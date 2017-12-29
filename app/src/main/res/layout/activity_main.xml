@@ -1,18 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~  Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
-  ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
-  ~
-  ~      https://mindorks.com/license/apache-v2
-  ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~  limitations under the License
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -59,11 +45,27 @@
 
                         <android.support.v7.widget.Toolbar
                             android:id="@+id/toolbar"
-                            style="@style/Toolbar"
-                            app:subtitleTextColor="@color/white"
-                            app:title="@string/app_name"
-                            app:titleTextAppearance="@style/Toolbar.TitleText"
-                            app:titleTextColor="@color/white" />
+                            style="@style/Toolbar">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:layout_marginRight="12dp"
+                                android:background="@drawable/rectangle_round"
+                                android:gravity="center|left">
+
+                                <EditText
+                                    android:id="@+id/editTextSearch"
+                                    android:textCursorDrawable="@null"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:hint="Find something..."
+                                    android:paddingLeft="12dp"
+                                    android:textColorHint="@color/text_hint"
+                                    android:textSize="14dp"></EditText>
+                            </LinearLayout>
+                        </android.support.v7.widget.Toolbar>
 
                         <View
                             android:layout_width="match_parent"
@@ -76,8 +78,8 @@
                         android:id="@+id/cardsContainer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:adapter="@{viewModel.questionDataList}"
-                        app:action="@{viewModel.action}"/>
+                        app:action="@{viewModel.action}"
+                        app:adapter="@{viewModel.questionDataList}" />
 
                 </LinearLayout>
             </android.support.design.widget.CoordinatorLayout>
@@ -112,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
     </FrameLayout>
 

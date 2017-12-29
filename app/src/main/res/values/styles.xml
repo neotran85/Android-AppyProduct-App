@@ -87,11 +87,12 @@
         <item name="android:textAppearance">@style/TextAppearance.Text.Italic</item>
     </style>
 
-    <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="Toolbar" parent="Base.Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="colorControlNormal">@color/white</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:background">@color/toolbar_background</item>
     </style>
 
     <style name="Toolbar.TitleText" parent="TextStyle.Heading">

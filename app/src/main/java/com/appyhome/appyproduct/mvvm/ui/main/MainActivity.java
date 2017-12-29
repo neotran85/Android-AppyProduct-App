@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         if (drawable instanceof Animatable) {
             ((Animatable) drawable).start();
         }
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case R.id.action_cut:
                 return true;
             case R.id.action_copy:
@@ -124,7 +124,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -158,12 +159,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mToolbar = mActivityMainBinding.toolbar;
         mNavigationView = mActivityMainBinding.navigationView;
         mCardsContainerView = mActivityMainBinding.cardsContainer;
-
+        mToolbar.setNavigationIcon(null);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawer,
-                mToolbar,
+                null,
                 R.string.open_drawer,
                 R.string.close_drawer) {
             @Override

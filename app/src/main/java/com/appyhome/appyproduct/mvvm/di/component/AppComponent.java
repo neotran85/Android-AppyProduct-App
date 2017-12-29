@@ -18,7 +18,7 @@ package com.appyhome.appyproduct.mvvm.di.component;
 
 import android.app.Application;
 
-import com.appyhome.appyproduct.mvvm.MvvmApp;
+import com.appyhome.appyproduct.mvvm.AppyProductApp;
 import com.appyhome.appyproduct.mvvm.di.builder.ActivityBuilder;
 import com.appyhome.appyproduct.mvvm.di.module.AppModule;
 
@@ -45,6 +45,6 @@ public interface AppComponent {
 
     }
 
-    void inject(MvvmApp app);
+    void inject(AppyProductApp app);
 
 }
