@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.appyhome.appyproduct.mvvm.ui.main.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.main.MainViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.home.HomeViewModel" />
 
     </data>
 
@@ -21,7 +20,6 @@
         android:background="@color/white">
 
         <android.support.v4.widget.DrawerLayout
-
             android:id="@+id/drawerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

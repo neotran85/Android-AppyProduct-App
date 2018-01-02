@@ -14,208 +14,46 @@
 
     </data>
 
-
-    <FrameLayout
-        android:background="@color/white"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <android.support.v4.widget.DrawerLayout
-
-            android:id="@+id/drawerView"
+        <LinearLayout
+            android:id="@+id/screenView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:orientation="vertical"></LinearLayout>
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/clRootView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/tabbar_background"
+            app:tabGravity="fill"
+            app:tabMode="fixed">
 
-                <LinearLayout
-                    android:id="@+id/activityMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <android.support.design.widget.AppBarLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:elevation="5dp">
-
-                        <android.support.v7.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            style="@style/Toolbar">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="end|center"
-                                android:orientation="horizontal">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="@dimen/actionbar_icon_size"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/rectangle_round"
-                                    android:gravity="center|start"
-                                    android:orientation="horizontal"
-                                    android:paddingBottom="6dp"
-                                    android:paddingLeft="12dp"
-                                    android:paddingRight="8dp"
-                                    android:paddingTop="6dp">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:adjustViewBounds="true"
-                                        app:srcCompat="@mipmap/search_logo" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="right|center"
-                                        android:orientation="horizontal">
-
-                                        <TextView
-                                            android:id="@+id/editTextSearch"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:background="@android:color/transparent"
-                                            android:gravity="end"
-                                            android:paddingRight="4dp"
-                                            android:text="Search"
-                                            android:textAlignment="textEnd"
-                                            android:textColor="@color/text_hint"
-                                            android:textSize="14dp"></TextView>
-
-                                        <ImageView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:adjustViewBounds="true"
-                                            android:padding="2dp"
-                                            android:src="@mipmap/search_icon" />
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0"
-                                    android:orientation="horizontal"
-                                    android:paddingLeft="12dp"
-                                    android:paddingRight="12dp">
-
-                                    <ImageButton
-                                        android:layout_width="@dimen/actionbar_icon_size"
-                                        android:layout_height="@dimen/actionbar_icon_size"
-                                        android:layout_marginRight="4dp"
-                                        android:adjustViewBounds="true"
-                                        android:background="@mipmap/icon_toolbar_menu" />
-
-                                    <ImageButton
-                                        android:layout_width="30dp"
-                                        android:layout_height="@dimen/actionbar_icon_size"
-                                        android:adjustViewBounds="true"
-                                        android:background="@mipmap/icon_toolbar_cart" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </android.support.v7.widget.Toolbar>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/light_gray" />
-
-                    </android.support.design.widget.AppBarLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                        </LinearLayout>
-
-                        <com.mindorks.placeholderview.SwipePlaceHolderView
-                            android:id="@+id/cardsContainer"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone"
-                            app:action="@{viewModel.action}"
-                            app:adapter="@{viewModel.questionDataList}" />
-
-                        <android.support.design.widget.TabLayout
-                            android:id="@+id/tabs"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/tabbar_background"
-                            app:tabGravity="fill"
-                            app:tabMode="fixed">
-
-                            <android.support.design.widget.TabItem
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:icon="@mipmap/icon_tabbar_home" />
-
-                            <android.support.design.widget.TabItem
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:icon="@mipmap/icon_tabbar_favorite" />
-
-                            <android.support.design.widget.TabItem
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:icon="@mipmap/icon_tabbar_notification" />
-
-                            <android.support.design.widget.TabItem
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:icon="@mipmap/icon_tabbar_profile" />
-                        </android.support.design.widget.TabLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.design.widget.CoordinatorLayout>
-
-            <android.support.design.widget.NavigationView
-                android:id="@+id/navigationView"
-                style="@style/Widget.Design.NavigationView"
+            <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:background="@color/white"
-                app:itemBackground="@color/white"
-                app:itemIconTint="@color/black_effective"
-                app:itemTextColor="@color/black_effective"
-                app:menu="@menu/drawer">
+                android:layout_height="wrap_content"
+                android:icon="@mipmap/icon_tabbar_home" />
 
-                <TextView
-                    android:id="@+id/tvAppVersion"
-                    style="@style/TextStyle.Title.Sub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:padding="5dp"
-                    android:text="@{viewModel.appVersion}" />
-            </android.support.design.widget.NavigationView>
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@mipmap/icon_tabbar_favorite" />
 
-        </android.support.v4.widget.DrawerLayout>
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@mipmap/icon_tabbar_notification" />
 
-        <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/address_looking_up"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@mipmap/icon_tabbar_profile" />
+        </android.support.design.widget.TabLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </layout>

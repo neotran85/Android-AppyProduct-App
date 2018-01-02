@@ -1,19 +1,3 @@
-/*
- *  Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      https://mindorks.com/license/apache-v2
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License
- */
-
 package com.appyhome.appyproduct.mvvm.ui.main;
 
 import android.arch.lifecycle.Observer;
@@ -21,37 +5,20 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
-import com.appyhome.appyproduct.mvvm.databinding.NavHeaderMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
-import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.ui.main.rating.RateUsDialog;
-import com.appyhome.appyproduct.mvvm.utils.ScreenUtils;
-import com.mindorks.placeholderview.SwipeDecor;
-import com.mindorks.placeholderview.SwipePlaceHolderView;
-import com.mindorks.placeholderview.listeners.ItemRemovedListener;
+import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -70,11 +37,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     private MainViewModel mMainViewModel;
-
-    private DrawerLayout mDrawer;
-    private Toolbar mToolbar;
-    private NavigationView mNavigationView;
-    private SwipePlaceHolderView mCardsContainerView;
     private TabLayout mTabLayout;
 
     ActivityMainBinding mActivityMainBinding;
@@ -90,13 +52,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mActivityMainBinding = getViewDataBinding();
         mMainViewModel.setNavigator(this);
         setUp();
+        showHomeFragment();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mDrawer != null)
-            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     @Override
@@ -120,44 +81,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                     .remove(fragment)
                     .commitNow();
-            unlockDrawer();
         }
     }
 
     private void setUp() {
         mTabLayout = mActivityMainBinding.tabs;
-        mDrawer = mActivityMainBinding.drawerView;
-        mToolbar = mActivityMainBinding.toolbar;
-        mNavigationView = mActivityMainBinding.navigationView;
-        mCardsContainerView = mActivityMainBinding.cardsContainer;
-        mToolbar.setNavigationIcon(null);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("");
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawer,
-                null,
-                R.string.open_drawer,
-                R.string.close_drawer) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                hideKeyboard();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
-        mDrawer.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-        setupNavMenu();
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
         mMainViewModel.updateAppVersion(version);
         mMainViewModel.onNavMenuCreated();
-        // setupCardContainerView();
         subscribeToLiveData();
     }
 
@@ -168,104 +99,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 mMainViewModel.setQuestionDataList(questionCardDatas);
             }
         });
-    }
-
-    private void setupCardContainerView() {
-
-        int screenWidth = ScreenUtils.getScreenWidth(this);
-        int screenHeight = ScreenUtils.getScreenHeight(this);
-
-        mCardsContainerView.getBuilder()
-                .setDisplayViewCount(3)
-                .setHeightSwipeDistFactor(10)
-                .setWidthSwipeDistFactor(5)
-                .setSwipeDecor(new SwipeDecor()
-                        .setViewWidth((int) (0.90 * screenWidth))
-                        .setViewHeight((int) (0.75 * screenHeight))
-                        .setPaddingTop(20)
-                        .setSwipeRotationAngle(10)
-                        .setRelativeScale(0.01f));
-
-        mCardsContainerView.addItemRemoveListener(new ItemRemovedListener() {
-            @Override
-            public void onItemRemoved(int count) {
-                if (count == 0) {
-                    // reload the contents again after 1 sec delay
-                    new Handler(getMainLooper()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Reload once all the cards are removed
-                            mMainViewModel.loadQuestionCards();
-                        }
-                    }, 800);
-                } else {
-                    mMainViewModel.removeQuestionCard();
-                }
-            }
-        });
-    }
-
-    private void setupNavMenu() {
-        NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
-                R.layout.nav_header_main, mActivityMainBinding.navigationView, false);
-        mActivityMainBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
-        navHeaderMainBinding.setViewModel(mMainViewModel);
-
-        mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        mDrawer.closeDrawer(GravityCompat.START);
-                        switch (item.getItemId()) {
-                            case R.id.navItemAbout:
-                                showAboutFragment();
-                                return true;
-                            case R.id.navItemRateUs:
-                                RateUsDialog.newInstance().show(getSupportFragmentManager());
-                                return true;
-                            case R.id.navItemFeed:
-                                startActivity(FeedActivity.getStartIntent(MainActivity.this));
-                                return true;
-                            case R.id.navItemLogout:
-                                mMainViewModel.logout();
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-    }
-
-    private void showAboutFragment() {
-        lockDrawer();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, AboutFragment.newInstance(), AboutFragment.TAG)
-                .commit();
-    }
-
-    private void lockDrawer() {
-        if (mDrawer != null)
-            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    private void unlockDrawer() {
-        if (mDrawer != null)
-            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    }
-
-
-    @Override
-    public void openLoginActivity() {
-        startActivity(LoginActivity.getStartIntent(this));
-        finish();
-    }
-
-    @Override
-    public void handleError(Throwable throwable) {
-        // handle error
     }
 
     @Override
@@ -287,5 +120,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
+    }
+
+    private void showHomeFragment() {
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.screenView, HomeFragment.newInstance(), HomeFragment.TAG)
+                .commit();
     }
 }
