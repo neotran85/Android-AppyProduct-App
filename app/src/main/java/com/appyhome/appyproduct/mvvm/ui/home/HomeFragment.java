@@ -21,9 +21,7 @@ import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.databinding.NavHeaderMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.ui.main.rating.RateUsDialog;
 
 import javax.inject.Inject;
 
@@ -63,6 +61,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mDrawer = mFragmentHomeBinding.drawerView;
         mToolbar = mFragmentHomeBinding.toolbar;
         mNavigationView = mFragmentHomeBinding.navigationView;
+        mNavigationView.setItemIconTintList(null);
 
         mToolbar.setNavigationIcon(null);
         if (getActivity() instanceof AppCompatActivity) {
@@ -108,18 +107,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         mDrawer.closeDrawer(GravityCompat.START);
                         switch (item.getItemId()) {
-                            case R.id.navItemAbout:
-                                showAboutFragment();
-                                return true;
-                            case R.id.navItemRateUs:
-                                RateUsDialog.newInstance().show(getActivity().getSupportFragmentManager());
-                                return true;
-                            case R.id.navItemFeed:
-                                startActivity(FeedActivity.getStartIntent(getActivity()));
-                                return true;
-                            case R.id.navItemLogout:
-                                mHomeViewModel.logout();
-                                return true;
                             default:
                                 return false;
                         }

@@ -198,19 +198,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:background="@color/white"
-                app:itemBackground="@color/white"
-                app:itemIconTint="@color/black_effective"
-                app:itemTextColor="@color/black_effective"
+                android:background="@color/drawer_bg"
+                app:itemBackground="@color/drawer_bg"
+                app:itemTextColor="@color/drawer_text"
                 app:menu="@menu/drawer">
-
-                <TextView
-                    android:id="@+id/tvAppVersion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:padding="5dp"
-                    android:text="@{viewModel.appVersion}" />
             </android.support.design.widget.NavigationView>
 
         </android.support.v4.widget.DrawerLayout>

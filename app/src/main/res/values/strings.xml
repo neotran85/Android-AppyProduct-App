@@ -33,6 +33,13 @@
     <string name="about">About</string>
     <string name="logout">Logout</string>
     <string name="feed">My Feed</string>
+    <string name="drawer_home">Home</string>
+    <string name="drawer_wishlist">Wishlist</string>
+    <string name="drawer_my_purchase">My Purchase</string>
+    <string name="drawer_customer_service">Customer Service</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="drawer_footsteps">Footsteps</string>
+    <string name="drawer_login">Tap To Login</string>
 
     <!--App Message-->
     <string name="api_retry_error">Please retry!</string>

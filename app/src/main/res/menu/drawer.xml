@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+    <group android:id="@+id/group_menu1">
         <item
-            android:id="@+id/navItemAbout"
+            android:id="@+id/navItemHome"
             android:checked="true"
-            android:icon="@drawable/ic_info_24px"
-            android:title="@string/about" />
+            android:icon="@mipmap/drawer_home"
+            android:title="@string/drawer_home" />
         <item
-            android:id="@+id/navItemRateUs"
+            android:id="@+id/navItemWishlist"
             android:checked="true"
-            android:icon="@drawable/ic_star"
-            android:title="@string/rate_us" />
+            android:icon="@mipmap/drawer_wishlist"
+            android:title="@string/drawer_wishlist" />
         <item
-            android:id="@+id/navItemFeed"
+            android:id="@+id/navItemMyPurchase"
             android:checked="true"
-            android:icon="@drawable/ic_rss_symbol"
-            android:title="@string/feed" />
+            android:icon="@mipmap/drawer_my_purchase"
+            android:title="@string/drawer_my_purchase" />
         <item
-            android:id="@+id/navItemLogout"
+            android:id="@+id/navItemCustomerService"
             android:checked="true"
-            android:icon="@drawable/ic_power_settings_new_24px"
-            android:title="@string/logout" />
+            android:icon="@mipmap/drawer_customer_service"
+            android:title="@string/drawer_customer_service" />
+        <item
+            android:id="@+id/navItemSettings"
+            android:checked="true"
+            android:icon="@mipmap/drawer_settings"
+            android:title="@string/drawer_settings" />
+        <item
+            android:id="@+id/navItemFootsteps"
+            android:checked="true"
+            android:icon="@mipmap/drawer_footsteps"
+            android:title="@string/drawer_footsteps" />
+
+    </group>
+    <group android:id="@+id/group_menu2">
+        <item
+            android:id="@+id/navItemLogin"
+            android:checked="true"
+            android:icon="@mipmap/drawer_login"
+            android:title="@string/drawer_login" />
     </group>
 </menu>
