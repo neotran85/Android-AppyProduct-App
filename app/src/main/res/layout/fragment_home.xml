@@ -162,7 +162,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <include layout="@layout/view_home_features" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/dealView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <include layout="@layout/view_home_deal" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -170,8 +179,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <include layout="@layout/view_home_ads" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"></LinearLayout>
