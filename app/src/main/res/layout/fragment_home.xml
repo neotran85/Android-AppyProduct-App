@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -128,25 +127,58 @@
 
                     </android.support.design.widget.AppBarLayout>
 
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"></LinearLayout>
-
-                        <com.mindorks.placeholderview.SwipePlaceHolderView
-                            android:id="@+id/cardsContainer"
+                            android:id="@+id/contentView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:visibility="gone"
-                            app:action="@{viewModel.action}"
-                            app:adapter="@{viewModel.questionDataList}" />
-                    </LinearLayout>
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/headerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:orientation="horizontal">
+
+                                <include layout="@layout/view_home_header" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/categoryView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:orientation="horizontal">
+
+                                <include layout="@layout/view_home_category" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/featureView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <include layout="@layout/view_home_features" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/adsView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <include layout="@layout/view_home_ads" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"></LinearLayout>
+                        </LinearLayout>
+                    </ScrollView>
                 </LinearLayout>
+
             </android.support.design.widget.CoordinatorLayout>
 
             <android.support.design.widget.NavigationView
@@ -163,7 +195,6 @@
 
                 <TextView
                     android:id="@+id/tvAppVersion"
-                    style="@style/TextStyle.Title.Sub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
@@ -179,8 +210,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+            android:visibility="gone" />
 
     </FrameLayout>
-
 </layout>

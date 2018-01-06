@@ -40,7 +40,6 @@
                 android:layout_height="wrap_content"
                 app:subtitleTextColor="@color/white"
                 app:title="@string/title"
-                app:titleTextAppearance="@style/Toolbar.TitleText"
                 app:titleTextColor="@color/white" />
 
             <android.support.design.widget.TabLayout

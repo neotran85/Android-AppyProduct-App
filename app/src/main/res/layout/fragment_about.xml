@@ -37,7 +37,6 @@
                 app:srcCompat="@drawable/ic_keyboard_backspace_24px" />
 
             <TextView
-                style="@style/TextStyle.Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -47,7 +46,6 @@
         </LinearLayout>
 
         <TextView
-            style="@style/TextStyle.Heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -59,7 +57,6 @@
 
         <TextView
             android:id="@+id/tvMvpBlog"
-            style="@style/TextStyle.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -70,7 +67,6 @@
 
         <TextView
             android:id="@+id/tvMvpRepo"
-            style="@style/TextStyle.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
@@ -80,7 +76,6 @@
 
         <TextView
             android:id="@+id/tvMindorksBlog"
-            style="@style/TextStyle.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
@@ -90,7 +85,6 @@
 
         <TextView
             android:id="@+id/tvMindorksRepo"
-            style="@style/TextStyle.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"

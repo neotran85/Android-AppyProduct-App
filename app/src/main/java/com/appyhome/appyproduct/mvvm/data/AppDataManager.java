@@ -15,7 +15,7 @@ import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
-import com.appyhome.appyproduct.mvvm.utils.AppConstants;
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

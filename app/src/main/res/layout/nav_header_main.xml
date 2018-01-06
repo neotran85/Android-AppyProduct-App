@@ -43,7 +43,6 @@
 
         <TextView
             android:id="@+id/tv_name"
-            style="@style/TextStyle.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -51,7 +50,6 @@
 
         <TextView
             android:id="@+id/tv_email"
-            style="@style/TextStyle.Title.Sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.userEmail}" />

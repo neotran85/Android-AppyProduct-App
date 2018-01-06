@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
-import com.appyhome.appyproduct.mvvm.utils.AppConstants;
+import com.appyhome.appyproduct.mvvm.AppConstants;
 
 import javax.inject.Inject;
 

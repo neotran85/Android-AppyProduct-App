@@ -19,7 +19,7 @@ import com.appyhome.appyproduct.mvvm.data.remote.AppApiHelper;
 import com.appyhome.appyproduct.mvvm.di.ApiInfo;
 import com.appyhome.appyproduct.mvvm.di.DatabaseInfo;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
-import com.appyhome.appyproduct.mvvm.utils.AppConstants;
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.utils.rx.AppSchedulerProvider;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 

@@ -41,6 +41,7 @@
     <string name="connection_error">Internet connection lost!</string>
 
     <!--Login-->
+    <string name="signup">Sign Up</string>
     <string name="login_dummy">Login Dummy</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
@@ -83,4 +84,17 @@
     <string name="empty_screen">We do not have anything\nhere right now.</string>
     <string name="please_retry">Please Retry</string>
     <string name="retry">Retry</string>
+
+    <!--Categories-->
+    <string name="category_bed_bath"><![CDATA[Bed & Bath]]></string>
+    <string name="category_decor"><![CDATA[Decor]]></string>
+    <string name="category_kitchen"><![CDATA[Kitchen]]></string>
+    <string name="category_appliances"><![CDATA[Appliances]]></string>
+    <string name="category_furniture"><![CDATA[Furniture]]></string>
+    <string name="category_home_improvement"><![CDATA[Home\nImprovement]]></string>
+    <string name="category_lighting"><![CDATA[Lighting]]></string>
+    <string name="category_storage_Organization"><![CDATA[Storage & Organization]]></string>
+
+    <string name="feature_more"><![CDATA[More >]]></string>
+
 </resources>
