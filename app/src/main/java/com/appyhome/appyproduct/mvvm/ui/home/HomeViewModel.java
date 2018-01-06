@@ -72,6 +72,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     }
                 }));
     }
+
     public MutableLiveData<List<QuestionCardData>> getQuestionCardData() {
         return questionCardData;
     }

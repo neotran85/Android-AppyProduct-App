@@ -1,4 +1,3 @@
-
 package com.appyhome.appyproduct.mvvm.ui.home;
 
 import android.arch.lifecycle.ViewModelProvider;
@@ -15,9 +14,10 @@ public class HomeFragmentModule {
 
     @Provides
     HomeViewModel provideHomeViewModel(DataManager dataManager,
-                                         SchedulerProvider schedulerProvider) {
+                                       SchedulerProvider schedulerProvider) {
         return new HomeViewModel(dataManager, schedulerProvider);
     }
+
     @Provides
     ViewModelProvider.Factory homeViewModelProvider(HomeViewModel homeViewModel) {
         return new ViewModelProviderFactory<>(homeViewModel);

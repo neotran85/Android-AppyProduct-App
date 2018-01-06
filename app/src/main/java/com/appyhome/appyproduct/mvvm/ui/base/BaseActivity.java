@@ -1,4 +1,3 @@
-
 package com.appyhome.appyproduct.mvvm.ui.base;
 
 import android.annotation.TargetApi;

@@ -1,4 +1,3 @@
-
 package com.appyhome.appyproduct.mvvm.ui.home;
 
 
@@ -34,10 +33,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Inject
     HomeViewModel mHomeViewModel;
-
+    FragmentHomeBinding mFragmentHomeBinding;
     private DrawerLayout mDrawer;
     private Toolbar mToolbar;
-    FragmentHomeBinding mFragmentHomeBinding;
     private NavigationView mNavigationView;
 
     public static HomeFragment newInstance() {
@@ -46,11 +44,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUp();
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +95,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         setupNavMenu();
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
     }
+
     private void setupNavMenu() {
         NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.nav_header_main, mFragmentHomeBinding.navigationView, false);
@@ -130,10 +131,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         if (mDrawer != null)
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
+
     private void unlockDrawer() {
         if (mDrawer != null)
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
+
     private void showAboutFragment() {
         lockDrawer();
         this.getActivity().getSupportFragmentManager()

@@ -1,4 +1,3 @@
-
 package com.appyhome.appyproduct.mvvm.ui.feed.blogs;
 
 import android.arch.lifecycle.Observer;
@@ -87,6 +86,7 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
             }
         });
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

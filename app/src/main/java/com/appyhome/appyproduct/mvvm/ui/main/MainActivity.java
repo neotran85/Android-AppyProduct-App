@@ -35,11 +35,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-
+    ActivityMainBinding mActivityMainBinding;
     private MainViewModel mMainViewModel;
     private TabLayout mTabLayout;
-
-    ActivityMainBinding mActivityMainBinding;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);

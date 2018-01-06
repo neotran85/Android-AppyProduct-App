@@ -4,10 +4,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
-/**
- * Created by RV on 06/09/17.
- */
-
 public final class ViewAnimationUtils {
 
     private ViewAnimationUtils() {

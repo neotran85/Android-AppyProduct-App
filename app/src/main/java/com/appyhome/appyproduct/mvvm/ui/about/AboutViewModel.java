@@ -1,4 +1,3 @@
-
 package com.appyhome.appyproduct.mvvm.ui.about;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
