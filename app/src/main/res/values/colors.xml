@@ -40,5 +40,6 @@
 
     <color name="drawer_text">#808080</color>
     <color name="drawer_bg">#eff0f0</color>
+    <color name="hint_text">#cccccc</color>
 
 </resources>

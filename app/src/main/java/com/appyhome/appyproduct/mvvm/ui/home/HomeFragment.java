@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -33,6 +34,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
 
+    private ImageButton mToolbarCartButton;
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -59,7 +61,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mToolbar = mFragmentHomeBinding.toolbar;
         mNavigationView = mFragmentHomeBinding.navigationView;
         mNavigationView.setItemIconTintList(null);
-
+        mToolbarCartButton = mFragmentHomeBinding.toolbar.findViewById(R.id.toolbarCartButton);
         mToolbar.setNavigationIcon(null);
         if (getActivity() instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) getActivity();

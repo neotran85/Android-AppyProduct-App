@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/search_logo" />
+            android:src="@mipmap/appyhome_logo_text" />
     </RelativeLayout>
 
 </layout>
