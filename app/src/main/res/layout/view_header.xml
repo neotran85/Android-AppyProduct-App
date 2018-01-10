@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height">
+    <ImageButton
+        android:id="@+id/leftButton"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:adjustViewBounds="true"
+        android:background="@mipmap/header_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:id="@+id/tvTitle"
+        android:textColor="#676767"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="My Profile"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_header"></include>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="#F1F1F1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:id="@+id/llAvatarEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/profile_avatar_edit" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Edit"
+                        android:textColor="#676767"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/llAvatarEdit"
+                    android:layout_marginTop="80dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="64dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_weight="0.5"
+                                android:text="Username"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_weight="0.5"
+                                android:text="Change password"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:background="@null"
+                                android:hint="Username"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Change password"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="Birthday"
+                            android:textColor="#676767"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/white"
+                            android:hint="Birthday"
+                            android:paddingLeft="20dp"
+                            android:textColor="#676767"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="Phone"
+                            android:textColor="#676767"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/white"
+                            android:hint="Phone Number"
+                            android:paddingLeft="20dp"
+                            android:textColor="#676767"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="#676767"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/white"
+                            android:hint="Email Address"
+                            android:paddingLeft="20dp"
+                            android:textColor="#676767"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="64dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="Address"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="154dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:background="@null"
+                                android:hint="Enter your address"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Town / City"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="State"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Post Code"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="154dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:background="@null"
+                                android:hint="Enter your address"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Town / City"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="State"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Post Code"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="64dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="Shipping Address"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="154dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:background="@null"
+                                android:hint="Enter your address"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Town / City"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="State"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Post Code"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="154dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:background="@null"
+                                android:hint="Enter your address"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Town / City"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="State"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@color/gray"></LinearLayout>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@null"
+                                android:hint="Post Code"
+                                android:paddingLeft="10dp"
+                                android:textColor="#676767"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"></LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            android:text="Done"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</layout>

@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.ui.login.LoginActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.main.rating.RateUsDialogProvider;
+import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
 
@@ -27,7 +28,7 @@ public abstract class ActivityBuilder {
     abstract LoginActivity bindLoginActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class,
-            AboutFragmentProvider.class, RateUsDialogProvider.class, HomeFragmentProvider.class})
+            AboutFragmentProvider.class, RateUsDialogProvider.class, HomeFragmentProvider.class, MyProfileFragmentProvider.class})
     abstract MainActivity bindMainActivity();
 
     @ContributesAndroidInjector(modules = {FeedActivityModule.class,

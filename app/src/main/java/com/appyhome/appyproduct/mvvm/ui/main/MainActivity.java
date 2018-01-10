@@ -20,6 +20,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
+import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 
 import java.util.List;
 
@@ -51,7 +52,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mActivityMainBinding = getViewDataBinding();
         mMainViewModel.setNavigator(this);
         setUp();
-        showHomeFragment();
+        //showHomeFragment();
+        showMyProfileFragment();
     }
 
     @Override
@@ -122,6 +124,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         return fragmentDispatchingAndroidInjector;
     }
 
+    private void showMyProfileFragment() {
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.screenView, MyProfileFragment.newInstance(), MyProfileFragment.TAG)
+                .commit();
+    }
     private void showHomeFragment() {
         this.getSupportFragmentManager()
                 .beginTransaction()

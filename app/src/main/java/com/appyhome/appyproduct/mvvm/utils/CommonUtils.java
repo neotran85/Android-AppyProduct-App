@@ -44,6 +44,9 @@ public final class CommonUtils {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
+    public static boolean isPhoneNumberValid(String number) {
+        return number.matches("^6?01\\d{8}$");
+    }
     public static boolean isEmailValid(String email) {
         Pattern pattern;
         Matcher matcher;

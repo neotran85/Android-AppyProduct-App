@@ -7,4 +7,5 @@
     <dimen name="actionbar_icon_size">24dp</dimen>
     <dimen name="navigation_view_margin">65dp</dimen>
     <dimen name="navigation_view_margin_minus">-65dp</dimen>
+    <dimen name="header_height">42dp</dimen>
 </resources>

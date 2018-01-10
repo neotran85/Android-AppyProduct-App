@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -52,14 +51,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void login() {
-        String email = mActivityLoginBinding.etEmail.getText().toString();
+        openMainActivity();
+        /*
+        String phoneNumber = mActivityLoginBinding.etPhoneNumber.getText().toString();
         String password = mActivityLoginBinding.etPassword.getText().toString();
-        if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
+        if (mLoginViewModel.isPhoneNumberAndPasswordValid(phoneNumber, password)) {
             hideKeyboard();
-            mLoginViewModel.login(email, password);
+            mLoginViewModel.login(phoneNumber, password);
         } else {
-            Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
-        }
+            Toast.makeText(this, getString(R.string.invalid_phone_password), Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @Override

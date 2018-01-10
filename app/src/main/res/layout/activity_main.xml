@@ -14,20 +14,21 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
         <LinearLayout
+            android:layout_weight="0.5"
             android:id="@+id/screenView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"></LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/tabbar_background"
@@ -55,6 +56,6 @@
                 android:icon="@mipmap/icon_tabbar_profile" />
         </android.support.design.widget.TabLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

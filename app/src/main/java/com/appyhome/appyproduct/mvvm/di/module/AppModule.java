@@ -106,7 +106,7 @@ public class AppModule {
     @Singleton
     CalligraphyConfig provideCalligraphyDefaultConfig() {
         return new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/source-sans-pro/SourceSansPro-Regular.ttf")
+                .setDefaultFontPath("fonts/TitilliumWeb-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build();
     }
