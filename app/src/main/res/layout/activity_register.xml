@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.login.LoginViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.register.RegisterViewModel" />
 
     </data>
 
@@ -120,7 +120,6 @@
                         android:layout_marginTop="28dp"
                         android:background="@drawable/button_rounded_bg_orange"
                         android:gravity="center"
-                        android:onClick="@{() -> viewModel.onServerLoginClick()}"
                         android:shadowRadius="0"
                         android:text="@string/login"
                         android:textStyle="bold"

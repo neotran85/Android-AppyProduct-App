@@ -21,6 +21,7 @@ import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
+import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragment;
 
 import java.util.List;
 
@@ -53,7 +54,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mMainViewModel.setNavigator(this);
         setUp();
         //showHomeFragment();
-        showMyProfileFragment();
+        //showMyProfileFragment();
+        showUserPageFragment();
     }
 
     @Override
@@ -136,6 +138,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .add(R.id.screenView, HomeFragment.newInstance(), HomeFragment.TAG)
+                .commit();
+    }
+
+    private void showUserPageFragment() {
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.screenView, UserPageFragment.newInstance(), UserPageFragment.TAG)
                 .commit();
     }
 }

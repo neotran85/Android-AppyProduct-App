@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragmentProvider;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -33,7 +34,7 @@ public abstract class ActivityBuilder {
     abstract RegisterActivity bindRegisterActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class,
-            AboutFragmentProvider.class, RateUsDialogProvider.class, HomeFragmentProvider.class, MyProfileFragmentProvider.class})
+            AboutFragmentProvider.class, RateUsDialogProvider.class, HomeFragmentProvider.class, MyProfileFragmentProvider.class, UserPageFragmentProvider.class})
     abstract MainActivity bindMainActivity();
 
     @ContributesAndroidInjector(modules = {FeedActivityModule.class,

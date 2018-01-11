@@ -6,18 +6,18 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
-public class RegisterActivity extends BaseActivity<ActivityLoginBinding, RegisterViewModel> implements RegisterNavigator {
+public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, RegisterViewModel> implements RegisterNavigator {
 
     @Inject
     RegisterViewModel mRegisterViewModel;
 
-    ActivityLoginBinding mActivityLoginBinding;
+    ActivityRegisterBinding mActivityRegisterBinding;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
@@ -27,7 +27,7 @@ public class RegisterActivity extends BaseActivity<ActivityLoginBinding, Registe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityLoginBinding = getViewDataBinding();
+        mActivityRegisterBinding = getViewDataBinding();
         mRegisterViewModel.setNavigator(this);
 
     }
