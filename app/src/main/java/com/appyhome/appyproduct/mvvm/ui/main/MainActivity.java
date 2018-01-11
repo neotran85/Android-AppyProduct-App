@@ -21,6 +21,7 @@ import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
+import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragment;
 
 import java.util.List;
@@ -55,7 +56,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         setUp();
         //showHomeFragment();
         //showMyProfileFragment();
-        showUserPageFragment();
+        //showUserPageFragment();
+        showMyWishListFragment();
     }
 
     @Override
@@ -146,6 +148,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .add(R.id.screenView, UserPageFragment.newInstance(), UserPageFragment.TAG)
+                .commit();
+    }
+    private void showMyWishListFragment() {
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.screenView, MyWishListFragment.newInstance(), MyWishListFragment.TAG)
                 .commit();
     }
 }

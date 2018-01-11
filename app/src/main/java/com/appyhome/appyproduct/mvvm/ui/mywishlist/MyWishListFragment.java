@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.userpage;
+package com.appyhome.appyproduct.mvvm.ui.mywishlist;
 
 
 import android.os.Bundle;
@@ -7,22 +7,22 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentUserPageBinding;
+import com.appyhome.appyproduct.mvvm.databinding.FragmentMyWishlistBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
 
-public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, UserPageViewModel> implements UserPageNavigator {
+public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, MyWishListViewModel> implements MyWishListNavigator {
 
     public static final String TAG = "UserPageFragment";
 
     @Inject
-    UserPageViewModel mUserPageViewModel;
-    FragmentUserPageBinding mFragmentUserPageBinding;
+    MyWishListViewModel mMyWishListViewModel;
+    FragmentMyWishlistBinding mFragmentMyWishlistBinding;
 
-    public static UserPageFragment newInstance() {
+    public static MyWishListFragment newInstance() {
         Bundle args = new Bundle();
-        UserPageFragment fragment = new UserPageFragment();
+        MyWishListFragment fragment = new MyWishListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,13 +39,13 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
     }
 
     private void setUp() {
-        mUserPageViewModel.setNavigator(this);
-        mFragmentUserPageBinding = getViewDataBinding();
+        mMyWishListViewModel.setNavigator(this);
+        mFragmentMyWishlistBinding = getViewDataBinding();
     }
 
     @Override
-    public UserPageViewModel getViewModel() {
-        return mUserPageViewModel;
+    public MyWishListViewModel getViewModel() {
+        return mMyWishListViewModel;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_user_page;
+        return R.layout.fragment_my_wishlist;
     }
 
     @Override
