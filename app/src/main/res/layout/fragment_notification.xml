@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.appyhome.appyproduct.mvvm.ui.notification.NotificationViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_header"></include>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="#F1F1F1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+                <include layout="@layout/view_item_notification"></include>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

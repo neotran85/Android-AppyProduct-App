@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.mywishlist;
+package com.appyhome.appyproduct.mvvm.ui.notification;
 
 
 import android.os.Bundle;
@@ -7,22 +7,22 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentMyWishlistBinding;
+import com.appyhome.appyproduct.mvvm.databinding.FragmentNotificationBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
 
-public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, MyWishListViewModel> implements MyWishListNavigator {
+public class NotificationFragment extends BaseFragment<FragmentNotificationBinding, NotificationViewModel> implements NotificationNavigator {
 
-    public static final String TAG = "MyWishListFragment";
+    public static final String TAG = "NotificationFragment";
 
     @Inject
-    MyWishListViewModel mMyWishListViewModel;
-    FragmentMyWishlistBinding mFragmentMyWishlistBinding;
+    NotificationViewModel mNotificationViewModel;
+    FragmentNotificationBinding mFragmentNotificationBinding;
 
-    public static MyWishListFragment newInstance() {
+    public static NotificationFragment newInstance() {
         Bundle args = new Bundle();
-        MyWishListFragment fragment = new MyWishListFragment();
+        NotificationFragment fragment = new NotificationFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,13 +39,13 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
     }
 
     private void setUp() {
-        mMyWishListViewModel.setNavigator(this);
-        mFragmentMyWishlistBinding = getViewDataBinding();
+        mNotificationViewModel.setNavigator(this);
+        mFragmentNotificationBinding = getViewDataBinding();
     }
 
     @Override
-    public MyWishListViewModel getViewModel() {
-        return mMyWishListViewModel;
+    public NotificationViewModel getViewModel() {
+        return mNotificationViewModel;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_my_wishlist;
+        return R.layout.fragment_notification;
     }
 
     @Override

@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_marginTop="4dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="22dp"
+    android:paddingRight="22dp"
+    android:paddingTop="28dp">
+
+    <TextView
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Celebrate our Grand Opening"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Get your premiere concert ticket now worth RM80"
+        android:textColor="#919193"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="28 Feb 2018"
+        android:textAlignment="textEnd"
+        android:textColor="#919193"
+        android:textSize="14sp" />
+</LinearLayout>
