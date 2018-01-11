@@ -80,26 +80,14 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
+    public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
                                                               request) {
-        return mApiHelper.doGoogleLoginApiCall(request);
+        return mApiHelper.doUserLogin(request);
     }
 
     @Override
-    public Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
-                                                                request) {
-        return mApiHelper.doFacebookLoginApiCall(request);
-    }
-
-    @Override
-    public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
-                                                              request) {
-        return mApiHelper.doServerLoginApiCall(request);
-    }
-
-    @Override
-    public Single<LogoutResponse> doLogoutApiCall() {
-        return mApiHelper.doLogoutApiCall();
+    public Single<LogoutResponse> doUserLogout() {
+        return mApiHelper.doUserLogout();
     }
 
     @Override
@@ -113,25 +101,23 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Long getCurrentUserId() {
-        return mPreferencesHelper.getCurrentUserId();
+    public String getCurrentUsername() {
+        return mPreferencesHelper.getCurrentUsername();
     }
 
     @Override
-    public void setCurrentUserId(Long userId) {
-        mPreferencesHelper.setCurrentUserId(userId);
+    public void setCurrentUsername(String userName) {
+        mPreferencesHelper.setCurrentUsername(userName);
+    }
+    @Override
+    public String getCurrentPhoneNumber() {
+        return mPreferencesHelper.getCurrentPhoneNumber();
     }
 
     @Override
-    public String getCurrentUserName() {
-        return mPreferencesHelper.getCurrentUserName();
+    public void setCurrentPhoneNumber(String phoneNumber) {
+        mPreferencesHelper.setCurrentPhoneNumber(phoneNumber);
     }
-
-    @Override
-    public void setCurrentUserName(String userName) {
-        mPreferencesHelper.setCurrentUserName(userName);
-    }
-
     @Override
     public String getCurrentUserEmail() {
         return mPreferencesHelper.getCurrentUserEmail();
@@ -153,36 +139,35 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void updateApiHeader(Long userId, String accessToken) {
-        mApiHelper.getApiHeader().getProtectedApiHeader().setUserId(userId);
+    public void updateApiHeader(String phoneNumber, String accessToken) {
+        mApiHelper.getApiHeader().getProtectedApiHeader().setPhoneNumber(phoneNumber);
         mApiHelper.getApiHeader().getProtectedApiHeader().setAccessToken(accessToken);
     }
 
     @Override
     public void updateUserInfo(
             String accessToken,
-            Long userId,
             LoggedInMode loggedInMode,
-            String userName,
+            String username,
+            String phoneNumber,
             String email,
             String profilePicPath) {
 
         setAccessToken(accessToken);
-        setCurrentUserId(userId);
         setCurrentUserLoggedInMode(loggedInMode);
-        setCurrentUserName(userName);
+        setCurrentUsername(username);
         setCurrentUserEmail(email);
         setCurrentUserProfilePicUrl(profilePicPath);
 
-        updateApiHeader(userId, accessToken);
+        updateApiHeader(phoneNumber, accessToken);
     }
 
     @Override
     public void setUserAsLoggedOut() {
         updateUserInfo(
                 null,
+                LoggedInMode.LOGGED_OUT,
                 null,
-                DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
                 null,
                 null,
                 null);

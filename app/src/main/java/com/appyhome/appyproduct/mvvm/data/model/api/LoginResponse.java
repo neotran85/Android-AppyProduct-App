@@ -11,10 +11,6 @@ public class LoginResponse {
     private String statusCode;
 
     @Expose
-    @SerializedName("user_id")
-    private Long userId;
-
-    @Expose
     @SerializedName("access_token")
     private String accessToken;
 
@@ -48,14 +44,6 @@ public class LoginResponse {
 
     public void setStatusCode(String statusCode) {
         this.statusCode = statusCode;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getAccessToken() {
@@ -123,7 +111,6 @@ public class LoginResponse {
 
         if (statusCode != null ? !statusCode.equals(that.statusCode) : that.statusCode != null)
             return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null)
             return false;
         if (userName != null ? !userName.equals(that.userName) : that.userName != null)
@@ -146,7 +133,6 @@ public class LoginResponse {
     @Override
     public int hashCode() {
         int result = statusCode != null ? statusCode.hashCode() : 0;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (accessToken != null ? accessToken.hashCode() : 0);
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);

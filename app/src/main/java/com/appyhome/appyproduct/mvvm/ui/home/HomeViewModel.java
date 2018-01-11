@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
@@ -55,7 +54,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
     public void logout() {
         setIsLoading(true);
-        getCompositeDisposable().add(getDataManager().doLogoutApiCall()
+        getCompositeDisposable().add(getDataManager().doUserLogout()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(new Consumer<LogoutResponse>() {

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
-import com.appyhome.appyproduct.mvvm.AppConstants;
 
 import javax.inject.Inject;
 
@@ -13,8 +12,8 @@ import javax.inject.Inject;
 public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_USER_LOGGED_IN_MODE = "PREF_KEY_USER_LOGGED_IN_MODE";
-    private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
+    private static final String PREF_KEY_CURRENT_PHONE_NUMBER = "PREF_KEY_CURRENT_PHONE_NUMBER";
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
     private static final String PREF_KEY_CURRENT_USER_PROFILE_PIC_URL
             = "PREF_KEY_CURRENT_USER_PROFILE_PIC_URL";
@@ -29,24 +28,22 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public Long getCurrentUserId() {
-        long userId = mPrefs.getLong(PREF_KEY_CURRENT_USER_ID, AppConstants.NULL_INDEX);
-        return userId == AppConstants.NULL_INDEX ? null : userId;
+    public String getCurrentPhoneNumber() {
+        return mPrefs.getString(PREF_KEY_CURRENT_PHONE_NUMBER, null);
     }
 
     @Override
-    public void setCurrentUserId(Long userId) {
-        long id = userId == null ? AppConstants.NULL_INDEX : userId;
-        mPrefs.edit().putLong(PREF_KEY_CURRENT_USER_ID, id).apply();
+    public void setCurrentPhoneNumber(String phoneNumber) {
+        mPrefs.edit().putString(PREF_KEY_CURRENT_PHONE_NUMBER, phoneNumber).apply();
     }
 
     @Override
-    public String getCurrentUserName() {
+    public String getCurrentUsername() {
         return mPrefs.getString(PREF_KEY_CURRENT_USER_NAME, null);
     }
 
     @Override
-    public void setCurrentUserName(String userName) {
+    public void setCurrentUsername(String userName) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_NAME, userName).apply();
     }
 
@@ -73,7 +70,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public int getCurrentUserLoggedInMode() {
         return mPrefs.getInt(PREF_KEY_USER_LOGGED_IN_MODE,
-                DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType());
+                DataManager.LoggedInMode.LOGGED_OUT.getType());
     }
 
     @Override

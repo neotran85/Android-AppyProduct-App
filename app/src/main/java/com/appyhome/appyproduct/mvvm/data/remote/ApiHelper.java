@@ -13,13 +13,9 @@ public interface ApiHelper {
 
     ApiHeader getApiHeader();
 
-    Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest request);
+    Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest request);
 
-    Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest request);
-
-    Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
-
-    Single<LogoutResponse> doLogoutApiCall();
+    Single<LogoutResponse> doUserLogout();
 
     Single<BlogResponse> getBlogApiCall();
 

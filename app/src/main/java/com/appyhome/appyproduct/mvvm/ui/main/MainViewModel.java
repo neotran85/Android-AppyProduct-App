@@ -40,7 +40,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     public void onNavMenuCreated() {
 
-        final String currentUserName = getDataManager().getCurrentUserName();
+        final String currentUserName = getDataManager().getCurrentUsername();
         if (currentUserName != null && !currentUserName.isEmpty()) {
             userName.set(currentUserName);
         }

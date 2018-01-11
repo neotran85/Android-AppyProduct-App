@@ -29,9 +29,9 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
+    public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
                                                               request) {
-        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_GOOGLE_LOGIN)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_LOGIN)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -39,28 +39,8 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
-                                                                request) {
-        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_FACEBOOK_LOGIN)
-                .addHeaders(mApiHeader.getPublicApiHeader())
-                .addBodyParameter(request)
-                .build()
-                .getObjectSingle(LoginResponse.class);
-    }
-
-    @Override
-    public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
-                                                              request) {
-        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_LOGIN)
-                .addHeaders(mApiHeader.getPublicApiHeader())
-                .addBodyParameter(request)
-                .build()
-                .getObjectSingle(LoginResponse.class);
-    }
-
-    @Override
-    public Single<LogoutResponse> doLogoutApiCall() {
-        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGOUT)
+    public Single<LogoutResponse> doUserLogout() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_LOGOUT)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(LogoutResponse.class);
@@ -68,7 +48,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<BlogResponse> getBlogApiCall() {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_BLOG)
+        return Rx2AndroidNetworking.get(ApiUrlConfig.ENDPOINT_BLOG)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(BlogResponse.class);
@@ -76,7 +56,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<OpenSourceResponse> getOpenSourceApiCall() {
-        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_OPEN_SOURCE)
+        return Rx2AndroidNetworking.get(ApiUrlConfig.ENDPOINT_OPEN_SOURCE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(OpenSourceResponse.class);

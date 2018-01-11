@@ -3,19 +3,32 @@ package com.appyhome.appyproduct.mvvm.data.model.db;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "users")
 public class User {
 
-    @PrimaryKey
-    public Long id;
+    @PrimaryKey @NonNull
+    public String username;
 
-    public String name;
+    @ColumnInfo(name = "phone_number")
+    public String phoneNumber;
 
-    @ColumnInfo(name = "created_at")
-    public String createdAt;
+    @ColumnInfo(name = "birthday")
+    public String birthday;
 
-    @ColumnInfo(name = "updated_at")
-    public String updatedAt;
+    @ColumnInfo(name = "email")
+    public String email;
 
+    @ColumnInfo(name = "address")
+    public String address;
+
+    @ColumnInfo(name = "shipping_address")
+    public String shippingAddress;
+
+    @ColumnInfo(name = "avatar_path")
+    public String avatarPath;
+
+    @ColumnInfo(name = "others")
+    public String others;
 }

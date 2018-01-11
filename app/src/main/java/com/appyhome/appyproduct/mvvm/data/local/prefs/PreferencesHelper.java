@@ -9,17 +9,17 @@ public interface PreferencesHelper {
 
     void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode);
 
-    Long getCurrentUserId();
+    String getCurrentUsername();
 
-    void setCurrentUserId(Long userId);
-
-    String getCurrentUserName();
-
-    void setCurrentUserName(String userName);
+    void setCurrentUsername(String userName);
 
     String getCurrentUserEmail();
 
     void setCurrentUserEmail(String email);
+
+    void setCurrentPhoneNumber(String phoneNumber);
+
+    String getCurrentPhoneNumber();
 
     String getCurrentUserProfilePicUrl();
 

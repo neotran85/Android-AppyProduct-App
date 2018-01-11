@@ -98,7 +98,7 @@ public class AppModule {
                                                            PreferencesHelper preferencesHelper) {
         return new ApiHeader.ProtectedApiHeader(
                 apiKey,
-                preferencesHelper.getCurrentUserId(),
+                preferencesHelper.getCurrentUsername(),
                 preferencesHelper.getAccessToken());
     }
 

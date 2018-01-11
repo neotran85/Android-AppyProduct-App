@@ -1,22 +1,22 @@
-package com.appyhome.appyproduct.mvvm.ui.login;
+package com.appyhome.appyproduct.mvvm.ui.register;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
-public class LoginViewModel extends BaseViewModel<LoginNavigator> {
+public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
-    public LoginViewModel(DataManager dataManager,
-                          SchedulerProvider schedulerProvider) {
+    public RegisterViewModel(DataManager dataManager,
+                             SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void onServerLoginClick() {
-        getNavigator().login();
+    public void onServerRegisterClick() {
+        getNavigator().register();
     }
 
-    public void login(String email, String password) {
+    public void register(String email, String password) {
         setIsLoading(true);
         getNavigator().openMainActivity();
 

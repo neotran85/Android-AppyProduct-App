@@ -16,11 +16,11 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     List<User> loadAll();
 
-    @Query("SELECT * FROM users WHERE id IN (:userIds)")
-    List<User> loadAllByIds(List<Integer> userIds);
+    @Query("SELECT * FROM users WHERE username IN (:userNames)")
+    List<User> loadAllByIds(List<String> userNames);
 
-    @Query("SELECT * FROM users WHERE name LIKE :name LIMIT 1")
-    User findByName(String name);
+    @Query("SELECT * FROM users WHERE username LIKE :name LIMIT 1")
+    User findByUsername(String name);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);

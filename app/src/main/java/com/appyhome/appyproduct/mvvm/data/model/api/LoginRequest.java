@@ -12,24 +12,24 @@ public class LoginRequest {
 
     public static class ServerLoginRequest {
         @Expose
-        @SerializedName("email")
-        private String email;
+        @SerializedName("phoneNumber")
+        private String phoneNumber;
 
         @Expose
         @SerializedName("password")
         private String password;
 
-        public ServerLoginRequest(String email, String password) {
-            this.email = email;
+        public ServerLoginRequest(String phoneNumber, String password) {
+            this.phoneNumber = phoneNumber;
             this.password = password;
         }
 
-        public String getEmail() {
-            return email;
+        public String getPhoneNumber() {
+            return phoneNumber;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
         }
 
         public String getPassword() {
@@ -47,119 +47,15 @@ public class LoginRequest {
 
             ServerLoginRequest that = (ServerLoginRequest) object;
 
-            if (email != null ? !email.equals(that.email) : that.email != null) return false;
+            if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
             return password != null ? password.equals(that.password) : that.password == null;
 
         }
 
         @Override
         public int hashCode() {
-            int result = email != null ? email.hashCode() : 0;
+            int result = phoneNumber != null ? phoneNumber.hashCode() : 0;
             result = 31 * result + (password != null ? password.hashCode() : 0);
-            return result;
-        }
-    }
-
-    public static class GoogleLoginRequest {
-        @Expose
-        @SerializedName("google_user_id")
-        private String googleUserId;
-
-        @Expose
-        @SerializedName("google_id_token")
-        private String idToken;
-
-        public GoogleLoginRequest(String googleUserId, String idToken) {
-            this.googleUserId = googleUserId;
-            this.idToken = idToken;
-        }
-
-        public String getGoogleUserId() {
-            return googleUserId;
-        }
-
-        public void setGoogleUserId(String googleUserId) {
-            this.googleUserId = googleUserId;
-        }
-
-        public String getIdToken() {
-            return idToken;
-        }
-
-        public void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            if (this == object) return true;
-            if (object == null || getClass() != object.getClass()) return false;
-
-            GoogleLoginRequest that = (GoogleLoginRequest) object;
-
-            if (googleUserId != null ? !googleUserId.equals(that.googleUserId)
-                    : that.googleUserId != null)
-                return false;
-            return idToken != null ? idToken.equals(that.idToken) : that.idToken == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = googleUserId != null ? googleUserId.hashCode() : 0;
-            result = 31 * result + (idToken != null ? idToken.hashCode() : 0);
-            return result;
-        }
-    }
-
-    public static class FacebookLoginRequest {
-        @Expose
-        @SerializedName("fb_user_id")
-        private String fbUserId;
-
-        @Expose
-        @SerializedName("fb_access_token")
-        private String fbAccessToken;
-
-        public FacebookLoginRequest(String fbUserId, String fbAccessToken) {
-            this.fbUserId = fbUserId;
-            this.fbAccessToken = fbAccessToken;
-        }
-
-        public String getFbUserId() {
-            return fbUserId;
-        }
-
-        public void setFbUserId(String fbUserId) {
-            this.fbUserId = fbUserId;
-        }
-
-        public String getFbAccessToken() {
-            return fbAccessToken;
-        }
-
-        public void setFbAccessToken(String fbAccessToken) {
-            this.fbAccessToken = fbAccessToken;
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            if (this == object) return true;
-            if (object == null || getClass() != object.getClass()) return false;
-
-            FacebookLoginRequest that = (FacebookLoginRequest) object;
-
-            if (fbUserId != null ? !fbUserId.equals(that.fbUserId) : that.fbUserId != null)
-                return false;
-            return fbAccessToken != null ? fbAccessToken.equals(that.fbAccessToken)
-                    : that.fbAccessToken == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = fbUserId != null ? fbUserId.hashCode() : 0;
-            result = 31 * result + (fbAccessToken != null ? fbAccessToken.hashCode() : 0);
             return result;
         }
     }
