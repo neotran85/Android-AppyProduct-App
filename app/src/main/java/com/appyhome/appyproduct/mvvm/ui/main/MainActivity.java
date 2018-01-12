@@ -19,11 +19,12 @@ import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
-import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragment;
+import com.appyhome.appyproduct.mvvm.utils.AppLogger;
 
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     ActivityMainBinding mActivityMainBinding;
     private MainViewModel mMainViewModel;
-    private TabLayout mTabLayout;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -52,14 +52,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppConstants.initiate(this);
         mActivityMainBinding = getViewDataBinding();
         mMainViewModel.setNavigator(this);
         setUp();
-        //showHomeFragment();
-        //showMyProfileFragment();
-        //showUserPageFragment();
-        //showMyWishListFragment();
-        showNotificationFragment();
+        showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
     }
 
     @Override
@@ -92,12 +89,43 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void setUp() {
-        AppConstants.initiate(this);
-        mTabLayout = mActivityMainBinding.tabs;
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
         mMainViewModel.updateAppVersion(version);
         mMainViewModel.onNavMenuCreated();
         subscribeToLiveData();
+        TabLayout tabs = mActivityMainBinding.tabs;
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                AppLogger.d("onTabSelected = " + tab.getPosition());
+                switch (tab.getPosition()) {
+                    case 0:
+                        showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+                        break;
+                    case 1:
+                        showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        showFragment(MyWishListFragment.newInstance(), MyWishListFragment.TAG);
+                        break;
+                    case 4:
+                        showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Do nothing
+            }
+        });
     }
 
     private void subscribeToLiveData() {
@@ -130,40 +158,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         return fragmentDispatchingAndroidInjector;
     }
 
-    private void showMyProfileFragment() {
+    private void showFragment(BaseFragment fragment, String tag) {
         this.getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .add(R.id.screenView, MyProfileFragment.newInstance(), MyProfileFragment.TAG)
-                .commit();
-    }
-    private void showHomeFragment() {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.screenView, HomeFragment.newInstance(), HomeFragment.TAG)
-                .commit();
-    }
-
-    private void showUserPageFragment() {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.screenView, UserPageFragment.newInstance(), UserPageFragment.TAG)
-                .commit();
-    }
-    private void showMyWishListFragment() {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.screenView, MyWishListFragment.newInstance(), MyWishListFragment.TAG)
-                .commit();
-    }
-    private void showNotificationFragment() {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.screenView, NotificationFragment.newInstance(), NotificationFragment.TAG)
+                .replace(R.id.screenView, fragment, tag)
                 .commit();
     }
 }

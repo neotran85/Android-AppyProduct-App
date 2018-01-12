@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="end|center"
+    android:paddingLeft="14dp"
     android:orientation="horizontal">
     <ImageView
         android:layout_width="wrap_content"

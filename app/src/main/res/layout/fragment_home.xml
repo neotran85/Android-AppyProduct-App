@@ -18,142 +18,104 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <android.support.v4.widget.DrawerLayout
-            android:id="@+id/drawerView"
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/clRootView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:clipChildren="false">
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/clRootView"
+            <LinearLayout
+                android:id="@+id/activityMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipChildren="false">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/activityMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <android.support.design.widget.AppBarLayout
-                        android:layout_width="match_parent"
-                        app:elevation="0dp"
-                        android:layout_height="wrap_content">
-
-                        <android.support.v7.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            style="@style/Toolbar"
-                            android:layout_marginLeft="-6dp">
-
-                            <include layout="@layout/view_toolbar" />
-                        </android.support.v7.widget.Toolbar>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/light_gray" />
-
-                    </android.support.design.widget.AppBarLayout>
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:id="@+id/contentView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:visibility="gone"
-                                android:id="@+id/headerView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/white"
-                                android:orientation="horizontal">
-
-                                <include layout="@layout/view_home_header" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/categoryView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/white"
-                                android:orientation="horizontal">
-
-                                <include layout="@layout/view_home_category" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/featureView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <include layout="@layout/view_home_features" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/dealView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <include layout="@layout/view_home_deal" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/adsView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <include layout="@layout/view_home_ads" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"></LinearLayout>
-                        </LinearLayout>
-                    </ScrollView>
-                </LinearLayout>
-
-            </android.support.design.widget.CoordinatorLayout>
-
-            <android.support.design.widget.NavigationView
-                android:id="@+id/navigationView"
-                style="@style/Widget.Design.NavigationView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_marginRight="@dimen/navigation_view_margin_minus"
-                android:background="@android:color/transparent"
-                android:fitsSystemWindows="true">
-
-                <LinearLayout
+                <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    app:elevation="0dp">
 
-                    <include layout="@layout/view_nav_header_main" />
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        style="@style/Toolbar"
+                        android:layout_marginLeft="-6dp">
+
+                        <include layout="@layout/view_toolbar" />
+                    </android.support.v7.widget.Toolbar>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/light_gray" />
+
+                </android.support.design.widget.AppBarLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
+                        android:id="@+id/contentView"
                         android:layout_width="match_parent"
-                        android:layout_height="500dp"
-                        android:layout_marginRight="@dimen/navigation_view_margin"
-                        android:background="@color/white"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <include layout="@layout/view_nav_menu" />
+                        <LinearLayout
+                            android:id="@+id/headerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <include layout="@layout/view_home_header" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/categoryView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_category" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/featureView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_features" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dealView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_deal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/adsView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_ads" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"></LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </android.support.design.widget.NavigationView>
+                </ScrollView>
+            </LinearLayout>
 
-        </android.support.v4.widget.DrawerLayout>
-
+        </android.support.design.widget.CoordinatorLayout>
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/address_looking_up"
             style="?android:attr/progressBarStyleLarge"

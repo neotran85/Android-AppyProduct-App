@@ -36,7 +36,6 @@
 
     <color name="toolbar_background">#fd8204</color>
     <color name="text_hint">#ced0d1</color>
-    <color name="tabbar_background">#f6f6f7</color>
 
     <color name="drawer_text">#808080</color>
     <color name="drawer_bg">#eff0f0</color>

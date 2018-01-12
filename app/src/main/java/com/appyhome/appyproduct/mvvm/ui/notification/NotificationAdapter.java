@@ -70,7 +70,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             final NotificationItemViewModel mItemViewModel = mNotificationList.get(position);
             mBinding.setViewModel(mItemViewModel);
-
             // Immediate Binding
             // When a variable or observable changes, the binding will be scheduled to change before
             // the next frame. There are times, however, when binding must be executed immediately.
