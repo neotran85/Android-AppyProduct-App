@@ -3,6 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.notification;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
@@ -18,6 +20,13 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
 
     @Inject
     NotificationViewModel mNotificationViewModel;
+
+    @Inject
+    NotificationAdapter mNotificationAdapter;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
+
     FragmentNotificationBinding mFragmentNotificationBinding;
 
     public static NotificationFragment newInstance() {
@@ -40,7 +49,11 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
 
     private void setUp() {
         mNotificationViewModel.setNavigator(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mFragmentNotificationBinding = getViewDataBinding();
+        mFragmentNotificationBinding.notificationRecyclerView.setLayoutManager(mLayoutManager);
+        mFragmentNotificationBinding.notificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mFragmentNotificationBinding.notificationRecyclerView.setAdapter(mNotificationAdapter);
     }
 
     @Override
