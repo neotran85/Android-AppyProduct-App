@@ -9,6 +9,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.Option;
 import com.appyhome.appyproduct.mvvm.data.model.db.Question;
 import com.appyhome.appyproduct.mvvm.data.model.db.User;
@@ -52,21 +54,19 @@ public class AppDataManager implements DataManager {
         mPreferencesHelper = preferencesHelper;
         mApiHelper = apiHelper;
     }
+    @Override
+    public String getCurrentUserId() {
+        return mPreferencesHelper.getCurrentUserId();
+    }
+    @Override
+    public void setCurrentUserId(String userId) {
+        mPreferencesHelper.setCurrentUserId(userId);
+        mApiHelper.getApiHeader().getProtectedApiHeader().setUserId(userId);
+    }
 
     @Override
     public ApiHeader getApiHeader() {
         return mApiHelper.getApiHeader();
-    }
-
-    @Override
-    public String getAccessToken() {
-        return mPreferencesHelper.getAccessToken();
-    }
-
-    @Override
-    public void setAccessToken(String accessToken) {
-        mPreferencesHelper.setAccessToken(accessToken);
-        mApiHelper.getApiHeader().getProtectedApiHeader().setAccessToken(accessToken);
     }
 
     @Override
@@ -83,6 +83,11 @@ public class AppDataManager implements DataManager {
     public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
                                                               request) {
         return mApiHelper.doUserLogin(request);
+    }
+
+    @Override
+    public Single<SignUpResponse> doUserSignUp(SignUpRequest request) {
+        return mApiHelper.doUserSignUp(request);
     }
 
     @Override
@@ -139,27 +144,26 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void updateApiHeader(String phoneNumber, String accessToken) {
+    public void updateApiHeader(String userId, String phoneNumber) {
         mApiHelper.getApiHeader().getProtectedApiHeader().setPhoneNumber(phoneNumber);
-        mApiHelper.getApiHeader().getProtectedApiHeader().setAccessToken(accessToken);
+        mApiHelper.getApiHeader().getProtectedApiHeader().setUserId(userId);
     }
 
     @Override
     public void updateUserInfo(
-            String accessToken,
+            String userId,
             LoggedInMode loggedInMode,
             String username,
             String phoneNumber,
             String email,
             String profilePicPath) {
 
-        setAccessToken(accessToken);
         setCurrentUserLoggedInMode(loggedInMode);
         setCurrentUsername(username);
         setCurrentUserEmail(email);
         setCurrentUserProfilePicUrl(profilePicPath);
-
-        updateApiHeader(phoneNumber, accessToken);
+        setCurrentUserId(userId);
+        updateApiHeader(phoneNumber, userId);
     }
 
     @Override

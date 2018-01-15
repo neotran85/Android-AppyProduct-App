@@ -97,9 +97,8 @@ public class AppModule {
     ApiHeader.ProtectedApiHeader provideProtectedApiHeader(@ApiInfo String apiKey,
                                                            PreferencesHelper preferencesHelper) {
         return new ApiHeader.ProtectedApiHeader(
-                apiKey,
-                preferencesHelper.getCurrentUsername(),
-                preferencesHelper.getAccessToken());
+                preferencesHelper.getCurrentUserId(),
+                preferencesHelper.getCurrentPhoneNumber());
     }
 
     @Provides

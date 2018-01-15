@@ -17,6 +17,10 @@ public interface PreferencesHelper {
 
     void setCurrentUserEmail(String email);
 
+    String getCurrentUserId();
+
+    void setCurrentUserId(String userId);
+
     void setCurrentPhoneNumber(String phoneNumber);
 
     String getCurrentPhoneNumber();
@@ -24,9 +28,4 @@ public interface PreferencesHelper {
     String getCurrentUserProfilePicUrl();
 
     void setCurrentUserProfilePicUrl(String profilePicUrl);
-
-    String getAccessToken();
-
-    void setAccessToken(String accessToken);
-
 }

@@ -5,6 +5,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import javax.inject.Inject;
@@ -37,6 +39,15 @@ public class AppApiHelper implements ApiHelper {
                 .build()
                 .getObjectSingle(LoginResponse.class);
     }
+    @Override
+    public Single<SignUpResponse> doUserSignUp(SignUpRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_SIGN_UP)
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(SignUpResponse.class);
+    }
+
 
     @Override
     public Single<LogoutResponse> doUserLogout() {

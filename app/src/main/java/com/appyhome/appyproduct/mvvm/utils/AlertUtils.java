@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -14,6 +15,7 @@ public class AlertUtils {
 
     private AlertUtils(Context context) {
         mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
         mContext = context;
     }
 

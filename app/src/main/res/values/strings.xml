@@ -43,6 +43,22 @@
     <string name="invalid_email_password">Please provide a valid email and password.</string>
     <string name="invalid_phone_password">Please provide a valid phone number and password.</string>
 
+    <!--Register Validation-->
+    <string name="register_error_missing_first_name">Your first name is missing. Please input it.</string>
+    <string name="register_error_missing_last_name">Your last name is missing. Please input it.</string>
+    <string name="register_error_missing_email_address">Your email address is missing. Please input it.</string>
+    <string name="register_error_missing_phone">Your phone number is missing. Please input it.</string>
+    <string name="register_error_missing_password">Your password is missing. Please input it.</string>
+    <string name="register_error_missing_retyped_password">Your retyped password is missing. Please input it.</string>
+    <string name="register_error_password_not_matched">Your passwords do not match. Please check again.</string>
+    <string name="register_error_invalid_password">Password must have at least 6 characters.</string>
+    <string name="register_error_invalid_email">Your email address is not valid.</string>
+    <string name="register_error_invalid_phone">Your phone number is not valid.</string>
+    <string name="register_error_internal_server">We are sorry. The server encountered an internal error. Please try again later.</string>
+    <string name="register_error_phone_duplicated">You phone number is used before. Please enter the new one.</string>
+    <string name="register_error_something">Something error. Please try again later.</string>
+    <string name="register_success_logged">Login is successful.</string>
+
     <!--about fragment-->
     <string name="project_info">This sample app implements MVVM architecture using Dagger2, GreenDao, RxJava, FastAndroidNetworking and PlaceholderView</string>
     <string name="link_mvvm_blog">1. https://blog.mindorks.com</string>

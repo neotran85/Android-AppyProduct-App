@@ -12,6 +12,7 @@ import javax.inject.Inject;
 public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_USER_LOGGED_IN_MODE = "PREF_KEY_USER_LOGGED_IN_MODE";
+    private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
     private static final String PREF_KEY_CURRENT_PHONE_NUMBER = "PREF_KEY_CURRENT_PHONE_NUMBER";
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
@@ -79,13 +80,12 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public String getAccessToken() {
-        return mPrefs.getString(PREF_KEY_ACCESS_TOKEN, null);
+    public String getCurrentUserId() {
+        return mPrefs.getString(PREF_KEY_CURRENT_USER_ID, null);
     }
 
     @Override
-    public void setAccessToken(String accessToken) {
-        mPrefs.edit().putString(PREF_KEY_ACCESS_TOKEN, accessToken).apply();
+    public void setCurrentUserId(String userId) {
+        mPrefs.edit().putString(PREF_KEY_CURRENT_USER_ID, userId).apply();
     }
-
 }
