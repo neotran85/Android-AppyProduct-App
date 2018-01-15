@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName;
 public class LoginRequest {
 
     private LoginRequest() {
-        // This class is not publicly instantiable
+
     }
 
     public static class ServerLoginRequest {
         @Expose
-        @SerializedName("phoneNumber")
+        @SerializedName("phone_number")
         private String phoneNumber;
 
         @Expose
@@ -23,7 +23,6 @@ public class LoginRequest {
             this.phoneNumber = phoneNumber;
             this.password = password;
         }
-
         public String getPhoneNumber() {
             return phoneNumber;
         }

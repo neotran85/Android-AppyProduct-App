@@ -1,9 +1,13 @@
 package com.appyhome.appyproduct.mvvm.ui.login;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
+import com.appyhome.appyproduct.mvvm.utils.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+
+import io.reactivex.functions.Consumer;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
@@ -16,13 +20,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         getNavigator().login();
     }
 
-    public void login(String email, String password) {
+    public void login(String phone, String password) {
         setIsLoading(true);
-        getNavigator().openMainActivity();
-
-        /*
         getCompositeDisposable().add(getDataManager()
-                .doUserLogin(new LoginRequest.ServerLoginRequest(email, password))
+                .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(new Consumer<LoginResponse>() {
@@ -30,9 +31,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     public void accept(LoginResponse response) throws Exception {
                         getDataManager().updateUserInfo(
                                 response.getAccessToken(),
-                                response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER,
+                                DataManager.LoggedInMode.LOGGED_IN,
                                 response.getUserName(),
+                                response.getPhoneNumber(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
                         setIsLoading(false);
@@ -45,19 +46,22 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         getNavigator().handleError(throwable);
                     }
                 }));
-                */
+
     }
 
-    public boolean isPhoneNumberAndPasswordValid(String phoneNumber, String password) {
+    public boolean validateData(String phoneNumber, String password) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
             return false;
         }
-        if (!CommonUtils.isPhoneNumberValid(phoneNumber)) {
-            return false;
-        }
+
         if (password == null || password.isEmpty()) {
             return false;
         }
+
+        if (!ValidationUtils.isPhoneNumberValid(phoneNumber)) {
+            return false;
+        }
+
         return true;
     }
 

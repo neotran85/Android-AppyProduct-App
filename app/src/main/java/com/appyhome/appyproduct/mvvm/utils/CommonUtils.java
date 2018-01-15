@@ -16,8 +16,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public final class CommonUtils {
@@ -42,20 +40,6 @@ public final class CommonUtils {
     @SuppressLint("all")
     public static String getDeviceId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-    }
-
-    public static boolean isPhoneNumberValid(String number) {
-        return number.matches("^6?01\\d{8}$");
-    }
-    public static boolean isEmailValid(String email) {
-        Pattern pattern;
-        Matcher matcher;
-        final String EMAIL_PATTERN =
-                "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(email);
-        return matcher.matches();
     }
 
     public static String loadJSONFromAsset(Context context, String jsonFileName)

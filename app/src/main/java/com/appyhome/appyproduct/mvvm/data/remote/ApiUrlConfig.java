@@ -6,7 +6,10 @@ import com.appyhome.appyproduct.mvvm.BuildConfig;
 public class ApiUrlConfig {
 
     public static final String USER_LOGIN = BuildConfig.BASE_URL
-            + "/588d15f5100000a8072d2945";
+            + "api/login";
+
+    public static final String USER_SIGN_UP = BuildConfig.BASE_URL
+            + "api/signup";
 
     public static final String USER_LOGOUT = BuildConfig.BASE_URL
             + "/588d161c100000a9072d2946";

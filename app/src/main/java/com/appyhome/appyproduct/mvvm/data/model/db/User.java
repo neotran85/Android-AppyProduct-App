@@ -11,6 +11,12 @@ public class User {
     @PrimaryKey @NonNull
     public String username;
 
+    @ColumnInfo(name = "first_name")
+    public String firstName;
+
+    @ColumnInfo(name = "last_name")
+    public String lastName;
+
     @ColumnInfo(name = "phone_number")
     public String phoneNumber;
 

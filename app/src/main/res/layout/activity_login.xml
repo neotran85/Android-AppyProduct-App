@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/logoImageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="52dp">
+                android:layout_marginTop="48dp">
 
                 <LinearLayout
                     android:layout_width="320dp"
@@ -55,8 +55,8 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
                             android:id="@+id/etPhoneNumber"
+                            fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_text_rounded_bg"
@@ -71,7 +71,7 @@
                             android:paddingTop="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="@color/hint_text"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -97,7 +97,7 @@
                             android:paddingTop="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="@color/hint_text"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -112,40 +112,42 @@
                         android:textSize="14sp" />
 
                     <Button
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:id="@+id/btnServerLogin"
                         style="?android:attr/borderlessButtonStyle"
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="28dp"
-                        android:background="@drawable/button_rounded_bg_orange"
+                        android:background="@drawable/button_rounded_bg_orange_click"
                         android:gravity="center"
                         android:onClick="@{() -> viewModel.onServerLoginClick()}"
                         android:shadowRadius="0"
                         android:text="@string/login"
-                        android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_marginTop="28dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:gravity="center"
                         android:orientation="horizontal">
+
                         <TextView
-                            android:textColor="#a8a9ab"
-                            android:text="Don't have an account?"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="Don't have an account?"
+                            android:textColor="#a8a9ab" />
+
                         <Button
                             android:id="@+id/btnSignUp"
                             android:layout_width="60dp"
                             android:layout_height="20dp"
-                            android:textColor="#00acee"
                             android:background="@null"
                             android:gravity="center"
                             android:text="Sign up"
+                            android:textColor="#00acee"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -153,13 +155,12 @@
 
         </RelativeLayout>
 
-        <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/address_looking_up"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}">
+            <include layout="@layout/view_preloading"></include>
+        </LinearLayout>
 
     </FrameLayout>
 

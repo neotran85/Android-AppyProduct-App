@@ -23,6 +23,10 @@ public class LoginResponse {
     private String userEmail;
 
     @Expose
+    @SerializedName("phone_number")
+    private String phoneNumber;
+
+    @Expose
     @SerializedName("server_profile_pic_url")
     private String serverProfilePicUrl;
 
@@ -72,6 +76,14 @@ public class LoginResponse {
 
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setUserEmail(String userEmail) {

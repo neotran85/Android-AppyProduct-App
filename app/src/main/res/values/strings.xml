@@ -90,4 +90,8 @@
 
     <string name="feature_more"><![CDATA[More >]]></string>
 
+    <string name="error_network_not_connected">Network error. Please check your internet again.</string>
+
+    <string name="message_loading">Please wait for loading...</string>
+
 </resources>

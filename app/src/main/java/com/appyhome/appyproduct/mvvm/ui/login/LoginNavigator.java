@@ -8,4 +8,6 @@ public interface LoginNavigator {
 
     void login();
 
+    void openSignUpActivity();
+
 }

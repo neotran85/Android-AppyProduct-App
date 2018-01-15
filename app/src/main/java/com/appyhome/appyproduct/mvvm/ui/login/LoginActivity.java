@@ -3,16 +3,20 @@ package com.appyhome.appyproduct.mvvm.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
+import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
+import com.appyhome.appyproduct.mvvm.utils.AlertUtils;
+import com.appyhome.appyproduct.mvvm.utils.NetworkUtils;
 
 import javax.inject.Inject;
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
+public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator, View.OnClickListener {
 
     @Inject
     LoginViewModel mLoginViewModel;
@@ -29,12 +33,22 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         super.onCreate(savedInstanceState);
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
-
+        mActivityLoginBinding.btnSignUp.setOnClickListener(this);
     }
-
+    @Override
+    public void onClick(View view) {
+        openSignUpActivity();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void openSignUpActivity() {
+        Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -51,16 +65,17 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void login() {
-        openMainActivity();
-        /*
+        if(!NetworkUtils.isNetworkConnected(this)) {
+           return;
+        }
         String phoneNumber = mActivityLoginBinding.etPhoneNumber.getText().toString();
         String password = mActivityLoginBinding.etPassword.getText().toString();
-        if (mLoginViewModel.isPhoneNumberAndPasswordValid(phoneNumber, password)) {
+        if (mLoginViewModel.validateData(phoneNumber, password)) {
             hideKeyboard();
             mLoginViewModel.login(phoneNumber, password);
         } else {
-            Toast.makeText(this, getString(R.string.invalid_phone_password), Toast.LENGTH_SHORT).show();
-        }*/
+            AlertUtils.getInstance(this).showQuickToast(getString(R.string.invalid_phone_password));
+        }
     }
 
     @Override
