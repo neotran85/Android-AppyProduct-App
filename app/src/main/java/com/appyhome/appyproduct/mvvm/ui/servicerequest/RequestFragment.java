@@ -14,7 +14,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
 
-public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator {
+public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator, View.OnClickListener {
 
     public static final String TAG = "NotificationFragment";
 
@@ -54,6 +54,8 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mFragmentRequestBinding.requestRecyclerView.setLayoutManager(mLayoutManager);
         mFragmentRequestBinding.requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mFragmentRequestBinding.requestRecyclerView.setAdapter(mRequestAdapter);
+        mFragmentRequestBinding.viewService.setOnClickListener(this);
+        mFragmentRequestBinding.viewOrder.setOnClickListener(this);
     }
 
     @Override
@@ -84,5 +86,19 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     @Override
     public void handleError(Throwable throwable) {
         // handle error
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.viewOrder:
+                mFragmentRequestBinding.viewOrderTracking.setVisibility(View.VISIBLE);
+                mFragmentRequestBinding.viewSection.setVisibility(View.GONE);
+                break;
+            case R.id.viewService:
+                mFragmentRequestBinding.viewServiceTracking.setVisibility(View.VISIBLE);
+                mFragmentRequestBinding.viewSection.setVisibility(View.GONE);
+                break;
+        }
     }
 }
