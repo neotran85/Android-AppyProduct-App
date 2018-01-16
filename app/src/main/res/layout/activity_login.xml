@@ -49,8 +49,17 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:paddingTop="32dp">
-
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Italic.ttf"
+                        android:textSize="12sp"
+                        android:id="@+id/txtError"
+                        android:textColor="@color/red_dark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="Please fill this form to login." />
                     <LinearLayout
+                        android:layout_marginTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -159,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}">
-            <include layout="@layout/view_preloading"></include>
+            <include android:visibility="gone" layout="@layout/view_preloading"></include>
         </LinearLayout>
 
     </FrameLayout>

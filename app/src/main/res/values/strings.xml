@@ -40,8 +40,13 @@
     <string name="forgot_password"><u>Forgot Password?</u></string>
 
     <!--Login Validation-->
-    <string name="invalid_email_password">Please provide a valid email and password.</string>
-    <string name="invalid_phone_password">Please provide a valid phone number and password.</string>
+    <string name="login_error_missing_phone">Please input your phone number.</string>
+    <string name="login_error_missing_password">Please input your password.</string>
+    <string name="login_error_invalid_password">Password must have at least 6 characters.</string>
+    <string name="login_error_invalid_phone">Your phone number is not valid.</string>
+    <string name="login_error_internal_server">We are sorry. The server encountered an internal error. Please try again later.</string>
+    <string name="login_error">Your phone number and password are not correct. Please check them again.</string>
+    <string name="login_success">Login success.</string>
 
     <!--Register Validation-->
     <string name="register_error_missing_first_name">Your first name is missing. Please input it.</string>
@@ -55,9 +60,9 @@
     <string name="register_error_invalid_email">Your email address is not valid.</string>
     <string name="register_error_invalid_phone">Your phone number is not valid.</string>
     <string name="register_error_internal_server">We are sorry. The server encountered an internal error. Please try again later.</string>
-    <string name="register_error_phone_duplicated">You phone number is used before. Please enter the new one.</string>
+    <string name="register_error_phone_duplicated">You phone number was used before. Please enter the new one.</string>
     <string name="register_error_something">Something error. Please try again later.</string>
-    <string name="register_success_logged">Login is successful.</string>
+    <string name="register_success_logged">Successfully registered and logged in</string>
 
     <!--about fragment-->
     <string name="project_info">This sample app implements MVVM architecture using Dagger2, GreenDao, RxJava, FastAndroidNetworking and PlaceholderView</string>

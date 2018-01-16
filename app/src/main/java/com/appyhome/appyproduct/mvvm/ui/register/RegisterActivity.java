@@ -3,16 +3,24 @@ package com.appyhome.appyproduct.mvvm.ui.register;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
-import com.appyhome.appyproduct.mvvm.utils.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.AlertUtils;
+import com.appyhome.appyproduct.mvvm.utils.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.ValidationUtils;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -22,6 +30,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     RegisterViewModel mRegisterViewModel;
 
     ActivityRegisterBinding mActivityRegisterBinding;
+
+    private ArrayList<TextInputEditText> mArrayTextInputs;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
@@ -34,11 +44,41 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         mActivityRegisterBinding = getViewDataBinding();
         mRegisterViewModel.setNavigator(this);
 
+        mArrayTextInputs = new ArrayList<>();
+        mArrayTextInputs.add(mActivityRegisterBinding.etFirstName);
+        mArrayTextInputs.add(mActivityRegisterBinding.etLastName);
+        mArrayTextInputs.add(mActivityRegisterBinding.etEmailAddress);
+        mArrayTextInputs.add(mActivityRegisterBinding.etNumberPhone);
+        mArrayTextInputs.add(mActivityRegisterBinding.etAccountPassword);
+        mArrayTextInputs.add(mActivityRegisterBinding.etRetypedPassword);
+        for(int i = 0; i <mArrayTextInputs.size(); i++) {
+            final TextInputEditText edt = mArrayTextInputs.get(i);
+            edt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    edt.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.white));
+                    edt.setHintTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.hint_text));
+                    showError("");
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mArrayTextInputs.clear();
+        mArrayTextInputs = null;
     }
 
     @Override
@@ -55,61 +95,68 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void register() {
+        View view = getCurrentFocus();
+        if (view != null)
+            view.clearFocus();
+        if(!NetworkUtils.isNetworkConnected(this)) {
+            return;
+        }
         String firstName = mActivityRegisterBinding.etFirstName.getText().toString();
         if (firstName == null || firstName.length() == 0) {
             showError(getString(R.string.register_error_missing_first_name));
-            mActivityRegisterBinding.etFirstName.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etFirstName);
             return;
         }
         String lastName = mActivityRegisterBinding.etLastName.getText().toString();
         if (lastName == null || lastName.length() == 0) {
             showError(getString(R.string.register_error_missing_last_name));
-            mActivityRegisterBinding.etLastName.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etLastName);
             return;
         }
         String email = mActivityRegisterBinding.etEmailAddress.getText().toString();
         if (email == null || email.length() == 0) {
             showError(getString(R.string.register_error_missing_email_address));
-            mActivityRegisterBinding.etEmailAddress.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etEmailAddress);
             return;
         } else if (!ValidationUtils.isEmailValid(email)) {
-            mActivityRegisterBinding.etEmailAddress.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etEmailAddress);
             showError(getString(R.string.register_error_invalid_email));
             return;
         }
 
         String phoneNumber = mActivityRegisterBinding.etNumberPhone.getText().toString();
         if (phoneNumber == null || phoneNumber.length() == 0) {
-            mActivityRegisterBinding.etNumberPhone.requestFocus();
             showError(getString(R.string.register_error_missing_phone));
+            showTextInputError(mActivityRegisterBinding.etNumberPhone);
             return;
         } else if (!ValidationUtils.isPhoneNumberValid(phoneNumber)) {
-            mActivityRegisterBinding.etNumberPhone.requestFocus();
             showError(getString(R.string.register_error_invalid_phone));
+            showTextInputError(mActivityRegisterBinding.etNumberPhone);
             return;
         }
 
         String password = mActivityRegisterBinding.etAccountPassword.getText().toString();
         if (password == null || password.length() == 0) {
             showError(getString(R.string.register_error_missing_password));
-            mActivityRegisterBinding.etAccountPassword.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etAccountPassword);
             return;
         } else if (!ValidationUtils.isPasswordValid(password)) {
             showError(getString(R.string.register_error_invalid_password));
-            mActivityRegisterBinding.etAccountPassword.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etAccountPassword);
             return;
         }
 
         String retypedPassword = mActivityRegisterBinding.etRetypedPassword.getText().toString();
         if (retypedPassword == null || retypedPassword.length() == 0) {
             showError(getString(R.string.register_error_missing_retyped_password));
-            mActivityRegisterBinding.etRetypedPassword.requestFocus();
+            showTextInputError(mActivityRegisterBinding.etRetypedPassword);
             return;
         }
 
         if (!password.equals(retypedPassword)) {
             mActivityRegisterBinding.etRetypedPassword.requestFocus();
             showError(getString(R.string.register_error_password_not_matched));
+            showTextInputError(mActivityRegisterBinding.etRetypedPassword);
             return;
         }
         hideKeyboard();
@@ -136,9 +183,15 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         return R.layout.activity_register;
     }
 
+    private void showTextInputError(TextInputEditText edt) {
+        edt.requestFocus();
+        if(edt.getText().length() > 0)
+            edt.setTextColor(ContextCompat.getColor(this, R.color.red_dark));
+        else
+            edt.setHintTextColor(ContextCompat.getColor(this, R.color.red_dark2));
+    }
     @Override
     public void handleSignUpResponse(SignUpResponse response) {
-        AppLogger.d(response.toString());
         if (response == null || response.getStatusCode() == null
                 || response.getStatusCode().length() <= 0
                 || response.getMessage() == null
@@ -151,6 +204,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         String message = response.getMessage();
         if (message.equals("phone_number_duplicate")) {
             showError(getString(R.string.register_error_phone_duplicated));
+            showTextInputError(mActivityRegisterBinding.etNumberPhone);
             return;
         }
         if (statusCode.equals("200")) {
@@ -158,8 +212,10 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
                 String[] result = message.split(":");
                 if (result != null && result.length == 2) {
                     String userId = result[1];
-                    showError(getString(R.string.register_success_logged));
-                    openMainActivity();
+                    // Do login after sign up succeeded
+                    String phoneNumber = mActivityRegisterBinding.etNumberPhone.getText().toString();
+                    String password = mActivityRegisterBinding.etAccountPassword.getText().toString();
+                    mRegisterViewModel.doUserLogin(phoneNumber, password);
                     return;
                 }
             }
@@ -168,4 +224,28 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         }
     }
 
+    @Override
+    public void handleLoginResponse(LoginResponse response) {
+        if (response == null || response.getStatusCode() == null
+                || response.getStatusCode().length() <= 0
+                || response.getMessage() == null
+                || response.getMessage().length() <= 0) {
+            showError(getString(R.string.login_error_internal_server));
+            return;
+        }
+        String statusCode = response.getStatusCode();
+        String message = response.getMessage();
+        if(statusCode.equals("200")) {
+            String[] result = message.split(" ");
+            if(result != null && result.length == 2) {
+                String token = result[1];
+                if(token != null && token.length() > 0) {
+                    AlertUtils.getInstance(this).showLongToast(getString(R.string.register_success_logged));
+                    openMainActivity();
+                }
+            }
+        } else {
+            showError(getString(R.string.login_error));
+        }
+    }
 }

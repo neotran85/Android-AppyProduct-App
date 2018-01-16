@@ -12,6 +12,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
@@ -40,9 +41,18 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     private void performDataBinding() {
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+
         this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
+    }
+
+    public View getMainView() {
+        View decorView = getWindow().getDecorView();
+        ViewGroup contentView = null;
+        if (decorView != null)
+            contentView = (ViewGroup) decorView.findViewById(android.R.id.content);
+        return contentView;
     }
 
     @Override
