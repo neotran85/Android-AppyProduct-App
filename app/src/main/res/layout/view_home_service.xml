@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="18dp"
+    android:paddingTop="12dp">
+    <TextView
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:paddingLeft="12dp"
+        android:textColor="#808083"
+        android:textSize="11sp"
+        android:text="Services"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:paddingLeft="38dp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/service_cleaning" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="80dp"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/service_aircon" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="160dp"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/service_electrical" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="240dp"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/service_plumbing" />
+    </RelativeLayout>
+</LinearLayout>
