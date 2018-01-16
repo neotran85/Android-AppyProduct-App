@@ -22,8 +22,8 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
-import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.utils.AppLogger;
 
 import java.util.List;
@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     case 2:
                         break;
                     case 3:
-                        showFragment(MyWishListFragment.newInstance(), MyWishListFragment.TAG);
+                        showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
                         break;
                     case 4:
                         showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);

@@ -26,6 +26,7 @@ public class TextInputDialog extends BaseDialog implements TextInputCallback {
     private TextInputUIHandler mUIHandler;
     private int mNumberOfFields;
     private String[] mHints;
+    private String mTitle;
 
     public static TextInputDialog newInstance() {
         TextInputDialog fragment = new TextInputDialog();
@@ -53,6 +54,7 @@ public class TextInputDialog extends BaseDialog implements TextInputCallback {
         mTextInputViewModel.setHint1(mHints[1]);
         mTextInputViewModel.setHint2(mHints[2]);
         mTextInputViewModel.setHint3(mHints[3]);
+        mTextInputViewModel.setErrorText(mTitle);
         return view;
     }
 
@@ -60,10 +62,11 @@ public class TextInputDialog extends BaseDialog implements TextInputCallback {
         return mUIHandler;
     }
 
-    public void show(FragmentManager fragmentManager, int numberOfFields, String[] hints) {
+    public void show(FragmentManager fragmentManager, String title, int numberOfFields, String[] hints) {
         super.show(fragmentManager, TAG);
         mNumberOfFields = numberOfFields;
         mHints = hints;
+        mTitle = title;
     }
     @Override
     public void onDestroyView() {

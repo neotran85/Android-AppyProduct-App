@@ -60,11 +60,11 @@
                 android:icon="@mipmap/tab_appyservice" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/wishlistTab"
-                android:text="Wishlist"
+                android:id="@+id/requestTab"
+                android:text="Requests"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:icon="@mipmap/tab_wishlist" />
+                android:icon="@mipmap/tab_request" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/myProfileTab"

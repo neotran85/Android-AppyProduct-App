@@ -15,6 +15,7 @@ public class TextInputViewModel extends BaseViewModel<TextInputCallback> {
     private final ObservableField<String> hint1 = new ObservableField<String>("");
     private final ObservableField<String> hint2 = new ObservableField<String>("");
     private final ObservableField<String> hint3 = new ObservableField<String>("");
+    private final ObservableField<String> errorText = new ObservableField<String>("");
 
     public TextInputViewModel(DataManager dataManager,
                               SchedulerProvider schedulerProvider) {
@@ -59,15 +60,19 @@ public class TextInputViewModel extends BaseViewModel<TextInputCallback> {
         }
         return View.VISIBLE;
     }
+
     public void setHint0(String hint) {
         hint0.set(hint);
     }
+
     public void setHint1(String hint) {
         hint1.set(hint);
     }
+
     public void setHint2(String hint) {
         hint2.set(hint);
     }
+
     public void setHint3(String hint) {
         hint3.set(hint);
     }
@@ -87,4 +92,13 @@ public class TextInputViewModel extends BaseViewModel<TextInputCallback> {
     public String getHint3() {
         return hint3.get();
     }
+
+    public String getErrorText() {
+        return errorText.get();
+    }
+
+    public void setErrorText(String text) {
+        errorText.set(text);
+    }
+
 }

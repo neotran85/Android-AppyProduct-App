@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragmentProvider;
@@ -38,7 +39,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {MainActivityModule.class,
             AboutFragmentProvider.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,
-            NotificationFragmentProvider.class})
+            NotificationFragmentProvider.class, RequestFragmentProvider.class})
     abstract MainActivity bindMainActivity();
 
     @ContributesAndroidInjector(modules = {FeedActivityModule.class,

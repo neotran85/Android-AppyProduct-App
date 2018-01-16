@@ -109,28 +109,35 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
                 showEmailTextInputDialog();
                 break;
             case R.id.etAddress:
+            case R.id.etCity:
+            case R.id.etState:
+            case R.id.etPostCode:
                 showAddressTextInputDialog();
                 break;
         }
     }
     private void showAddressTextInputDialog() {
         if (mTextInputDialog != null) {
-            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(), 4, mAddressHints);
+            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
+                    getResources().getString(R.string.my_profile_change_address),4, mAddressHints);
         }
     }
     private void showEmailTextInputDialog() {
         if (mTextInputDialog != null) {
-            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(), 1, mEmailHints);
+            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
+                    getResources().getString(R.string.my_profile_change_email),1, mEmailHints);
         }
     }
     private void showPhoneTextInputDialog() {
         if (mTextInputDialog != null) {
-            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(), 1, mPhoneHints);
+            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
+                    getResources().getString(R.string.my_profile_change_phone),1, mPhoneHints);
         }
     }
     private void showPasswordTextInputDialog() {
         if (mTextInputDialog != null) {
-            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(), 3, mPasswordHints);
+            mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
+                    getResources().getString(R.string.my_profile_change_password),3, mPasswordHints);
         }
     }
 

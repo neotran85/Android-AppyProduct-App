@@ -41,6 +41,10 @@
     <string name="my_profile_hint_address_city">Town / City</string>
     <string name="my_profile_hint_address_state">State</string>
     <string name="my_profile_hint_address_code">Post Code</string>
+    <string name="my_profile_change_password">Change password</string>
+    <string name="my_profile_change_phone">Change phone number</string>
+    <string name="my_profile_change_email">Change email address</string>
+    <string name="my_profile_change_address">Change your address</string>
 
     <!--Login-->
     <string name="signup">Sign Up</string>
@@ -98,6 +102,7 @@
 
     <!--button-->
     <string name="later">Later</string>
+    <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
 
     <!--feed-->
