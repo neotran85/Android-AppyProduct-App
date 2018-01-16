@@ -31,6 +31,17 @@
     <string name="some_error">Some Error Occurred!</string>
     <string name="connection_error">Internet connection lost!</string>
 
+    <!--My Profile-->
+    <string name="my_profile_hint_old_password">Type your old password</string>
+    <string name="my_profile_hint_new_password">Type your new password</string>
+    <string name="my_profile_hint_retyped_password">Retype your new password</string>
+    <string name="my_profile_hint_phone">Type a new phone number</string>
+    <string name="my_profile_hint_email">Type a new email address</string>
+    <string name="my_profile_hint_address">Type a new address</string>
+    <string name="my_profile_hint_address_city">Town / City</string>
+    <string name="my_profile_hint_address_state">State</string>
+    <string name="my_profile_hint_address_code">Post Code</string>
+
     <!--Login-->
     <string name="signup">Sign Up</string>
     <string name="login_dummy">Login Dummy</string>

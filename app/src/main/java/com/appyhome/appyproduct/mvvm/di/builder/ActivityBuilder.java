@@ -10,8 +10,8 @@ import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.main.rating.RateUsDialogProvider;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.myprofile.textinput.TextInputDialogProvider;
 import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
@@ -36,7 +36,7 @@ public abstract class ActivityBuilder {
     abstract RegisterActivity bindRegisterActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class,
-            AboutFragmentProvider.class, RateUsDialogProvider.class, HomeFragmentProvider.class,
+            AboutFragmentProvider.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,
             NotificationFragmentProvider.class})
     abstract MainActivity bindMainActivity();
