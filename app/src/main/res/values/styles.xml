@@ -11,12 +11,6 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24px</item>
     </style>
 
-    <style name="AppThemeFullScreen" parent="AppTheme">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="android:windowBackground">@color/white</item>
-    </style>
-
     <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">false</item>
         <item name="color">@color/white</item>
@@ -51,17 +45,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/button_rounded_bg_orange</item>
     </style>
-    <style name="ImageButton.Primary" parent="Button.ImageButton">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button_rounded_bg_orange</item>
-    </style>
+
     <style name="Button.Secondary" parent="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/button_secondary_bg</item>
-    </style>
-
-    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/gray</item>
     </style>
 
     <style name="Button.Action.Positive" parent="Button">
