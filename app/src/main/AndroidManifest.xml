@@ -25,9 +25,13 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.bookingservices.step1.BookingServicesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.bookingservices.step2.ServicesStep2Activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />

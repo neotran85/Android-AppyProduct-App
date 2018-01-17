@@ -11,8 +11,8 @@ import android.widget.ImageButton;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
-import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.BookingServicesActivity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 
 import javax.inject.Inject;
@@ -59,16 +59,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setTitle("");
         }
 
+        mFragmentHomeBinding.serviceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBookingServiceActivity();
+            }
+        });
 
-    }
-
-    private void showAboutFragment() {
-        this.getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, AboutFragment.newInstance(), AboutFragment.TAG)
-                .commit();
     }
 
     @Override
@@ -105,5 +102,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void handleError(Throwable throwable) {
         // handle error
+    }
+    @Override
+    public void openBookingServiceActivity() {
+        startActivity(BookingServicesActivity.getStartIntent(this.getContext()));
     }
 }

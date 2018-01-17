@@ -131,4 +131,7 @@
 
     <string name="message_loading">Please wait for loading...</string>
 
+    <string name="booking_service_read_tandt"><![CDATA[READ OUR BOOKING T&C]]></string>
+    <string name="booking_service_read_scheduling_FAQ"><![CDATA[READ OUR SCHEDULING FAQ]]></string>
+
 </resources>
