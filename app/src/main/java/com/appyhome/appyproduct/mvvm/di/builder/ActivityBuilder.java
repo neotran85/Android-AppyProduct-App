@@ -1,10 +1,12 @@
 package com.appyhome.appyproduct.mvvm.di.builder;
 
 import com.appyhome.appyproduct.mvvm.ui.about.AboutFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.BookingServicesActivity;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.BookingServicesActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2ActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
 import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogFragmentProvider;
@@ -37,11 +39,14 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = LoginActivityModule.class)
     abstract LoginActivity bindLoginActivity();
 
-    @ContributesAndroidInjector(modules = BookingServicesActivityModule.class)
-    abstract BookingServicesActivity bindBookingServicesActivity();
+    @ContributesAndroidInjector(modules = ServicesStep1ActivityModule.class)
+    abstract ServicesStep1Activity bindBookingServicesActivity();
 
     @ContributesAndroidInjector(modules = ServicesStep2ActivityModule.class)
     abstract ServicesStep2Activity bindServicesStep2Activity();
+
+    @ContributesAndroidInjector(modules = ServicesStep3ActivityModule.class)
+    abstract ServicesStep3Activity bindServicesStep3Activity();
 
     @ContributesAndroidInjector(modules = RegisterActivityModule.class)
     abstract RegisterActivity bindRegisterActivity();

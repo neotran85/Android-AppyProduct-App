@@ -21,6 +21,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
+            <include layout="@layout/view_service_header"></include>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -213,28 +214,32 @@
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
-                        <Button
+                        <Button android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:background="@color/white"
+                            android:background="@null"
                             android:gravity="center_vertical|left"
                             android:text="+ Add a timeslot" />
-
-                        <Button
+                        <View
+                            android:background="@color/semi_gray"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"></View>
+                        <Button android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/white"
+                            android:background="@null"
                             android:gravity="center_vertical|left"
                             android:text="+ Add an alternative timeslot"
                             android:textColor="@color/semi_gray" />
-
-                        <Button
+                        <View
+                            android:background="@color/semi_gray"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"></View>
+                        <Button android:textSize="14sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/white"
+                            android:background="@null"
                             android:gravity="center_vertical|left"
                             android:text="+ Add an alternative timeslot"
                             android:textColor="@color/semi_gray" />
@@ -250,14 +255,13 @@
                         android:padding="12dp">
 
                         <CheckBox
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
                             android:text="I am flexible 30 mins earlier or later."
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
                     </LinearLayout>
 
 
@@ -314,11 +318,13 @@
             </ScrollView>
 
             <Button
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
                 android:text="NEXT"
+                android:id="@+id/btnNext"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

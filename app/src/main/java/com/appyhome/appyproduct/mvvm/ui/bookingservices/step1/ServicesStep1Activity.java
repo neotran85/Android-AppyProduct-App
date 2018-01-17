@@ -13,15 +13,15 @@ import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activ
 
 import javax.inject.Inject;
 
-public class BookingServicesActivity extends BaseActivity<ActivityServicesBookingStep1Binding, BookingServicesViewModel> implements BookingServicesNavigator, View.OnClickListener {
+public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingStep1Binding, ServicesStep1ViewModel> implements ServicesStep1Navigator, View.OnClickListener {
 
     @Inject
-    BookingServicesViewModel mBookingServicesViewModel;
+    ServicesStep1ViewModel mServicesStep1ViewModel;
 
     ActivityServicesBookingStep1Binding mActivityServicesBookingStep1Binding;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, BookingServicesActivity.class);
+        Intent intent = new Intent(context, ServicesStep1Activity.class);
         return intent;
     }
 
@@ -29,7 +29,7 @@ public class BookingServicesActivity extends BaseActivity<ActivityServicesBookin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityServicesBookingStep1Binding = getViewDataBinding();
-        mBookingServicesViewModel.setNavigator(this);
+        mServicesStep1ViewModel.setNavigator(this);
         mActivityServicesBookingStep1Binding.btnNext.setOnClickListener(this);
     }
 
@@ -55,8 +55,8 @@ public class BookingServicesActivity extends BaseActivity<ActivityServicesBookin
 
 
     @Override
-    public BookingServicesViewModel getViewModel() {
-        return mBookingServicesViewModel;
+    public ServicesStep1ViewModel getViewModel() {
+        return mServicesStep1ViewModel;
     }
 
     @Override

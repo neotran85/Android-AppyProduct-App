@@ -27,10 +27,13 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.bookingservices.step1.BookingServicesActivity"
+            android:name=".ui.bookingservices.step1.ServicesStep1Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bookingservices.step2.ServicesStep2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.bookingservices.step3.ServicesStep3Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.register.RegisterActivity"

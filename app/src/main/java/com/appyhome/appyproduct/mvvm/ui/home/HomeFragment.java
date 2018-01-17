@@ -12,7 +12,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.BookingServicesActivity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 
 import javax.inject.Inject;
@@ -105,6 +105,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
     @Override
     public void openBookingServiceActivity() {
-        startActivity(BookingServicesActivity.getStartIntent(this.getContext()));
+        startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
     }
 }

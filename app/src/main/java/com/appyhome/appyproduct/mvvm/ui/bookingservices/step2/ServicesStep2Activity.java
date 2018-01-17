@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
 
 import javax.inject.Inject;
 
@@ -29,11 +30,16 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         super.onCreate(savedInstanceState);
         mActivityServicesBookingStep2Binding = getViewDataBinding();
         mServicesStep2ViewModel.setNavigator(this);
+        mActivityServicesBookingStep2Binding.btnNext.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.btnNext:
+                goToStep3();
+                break;
+        }
     }
 
     @Override
@@ -61,6 +67,11 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public int getLayoutId() {
         return R.layout.activity_services_booking_step2;
+    }
+
+    @Override
+    public void goToStep3() {
+        startActivity(ServicesStep3Activity.getStartIntent(this));
     }
 
 }

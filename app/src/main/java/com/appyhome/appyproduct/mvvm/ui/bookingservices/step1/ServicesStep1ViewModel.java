@@ -4,10 +4,10 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
-public class BookingServicesViewModel extends BaseViewModel<BookingServicesNavigator> {
+public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator> {
 
-    public BookingServicesViewModel(DataManager dataManager,
-                                    SchedulerProvider schedulerProvider) {
+    public ServicesStep1ViewModel(DataManager dataManager,
+                                  SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 }
