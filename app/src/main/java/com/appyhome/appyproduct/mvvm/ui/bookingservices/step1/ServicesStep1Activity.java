@@ -31,6 +31,8 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         mActivityServicesBookingStep1Binding = getViewDataBinding();
         mServicesStep1ViewModel.setNavigator(this);
         mActivityServicesBookingStep1Binding.btnNext.setOnClickListener(this);
+        setTitle("Home Cleaning");
+        activeBackButton();
     }
 
     @Override

@@ -12,6 +12,8 @@
     </data>
 
     <RelativeLayout
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -165,14 +167,14 @@
                             android:layout_marginTop="12dp"
                             android:background="@color/light_gray"></View>
 
-                        <include layout="@layout/view_item_booking_offer"></include>
+                        <include layout="@layout/view_item_service_offer"></include>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/light_gray"></View>
 
-                        <include layout="@layout/view_item_booking_offer"></include>
+                        <include layout="@layout/view_item_service_offer"></include>
                     </LinearLayout>
 
                     <RelativeLayout

@@ -31,6 +31,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         mActivityServicesBookingStep2Binding = getViewDataBinding();
         mServicesStep2ViewModel.setNavigator(this);
         mActivityServicesBookingStep2Binding.btnNext.setOnClickListener(this);
+        setTitle("Details");
+        activeBackButton();
     }
 
     @Override

@@ -14,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
 import com.appyhome.appyproduct.mvvm.utils.NetworkUtils;
@@ -53,6 +56,29 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         if (decorView != null)
             contentView = (ViewGroup) decorView.findViewById(android.R.id.content);
         return contentView;
+    }
+
+    public void activeBackButton() {
+        View mainView = getMainView();
+        if(mainView != null) {
+            ImageButton button = (ImageButton) mainView.findViewById(R.id.btBack);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
+    }
+
+    public void setTitle(String title) {
+        View mainView = getMainView();
+        if(mainView != null) {
+            TextView txt = mainView.findViewById(R.id.tvTitle);
+            if(txt != null) {
+                txt.setText(title);
+            }
+        }
     }
 
     @Override

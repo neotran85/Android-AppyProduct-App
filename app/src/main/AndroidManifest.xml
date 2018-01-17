@@ -36,6 +36,9 @@
             android:name=".ui.bookingservices.step3.ServicesStep3Activity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.bookingservices.step4.ServicesStep4Activity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
 
