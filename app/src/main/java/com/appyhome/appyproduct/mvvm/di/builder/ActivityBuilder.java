@@ -9,6 +9,8 @@ import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activ
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4ActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5Activity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
 import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogFragmentProvider;
@@ -52,6 +54,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = ServicesStep4ActivityModule.class)
     abstract ServicesStep4Activity bindServicesStep4Activity();
+
+    @ContributesAndroidInjector(modules = ServicesStep5ActivityModule.class)
+    abstract ServicesStep5Activity bindServicesStep5Activity();
 
     @ContributesAndroidInjector(modules = RegisterActivityModule.class)
     abstract RegisterActivity bindRegisterActivity();

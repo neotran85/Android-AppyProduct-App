@@ -38,14 +38,19 @@
         <activity
             android:name=".ui.bookingservices.step4.ServicesStep4Activity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.bookingservices.step5.ServicesStep5Activity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:windowSoftInputMode="adjustResize"
             android:name=".ui.main.MainActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity"

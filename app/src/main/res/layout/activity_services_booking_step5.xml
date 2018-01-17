@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5ViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <ImageView
+                        android:src="@mipmap/icon_congratulations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CONGRATULATIONS"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="260dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:text="We will contact you once the appointment is confirmed."
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="260dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:text="You will be contacted via"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="260dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:text="0146302577"
+                        android:textColor="@color/black"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="260dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:text="Receipt ID #453445"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                    <Button
+                        android:layout_marginTop="18dp"
+                        android:id="@+id/btnViewRequest"
+                        android:layout_width="240dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorAccent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="VIEW REQUESTS"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/btnNext"
+                        android:layout_width="240dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/semi_gray"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="BACK TO HOME SCREEN"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

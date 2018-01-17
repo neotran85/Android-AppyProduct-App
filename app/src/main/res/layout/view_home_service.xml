@@ -19,6 +19,7 @@
         android:layout_height="60dp">
 
         <ImageButton
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -26,6 +27,7 @@
             android:background="@mipmap/service_cleaning" />
 
         <ImageButton
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -34,6 +36,7 @@
             android:background="@mipmap/service_aircon" />
 
         <ImageButton
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -42,6 +45,7 @@
             android:background="@mipmap/service_electrical" />
 
         <ImageButton
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep4Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5Activity;
 
 import javax.inject.Inject;
 
@@ -29,13 +30,18 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         super.onCreate(savedInstanceState);
         mActivityServicesBookingStep4Binding = getViewDataBinding();
         mServicesStep4ViewModel.setNavigator(this);
+        mActivityServicesBookingStep4Binding.btnNext.setOnClickListener(this);
         setTitle("Payment");
         activeBackButton();
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.btnNext:
+                goToStep5();
+                break;
+        }
     }
 
     @Override
@@ -66,7 +72,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     @Override
-    public void goToStep4() {
-        startActivity(ServicesStep4Activity.getStartIntent(this));
+    public void goToStep5() {
+        startActivity(ServicesStep5Activity.getStartIntent(this));
     }
 }
