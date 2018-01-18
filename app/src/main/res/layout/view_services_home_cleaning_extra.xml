@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What type of properties do you have?"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <RadioGroup
+        android:id="@+id/rgTypeProperties"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/rbHighRise"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbHighRise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="High Rise"
+            android:textSize="13sp" />
+
+        <RadioButton
+            android:id="@+id/rbLanRise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Land Rise"
+            android:textSize="13sp" />
+    </RadioGroup>
+
+    <TextView
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="8dp"
+        android:text="Do you need us to provide cleaning supplies?"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <RadioGroup
+        android:id="@+id/rgSupplies"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/rbYes"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="Yes"
+            android:textSize="13sp" />
+
+        <RadioButton
+            android:id="@+id/rbNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:textSize="13sp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            fontPath="fonts/TitilliumWeb-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="8dp"
+            android:text="Number of rooms: "
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etRoomNumber"
+            fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/input_text_rounded_light_gray_bg"
+            android:cursorVisible="true"
+            android:gravity="center_vertical"
+            android:hint="Enter the number of rooms"
+            android:inputType="number"
+            android:maxLength="50"
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -19,10 +19,10 @@ public class TextInputUIHandler {
     public TextInputUIHandler(View mainView) {
         mViewMain = mainView;
         mArrayEts = new ArrayList<>();
+        mArrayEts.add((TextInputEditText) mViewMain.findViewById(R.id.etNewValue0));
         mArrayEts.add((TextInputEditText) mViewMain.findViewById(R.id.etNewValue1));
         mArrayEts.add((TextInputEditText) mViewMain.findViewById(R.id.etNewValue2));
         mArrayEts.add((TextInputEditText) mViewMain.findViewById(R.id.etNewValue3));
-        mArrayEts.add((TextInputEditText) mViewMain.findViewById(R.id.etNewValue4));
         txtErrorTitle = mViewMain.findViewById(R.id.txtError);
 
         Button btnOkay = mViewMain.findViewById(R.id.btnSubmit);

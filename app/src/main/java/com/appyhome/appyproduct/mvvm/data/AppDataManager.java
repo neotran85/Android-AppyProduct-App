@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.data;
 
 import android.content.Context;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
@@ -17,7 +18,6 @@ import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,10 +54,12 @@ public class AppDataManager implements DataManager {
         mPreferencesHelper = preferencesHelper;
         mApiHelper = apiHelper;
     }
+
     @Override
     public String getCurrentUserId() {
         return mPreferencesHelper.getCurrentUserId();
     }
+
     @Override
     public void setCurrentUserId(String userId) {
         mPreferencesHelper.setCurrentUserId(userId);
@@ -81,7 +83,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
-                                                              request) {
+                                                     request) {
         return mApiHelper.doUserLogin(request);
     }
 
@@ -114,6 +116,7 @@ public class AppDataManager implements DataManager {
     public void setCurrentUsername(String userName) {
         mPreferencesHelper.setCurrentUsername(userName);
     }
+
     @Override
     public String getCurrentPhoneNumber() {
         return mPreferencesHelper.getCurrentPhoneNumber();
@@ -123,6 +126,7 @@ public class AppDataManager implements DataManager {
     public void setCurrentPhoneNumber(String phoneNumber) {
         mPreferencesHelper.setCurrentPhoneNumber(phoneNumber);
     }
+
     @Override
     public String getCurrentUserEmail() {
         return mPreferencesHelper.getCurrentUserEmail();
@@ -305,5 +309,15 @@ public class AppDataManager implements DataManager {
                 })
                 .toList()
                 .toObservable();
+    }
+
+    @Override
+    public String getAccessToken() {
+        return mPreferencesHelper.getAccessToken();
+    }
+
+    @Override
+    public void setAccessToken(String token) {
+        mPreferencesHelper.setAccessToken(token);
     }
 }

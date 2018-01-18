@@ -1,5 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.bookingservices.step1;
 
+import android.arch.lifecycle.ViewModelProvider;
+
+import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -10,9 +13,12 @@ import dagger.Provides;
 public class ServicesStep1ActivityModule {
 
     @Provides
-    ServicesStep1ViewModel provideBookingServicesViewModel(DataManager dataManager,
+    ServicesStep1ViewModel provideServicesStep1ViewModel(DataManager dataManager,
                                                            SchedulerProvider schedulerProvider) {
         return new ServicesStep1ViewModel(dataManager, schedulerProvider);
     }
-
+    @Provides
+    ViewModelProvider.Factory servicesStep1ViewModelProvider(ServicesStep1ViewModel viewModel) {
+        return new ViewModelProviderFactory<>(viewModel);
+    }
 }

@@ -11,8 +11,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
@@ -51,7 +49,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         mArrayTextInputs.add(mActivityRegisterBinding.etNumberPhone);
         mArrayTextInputs.add(mActivityRegisterBinding.etAccountPassword);
         mArrayTextInputs.add(mActivityRegisterBinding.etRetypedPassword);
-        for(int i = 0; i <mArrayTextInputs.size(); i++) {
+        for (int i = 0; i < mArrayTextInputs.size(); i++) {
             final TextInputEditText edt = mArrayTextInputs.get(i);
             edt.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -98,7 +96,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         View view = getCurrentFocus();
         if (view != null)
             view.clearFocus();
-        if(!NetworkUtils.isNetworkConnected(this)) {
+        if (!NetworkUtils.isNetworkConnected(this)) {
             return;
         }
         String firstName = mActivityRegisterBinding.etFirstName.getText().toString();
@@ -185,67 +183,38 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     private void showTextInputError(TextInputEditText edt) {
         edt.requestFocus();
-        if(edt.getText().length() > 0)
+        if (edt.getText().length() > 0)
             edt.setTextColor(ContextCompat.getColor(this, R.color.red_dark));
         else
             edt.setHintTextColor(ContextCompat.getColor(this, R.color.red_dark2));
     }
-    @Override
-    public void handleSignUpResponse(SignUpResponse response) {
-        if (response == null || response.getStatusCode() == null
-                || response.getStatusCode().length() <= 0
-                || response.getMessage() == null
-                || response.getMessage().length() <= 0) {
-            showError(getString(R.string.register_error_internal_server));
-            return;
-        }
 
-        String statusCode = response.getStatusCode();
-        String message = response.getMessage();
-        if (message.equals("phone_number_duplicate")) {
-            showError(getString(R.string.register_error_phone_duplicated));
-            showTextInputError(mActivityRegisterBinding.etNumberPhone);
-            return;
-        }
-        if (statusCode.equals("200")) {
-            if (message.contains("user_created")) {
-                String[] result = message.split(":");
-                if (result != null && result.length == 2) {
-                    String userId = result[1];
-                    // Do login after sign up succeeded
-                    String phoneNumber = mActivityRegisterBinding.etNumberPhone.getText().toString();
-                    String password = mActivityRegisterBinding.etAccountPassword.getText().toString();
-                    mRegisterViewModel.doUserLogin(phoneNumber, password);
-                    return;
-                }
-            }
-            showError(getString(R.string.register_error_something));
-            return;
-        }
+    @Override
+    public void login() {
+        // Do login after sign up succeeded
+        String phoneNumber = mActivityRegisterBinding.etNumberPhone.getText().toString();
+        String password = mActivityRegisterBinding.etAccountPassword.getText().toString();
+        mRegisterViewModel.doUserLogin(phoneNumber, password);
     }
 
     @Override
-    public void handleLoginResponse(LoginResponse response) {
-        if (response == null || response.getStatusCode() == null
-                || response.getStatusCode().length() <= 0
-                || response.getMessage() == null
-                || response.getMessage().length() <= 0) {
-            showError(getString(R.string.login_error_internal_server));
-            return;
-        }
-        String statusCode = response.getStatusCode();
-        String message = response.getMessage();
-        if(statusCode.equals("200")) {
-            String[] result = message.split(" ");
-            if(result != null && result.length == 2) {
-                String token = result[1];
-                if(token != null && token.length() > 0) {
-                    AlertUtils.getInstance(this).showLongToast(getString(R.string.register_success_logged));
-                    openMainActivity();
-                }
-            }
-        } else {
-            showError(getString(R.string.login_error));
-        }
+    public void showSuccessLogin() {
+        AlertUtils.getInstance(this).showLongToast(getString(R.string.register_success_logged));
+    }
+
+    @Override
+    public void showErrorServer() {
+        showError(getString(R.string.login_error_internal_server));
+    }
+
+    @Override
+    public void showErrorOthers() {
+        showError(getString(R.string.register_error_something));
+    }
+
+    @Override
+    public void showErrorPhoneDuplicated() {
+        showError(getString(R.string.register_error_phone_duplicated));
+        showTextInputError(mActivityRegisterBinding.etNumberPhone);
     }
 }

@@ -44,6 +44,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.custom.detail.TextDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
 

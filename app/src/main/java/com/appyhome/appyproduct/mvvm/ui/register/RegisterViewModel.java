@@ -6,6 +6,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.functions.Consumer;
@@ -31,7 +32,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     @Override
                     public void accept(SignUpResponse response) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleSignUpResponse(response);
+                        handleSignUpResponse(response);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -51,7 +52,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 .subscribe(new Consumer<LoginResponse>() {
                     @Override
                     public void accept(LoginResponse response) throws Exception {
-                        getNavigator().handleLoginResponse(response);
+                        handleLoginResponse(response);
                         setIsLoading(false);
                     }
                 }, new Consumer<Throwable>() {
@@ -62,4 +63,60 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     }
                 }));
     }
+
+    private void handleLoginResponse(LoginResponse response) {
+        if (response == null || response.getStatusCode() == null
+                || response.getStatusCode().length() <= 0
+                || response.getMessage() == null
+                || response.getMessage().length() <= 0) {
+            getNavigator().showErrorServer();
+            return;
+        }
+        String statusCode = response.getStatusCode();
+        String message = response.getMessage();
+        if (statusCode.equals("200")) {
+            if (message != null && message.length() > 0) {
+                setAccessToken(message);
+                getNavigator().showSuccessLogin();
+                getNavigator().openMainActivity();
+            }
+        } else {
+            getNavigator().showErrorOthers();
+        }
+    }
+
+    public void setAccessToken(String token) {
+        getDataManager().setAccessToken(token);
+    }
+
+    private void handleSignUpResponse(SignUpResponse response) {
+        if (response == null || response.getStatusCode() == null
+                || response.getStatusCode().length() <= 0
+                || response.getMessage() == null
+                || response.getMessage().length() <= 0) {
+            getNavigator().showErrorServer();
+            return;
+        }
+
+        String statusCode = response.getStatusCode();
+        String message = response.getMessage();
+        if (message.equals("phone_number_duplicate")) {
+            getNavigator().showErrorPhoneDuplicated();
+            return;
+        }
+        if (statusCode.equals("200")) {
+            if (message.contains("user_created")) {
+                String[] result = message.split(":");
+                if (result != null && result.length == 2) {
+                    String userId = result[1];
+                    getDataManager().setCurrentUserId(userId);
+                    getNavigator().login();
+                    return;
+                }
+            }
+            getNavigator().showErrorOthers();
+            return;
+        }
+    }
+
 }

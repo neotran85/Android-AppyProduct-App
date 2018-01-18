@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
@@ -139,7 +138,18 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         else
             edt.setHintTextColor(ContextCompat.getColor(this, R.color.red_dark2));
     }
-
+    @Override
+    public void showSuccessLogin() {
+        AlertUtils.getInstance(this).showLongToast(getString(R.string.login_success));
+    }
+    @Override
+    public void showErrorServer() {
+        showError(getString(R.string.login_error_internal_server));
+    }
+    @Override
+    public void showErrorOthers() {
+        showError(getString(R.string.login_error));
+    }
     private void showError(String text) {
         mActivityLoginBinding.txtError.setText(text);
         mActivityLoginBinding.txtError.setVisibility(text.length() > 0 ? View.VISIBLE : View.INVISIBLE);
@@ -158,30 +168,5 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;
-    }
-
-    @Override
-    public void handleLoginResponse(LoginResponse response) {
-        if (response == null || response.getStatusCode() == null
-                || response.getStatusCode().length() <= 0
-                || response.getMessage() == null
-                || response.getMessage().length() <= 0) {
-            showError(getString(R.string.login_error_internal_server));
-            return;
-        }
-        String statusCode = response.getStatusCode();
-        String message = response.getMessage();
-        if (statusCode.equals("200")) {
-            String[] result = message.split(" ");
-            if (result != null && result.length == 2) {
-                String token = result[1];
-                if (token != null && token.length() > 0) {
-                    AlertUtils.getInstance(this).showLongToast(getString(R.string.login_success));
-                    openMainActivity();
-                }
-            }
-        } else {
-            showError(getString(R.string.login_error));
-        }
     }
 }

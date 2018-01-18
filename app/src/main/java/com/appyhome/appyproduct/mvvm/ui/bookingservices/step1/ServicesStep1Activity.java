@@ -3,22 +3,36 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices.step1;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep1Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
+import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingStep1Binding, ServicesStep1ViewModel> implements ServicesStep1Navigator, View.OnClickListener {
+public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingStep1Binding, ServicesStep1ViewModel> implements ServicesStep1Navigator, View.OnClickListener, AdapterView.OnItemClickListener {
 
     @Inject
     ServicesStep1ViewModel mServicesStep1ViewModel;
 
     ActivityServicesBookingStep1Binding mActivityServicesBookingStep1Binding;
+    private ArrayList<JSONObject> mServicesList;
+    private View mCurrentServiceView;
+    private int mSelectedServiceIndex;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep1Activity.class);
@@ -29,10 +43,49 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityServicesBookingStep1Binding = getViewDataBinding();
+        mActivityServicesBookingStep1Binding.setViewModel(mServicesStep1ViewModel);
         mServicesStep1ViewModel.setNavigator(this);
-        mActivityServicesBookingStep1Binding.btnNext.setOnClickListener(this);
-        setTitle("Home Cleaning");
+        setTitle(ServiceOrderInfo.getInstance().getServiceName());
         activeBackButton();
+        setUpData();
+        setUpListeners();
+    }
+
+    private void setUpData() {
+        mServicesStep1ViewModel.setTypeServices(ServiceOrderInfo.getInstance().getType());
+        mServicesList = ServiceOrderInfo.getInstance().getServices();
+        if (mServicesList != null && mServicesList.size() > 0) {
+            mActivityServicesBookingStep1Binding.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
+            mActivityServicesBookingStep1Binding.lvServices.setOnItemClickListener(this);
+        } else {
+            mActivityServicesBookingStep1Binding.lvServices.setVisibility(View.GONE);
+        }
+    }
+    private void setUpListeners() {
+        mActivityServicesBookingStep1Binding.btnNext.setOnClickListener(this);
+        mActivityServicesBookingStep1Binding.btSeeDetailService.setOnClickListener(this);
+        final EditText etNumberRooms = mActivityServicesBookingStep1Binding.llServiceHomeCleaning.findViewById(R.id.etRoomNumber);
+        if (etNumberRooms != null)
+            etNumberRooms.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (etNumberRooms != null) {
+                        String number = etNumberRooms.getText().toString();
+                        if (number != null && number.length() > 0)
+                            ServiceOrderInfo.getInstance().setRoomNumber(Integer.valueOf(number));
+                    }
+                }
+            });
     }
 
     @Override
@@ -40,6 +93,9 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         switch (view.getId()) {
             case R.id.btnNext:
                 goToStep2();
+                break;
+            case R.id.btSeeDetailService:
+                viewDetailService();
                 break;
         }
     }
@@ -76,4 +132,33 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         startActivity(ServicesStep2Activity.getStartIntent(this));
     }
 
+    @Override
+    public void viewDetailService() {
+        JSONObject data = ServiceOrderInfo.getInstance().getSelectedService();
+        if (data != null) {
+            try {
+                Intent intent = TextDetailActivity.getStartIntent(this);
+                intent.putExtra("title", data.get("name").toString());
+                intent.putExtra("detail", data.get("detail").toString());
+                startActivity(intent);
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (mCurrentServiceView != null) {
+            mCurrentServiceView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+        }
+        if (view != null) {
+            mCurrentServiceView = view;
+            mSelectedServiceIndex = position;
+            ServiceOrderInfo.getInstance().setSelectedService(mServicesList.get(position));
+            view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+        } else {
+            ServiceOrderInfo.getInstance().setSelectedService(null);
+        }
+    }
 }

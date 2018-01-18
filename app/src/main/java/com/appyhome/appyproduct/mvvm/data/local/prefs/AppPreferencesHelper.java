@@ -88,4 +88,14 @@ public class AppPreferencesHelper implements PreferencesHelper {
     public void setCurrentUserId(String userId) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_ID, userId).apply();
     }
+
+    @Override
+    public String getAccessToken() {
+        return mPrefs.getString(PREF_KEY_ACCESS_TOKEN, null);
+    }
+
+    @Override
+    public void setAccessToken(String token) {
+        mPrefs.edit().putString(PREF_KEY_ACCESS_TOKEN, token).apply();
+    }
 }

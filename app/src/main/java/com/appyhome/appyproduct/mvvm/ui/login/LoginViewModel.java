@@ -29,7 +29,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     @Override
                     public void accept(LoginResponse response) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleLoginResponse(response);
+                        handleLoginResponse(response);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -39,6 +39,27 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     }
                 }));
     }
-
-
+    private void handleLoginResponse(LoginResponse response) {
+        if (response == null || response.getStatusCode() == null
+                || response.getStatusCode().length() <= 0
+                || response.getMessage() == null
+                || response.getMessage().length() <= 0) {
+            getNavigator().showErrorServer();
+            return;
+        }
+        String statusCode = response.getStatusCode();
+        String message = response.getMessage();
+        if (statusCode.equals("200")) {
+            if(message != null && message.length() > 0) {
+                setAccessToken(message);
+                getNavigator().showSuccessLogin();
+                getNavigator().openMainActivity();
+            }
+        } else {
+            getNavigator().showErrorOthers();
+        }
+    }
+    public void setAccessToken(String token) {
+        getDataManager().setAccessToken(token);
+    }
 }

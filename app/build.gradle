@@ -91,6 +91,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle"
 
+    implementation 'com.wdullaer:materialdatetimepicker:3.5.0'
 }
 
 configurations.all {

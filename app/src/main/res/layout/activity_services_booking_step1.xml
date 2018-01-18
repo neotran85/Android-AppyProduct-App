@@ -12,10 +12,10 @@
     </data>
 
     <RelativeLayout
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
+
             <include layout="@layout/view_service_header"></include>
 
             <ScrollView
@@ -38,109 +39,27 @@
                     android:padding="12dp">
 
                     <LinearLayout
+                        android:id="@+id/llServiceHomeCleaning"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:padding="20dp">
+                        android:padding="20dp"
+                        android:visibility="@{viewModel.isHomeCleaningVisible()}">
 
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="What type of properties do you have?"
-                            android:textColor="@color/black"
-                            android:textSize="15sp" />
+                        <include layout="@layout/view_services_home_cleaning_extra"></include>
+                    </LinearLayout>
 
-                        <RadioGroup
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/llServiceAirConCleaning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="@{viewModel.isAirConCleaningVisible()}">
 
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:checked="true"
-                                android:text="High Rise"
-                                android:textSize="13sp" />
-
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Land Rise"
-                                android:textSize="13sp" />
-                        </RadioGroup>
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:lineSpacingExtra="8dp"
-                            android:text="Do you need us to provide cleaning supplies?"
-                            android:textColor="@color/black"
-                            android:textSize="15sp" />
-
-                        <RadioGroup
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:checked="true"
-                                android:text="Yes"
-                                android:textSize="13sp" />
-
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="No"
-                                android:textSize="13sp" />
-                        </RadioGroup>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:lineSpacingExtra="8dp"
-                                android:text="Number of rooms: "
-                                android:textColor="@color/black"
-                                android:textSize="15sp" />
-
-                            <android.support.design.widget.TextInputEditText
-                                android:layout_marginLeft="8dp"
-                                android:id="@+id/etFirstName"
-                                fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.5"
-                                android:background="@drawable/input_text_rounded_light_gray_bg"
-                                android:cursorVisible="true"
-                                android:gravity="center_vertical"
-                                android:hint="Enter the number of rooms"
-                                android:inputType="number"
-                                android:maxLength="50"
-                                android:paddingBottom="10dp"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp"
-                                android:paddingTop="12dp"
-                                android:textColor="@color/black"
-                                android:textColorHint="@color/hint_text"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
+                        <include layout="@layout/view_services_air_cond_cleaning_extra"></include>
                     </LinearLayout>
 
                     <LinearLayout
@@ -148,36 +67,35 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="12dp"
                             android:lineSpacingExtra="8dp"
                             android:text="Booking Offer(s)"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
-                        <View
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Touch to choose the service as below"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="12sp" />
+
+                        <com.appyhome.appyproduct.mvvm.ui.custom.NonScrollListView
+                            android:id="@+id/lvServices"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="12dp"
-                            android:background="@color/light_gray"></View>
-
-                        <include layout="@layout/view_item_service_offer"></include>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/light_gray"></View>
-
-                        <include layout="@layout/view_item_service_offer"></include>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"></com.appyhome.appyproduct.mvvm.ui.custom.NonScrollListView>
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/btSeeDetailService"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -197,10 +115,10 @@
                             android:textSize="12sp" />
 
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
                             android:src="@mipmap/icon_next" />
                     </RelativeLayout>
 
@@ -224,10 +142,10 @@
                             android:textSize="16sp" />
 
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
                             android:src="@mipmap/icon_next" />
                     </RelativeLayout>
 
@@ -251,25 +169,25 @@
                             android:textSize="16sp" />
 
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
                             android:src="@mipmap/icon_next" />s
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>
 
             <Button
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:textSize="14sp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="NEXT"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
 </layout>
