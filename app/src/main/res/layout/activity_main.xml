@@ -29,49 +29,49 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
-            app:tabTextAppearance="@style/AppyTabLayoutTextAppearance"
             android:layout_width="match_parent"
             android:layout_height="62dp"
+            android:background="@mipmap/tab_bg"
             android:elevation="10dp"
             android:paddingTop="4dp"
-            android:background="@mipmap/tab_bg"
             app:tabGravity="fill"
-            app:tabMode="fixed">
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/AppyTabLayoutTextAppearance">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/homeTab"
-                android:text="Home"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:icon="@mipmap/tab_home" />
+                android:icon="@mipmap/tab_home"
+                android:text="Home" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/notificationTab"
-                android:text="Notification"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:icon="@mipmap/tab_notification" />
+                android:icon="@mipmap/tab_notification"
+                android:text="Notification" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/appyServiceTab"
-                android:text="Appy Service"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:icon="@mipmap/tab_appyservice" />
+                android:icon="@mipmap/tab_appyservice"
+                android:text="Appy Service" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/requestTab"
-                android:text="Requests"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:icon="@mipmap/tab_request" />
+                android:icon="@mipmap/tab_request"
+                android:text="Requests" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/myProfileTab"
-                android:text="My Profile"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:icon="@mipmap/tab_profile" />
+                android:icon="@mipmap/tab_profile"
+                android:text="My Profile" />
         </android.support.design.widget.TabLayout>
 
     </LinearLayout>

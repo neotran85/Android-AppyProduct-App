@@ -68,6 +68,7 @@ public class TextInputDialog extends BaseDialog implements TextInputCallback {
         mHints = hints;
         mTitle = title;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

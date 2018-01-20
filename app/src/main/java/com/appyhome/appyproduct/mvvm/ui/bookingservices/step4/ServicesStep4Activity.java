@@ -18,7 +18,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     @Inject
     ServicesStep4ViewModel mServicesStep4ViewModel;
 
-    ActivityServicesBookingStep4Binding mActivityServicesBookingStep4Binding;
+    ActivityServicesBookingStep4Binding mBinder;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep4Activity.class);
@@ -28,9 +28,10 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityServicesBookingStep4Binding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mServicesStep4ViewModel);
         mServicesStep4ViewModel.setNavigator(this);
-        mActivityServicesBookingStep4Binding.btnNext.setOnClickListener(this);
+        mBinder.btnNext.setOnClickListener(this);
         setTitle("Payment");
         activeBackButton();
     }

@@ -11,7 +11,7 @@ public class TextInputDialogModule {
 
     @Provides
     TextInputViewModel provideTextInputViewModel(DataManager dataManager,
-                                              SchedulerProvider schedulerProvider) {
+                                                 SchedulerProvider schedulerProvider) {
         return new TextInputViewModel(dataManager, schedulerProvider);
     }
 

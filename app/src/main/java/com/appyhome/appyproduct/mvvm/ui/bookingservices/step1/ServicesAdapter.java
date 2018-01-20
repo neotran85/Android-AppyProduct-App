@@ -14,9 +14,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ServicesAdapter extends BaseAdapter {
-    private ArrayList<JSONObject> mListItem;
-
     Context mContext;
+    private ArrayList<JSONObject> mListItem;
 
     public ServicesAdapter(Context mContext, ArrayList<JSONObject> listItem) {
         this.mContext = mContext;

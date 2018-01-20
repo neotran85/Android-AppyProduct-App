@@ -11,7 +11,7 @@ public class TextDetailActivityModule {
 
     @Provides
     TextDetailViewModel provideTextDetailViewModel(DataManager dataManager,
-                                                      SchedulerProvider schedulerProvider) {
+                                                   SchedulerProvider schedulerProvider) {
         return new TextDetailViewModel(dataManager, schedulerProvider);
     }
 

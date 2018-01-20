@@ -1,13 +1,10 @@
 package com.appyhome.appyproduct.mvvm.data.local.prefs;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 
 
 public interface PreferencesHelper {
-
-    int getCurrentUserLoggedInMode();
-
-    void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode);
 
     String getCurrentUsername();
 
@@ -21,9 +18,9 @@ public interface PreferencesHelper {
 
     void setCurrentUserId(String userId);
 
-    void setCurrentPhoneNumber(String phoneNumber);
-
     String getCurrentPhoneNumber();
+
+    void setCurrentPhoneNumber(String phoneNumber);
 
     String getCurrentUserProfilePicUrl();
 
@@ -32,4 +29,8 @@ public interface PreferencesHelper {
     String getAccessToken();
 
     void setAccessToken(String token);
+
+    void setServiceAddress(ServiceAddress serviceAddress);
+
+    ServiceAddress getServiceAddress();
 }

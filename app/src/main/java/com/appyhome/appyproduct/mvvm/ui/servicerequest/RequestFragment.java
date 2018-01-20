@@ -27,7 +27,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     @Inject
     LinearLayoutManager mLayoutManager;
 
-    FragmentRequestBinding mFragmentRequestBinding;
+    FragmentRequestBinding mBinder;
 
     public static RequestFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,12 +50,13 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     private void setUp() {
         mRequestViewModel.setNavigator(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mFragmentRequestBinding = getViewDataBinding();
-        mFragmentRequestBinding.requestRecyclerView.setLayoutManager(mLayoutManager);
-        mFragmentRequestBinding.requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mFragmentRequestBinding.requestRecyclerView.setAdapter(mRequestAdapter);
-        mFragmentRequestBinding.viewService.setOnClickListener(this);
-        mFragmentRequestBinding.viewOrder.setOnClickListener(this);
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mRequestViewModel);
+        mBinder.requestRecyclerView.setLayoutManager(mLayoutManager);
+        mBinder.requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mBinder.requestRecyclerView.setAdapter(mRequestAdapter);
+        mBinder.viewService.setOnClickListener(this);
+        mBinder.viewOrder.setOnClickListener(this);
     }
 
     @Override
@@ -92,12 +93,12 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.viewOrder:
-                mFragmentRequestBinding.viewOrderTracking.setVisibility(View.VISIBLE);
-                mFragmentRequestBinding.viewSection.setVisibility(View.GONE);
+                mBinder.viewOrderTracking.setVisibility(View.VISIBLE);
+                mBinder.viewSection.setVisibility(View.GONE);
                 break;
             case R.id.viewService:
-                mFragmentRequestBinding.viewServiceTracking.setVisibility(View.VISIBLE);
-                mFragmentRequestBinding.viewSection.setVisibility(View.GONE);
+                mBinder.viewServiceTracking.setVisibility(View.VISIBLE);
+                mBinder.viewSection.setVisibility(View.GONE);
                 break;
         }
     }

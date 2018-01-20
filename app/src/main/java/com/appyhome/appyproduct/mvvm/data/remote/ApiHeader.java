@@ -51,33 +51,20 @@ public class ApiHeader {
     public static final class ProtectedApiHeader {
 
         @Expose
-        @SerializedName("user_id")
-        private String mUserId;
+        @SerializedName("Authorization")
+        private String mAuthorization;
 
-        @Expose
-        @SerializedName("phone_number")
-        private String mPhoneNumber;
-
-
-        public ProtectedApiHeader(String userId, String phoneNumber) {
-            this.mPhoneNumber = phoneNumber;
-            this.mUserId = userId;
+        @Inject
+        public ProtectedApiHeader(@ApiInfo String authentication) {
+            mAuthorization = authentication;
         }
 
-        public String getPhoneNumber() {
-            return mPhoneNumber;
+        public String getAuthorization() {
+            return mAuthorization;
         }
 
-        public void setPhoneNumber(String phoneNumber) {
-            this.mPhoneNumber = phoneNumber;
-        }
-
-        public String getUserId() {
-            return mUserId;
-        }
-
-        public void setUserId(String userId) {
-            this.mUserId = userId;
+        public void setAuthorization(String authorization) {
+            this.mAuthorization = authorization;
         }
     }
 }

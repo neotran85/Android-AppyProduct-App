@@ -39,6 +39,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     }
                 }));
     }
+
     private void handleLoginResponse(LoginResponse response) {
         if (response == null || response.getStatusCode() == null
                 || response.getStatusCode().length() <= 0
@@ -50,8 +51,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         String statusCode = response.getStatusCode();
         String message = response.getMessage();
         if (statusCode.equals("200")) {
-            if(message != null && message.length() > 0) {
+            if (message != null && message.length() > 0) {
                 setAccessToken(message);
+                getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
                 getNavigator().openMainActivity();
             }
@@ -59,6 +61,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
             getNavigator().showErrorOthers();
         }
     }
+
     public void setAccessToken(String token) {
         getDataManager().setAccessToken(token);
     }

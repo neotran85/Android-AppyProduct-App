@@ -18,7 +18,7 @@ public class RequestFragmentModule {
 
     @Provides
     RequestViewModel requestViewModel(DataManager dataManager,
-                                           SchedulerProvider schedulerProvider) {
+                                      SchedulerProvider schedulerProvider) {
         return new RequestViewModel(dataManager, schedulerProvider);
     }
 

@@ -23,6 +23,7 @@ public class LoginRequest {
             this.phoneNumber = phoneNumber;
             this.password = password;
         }
+
         public String getPhoneNumber() {
             return phoneNumber;
         }
@@ -46,7 +47,8 @@ public class LoginRequest {
 
             ServerLoginRequest that = (ServerLoginRequest) object;
 
-            if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
+            if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null)
+                return false;
             return password != null ? password.equals(that.password) : that.password == null;
 
         }

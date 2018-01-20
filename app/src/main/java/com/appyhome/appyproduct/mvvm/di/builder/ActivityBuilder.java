@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.di.builder;
 
-import com.appyhome.appyproduct.mvvm.ui.about.AboutFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
@@ -66,8 +65,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = RegisterActivityModule.class)
     abstract RegisterActivity bindRegisterActivity();
 
-    @ContributesAndroidInjector(modules = {MainActivityModule.class,
-            AboutFragmentProvider.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
+    @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,
             NotificationFragmentProvider.class, RequestFragmentProvider.class})
     abstract MainActivity bindMainActivity();

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.AppDataManager;
@@ -19,7 +20,6 @@ import com.appyhome.appyproduct.mvvm.data.remote.AppApiHelper;
 import com.appyhome.appyproduct.mvvm.di.ApiInfo;
 import com.appyhome.appyproduct.mvvm.di.DatabaseInfo;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.utils.rx.AppSchedulerProvider;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -96,9 +96,7 @@ public class AppModule {
     @Singleton
     ApiHeader.ProtectedApiHeader provideProtectedApiHeader(@ApiInfo String apiKey,
                                                            PreferencesHelper preferencesHelper) {
-        return new ApiHeader.ProtectedApiHeader(
-                preferencesHelper.getCurrentUserId(),
-                preferencesHelper.getCurrentPhoneNumber());
+        return new ApiHeader.ProtectedApiHeader(preferencesHelper.getAccessToken());
     }
 
     @Provides

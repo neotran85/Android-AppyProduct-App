@@ -56,7 +56,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return 0;
     }
 
-    public class NotificationItemViewHolder extends BaseViewHolder{
+    public class NotificationItemViewHolder extends BaseViewHolder {
 
         private ViewItemNotificationBinding mBinding;
 

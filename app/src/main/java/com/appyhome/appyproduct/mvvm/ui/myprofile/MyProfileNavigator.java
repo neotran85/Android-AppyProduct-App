@@ -8,5 +8,6 @@ public interface MyProfileNavigator {
     void goBack();
 
     void handleError(Throwable throwable);
+
     void onFieldClick(View view);
 }

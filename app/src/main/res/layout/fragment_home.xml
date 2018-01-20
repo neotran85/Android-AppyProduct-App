@@ -70,19 +70,23 @@
 
                             <include layout="@layout/view_home_header" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/serviceView"
-                            android:clickable="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
+                            android:clickable="true"
                             android:orientation="vertical">
+
                             <include layout="@layout/view_home_service" />
+
                             <View
-                                android:background="@color/light_gray"
                                 android:layout_width="match_parent"
-                                android:layout_height="4dp"></View>
+                                android:layout_height="4dp"
+                                android:background="@color/light_gray"></View>
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/categoryView"
                             android:layout_width="match_parent"
@@ -103,11 +107,11 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:visibility="gone"
                             android:id="@+id/dealView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <include layout="@layout/view_home_deal" />
                         </LinearLayout>
@@ -129,6 +133,7 @@
             </LinearLayout>
 
         </android.support.design.widget.CoordinatorLayout>
+
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/address_looking_up"
             style="?android:attr/progressBarStyleLarge"

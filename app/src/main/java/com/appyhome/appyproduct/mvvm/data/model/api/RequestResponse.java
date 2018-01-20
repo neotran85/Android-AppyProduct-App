@@ -79,6 +79,12 @@ public class RequestResponse {
         @SerializedName("published_at")
         private String date;
 
+        public Request() {
+            this.title = "Celebrate our Grand Opening";
+            this.description = "Get your premiere concert ticket now worth RM80";
+            this.date = "28 Feb 2018";
+        }
+
         public String getTitle() {
             return title;
         }
@@ -118,11 +124,6 @@ public class RequestResponse {
             result = 31 * result + description.hashCode();
             result = 31 * result + date.hashCode();
             return result;
-        }
-        public Request() {
-            this.title = "Celebrate our Grand Opening";
-            this.description = "Get your premiere concert ticket now worth RM80";
-            this.date = "28 Feb 2018";
         }
     }
 }

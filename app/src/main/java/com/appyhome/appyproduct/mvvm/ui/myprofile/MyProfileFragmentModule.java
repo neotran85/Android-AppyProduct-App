@@ -14,7 +14,7 @@ public class MyProfileFragmentModule {
 
     @Provides
     MyProfileViewModel provideMyProfileViewModel(DataManager dataManager,
-                                            SchedulerProvider schedulerProvider) {
+                                                 SchedulerProvider schedulerProvider) {
         return new MyProfileViewModel(dataManager, schedulerProvider);
     }
 

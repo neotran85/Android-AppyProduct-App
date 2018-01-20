@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.R;
 
@@ -32,4 +33,10 @@ public final class ViewUtils {
         }
     }
 
+    public static String getStringByTag(View view) {
+        if (view != null && view.getTag() != null) {
+            return view.getTag().toString();
+        }
+        return "";
+    }
 }

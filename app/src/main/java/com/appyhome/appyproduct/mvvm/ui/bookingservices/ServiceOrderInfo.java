@@ -9,9 +9,8 @@ import java.util.ArrayList;
 public class ServiceOrderInfo {
     public static final int SERVICE_HOME_CLEANING = 0;
     public static final int SERVICE_AIR_CON_CLEANING = 1;
-
-    private int mType = SERVICE_HOME_CLEANING;
     private static ServiceOrderInfo mServiceOrderInfo;
+    private int mType = SERVICE_HOME_CLEANING;
     private JSONObject mServiceInfo;
     private ArrayList<JSONObject> mArrayHomeCleaningServices;
     private ArrayList<JSONObject> mArrayAirConServices;
@@ -20,10 +19,15 @@ public class ServiceOrderInfo {
     private boolean mIsFlexible = false;
     private JSONObject mSelectedService;
     private String mAdditionalInfo = "";
+    private String mAddress = "";
 
     private String mTimeSlot1 = "";
     private String mTimeSlot2 = "";
     private String mTimeSlot3 = "";
+
+    private String mExtraServices = "";
+
+    private String mAppointmentId;
 
     private ServiceOrderInfo() {
 
@@ -66,12 +70,12 @@ public class ServiceOrderInfo {
         mSelectedService = object;
     }
 
-    public void setRoomNumber(int number) {
-        mRoomNumber = number;
-    }
-
     public int getRoomNumber() {
         return mRoomNumber;
+    }
+
+    public void setRoomNumber(int number) {
+        mRoomNumber = number;
     }
 
     public int getType() {
@@ -192,5 +196,60 @@ public class ServiceOrderInfo {
 
     public void setTimeSlot3(String mTimeSlot3) {
         this.mTimeSlot3 = mTimeSlot3;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String mAddress) {
+        this.mAddress = mAddress;
+    }
+
+    public String getExtraServices() {
+        return mExtraServices;
+    }
+
+    public void setExtraServices(String mExtraServices) {
+        this.mExtraServices = mExtraServices;
+    }
+
+    public String getAppointmentId() {
+        return mAppointmentId;
+    }
+
+    public void setAppointmentId(String mAppointmentId) {
+        this.mAppointmentId = mAppointmentId;
+    }
+
+    public JSONObject getJSONRequestData() {
+        JSONObject request = new JSONObject();
+        try {
+            request.put("id_number", getAppointmentId());
+            request.put("address", getAddress());
+
+            JSONObject datetime = new JSONObject();
+            datetime.put("datetime1", getTimeSlot1());
+            datetime.put("datetime2", getTimeSlot2());
+            datetime.put("datetime3", getTimeSlot3());
+            request.put("datetime", datetime);
+
+            JSONObject services = new JSONObject();
+            services.put("service1", getSelectedService().getString("name"));
+            services.put("service2", "");
+            services.put("service3", "");
+            request.put("services", services);
+
+            JSONObject additional = new JSONObject();
+            additional.put("extra", getExtraServices().toString());
+            additional.put("is_flexible", mIsFlexible + "");
+            if (mType == SERVICE_HOME_CLEANING) {
+                additional.put("room", getRoomNumber() + "");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return request;
     }
 }

@@ -22,13 +22,13 @@
         android:src="@mipmap/header_sign_up" />
 
     <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="64dp"
         android:layout_height="20dp"
         android:layout_alignLeft="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
         android:layout_below="@+id/imageView"
         android:layout_marginTop="12dp"
-        style="?android:attr/borderlessButtonStyle"
         android:background="@drawable/button_rounded_bg_orange"
         android:text="@string/signup"
         android:textColor="@color/white"

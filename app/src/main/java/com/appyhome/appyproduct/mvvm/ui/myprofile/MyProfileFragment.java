@@ -20,7 +20,7 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
 
     @Inject
     MyProfileViewModel mMyProfileViewModel;
-    FragmentMyProfileBinding mFragmentMyProfileBinding;
+    FragmentMyProfileBinding mBinder;
     private int etCurrent;
 
     private TextInputUIHandler mTextInputHandler;
@@ -51,7 +51,8 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
 
     private void setUp() {
         mMyProfileViewModel.setNavigator(this);
-        mFragmentMyProfileBinding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mMyProfileViewModel);
         mTextInputDialog = TextInputDialog.newInstance();
         mPasswordHints = new String[]{getResources().getString(R.string.my_profile_hint_old_password),
                 getResources().getString(R.string.my_profile_hint_new_password),
@@ -116,28 +117,32 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
                 break;
         }
     }
+
     private void showAddressTextInputDialog() {
         if (mTextInputDialog != null) {
             mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
-                    getResources().getString(R.string.my_profile_change_address),4, mAddressHints);
+                    getResources().getString(R.string.my_profile_change_address), 4, mAddressHints);
         }
     }
+
     private void showEmailTextInputDialog() {
         if (mTextInputDialog != null) {
             mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
-                    getResources().getString(R.string.my_profile_change_email),1, mEmailHints);
+                    getResources().getString(R.string.my_profile_change_email), 1, mEmailHints);
         }
     }
+
     private void showPhoneTextInputDialog() {
         if (mTextInputDialog != null) {
             mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
-                    getResources().getString(R.string.my_profile_change_phone),1, mPhoneHints);
+                    getResources().getString(R.string.my_profile_change_phone), 1, mPhoneHints);
         }
     }
+
     private void showPasswordTextInputDialog() {
         if (mTextInputDialog != null) {
             mTextInputDialog.show(this.getActivity().getSupportFragmentManager(),
-                    getResources().getString(R.string.my_profile_change_password),3, mPasswordHints);
+                    getResources().getString(R.string.my_profile_change_password), 3, mPasswordHints);
         }
     }
 

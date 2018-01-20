@@ -27,7 +27,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Inject
     RegisterViewModel mRegisterViewModel;
 
-    ActivityRegisterBinding mActivityRegisterBinding;
+    ActivityRegisterBinding mBinder;
 
     private ArrayList<TextInputEditText> mArrayTextInputs;
 
@@ -39,16 +39,17 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityRegisterBinding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mRegisterViewModel);
         mRegisterViewModel.setNavigator(this);
 
         mArrayTextInputs = new ArrayList<>();
-        mArrayTextInputs.add(mActivityRegisterBinding.etFirstName);
-        mArrayTextInputs.add(mActivityRegisterBinding.etLastName);
-        mArrayTextInputs.add(mActivityRegisterBinding.etEmailAddress);
-        mArrayTextInputs.add(mActivityRegisterBinding.etNumberPhone);
-        mArrayTextInputs.add(mActivityRegisterBinding.etAccountPassword);
-        mArrayTextInputs.add(mActivityRegisterBinding.etRetypedPassword);
+        mArrayTextInputs.add(mBinder.etFirstName);
+        mArrayTextInputs.add(mBinder.etLastName);
+        mArrayTextInputs.add(mBinder.etEmailAddress);
+        mArrayTextInputs.add(mBinder.etNumberPhone);
+        mArrayTextInputs.add(mBinder.etAccountPassword);
+        mArrayTextInputs.add(mBinder.etRetypedPassword);
         for (int i = 0; i < mArrayTextInputs.size(); i++) {
             final TextInputEditText edt = mArrayTextInputs.get(i);
             edt.addTextChangedListener(new TextWatcher() {
@@ -99,62 +100,62 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         if (!NetworkUtils.isNetworkConnected(this)) {
             return;
         }
-        String firstName = mActivityRegisterBinding.etFirstName.getText().toString();
+        String firstName = mBinder.etFirstName.getText().toString();
         if (firstName == null || firstName.length() == 0) {
             showError(getString(R.string.register_error_missing_first_name));
-            showTextInputError(mActivityRegisterBinding.etFirstName);
+            showTextInputError(mBinder.etFirstName);
             return;
         }
-        String lastName = mActivityRegisterBinding.etLastName.getText().toString();
+        String lastName = mBinder.etLastName.getText().toString();
         if (lastName == null || lastName.length() == 0) {
             showError(getString(R.string.register_error_missing_last_name));
-            showTextInputError(mActivityRegisterBinding.etLastName);
+            showTextInputError(mBinder.etLastName);
             return;
         }
-        String email = mActivityRegisterBinding.etEmailAddress.getText().toString();
+        String email = mBinder.etEmailAddress.getText().toString();
         if (email == null || email.length() == 0) {
             showError(getString(R.string.register_error_missing_email_address));
-            showTextInputError(mActivityRegisterBinding.etEmailAddress);
+            showTextInputError(mBinder.etEmailAddress);
             return;
         } else if (!ValidationUtils.isEmailValid(email)) {
-            showTextInputError(mActivityRegisterBinding.etEmailAddress);
+            showTextInputError(mBinder.etEmailAddress);
             showError(getString(R.string.register_error_invalid_email));
             return;
         }
 
-        String phoneNumber = mActivityRegisterBinding.etNumberPhone.getText().toString();
+        String phoneNumber = mBinder.etNumberPhone.getText().toString();
         if (phoneNumber == null || phoneNumber.length() == 0) {
             showError(getString(R.string.register_error_missing_phone));
-            showTextInputError(mActivityRegisterBinding.etNumberPhone);
+            showTextInputError(mBinder.etNumberPhone);
             return;
         } else if (!ValidationUtils.isPhoneNumberValid(phoneNumber)) {
             showError(getString(R.string.register_error_invalid_phone));
-            showTextInputError(mActivityRegisterBinding.etNumberPhone);
+            showTextInputError(mBinder.etNumberPhone);
             return;
         }
 
-        String password = mActivityRegisterBinding.etAccountPassword.getText().toString();
+        String password = mBinder.etAccountPassword.getText().toString();
         if (password == null || password.length() == 0) {
             showError(getString(R.string.register_error_missing_password));
-            showTextInputError(mActivityRegisterBinding.etAccountPassword);
+            showTextInputError(mBinder.etAccountPassword);
             return;
         } else if (!ValidationUtils.isPasswordValid(password)) {
             showError(getString(R.string.register_error_invalid_password));
-            showTextInputError(mActivityRegisterBinding.etAccountPassword);
+            showTextInputError(mBinder.etAccountPassword);
             return;
         }
 
-        String retypedPassword = mActivityRegisterBinding.etRetypedPassword.getText().toString();
+        String retypedPassword = mBinder.etRetypedPassword.getText().toString();
         if (retypedPassword == null || retypedPassword.length() == 0) {
             showError(getString(R.string.register_error_missing_retyped_password));
-            showTextInputError(mActivityRegisterBinding.etRetypedPassword);
+            showTextInputError(mBinder.etRetypedPassword);
             return;
         }
 
         if (!password.equals(retypedPassword)) {
-            mActivityRegisterBinding.etRetypedPassword.requestFocus();
+            mBinder.etRetypedPassword.requestFocus();
             showError(getString(R.string.register_error_password_not_matched));
-            showTextInputError(mActivityRegisterBinding.etRetypedPassword);
+            showTextInputError(mBinder.etRetypedPassword);
             return;
         }
         hideKeyboard();
@@ -162,8 +163,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     }
 
     private void showError(String text) {
-        mActivityRegisterBinding.txtError.setText(text);
-        mActivityRegisterBinding.txtError.setVisibility(text.length() > 0 ? View.VISIBLE : View.INVISIBLE);
+        mBinder.txtError.setText(text);
+        mBinder.txtError.setVisibility(text.length() > 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -192,8 +193,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     public void login() {
         // Do login after sign up succeeded
-        String phoneNumber = mActivityRegisterBinding.etNumberPhone.getText().toString();
-        String password = mActivityRegisterBinding.etAccountPassword.getText().toString();
+        String phoneNumber = mBinder.etNumberPhone.getText().toString();
+        String password = mBinder.etAccountPassword.getText().toString();
         mRegisterViewModel.doUserLogin(phoneNumber, password);
     }
 
@@ -215,6 +216,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     public void showErrorPhoneDuplicated() {
         showError(getString(R.string.register_error_phone_duplicated));
-        showTextInputError(mActivityRegisterBinding.etNumberPhone);
+        showTextInputError(mBinder.etNumberPhone);
     }
 }

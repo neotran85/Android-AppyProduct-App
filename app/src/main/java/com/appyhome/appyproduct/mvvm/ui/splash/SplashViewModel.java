@@ -40,6 +40,7 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
     }
 
     private void decideNextActivity() {
+        getDataManager().setAccessToken("");
         String token = getDataManager().getAccessToken();
         if (token == null || token.length() == 0) {
             getNavigator().openLoginActivity();

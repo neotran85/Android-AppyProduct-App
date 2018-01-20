@@ -5,52 +5,54 @@
     android:orientation="vertical"
     android:paddingBottom="18dp"
     android:paddingTop="12dp">
+
     <TextView
         fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingLeft="12dp"
-        android:textColor="#808083"
-        android:textSize="11sp"
         android:text="Services"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textColor="#808083"
+        android:textSize="11sp" />
+
     <RelativeLayout
-        android:paddingLeft="38dp"
         android:layout_width="wrap_content"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:paddingLeft="38dp">
 
         <ImageButton
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_cleaning" />
+            android:background="@mipmap/service_cleaning"
+            android:clickable="false" />
 
         <ImageButton
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="80dp"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_aircon" />
+            android:background="@mipmap/service_aircon"
+            android:clickable="false" />
 
         <ImageButton
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="160dp"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_electrical" />
+            android:background="@mipmap/service_electrical"
+            android:clickable="false" />
 
         <ImageButton
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="240dp"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_plumbing" />
+            android:background="@mipmap/service_plumbing"
+            android:clickable="false" />
     </RelativeLayout>
 </LinearLayout>

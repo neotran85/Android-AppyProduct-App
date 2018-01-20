@@ -17,7 +17,6 @@ import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
-import com.appyhome.appyproduct.mvvm.ui.about.AboutFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
@@ -41,7 +40,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-    ActivityMainBinding mActivityMainBinding;
+    ActivityMainBinding mBinder;
     private MainViewModel mMainViewModel;
 
     public static Intent getStartIntent(Context context) {
@@ -53,7 +52,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppConstants.initiate(this);
-        mActivityMainBinding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUp();
         showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
@@ -62,17 +62,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(AboutFragment.TAG);
-        if (fragment == null) {
-            super.onBackPressed();
-        } else {
-            onFragmentDetached(AboutFragment.TAG);
-        }
     }
 
     public void onFragmentDetached(String tag) {
@@ -93,7 +82,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mMainViewModel.updateAppVersion(version);
         mMainViewModel.onNavMenuCreated();
         subscribeToLiveData();
-        TabLayout tabs = mActivityMainBinding.tabs;
+        TabLayout tabs = mBinder.tabs;
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

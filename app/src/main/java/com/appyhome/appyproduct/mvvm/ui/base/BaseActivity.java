@@ -60,7 +60,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     public void activeBackButton() {
         View mainView = getMainView();
-        if(mainView != null) {
+        if (mainView != null) {
             ImageButton button = (ImageButton) mainView.findViewById(R.id.btBack);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,9 +73,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     public void setTitle(String title) {
         View mainView = getMainView();
-        if(mainView != null) {
+        if (mainView != null) {
             TextView txt = mainView.findViewById(R.id.tvTitle);
-            if(txt != null) {
+            if (txt != null) {
                 txt.setText(title);
             }
         }

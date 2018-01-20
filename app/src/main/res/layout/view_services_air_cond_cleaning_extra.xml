@@ -33,7 +33,7 @@
             android:id="@+id/rbLanRise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Land Rise"
+            android:text="Landed"
             android:textSize="13sp" />
     </RadioGroup>
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="8dp"
-        android:text="What type of services would you like?"
+        android:text="Type of services"
         android:textColor="@color/black"
         android:textSize="15sp" />
 
@@ -60,14 +60,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:checked="true"
-            android:text="Service 1"
+            android:text="Standard service"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/rbService2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Service 2"
+            android:text="Chemical service"
             android:textSize="13sp" />
     </RadioGroup>
 
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="8dp"
-        android:text="What type of mounting do you have?"
+        android:text="Type of mounting"
         android:textColor="@color/black"
         android:textSize="15sp" />
 
@@ -94,14 +94,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:checked="true"
-            android:text="Mounting 1"
+            android:text="Wall mount"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/rbMounting2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mounting 2"
+            android:text="Ceiling mount"
             android:textSize="13sp" />
     </RadioGroup>
 
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="8dp"
-        android:text="Your air con' size"
+        android:text="Air-con size"
         android:textColor="@color/black"
         android:textSize="15sp" />
 
@@ -128,14 +128,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:checked="true"
-            android:text="Size 1"
+            android:text="1.0 - 1.5"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/rbSize2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Size 2"
+            android:text="2.0 - 2.5"
+            android:textSize="13sp" />
+
+        <RadioButton
+            android:id="@+id/rbSize3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.0 - 5.0"
+            android:textSize="13sp" />
+        <RadioButton
+            android:id="@+id/rbSize4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I don' know"
             android:textSize="13sp" />
     </RadioGroup>
 

@@ -56,7 +56,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return 0;
     }
 
-    public class RequestItemViewHolder extends BaseViewHolder{
+    public class RequestItemViewHolder extends BaseViewHolder {
 
         private ViewItemRequestBinding mBinding;
 

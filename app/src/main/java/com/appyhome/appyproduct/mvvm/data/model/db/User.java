@@ -8,7 +8,8 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "users")
 public class User {
 
-    @PrimaryKey @NonNull
+    @PrimaryKey
+    @NonNull
     public String username;
 
     @ColumnInfo(name = "first_name")

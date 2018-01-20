@@ -5,6 +5,7 @@ import android.content.Context;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
+import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
@@ -14,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.Option;
 import com.appyhome.appyproduct.mvvm.data.model.db.Question;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
@@ -23,6 +25,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -63,7 +67,6 @@ public class AppDataManager implements DataManager {
     @Override
     public void setCurrentUserId(String userId) {
         mPreferencesHelper.setCurrentUserId(userId);
-        mApiHelper.getApiHeader().getProtectedApiHeader().setUserId(userId);
     }
 
     @Override
@@ -95,16 +98,6 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<LogoutResponse> doUserLogout() {
         return mApiHelper.doUserLogout();
-    }
-
-    @Override
-    public int getCurrentUserLoggedInMode() {
-        return mPreferencesHelper.getCurrentUserLoggedInMode();
-    }
-
-    @Override
-    public void setCurrentUserLoggedInMode(LoggedInMode mode) {
-        mPreferencesHelper.setCurrentUserLoggedInMode(mode);
     }
 
     @Override
@@ -148,9 +141,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void updateApiHeader(String userId, String phoneNumber) {
-        mApiHelper.getApiHeader().getProtectedApiHeader().setPhoneNumber(phoneNumber);
-        mApiHelper.getApiHeader().getProtectedApiHeader().setUserId(userId);
+    public void updateApiHeader(String token) {
+        mApiHelper.getApiHeader().getProtectedApiHeader().setAuthorization(token);
     }
 
     @Override
@@ -160,14 +152,12 @@ public class AppDataManager implements DataManager {
             String username,
             String phoneNumber,
             String email,
-            String profilePicPath) {
-
-        setCurrentUserLoggedInMode(loggedInMode);
+            String profilePicPath, String token) {
         setCurrentUsername(username);
         setCurrentUserEmail(email);
         setCurrentUserProfilePicUrl(profilePicPath);
         setCurrentUserId(userId);
-        updateApiHeader(phoneNumber, userId);
+        updateApiHeader(token);
     }
 
     @Override
@@ -175,6 +165,7 @@ public class AppDataManager implements DataManager {
         updateUserInfo(
                 null,
                 LoggedInMode.LOGGED_OUT,
+                null,
                 null,
                 null,
                 null,
@@ -320,4 +311,20 @@ public class AppDataManager implements DataManager {
     public void setAccessToken(String token) {
         mPreferencesHelper.setAccessToken(token);
     }
+
+    @Override
+    public void setServiceAddress(ServiceAddress address) {
+        mPreferencesHelper.setServiceAddress(address);
+    }
+
+    @Override
+    public ServiceAddress getServiceAddress() {
+        return mPreferencesHelper.getServiceAddress();
+    }
+
+    @Override
+    public Single<AppointmentCreateResponse> createAppointment(JSONObject dataRequest) {
+        return mApiHelper.createAppointment(dataRequest);
+    }
+
 }

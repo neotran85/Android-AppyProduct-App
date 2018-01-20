@@ -18,7 +18,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     @Inject
     ServicesStep5ViewModel mServicesStep5ViewModel;
 
-    ActivityServicesBookingStep5Binding mActivityServicesBookingStep5Binding;
+    ActivityServicesBookingStep5Binding mBinder;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep5Activity.class);
@@ -28,10 +28,11 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityServicesBookingStep5Binding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mServicesStep5ViewModel);
         mServicesStep5ViewModel.setNavigator(this);
-        mActivityServicesBookingStep5Binding.btnNext.setOnClickListener(this);
-        mActivityServicesBookingStep5Binding.btnViewRequest.setOnClickListener(this);
+        mBinder.btnNext.setOnClickListener(this);
+        mBinder.btnViewRequest.setOnClickListener(this);
         setTitle("FINISH");
     }
 
@@ -76,13 +77,14 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void openRequestsScreen() {
-        Intent i= MainActivity.getStartIntent(this);
+        Intent i = MainActivity.getStartIntent(this);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
+
     @Override
     public void backToHomeScreen() {
-        Intent i= MainActivity.getStartIntent(this);
+        Intent i = MainActivity.getStartIntent(this);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }

@@ -28,7 +28,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Inject
     LoginViewModel mLoginViewModel;
 
-    ActivityLoginBinding mActivityLoginBinding;
+    ActivityLoginBinding mBinder;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -38,13 +38,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityLoginBinding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mLoginViewModel);
         mLoginViewModel.setNavigator(this);
-        mActivityLoginBinding.btnSignUp.setOnClickListener(this);
+        mBinder.btnSignUp.setOnClickListener(this);
 
         ArrayList<TextInputEditText> arrayTextInputs = new ArrayList<>();
-        arrayTextInputs.add(mActivityLoginBinding.etPhoneNumber);
-        arrayTextInputs.add(mActivityLoginBinding.etPassword);
+        arrayTextInputs.add(mBinder.etPhoneNumber);
+        arrayTextInputs.add(mBinder.etPassword);
         for (int i = 0; i < arrayTextInputs.size(); i++) {
             final TextInputEditText edt = arrayTextInputs.get(i);
             edt.addTextChangedListener(new TextWatcher() {
@@ -106,25 +107,25 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         if (!NetworkUtils.isNetworkConnected(this)) {
             return;
         }
-        String phoneNumber = mActivityLoginBinding.etPhoneNumber.getText().toString();
-        String password = mActivityLoginBinding.etPassword.getText().toString();
+        String phoneNumber = mBinder.etPhoneNumber.getText().toString();
+        String password = mBinder.etPassword.getText().toString();
         if (phoneNumber == null || phoneNumber.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
-            showTextInputError(mActivityLoginBinding.etPhoneNumber);
+            showTextInputError(mBinder.etPhoneNumber);
             return;
         } else if (!ValidationUtils.isPhoneNumberValid(phoneNumber)) {
             showError(getString(R.string.login_error_invalid_phone));
-            showTextInputError(mActivityLoginBinding.etPhoneNumber);
+            showTextInputError(mBinder.etPhoneNumber);
             return;
         }
 
         if (password == null || password.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
-            showTextInputError(mActivityLoginBinding.etPassword);
+            showTextInputError(mBinder.etPassword);
             return;
         } else if (!ValidationUtils.isPasswordValid(password)) {
             showError(getString(R.string.login_error_invalid_password));
-            showTextInputError(mActivityLoginBinding.etPassword);
+            showTextInputError(mBinder.etPassword);
             return;
         }
         hideKeyboard();
@@ -138,21 +139,25 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         else
             edt.setHintTextColor(ContextCompat.getColor(this, R.color.red_dark2));
     }
+
     @Override
     public void showSuccessLogin() {
         AlertUtils.getInstance(this).showLongToast(getString(R.string.login_success));
     }
+
     @Override
     public void showErrorServer() {
         showError(getString(R.string.login_error_internal_server));
     }
+
     @Override
     public void showErrorOthers() {
         showError(getString(R.string.login_error));
     }
+
     private void showError(String text) {
-        mActivityLoginBinding.txtError.setText(text);
-        mActivityLoginBinding.txtError.setVisibility(text.length() > 0 ? View.VISIBLE : View.INVISIBLE);
+        mBinder.txtError.setText(text);
+        mBinder.txtError.setVisibility(text.length() > 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override

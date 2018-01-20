@@ -47,6 +47,7 @@ public class TextInputUIHandler {
     public String getNewValue(int index) {
         return mArrayEts.get(index).getText().toString();
     }
+
     public void setError(String text) {
         if (txtErrorTitle != null) {
             txtErrorTitle.setText(text);
@@ -59,7 +60,7 @@ public class TextInputUIHandler {
         mHandler = handler;
     }
 
-    public void setUp(int numberOfFields, String title, String [] arrayValues, int[] arrayHints) {
+    public void setUp(int numberOfFields, String title, String[] arrayValues, int[] arrayHints) {
         for (TextInputEditText edt : mArrayEts) {
             edt.setText("");
             edt.setHint("");

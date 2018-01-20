@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 
 public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
 
-    void updateApiHeader(String phoneNumber, String accessToken);
+    void updateApiHeader(String token);
 
     void setUserAsLoggedOut();
 
@@ -28,7 +28,8 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
             String userName,
             String phoneNumber,
             String email,
-            String profilePicPath);
+            String profilePicPath,
+            String token);
 
     enum LoggedInMode {
         LOGGED_OUT(0),

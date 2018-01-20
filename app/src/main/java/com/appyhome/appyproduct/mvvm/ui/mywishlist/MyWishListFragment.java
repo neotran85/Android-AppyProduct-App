@@ -18,7 +18,7 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
 
     @Inject
     MyWishListViewModel mMyWishListViewModel;
-    FragmentMyWishlistBinding mFragmentMyWishlistBinding;
+    FragmentMyWishlistBinding mBinder;
 
     public static MyWishListFragment newInstance() {
         Bundle args = new Bundle();
@@ -40,7 +40,8 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
 
     private void setUp() {
         mMyWishListViewModel.setNavigator(this);
-        mFragmentMyWishlistBinding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mMyWishListViewModel);
     }
 
     @Override

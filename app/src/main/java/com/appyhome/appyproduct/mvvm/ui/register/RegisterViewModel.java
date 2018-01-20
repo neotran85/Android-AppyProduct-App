@@ -6,7 +6,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.utils.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.functions.Consumer;
@@ -77,6 +76,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
         if (statusCode.equals("200")) {
             if (message != null && message.length() > 0) {
                 setAccessToken(message);
+                getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
                 getNavigator().openMainActivity();
             }

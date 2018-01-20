@@ -19,6 +19,7 @@ public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator
     public int isAirConCleaningVisible() {
         return typeServices.get() == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING ? View.VISIBLE : View.GONE;
     }
+
     public int isHomeCleaningVisible() {
         return typeServices.get() == ServiceOrderInfo.SERVICE_HOME_CLEANING ? View.VISIBLE : View.GONE;
     }
@@ -26,6 +27,7 @@ public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator
     public ObservableField<Integer> getTypeServices() {
         return typeServices;
     }
+
     public void setTypeServices(int type) {
         typeServices.set(type);
     }

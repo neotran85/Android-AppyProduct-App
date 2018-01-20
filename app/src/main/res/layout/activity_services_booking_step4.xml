@@ -12,10 +12,10 @@
     </data>
 
     <RelativeLayout
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -198,17 +198,17 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:layout_centerVertical="true"
                             android:text="Pay by Credit/Debit Card"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
                         <ImageView
-                            android:layout_marginRight="6dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="6dp"
                             android:layout_toLeftOf="@+id/visaNext"
                             android:src="@mipmap/icon_visa_master_card" />
 
@@ -233,9 +233,9 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:layout_centerVertical="true"
                             android:text="Pay by Bank"
                             android:textColor="@color/black"
                             android:textSize="14sp" />

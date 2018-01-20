@@ -12,10 +12,10 @@
     </data>
 
     <RelativeLayout
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
+
             <include layout="@layout/view_service_header"></include>
 
             <ScrollView
@@ -43,18 +44,20 @@
                         android:background="@color/white"
                         android:orientation="horizontal"
                         android:padding="20dp">
+
                         <TextView
-                            android:layout_weight="0.5"
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
                             android:text="Search to get started"
                             android:textColor="@color/semi_gray"
                             android:textSize="15sp" />
+
                         <ImageView
-                            android:src="@mipmap/icon_search_big"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_search_big" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -74,6 +77,7 @@
                             android:textSize="15sp" />
 
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etUnitNumberHouse"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -89,7 +93,9 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/hint_text"
                             android:textSize="14sp" />
+
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etStreet"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -105,7 +111,9 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/hint_text"
                             android:textSize="14sp" />
+
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAreaLine1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -121,7 +129,9 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/hint_text"
                             android:textSize="14sp" />
+
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etAreaLine2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -137,7 +147,9 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/hint_text"
                             android:textSize="14sp" />
+
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etCityTown"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -153,7 +165,9 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/hint_text"
                             android:textSize="14sp" />
+
                         <android.support.design.widget.TextInputEditText
+                            android:id="@+id/etPostCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -181,11 +195,12 @@
                         android:padding="12dp">
 
                         <CheckBox
+                            android:id="@+id/cbSaveAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
-                            android:paddingRight="6dp"
                             android:checked="true"
+                            android:paddingRight="6dp"
                             android:text="Save this address for future requests."
                             android:textColor="@color/black"
                             android:textSize="13sp" />
@@ -194,12 +209,12 @@
             </ScrollView>
 
             <Button
-                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="NEXT"
                 android:textColor="@color/white"
                 android:textSize="14sp" />

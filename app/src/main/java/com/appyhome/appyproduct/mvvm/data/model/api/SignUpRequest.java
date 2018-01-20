@@ -5,71 +5,72 @@ import com.google.gson.annotations.SerializedName;
 
 
 public class SignUpRequest {
-        @Expose
-        @SerializedName("first_name")
-        private String firstName;
+    @Expose
+    @SerializedName("first_name")
+    private String firstName;
 
-        @Expose
-        @SerializedName("last_name")
-        private String lastName;
+    @Expose
+    @SerializedName("last_name")
+    private String lastName;
 
-        @Expose
-        @SerializedName("email")
-        private String email;
+    @Expose
+    @SerializedName("email")
+    private String email;
 
-        @Expose
-        @SerializedName("phone_number")
-        private String phoneNumber;
+    @Expose
+    @SerializedName("phone_number")
+    private String phoneNumber;
 
-        @Expose
-        @SerializedName("password")
-        private String password;
+    @Expose
+    @SerializedName("password")
+    private String password;
 
-        public SignUpRequest(String firstName, String last_name,
-                                  String email, String phoneNumber, String password) {
-            this.phoneNumber = phoneNumber;
-            this.password = password;
-            this.firstName = firstName;
-            this.lastName = last_name;
-            this.email = email;
-        }
-        public String getPhoneNumber() {
-            return phoneNumber;
-        }
+    public SignUpRequest(String firstName, String last_name,
+                         String email, String phoneNumber, String password) {
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = last_name;
+        this.email = email;
+    }
 
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public String getPassword() {
+        return password;
+    }
 
-        public String getEmail() {
-            return email;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
+    public String getEmail() {
+        return email;
+    }
 
-        public String getFirstName() {
-            return firstName;
-        }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
+    public String getFirstName() {
+        return firstName;
+    }
 
-        public String getLastName() {
-            return lastName;
-        }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

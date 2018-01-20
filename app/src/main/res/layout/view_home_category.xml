@@ -52,11 +52,12 @@
             android:background="@mipmap/category_appliances" />
     </RelativeLayout>
 
-    <RelativeLayout     android:paddingLeft="38dp"
-
+    <RelativeLayout
         android:layout_width="wrap_content"
+
         android:layout_height="60dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:paddingLeft="38dp">
 
         <ImageButton
             android:layout_width="wrap_content"

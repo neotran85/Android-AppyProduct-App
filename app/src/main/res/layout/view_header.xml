@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#EFEFEF"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/header_height">
+    android:layout_height="@dimen/header_height"
+    android:background="#EFEFEF">
+
     <ImageButton
         android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:adjustViewBounds="true"
-        android:background="@mipmap/icon_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:background="@mipmap/icon_back" />
+
     <TextView
-        fontPath="fonts/TitilliumWeb-Bold.ttf"
         android:id="@+id/tvTitle"
-        android:textColor="@color/dark_gray"
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:singleLine="true"
         android:gravity="center"
-        android:textSize="18sp"
-        android:layout_width="240dp"
-        android:layout_height="match_parent" />
+        android:singleLine="true"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp" />
 </RelativeLayout>

@@ -3,13 +3,11 @@ package com.appyhome.appyproduct.mvvm.ui.custom.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityDetailTextBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
 
 import javax.inject.Inject;
 

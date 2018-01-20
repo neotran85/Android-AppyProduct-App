@@ -14,7 +14,7 @@ public class MyWishListFragmentModule {
 
     @Provides
     MyWishListViewModel provideMyWishListViewModel(DataManager dataManager,
-                                                 SchedulerProvider schedulerProvider) {
+                                                   SchedulerProvider schedulerProvider) {
         return new MyWishListViewModel(dataManager, schedulerProvider);
     }
 

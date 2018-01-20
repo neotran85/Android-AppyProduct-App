@@ -61,36 +61,36 @@ public class TextInputViewModel extends BaseViewModel<TextInputCallback> {
         return View.VISIBLE;
     }
 
-    public void setHint0(String hint) {
-        hint0.set(hint);
-    }
-
-    public void setHint1(String hint) {
-        hint1.set(hint);
-    }
-
-    public void setHint2(String hint) {
-        hint2.set(hint);
-    }
-
-    public void setHint3(String hint) {
-        hint3.set(hint);
-    }
-
     public String getHint0() {
         return hint0.get();
+    }
+
+    public void setHint0(String hint) {
+        hint0.set(hint);
     }
 
     public String getHint1() {
         return hint1.get();
     }
 
+    public void setHint1(String hint) {
+        hint1.set(hint);
+    }
+
     public String getHint2() {
         return hint2.get();
     }
 
+    public void setHint2(String hint) {
+        hint2.set(hint);
+    }
+
     public String getHint3() {
         return hint3.get();
+    }
+
+    public void setHint3(String hint) {
+        hint3.set(hint);
     }
 
     public String getErrorText() {

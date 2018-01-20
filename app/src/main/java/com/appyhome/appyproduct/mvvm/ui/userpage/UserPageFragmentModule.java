@@ -14,7 +14,7 @@ public class UserPageFragmentModule {
 
     @Provides
     UserPageViewModel provideUserPageViewModel(DataManager dataManager,
-                                                SchedulerProvider schedulerProvider) {
+                                               SchedulerProvider schedulerProvider) {
         return new UserPageViewModel(dataManager, schedulerProvider);
     }
 

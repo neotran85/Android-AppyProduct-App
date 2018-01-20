@@ -18,9 +18,9 @@
             android:src="@mipmap/service_step1" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Start"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />
@@ -44,9 +44,9 @@
             android:src="@mipmap/service_step1" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Details"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />
@@ -70,9 +70,9 @@
             android:src="@mipmap/service_step1" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Location"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />
@@ -96,9 +96,9 @@
             android:src="@mipmap/service_step1" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Payment"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />
@@ -122,9 +122,9 @@
             android:src="@mipmap/service_step1" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Finish"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />

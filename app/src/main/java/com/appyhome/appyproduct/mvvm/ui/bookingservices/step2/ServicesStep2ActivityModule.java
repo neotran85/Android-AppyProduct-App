@@ -11,7 +11,7 @@ public class ServicesStep2ActivityModule {
 
     @Provides
     ServicesStep2ViewModel provideServicesStep2ViewModel(DataManager dataManager,
-                                                           SchedulerProvider schedulerProvider) {
+                                                         SchedulerProvider schedulerProvider) {
         return new ServicesStep2ViewModel(dataManager, schedulerProvider);
     }
 

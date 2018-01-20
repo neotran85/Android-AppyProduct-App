@@ -12,10 +12,10 @@
     </data>
 
     <RelativeLayout
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
+
             <include layout="@layout/view_service_header"></include>
 
             <ScrollView
@@ -62,14 +63,16 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="12dp"
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:gravity="center_horizontal"
+                                android:id="@+id/llIroning"
                                 android:layout_width="48dp"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:padding="4dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -77,22 +80,25 @@
                                     android:src="@mipmap/service_step1" />
 
                                 <TextView
-                                    android:gravity="center_horizontal"
+                                    android:id="@+id/tvIroning"
                                     fontPath="fonts/TitilliumWeb-Bold.ttf"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:gravity="center_horizontal"
                                     android:text="Ironing"
                                     android:textColor="@color/black"
                                     android:textSize="11sp" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:gravity="center_horizontal"
+                                android:id="@+id/llFolding"
                                 android:layout_width="48dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:orientation="vertical">
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:padding="4dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -100,22 +106,25 @@
                                     android:src="@mipmap/service_step1" />
 
                                 <TextView
+                                    android:id="@+id/tvFolding"
                                     fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    android:gravity="center_horizontal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:gravity="center_horizontal"
                                     android:text="Folding Clothes"
                                     android:textColor="@color/black"
                                     android:textSize="11sp" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:gravity="center_horizontal"
+                                android:id="@+id/llLaundry"
                                 android:layout_width="48dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:orientation="vertical">
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:padding="4dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -123,8 +132,8 @@
                                     android:src="@mipmap/service_step1" />
 
                                 <TextView
+                                    android:id="@+id/tvLaundry"
                                     fontPath="fonts/TitilliumWeb-Bold.ttf"
-
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
@@ -135,11 +144,13 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:gravity="center_horizontal"
+                                android:id="@+id/llCeilingFan"
                                 android:layout_width="48dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:orientation="vertical">
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:padding="4dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -147,11 +158,12 @@
                                     android:src="@mipmap/service_step1" />
 
                                 <TextView
-                                    android:gravity="center_horizontal"
+                                    android:id="@+id/tvCeilingFan"
                                     fontPath="fonts/TitilliumWeb-Bold.ttf"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:gravity="center_horizontal"
                                     android:text="Ceiling Fan"
                                     android:textColor="@color/black"
                                     android:textSize="11sp" />
@@ -220,38 +232,45 @@
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
-                        <Button android:textSize="14sp"
+                        <Button
                             android:id="@+id/btTimeslot1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:background="@null"
                             android:gravity="center_vertical|left"
-                            android:text="+ Add a timeslot" />
+                            android:text="+ Add a timeslot"
+                            android:textSize="14sp" />
+
                         <View
-                            android:background="@color/semi_gray"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"></View>
-                        <Button android:textSize="14sp"
+                            android:layout_height="1dp"
+                            android:background="@color/semi_gray"></View>
+
+                        <Button
                             android:id="@+id/btTimeslot2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="center_vertical|left"
                             android:text="+ Add an alternative timeslot"
-                            android:textColor="@color/semi_gray" />
+                            android:textColor="@color/semi_gray"
+                            android:textSize="14sp" />
+
                         <View
-                            android:background="@color/semi_gray"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"></View>
-                        <Button android:textSize="14sp"
+                            android:layout_height="1dp"
+                            android:background="@color/semi_gray"></View>
+
+                        <Button
                             android:id="@+id/btTimeslot3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="center_vertical|left"
                             android:text="+ Add an alternative timeslot"
-                            android:textColor="@color/semi_gray" />
+                            android:textColor="@color/semi_gray"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -280,8 +299,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:orientation="horizontal"
                         android:gravity="center_vertical"
+                        android:orientation="horizontal"
                         android:padding="20dp">
 
                         <ImageView
@@ -290,9 +309,9 @@
                             android:src="@mipmap/icon_warning" />
 
                         <TextView
-                            android:layout_marginLeft="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:text="Please inform your apartment security before the service visit, to make sure you comply with contractor visit hours"
                             android:textColor="@color/semi_gray"
                             android:textSize="15sp" />
@@ -328,13 +347,13 @@
             </ScrollView>
 
             <Button
-                android:foreground="?attr/selectableItemBackground"
+                android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="NEXT"
-                android:id="@+id/btnNext"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

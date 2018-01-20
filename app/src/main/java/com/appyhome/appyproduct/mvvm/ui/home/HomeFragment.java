@@ -24,7 +24,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Inject
     HomeViewModel mHomeViewModel;
-    FragmentHomeBinding mFragmentHomeBinding;
+    FragmentHomeBinding mBinder;
     private Toolbar mToolbar;
     private ImageButton mToolbarCartButton;
 
@@ -48,10 +48,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void setUp() {
         mHomeViewModel.setNavigator(this);
-        mFragmentHomeBinding = getViewDataBinding();
-
-        mToolbar = mFragmentHomeBinding.toolbar;
-        mToolbarCartButton = mFragmentHomeBinding.toolbar.findViewById(R.id.toolbarCartButton);
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mHomeViewModel);
+        mToolbar = mBinder.toolbar;
+        mToolbarCartButton = mBinder.toolbar.findViewById(R.id.toolbarCartButton);
         mToolbar.setNavigationIcon(null);
         if (getActivity() instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -60,7 +60,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setTitle("");
         }
 
-        mFragmentHomeBinding.serviceView.setOnClickListener(new View.OnClickListener() {
+        mBinder.serviceView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openBookingServiceActivity();
@@ -104,6 +104,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void handleError(Throwable throwable) {
         // handle error
     }
+
     @Override
     public void openBookingServiceActivity() {
         startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));

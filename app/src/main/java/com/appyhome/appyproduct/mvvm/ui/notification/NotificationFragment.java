@@ -27,7 +27,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     @Inject
     LinearLayoutManager mLayoutManager;
 
-    FragmentNotificationBinding mFragmentNotificationBinding;
+    FragmentNotificationBinding mBinder;
 
     public static NotificationFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,10 +50,11 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     private void setUp() {
         mNotificationViewModel.setNavigator(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mFragmentNotificationBinding = getViewDataBinding();
-        mFragmentNotificationBinding.notificationRecyclerView.setLayoutManager(mLayoutManager);
-        mFragmentNotificationBinding.notificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mFragmentNotificationBinding.notificationRecyclerView.setAdapter(mNotificationAdapter);
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mNotificationViewModel);
+        mBinder.notificationRecyclerView.setLayoutManager(mLayoutManager);
+        mBinder.notificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mBinder.notificationRecyclerView.setAdapter(mNotificationAdapter);
     }
 
     @Override

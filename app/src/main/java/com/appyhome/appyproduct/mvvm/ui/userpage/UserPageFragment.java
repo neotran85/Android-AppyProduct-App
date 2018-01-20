@@ -18,7 +18,7 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
 
     @Inject
     UserPageViewModel mUserPageViewModel;
-    FragmentUserPageBinding mFragmentUserPageBinding;
+    FragmentUserPageBinding mBinder;
 
     public static UserPageFragment newInstance() {
         Bundle args = new Bundle();
@@ -40,7 +40,8 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
 
     private void setUp() {
         mUserPageViewModel.setNavigator(this);
-        mFragmentUserPageBinding = getViewDataBinding();
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mUserPageViewModel);
     }
 
     @Override

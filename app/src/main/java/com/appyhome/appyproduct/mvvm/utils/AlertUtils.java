@@ -32,6 +32,7 @@ public class AlertUtils {
             mProgressDialog = null;
         }
     }
+
     public void showLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing())
             mProgressDialog.cancel();

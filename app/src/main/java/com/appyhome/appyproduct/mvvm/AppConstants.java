@@ -17,15 +17,14 @@ public final class AppConstants {
     public static final String SEED_DATABASE_OPTIONS = "seed/options.json";
     public static final String SEED_DATABASE_QUESTIONS = "seed/questions.json";
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
-
-    private static Activity mFirstActivity;
-
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
+    private static Activity mFirstActivity;
 
     private AppConstants() {
         // This utility class is not publicly instantiable
     }
+
     public static void initiate(Activity firstActivity) {
         mFirstActivity = firstActivity;
         SCREEN_WIDTH = 0;
@@ -43,6 +42,7 @@ public final class AppConstants {
             SCREEN_HEIGHT = d.getHeight();
         }
     }
+
     public static Activity getFirstActivity() {
         return mFirstActivity;
     }

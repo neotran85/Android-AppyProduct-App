@@ -20,6 +20,9 @@ public class ApiUrlConfig {
     public static final String ENDPOINT_OPEN_SOURCE = BuildConfig.BASE_URL
             + "/5926c34212000035026871cd";
 
+    public static final String APPOINTMENT_CREATE = BuildConfig.BASE_URL
+            + "api/create/appointment";
+
     private ApiUrlConfig() {
         // This class is not publicly instantiable
     }

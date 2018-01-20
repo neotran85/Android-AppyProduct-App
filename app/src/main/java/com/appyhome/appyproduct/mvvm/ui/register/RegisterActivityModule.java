@@ -11,7 +11,7 @@ public class RegisterActivityModule {
 
     @Provides
     RegisterViewModel provideRegisterViewModel(DataManager dataManager,
-                                            SchedulerProvider schedulerProvider) {
+                                               SchedulerProvider schedulerProvider) {
         return new RegisterViewModel(dataManager, schedulerProvider);
     }
 

@@ -17,7 +17,9 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
+import com.appyhome.appyproduct.mvvm.utils.AlertUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Inject
     ServicesStep1ViewModel mServicesStep1ViewModel;
 
-    ActivityServicesBookingStep1Binding mActivityServicesBookingStep1Binding;
+    ActivityServicesBookingStep1Binding mBinder;
     private ArrayList<JSONObject> mServicesList;
     private View mCurrentServiceView;
     private int mSelectedServiceIndex;
@@ -42,8 +44,8 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityServicesBookingStep1Binding = getViewDataBinding();
-        mActivityServicesBookingStep1Binding.setViewModel(mServicesStep1ViewModel);
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mServicesStep1ViewModel);
         mServicesStep1ViewModel.setNavigator(this);
         setTitle(ServiceOrderInfo.getInstance().getServiceName());
         activeBackButton();
@@ -55,16 +57,17 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         mServicesStep1ViewModel.setTypeServices(ServiceOrderInfo.getInstance().getType());
         mServicesList = ServiceOrderInfo.getInstance().getServices();
         if (mServicesList != null && mServicesList.size() > 0) {
-            mActivityServicesBookingStep1Binding.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
-            mActivityServicesBookingStep1Binding.lvServices.setOnItemClickListener(this);
+            mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
+            mBinder.lvServices.setOnItemClickListener(this);
         } else {
-            mActivityServicesBookingStep1Binding.lvServices.setVisibility(View.GONE);
+            mBinder.lvServices.setVisibility(View.GONE);
         }
     }
+
     private void setUpListeners() {
-        mActivityServicesBookingStep1Binding.btnNext.setOnClickListener(this);
-        mActivityServicesBookingStep1Binding.btSeeDetailService.setOnClickListener(this);
-        final EditText etNumberRooms = mActivityServicesBookingStep1Binding.llServiceHomeCleaning.findViewById(R.id.etRoomNumber);
+        mBinder.btnNext.setOnClickListener(this);
+        mBinder.btSeeDetailService.setOnClickListener(this);
+        final EditText etNumberRooms = mBinder.llServiceHomeCleaning.findViewById(R.id.etRoomNumber);
         if (etNumberRooms != null)
             etNumberRooms.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -92,12 +95,27 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                goToStep2();
+                boolean selected = checkIfServiceSelected();
+                if (selected) goToStep2();
+                else AlertUtils.getInstance(this).showLongToast("Please choose a service");
                 break;
             case R.id.btSeeDetailService:
                 viewDetailService();
                 break;
         }
+    }
+
+    private boolean checkIfServiceSelected() {
+        JSONObject data = ServiceOrderInfo.getInstance().getSelectedService();
+        if (data != null) {
+            try {
+                String nameService = data.getString("name");
+                return nameService != null && nameService.length() > 0;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     @Override
