@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.utils;
+package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;

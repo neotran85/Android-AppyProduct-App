@@ -23,7 +23,7 @@ import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
-import com.appyhome.appyproduct.mvvm.utils.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import java.util.List;
 

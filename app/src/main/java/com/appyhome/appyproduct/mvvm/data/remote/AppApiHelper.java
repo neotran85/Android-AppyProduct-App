@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
+import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
@@ -9,8 +10,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
-
-import org.json.JSONObject;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -78,10 +77,10 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<AppointmentCreateResponse> createAppointment(JSONObject dataRequest) {
+    public Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_CREATE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addJSONObjectBody(dataRequest)
+                .addUrlEncodeFormBodyParameter(dataRequest)
                 .build()
                 .getObjectSingle(AppointmentCreateResponse.class);
     }

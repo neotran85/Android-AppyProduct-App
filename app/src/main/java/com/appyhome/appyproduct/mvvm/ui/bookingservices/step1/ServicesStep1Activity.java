@@ -17,7 +17,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
-import com.appyhome.appyproduct.mvvm.utils.AlertUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,7 +97,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
             case R.id.btnNext:
                 boolean selected = checkIfServiceSelected();
                 if (selected) goToStep2();
-                else AlertUtils.getInstance(this).showLongToast("Please choose a service");
+                else AlertManager.getInstance(this).showLongToast("Please choose a service");
                 break;
             case R.id.btSeeDetailService:
                 viewDetailService();

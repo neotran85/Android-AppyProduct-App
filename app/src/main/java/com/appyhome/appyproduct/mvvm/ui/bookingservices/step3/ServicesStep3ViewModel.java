@@ -1,12 +1,11 @@
 package com.appyhome.appyproduct.mvvm.ui.bookingservices.step3;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
-
-import org.json.JSONObject;
 
 import io.reactivex.functions.Consumer;
 
@@ -20,7 +19,7 @@ public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator
     public void setServiceAddress(ServiceAddress serviceAddress) {
         getDataManager().setServiceAddress(serviceAddress);
     }
-    public void createAppointment(JSONObject requestData) {
+    public void createAppointment(AppointmentCreateRequest requestData) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .createAppointment(requestData)
@@ -36,7 +35,8 @@ public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleError(throwable);
+                        getNavigator().handleErrorService(throwable);
+                        getNavigator().doWhenAppointmentCreated();
                     }
                 }));
     }

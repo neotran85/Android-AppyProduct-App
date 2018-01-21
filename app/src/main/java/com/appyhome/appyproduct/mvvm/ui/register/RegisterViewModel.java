@@ -37,7 +37,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleError(throwable);
+                        getNavigator().handleErrorService(throwable);
                     }
                 }));
     }
@@ -58,7 +58,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleError(throwable);
+                        getNavigator().handleErrorService(throwable);
                     }
                 }));
     }

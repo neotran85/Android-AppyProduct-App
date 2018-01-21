@@ -4,7 +4,7 @@ public interface RegisterNavigator {
 
     void openMainActivity();
 
-    void handleError(Throwable throwable);
+    void handleErrorService(Throwable throwable);
 
     void register();
 

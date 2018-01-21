@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.utils;
+package com.appyhome.appyproduct.mvvm.utils.manager;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,21 +7,21 @@ import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.R;
 
-public class AlertUtils {
-    private static AlertUtils mInstance;
+public class AlertManager {
+    private static AlertManager mInstance;
     private Toast mToast;
     private Context mContext;
     private ProgressDialog mProgressDialog;
 
-    private AlertUtils(Context context) {
+    private AlertManager(Context context) {
         mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mContext = context;
     }
 
-    public static AlertUtils getInstance(Context context) {
+    public static AlertManager getInstance(Context context) {
         if (mInstance == null || mInstance.mContext != context) {
-            mInstance = new AlertUtils(context);
+            mInstance = new AlertManager(context);
         }
         return mInstance;
     }

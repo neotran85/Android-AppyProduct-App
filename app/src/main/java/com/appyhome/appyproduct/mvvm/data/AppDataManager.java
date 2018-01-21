@@ -5,6 +5,7 @@ import android.content.Context;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
+import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
@@ -20,13 +21,11 @@ import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
-import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -323,7 +322,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<AppointmentCreateResponse> createAppointment(JSONObject dataRequest) {
+    public Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest) {
         return mApiHelper.createAppointment(dataRequest);
     }
 

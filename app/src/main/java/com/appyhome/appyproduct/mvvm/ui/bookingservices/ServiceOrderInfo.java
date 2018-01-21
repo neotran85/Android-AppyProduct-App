@@ -1,6 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.bookingservices;
 
 
+import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -222,23 +224,23 @@ public class ServiceOrderInfo {
         this.mAppointmentId = mAppointmentId;
     }
 
-    public JSONObject getJSONRequestData() {
-        JSONObject request = new JSONObject();
+    public AppointmentCreateRequest getAppointmentCreateRequest() {
+        AppointmentCreateRequest request = new AppointmentCreateRequest();
         try {
-            request.put("id_number", getAppointmentId());
-            request.put("address", getAddress());
+            request.setIdNumber(getAppointmentId());
+            request.setAddress(getAddress());
 
             JSONObject datetime = new JSONObject();
             datetime.put("datetime1", getTimeSlot1());
             datetime.put("datetime2", getTimeSlot2());
             datetime.put("datetime3", getTimeSlot3());
-            request.put("datetime", datetime);
+            request.setDateTime(datetime.toString());
 
             JSONObject services = new JSONObject();
             services.put("service1", getSelectedService().getString("name"));
             services.put("service2", "");
             services.put("service3", "");
-            request.put("services", services);
+            request.setServices(services.toString());
 
             JSONObject additional = new JSONObject();
             additional.put("extra", getExtraServices().toString());
@@ -246,6 +248,8 @@ public class ServiceOrderInfo {
             if (mType == SERVICE_HOME_CLEANING) {
                 additional.put("room", getRoomNumber() + "");
             }
+            request.setAdditional(additional.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

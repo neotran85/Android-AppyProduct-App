@@ -14,9 +14,9 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
-import com.appyhome.appyproduct.mvvm.utils.AlertUtils;
-import com.appyhome.appyproduct.mvvm.utils.NetworkUtils;
-import com.appyhome.appyproduct.mvvm.utils.ValidationUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 
 import java.util.ArrayList;
 
@@ -88,8 +88,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     }
 
     @Override
-    public void handleError(Throwable throwable) {
-
+    public void handleErrorService(Throwable throwable) {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
     }
 
     @Override
@@ -200,7 +200,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void showSuccessLogin() {
-        AlertUtils.getInstance(this).showLongToast(getString(R.string.register_success_logged));
+        AlertManager.getInstance(this).showLongToast(getString(R.string.register_success_logged));
     }
 
     @Override

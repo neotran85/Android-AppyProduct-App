@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
+import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
@@ -8,8 +9,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
-
-import org.json.JSONObject;
 
 import io.reactivex.Single;
 
@@ -28,5 +27,5 @@ public interface ApiHelper {
 
     Single<OpenSourceResponse> getOpenSourceApiCall();
 
-    Single<AppointmentCreateResponse> createAppointment(JSONObject dataRequest);
+    Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 }

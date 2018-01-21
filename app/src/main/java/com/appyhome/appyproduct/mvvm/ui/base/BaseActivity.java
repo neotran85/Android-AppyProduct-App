@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.utils.CommonUtils;
-import com.appyhome.appyproduct.mvvm.utils.NetworkUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.CommonUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 
 import dagger.android.AndroidInjection;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

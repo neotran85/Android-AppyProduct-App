@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.utils;
+package com.appyhome.appyproduct.mvvm.utils.helper;
 
 public final class ValidationUtils {
 

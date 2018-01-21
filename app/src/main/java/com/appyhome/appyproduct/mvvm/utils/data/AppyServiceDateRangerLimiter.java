@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.utils;
+package com.appyhome.appyproduct.mvvm.utils.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

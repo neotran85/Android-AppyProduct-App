@@ -6,7 +6,7 @@ import android.app.Application;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.appyhome.appyproduct.mvvm.di.component.DaggerAppComponent;
-import com.appyhome.appyproduct.mvvm.utils.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import javax.inject.Inject;
 

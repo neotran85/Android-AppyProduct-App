@@ -35,7 +35,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleError(throwable);
+                        getNavigator().handleErrorService(throwable);
                     }
                 }));
     }

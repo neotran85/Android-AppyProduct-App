@@ -13,7 +13,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.utils.AlertUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
@@ -67,11 +67,11 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setAddress() {
-        String address = mBinder.etUnitNumberHouse.getText().toString() + " | "
-                + mBinder.etStreet.getText().toString() + " | "
-                + mBinder.etAreaLine1.getText().toString() + " | "
-                + mBinder.etAreaLine2.getText().toString() + " | "
-                + mBinder.etCityTown.getText().toString() + " | "
+        String address = mBinder.etUnitNumberHouse.getText().toString() + " "
+                + mBinder.etStreet.getText().toString() + " "
+                + mBinder.etAreaLine1.getText().toString() + " "
+                + mBinder.etAreaLine2.getText().toString() + " "
+                + mBinder.etCityTown.getText().toString() + " "
                 + "(Postcode " + mBinder.etPostCode.getText().toString() + ")";
         ServiceOrderInfo.getInstance().setAddress(address);
     }
@@ -83,7 +83,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 setAddress();
                 setAppointmentId();
                 saveAddress(mBinder.cbSaveAddress.isChecked());
-                mServicesStep3ViewModel.createAppointment(ServiceOrderInfo.getInstance().getJSONRequestData());
+                mServicesStep3ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
                 break;
         }
     }
@@ -99,9 +99,10 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
 
 
     @Override
-    public void handleError(Throwable throwable) {
-        // handle error
+    public void handleErrorService(Throwable throwable) {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
     }
+
     @Override
     public void doWhenAppointmentCreated() {
         goToStep4();
@@ -129,7 +130,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void openLoginActivity() {
-        AlertUtils.getInstance(this).showLongToast("Unauthorized. Please log in again.");
+        AlertManager.getInstance(this).showLongToast("Unauthorized. Please log in again.");
         Intent intent = LoginActivity.getStartIntent(this);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

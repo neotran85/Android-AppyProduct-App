@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.utils;
+package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.view.View;
 import android.view.animation.Animation;

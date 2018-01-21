@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.databinding.ItemOpenSourceEmptyViewBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ItemOpenSourceViewBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
-import com.appyhome.appyproduct.mvvm.utils.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import java.util.ArrayList;
 import java.util.List;
