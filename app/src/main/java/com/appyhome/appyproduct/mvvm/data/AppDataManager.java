@@ -5,15 +5,17 @@ import android.content.Context;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
-import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.Option;
 import com.appyhome.appyproduct.mvvm.data.model.db.Question;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
@@ -312,13 +314,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void setServiceAddress(ServiceAddress address) {
-        mPreferencesHelper.setServiceAddress(address);
+    public ServiceAddress getServiceAddress() {
+        return mPreferencesHelper.getServiceAddress();
     }
 
     @Override
-    public ServiceAddress getServiceAddress() {
-        return mPreferencesHelper.getServiceAddress();
+    public void setServiceAddress(ServiceAddress address) {
+        mPreferencesHelper.setServiceAddress(address);
     }
 
     @Override
@@ -326,4 +328,13 @@ public class AppDataManager implements DataManager {
         return mApiHelper.createAppointment(dataRequest);
     }
 
+    @Override
+    public Single<AppointmentGetResponse> getAppointmentAll() {
+        return mApiHelper.getAppointmentAll();
+    }
+
+    @Override
+    public Single<AppointmentGetResponse> getAppointment(AppointmentGetRequest request) {
+        return mApiHelper.getAppointment(request);
+    }
 }

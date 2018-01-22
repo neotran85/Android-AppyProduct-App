@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.data.local.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
 

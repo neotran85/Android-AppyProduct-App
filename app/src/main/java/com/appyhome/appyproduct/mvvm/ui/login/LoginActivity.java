@@ -15,9 +15,9 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
 
@@ -92,6 +92,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         startActivity(intent);
         finish();
     }
+
     @Override
     public void handleErrorService(Throwable throwable) {
         AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));

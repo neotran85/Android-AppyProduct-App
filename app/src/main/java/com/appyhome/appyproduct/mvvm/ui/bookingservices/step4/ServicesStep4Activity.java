@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices.step4;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
@@ -10,6 +11,9 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep4Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5Activity;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
+import com.molpay.molpayxdk.MOLPayActivity;
 
 import javax.inject.Inject;
 
@@ -32,6 +36,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.setViewModel(mServicesStep4ViewModel);
         mServicesStep4ViewModel.setNavigator(this);
         mBinder.btnNext.setOnClickListener(this);
+        mBinder.rlVisaPayment.setOnClickListener(this);
         setTitle("Payment");
         activeBackButton();
     }
@@ -41,6 +46,9 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         switch (view.getId()) {
             case R.id.btnNext:
                 goToStep5();
+                break;
+            case R.id.rlVisaPayment:
+                openPaymentActivity();
                 break;
         }
     }
@@ -75,5 +83,20 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public void goToStep5() {
         startActivity(ServicesStep5Activity.getStartIntent(this));
+    }
+
+    @Override
+    public void openPaymentActivity() {
+        PaymentManager.getInstance().startPaymentActivity(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
+            Log.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
+            AlertManager.getInstance(this).showLongToast(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
+        }
+
     }
 }

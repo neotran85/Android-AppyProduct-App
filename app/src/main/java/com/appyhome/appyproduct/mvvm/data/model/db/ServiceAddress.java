@@ -7,6 +7,7 @@ public class ServiceAddress {
     public String area2;
     public String city;
     public String code;
+
     public ServiceAddress() {
         number = "";
         street = "";
@@ -15,6 +16,7 @@ public class ServiceAddress {
         city = "";
         code = "";
     }
+
     public ServiceAddress(String number, String street, String area1, String area2, String city, String code) {
         number = number;
         street = street;

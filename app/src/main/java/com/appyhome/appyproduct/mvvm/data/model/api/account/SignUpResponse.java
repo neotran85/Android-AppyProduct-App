@@ -1,13 +1,13 @@
-package com.appyhome.appyproduct.mvvm.data.model.api;
+package com.appyhome.appyproduct.mvvm.data.model.api.account;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class LogoutResponse {
+public class SignUpResponse {
 
     @Expose
-    @SerializedName("status_code")
+    @SerializedName("code")
     private String statusCode;
 
     @Expose
@@ -35,11 +35,12 @@ public class LogoutResponse {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
 
-        LogoutResponse that = (LogoutResponse) object;
+        SignUpResponse that = (SignUpResponse) object;
 
         if (statusCode != null ? !statusCode.equals(that.statusCode) : that.statusCode != null)
             return false;
-        return message != null ? message.equals(that.message) : that.message == null;
+
+        return (message != null ? !message.equals(that.message) : that.message != null);
 
     }
 
@@ -48,5 +49,10 @@ public class LogoutResponse {
         int result = statusCode != null ? statusCode.hashCode() : 0;
         result = 31 * result + (message != null ? message.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "status_code = " + getStatusCode() + " | " + "message = " + getMessage();
     }
 }

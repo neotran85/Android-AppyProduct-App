@@ -9,18 +9,6 @@ import com.wdullaer.materialdatetimepicker.date.DateRangeLimiter;
 import java.util.Calendar;
 
 public class AppyServiceDateRangerLimiter implements DateRangeLimiter {
-    private Calendar mStartDate;
-
-    public AppyServiceDateRangerLimiter() {
-
-    }
-
-    @SuppressWarnings("WeakerAccess")
-
-    public AppyServiceDateRangerLimiter(Parcel in) {
-
-    }
-
     @SuppressWarnings("WeakerAccess")
     public static final Parcelable.Creator<AppyServiceDateRangerLimiter> CREATOR
             = new Parcelable.Creator<AppyServiceDateRangerLimiter>() {
@@ -32,6 +20,17 @@ public class AppyServiceDateRangerLimiter implements DateRangeLimiter {
             return new AppyServiceDateRangerLimiter[size];
         }
     };
+    private Calendar mStartDate;
+
+    public AppyServiceDateRangerLimiter() {
+
+    }
+
+    @SuppressWarnings("WeakerAccess")
+
+    public AppyServiceDateRangerLimiter(Parcel in) {
+
+    }
 
     @Override
     public int getMinYear() {

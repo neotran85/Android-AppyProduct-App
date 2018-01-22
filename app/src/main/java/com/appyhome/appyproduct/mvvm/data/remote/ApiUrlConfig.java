@@ -23,6 +23,9 @@ public class ApiUrlConfig {
     public static final String APPOINTMENT_CREATE = BuildConfig.BASE_URL
             + "api/create/appointment";
 
+    public static final String APPOINTMENT_GET = BuildConfig.BASE_URL
+            + "api/read/appointment";
+
     private ApiUrlConfig() {
         // This class is not publicly instantiable
     }

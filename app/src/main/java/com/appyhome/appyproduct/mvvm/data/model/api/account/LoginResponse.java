@@ -1,10 +1,10 @@
-package com.appyhome.appyproduct.mvvm.data.model.api;
+package com.appyhome.appyproduct.mvvm.data.model.api.account;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class SignUpResponse {
+public class LoginResponse {
 
     @Expose
     @SerializedName("code")
@@ -13,6 +13,27 @@ public class SignUpResponse {
     @Expose
     @SerializedName("message")
     private String message;
+
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+
+        LoginResponse that = (LoginResponse) object;
+
+        if (statusCode != null ? !statusCode.equals(that.statusCode) : that.statusCode != null)
+            return false;
+        return message != null ? message.equals(that.message) : that.message == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = statusCode != null ? statusCode.hashCode() : 0;
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        return result;
+    }
 
     public String getStatusCode() {
         return statusCode;
@@ -28,31 +49,5 @@ public class SignUpResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-
-        SignUpResponse that = (SignUpResponse) object;
-
-        if (statusCode != null ? !statusCode.equals(that.statusCode) : that.statusCode != null)
-            return false;
-
-        return (message != null ? !message.equals(that.message) : that.message != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = statusCode != null ? statusCode.hashCode() : 0;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "status_code = " + getStatusCode() + " | " + "message = " + getMessage();
     }
 }

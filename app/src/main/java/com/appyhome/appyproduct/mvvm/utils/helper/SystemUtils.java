@@ -8,6 +8,7 @@ public final class SystemUtils {
     private SystemUtils() {
 
     }
+
     public static String getDeviceId(Context context) {
         final String deviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         if (deviceId != null) {

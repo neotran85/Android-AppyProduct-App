@@ -17,10 +17,10 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.data.AppyServiceDateRangerLimiter;
 import com.appyhome.appyproduct.mvvm.utils.data.AppyServiceTimepointLimiter;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.Timepoint;
@@ -189,7 +189,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        mDateSelectedString = mDateSelectedString + " "  + hourOfDay + ":" + minute + ":00";
+        mDateSelectedString = mDateSelectedString + " " + hourOfDay + ":" + minute + ":00";
         mDateSelectedShowedString = hourOfDay + ":" + minute + " " + mDateSelectedShowedString;
         if (mBtnTimeSlot != null) {
             mBtnTimeSlot.setText(mDateSelectedShowedString);

@@ -14,9 +14,9 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
 

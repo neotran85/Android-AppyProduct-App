@@ -1,14 +1,16 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
-import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.SignUpRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import javax.inject.Inject;
@@ -83,5 +85,24 @@ public class AppApiHelper implements ApiHelper {
                 .addUrlEncodeFormBodyParameter(dataRequest)
                 .build()
                 .getObjectSingle(AppointmentCreateResponse.class);
+    }
+
+    @Override
+    public Single<AppointmentGetResponse> getAppointment(AppointmentGetRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(AppointmentGetResponse.class);
+    }
+
+    @Override
+    public Single<AppointmentGetResponse> getAppointmentAll() {
+        AppointmentGetRequest request = new AppointmentGetRequest("");
+        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(AppointmentGetResponse.class);
     }
 }

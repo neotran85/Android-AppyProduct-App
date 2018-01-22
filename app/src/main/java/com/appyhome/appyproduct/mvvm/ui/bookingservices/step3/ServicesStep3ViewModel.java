@@ -1,8 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.bookingservices.step3;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.AppointmentCreateResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -16,9 +16,6 @@ public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator
         super(dataManager, schedulerProvider);
     }
 
-    public void setServiceAddress(ServiceAddress serviceAddress) {
-        getDataManager().setServiceAddress(serviceAddress);
-    }
     public void createAppointment(AppointmentCreateRequest requestData) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
@@ -40,14 +37,20 @@ public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator
                     }
                 }));
     }
+
     private void handleResponse(AppointmentCreateResponse response) {
-        if(response != null) {
-            if(response.getStatusCode() != null && response.getStatusCode() == "401") {
+        if (response != null) {
+            if (response.getStatusCode() != null && response.getStatusCode() == "401") {
                 getNavigator().openLoginActivity();
             }
         }
     }
+
     public ServiceAddress getServiceAddress() {
         return getDataManager().getServiceAddress();
+    }
+
+    public void setServiceAddress(ServiceAddress serviceAddress) {
+        getDataManager().setServiceAddress(serviceAddress);
     }
 }

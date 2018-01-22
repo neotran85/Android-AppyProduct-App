@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.data.model.api;
+package com.appyhome.appyproduct.mvvm.data.model.api.appointment;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

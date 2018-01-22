@@ -1,8 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.login;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.LoginResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
