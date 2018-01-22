@@ -232,13 +232,22 @@ public class ServiceOrderInfo {
             request.setAddress(getAddress());
 
             JSONObject datetime = new JSONObject();
-            datetime.put("datetime1", getTimeSlot1());
-            datetime.put("datetime2", getTimeSlot2());
-            datetime.put("datetime3", getTimeSlot3());
+            String time1 = getTimeSlot1();
+            if (time1 != null && time1.length() > 0)
+                datetime.put("datetime1", time1);
+            String time2 = getTimeSlot2();
+            if (time2 != null && time2.length() > 0)
+                datetime.put("datetime2", time2);
+            String time3 = getTimeSlot3();
+            if (time3 != null && time3.length() > 0)
+                datetime.put("datetime3", time3);
+
             request.setDateTime(datetime.toString());
 
             JSONObject services = new JSONObject();
-            services.put("service1", getSelectedService().getString("name"));
+            String name = this.mServiceInfo.getString("name");
+            String price = getSelectedService().getString("price");
+            services.put("service1", name + "::" + price);
             services.put("service2", "");
             services.put("service3", "");
             request.setServices(services.toString());
@@ -264,5 +273,14 @@ public class ServiceOrderInfo {
 
     public void setServiceMain(ArrayList<String> mServiceMain) {
         this.mServiceMain = mServiceMain;
+    }
+
+    public String getTotalCost() {
+        try {
+            return getSelectedService().getString("price");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

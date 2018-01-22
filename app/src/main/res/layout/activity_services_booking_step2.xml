@@ -24,7 +24,7 @@
 
             <include layout="@layout/view_header"></include>
 
-            <include layout="@layout/view_service_header"></include>
+            <include layout="@layout/view_service_step2"></include>
 
             <ScrollView
                 android:layout_width="match_parent"

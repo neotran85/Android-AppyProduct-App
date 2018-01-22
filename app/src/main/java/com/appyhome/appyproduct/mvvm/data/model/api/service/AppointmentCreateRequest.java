@@ -68,4 +68,14 @@ public class AppointmentCreateRequest {
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
+
+    @Override
+    public String toString() {
+        String result = "id_number: " + idNumber + " | ";
+         result = result + address + " | ";
+         result = result + services + " | ";
+         result = result + dateTime + " | ";
+         result = result + additional;
+         return result;
+    }
 }

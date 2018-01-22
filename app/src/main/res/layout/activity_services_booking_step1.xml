@@ -24,7 +24,7 @@
 
             <include layout="@layout/view_header"></include>
 
-            <include layout="@layout/view_service_header"></include>
+            <include layout="@layout/view_service_step1"></include>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -39,6 +39,7 @@
                     android:padding="12dp">
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/llServiceMain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

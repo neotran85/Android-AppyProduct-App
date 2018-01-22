@@ -24,7 +24,7 @@ public class MultipleChooseView implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if (view != null) {
-            Boolean booleanValue = (Boolean) view.getTag(R.id.name);
+            Boolean booleanValue = (Boolean) view.getTag(R.id.selected);
             if (booleanValue == null || !booleanValue) {
                 view.setBackgroundResource(R.drawable.view_rounded_bg_orange);
                 booleanValue = true;
@@ -32,14 +32,14 @@ public class MultipleChooseView implements View.OnClickListener{
                 view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.white));
                 booleanValue = false;
             }
-            view.setTag(R.id.name, booleanValue);
+            view.setTag(R.id.selected, booleanValue);
             if(mListener!= null) mListener.onClick(view);
         }
     }
     public ArrayList<String> getSelectedStringValue() {
         ArrayList<String> arrayList = new ArrayList<>();
         for(View item: mArrayItems) {
-            Boolean booleanValue = (Boolean) item.getTag(100);
+            Boolean booleanValue = (Boolean) item.getTag(R.id.selected);
             if (booleanValue != null && booleanValue) {
                 arrayList.add(item.getTag().toString());
             }

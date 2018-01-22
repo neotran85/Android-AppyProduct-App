@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 import com.google.android.gms.location.places.Place;
@@ -76,12 +77,15 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setAddress() {
-        String address = mBinder.etUnitNumberHouse.getText().toString() + " "
-                + mBinder.etStreet.getText().toString() + " "
-                + mBinder.etAreaLine1.getText().toString() + " "
-                + mBinder.etAreaLine2.getText().toString() + " "
+        String postcode =  mBinder.etPostCode.getText().toString();
+        postcode = postcode.length() > 0 ? "(Postal code " + postcode + ")" : "";
+
+        String address = mBinder.etUnitNumberHouse.getText().toString() + ", "
+                + mBinder.etStreet.getText().toString() + ", "
+                + mBinder.etAreaLine1.getText().toString() + ", "
+                + mBinder.etAreaLine2.getText().toString() + ", "
                 + mBinder.etCityTown.getText().toString() + " "
-                + "(Postcode " + mBinder.etPostCode.getText().toString() + ")";
+                + postcode;
         ServiceOrderInfo.getInstance().setAddress(address);
     }
 
@@ -92,6 +96,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 setAddress();
                 setAppointmentId();
                 saveAddress(mBinder.cbSaveAddress.isChecked());
+                AppLogger.d(ServiceOrderInfo.getInstance().getAppointmentCreateRequest().toString());
                 mServicesStep3ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
                 break;
             case R.id.llSearchLocationNearby:

@@ -24,7 +24,7 @@
 
             <include layout="@layout/view_header"></include>
 
-            <include layout="@layout/view_service_header"></include>
+            <include layout="@layout/view_service_step4"></include>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -46,16 +46,36 @@
                         android:paddingBottom="20dp"
                         android:paddingTop="20dp">
 
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="SUMMARY"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <include layout="@layout/view_item_service_offer"></include>
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="SUMMARY OF"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@{viewModel.getNameService()}"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <com.appyhome.appyproduct.mvvm.ui.custom.NonScrollListView
+                            android:id="@+id/lvServices"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"></com.appyhome.appyproduct.mvvm.ui.custom.NonScrollListView>
 
                         <View
                             android:layout_width="match_parent"
@@ -69,7 +89,7 @@
                             android:layout_marginLeft="20dp"
                             android:background="@null"
                             android:gravity="center_vertical|left"
-                            android:text="+ Add Promo Code"
+                            android:text="+ Add Promo Code (Coming soon)"
                             android:textColor="@color/light_green"
                             android:textSize="14sp" />
 
@@ -115,7 +135,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="90.00"
+                                    android:text="@{viewModel.getTotalCost()}"
                                     android:textColor="@color/black"
                                     android:textSize="20sp" />
                             </LinearLayout>
@@ -126,7 +146,27 @@
                             android:layout_height="1dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="16dp"
                             android:background="@color/light_gray"></View>
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Additional Services"
+                            android:visibility="@{viewModel.isAdditionalServiceViewVisible()}"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="28dp"
+                            android:layout_marginTop="6dp"
+                            android:text="@{viewModel.getAdditionalServices()}"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="12sp" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -143,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="28dp"
                             android:layout_marginTop="6dp"
-                            android:text="Mon, 15 Jan 2018 3:34 PM"
+                            android:text="@{viewModel.getTimeSlot1()}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -152,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="28dp"
                             android:layout_marginTop="6dp"
-                            android:text="Mon, 15 Jan 2018 3:34 PM"
+                            android:text="@{viewModel.getTimeSlot2()}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -161,7 +201,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="28dp"
                             android:layout_marginTop="6dp"
-                            android:text="Mon, 15 Jan 2018 3:34 PM"
+                            android:text="@{viewModel.getTimeSlot3()}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -180,9 +220,30 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="28dp"
                             android:layout_marginTop="6dp"
-                            android:text="Johor Bahru, 28-01, Jalan Molek 1/10, Taman Molek. Kuala Lumpur"
+                            android:text="@{viewModel.getAddressString()}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Additional Detail"
+                            android:visibility="@{viewModel.isAdditionalDetailViewVisible()}"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="28dp"
+                            android:layout_marginTop="6dp"
+                            android:text="@{viewModel.getAdditionalDetail()}"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="12sp" />
+
                     </LinearLayout>
 
 
