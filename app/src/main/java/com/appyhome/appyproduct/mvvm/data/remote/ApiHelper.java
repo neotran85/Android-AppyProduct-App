@@ -7,10 +7,16 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 
 import io.reactivex.Single;
 
@@ -32,6 +38,14 @@ public interface ApiHelper {
     Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 
     Single<AppointmentGetResponse> getAppointment(AppointmentGetRequest request);
+
+    Single<OrderGetResponse> getOrder(OrderGetRequest request);
+
+    Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request);
+
+    Single<OrderGetResponse> getOrderAll();
+
+    Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
 
     Single<AppointmentGetResponse> getAppointmentAll();
 }

@@ -7,10 +7,16 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import javax.inject.Inject;
@@ -104,5 +110,37 @@ public class AppApiHelper implements ApiHelper {
                 .addUrlEncodeFormBodyParameter(request)
                 .build()
                 .getObjectSingle(AppointmentGetResponse.class);
+    }
+
+    @Override
+    public Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_DELETE)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(AppointmentDeleteResponse.class);
+    }
+
+    @Override
+    public Single<OrderGetResponse> getOrder(OrderGetRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(OrderGetResponse.class);
+    }
+
+    @Override
+    public Single<OrderGetResponse> getOrderAll() {
+        return getOrder(new OrderGetRequest());
+    }
+
+    @Override
+    public Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(ReceiptGetResponse.class);
     }
 }

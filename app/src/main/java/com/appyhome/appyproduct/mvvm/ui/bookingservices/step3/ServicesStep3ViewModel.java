@@ -1,8 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.bookingservices.step3;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;

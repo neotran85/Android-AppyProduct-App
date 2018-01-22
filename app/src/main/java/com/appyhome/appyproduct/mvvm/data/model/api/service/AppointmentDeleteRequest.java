@@ -1,15 +1,15 @@
-package com.appyhome.appyproduct.mvvm.data.model.api.appointment;
+package com.appyhome.appyproduct.mvvm.data.model.api.service;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class AppointmentGetRequest {
+public class AppointmentDeleteRequest {
     @Expose
     @SerializedName("id_number")
     private String idNumber;
 
-    public AppointmentGetRequest(String idNumber) {
+    public AppointmentDeleteRequest(String idNumber) {
         idNumber = idNumber;
     }
 

@@ -26,6 +26,14 @@ public class ApiUrlConfig {
     public static final String APPOINTMENT_GET = BuildConfig.BASE_URL
             + "api/read/appointment";
 
+    public static final String APPOINTMENT_DELETE = BuildConfig.BASE_URL
+            + "api/delete/appointment";
+
+    public static final String ORDER_GET = BuildConfig.BASE_URL
+            + "api/read/order";
+
+    public static final String RECEIPT_GET = BuildConfig.BASE_URL
+            + "api/read/receipt";
     private ApiUrlConfig() {
         // This class is not publicly instantiable
     }

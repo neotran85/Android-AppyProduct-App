@@ -1,7 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.bookingservices;
 
 
-import com.appyhome.appyproduct.mvvm.data.model.api.appointment.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

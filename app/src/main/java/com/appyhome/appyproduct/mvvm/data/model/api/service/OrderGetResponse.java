@@ -1,10 +1,10 @@
-package com.appyhome.appyproduct.mvvm.data.model.api.appointment;
+package com.appyhome.appyproduct.mvvm.data.model.api.service;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class AppointmentDeleteResponse {
+public class OrderGetResponse {
 
     @Expose
     @SerializedName("code")
