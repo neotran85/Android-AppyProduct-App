@@ -100,8 +100,6 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         }
     }
 
-    private final static int PLACE_PICKER_REQUEST = 999;
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -118,9 +116,12 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                                 addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
                                 String state = addresses.get(0).getAdminArea();
                                 String country = addresses.get(0).getCountryName();
-                                mBinder.etCityTown.setText(addresses.get(0).getLocality() + " , " + state + ", " + country);
+                                String city = addresses.get(0).getLocality();
+                                mBinder.etCityTown.setText(state + ", " + country);
                                 mBinder.etPostCode.setText(addresses.get(0).getPostalCode());
-                                mBinder.etUnitNumberHouse.setText(addresses.get(0).getAddressLine(0));
+                                mBinder.etUnitNumberHouse.setText(place.getName());
+                                mBinder.etStreet.setText(place.getAddress());
+                                mBinder.etAreaLine1.setText(city);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
