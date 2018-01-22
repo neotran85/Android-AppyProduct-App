@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'AppyProduct_keystore'
+            keyPassword 'namtran1985'
+            storeFile file('/Users/namheo/Documents/GitHub/Android-AppyProduct-App/keystores/key')
+            storePassword 'namtran1985'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
@@ -11,11 +19,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.config
     }
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"http://dev.lara.appycms.com/\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
+            signingConfig signingConfigs.config
         }
         release {
             shrinkResources true
@@ -23,15 +33,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"http://dev.lara.appycms.com/\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
+            signingConfig signingConfigs.config
         }
     }
     dataBinding {
         enabled = true
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // android support libraries
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
@@ -96,6 +109,9 @@ dependencies {
 
     // Payments
     implementation 'com.molpay:molpay-mobile-xdk-android:3.17.0'
+
+    // Map & Location
+    implementation 'com.google.android.gms:play-services-places:10.2.0'
 }
 
 configurations.all {

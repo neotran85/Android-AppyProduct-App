@@ -2,6 +2,8 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices.step3;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,6 +16,12 @@ import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -35,6 +43,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         mBinder = getViewDataBinding();
         mServicesStep3ViewModel.setNavigator(this);
         mBinder.btnNext.setOnClickListener(this);
+        mBinder.llSearchLocationNearby.setOnClickListener(this);
         setTitle("Set Location");
         activeBackButton();
         updateAddress();
@@ -85,8 +94,42 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 saveAddress(mBinder.cbSaveAddress.isChecked());
                 mServicesStep3ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
                 break;
+            case R.id.llSearchLocationNearby:
+                MapManager.openMapForPlaceSelection(this);
+                break;
         }
     }
+
+    private final static int PLACE_PICKER_REQUEST = 999;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case MapManager.PLACE_PICKER_REQUEST:
+                    if (data != null) {
+                        Place place = PlacePicker.getPlace(this, data);
+                        if (place != null) {
+                            Geocoder geocoder;
+                            List<Address> addresses;
+                            geocoder = new Geocoder(this, Locale.getDefault());
+                            try {
+                                addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                                String state = addresses.get(0).getAdminArea();
+                                String country = addresses.get(0).getCountryName();
+                                mBinder.etCityTown.setText(addresses.get(0).getLocality() + " , " + state + ", " + country);
+                                mBinder.etPostCode.setText(addresses.get(0).getPostalCode());
+                                mBinder.etUnitNumberHouse.setText(addresses.get(0).getAddressLine(0));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
 
     private void setAppointmentId() {
         ServiceOrderInfo.getInstance().setAppointmentId(System.currentTimeMillis() + "");
@@ -135,4 +178,6 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+
 }

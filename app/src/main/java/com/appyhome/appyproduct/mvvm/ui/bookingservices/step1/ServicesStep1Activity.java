@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep1Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
+import com.appyhome.appyproduct.mvvm.ui.custom.MultipleChooseView;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -35,6 +36,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     private ArrayList<JSONObject> mServicesList;
     private View mCurrentServiceView;
     private int mSelectedServiceIndex;
+    private MultipleChooseView mMainServiceView;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep1Activity.class);
@@ -51,7 +53,18 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         activeBackButton();
         setUpData();
         setUpListeners();
+        setUpMultipleExtraServices();
     }
+
+    private void setUpMultipleExtraServices() {
+        View viewCleaning = mBinder.llServiceMain.findViewById(R.id.llCleaning);
+        View viewAirCon = mBinder.llServiceMain.findViewById(R.id.llAirCon);
+        View viewPlumbing = mBinder.llServiceMain.findViewById(R.id.llPlumbing);
+        View viewElectric = mBinder.llServiceMain.findViewById(R.id.llElectrical);
+        mMainServiceView = new MultipleChooseView(viewCleaning, viewAirCon, viewPlumbing, viewElectric);
+        mMainServiceView.setOnClickListener(this);
+    }
+
 
     private void setUpData() {
         mServicesStep1ViewModel.setTypeServices(ServiceOrderInfo.getInstance().getType());
@@ -96,13 +109,19 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         switch (view.getId()) {
             case R.id.btnNext:
                 boolean selected = checkIfServiceSelected();
-                if (selected) goToStep2();
-                else AlertManager.getInstance(this).showLongToast("Please choose a service");
+                if (selected) {
+                    goToStep2();
+                    updateServiceOrderInfo();
+                } else AlertManager.getInstance(this).showLongToast("Please choose a service");
                 break;
             case R.id.btSeeDetailService:
                 viewDetailService();
                 break;
         }
+    }
+
+    private void updateServiceOrderInfo() {
+        ServiceOrderInfo.getInstance().setServiceMain(mMainServiceView.getSelectedStringValue());
     }
 
     private boolean checkIfServiceSelected() {

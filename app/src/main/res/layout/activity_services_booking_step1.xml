@@ -39,6 +39,33 @@
                     android:padding="12dp">
 
                     <LinearLayout
+                        android:id="@+id/llServiceMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Services"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="You can choose multiple services"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="12sp" />
+
+                        <include layout="@layout/view_service_main"></include>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
                         android:id="@+id/llServiceHomeCleaning"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

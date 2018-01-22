@@ -96,4 +96,7 @@
     <string name="booking_service_read_tandt"><![CDATA[READ OUR BOOKING T&C]]></string>
     <string name="booking_service_read_scheduling_FAQ"><![CDATA[READ OUR SCHEDULING FAQ]]></string>
 
+    <!--Map & Location-->
+    <string name="map_api_key">AIzaSyCSgHu3b8BSGopgbgXeVqPrZ7GhTxATYoY</string>
+
 </resources>

@@ -211,7 +211,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="6dp"
                             android:layout_toLeftOf="@+id/visaNext"
-                            android:src="@mipmap/icon_visa_master_card" />
+                            android:src="@mipmap/molpay_logo" />
 
                         <ImageView
                             android:id="@+id/visaNext"
@@ -237,7 +237,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="Pay by Bank"
+                            android:text="Pay by Bank (coming soon)"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 

@@ -27,7 +27,8 @@ public class ServiceOrderInfo {
     private String mTimeSlot2 = "";
     private String mTimeSlot3 = "";
 
-    private String mExtraServices = "";
+    private ArrayList<String> mServiceExtra;
+    private ArrayList<String> mServiceMain;
 
     private String mAppointmentId;
 
@@ -208,12 +209,12 @@ public class ServiceOrderInfo {
         this.mAddress = mAddress;
     }
 
-    public String getExtraServices() {
-        return mExtraServices;
+    public ArrayList<String> getExtraServices() {
+        return mServiceExtra;
     }
 
-    public void setExtraServices(String mExtraServices) {
-        this.mExtraServices = mExtraServices;
+    public void setExtraServices(ArrayList<String> mExtraServices) {
+        this.mServiceExtra = mExtraServices;
     }
 
     public String getAppointmentId() {
@@ -255,5 +256,13 @@ public class ServiceOrderInfo {
         }
 
         return request;
+    }
+
+    public ArrayList<String> getServiceMain() {
+        return mServiceMain;
+    }
+
+    public void setServiceMain(ArrayList<String> mServiceMain) {
+        this.mServiceMain = mServiceMain;
     }
 }

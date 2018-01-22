@@ -87,7 +87,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void openPaymentActivity() {
-        PaymentManager.getInstance().startPaymentActivity(this);
+        PaymentManager.getInstance().startPaymentActivity(this, "2.0");
     }
 
     @Override

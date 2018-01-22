@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
+import com.appyhome.appyproduct.mvvm.ui.custom.MultipleChooseView;
 import com.appyhome.appyproduct.mvvm.utils.data.AppyServiceDateRangerLimiter;
 import com.appyhome.appyproduct.mvvm.utils.data.AppyServiceTimepointLimiter;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -39,7 +39,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     private Button mBtnTimeSlot;
     private String mDateSelectedShowedString = "";
     private String mDateSelectedString = "";
-
+    private MultipleChooseView mExtraServicesView;
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep2Activity.class);
         return intent;
@@ -54,6 +54,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         setTitle("Details");
         activeBackButton();
         setUpListeners();
+        setUpMultipleExtraServices();
     }
 
     private void setUpListeners() {
@@ -88,18 +89,22 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.btTimeslot2.setOnClickListener(this);
         mBinder.btTimeslot3.setOnClickListener(this);
 
-        mBinder.llCeilingFan.setOnClickListener(this);
-        mBinder.llIroning.setOnClickListener(this);
-        mBinder.llLaundry.setOnClickListener(this);
-        mBinder.llFolding.setOnClickListener(this);
+    }
+
+    private void setUpMultipleExtraServices() {
+        View llCeilingFan = mBinder.llServiceExtra.findViewById(R.id.llCeilingFan);
+        View llIroning = mBinder.llServiceExtra.findViewById(R.id.llIroning);
+        View llLaundry = mBinder.llServiceExtra.findViewById(R.id.llLaundry);
+        View llFolding = mBinder.llServiceExtra.findViewById(R.id.llFolding);
+        mExtraServicesView = new MultipleChooseView(llCeilingFan, llIroning, llLaundry, llFolding);
+        mExtraServicesView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                setTimeSlots();
-                ServiceOrderInfo.getInstance().setExtraServices(getExtraServicesSelected());
+                updateServiceOrderInfo();
                 goToStep3();
                 break;
             case R.id.btTimeslot1:
@@ -108,49 +113,14 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 mBtnTimeSlot = (Button) view;
                 openDatePicker();
                 break;
-
-            case R.id.llCeilingFan:
-            case R.id.llIroning:
-            case R.id.llLaundry:
-            case R.id.llFolding:
-                chooseExtraServices(view);
-                break;
         }
     }
 
-    private String getExtraServicesSelected() {
-        String extraServices = "";
-        Boolean booleanValue = (Boolean) mBinder.llFolding.getTag();
-        if (booleanValue != null) {
-            extraServices = booleanValue ? (mBinder.tvFolding.getText().toString()) : "";
-            booleanValue = (Boolean) mBinder.llLaundry.getTag();
-            extraServices = extraServices + (booleanValue ? (" & " + mBinder.tvLaundry.getText().toString()) : "");
-            booleanValue = (Boolean) mBinder.llIroning.getTag();
-            extraServices = extraServices + (booleanValue ? (" & " + mBinder.tvIroning.getText().toString()) : "");
-            booleanValue = (Boolean) mBinder.llCeilingFan.getTag();
-            extraServices = extraServices + (booleanValue ? (" & " + mBinder.tvCeilingFan.getText().toString()) : "");
-        }
-        return extraServices;
-    }
-
-    private void setTimeSlots() {
+    private void updateServiceOrderInfo() {
         ServiceOrderInfo.getInstance().setTimeSlot1(ViewUtils.getStringByTag(mBinder.btTimeslot1));
         ServiceOrderInfo.getInstance().setTimeSlot2(ViewUtils.getStringByTag(mBinder.btTimeslot2));
         ServiceOrderInfo.getInstance().setTimeSlot3(ViewUtils.getStringByTag(mBinder.btTimeslot3));
-    }
-
-    private void chooseExtraServices(View view) {
-        if (view != null) {
-            Boolean booleanValue = (Boolean) view.getTag();
-            if (booleanValue == null || !booleanValue) {
-                view.setBackgroundResource(R.drawable.view_rounded_bg_orange);
-                booleanValue = true;
-            } else {
-                view.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                booleanValue = false;
-            }
-            view.setTag(booleanValue);
-        }
+        ServiceOrderInfo.getInstance().setExtraServices(mExtraServicesView.getSelectedStringValue());
     }
 
     private void openDatePicker() {
