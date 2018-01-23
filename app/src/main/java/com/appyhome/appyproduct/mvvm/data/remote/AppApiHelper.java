@@ -11,7 +11,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;

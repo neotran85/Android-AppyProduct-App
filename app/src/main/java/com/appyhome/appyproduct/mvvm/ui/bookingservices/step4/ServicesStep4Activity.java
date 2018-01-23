@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
 import com.molpay.molpayxdk.MOLPayActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.rlVisaPayment.setOnClickListener(this);
         mBinder.rlBankPayment.setOnClickListener(this);
     }
+
     private void setUpData() {
         mServicesStep4ViewModel.setAddress(ServiceOrderInfo.getInstance().getAddress());
         mServicesStep4ViewModel.setTimeSlot1(ServiceOrderInfo.getInstance().getTimeSlot1());
@@ -116,13 +118,17 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void goToStep5() {
-        startActivity(ServicesStep5Activity.getStartIntent(this));
+        Intent i = ServicesStep5Activity.getStartIntent(this);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     @Override
     public void openBankPaymentActivity() {
         PaymentManager.getInstance().startPaymentActivity(this,
-                ServiceOrderInfo.getInstance().getTotalCost(), mAppointmentId);
+                ServiceOrderInfo.getInstance().getTotalCost(), mAppointmentId,
+                mServicesStep4ViewModel.getPhoneNumberOfUser(), mServicesStep4ViewModel.getEmailOfUser());
     }
 
     @Override
@@ -130,7 +136,18 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
             Log.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
-            AlertManager.getInstance(this).showLongToast(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
+            try {
+                JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
+                if(result.getString("status_code").equals("00")) {
+                    // SUCCESS
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
+                    mServicesStep4ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
+                }
+                return;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
         }
 
     }

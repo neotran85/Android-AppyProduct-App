@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -115,6 +116,7 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
 
     public void createAppointment(AppointmentCreateRequest requestData) {
         setIsLoading(true);
+        AppLogger.d(requestData.toString());
         getCompositeDisposable().add(getDataManager()
                 .createAppointment(requestData)
                 .subscribeOn(getSchedulerProvider().io())
@@ -123,7 +125,10 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
                     @Override
                     public void accept(AppointmentCreateResponse response) throws Exception {
                         setIsLoading(false);
-                        getNavigator().doWhenAppointmentCreated();
+                        if(response.getStatusCode().equals("200")) {
+                            getNavigator().doWhenAppointmentCreated();
+                            AppLogger.d(response.getMessage());
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -132,5 +137,11 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
                         getNavigator().handleErrorService(throwable);
                     }
                 }));
+    }
+    public String getEmailOfUser() {
+        return getDataManager().getCurrentUserEmail();
+    }
+    public String getPhoneNumberOfUser() {
+        return getDataManager().getCurrentPhoneNumber();
     }
 }

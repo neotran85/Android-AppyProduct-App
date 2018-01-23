@@ -99,4 +99,8 @@
     <!--Map & Location-->
     <string name="map_api_key">AIzaSyCSgHu3b8BSGopgbgXeVqPrZ7GhTxATYoY</string>
 
+    <!--Payment-->
+    <string name="payment_success">Payment success</string>
+    <string name="payment_error_something">Payment error. Please try again later.</string>
+
 </resources>

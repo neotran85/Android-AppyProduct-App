@@ -251,8 +251,8 @@ public class ServiceOrderInfo {
             String name = this.mServiceInfo.getString("name");
             String price = getSelectedService().getString("price");
             services.put("service1", name + "::" + price);
-            services.put("service2", "");
-            services.put("service3", "");
+            // services.put("service2", "");
+            // services.put("service3", "");
             request.setServices(services.toString());
 
             JSONObject additional = new JSONObject();

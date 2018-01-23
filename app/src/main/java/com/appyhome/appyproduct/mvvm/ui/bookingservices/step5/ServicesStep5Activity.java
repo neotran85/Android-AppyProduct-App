@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep5Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         mServicesStep5ViewModel.setNavigator(this);
         mBinder.btnNext.setOnClickListener(this);
         mBinder.btnViewRequest.setOnClickListener(this);
-        setTitle("FINISH");
+        mBinder.tvOrderId.setText("Order Id: #"  + ServiceOrderInfo.getInstance().getAppointmentId());
     }
 
     @Override
@@ -79,6 +80,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     public void openRequestsScreen() {
         Intent i = MainActivity.getStartIntent(this);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 
@@ -86,6 +88,12 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     public void backToHomeScreen() {
         Intent i = MainActivity.getStartIntent(this);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+    }
+
+    @Override
+    public void onBackPressed() {
+        backToHomeScreen();
     }
 }

@@ -3,6 +3,9 @@ package com.appyhome.appyproduct.mvvm.data.model.api.service;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class AppointmentCreateRequest {
     @Expose
@@ -71,11 +74,20 @@ public class AppointmentCreateRequest {
 
     @Override
     public String toString() {
-        String result = "id_number: " + idNumber + " | ";
-         result = result + address + " | ";
-         result = result + services + " | ";
-         result = result + dateTime + " | ";
-         result = result + additional;
-         return result;
+         return getJSONObject().toString();
+    }
+
+    public JSONObject getJSONObject() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id_number", idNumber);
+            object.put("address", address);
+            object.put("datetime", dateTime);
+            object.put("services", services);
+            object.put("additional", additional);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 }
