@@ -9,20 +9,22 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.api.RequestResponse;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentRequestBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
-public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator, View.OnClickListener {
+public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator {
 
     public static final String TAG = "NotificationFragment";
 
     @Inject
     RequestViewModel mRequestViewModel;
 
-    @Inject
-    RequestAdapter mRequestAdapter;
+    private RequestAdapter mRequestAdapter;
 
     @Inject
     LinearLayoutManager mLayoutManager;
@@ -48,15 +50,16 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     }
 
     private void setUp() {
+        setTitle("Requests Service");
         mRequestViewModel.setNavigator(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinder = getViewDataBinding();
+        mRequestAdapter = provideRequestAdapter();
         mBinder.setViewModel(mRequestViewModel);
         mBinder.requestRecyclerView.setLayoutManager(mLayoutManager);
         mBinder.requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mBinder.requestRecyclerView.setAdapter(mRequestAdapter);
-        mBinder.viewService.setOnClickListener(this);
-        mBinder.viewOrder.setOnClickListener(this);
+        mRequestViewModel.getAllAppointments();
     }
 
     @Override
@@ -89,17 +92,13 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         // handle error
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.viewOrder:
-                mBinder.viewOrderTracking.setVisibility(View.VISIBLE);
-                mBinder.viewSection.setVisibility(View.GONE);
-                break;
-            case R.id.viewService:
-                mBinder.viewServiceTracking.setVisibility(View.VISIBLE);
-                mBinder.viewSection.setVisibility(View.GONE);
-                break;
+
+    private RequestAdapter provideRequestAdapter() {
+        ArrayList<RequestItemViewModel> array = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            RequestItemViewModel item = new RequestItemViewModel(new RequestResponse.Request());
+            array.add(item);
         }
+        return new RequestAdapter(array);
     }
 }

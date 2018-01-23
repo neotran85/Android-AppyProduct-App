@@ -104,10 +104,10 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<AppointmentGetResponse> getAppointmentAll() {
-        AppointmentGetRequest request = new AppointmentGetRequest("");
+        AppointmentGetRequest request = new AppointmentGetRequest("1234");
         return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addUrlEncodeFormBodyParameter(request)
+                .addBodyParameter(request)
                 .build()
                 .getObjectSingle(AppointmentGetResponse.class);
     }

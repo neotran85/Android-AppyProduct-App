@@ -20,70 +20,12 @@
         <include layout="@layout/view_header"></include>
 
         <LinearLayout
-            android:id="@+id/viewSection"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/viewService"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/tracking_service" />
-
-                <TextView
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#99000000"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="Service Tracking"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/viewOrder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/tracking_order" />
-
-                <TextView
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#99000000"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="Order Tracking"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/viewServiceTracking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:background="#F1F1F1"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,13 +35,14 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btRequest"
                     fontPath="fonts/TitilliumWeb-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="ACTIVE"
-                    android:textColor="@color/colorAccent"
+                    android:background="@color/colorAccent"
+                    android:text="REQUEST"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
                 <View
@@ -108,6 +51,23 @@
                     android:background="@color/light_gray"></View>
 
                 <Button
+                    android:id="@+id/btOrders"
+                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="ORDERS"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="@color/light_gray"></View>
+
+                <Button
+                    android:id="@+id/btClosed"
                     fontPath="fonts/TitilliumWeb-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,29 +1,44 @@
 package com.appyhome.appyproduct.mvvm.ui.servicerequest;
 
-import android.databinding.ObservableArrayList;
-
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.RequestResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
-import java.util.List;
+import io.reactivex.functions.Consumer;
 
 public class RequestViewModel extends BaseViewModel<RequestNavigator> {
-    private final ObservableArrayList<RequestResponse.Request> requestObservableArrayList = new ObservableArrayList<>();
-    public String temp;
 
     public RequestViewModel(DataManager dataManager,
                             SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void addRequestItemsToList(List<RequestResponse.Request> list) {
-        requestObservableArrayList.clear();
-        requestObservableArrayList.addAll(list);
+    public void getAllAppointments() {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager()
+                .getAppointmentAll()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<AppointmentGetResponse>() {
+                    @Override
+                    public void accept(AppointmentGetResponse response) throws Exception {
+                        setIsLoading(false);
+                        handleServiceResult(response);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        setIsLoading(false);
+                    }
+                }));
     }
 
-    public ObservableArrayList<RequestResponse.Request> getRequestObservableArrayList() {
-        return requestObservableArrayList;
+    private void handleServiceResult(AppointmentGetResponse response) {
+        if(response!= null && response.getStatusCode() == "200") {
+            AppLogger.d(response.getResult());
+        }
     }
+
 }

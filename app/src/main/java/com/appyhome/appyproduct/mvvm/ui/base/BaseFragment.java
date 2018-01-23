@@ -10,6 +10,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.appyhome.appyproduct.mvvm.R;
 
 import dagger.android.support.AndroidSupportInjection;
 
@@ -114,5 +118,27 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         void onFragmentAttached();
 
         void onFragmentDetached(String tag);
+    }
+
+    public void setTitle(String title) {
+        if (mRootView != null) {
+            TextView txt = mRootView.findViewById(R.id.tvTitle);
+            if (txt != null) {
+                txt.setText(title);
+            }
+        }
+    }
+
+    public void activeBackButton() {
+        if (mRootView != null) {
+            ImageButton button = (ImageButton) mRootView.findViewById(R.id.btBack);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getActivity() != null)
+                        getActivity().onBackPressed();
+                }
+            });
+        }
     }
 }

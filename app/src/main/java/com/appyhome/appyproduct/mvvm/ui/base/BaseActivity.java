@@ -62,12 +62,15 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         View mainView = getMainView();
         if (mainView != null) {
             ImageButton button = (ImageButton) mainView.findViewById(R.id.btBack);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            if (button != null) {
+                button.setVisibility(View.VISIBLE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
+            }
         }
     }
 

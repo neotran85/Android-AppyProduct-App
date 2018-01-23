@@ -28,16 +28,6 @@ public class RequestFragmentModule {
     }
 
     @Provides
-    RequestAdapter provideRequestAdapter() {
-        ArrayList<RequestItemViewModel> array = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            RequestItemViewModel item = new RequestItemViewModel(new RequestResponse.Request());
-            array.add(item);
-        }
-        return new RequestAdapter(array);
-    }
-
-    @Provides
     LinearLayoutManager provideLinearLayoutManager(RequestFragment fragment) {
         return new LinearLayoutManager(fragment.getActivity());
     }
