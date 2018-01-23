@@ -121,6 +121,14 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void updateServiceOrderInfo() {
+        if (ServiceOrderInfo.getInstance().getType() == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING) {
+            AirConOptionView airConView = new AirConOptionView(mBinder.llServiceAirConCleaning);
+            ServiceOrderInfo.getInstance().setArrayAirConOpts(airConView.getResultStrings());
+        }
+        if (ServiceOrderInfo.getInstance().getType() == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING) {
+            HomeCleaningOptionView homeView = new HomeCleaningOptionView(mBinder.llServiceHomeCleaning);
+            ServiceOrderInfo.getInstance().setArrayHomeCleaningOpts(homeView.getResultStrings());
+        }
         ServiceOrderInfo.getInstance().setServiceMain(mMainServiceView.getSelectedStringValue());
     }
 

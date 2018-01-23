@@ -32,6 +32,9 @@ public class ServiceOrderInfo {
 
     private String mAppointmentId;
 
+    private ArrayList<String> mArrayHomeCleaningOpts;
+    private ArrayList<String> mArrayAirConOpts;
+
     private ServiceOrderInfo() {
 
     }
@@ -253,10 +256,24 @@ public class ServiceOrderInfo {
             request.setServices(services.toString());
 
             JSONObject additional = new JSONObject();
-            additional.put("extra", getExtraServices().toString());
-            additional.put("is_flexible", mIsFlexible + "");
+
+            ArrayList<String> additionalArrayOpts = new ArrayList<>();
+
+            String extra1 = mIsFlexible ? "flexible::0" : "not_flexible::0";
+            additionalArrayOpts.add(extra1);
+            additionalArrayOpts.addAll(getPrice0Strings(mServiceExtra));
+
+            if (mType == SERVICE_AIR_CON_CLEANING) {
+                additionalArrayOpts.addAll(getPrice0Strings(mArrayAirConOpts));
+            }
             if (mType == SERVICE_HOME_CLEANING) {
-                additional.put("room", getRoomNumber() + "");
+                additionalArrayOpts.addAll(getPrice0Strings(mArrayHomeCleaningOpts));
+            }
+            if (mAdditionalInfo != null && mAdditionalInfo.length() > 0) {
+                additionalArrayOpts.add("Additional comments: " + mAdditionalInfo + "::0");
+            }
+            for (int i = 0; i < additionalArrayOpts.size(); i++) {
+                additional.put("extra" + i, additionalArrayOpts.get(i));
             }
             request.setAdditional(additional.toString());
 
@@ -265,6 +282,16 @@ public class ServiceOrderInfo {
         }
 
         return request;
+    }
+
+    private ArrayList<String> getPrice0Strings(ArrayList<String> arrayList) {
+        ArrayList<String> result = new ArrayList<>();
+        for (String str : arrayList) {
+            if (str != null && str.length() > 0) {
+                result.add(str + "::0");
+            }
+        }
+        return result;
     }
 
     public ArrayList<String> getServiceMain() {
@@ -282,5 +309,21 @@ public class ServiceOrderInfo {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public ArrayList<String> getArrayHomeCleaningOpts() {
+        return mArrayHomeCleaningOpts;
+    }
+
+    public void setArrayHomeCleaningOpts(ArrayList<String> mArrayHomeCleaningOpts) {
+        this.mArrayHomeCleaningOpts = mArrayHomeCleaningOpts;
+    }
+
+    public ArrayList<String> getArrayAirConOpts() {
+        return mArrayAirConOpts;
+    }
+
+    public void setArrayAirConOpts(ArrayList<String> mArrayAirConOpts) {
+        this.mArrayAirConOpts = mArrayAirConOpts;
     }
 }

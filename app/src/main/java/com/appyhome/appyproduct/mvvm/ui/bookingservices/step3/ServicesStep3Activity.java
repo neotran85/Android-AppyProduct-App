@@ -15,7 +15,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 import com.google.android.gms.location.places.Place;
@@ -94,10 +93,8 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         switch (view.getId()) {
             case R.id.btnNext:
                 setAddress();
-                setAppointmentId();
                 saveAddress(mBinder.cbSaveAddress.isChecked());
-                AppLogger.d(ServiceOrderInfo.getInstance().getAppointmentCreateRequest().toString());
-                mServicesStep3ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
+                goToStep4();
                 break;
             case R.id.llSearchLocationNearby:
                 MapManager.openMapForPlaceSelection(this);
@@ -136,25 +133,9 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         }
     }
 
-
-    private void setAppointmentId() {
-        ServiceOrderInfo.getInstance().setAppointmentId(System.currentTimeMillis() + "");
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-
-    @Override
-    public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
-    }
-
-    @Override
-    public void doWhenAppointmentCreated() {
-        goToStep4();
     }
 
     @Override
@@ -176,14 +157,5 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     public void goToStep4() {
         startActivity(ServicesStep4Activity.getStartIntent(this));
     }
-
-    @Override
-    public void openLoginActivity() {
-        AlertManager.getInstance(this).showLongToast("Unauthorized. Please log in again.");
-        Intent intent = LoginActivity.getStartIntent(this);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
 
 }

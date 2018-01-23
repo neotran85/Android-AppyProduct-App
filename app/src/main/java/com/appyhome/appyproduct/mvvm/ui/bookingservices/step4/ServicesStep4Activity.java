@@ -32,6 +32,8 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     private ArrayList<JSONObject> mServicesList;
 
+    private String mAppointmentId;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep4Activity.class);
         return intent;
@@ -53,6 +55,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         mServicesStep4ViewModel.setNavigator(this);
         mBinder.btnNext.setOnClickListener(this);
         mBinder.rlVisaPayment.setOnClickListener(this);
+        mBinder.rlBankPayment.setOnClickListener(this);
     }
     private void setUpData() {
         mServicesStep4ViewModel.setAddress(ServiceOrderInfo.getInstance().getAddress());
@@ -67,16 +70,26 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         mServicesList = new ArrayList<>();
         mServicesList.add(ServiceOrderInfo.getInstance().getSelectedService());
         mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
+
+        mAppointmentId = setAppointmentId();
+    }
+
+
+    private String setAppointmentId() {
+        String id = System.currentTimeMillis() + "";
+        ServiceOrderInfo.getInstance().setAppointmentId(id);
+        return id;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                goToStep5();
                 break;
             case R.id.rlVisaPayment:
-                openPaymentActivity();
+                break;
+            case R.id.rlBankPayment:
+                openBankPaymentActivity();
                 break;
         }
     }
@@ -85,13 +98,6 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
-    @Override
-    public void handleError(Throwable throwable) {
-        // handle error
-    }
-
 
     @Override
     public ServicesStep4ViewModel getViewModel() {
@@ -114,8 +120,9 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     @Override
-    public void openPaymentActivity() {
-        PaymentManager.getInstance().startPaymentActivity(this, "2.0");
+    public void openBankPaymentActivity() {
+        PaymentManager.getInstance().startPaymentActivity(this,
+                ServiceOrderInfo.getInstance().getTotalCost(), mAppointmentId);
     }
 
     @Override
@@ -126,5 +133,15 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
             AlertManager.getInstance(this).showLongToast(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
         }
 
+    }
+
+    @Override
+    public void handleErrorService(Throwable throwable) {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+    }
+
+    @Override
+    public void doWhenAppointmentCreated() {
+        goToStep5();
     }
 }

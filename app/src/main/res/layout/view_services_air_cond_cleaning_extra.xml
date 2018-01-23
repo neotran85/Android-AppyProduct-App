@@ -149,7 +149,7 @@
             android:id="@+id/rbSize4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I don' know"
+            android:text="I don't know"
             android:textSize="13sp" />
     </RadioGroup>
 
@@ -171,7 +171,7 @@
             android:textSize="15sp" />
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/etRoomNumber"
+            android:id="@+id/etAirConNumber"
             fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -47,10 +47,10 @@
                         android:paddingTop="20dp">
 
                         <LinearLayout
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                             <TextView
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -144,10 +144,11 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
+                            android:layout_marginBottom="16dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="16dp"
                             android:background="@color/light_gray"></View>
+
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
@@ -155,9 +156,9 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:text="Additional Services"
-                            android:visibility="@{viewModel.isAdditionalServiceViewVisible()}"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:visibility="@{viewModel.isAdditionalServiceViewVisible()}" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -231,9 +232,9 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:text="Additional Detail"
-                            android:visibility="@{viewModel.isAdditionalDetailViewVisible()}"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:visibility="@{viewModel.isAdditionalDetailViewVisible()}" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -246,8 +247,8 @@
 
                     </LinearLayout>
 
-
                     <RelativeLayout
+                        android:clickable="true"
                         android:id="@+id/rlVisaPayment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -263,7 +264,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="Pay by Credit/Debit Card"
+                            android:text="Pay Credit/Debit card"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -272,7 +273,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="6dp"
                             android:layout_toLeftOf="@+id/visaNext"
-                            android:src="@mipmap/molpay_logo" />
+                            android:src="@mipmap/icon_visa_master_card" />
 
                         <ImageView
                             android:id="@+id/visaNext"
@@ -284,6 +285,8 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:clickable="true"
+                        android:id="@+id/rlBankPayment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -298,17 +301,27 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="Pay by Bank (coming soon)"
+                            android:text="Pay by Bank"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="6dp"
+                            android:layout_toLeftOf="@+id/ivBankNext"
+                            android:src="@mipmap/molpay_logo" />
+
+                        <ImageView
+                            android:id="@+id/ivBankNext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:src="@mipmap/icon_next" />
                     </RelativeLayout>
+
+
                 </LinearLayout>
             </ScrollView>
 
