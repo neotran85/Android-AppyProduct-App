@@ -29,6 +29,7 @@ import io.reactivex.Single;
 public class AppApiHelper implements ApiHelper {
 
     private ApiHeader mApiHeader;
+    private static final String KEY_ID_NUMBER = "id_number";
 
     @Inject
     public AppApiHelper(ApiHeader apiHeader) {
@@ -94,20 +95,19 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<AppointmentGetResponse> getAppointment(AppointmentGetRequest request) {
+    public Single<AppointmentGetResponse> getAppointment(String idNumber) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addUrlEncodeFormBodyParameter(request)
+                .addBodyParameter(KEY_ID_NUMBER, idNumber)
                 .build()
                 .getObjectSingle(AppointmentGetResponse.class);
     }
 
     @Override
     public Single<AppointmentGetResponse> getAppointmentAll() {
-        AppointmentGetRequest request = new AppointmentGetRequest("1234");
         return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addBodyParameter(request)
+                .addBodyParameter(KEY_ID_NUMBER, "")
                 .build()
                 .getObjectSingle(AppointmentGetResponse.class);
     }

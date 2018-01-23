@@ -11,7 +11,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
@@ -37,7 +36,7 @@ public interface ApiHelper {
 
     Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 
-    Single<AppointmentGetResponse> getAppointment(AppointmentGetRequest request);
+    Single<AppointmentGetResponse> getAppointment(String idNumber);
 
     Single<OrderGetResponse> getOrder(OrderGetRequest request);
 

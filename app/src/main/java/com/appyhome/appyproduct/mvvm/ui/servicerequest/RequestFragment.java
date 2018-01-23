@@ -19,7 +19,7 @@ import javax.inject.Inject;
 
 public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator {
 
-    public static final String TAG = "NotificationFragment";
+    public static final String TAG = "RequestFragment";
 
     @Inject
     RequestViewModel mRequestViewModel;

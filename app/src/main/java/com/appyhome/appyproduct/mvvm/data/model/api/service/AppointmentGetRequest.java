@@ -9,15 +9,15 @@ public class AppointmentGetRequest {
     @SerializedName("id_number")
     private String idNumber;
 
-    public AppointmentGetRequest(String idNumber) {
-        idNumber = idNumber;
+    public AppointmentGetRequest() {
+
     }
 
     public String getIdNumber() {
         return idNumber;
     }
 
-    public void setIdNumber(String idNumber) {
+    public void setIdNumber(String number) {
         this.idNumber = idNumber;
     }
 }

@@ -45,11 +45,6 @@
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:background="@color/light_gray"></View>
-
                 <Button
                     android:id="@+id/btOrders"
                     fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -60,11 +55,6 @@
                     android:text="ORDERS"
                     android:textColor="@color/dark_gray"
                     android:textSize="12sp" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:background="@color/light_gray"></View>
 
                 <Button
                     android:id="@+id/btClosed"
