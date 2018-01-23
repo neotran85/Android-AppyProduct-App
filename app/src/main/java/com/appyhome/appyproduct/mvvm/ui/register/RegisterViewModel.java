@@ -13,6 +13,7 @@ import io.reactivex.functions.Consumer;
 public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
     private String mEmail = "";
+    private String mPhoneNumber = "";
     public RegisterViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -24,6 +25,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
     public void register(String firstName, String lastName, String email, String phoneNumber, String password) {
         mEmail = email;
+        mPhoneNumber = phoneNumber;
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .doUserSignUp(new SignUpRequest(firstName, lastName, email, phoneNumber, password))
@@ -79,6 +81,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
             if (message != null && message.length() > 0) {
                 setAccessToken(message);
                 setEmailUser(mEmail);
+                setPhoneNumber(mPhoneNumber);
                 getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
                 getNavigator().openMainActivity();
@@ -90,6 +93,9 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
     public void setAccessToken(String token) {
         getDataManager().setAccessToken(token);
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        getDataManager().setCurrentPhoneNumber(phoneNumber);
     }
     public void setEmailUser(String email) {
         getDataManager().setCurrentUserEmail(email);

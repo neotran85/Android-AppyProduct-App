@@ -17,6 +17,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 
+import org.json.JSONObject;
+
 import io.reactivex.Single;
 
 
@@ -46,5 +48,5 @@ public interface ApiHelper {
 
     Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
 
-    Single<AppointmentGetResponse> getAppointmentAll();
+    Single<JSONObject> getAppointmentAll();
 }

@@ -8,13 +8,12 @@ import com.appyhome.appyproduct.mvvm.databinding.ViewItemRequestBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public static final int VIEW_TYPE_NORMAL = 1;
 
-    private List<RequestItemViewModel> mRequestList;
+    private ArrayList<RequestItemViewModel> mRequestList;
 
     public RequestAdapter(ArrayList arrayList) {
         this.mRequestList = arrayList;
@@ -68,13 +67,13 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            final RequestItemViewModel mItemViewModel = mRequestList.get(position);
-            mBinding.setViewModel(mItemViewModel);
-            // Immediate Binding
-            // When a variable or observable changes, the binding will be scheduled to change before
-            // the next frame. There are times, however, when binding must be executed immediately.
-            // To force execution, use the executePendingBindings() method.
-            mBinding.executePendingBindings();
+            if(mRequestList != null && mRequestList.size() > 0) {
+                final RequestItemViewModel itemViewModel = mRequestList.get(position);
+                mBinding.setViewModel(itemViewModel);
+                mBinding.executePendingBindings();
+                mBinding.tvTitle.setText(itemViewModel.title.get());
+                mBinding.tvTimeCreated.setText(itemViewModel.timeCreated.get());
+            }
         }
 
     }

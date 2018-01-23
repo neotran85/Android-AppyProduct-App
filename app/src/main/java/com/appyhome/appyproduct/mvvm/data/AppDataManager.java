@@ -34,6 +34,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -334,7 +336,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<AppointmentGetResponse> getAppointmentAll() {
+    public Single<JSONObject> getAppointmentAll() {
         return mApiHelper.getAppointmentAll();
     }
 
@@ -352,10 +354,12 @@ public class AppDataManager implements DataManager {
     public Single<OrderGetResponse> getOrder(OrderGetRequest request) {
         return mApiHelper.getOrder(request);
     }
+
     @Override
     public Single<OrderGetResponse> getOrderAll() {
         return mApiHelper.getOrderAll();
     }
+
     @Override
     public Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request) {
         return mApiHelper.getReceipt(request);

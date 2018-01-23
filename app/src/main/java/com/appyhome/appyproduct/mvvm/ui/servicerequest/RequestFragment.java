@@ -9,9 +9,11 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.model.api.RequestResponse;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentRequestBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -54,11 +56,9 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mRequestViewModel.setNavigator(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinder = getViewDataBinding();
-        mRequestAdapter = provideRequestAdapter();
         mBinder.setViewModel(mRequestViewModel);
         mBinder.requestRecyclerView.setLayoutManager(mLayoutManager);
         mBinder.requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mBinder.requestRecyclerView.setAdapter(mRequestAdapter);
         mRequestViewModel.getAllAppointments();
     }
 
@@ -92,13 +92,10 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         // handle error
     }
 
-
-    private RequestAdapter provideRequestAdapter() {
-        ArrayList<RequestItemViewModel> array = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            RequestItemViewModel item = new RequestItemViewModel(new RequestResponse.Request());
-            array.add(item);
-        }
-        return new RequestAdapter(array);
+    @Override
+    public void showResultList(ArrayList<RequestItemViewModel> array) {
+        mRequestAdapter = new RequestAdapter(array);
+        mBinder.requestRecyclerView.setAdapter(mRequestAdapter);
+        mRequestAdapter.notifyDataSetChanged();
     }
 }

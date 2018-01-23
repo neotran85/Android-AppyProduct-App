@@ -18,6 +18,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
+import org.json.JSONObject;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -103,12 +105,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<AppointmentGetResponse> getAppointmentAll() {
+    public Single<JSONObject> getAppointmentAll() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addBodyParameter(KEY_ID_NUMBER, "")
                 .build()
-                .getObjectSingle(AppointmentGetResponse.class);
+                .getJSONObjectSingle();
     }
 
     @Override

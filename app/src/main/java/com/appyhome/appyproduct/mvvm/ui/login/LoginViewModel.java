@@ -10,6 +10,8 @@ import io.reactivex.functions.Consumer;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
+    private String mPhoneNumber = "";
+
     public LoginViewModel(DataManager dataManager,
                           SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -21,6 +23,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public void login(String phone, String password) {
         setIsLoading(true);
+        mPhoneNumber = phone;
         getCompositeDisposable().add(getDataManager()
                 .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
@@ -53,6 +56,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         if (statusCode.equals("200")) {
             if (message != null && message.length() > 0) {
                 setAccessToken(message);
+                setPhoneNumber(mPhoneNumber);
                 getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
                 getNavigator().openMainActivity();
@@ -64,5 +68,8 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public void setAccessToken(String token) {
         getDataManager().setAccessToken(token);
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        getDataManager().setCurrentPhoneNumber(phoneNumber);
     }
 }
