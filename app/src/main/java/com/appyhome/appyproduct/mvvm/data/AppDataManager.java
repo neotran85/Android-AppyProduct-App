@@ -363,4 +363,9 @@ public class AppDataManager implements DataManager {
     public Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request) {
         return mApiHelper.getReceipt(request);
     }
+
+    @Override
+    public Single<JSONObject> getReceiptAll() {
+        return mApiHelper.getReceiptAll();
+    }
 }

@@ -45,6 +45,8 @@ public interface ApiHelper {
 
     Single<JSONObject> getOrderAll();
 
+    Single<JSONObject> getReceiptAll();
+
     Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
 
     Single<JSONObject> getAppointmentAll();

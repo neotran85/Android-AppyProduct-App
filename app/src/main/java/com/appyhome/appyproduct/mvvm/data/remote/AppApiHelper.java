@@ -13,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
@@ -132,6 +131,14 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<JSONObject> getOrderAll() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getJSONObjectSingle();
+    }
+
+    @Override
+    public Single<JSONObject> getReceiptAll() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();

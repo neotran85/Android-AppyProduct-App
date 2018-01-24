@@ -65,7 +65,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
         }
         if (type == RequestFragment.TYPE_CLOSED) {
             getCompositeDisposable().add(getDataManager()
-                    .getAppointmentAll()
+                    .getReceiptAll()
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(new Consumer<JSONObject>() {

@@ -124,7 +124,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mBinder.btRequest.setOnClickListener(this);
         mBinder.btOrders.setOnClickListener(this);
 
-        changeTabSelection(mBinder.btClosed, mBinder.closedRecyclerView);
+        changeTabSelection(mBinder.btRequest, mBinder.requestRecyclerView);
     }
 
     @Override
