@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/service_step1" />
+            android:src="@mipmap/icon_extra_service_iron_main" />
 
         <TextView
             android:id="@+id/tvIroning"
@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/service_step1" />
+            android:src="@mipmap/icon_extra_service_foldingclothes" />
 
         <TextView
             android:id="@+id/tvFolding"
@@ -72,7 +72,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/service_step1" />
+            android:src="@mipmap/icon_extra_service_shirt" />
 
         <TextView
             android:id="@+id/tvLaundry"
@@ -99,7 +99,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/service_step1" />
+            android:src="@mipmap/icon_extra_service_fan" />
 
         <TextView
             android:id="@+id/tvCeilingFan"

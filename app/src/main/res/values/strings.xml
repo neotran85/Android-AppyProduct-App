@@ -6,7 +6,6 @@
     <!--Drawer-->
 
     <!--Drawer Menus-->
-    <string name="about">About</string>
 
     <!--App Message-->
 
@@ -49,17 +48,11 @@
     <string name="register_error_invalid_password">Password must have at least 6 characters.</string>
     <string name="register_error_invalid_email">Your email address is not valid.</string>
     <string name="register_error_invalid_phone">Your phone number is not valid.</string>
-    <string name="register_error_internal_server">We are sorry. The server encountered an internal error. Please try again later.</string>
     <string name="register_error_phone_duplicated">You phone number was used before. Please enter the new one.</string>
     <string name="register_error_something">Something error. Please try again later.</string>
     <string name="register_success_logged">Successfully registered and logged in</string>
 
     <!--about fragment-->
-    <string name="project_info">This sample app implements MVVM architecture using Dagger2, GreenDao, RxJava, FastAndroidNetworking and PlaceholderView</string>
-    <string name="link_mvvm_blog">1. https://blog.mindorks.com</string>
-    <string name="link_mvvm_repo">2. https://github.com/MindorksOpenSource/android-mvvm-architecture</string>
-    <string name="link_mindorks_blog">3. https://blog.mindorks.com</string>
-    <string name="link_mindorks_repo">4. https://github.com/MindorksOpenSource</string>
     <string name="version">"version"</string>
 
     <!--rating dialog-->
