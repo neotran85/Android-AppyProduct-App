@@ -4,9 +4,5 @@ public interface ServicesStep4Navigator {
 
     void goToStep5();
 
-    void doWhenAppointmentCreated();
-
     void openBankPaymentActivity();
-
-    void handleErrorService(Throwable throwable);
 }

@@ -139,9 +139,9 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
             try {
                 JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
                 if(result.getString("status_code").equals("00")) {
-                    // SUCCESS
+                    // PAYMENT SUCCESS
+                    goToStep5();
                     AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
-                    mServicesStep4ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
                 }
                 return;
             } catch (JSONException e) {
@@ -150,15 +150,5 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
             AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
         }
 
-    }
-
-    @Override
-    public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
-    }
-
-    @Override
-    public void doWhenAppointmentCreated() {
-        goToStep5();
     }
 }

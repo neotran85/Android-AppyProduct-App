@@ -21,38 +21,38 @@
         android:paddingLeft="38dp">
 
         <ImageButton
+            android:id="@+id/ibHomeCleaning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_cleaning"
-            android:clickable="false" />
+            android:background="@mipmap/service_cleaning"/>
 
         <ImageButton
+            android:id="@+id/ibAirConServicing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="80dp"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_aircon"
-            android:clickable="false" />
+            android:background="@mipmap/service_aircon"/>
 
         <ImageButton
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="160dp"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_electrical"
-            android:clickable="false" />
+            android:background="@mipmap/service_electrical" />
 
         <ImageButton
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="240dp"
             android:adjustViewBounds="true"
-            android:background="@mipmap/service_plumbing"
-            android:clickable="false" />
+            android:background="@mipmap/service_plumbing"/>
     </RelativeLayout>
 </LinearLayout>

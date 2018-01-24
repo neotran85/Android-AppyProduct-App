@@ -83,7 +83,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void openSignUpActivity() {
         Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
         startActivity(intent);
-        finish();
     }
 
     @Override

@@ -76,7 +76,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:clickable="true"
                             android:orientation="vertical">
 
                             <include layout="@layout/view_home_service" />

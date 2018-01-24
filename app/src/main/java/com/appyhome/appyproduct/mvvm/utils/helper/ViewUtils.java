@@ -39,4 +39,12 @@ public final class ViewUtils {
         }
         return "";
     }
+
+    public static void setOnClickListener(View mainView, int idResourceButton, View.OnClickListener listener) {
+        if (mainView != null) {
+            View view = mainView.findViewById(idResourceButton);
+            if (view != null)
+                view.setOnClickListener(listener);
+        }
+    }
 }

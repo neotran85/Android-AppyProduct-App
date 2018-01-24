@@ -14,11 +14,11 @@ import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
-import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
 import javax.inject.Inject;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator {
+public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator, View.OnClickListener {
 
     public static final String TAG = "HomeFragment";
 
@@ -33,6 +33,20 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ibAirConServicing:
+                ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_AIR_CON_CLEANING);
+                startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
+                break;
+            case R.id.ibHomeCleaning:
+                ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_HOME_CLEANING);
+                startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
+                break;
+        }
     }
 
     @Override
@@ -59,14 +73,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setDisplayUseLogoEnabled(false);
             activity.getSupportActionBar().setTitle("");
         }
-
-        mBinder.serviceView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openBookingServiceActivity();
-            }
-        });
-
+        ViewUtils.setOnClickListener(mBinder.serviceView, R.id.ibHomeCleaning, this);
+        ViewUtils.setOnClickListener(mBinder.serviceView, R.id.ibAirConServicing, this);
     }
 
     @Override
@@ -85,29 +93,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
-    public void goBack() {
-        getBaseActivity().onFragmentDetached(TAG);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-    @Override
-    public void openLoginActivity() {
-        startActivity(LoginActivity.getStartIntent(this.getContext()));
-        this.getActivity().finish();
-    }
-
-    @Override
-    public void handleError(Throwable throwable) {
-        // handle error
-    }
-
-    @Override
-    public void openBookingServiceActivity() {
-        startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
-        ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_AIR_CON_CLEANING);
     }
 }

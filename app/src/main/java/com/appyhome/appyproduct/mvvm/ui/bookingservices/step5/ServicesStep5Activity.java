@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep5Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
@@ -31,10 +32,12 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mServicesStep5ViewModel);
+        mBinder.rlMainView.setVisibility(View.INVISIBLE);
         mServicesStep5ViewModel.setNavigator(this);
         mBinder.btnNext.setOnClickListener(this);
         mBinder.btnViewRequest.setOnClickListener(this);
         mBinder.tvOrderId.setText("Order Id: #"  + ServiceOrderInfo.getInstance().getAppointmentId());
+        mServicesStep5ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
     }
 
     @Override
@@ -53,13 +56,6 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
-    @Override
-    public void handleError(Throwable throwable) {
-        // handle error
-    }
-
 
     @Override
     public ServicesStep5ViewModel getViewModel() {
@@ -95,5 +91,16 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public void onBackPressed() {
         backToHomeScreen();
+    }
+
+    @Override
+    public void showCongratulationForm() {
+        mBinder.rlMainView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void handleErrorService(Throwable throwable) {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+        this.finish();
     }
 }
