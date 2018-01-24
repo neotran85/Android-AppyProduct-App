@@ -13,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 
@@ -40,11 +39,11 @@ public interface ApiHelper {
 
     Single<AppointmentGetResponse> getAppointment(String idNumber);
 
-    Single<OrderGetResponse> getOrder(OrderGetRequest request);
+    Single<JSONObject> getOrder(OrderGetRequest request);
 
     Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request);
 
-    Single<OrderGetResponse> getOrderAll();
+    Single<JSONObject> getOrderAll();
 
     Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
 

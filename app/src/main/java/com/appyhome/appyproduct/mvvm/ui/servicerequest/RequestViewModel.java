@@ -21,25 +21,68 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void getAllAppointments() {
+    public void getData(final int type) {
         setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .getAppointmentAll()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject response) throws Exception {
-                        setIsLoading(false);
-                        AppLogger.d("handleServiceResult");
-                        handleServiceResult(response);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                    }
-                }));
+        if (type == RequestFragment.TYPE_REQUEST) {
+            getCompositeDisposable().add(getDataManager()
+                    .getAppointmentAll()
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(new Consumer<JSONObject>() {
+                        @Override
+                        public void accept(JSONObject response) throws Exception {
+                            setIsLoading(false);
+                            AppLogger.d("handleServiceResult");
+                            handleServiceResult(response, type);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            setIsLoading(false);
+                            showEmptyList(type);
+                        }
+                    }));
+        }
+        if (type == RequestFragment.TYPE_ORDER) {
+            getCompositeDisposable().add(getDataManager()
+                    .getOrderAll()
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(new Consumer<JSONObject>() {
+                        @Override
+                        public void accept(JSONObject response) throws Exception {
+                            setIsLoading(false);
+                            AppLogger.d("handleServiceResult");
+                            handleServiceResult(response, type);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            setIsLoading(false);
+                            showEmptyList(type);
+                        }
+                    }));
+        }
+        if (type == RequestFragment.TYPE_CLOSED) {
+            getCompositeDisposable().add(getDataManager()
+                    .getAppointmentAll()
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(new Consumer<JSONObject>() {
+                        @Override
+                        public void accept(JSONObject response) throws Exception {
+                            setIsLoading(false);
+                            AppLogger.d("handleServiceResult");
+                            handleServiceResult(response, type);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            setIsLoading(false);
+                            showEmptyList(type);
+                        }
+                    }));
+        }
     }
 
     private JSONObject getItemInside(JSONObject jsonObject) {
@@ -55,33 +98,37 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
         return null;
     }
 
-    private void handleServiceResult(JSONObject response) {
+    private void handleServiceResult(JSONObject response, int type) {
         try {
             if (response != null && response.getString("code").equals("200")) {
-                try {
+                if (response.getString("message").equals("list_empty")) {
+                    showEmptyList(type);
+                    return;
+                } else {
                     JSONArray arrayResult = new JSONArray(response.getString("message"));
                     if (arrayResult != null && arrayResult.length() > 0) {
                         ArrayList<RequestItemViewModel> arrayItems = new ArrayList<>();
-                        try {
-                            for (int i = 0; i < arrayResult.length(); i++) {
-                                JSONObject valueItem = getItemInside(arrayResult.getJSONObject(i));
-                                if (valueItem != null) {
-                                    RequestItemViewModel item = new RequestItemViewModel(valueItem);
-                                    arrayItems.add(item);
-                                }
+                        for (int i = 0; i < arrayResult.length(); i++) {
+                            JSONObject valueItem = getItemInside(arrayResult.getJSONObject(i));
+                            if (valueItem != null) {
+                                RequestItemViewModel item = new RequestItemViewModel(valueItem);
+                                arrayItems.add(item);
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                        getNavigator().showResultList(arrayItems);
+                        getNavigator().showResultList(arrayItems, type);
+                        return;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        // Some error???
+        // EMPTY LIST
+        showEmptyList(type);
     }
 
+    private void showEmptyList(int type) {
+        getNavigator().showResultList(new ArrayList<RequestItemViewModel>(), type);
+    }
 }

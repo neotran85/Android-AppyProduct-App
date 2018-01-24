@@ -5,9 +5,5 @@ import java.util.ArrayList;
 
 public interface RequestNavigator {
 
-    void goBack();
-
-    void showResultList(ArrayList<RequestItemViewModel> array);
-
-    void handleError(Throwable throwable);
+    void showResultList(ArrayList<RequestItemViewModel> array, int type);
 }

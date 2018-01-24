@@ -18,7 +18,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.Option;
@@ -351,12 +350,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<OrderGetResponse> getOrder(OrderGetRequest request) {
+    public Single<JSONObject> getOrder(OrderGetRequest request) {
         return mApiHelper.getOrder(request);
     }
 
     @Override
-    public Single<OrderGetResponse> getOrderAll() {
+    public Single<JSONObject> getOrderAll() {
         return mApiHelper.getOrderAll();
     }
 

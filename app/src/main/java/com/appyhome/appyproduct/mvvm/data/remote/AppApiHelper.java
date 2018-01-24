@@ -122,17 +122,19 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<OrderGetResponse> getOrder(OrderGetRequest request) {
+    public Single<JSONObject> getOrder(OrderGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addUrlEncodeFormBodyParameter(request)
                 .build()
-                .getObjectSingle(OrderGetResponse.class);
+                .getJSONObjectSingle();
     }
 
     @Override
-    public Single<OrderGetResponse> getOrderAll() {
-        return getOrder(new OrderGetRequest());
+    public Single<JSONObject> getOrderAll() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getJSONObjectSingle();
     }
 
     @Override

@@ -27,8 +27,4 @@ public class RequestFragmentModule {
         return new ViewModelProviderFactory<>(requestViewModel);
     }
 
-    @Provides
-    LinearLayoutManager provideLinearLayoutManager(RequestFragment fragment) {
-        return new LinearLayoutManager(fragment.getActivity());
-    }
 }
