@@ -39,6 +39,7 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
     }
 
     private void setUp() {
+        setTitle("My Wish List");
         mMyWishListViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMyWishListViewModel);

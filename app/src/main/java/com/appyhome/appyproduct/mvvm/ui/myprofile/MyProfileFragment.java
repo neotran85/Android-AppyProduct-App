@@ -65,6 +65,8 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
                 "", "", ""};
         mEmailHints = new String[]{getResources().getString(R.string.my_profile_hint_email),
                 "", "", ""};
+
+        setTitle("My Profile");
     }
 
     @Override

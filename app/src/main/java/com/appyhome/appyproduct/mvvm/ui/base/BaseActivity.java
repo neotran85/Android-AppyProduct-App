@@ -79,7 +79,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         if (mainView != null) {
             TextView txt = mainView.findViewById(R.id.tvTitle);
             if (txt != null) {
-                txt.setText(title);
+                if (title != null && title.length() > 0)
+                    txt.setText(title);
+                else
+                    txt.setVisibility(View.GONE);
             }
         }
     }

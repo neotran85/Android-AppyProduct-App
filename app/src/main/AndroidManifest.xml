@@ -61,7 +61,12 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.browser.BrowserActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity"

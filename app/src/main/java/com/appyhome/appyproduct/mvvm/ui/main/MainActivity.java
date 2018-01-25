@@ -7,9 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
@@ -21,9 +21,9 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
+import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
@@ -42,6 +42,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     ActivityMainBinding mBinder;
     private MainViewModel mMainViewModel;
+
+    private View currentTab;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -56,7 +58,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUp();
-        showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
     }
 
     @Override
@@ -82,41 +83,44 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mMainViewModel.updateAppVersion(version);
         mMainViewModel.onNavMenuCreated();
         subscribeToLiveData();
-        TabLayout tabs = mBinder.tabs;
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                AppLogger.d("onTabSelected = " + tab.getPosition());
-                switch (tab.getPosition()) {
-                    case 0:
-                        showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-                        break;
-                    case 1:
-                        showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
-                        break;
-                    case 4:
-                        showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                // Do nothing
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                // Do nothing
-            }
-        });
+        mBinder.rlHome.setOnClickListener(this);
+        mBinder.rlMyProfile.setOnClickListener(this);
+        mBinder.rlNotification.setOnClickListener(this);
+        mBinder.rlRequest.setOnClickListener(this);
+        mBinder.rlWishList.setOnClickListener(this);
+        currentTab = mBinder.rlHome;
+        showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rlHome:
+                switchTabSelection(view);
+                showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+                break;
+            case R.id.rlNotification:
+                switchTabSelection(view);
+                showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
+                break;
+            case R.id.rlRequest:
+                switchTabSelection(view);
+                showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
+                break;
+            case R.id.rlWishList:
+                switchTabSelection(view);
+                showFragment(MyWishListFragment.newInstance(), MyWishListFragment.TAG);
+                break;
+            case R.id.rlMyProfile:
+                switchTabSelection(view);
+                showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
+                break;
+        }
+    }
+    private void switchTabSelection(View view) {
+        highLightTab(currentTab, view);
+        currentTab = view;
+    }
     private void subscribeToLiveData() {
         mMainViewModel.getQuestionCardData().observe(this, new Observer<List<QuestionCardData>>() {
             @Override
@@ -153,5 +157,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .disallowAddToBackStack()
                 .replace(R.id.screenView, fragment, tag)
                 .commit();
+    }
+
+    private void highLightTab(View oldView, View newView) {
+        View oldHighlightView = oldView.findViewWithTag("highlight");
+        oldHighlightView.setVisibility(View.GONE);
+        View newHighLightView = newView.findViewWithTag("highlight");
+        newHighLightView.setVisibility(View.VISIBLE);
     }
 }

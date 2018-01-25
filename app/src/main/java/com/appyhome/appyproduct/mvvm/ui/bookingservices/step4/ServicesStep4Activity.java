@@ -87,8 +87,11 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
+                AlertManager.getInstance(this).showLongToast(getString(R.string.payment_advice));
+                mBinder.svMainView.fullScroll(View.FOCUS_DOWN);
                 break;
             case R.id.rlVisaPayment:
+                AlertManager.getInstance(this).showLongToast(getString(R.string.error_coming_soon));
                 break;
             case R.id.rlBankPayment:
                 openBankPaymentActivity();

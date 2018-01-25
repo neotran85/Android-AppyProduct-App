@@ -48,6 +48,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     }
 
     private void setUp() {
+        setTitle("Notification");
         mNotificationViewModel.setNavigator(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinder = getViewDataBinding();

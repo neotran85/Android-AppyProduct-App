@@ -11,8 +11,10 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.browser.BrowserActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
@@ -42,7 +44,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mBinder.setViewModel(mLoginViewModel);
         mLoginViewModel.setNavigator(this);
         mBinder.btnSignUp.setOnClickListener(this);
-
+        mBinder.btnForgetPassword.setOnClickListener(this);
         ArrayList<TextInputEditText> arrayTextInputs = new ArrayList<>();
         arrayTextInputs.add(mBinder.etPhoneNumber);
         arrayTextInputs.add(mBinder.etPassword);
@@ -71,7 +73,22 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void onClick(View view) {
-        openSignUpActivity();
+        switch (view.getId()) {
+            case R.id.btnSignUp:
+                openSignUpActivity();
+                break;
+            case R.id.btnForgetPassword:
+                openForgetPassword();
+                break;
+        }
+
+    }
+
+    private void openForgetPassword() {
+        Intent intent = BrowserActivity.getStartIntent(LoginActivity.this);
+        intent.putExtra("url", ApiUrlConfig.URL_FORGET_PASSWORD);
+        intent.putExtra("title", "Forget Password");
+        startActivity(intent);
     }
 
     @Override

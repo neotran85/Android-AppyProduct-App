@@ -27,6 +27,7 @@
             <include layout="@layout/view_service_step4"></include>
 
             <ScrollView
+                android:id="@+id/svMainView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
