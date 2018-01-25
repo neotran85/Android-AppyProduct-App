@@ -3,12 +3,12 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices.step1;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -80,28 +80,6 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     private void setUpListeners() {
         mBinder.btnNext.setOnClickListener(this);
         mBinder.btSeeDetailService.setOnClickListener(this);
-        final EditText etNumberRooms = mBinder.llServiceHomeCleaning.findViewById(R.id.etRoomNumber);
-        if (etNumberRooms != null)
-            etNumberRooms.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (etNumberRooms != null) {
-                        String number = etNumberRooms.getText().toString();
-                        if (number != null && number.length() > 0)
-                            ServiceOrderInfo.getInstance().setRoomNumber(Integer.valueOf(number));
-                    }
-                }
-            });
     }
 
     @Override

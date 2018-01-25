@@ -77,6 +77,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         Intent i = MainActivity.getStartIntent(this);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.putExtra(MainActivity.TAB, MainActivity.TAB_REQUEST);
         startActivity(i);
     }
 

@@ -91,7 +91,9 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
             // get some_name_i_wont_know in str_Name
             String str_Name = keys.next();
             // get the value i care about
-            return jsonObject.getJSONObject(str_Name);
+            JSONObject result = jsonObject.getJSONObject(str_Name);
+            result.put("id", str_Name);
+            return result;
         } catch (JSONException e) {
             e.printStackTrace();
         }

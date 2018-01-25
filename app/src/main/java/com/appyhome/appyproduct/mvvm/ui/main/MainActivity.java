@@ -35,14 +35,19 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
 
+    public final static int TAB_HOME = 0;
+    public final static int TAB_NOTIFICATION = 1;
+    public final static int TAB_REQUEST = 2;
+    public final static int TAB_WISH_LIST = 3;
+    public final static int TAB_MY_PROFILE = 4;
+    public final static String TAB = "tab";
+
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
-
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     ActivityMainBinding mBinder;
     private MainViewModel mMainViewModel;
-
     private View currentTab;
 
     public static Intent getStartIntent(Context context) {
@@ -90,6 +95,28 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.rlWishList.setOnClickListener(this);
         currentTab = mBinder.rlHome;
         showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+
+        Intent intent = getIntent();
+        int tab = intent.getIntExtra(TAB, -1);
+        switch (tab) {
+            case TAB_HOME:
+                onClick(mBinder.rlHome);
+                break;
+            case TAB_NOTIFICATION:
+                onClick(mBinder.rlNotification);
+                break;
+            case TAB_REQUEST:
+                onClick(mBinder.rlRequest);
+                break;
+            case TAB_WISH_LIST:
+                onClick(mBinder.rlWishList);
+                break;
+            case TAB_MY_PROFILE:
+                onClick(mBinder.rlMyProfile);
+                break;
+            default:
+                onClick(mBinder.rlHome);
+        }
     }
 
     @Override
@@ -117,10 +144,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 break;
         }
     }
+
     private void switchTabSelection(View view) {
         highLightTab(currentTab, view);
         currentTab = view;
     }
+
     private void subscribeToLiveData() {
         mMainViewModel.getQuestionCardData().observe(this, new Observer<List<QuestionCardData>>() {
             @Override
@@ -160,9 +189,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void highLightTab(View oldView, View newView) {
-        View oldHighlightView = oldView.findViewWithTag("highlight");
-        oldHighlightView.setVisibility(View.GONE);
-        View newHighLightView = newView.findViewWithTag("highlight");
-        newHighLightView.setVisibility(View.VISIBLE);
+        if (oldView != null) {
+            View oldHighlightView = oldView.findViewWithTag("highlight");
+            oldHighlightView.setVisibility(View.GONE);
+        }
+        if (newView != null) {
+            View newHighLightView = newView.findViewWithTag("highlight");
+            newHighLightView.setVisibility(View.VISIBLE);
+        }
     }
 }

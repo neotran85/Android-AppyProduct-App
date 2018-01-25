@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.servicerequest;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -14,13 +15,14 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentRequestBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.detail.RequestDetailActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator, View.OnClickListener {
+public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator, View.OnClickListener, RequestAdapter.OnItemClickListener {
 
     public static final String TAG = "RequestFragment";
     public static final int TYPE_REQUEST = 0;
@@ -125,6 +127,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mBinder.btOrders.setOnClickListener(this);
 
         changeTabSelection(mBinder.btRequest, mBinder.requestRecyclerView);
+        mRequestAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -163,5 +166,11 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
             mCloseAdapter.updateData(array);
             mCloseAdapter.notifyDataSetChanged();
         }
+    }
+    @Override
+    public void onItemClick(View view) {
+        Intent intent = RequestDetailActivity.getStartIntent(this.getActivity());
+        intent.putExtra("detail", view.getTag().toString());
+        startActivity(intent);
     }
 }

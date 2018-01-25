@@ -17,7 +17,6 @@ public class ServiceOrderInfo {
     private ArrayList<JSONObject> mArrayHomeCleaningServices;
     private ArrayList<JSONObject> mArrayAirConServices;
     private JSONObject mAirConServicing;
-    private int mRoomNumber = 0;
     private boolean mIsFlexible = false;
     private JSONObject mSelectedService;
     private String mAdditionalInfo = "";
@@ -74,14 +73,6 @@ public class ServiceOrderInfo {
 
     public void setSelectedService(JSONObject object) {
         mSelectedService = object;
-    }
-
-    public int getRoomNumber() {
-        return mRoomNumber;
-    }
-
-    public void setRoomNumber(int number) {
-        mRoomNumber = number;
     }
 
     public int getType() {

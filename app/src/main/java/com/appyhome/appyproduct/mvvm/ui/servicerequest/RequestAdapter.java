@@ -11,7 +11,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
 
-public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
 
     public static final int VIEW_TYPE_NORMAL = 1;
     public static final int VIEW_TYPE_EMPTY = 0;
@@ -21,6 +21,12 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private ArrayList<RequestItemViewModel> mRequestList;
 
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
+    }
+
     public RequestAdapter(ArrayList arrayList, int type) {
         this.mRequestList = arrayList;
         mType = type;
@@ -28,6 +34,13 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void updateData(ArrayList list) {
         mRequestList = list;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(onItemClickListener != null) {
+            onItemClickListener.onItemClick(view);
+        }
     }
 
     @Override
@@ -63,6 +76,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private RequestItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemRequestBinding itemViewBinding = ViewItemRequestBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        itemViewBinding.getRoot().setOnClickListener(this);
         return new RequestItemViewHolder(itemViewBinding);
     }
     private RequestItemLoadingViewHolder getLoadingHolder(ViewGroup parent) {
@@ -152,10 +166,15 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 final RequestItemViewModel itemViewModel = mRequestList.get(position);
                 mBinding.setViewModel(itemViewModel);
                 mBinding.executePendingBindings();
+                mBinding.getRoot().setTag(itemViewModel.getData());
                 mBinding.tvTitle.setText(itemViewModel.title.get());
                 mBinding.tvTimeCreated.setText(itemViewModel.timeCreated.get());
             }
         }
 
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view);
     }
 }

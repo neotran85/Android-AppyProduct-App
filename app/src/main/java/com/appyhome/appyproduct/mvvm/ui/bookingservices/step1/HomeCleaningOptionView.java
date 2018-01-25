@@ -35,7 +35,7 @@ public class HomeCleaningOptionView {
         }
         TextInputEditText etRoomNumber = mMainView.findViewById(R.id.etRoomNumber);
         if(etRoomNumber.getText().length() > 0) {
-            result.add(etRoomNumber + " rooms");
+            result.add(etRoomNumber.getText().toString()+ " rooms");
         }
         return result;
     }
