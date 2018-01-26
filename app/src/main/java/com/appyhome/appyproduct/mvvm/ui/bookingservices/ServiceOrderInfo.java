@@ -14,9 +14,6 @@ public class ServiceOrderInfo {
     private static ServiceOrderInfo mServiceOrderInfo;
     private int mType = SERVICE_HOME_CLEANING;
     private JSONObject mServiceInfo;
-    private ArrayList<JSONObject> mArrayHomeCleaningServices;
-    private ArrayList<JSONObject> mArrayAirConServices;
-    private JSONObject mAirConServicing;
     private boolean mIsFlexible = false;
     private JSONObject mSelectedService;
     private String mAdditionalInfo = "";
@@ -33,6 +30,8 @@ public class ServiceOrderInfo {
 
     private ArrayList<String> mArrayHomeCleaningOpts;
     private ArrayList<String> mArrayAirConOpts;
+
+    private String txn_ID;
 
     private ServiceOrderInfo() {
 
@@ -241,9 +240,10 @@ public class ServiceOrderInfo {
             JSONObject services = new JSONObject();
             String name = this.mServiceInfo.getString("name");
             String price = getSelectedService().getString("price");
+            if (mSelectedService != null) {
+                name = name + " - " + mSelectedService.getString("name");
+            }
             services.put("service1", name + "::" + price);
-            // services.put("service2", "");
-            // services.put("service3", "");
             request.setServices(services.toString());
 
             JSONObject additional = new JSONObject();
@@ -260,9 +260,8 @@ public class ServiceOrderInfo {
             if (mType == SERVICE_HOME_CLEANING) {
                 additionalArrayOpts.addAll(getPrice0Strings(mArrayHomeCleaningOpts));
             }
-            if (mAdditionalInfo != null && mAdditionalInfo.length() > 0) {
-                additionalArrayOpts.add("Additional comments: " + mAdditionalInfo + "::0");
-            }
+            String additionalComment = "Additional details: " + mAdditionalInfo + "_" + txn_ID + "::0";
+            additionalArrayOpts.add(additionalComment);
             for (int i = 0; i < additionalArrayOpts.size(); i++) {
                 additional.put("extra" + i, additionalArrayOpts.get(i));
             }
@@ -316,5 +315,13 @@ public class ServiceOrderInfo {
 
     public void setArrayAirConOpts(ArrayList<String> mArrayAirConOpts) {
         this.mArrayAirConOpts = mArrayAirConOpts;
+    }
+
+    public String getTxn_ID() {
+        return txn_ID;
+    }
+
+    public void setTxn_ID(String txn_ID) {
+        this.txn_ID = txn_ID;
     }
 }

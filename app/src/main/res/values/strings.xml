@@ -96,6 +96,10 @@
     <string name="payment_success">Payment success</string>
     <string name="payment_error_something">Payment error. Please try again later.</string>
     <string name="payment_advice">Please do the payment before completing the order</string>
+    <!-- Services -->
+    <string name="awaiting_schedule_confirmation">AWAITING SCHEDULE CONFIRMATION</string>
+    <string name="pending_execution">PENDING_EXECUTION</string>
+    <string name="closed_status">COMPLETED</string>
 
     <!--Other-->
     <string name="error_coming_soon">Sorry. This feature is coming soon.</string>

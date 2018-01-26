@@ -21,9 +21,9 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void getData(final int type) {
+    public void fetchData(final int type) {
         setIsLoading(true);
-        if (type == RequestFragment.TYPE_REQUEST) {
+        if (type == RequestType.TYPE_REQUEST) {
             getCompositeDisposable().add(getDataManager()
                     .getAppointmentAll()
                     .subscribeOn(getSchedulerProvider().io())
@@ -43,7 +43,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                         }
                     }));
         }
-        if (type == RequestFragment.TYPE_ORDER) {
+        if (type == RequestType.TYPE_ORDER) {
             getCompositeDisposable().add(getDataManager()
                     .getOrderAll()
                     .subscribeOn(getSchedulerProvider().io())
@@ -63,7 +63,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                         }
                     }));
         }
-        if (type == RequestFragment.TYPE_CLOSED) {
+        if (type == RequestType.TYPE_CLOSED) {
             getCompositeDisposable().add(getDataManager()
                     .getReceiptAll()
                     .subscribeOn(getSchedulerProvider().io())
@@ -113,7 +113,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                         for (int i = 0; i < arrayResult.length(); i++) {
                             JSONObject valueItem = getItemInside(arrayResult.getJSONObject(i));
                             if (valueItem != null) {
-                                RequestItemViewModel item = new RequestItemViewModel(valueItem);
+                                RequestItemViewModel item = new RequestItemViewModel(valueItem, type);
                                 arrayItems.add(item);
                             }
                         }

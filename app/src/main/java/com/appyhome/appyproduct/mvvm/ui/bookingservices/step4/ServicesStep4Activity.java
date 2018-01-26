@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices.step4;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
@@ -13,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesAdapter;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5Activity;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
 import com.molpay.molpayxdk.MOLPayActivity;
@@ -138,11 +138,14 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
-            Log.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
+            AppLogger.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
             try {
                 JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
                 if(result.getString("status_code").equals("00")) {
                     // PAYMENT SUCCESS
+                    String txn_ID = result.getString("txn_ID");
+                    AppLogger.d(txn_ID);
+                    ServiceOrderInfo.getInstance().setTxn_ID(txn_ID);
                     goToStep5();
                     AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
                 }

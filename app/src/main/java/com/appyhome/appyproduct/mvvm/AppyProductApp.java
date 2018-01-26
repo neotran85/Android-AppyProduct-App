@@ -8,6 +8,8 @@ import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.appyhome.appyproduct.mvvm.di.component.DaggerAppComponent;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
@@ -25,6 +27,7 @@ public class AppyProductApp extends Application implements HasActivityInjector {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         DaggerAppComponent.builder()
                 .application(this)

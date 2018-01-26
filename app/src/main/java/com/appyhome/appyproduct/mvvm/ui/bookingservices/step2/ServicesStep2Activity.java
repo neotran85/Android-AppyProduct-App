@@ -159,8 +159,11 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        mDateSelectedString = mDateSelectedString + " " + hourOfDay + ":" + minute + ":00";
-        mDateSelectedShowedString = hourOfDay + ":" + minute + " " + mDateSelectedShowedString;
+        String hourOfDayStr = (hourOfDay < 10) ? "0" + hourOfDay : hourOfDay + "";
+        String minuteStr = (minute < 10) ? "0" + minute : minute + "";
+
+        mDateSelectedString = mDateSelectedString + " " + hourOfDayStr + ":" + minuteStr + ":00";
+        mDateSelectedShowedString = hourOfDayStr + ":" + minuteStr + " " + mDateSelectedShowedString;
         if (mBtnTimeSlot != null) {
             mBtnTimeSlot.setText(mDateSelectedShowedString);
             mBtnTimeSlot.setTag(mDateSelectedString);
@@ -173,8 +176,11 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
         openTimePicker(calendar);
-        mDateSelectedString = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-        mDateSelectedShowedString = "on " + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+        int month = monthOfYear + 1;
+        String dayOfMonthStr = (dayOfMonth < 10) ? "0" + dayOfMonth : dayOfMonth + "";
+        String monthOfYearStr = (month < 10) ? "0" + month : month + "";
+        mDateSelectedString = year + "-" + monthOfYearStr + "-" + dayOfMonthStr;
+        mDateSelectedShowedString = "on " + dayOfMonthStr + "/" + monthOfYearStr + "/" + year;
     }
 
     @Override

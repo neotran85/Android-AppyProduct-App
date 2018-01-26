@@ -17,7 +17,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_LOADING = -1;
 
-    private int mType = RequestFragment.TYPE_REQUEST;
+    private int mType = RequestType.TYPE_REQUEST;
 
     private ArrayList<RequestItemViewModel> mRequestList;
 
@@ -38,8 +38,8 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     @Override
     public void onClick(View view) {
-        if(onItemClickListener != null) {
-            onItemClickListener.onItemClick(view);
+        if (onItemClickListener != null) {
+            onItemClickListener.onItemClick(view, mType);
         }
     }
 
@@ -58,7 +58,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
             case VIEW_TYPE_EMPTY:
                 return getEmptyHolder(parent);
             case VIEW_TYPE_LOADING:
-               return getLoadingHolder(parent);
+                return getLoadingHolder(parent);
             default:
                 return getDefaultHolder(parent);
         }
@@ -79,31 +79,35 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         itemViewBinding.getRoot().setOnClickListener(this);
         return new RequestItemViewHolder(itemViewBinding);
     }
+
     private RequestItemLoadingViewHolder getLoadingHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View loadingView = inflater.inflate(R.layout.view_item_loading, parent, false);
         return new RequestItemLoadingViewHolder(loadingView);
     }
+
     private RequestItemEmptyViewHolder getEmptyHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View view = inflater.inflate(getEmptyLayoutId(parent), parent, false);
         return new RequestItemEmptyViewHolder(view);
     }
+
     private int getEmptyLayoutId(ViewGroup parent) {
         int layoutId = parent.getId();
-        if (mType == RequestFragment.TYPE_REQUEST) {
+        if (mType == RequestType.TYPE_REQUEST) {
             layoutId = R.layout.view_item_request_empty;
         }
-        if (mType == RequestFragment.TYPE_ORDER) {
+        if (mType == RequestType.TYPE_ORDER) {
             layoutId = R.layout.view_item_order_empty;
         }
-        if (mType == RequestFragment.TYPE_CLOSED) {
+        if (mType == RequestType.TYPE_CLOSED) {
             layoutId = R.layout.view_item_closed_empty;
         }
         return layoutId;
     }
+
     @Override
     public int getItemViewType(int position) {
         if (mRequestList == null) {
@@ -168,13 +172,32 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
                 mBinding.executePendingBindings();
                 mBinding.getRoot().setTag(itemViewModel.getData());
                 mBinding.tvTitle.setText(itemViewModel.title.get());
-                mBinding.tvTimeCreated.setText(itemViewModel.timeCreated.get());
+                String time = "";
+                switch (itemViewModel.getType()) {
+                    case RequestType.TYPE_REQUEST:
+                        time = itemViewModel.timeCreated.get();
+                        time = time != null ? time : "";
+                        time = "Created: " + time;
+                        mBinding.tvStatus.setText("AWAITING SCHEDULE CONFIRMATION");
+                        break;
+                    case RequestType.TYPE_CLOSED:
+                        time = "Closed: " + time;
+                        mBinding.tvStatus.setText("COMPLETED");
+                        break;
+                    case RequestType.TYPE_ORDER:
+                        time = itemViewModel.dateTime1.get();
+                        time = time != null ? time : "";
+                        time = "Scheduled for: " + time;
+                        mBinding.tvStatus.setText("PENDING EXECUTION");
+                        break;
+                }
+                mBinding.tvTimeCreated.setText(time);
             }
         }
 
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view);
+        void onItemClick(View view, int type);
     }
 }

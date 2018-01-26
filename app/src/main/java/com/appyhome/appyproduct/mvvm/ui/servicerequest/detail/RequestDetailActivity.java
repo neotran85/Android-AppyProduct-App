@@ -3,15 +3,18 @@ package com.appyhome.appyproduct.mvvm.ui.servicerequest.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.EditDetailActivity;
 
 import javax.inject.Inject;
 
-public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBinding, RequestDetailViewModel> implements RequestDetailNavigator {
+public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBinding, RequestDetailViewModel> implements RequestDetailNavigator, View.OnClickListener {
 
     @Inject
     RequestDetailViewModel mRequestDetailViewModel;
@@ -31,9 +34,42 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         mBinder.setViewModel(mRequestDetailViewModel);
         mRequestDetailViewModel.setNavigator(this);
         Intent intent = getIntent();
-        String data = intent.getStringExtra("detail");
-        mRequestDetailViewModel.proceedData(data);
         setTitle("SUMMARY");
+        if (intent.hasExtra("detail")) {
+            String data = intent.getStringExtra("detail");
+            int type = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
+            mRequestDetailViewModel.processData(data, type);
+            switch (type) {
+                case RequestType.TYPE_CLOSED:
+                    setTitle("RECEIPT SUMMARY");
+                    break;
+                case RequestType.TYPE_ORDER:
+                    setTitle("ORDER SUMMARY");
+                    break;
+                case RequestType.TYPE_REQUEST:
+                    setTitle("REQUEST SUMMARY");
+                    break;
+            }
+        }
+        activeBackButton();
+        mBinder.llAddServices.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.llConfirmation:
+                openEditDetailActivity();
+                break;
+            case R.id.llAddServices:
+                break;
+        }
+    }
+
+    private void openEditDetailActivity() {
+        Intent intent = getIntent();
+        intent.setClass(this, EditDetailActivity.class);
+        startActivity(intent);
     }
 
     @Override

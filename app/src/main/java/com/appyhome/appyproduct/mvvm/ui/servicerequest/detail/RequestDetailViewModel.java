@@ -1,10 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.servicerequest.detail;
 
-import android.databinding.ObservableField;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONException;
@@ -12,17 +14,13 @@ import org.json.JSONObject;
 
 public class RequestDetailViewModel extends BaseViewModel<RequestDetailNavigator> {
 
-    public ObservableField<String> title = new ObservableField<>();
-    public ObservableField<String> price = new ObservableField<>();
-    public ObservableField<String> address = new ObservableField<>();
-    public ObservableField<String> timeCreated = new ObservableField<>();
-    public ObservableField<String> dateTime1 = new ObservableField<>();
-    public ObservableField<String> dateTime2 = new ObservableField<>();
-    public ObservableField<String> dateTime3 = new ObservableField<>();
+    private int mType = 0;
+    private RequestItemViewModel mDataModel;
 
     public RequestDetailViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        mDataModel = new RequestItemViewModel();
     }
 
     public int isAdditionalServiceViewVisible() {
@@ -36,65 +34,74 @@ public class RequestDetailViewModel extends BaseViewModel<RequestDetailNavigator
     public String getAdditionalDetail() {
         return "";
     }
+
     public int isAdditionalDetailViewVisible() {
         return View.GONE;
     }
+
     public String getAddressString() {
-        return address.get();
+        return mDataModel.address.get();
     }
 
     public String getTimeSlot1() {
-        return dateTime1.get();
+        return mDataModel.dateTime1.get();
     }
+
     public String getTimeSlot2() {
-        return dateTime2.get();
+        return mDataModel.dateTime2.get();
     }
+
     public String getTimeSlot3() {
-        return dateTime3.get();
+        return mDataModel.dateTime3.get();
     }
 
     public String getTotalCost() {
-        return price.get();
+        return mDataModel.price.get();
     }
 
     public String getDateCreated() {
-        return timeCreated.get();
+        return "Date created: " + mDataModel.timeCreated.get();
     }
 
     public String getNameService() {
-        return title.get();
+        if(mDataModel == null) return "";
+        return mDataModel.title.get();
     }
 
-    public void proceedData(String data) {
+    public void processData(String data, int type) {
+        mType = type;
         try {
             JSONObject dataJSON = new JSONObject(data);
-            JSONObject temp = new JSONObject(dataJSON.get("services").toString());
-            String tempStr = temp.getString("service1");
-            String[]result = tempStr.split("::");
-            this.title.set(result[0]);
-            this.price.set(result[1]);
-            this.address.set(dataJSON.get("address").toString());
-            this.timeCreated.set(dataJSON.get("time").toString());
-
-            JSONObject datetime = new JSONObject(dataJSON.get("datetime").toString());
-            if(datetime != null) {
-                if(datetime.has("datetime1")) {
-                    dateTime1.set(datetime.getString("datetime1"));
-                }
-                if(datetime.has("datetime2")) {
-                    dateTime1.set(datetime.getString("datetime2"));
-                }
-                if(datetime.has("datetime3")) {
-                    dateTime1.set(datetime.getString("datetime3"));
-                }
-            }
-
-            JSONObject additional = new JSONObject(dataJSON.get("additional").toString());
-            if(additional != null) {
-                // Do something
-            }
+            mDataModel.processData(dataJSON, type);
+            AppLogger.d("RequestDetailViewModel: " + mDataModel.getIdNumber());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public int isSafetyCodeVisible() {
+        return mType == RequestType.TYPE_ORDER ? View.VISIBLE : View.GONE;
+    }
+
+    public String getSafetyCode() {
+        return "Safety Code: " + mDataModel.safetyCode.get();
+    }
+
+    public int isAddServiceVisible() {
+        return mType == RequestType.TYPE_ORDER ? View.VISIBLE : View.GONE;
+    }
+
+    public int isConfirmationVisible() {
+        return mType == RequestType.TYPE_ORDER ? View.VISIBLE : View.GONE;
+    }
+
+    public int isTimeSlot2Visible() {
+        return mDataModel.dateTime2.get() != null && mDataModel.dateTime2.get().length() > 0 ? View.VISIBLE : View.GONE;
+    }
+    public int isTimeSlot3Visible() {
+        return mDataModel.dateTime3.get() != null && mDataModel.dateTime3.get().length() > 0 ? View.VISIBLE : View.GONE;
+    }
+    public int isTimeSlot1Visible() {
+        return mDataModel.dateTime1.get() != null && mDataModel.dateTime1.get().length() > 0 ? View.VISIBLE : View.GONE;
     }
 }

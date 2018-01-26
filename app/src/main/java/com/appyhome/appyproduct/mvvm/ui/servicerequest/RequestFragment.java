@@ -25,9 +25,6 @@ import javax.inject.Inject;
 public class RequestFragment extends BaseFragment<FragmentRequestBinding, RequestViewModel> implements RequestNavigator, View.OnClickListener, RequestAdapter.OnItemClickListener {
 
     public static final String TAG = "RequestFragment";
-    public static final int TYPE_REQUEST = 0;
-    public static final int TYPE_ORDER = 1;
-    public static final int TYPE_CLOSED = 2;
 
     @Inject
     RequestViewModel mRequestViewModel;
@@ -106,13 +103,13 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mBinder.closedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mBinder.closedRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mRequestViewModel.getData(TYPE_REQUEST);
-        mRequestViewModel.getData(TYPE_ORDER);
-        mRequestViewModel.getData(TYPE_CLOSED);
+        mRequestViewModel.fetchData(RequestType.TYPE_REQUEST);
+        mRequestViewModel.fetchData(RequestType.TYPE_ORDER);
+        mRequestViewModel.fetchData(RequestType.TYPE_CLOSED);
 
-        mRequestAdapter = new RequestAdapter(null, TYPE_REQUEST);
-        mCloseAdapter = new RequestAdapter(null, TYPE_CLOSED);
-        mOrdersAdapter = new RequestAdapter(null, TYPE_ORDER);
+        mRequestAdapter = new RequestAdapter(null, RequestType.TYPE_REQUEST);
+        mCloseAdapter = new RequestAdapter(null, RequestType.TYPE_CLOSED);
+        mOrdersAdapter = new RequestAdapter(null, RequestType.TYPE_ORDER);
 
         mBinder.requestRecyclerView.setAdapter(mRequestAdapter);
         mBinder.ordersRecyclerView.setAdapter(mOrdersAdapter);
@@ -128,6 +125,8 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
         changeTabSelection(mBinder.btRequest, mBinder.requestRecyclerView);
         mRequestAdapter.setOnItemClickListener(this);
+        mOrdersAdapter.setOnItemClickListener(this);
+        mCloseAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -154,23 +153,26 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     @Override
     public void showResultList(ArrayList<RequestItemViewModel> array, int type) {
         AppLogger.d("showResultList " + type);
-        if (type == TYPE_REQUEST) {
+        if (type == RequestType.TYPE_REQUEST) {
             mRequestAdapter.updateData(array);
             mRequestAdapter.notifyDataSetChanged();
         }
-        if (type == TYPE_ORDER) {
+        if (type == RequestType.TYPE_ORDER) {
             mOrdersAdapter.updateData(array);
             mOrdersAdapter.notifyDataSetChanged();
         }
-        if (type == TYPE_CLOSED) {
+        if (type == RequestType.TYPE_CLOSED) {
             mCloseAdapter.updateData(array);
             mCloseAdapter.notifyDataSetChanged();
         }
     }
     @Override
-    public void onItemClick(View view) {
+    public void onItemClick(View view, int type) {
         Intent intent = RequestDetailActivity.getStartIntent(this.getActivity());
-        intent.putExtra("detail", view.getTag().toString());
+        String detail = view.getTag().toString();
+        AppLogger.d("onItemClick: " + detail);
+        intent.putExtra("detail", detail);
+        intent.putExtra("type", type);
         startActivity(intent);
     }
 }

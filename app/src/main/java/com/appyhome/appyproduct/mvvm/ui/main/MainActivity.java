@@ -24,6 +24,7 @@ import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
 
@@ -58,6 +60,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         AppConstants.initiate(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);

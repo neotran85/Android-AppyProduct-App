@@ -22,6 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             i
+
             <include layout="@layout/view_header"></include>
 
             <include layout="@layout/view_service_step4"></include>
@@ -108,14 +109,28 @@
                             android:orientation="horizontal"
                             android:paddingRight="16dp">
 
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="TOTAL"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
+                                android:orientation="vertical">
+
+                                <TextView
+                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="TOTAL"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                                <TextView
+                                    android:layout_marginTop="4dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="incl. GST and additional services"
+                                    android:textColor="@color/gray"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="90dp"
@@ -249,12 +264,12 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:clickable="true"
                         android:id="@+id/rlVisaPayment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
+                        android:clickable="true"
                         android:orientation="horizontal"
                         android:padding="16dp">
 
@@ -286,12 +301,12 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:clickable="true"
                         android:id="@+id/rlBankPayment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
+                        android:clickable="true"
                         android:orientation="horizontal"
                         android:padding="16dp">
 

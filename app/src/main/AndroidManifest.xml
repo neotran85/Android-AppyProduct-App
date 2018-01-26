@@ -35,9 +35,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bookingservices.step1.ServicesStep1Activity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bookingservices.step2.ServicesStep2Activity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bookingservices.step3.ServicesStep3Activity"
@@ -63,6 +65,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.servicerequest.edit.EditDetailActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -83,6 +90,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4b65f586237b86de0501374be978ce7302fc46fb" />
     </application>
 
 </manifest>
