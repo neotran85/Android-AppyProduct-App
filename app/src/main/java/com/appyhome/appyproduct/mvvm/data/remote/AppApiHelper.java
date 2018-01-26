@@ -12,6 +12,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRes
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
@@ -124,6 +126,7 @@ public class AppApiHelper implements ApiHelper {
     public Single<JSONObject> getOrder(OrderGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
                 .build()
                 .getJSONObjectSingle();
     }
@@ -142,6 +145,15 @@ public class AppApiHelper implements ApiHelper {
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
+    }
+
+    @Override
+    public Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_COMPLETED)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(OrderCompletedResponse.class);
     }
 
     @Override

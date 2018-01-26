@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:paddingBottom="20dp">
+                        android:paddingBottom="24dp">
 
                         <LinearLayout
                             android:layout_marginTop="20dp"
@@ -291,6 +291,36 @@
                             android:background="@mipmap/icon_completed"
                             android:layout_width="22dp"
                             android:layout_height="22dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="@{viewModel.isAdminReViewingVisible()}"
+                        android:id="@+id/llAdminReview"
+                        android:gravity="center_vertical"
+                        android:padding="10dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:layout_marginLeft="8dp"
+                            android:gravity="center_vertical"
+                            android:text="Admin reviewing"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                        <RatingBar
+                            android:clickable="false"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:rating="@{viewModel.getRating()}"
+                            android:stepSize="0.5"
+                            android:numStars="5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

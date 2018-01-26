@@ -22,6 +22,12 @@ public class RequestItemViewModel {
 
     private String idNumber;
 
+    private String editCode = "";
+
+    private String statusOfOrder = "";
+
+    private float rating = -1;
+
     public RequestItemViewModel() {
 
     }
@@ -33,10 +39,23 @@ public class RequestItemViewModel {
         mType = type;
         try {
             if (mItem.has("id"))
-                idNumber = mItem.get("id").toString();
-
+                idNumber = mItem.getString("id");
+            if(mItem.has("edit_code")) {
+                editCode = mItem.getString("edit_code");
+            }
+            if(mItem.has("status")) {
+                statusOfOrder = mItem.getString("status");
+            }
+            if(mItem.has("rating")) {
+                try {
+                    String rate = mItem.getString("rating");
+                    rating = Float.parseFloat(rate);
+                } catch (Exception e ) {
+                    rating = -1;
+                }
+            }
             if (mItem.has("services")) {
-                String serviceString = mItem.get("services").toString();
+                String serviceString = mItem.getString("services");
                 if (serviceString.contains("{")) {
                     JSONObject temp = new JSONObject(serviceString);
                     String tempStr = temp.getString("service1");
@@ -45,16 +64,16 @@ public class RequestItemViewModel {
                     this.price.set(result[1]);
                 } else {
                     this.title.set(serviceString);
-                    String priceString = mItem.get("price").toString();
+                    String priceString = mItem.getString("price");
                     this.price.set(priceString);
                 }
             }
             if (mItem.has("address"))
-                this.address.set(mItem.get("address").toString());
+                this.address.set(mItem.getString("address"));
             if (mItem.has("time"))
-                this.timeCreated.set(mItem.get("time").toString());
+                this.timeCreated.set(mItem.getString("time"));
             if (mItem.has("datetime")) {
-                String dateTimeStr = mItem.get("datetime").toString();
+                String dateTimeStr = mItem.getString("datetime");
                 if(dateTimeStr.contains("{")) {
                     JSONObject datetime = new JSONObject(dateTimeStr);
                     if (datetime != null) {
@@ -99,5 +118,29 @@ public class RequestItemViewModel {
 
     public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
+    }
+
+    public String getEditCode() {
+        return editCode;
+    }
+
+    public void setEditCode(String editCode) {
+        this.editCode = editCode;
+    }
+
+    public String getStatusOfOrder() {
+        return statusOfOrder;
+    }
+
+    public void setStatusOfOrder(String statusOfOrder) {
+        this.statusOfOrder = statusOfOrder;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }

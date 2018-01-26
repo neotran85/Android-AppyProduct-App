@@ -1,14 +1,10 @@
 package com.appyhome.appyproduct.mvvm.ui.servicerequest;
 
 import android.arch.lifecycle.ViewModelProvider;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.RequestResponse;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
-
-import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;

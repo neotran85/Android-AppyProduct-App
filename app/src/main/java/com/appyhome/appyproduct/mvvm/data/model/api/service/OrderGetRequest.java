@@ -9,6 +9,9 @@ public class OrderGetRequest {
     @SerializedName("id_number")
     private String idNumber;
 
+    public OrderGetRequest(String number) {
+        idNumber = number;
+    }
     public OrderGetRequest() {
 
     }

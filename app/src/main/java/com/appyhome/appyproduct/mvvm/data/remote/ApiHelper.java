@@ -12,6 +12,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRes
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
@@ -44,6 +46,8 @@ public interface ApiHelper {
     Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request);
 
     Single<JSONObject> getOrderAll();
+
+    Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request);
 
     Single<JSONObject> getReceiptAll();
 

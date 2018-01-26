@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.EditDetailActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import javax.inject.Inject;
 
@@ -21,6 +22,9 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
 
     ActivityRequestDetailBinding mBinder;
 
+    private int mType = 0;
+
+    private static final int CODE_REQUEST_BACK = 111;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestDetailActivity.class);
@@ -37,9 +41,9 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         setTitle("SUMMARY");
         if (intent.hasExtra("detail")) {
             String data = intent.getStringExtra("detail");
-            int type = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
-            mRequestDetailViewModel.processData(data, type);
-            switch (type) {
+            mType = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
+            mRequestDetailViewModel.processData(data, mType);
+            switch (mType) {
                 case RequestType.TYPE_CLOSED:
                     setTitle("RECEIPT SUMMARY");
                     break;
@@ -53,11 +57,12 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         }
         activeBackButton();
         mBinder.llAddServices.setOnClickListener(this);
+        mBinder.llConfirmation.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.llConfirmation:
                 openEditDetailActivity();
                 break;
@@ -69,7 +74,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     private void openEditDetailActivity() {
         Intent intent = getIntent();
         intent.setClass(this, EditDetailActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, CODE_REQUEST_BACK);
     }
 
     @Override
@@ -93,4 +98,16 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         return R.layout.activity_request_detail;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        AppLogger.d("onActivityResult");
+        if(requestCode == CODE_REQUEST_BACK) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra("result");
+                AppLogger.d("onActivityResult: " + result);
+                mRequestDetailViewModel.processData(result, mType);
+            }
+        }
+    }
 }

@@ -11,86 +11,103 @@
 
     </data>
 
-    <LinearLayout
-        android:background="@color/gray"
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/view_header"></include>
+
         <LinearLayout
-            android:paddingTop="20dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/gray"
             android:orientation="vertical">
-            <TextView
-                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:text="Rate the service"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
-            <RatingBar
-                style="?android:attr/ratingBarStyleIndicator"
-                android:rating="4.5"
-                android:stepSize="0.5"
-                android:numStars="5"
-                android:layout_marginTop="10dp"
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginTop="20dp"
-                android:text="Your comments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Please add your comments on the service"
-                android:textColor="@color/dark_gray"
-                android:textSize="11sp" />
+            <include layout="@layout/view_header"></include>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/etAdditionalInfo"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/input_text_rounded_light_gray_bg"
-                android:gravity="top|left"
-                android:inputType="textMultiLine"
-                android:maxLines="10"
-                android:minLines="6"
-                android:paddingBottom="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="50dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingTop="12dp"
-                android:scrollbars="vertical"
-                android:singleLine="false"
-                android:textColor="@color/black"
-                android:textColorHint="@color/hint_text"
-                android:textSize="14sp" />
+                android:paddingTop="20dp">
 
-            <Button
-                android:layout_marginTop="20dp"
-                android:id="@+id/btnSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@color/colorAccent"
-                android:text="Confirm Completed"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate the service"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Your comments"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Please add your comments on the service"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="11sp" />
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etAdditionalInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/input_text_rounded_light_gray_bg"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:minLines="6"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="12dp"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_text"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorAccent"
+                    android:text="Confirm Completed"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}">
+            <include layout="@layout/view_preloading"></include>
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

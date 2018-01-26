@@ -100,6 +100,7 @@
     <string name="awaiting_schedule_confirmation">AWAITING SCHEDULE CONFIRMATION</string>
     <string name="pending_execution">PENDING_EXECUTION</string>
     <string name="closed_status">COMPLETED</string>
+    <string name="mark_order_completed">Thank you for your feedback.</string>
 
     <!--Other-->
     <string name="error_coming_soon">Sorry. This feature is coming soon.</string>

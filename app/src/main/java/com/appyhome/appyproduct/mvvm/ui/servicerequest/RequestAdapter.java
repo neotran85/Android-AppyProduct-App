@@ -175,20 +175,20 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
                 String time = "";
                 switch (itemViewModel.getType()) {
                     case RequestType.TYPE_REQUEST:
+                        mBinding.tvStatus.setText(RequestStatus.AWAITING_SCHEDULE_CONFIRMATION);
                         time = itemViewModel.timeCreated.get();
                         time = time != null ? time : "";
                         time = "Created: " + time;
-                        mBinding.tvStatus.setText("AWAITING SCHEDULE CONFIRMATION");
                         break;
                     case RequestType.TYPE_CLOSED:
+                        mBinding.tvStatus.setText(itemViewModel.getStatusOfOrder());
                         time = "Closed: " + time;
-                        mBinding.tvStatus.setText("COMPLETED");
                         break;
                     case RequestType.TYPE_ORDER:
+                        mBinding.tvStatus.setText(itemViewModel.getStatusOfOrder());
                         time = itemViewModel.dateTime1.get();
                         time = time != null ? time : "";
                         time = "Scheduled for: " + time;
-                        mBinding.tvStatus.setText("PENDING EXECUTION");
                         break;
                 }
                 mBinding.tvTimeCreated.setText(time);
