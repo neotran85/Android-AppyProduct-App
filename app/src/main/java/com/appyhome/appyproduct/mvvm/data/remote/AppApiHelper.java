@@ -11,12 +11,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import org.json.JSONObject;
@@ -97,12 +96,12 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<AppointmentGetResponse> getAppointment(String idNumber) {
+    public Single<JSONObject> getAppointment(AppointmentGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addBodyParameter(KEY_ID_NUMBER, idNumber)
+                .addBodyParameter(request)
                 .build()
-                .getObjectSingle(AppointmentGetResponse.class);
+                .getJSONObjectSingle();
     }
 
     @Override
@@ -157,11 +156,11 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request) {
+    public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
-                .addUrlEncodeFormBodyParameter(request)
+                .addBodyParameter(request)
                 .build()
-                .getObjectSingle(ReceiptGetResponse.class);
+                .getJSONObjectSingle();
     }
 }

@@ -12,7 +12,7 @@ public class AppointmentGetResponse {
 
     @Expose
     @SerializedName("message")
-    private String message;
+    private String result;
 
     public String getStatusCode() {
         return statusCode;
@@ -22,12 +22,12 @@ public class AppointmentGetResponse {
         this.statusCode = statusCode;
     }
 
-    public String getMessage() {
-        return message;
+    public String getResult() {
+        return result;
     }
 
-    public void setMessage(String result) {
-        this.message = result;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     @Override
@@ -37,13 +37,13 @@ public class AppointmentGetResponse {
         AppointmentGetResponse that = (AppointmentGetResponse) object;
         if (statusCode != null ? !statusCode.equals(that.getStatusCode()) : that.statusCode != null)
             return false;
-        return (message != null ? !message.equals(that.message) : that.message != null);
+        return (result != null ? !result.equals(that.result) : that.result != null);
     }
 
     @Override
     public int hashCode() {
         int result = statusCode != null ? statusCode.hashCode() : 0;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (this.result != null ? this.result.hashCode() : 0);
         return result;
     }
 

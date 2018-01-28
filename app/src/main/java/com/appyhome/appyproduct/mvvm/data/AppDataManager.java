@@ -16,12 +16,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.Option;
 import com.appyhome.appyproduct.mvvm.data.model.db.Question;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
@@ -342,8 +341,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<AppointmentGetResponse> getAppointment(String idNumber) {
-        return mApiHelper.getAppointment(idNumber);
+    public Single<JSONObject> getAppointment(AppointmentGetRequest request) {
+        return mApiHelper.getAppointment(request);
     }
 
     @Override
@@ -362,7 +361,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request) {
+    public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
         return mApiHelper.getReceipt(request);
     }
 
@@ -375,4 +374,5 @@ public class AppDataManager implements DataManager {
     public Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request) {
         return mApiHelper.markOrderCompleted(request);
     }
+
 }

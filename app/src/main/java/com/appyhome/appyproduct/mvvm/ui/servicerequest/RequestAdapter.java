@@ -170,7 +170,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
                 final RequestItemViewModel itemViewModel = mRequestList.get(position);
                 mBinding.setViewModel(itemViewModel);
                 mBinding.executePendingBindings();
-                mBinding.getRoot().setTag(itemViewModel.getData());
+                mBinding.getRoot().setTag(itemViewModel.getIdNumber());
                 mBinding.tvTitle.setText(itemViewModel.title.get());
                 String time = "";
                 switch (itemViewModel.getType()) {
@@ -181,11 +181,11 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
                         time = "Created: " + time;
                         break;
                     case RequestType.TYPE_CLOSED:
-                        mBinding.tvStatus.setText(itemViewModel.getStatusOfOrder());
+                        mBinding.tvStatus.setText(itemViewModel.statusOfOrder.get());
                         time = "Closed: " + time;
                         break;
                     case RequestType.TYPE_ORDER:
-                        mBinding.tvStatus.setText(itemViewModel.getStatusOfOrder());
+                        mBinding.tvStatus.setText(itemViewModel.statusOfOrder.get());
                         time = itemViewModel.dateTime1.get();
                         time = time != null ? time : "";
                         time = "Scheduled for: " + time;

@@ -11,12 +11,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateReq
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetResponse;
 
 import org.json.JSONObject;
 
@@ -39,11 +38,11 @@ public interface ApiHelper {
 
     Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 
-    Single<AppointmentGetResponse> getAppointment(String idNumber);
+    Single<JSONObject> getAppointment(AppointmentGetRequest request);
 
     Single<JSONObject> getOrder(OrderGetRequest request);
 
-    Single<ReceiptGetResponse> getReceipt(ReceiptGetRequest request);
+    Single<JSONObject> getReceipt(ReceiptGetRequest request);
 
     Single<JSONObject> getOrderAll();
 
@@ -54,4 +53,5 @@ public interface ApiHelper {
     Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
 
     Single<JSONObject> getAppointmentAll();
+
 }

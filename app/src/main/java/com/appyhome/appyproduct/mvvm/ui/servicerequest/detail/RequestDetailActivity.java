@@ -9,22 +9,22 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.EditDetailActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import javax.inject.Inject;
 
-public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBinding, RequestDetailViewModel> implements RequestDetailNavigator, View.OnClickListener {
+public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBinding, RequestItemViewModel> implements RequestItemNavigator, View.OnClickListener {
 
     @Inject
-    RequestDetailViewModel mRequestDetailViewModel;
+    RequestItemViewModel mRequestItemViewModel;
 
     ActivityRequestDetailBinding mBinder;
 
     private int mType = 0;
-
-    private static final int CODE_REQUEST_BACK = 111;
+    private String mIdNumber = "";
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestDetailActivity.class);
@@ -32,32 +32,44 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        processDetailData(getIntent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
-        mBinder.setViewModel(mRequestDetailViewModel);
-        mRequestDetailViewModel.setNavigator(this);
-        Intent intent = getIntent();
+        mBinder.setViewModel(mRequestItemViewModel);
+        mRequestItemViewModel.setNavigator(this);
         setTitle("SUMMARY");
-        if (intent.hasExtra("detail")) {
-            String data = intent.getStringExtra("detail");
-            mType = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
-            mRequestDetailViewModel.processData(data, mType);
-            switch (mType) {
-                case RequestType.TYPE_CLOSED:
-                    setTitle("RECEIPT SUMMARY");
-                    break;
-                case RequestType.TYPE_ORDER:
-                    setTitle("ORDER SUMMARY");
-                    break;
-                case RequestType.TYPE_REQUEST:
-                    setTitle("REQUEST SUMMARY");
-                    break;
-            }
-        }
         activeBackButton();
         mBinder.llAddServices.setOnClickListener(this);
         mBinder.llConfirmation.setOnClickListener(this);
+    }
+
+    private void processDetailData(Intent data) {
+        if (data != null && data.hasExtra("id")) {
+            mIdNumber = data.getStringExtra("id");
+            mType = data.getIntExtra("type", RequestType.TYPE_REQUEST);
+            try {
+                mRequestItemViewModel.fetchData(mIdNumber, mType);
+                switch (mType) {
+                    case RequestType.TYPE_CLOSED:
+                        setTitle("RECEIPT SUMMARY");
+                        break;
+                    case RequestType.TYPE_ORDER:
+                        setTitle("ORDER SUMMARY");
+                        break;
+                    case RequestType.TYPE_REQUEST:
+                        setTitle("REQUEST SUMMARY");
+                        break;
+                }
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     @Override
@@ -74,7 +86,9 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     private void openEditDetailActivity() {
         Intent intent = getIntent();
         intent.setClass(this, EditDetailActivity.class);
-        startActivityForResult(intent, CODE_REQUEST_BACK);
+        intent.putExtra("id", mIdNumber);
+        intent.putExtra("type", mType);
+        startActivity(intent);
     }
 
     @Override
@@ -84,8 +98,8 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
 
 
     @Override
-    public RequestDetailViewModel getViewModel() {
-        return mRequestDetailViewModel;
+    public RequestItemViewModel getViewModel() {
+        return mRequestItemViewModel;
     }
 
     @Override
@@ -99,15 +113,12 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        AppLogger.d("onActivityResult");
-        if(requestCode == CODE_REQUEST_BACK) {
-            if (resultCode == RESULT_OK) {
-                String result = data.getStringExtra("result");
-                AppLogger.d("onActivityResult: " + result);
-                mRequestDetailViewModel.processData(result, mType);
-            }
-        }
+    public void doAfterDataUpdated() {
+
+    }
+
+    @Override
+    public void handleErrorService(Throwable a) {
+
     }
 }

@@ -9,6 +9,9 @@ public class ReceiptGetRequest {
     @SerializedName("id_number")
     private String idNumber;
 
+    public ReceiptGetRequest(String id) {
+        idNumber = id;
+    }
     public ReceiptGetRequest() {
 
     }

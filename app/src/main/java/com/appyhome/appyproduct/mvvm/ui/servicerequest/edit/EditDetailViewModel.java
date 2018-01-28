@@ -4,9 +4,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONException;
@@ -16,31 +14,17 @@ import java.util.Iterator;
 
 import io.reactivex.functions.Consumer;
 
-public class EditDetailViewModel extends BaseViewModel<EditDetailNavigator> {
+public class EditDetailViewModel extends RequestItemViewModel {
 
-    private RequestItemViewModel mDataModel;
-    private int mType = 0;
     public EditDetailViewModel(DataManager dataManager,
                                SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-        mDataModel = new RequestItemViewModel();
-    }
-
-    public void processData(String data, int type) {
-        mType = type;
-        try {
-            JSONObject dataJSON = new JSONObject(data);
-            mDataModel.processData(dataJSON, type);
-            AppLogger.d("EditDetailViewModel: " + mDataModel.getIdNumber());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     public void updateOrderInformation() {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .getOrder(new OrderGetRequest(mDataModel.getIdNumber()))
+                .getOrder(new OrderGetRequest(getIdNumber()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(new Consumer<JSONObject>() {
@@ -53,7 +37,6 @@ public class EditDetailViewModel extends BaseViewModel<EditDetailNavigator> {
                                         String result = response.getString("message");
                                         JSONObject object = new JSONObject(result);
                                         JSONObject resultJSON = getItemInside(object);
-                                        getNavigator().goBackAfterSubmitting(resultJSON.toString());
                                     }
                                 }
                             }
@@ -87,7 +70,7 @@ public class EditDetailViewModel extends BaseViewModel<EditDetailNavigator> {
     public void markOrderCompleted(String comments, String rating) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .markOrderCompleted(new OrderCompletedRequest(mDataModel.getIdNumber(), comments, rating))
+                .markOrderCompleted(new OrderCompletedRequest(getIdNumber(), comments, rating))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(new Consumer<OrderCompletedResponse>() {
@@ -96,7 +79,7 @@ public class EditDetailViewModel extends BaseViewModel<EditDetailNavigator> {
                         if(response != null && response.getStatusCode().equals("200")) {
                             // MARK COMPLETED SUCCESS
                             setIsLoading(true);
-                            updateOrderInformation();
+                            getNavigator().doAfterDataUpdated();
                         }
                     }
                 }, new Consumer<Throwable>() {

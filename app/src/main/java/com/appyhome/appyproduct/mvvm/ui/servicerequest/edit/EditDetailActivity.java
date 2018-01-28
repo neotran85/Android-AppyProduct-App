@@ -9,11 +9,12 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestEditDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 
 import javax.inject.Inject;
 
-public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBinding, EditDetailViewModel> implements EditDetailNavigator, View.OnClickListener {
+public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBinding, EditDetailViewModel> implements RequestItemNavigator, View.OnClickListener {
 
     @Inject
     EditDetailViewModel mEditDetailViewModel;
@@ -34,10 +35,11 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
         setTitle("Confirm Completed");
         activeBackButton();
         Intent intent = getIntent();
-        if (intent.hasExtra("detail")) {
-            String data = intent.getStringExtra("detail");
+        if (intent.hasExtra("id") && intent.hasExtra("type")) {
+            String idNumber = intent.getStringExtra("id");
             int type = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
-            mEditDetailViewModel.processData(data, type);
+            mEditDetailViewModel.setIdNumber(idNumber);
+            mEditDetailViewModel.setType(type);
         }
 
         mBinder.btnSubmit.setOnClickListener(this);
@@ -81,10 +83,7 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
     }
 
     @Override
-    public void goBackAfterSubmitting(String data) {
-        Intent returnIntent = getIntent();
-        returnIntent.putExtra("result", data);
-        setResult(RESULT_OK, returnIntent);
+    public void doAfterDataUpdated() {
         finish();
     }
 }

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.servicerequest.detail.RequestDetailViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel" />
 
     </data>
 
@@ -57,14 +57,14 @@
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.getNameService()}"
+                                android:text="@{viewModel.title}"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.getDateCreated()}"
+                                android:text="@{viewModel.timeCreated}"
                                 android:textColor="@color/dark_gray"
                                 android:textSize="11sp" />
                         </LinearLayout>
@@ -123,7 +123,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="@{viewModel.getTotalCost()}"
+                                    android:text="@{viewModel.price}"
                                     android:textColor="@color/black"
                                     android:textSize="20sp" />
                             </LinearLayout>
@@ -136,12 +136,12 @@
                             android:layout_marginTop="10dp"
                             android:background="@color/light_gray"></View>
                         <TextView
-                            android:visibility="@{viewModel.isSafetyCodeVisible()}"
+                            android:visibility="@{viewModel.isSafetyCodeVisible}"
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@{viewModel.getSafetyCode()}"
+                            android:text="@{viewModel.safetyCode}"
                             android:textColor="@color/black"
                             android:textSize="14sp"/>
                         <TextView
@@ -159,7 +159,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:visibility="gone"
-                            android:text="@{viewModel.getAdditionalServices()}"
+                            android:text="@{viewModel.additionalServices}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -177,8 +177,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isTimeSlot1Visible()}"
-                            android:text="@{viewModel.getTimeSlot1()}"
+                            android:visibility="@{viewModel.isTimeSlot1Visible}"
+                            android:text="@{viewModel.dateTime1}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -187,8 +187,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isTimeSlot2Visible()}"
-                            android:text="@{viewModel.getTimeSlot2()}"
+                            android:visibility="@{viewModel.isTimeSlot2Visible}"
+                            android:text="@{viewModel.dateTime2}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -197,8 +197,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isTimeSlot3Visible()}"
-                            android:text="@{viewModel.getTimeSlot3()}"
+                            android:visibility="@{viewModel.isTimeSlot3Visible}"
+                            android:text="@{viewModel.dateTime3}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -216,7 +216,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getAddressString()}"
+                            android:text="@{viewModel.address}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -236,14 +236,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getAdditionalDetail()}"
+                            android:text="@{viewModel.additionalDetail}"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llAddServices"
-                        android:visibility="@{viewModel.isAddServiceVisible()}"
+                        android:visibility="@{viewModel.isAddServiceVisible}"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:orientation="horizontal"
@@ -268,7 +268,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="@{viewModel.isConfirmationVisible()}"
+                        android:visibility="@{viewModel.isConfirmationVisible}"
                         android:id="@+id/llConfirmation"
                         android:gravity="center_vertical"
                         android:padding="10dp"
@@ -294,7 +294,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="@{viewModel.isAdminReViewingVisible()}"
+                        android:visibility="@{viewModel.isAdminReViewingVisible}"
                         android:id="@+id/llAdminReview"
                         android:gravity="center_vertical"
                         android:padding="10dp"
@@ -314,9 +314,10 @@
                             android:textColor="@color/black"
                             android:textSize="15sp" />
                         <RatingBar
+                            android:id="@+id/ratingBar"
                             android:clickable="false"
                             style="?android:attr/ratingBarStyleSmall"
-                            android:rating="@{viewModel.getRating()}"
+                            android:rating="@{viewModel.rating}"
                             android:stepSize="0.5"
                             android:numStars="5"
                             android:layout_width="wrap_content"

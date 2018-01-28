@@ -103,10 +103,6 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mBinder.closedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mBinder.closedRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mRequestViewModel.fetchData(RequestType.TYPE_REQUEST);
-        mRequestViewModel.fetchData(RequestType.TYPE_ORDER);
-        mRequestViewModel.fetchData(RequestType.TYPE_CLOSED);
-
         mRequestAdapter = new RequestAdapter(null, RequestType.TYPE_REQUEST);
         mCloseAdapter = new RequestAdapter(null, RequestType.TYPE_CLOSED);
         mOrdersAdapter = new RequestAdapter(null, RequestType.TYPE_ORDER);
@@ -127,6 +123,14 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mRequestAdapter.setOnItemClickListener(this);
         mOrdersAdapter.setOnItemClickListener(this);
         mCloseAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRequestViewModel.fetchData(RequestType.TYPE_REQUEST);
+        mRequestViewModel.fetchData(RequestType.TYPE_ORDER);
+        mRequestViewModel.fetchData(RequestType.TYPE_CLOSED);
     }
 
     @Override
@@ -169,9 +173,9 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     @Override
     public void onItemClick(View view, int type) {
         Intent intent = RequestDetailActivity.getStartIntent(this.getActivity());
-        String detail = view.getTag().toString();
-        AppLogger.d("onItemClick: " + detail);
-        intent.putExtra("detail", detail);
+        String idNumber = view.getTag().toString();
+        AppLogger.d("onItemClick: " + idNumber);
+        intent.putExtra("id", idNumber);
         intent.putExtra("type", type);
         startActivity(intent);
     }

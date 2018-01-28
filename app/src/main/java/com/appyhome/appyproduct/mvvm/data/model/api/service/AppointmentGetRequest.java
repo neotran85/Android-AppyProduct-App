@@ -9,6 +9,9 @@ public class AppointmentGetRequest {
     @SerializedName("id_number")
     private String idNumber;
 
+    public AppointmentGetRequest(String id) {
+        idNumber = id;
+    }
     public AppointmentGetRequest() {
 
     }
