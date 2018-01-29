@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.servicerequest.edit;
+package com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
@@ -8,10 +8,10 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.functions.Consumer;
 
-public class EditDetailViewModel extends RequestItemViewModel {
+public class RequestConfirmedViewModel extends RequestItemViewModel {
 
-    public EditDetailViewModel(DataManager dataManager,
-                               SchedulerProvider schedulerProvider) {
+    public RequestConfirmedViewModel(DataManager dataManager,
+                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 

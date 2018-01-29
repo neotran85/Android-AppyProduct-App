@@ -12,7 +12,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
-import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.EditDetailActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedActivity;
 
 import javax.inject.Inject;
 
@@ -85,7 +85,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
 
     private void openEditDetailActivity() {
         Intent intent = getIntent();
-        intent.setClass(this, EditDetailActivity.class);
+        intent.setClass(this, RequestConfirmedActivity.class);
         intent.putExtra("id", mIdNumber);
         intent.putExtra("type", mType);
         startActivity(intent);

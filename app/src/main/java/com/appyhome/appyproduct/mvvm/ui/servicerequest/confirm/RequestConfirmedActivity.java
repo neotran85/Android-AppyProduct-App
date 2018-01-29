@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.servicerequest.edit;
+package com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,21 +7,21 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestEditDetailBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestConfirmCompletedBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 
 import javax.inject.Inject;
 
-public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBinding, EditDetailViewModel> implements RequestItemNavigator, View.OnClickListener {
+public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfirmCompletedBinding, RequestConfirmedViewModel> implements RequestItemNavigator, View.OnClickListener {
 
     @Inject
-    EditDetailViewModel mEditDetailViewModel;
-    ActivityRequestEditDetailBinding mBinder;
+    RequestConfirmedViewModel mRequestConfirmedViewModel;
+    ActivityRequestConfirmCompletedBinding mBinder;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, EditDetailActivity.class);
+        Intent intent = new Intent(context, RequestConfirmedActivity.class);
         return intent;
     }
 
@@ -29,8 +29,8 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
-        mBinder.setViewModel(mEditDetailViewModel);
-        mEditDetailViewModel.setNavigator(this);
+        mBinder.setViewModel(mRequestConfirmedViewModel);
+        mRequestConfirmedViewModel.setNavigator(this);
 
         setTitle("Confirm Completed");
         activeBackButton();
@@ -38,8 +38,8 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
         if (intent.hasExtra("id") && intent.hasExtra("type")) {
             String idNumber = intent.getStringExtra("id");
             int type = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
-            mEditDetailViewModel.setIdNumber(idNumber);
-            mEditDetailViewModel.setType(type);
+            mRequestConfirmedViewModel.setIdNumber(idNumber);
+            mRequestConfirmedViewModel.setType(type);
         }
 
         mBinder.btnSubmit.setOnClickListener(this);
@@ -50,7 +50,7 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
         switch (view.getId()) {
             case R.id.btnSubmit:
                 String rating = mBinder.ratingBar.getRating() + "";
-                mEditDetailViewModel.markOrderCompleted(mBinder.etAdditionalInfo.getText().toString(), rating);
+                mRequestConfirmedViewModel.markOrderCompleted(mBinder.etAdditionalInfo.getText().toString(), rating);
                 break;
         }
     }
@@ -63,8 +63,8 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
 
 
     @Override
-    public EditDetailViewModel getViewModel() {
-        return mEditDetailViewModel;
+    public RequestConfirmedViewModel getViewModel() {
+        return mRequestConfirmedViewModel;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class EditDetailActivity extends BaseActivity<ActivityRequestEditDetailBi
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_request_edit_detail;
+        return R.layout.activity_request_confirm_completed;
     }
 
     @Override

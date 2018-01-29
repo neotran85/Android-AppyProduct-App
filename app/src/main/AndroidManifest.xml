@@ -65,7 +65,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.servicerequest.edit.EditDetailActivity"
+            android:name=".ui.servicerequest.confirm.RequestConfirmedActivity"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
 
