@@ -18,8 +18,8 @@
         android:orientation="vertical">
 
         <include layout="@layout/view_header"></include>
-
-        <ScrollView
+        <include layout="@layout/view_coming_soon"></include>
+        <ScrollView android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

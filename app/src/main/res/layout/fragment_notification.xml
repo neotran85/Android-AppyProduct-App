@@ -18,8 +18,10 @@
         android:orientation="vertical">
 
         <include layout="@layout/view_header"></include>
+        <include layout="@layout/view_coming_soon"></include>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
