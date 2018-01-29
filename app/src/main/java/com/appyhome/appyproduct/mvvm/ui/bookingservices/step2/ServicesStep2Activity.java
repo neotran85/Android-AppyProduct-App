@@ -104,8 +104,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                updateServiceOrderInfo();
-                goToStep3();
+                clickNextButton();
                 break;
             case R.id.btTimeslot1:
             case R.id.btTimeslot2:
@@ -115,7 +114,16 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 break;
         }
     }
-
+    private void clickNextButton() {
+        if(ServiceOrderInfo.getInstance().getTimeSlot1().length() ==0 &&
+                ServiceOrderInfo.getInstance().getTimeSlot2().length() ==0 &&
+                ServiceOrderInfo.getInstance().getTimeSlot3().length() ==0) {
+                AlertManager.getInstance(this).showLongToast(getString(R.string.step2_warning_date_time));
+        } else {
+            updateServiceOrderInfo();
+            goToStep3();
+        }
+    }
     private void updateServiceOrderInfo() {
         ServiceOrderInfo.getInstance().setTimeSlot1(ViewUtils.getStringByTag(mBinder.btTimeslot1));
         ServiceOrderInfo.getInstance().setTimeSlot2(ViewUtils.getStringByTag(mBinder.btTimeslot2));

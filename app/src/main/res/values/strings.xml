@@ -105,4 +105,6 @@
     <!--Other-->
     <string name="error_coming_soon">Sorry. This feature is coming soon.</string>
 
+    <string name="step2_warning_date_time">Please select the date and time for an appointment.</string>
+
 </resources>

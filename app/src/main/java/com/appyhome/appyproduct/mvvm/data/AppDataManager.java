@@ -375,4 +375,9 @@ public class AppDataManager implements DataManager {
         return mApiHelper.markOrderCompleted(request);
     }
 
+    @Override
+    public Single<JSONObject> getUserProfile() {
+        return mApiHelper.getUserProfile();
+    }
+
 }

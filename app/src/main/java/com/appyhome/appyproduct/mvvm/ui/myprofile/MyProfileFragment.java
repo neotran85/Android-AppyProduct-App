@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.databinding.FragmentMyProfileBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.textinput.TextInputDialog;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.textinput.TextInputUIHandler;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
@@ -41,6 +42,9 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mMyProfileViewModel.setNavigator(this);
+        mBinder = getViewDataBinding();
+        mBinder.setViewModel(mMyProfileViewModel);
         setUp();
     }
 
@@ -48,11 +52,13 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMyProfileViewModel.fetchUserProfile();
+    }
 
     private void setUp() {
-        mMyProfileViewModel.setNavigator(this);
-        mBinder = getViewDataBinding();
-        mBinder.setViewModel(mMyProfileViewModel);
         mTextInputDialog = TextInputDialog.newInstance();
         mPasswordHints = new String[]{getResources().getString(R.string.my_profile_hint_old_password),
                 getResources().getString(R.string.my_profile_hint_new_password),
@@ -95,8 +101,8 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     }
 
     @Override
-    public void handleError(Throwable throwable) {
-        // handle error
+    public void handleErrorService(Throwable throwable) {
+        AlertManager.getInstance(getBaseActivity()).showLongToast(getString(R.string.error_network_general));
     }
 
     @Override

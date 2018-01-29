@@ -54,4 +54,6 @@ public interface ApiHelper {
 
     Single<JSONObject> getAppointmentAll();
 
+    Single<JSONObject> getUserProfile();
+
 }

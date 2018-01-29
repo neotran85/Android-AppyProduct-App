@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedReques
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.UserGetResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import org.json.JSONObject;
@@ -154,7 +155,13 @@ public class AppApiHelper implements ApiHelper {
                 .build()
                 .getObjectSingle(OrderCompletedResponse.class);
     }
-
+    @Override
+    public Single<JSONObject> getUserProfile() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getJSONObjectSingle();
+    }
     @Override
     public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)

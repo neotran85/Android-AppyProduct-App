@@ -60,9 +60,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/llAvatarEdit"
-                        android:layout_marginTop="80dp"
+                        android:layout_marginTop="60dp"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="28dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
                                     android:layout_weight="0.5"
-                                    android:text="Username"
+                                    android:text="First Name"
                                     android:textColor="#676767"
                                     android:textSize="10sp" />
 
@@ -93,7 +93,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
                                     android:layout_weight="0.5"
-                                    android:text="Change password"
+                                    android:text="Last Name"
                                     android:textColor="#676767"
                                     android:textSize="10sp" />
                             </LinearLayout>
@@ -107,18 +107,17 @@
                                 android:padding="10dp">
 
                                 <EditText
-                                    android:id="@+id/etUsername"
+                                    android:id="@+id/etFirstName"
                                     android:layout_width="match_parent"
                                     android:layout_height="24dp"
                                     android:background="@null"
                                     android:clickable="true"
                                     android:editable="false"
+                                    android:text="@{viewModel.firstName}"
                                     android:focusable="false"
-                                    android:hint="Username"
-                                    android:onClick="@{viewModel::onFieldClick}"
                                     android:paddingLeft="10dp"
                                     android:textColor="#676767"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -127,19 +126,18 @@
                                     android:background="@color/gray"></LinearLayout>
 
                                 <EditText
-                                    android:id="@+id/etPassword"
+                                    android:id="@+id/etLastName"
                                     android:layout_width="match_parent"
                                     android:layout_height="24dp"
                                     android:layout_marginTop="6dp"
                                     android:background="@null"
+                                    android:text="@{viewModel.lastName}"
                                     android:clickable="true"
                                     android:editable="false"
                                     android:focusable="false"
-                                    android:hint="Change password"
-                                    android:onClick="@{viewModel::onFieldClick}"
                                     android:paddingLeft="10dp"
                                     android:textColor="#676767"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -154,23 +152,22 @@
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="64dp"
                                 android:layout_height="wrap_content"
-                                android:text="Birthday"
+                                android:text="Email"
                                 android:textColor="#676767"
                                 android:textSize="10sp" />
 
                             <EditText
-                                android:id="@+id/etBirthday"
+                                android:id="@+id/etEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/white"
                                 android:clickable="true"
+                                android:text="@{viewModel.email}"
                                 android:editable="false"
                                 android:focusable="false"
-                                android:hint="Birthday"
-                                android:onClick="@{viewModel::onFieldClick}"
                                 android:paddingLeft="20dp"
                                 android:textColor="#676767"
-                                android:textSize="10sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -196,14 +193,14 @@
                                 android:clickable="true"
                                 android:editable="false"
                                 android:focusable="false"
-                                android:hint="Phone Number"
-                                android:onClick="@{viewModel::onFieldClick}"
+                                android:text="@{viewModel.phoneNumber}"
                                 android:paddingLeft="20dp"
                                 android:textColor="#676767"
-                                android:textSize="10sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_centerHorizontal="true"
@@ -234,6 +231,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -347,6 +345,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -465,6 +464,7 @@
             </ScrollView>
 
             <Button
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"

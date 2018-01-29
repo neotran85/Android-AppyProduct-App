@@ -38,6 +38,9 @@ public class ApiUrlConfig {
     public static final String RECEIPT_GET = BuildConfig.BASE_URL
             + "api/read/receipt";
 
+    public static final String USER_GET = BuildConfig.BASE_URL
+            + "api/read/user";
+
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     private ApiUrlConfig() {
         // This class is not publicly instantiable

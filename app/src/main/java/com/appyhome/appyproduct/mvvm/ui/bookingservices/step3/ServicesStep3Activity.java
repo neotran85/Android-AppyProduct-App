@@ -14,8 +14,6 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
-import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -92,16 +90,18 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                setAddress();
-                saveAddress(mBinder.cbSaveAddress.isChecked());
-                goToStep4();
+                clickNextButton();
                 break;
             case R.id.llSearchLocationNearby:
                 MapManager.openMapForPlaceSelection(this);
                 break;
         }
     }
-
+    private void clickNextButton() {
+        setAddress();
+        saveAddress(mBinder.cbSaveAddress.isChecked());
+        goToStep4();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

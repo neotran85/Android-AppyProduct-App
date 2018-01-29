@@ -7,7 +7,7 @@ public interface MyProfileNavigator {
 
     void goBack();
 
-    void handleError(Throwable throwable);
+    void handleErrorService(Throwable throwable);
 
     void onFieldClick(View view);
 }
