@@ -34,6 +34,8 @@ import com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedA
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.detail.RequestDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.detail.RequestDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.RequestEditActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.RequestEditActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragmentProvider;
@@ -52,6 +54,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = TextDetailActivityModule.class)
     abstract TextDetailActivity bindTextDetailActivity();
+
+    @ContributesAndroidInjector(modules = RequestEditActivityModule.class)
+    abstract RequestEditActivity bindRequestEditActivity();
 
     @ContributesAndroidInjector(modules = ServicesStep1ActivityModule.class)
     abstract ServicesStep1Activity bindBookingServicesActivity();

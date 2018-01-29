@@ -13,6 +13,12 @@ import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedActivity;
+import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.RequestEditActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.samples.vision.barcodereader.BarcodeCaptureActivity;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import javax.inject.Inject;
 
@@ -22,6 +28,8 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     RequestItemViewModel mRequestItemViewModel;
 
     ActivityRequestDetailBinding mBinder;
+
+    private static final int REQUEST_BARCODE_CAPTURE = 9001;
 
     private int mType = 0;
     private String mIdNumber = "";
@@ -76,14 +84,23 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llConfirmation:
-                openEditDetailActivity();
+                openConfirmationActivity();
                 break;
             case R.id.llAddServices:
+                openQRCodeScanActivity();
                 break;
         }
     }
 
     private void openEditDetailActivity() {
+        Intent intent = getIntent();
+        intent.setClass(this, RequestEditActivity.class);
+        intent.putExtra("id", mIdNumber);
+        intent.putExtra("type", mType);
+        startActivity(intent);
+    }
+
+    private void openConfirmationActivity() {
         Intent intent = getIntent();
         intent.setClass(this, RequestConfirmedActivity.class);
         intent.putExtra("id", mIdNumber);
@@ -114,11 +131,44 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
 
     @Override
     public void doAfterDataUpdated() {
-
+        // GET EDIT CODE SAFELY
     }
 
     @Override
     public void handleErrorService(Throwable a) {
 
+    }
+
+    public void openQRCodeScanActivity() {
+        Intent intent = new Intent(this, BarcodeCaptureActivity.class);
+        intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
+        intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
+        startActivityForResult(intent, REQUEST_BARCODE_CAPTURE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_BARCODE_CAPTURE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    AppLogger.d("barcodeValue: " + barcode.displayValue);
+                    if(barcode.displayValue.equals(mRequestItemViewModel.getEditCode())) {
+                        // CODE MATCHED & ALLOW USER TO EDIT THE DETAIL
+                        allowUserEditDetail();
+                        return;
+                    } else {
+                        AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_error_not_matched));
+                        return;
+                    }
+                }
+            }
+        }
+        AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_error_general));
+    }
+
+    private void allowUserEditDetail() {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_success));
+        openEditDetailActivity();
     }
 }

@@ -61,6 +61,6 @@ ext {
     // Others
     molpaymobilexdkVersion = '3.17.0'
     materialdatetimepickerVersion = '3.5.0'
-    playservicesplacesVersion = '10.2.0'
+    playservicesplacesVersion = '11.6.0'
     crashlyticsVersion = '2.8.0@aar'
 }

@@ -278,6 +278,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             result = getItemInside(result);
             processData(result, mType);
             AppLogger.d("handleResultSuccess: " + result.toString());
+            getNavigator().doAfterDataUpdated();
         } catch (Exception e) {
 
         }
@@ -296,5 +297,9 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getEditCode() {
+        return editCode;
     }
 }
