@@ -2,7 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.register;
 
 public interface RegisterNavigator {
 
-    void openMainActivity();
+    void doAfterRegisterSucceeded();
 
     void handleErrorService(Throwable throwable);
 

@@ -11,4 +11,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
         super(dataManager, schedulerProvider);
     }
 
+    public boolean isUserLoggedIn() {
+        return getDataManager().isUserLoggedIn();
+    }
 }

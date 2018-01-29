@@ -20,6 +20,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
+import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
@@ -43,6 +44,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public final static int TAB_WISH_LIST = 3;
     public final static int TAB_MY_PROFILE = 4;
     public final static String TAB = "tab";
+
+    public final static int REQUEST_LOGIN_FOR_REQUEST_TRACKING= 1111;
+    public final static int REQUEST_LOGIN_FOR_MY_PROFILE = 1112;
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
@@ -123,6 +127,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_LOGIN_FOR_MY_PROFILE:
+                if(resultCode == RESULT_OK) {
+                    onClick(mBinder.rlMyProfile);
+                }
+                break;
+            case REQUEST_LOGIN_FOR_REQUEST_TRACKING:
+                if(resultCode == RESULT_OK) {
+                    onClick(mBinder.rlRequest);
+                }
+                break;
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlHome:
@@ -134,18 +155,34 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
                 break;
             case R.id.rlRequest:
-                switchTabSelection(view);
-                showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
+                if (mMainViewModel.isUserLoggedIn()) {
+                    switchTabSelection(view);
+                    showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
+                } else {
+                    openLoginActivity(getString(R.string.login_required_message) + " see your service requests.",
+                            REQUEST_LOGIN_FOR_REQUEST_TRACKING);
+                }
                 break;
             case R.id.rlWishList:
                 switchTabSelection(view);
                 showFragment(MyWishListFragment.newInstance(), MyWishListFragment.TAG);
                 break;
             case R.id.rlMyProfile:
-                switchTabSelection(view);
-                showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
+                if (mMainViewModel.isUserLoggedIn()) {
+                    switchTabSelection(view);
+                    showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
+                } else {
+                    openLoginActivity(getString(R.string.login_required_message) + " see your profile.",
+                            REQUEST_LOGIN_FOR_MY_PROFILE);
+                }
                 break;
         }
+    }
+
+    private void openLoginActivity(String message, int requestCode) {
+        Intent intent = LoginActivity.getStartIntent(this);
+        intent.putExtra("message", message);
+        startActivityForResult(intent, requestCode);
     }
 
     private void switchTabSelection(View view) {

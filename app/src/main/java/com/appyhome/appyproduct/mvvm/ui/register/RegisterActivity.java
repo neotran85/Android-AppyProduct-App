@@ -13,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -81,9 +80,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     }
 
     @Override
-    public void openMainActivity() {
-        Intent intent = MainActivity.getStartIntent(RegisterActivity.this);
-        startActivity(intent);
+    public void doAfterRegisterSucceeded() {
+        setResult(RESULT_OK);
         finish();
     }
 

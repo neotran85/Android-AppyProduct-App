@@ -380,4 +380,12 @@ public class AppDataManager implements DataManager {
         return mApiHelper.getUserProfile();
     }
 
+    @Override
+    public void logout() {
+        mPreferencesHelper.logout();
+    }
+    @Override
+    public boolean isUserLoggedIn() {
+        return mPreferencesHelper.isUserLoggedIn();
+    }
 }

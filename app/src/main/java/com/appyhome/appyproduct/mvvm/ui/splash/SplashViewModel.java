@@ -40,13 +40,18 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
     }
 
     private void decideNextActivity() {
-        getDataManager().setAccessToken("");
-        String token = getDataManager().getAccessToken();
-        if (token == null || token.length() == 0) {
-            getNavigator().openLoginActivity();
-        } else {
+        getNavigator().openMainActivity();
+    }
+    private void decideNextActivityWithLoginRequired() {
+        if (isUserLoggedIn()) {
             getNavigator().openMainActivity();
+        } else {
+            getNavigator().openLoginActivity();
         }
+    }
+
+    private boolean isUserLoggedIn() {
+        return getDataManager().isUserLoggedIn();
     }
 
 }

@@ -32,4 +32,8 @@ public interface PreferencesHelper {
     ServiceAddress getServiceAddress();
 
     void setServiceAddress(ServiceAddress serviceAddress);
+
+    void logout();
+
+    boolean isUserLoggedIn();
 }

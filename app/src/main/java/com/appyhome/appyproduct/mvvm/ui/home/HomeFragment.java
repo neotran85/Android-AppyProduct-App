@@ -1,6 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.home;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
+import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
 import javax.inject.Inject;
@@ -28,6 +31,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private Toolbar mToolbar;
     private ImageButton mToolbarCartButton;
 
+    public final static int REQUEST_LOGIN_FOR_AIR_CON_SERVICING= 1113;
+    public final static int REQUEST_LOGIN_FOR_HOME_CLEANING = 1114;
+
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
@@ -35,20 +41,41 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         return fragment;
     }
 
+    private void openLoginActivity(String message, int requestCode) {
+        Intent intent = LoginActivity.getStartIntent(getActivity());
+        intent.putExtra("message", message);
+        startActivityForResult(intent, requestCode);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibAirConServicing:
-                ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_AIR_CON_CLEANING);
-                startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
+                openAirConServiceBooking();
                 break;
             case R.id.ibHomeCleaning:
-                ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_HOME_CLEANING);
-                startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
+                openHomeCleaningBooking();
                 break;
         }
     }
-
+    private void openHomeCleaningBooking() {
+        if (mHomeViewModel.isUserLoggedIn()) {
+            ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_HOME_CLEANING);
+            startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
+        } else {
+            openLoginActivity(getString(R.string.login_required_message) + " book a service.",
+                    REQUEST_LOGIN_FOR_HOME_CLEANING);
+        }
+    }
+    private void openAirConServiceBooking() {
+        if (mHomeViewModel.isUserLoggedIn()) {
+            ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_AIR_CON_CLEANING);
+            startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
+        } else {
+            openLoginActivity(getString(R.string.login_required_message) + " book a service.",
+                    REQUEST_LOGIN_FOR_AIR_CON_SERVICING);
+        }
+    }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -95,5 +122,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_LOGIN_FOR_AIR_CON_SERVICING:
+                if(resultCode == Activity.RESULT_OK) {
+                    openAirConServiceBooking();
+                }
+                break;
+            case REQUEST_LOGIN_FOR_HOME_CLEANING:
+                if(resultCode == Activity.RESULT_OK) {
+                    openHomeCleaningBooking();
+                }
+                break;
+        }
     }
 }

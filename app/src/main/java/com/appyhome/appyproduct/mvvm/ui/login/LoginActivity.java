@@ -15,7 +15,6 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.browser.BrowserActivity;
-import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
@@ -31,6 +30,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     LoginViewModel mLoginViewModel;
 
     ActivityLoginBinding mBinder;
+
+    public static final int REQUEST_SIGN_UP = 2222;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -69,6 +70,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 }
             });
         }
+
+        Intent data = getIntent();
+        if(data.hasExtra("message")) {
+            String message = data.getStringExtra("message");
+            showError(message);
+        }
     }
 
     @Override
@@ -99,13 +106,25 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openSignUpActivity() {
         Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_SIGN_UP);
     }
 
     @Override
-    public void openMainActivity() {
-        Intent intent = MainActivity.getStartIntent(LoginActivity.this);
-        startActivity(intent);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_SIGN_UP:
+                if(resultCode == RESULT_OK) {
+                   doAfterLoginSucceeded();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void doAfterLoginSucceeded() {
+        Intent intent = getIntent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 

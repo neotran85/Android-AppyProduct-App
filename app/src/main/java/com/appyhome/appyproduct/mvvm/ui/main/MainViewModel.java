@@ -105,4 +105,8 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     public int getAction() {
         return action;
     }
+
+    public boolean isUserLoggedIn() {
+        return getDataManager().isUserLoggedIn();
+    }
 }

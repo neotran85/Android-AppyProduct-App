@@ -61,5 +61,8 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                     }
                 }));
     }
-
+    public void logout() {
+        getDataManager().logout();
+        getNavigator().backToHomeScreen();
+    }
 }

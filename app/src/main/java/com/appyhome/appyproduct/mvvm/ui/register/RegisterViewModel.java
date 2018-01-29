@@ -84,7 +84,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 setPhoneNumber(mPhoneNumber);
                 getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
-                getNavigator().openMainActivity();
+                getNavigator().doAfterRegisterSucceeded();
             }
         } else {
             getNavigator().showErrorOthers();

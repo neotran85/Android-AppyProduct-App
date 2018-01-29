@@ -14,7 +14,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -89,11 +89,23 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 break;
         }
     }
+    private boolean checkIfLocationInputted() {
+        return mBinder.etUnitNumberHouse.getText().length() > 0 ||
+                mBinder.etStreet.getText().length() > 0 ||
+                mBinder.etAreaLine1.getText().length() > 0 ||
+                mBinder.etAreaLine2.getText().length() > 0 ||
+                mBinder.etCityTown.getText().length() > 0 ||
+                mBinder.etPostCode.getText().length() > 0;
+    }
 
     private void clickNextButton() {
-        setAddress();
-        saveAddress(mBinder.cbSaveAddress.isChecked());
-        goToStep4();
+        if(checkIfLocationInputted()) {
+            setAddress();
+            saveAddress(mBinder.cbSaveAddress.isChecked());
+            goToStep4();
+        } else {
+            AlertManager.getInstance(this).showLongToast(getString(R.string.step3_warning_location));
+        }
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface MyProfileNavigator {
     void handleErrorService(Throwable throwable);
 
     void onFieldClick(View view);
+
+    void backToHomeScreen();
 }

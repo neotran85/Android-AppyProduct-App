@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.myprofile;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,13 +10,14 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentMyProfileBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.textinput.TextInputDialog;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.textinput.TextInputUIHandler;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, MyProfileViewModel> implements MyProfileNavigator, TextInputUIHandler.DialogInputHandler {
+public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, MyProfileViewModel> implements MyProfileNavigator, TextInputUIHandler.DialogInputHandler, View.OnClickListener {
 
     public static final String TAG = "MyProfileFragment";
 
@@ -73,6 +75,7 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
                 "", "", ""};
 
         setTitle("My Profile");
+        mBinder.tvLogout.setOnClickListener(this);
     }
 
     @Override
@@ -158,6 +161,23 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     @Override
     public void onOkayHandler() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvLogout:
+                mMyProfileViewModel.logout();
+                break;
+        }
+    }
+
+    @Override
+    public void backToHomeScreen() {
+        Intent i = MainActivity.getStartIntent(getActivity());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     @Override

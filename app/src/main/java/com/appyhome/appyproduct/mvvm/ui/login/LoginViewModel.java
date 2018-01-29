@@ -59,7 +59,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 setPhoneNumber(mPhoneNumber);
                 getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
-                getNavigator().openMainActivity();
+                getNavigator().doAfterLoginSucceeded();
             }
         } else {
             getNavigator().showErrorOthers();

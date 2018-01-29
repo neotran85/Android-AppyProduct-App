@@ -103,4 +103,15 @@ public class AppPreferencesHelper implements PreferencesHelper {
         AppLogger.d("setServiceAddress: " + serviceAddress.toString());
         mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS, serviceAddress.toJSONString()).apply();
     }
+
+    @Override
+    public void logout() {
+        setAccessToken("");
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        String accessToken = getAccessToken();
+        return accessToken != null && accessToken.length() > 0;
+    }
 }
