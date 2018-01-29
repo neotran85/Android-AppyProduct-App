@@ -61,6 +61,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         if (data != null && data.hasExtra("id")) {
             mIdNumber = data.getStringExtra("id");
             mType = data.getIntExtra("type", RequestType.TYPE_REQUEST);
+            mType = data.getIntExtra("type", RequestType.TYPE_REQUEST);
             try {
                 mRequestItemViewModel.fetchData(mIdNumber, mType);
                 switch (mType) {
@@ -97,6 +98,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         intent.setClass(this, RequestEditActivity.class);
         intent.putExtra("id", mIdNumber);
         intent.putExtra("type", mType);
+        intent.putExtra("edit_code", mRequestItemViewModel.getEditCode());
         startActivity(intent);
     }
 

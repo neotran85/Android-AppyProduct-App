@@ -32,6 +32,9 @@ public class ApiUrlConfig {
     public static final String ORDER_GET = BuildConfig.BASE_URL
             + "api/read/order";
 
+    public static final String ORDER_EDIT = BuildConfig.BASE_URL
+            + "api/edit/order";
+
     public static final String ORDER_COMPLETED = BuildConfig.BASE_URL
             + "api/mark/ordercomplete";
 
@@ -42,6 +45,7 @@ public class ApiUrlConfig {
             + "api/read/user";
 
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
+
     private ApiUrlConfig() {
         // This class is not publicly instantiable
     }

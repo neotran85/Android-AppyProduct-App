@@ -302,4 +302,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public String getEditCode() {
         return editCode;
     }
+    public void setEditCode(String code) {
+        editCode = code;
+    }
 }
