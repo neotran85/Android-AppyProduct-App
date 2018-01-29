@@ -140,6 +140,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                     }
                 } else {
                     dateTime1.set(dateTimeStr);
+                    isTimeSlot1Visible.set(isTimeSlot1Visible());
                 }
             }
 
