@@ -40,6 +40,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     private String mDateSelectedShowedString = "";
     private String mDateSelectedString = "";
     private MultipleChooseView mExtraServicesView;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep2Activity.class);
         return intent;
@@ -114,16 +115,23 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 break;
         }
     }
+
+    private boolean checkIfDateTimeInputted() {
+        String datetime1 = ViewUtils.getStringByTag(mBinder.btTimeslot1);
+        String datetime2 = ViewUtils.getStringByTag(mBinder.btTimeslot2);
+        String datetime3 = ViewUtils.getStringByTag(mBinder.btTimeslot3);
+        return datetime1.length() > 0 || datetime2.length() > 0 || datetime3.length() > 0;
+    }
+
     private void clickNextButton() {
-        if(ServiceOrderInfo.getInstance().getTimeSlot1().length() ==0 &&
-                ServiceOrderInfo.getInstance().getTimeSlot2().length() ==0 &&
-                ServiceOrderInfo.getInstance().getTimeSlot3().length() ==0) {
-                AlertManager.getInstance(this).showLongToast(getString(R.string.step2_warning_date_time));
-        } else {
+        if (checkIfDateTimeInputted()) {
             updateServiceOrderInfo();
             goToStep3();
+        } else {
+            AlertManager.getInstance(this).showLongToast(getString(R.string.step2_warning_date_time));
         }
     }
+
     private void updateServiceOrderInfo() {
         ServiceOrderInfo.getInstance().setTimeSlot1(ViewUtils.getStringByTag(mBinder.btTimeslot1));
         ServiceOrderInfo.getInstance().setTimeSlot2(ViewUtils.getStringByTag(mBinder.btTimeslot2));

@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -40,24 +41,15 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mServicesStep3ViewModel.setNavigator(this);
+        mBinder.setViewModel(mServicesStep3ViewModel);
         mBinder.btnNext.setOnClickListener(this);
         mBinder.llSearchLocationNearby.setOnClickListener(this);
         setTitle("Set Location");
         activeBackButton();
-        updateAddress();
+        mServicesStep3ViewModel.updateAddress();
     }
 
-    private void updateAddress() {
-        ServiceAddress address = mServicesStep3ViewModel.getServiceAddress();
-        if (address.number != null || address.number.length() > 0) {
-            mBinder.etUnitNumberHouse.setText(address.number);
-            mBinder.etStreet.setText(address.street);
-            mBinder.etAreaLine1.setText(address.area1);
-            mBinder.etAreaLine2.setText(address.area2);
-            mBinder.etCityTown.setText(address.city);
-            mBinder.etPostCode.setText(address.code);
-        }
-    }
+
 
     public void saveAddress(boolean isSaved) {
         if (isSaved) {
@@ -74,7 +66,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setAddress() {
-        String postcode =  mBinder.etPostCode.getText().toString();
+        String postcode = mBinder.etPostCode.getText().toString();
         postcode = postcode.length() > 0 ? "(Postal code " + postcode + ")" : "";
 
         String address = mBinder.etUnitNumberHouse.getText().toString() + ", "
@@ -97,11 +89,13 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 break;
         }
     }
+
     private void clickNextButton() {
         setAddress();
         saveAddress(mBinder.cbSaveAddress.isChecked());
         goToStep4();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

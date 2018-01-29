@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import javax.inject.Inject;
 
@@ -18,12 +19,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
             = "PREF_KEY_CURRENT_USER_PROFILE_PIC_URL";
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
 
-    private static final String PREF_KEY_SERVICE_ADDRESS_NUMBER = "PREF_KEY_SERVICE_ADDRESS_NUMBER";
-    private static final String PREF_KEY_SERVICE_ADDRESS_STREET = "PREF_KEY_SERVICE_ADDRESS_STREET";
-    private static final String PREF_KEY_SERVICE_ADDRESS_AREA_LINE1 = "PREF_KEY_SERVICE_ADDRESS_AREA_LINE1";
-    private static final String PREF_KEY_SERVICE_ADDRESS_AREA_LINE2 = "PREF_KEY_SERVICE_ADDRESS_AREA_LINE2";
-    private static final String PREF_KEY_SERVICE_ADDRESS_CITY = "PREF_KEY_SERVICE_ADDRESS_CITY";
-    private static final String PREF_KEY_SERVICE_ADDRESS_CODE = "PREF_KEY_SERVICE_ADDRESS_CODE";
+    private static final String PREF_KEY_SERVICE_ADDRESS = "PREF_KEY_SERVICE_ADDRESS";
 
     private final SharedPreferences mPrefs;
 
@@ -96,22 +92,15 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public ServiceAddress getServiceAddress() {
         ServiceAddress address = new ServiceAddress();
-        address.number = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS_NUMBER, "");
-        address.street = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS_STREET, "");
-        address.area1 = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS_AREA_LINE1, "");
-        address.area2 = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS_AREA_LINE2, "");
-        address.city = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS_CITY, "");
-        address.code = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS_CODE, "");
+        String json = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS, "");
+        address.fromJSONString(json);
         return address;
     }
 
     @Override
     public void setServiceAddress(ServiceAddress serviceAddress) {
-        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS_NUMBER, serviceAddress.number).apply();
-        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS_STREET, serviceAddress.street).apply();
-        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS_AREA_LINE1, serviceAddress.area1).apply();
-        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS_AREA_LINE2, serviceAddress.area2).apply();
-        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS_CITY, serviceAddress.city).apply();
-        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS_CODE, serviceAddress.code).apply();
+        AppLogger.d("setServiceAddress: " + serviceAddress.toJSONString());
+        AppLogger.d("setServiceAddress: " + serviceAddress.toString());
+        mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS, serviceAddress.toJSONString()).apply();
     }
 }

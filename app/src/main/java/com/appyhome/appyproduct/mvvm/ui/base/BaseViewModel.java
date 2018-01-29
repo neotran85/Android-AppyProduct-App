@@ -2,6 +2,8 @@ package com.appyhome.appyproduct.mvvm.ui.base;
 
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -13,9 +15,11 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
-    private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
+    public final ObservableBoolean isLoading = new ObservableBoolean(false);
     private N mNavigator;
     private CompositeDisposable mCompositeDisposable;
+    public ObservableField<Integer> isLoadingVisible = new ObservableField<>(View.GONE);
+    public ObservableField<Integer> isContentVisible = new ObservableField<>(View.GONE);
 
     public BaseViewModel() {
         mDataManager = null;
@@ -49,11 +53,13 @@ public abstract class BaseViewModel<N> extends ViewModel {
     }
 
     public ObservableBoolean getIsLoading() {
-        return mIsLoading;
+        return isLoading;
     }
 
-    public void setIsLoading(boolean isLoading) {
-        mIsLoading.set(isLoading);
+    public void setIsLoading(boolean value) {
+        isLoading.set(value);
+        isLoadingVisible.set(value ? View.VISIBLE : View.GONE);
+        isContentVisible.set(value ? View.GONE : View.VISIBLE);
     }
 
     @Override

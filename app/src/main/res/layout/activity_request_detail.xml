@@ -23,7 +23,6 @@
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
-
             <ScrollView
                 android:id="@+id/svMainView"
                 android:layout_width="match_parent"
