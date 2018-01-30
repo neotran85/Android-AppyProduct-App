@@ -115,8 +115,13 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
         String statusCode = response.getStatusCode();
         String message = response.getMessage();
+
         if (message.equals("phone_number_duplicate")) {
             getNavigator().showErrorPhoneDuplicated();
+            return;
+        }
+        if (message.equals("email_duplicate")) {
+            getNavigator().showErrorEmailDuplicated();
             return;
         }
         if (statusCode.equals("200")) {
@@ -128,12 +133,6 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     getNavigator().login();
                     return;
                 }
-            }
-        }
-        if (statusCode.equals("400")) {
-            if (message.equals("email_duplicate")) {
-                getNavigator().showErrorEmailDuplicated();
-                return;
             }
         }
         getNavigator().showErrorOthers();
