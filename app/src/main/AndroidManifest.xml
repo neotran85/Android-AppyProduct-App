@@ -34,6 +34,7 @@
             android:name="com.google.android.gms.samples.vision.barcodereader.BarcodeCaptureActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:windowSoftInputMode="stateVisible"
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -63,6 +64,7 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:windowSoftInputMode="stateVisible"
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
 
