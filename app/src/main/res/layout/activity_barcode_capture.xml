@@ -10,10 +10,12 @@
 
   <com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview
       android:id="@+id/preview"
+      android:background="@color/black"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
     <com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay
+        android:background="@color/black"
         android:id="@+id/graphicOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

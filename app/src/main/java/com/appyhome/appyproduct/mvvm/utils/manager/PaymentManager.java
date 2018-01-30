@@ -4,7 +4,7 @@ package com.appyhome.appyproduct.mvvm.utils.manager;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.molpay.molpayxdk.BuildConfig;
+import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.molpay.molpayxdk.MOLPayActivity;
 
 import java.util.HashMap;
