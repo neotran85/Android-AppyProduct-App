@@ -38,6 +38,7 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:windowSoftInputMode="stateVisible"
             android:name=".ui.servicerequest.edit.RequestEditActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -75,7 +76,7 @@
         <activity
             android:name=".ui.servicerequest.confirm.RequestConfirmedActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateVisible" />
 
         <activity
             android:name=".ui.main.MainActivity"
