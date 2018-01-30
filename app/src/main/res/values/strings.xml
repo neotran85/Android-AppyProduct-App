@@ -48,7 +48,8 @@
     <string name="register_error_invalid_password">Password must have at least 6 characters.</string>
     <string name="register_error_invalid_email">Your email address is not valid.</string>
     <string name="register_error_invalid_phone">Your phone number is not valid.</string>
-    <string name="register_error_phone_duplicated">You phone number was used before. Please enter the new one.</string>
+    <string name="register_error_phone_duplicated">Your phone number was used before. Please enter the new one.</string>
+    <string name="register_error_email_duplicated">Your email address was used before. Please enter the new one.</string>
     <string name="register_error_something">Something error. Please try again later.</string>
     <string name="register_success_logged">Successfully registered and logged in</string>
 

@@ -216,4 +216,10 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         showError(getString(R.string.register_error_phone_duplicated));
         showTextInputError(mBinder.etNumberPhone);
     }
+
+    @Override
+    public void showErrorEmailDuplicated() {
+        showError(getString(R.string.register_error_email_duplicated));
+        showTextInputError(mBinder.etEmailAddress);
+    }
 }

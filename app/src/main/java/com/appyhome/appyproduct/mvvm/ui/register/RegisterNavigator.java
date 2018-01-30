@@ -18,4 +18,6 @@ public interface RegisterNavigator {
 
     void showErrorPhoneDuplicated();
 
+    void showErrorEmailDuplicated();
+
 }

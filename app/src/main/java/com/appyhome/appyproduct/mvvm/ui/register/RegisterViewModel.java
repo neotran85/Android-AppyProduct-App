@@ -14,6 +14,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
     private String mEmail = "";
     private String mPhoneNumber = "";
+
     public RegisterViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -85,18 +86,20 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
                 getNavigator().doAfterRegisterSucceeded();
+                return;
             }
-        } else {
-            getNavigator().showErrorOthers();
         }
+        getNavigator().showErrorOthers();
     }
 
     public void setAccessToken(String token) {
         getDataManager().setAccessToken(token);
     }
+
     public void setPhoneNumber(String phoneNumber) {
         getDataManager().setCurrentPhoneNumber(phoneNumber);
     }
+
     public void setEmailUser(String email) {
         getDataManager().setCurrentUserEmail(email);
     }
@@ -126,9 +129,14 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     return;
                 }
             }
-            getNavigator().showErrorOthers();
-            return;
         }
+        if (statusCode.equals("400")) {
+            if (message.equals("email_duplicate")) {
+                getNavigator().showErrorEmailDuplicated();
+                return;
+            }
+        }
+        getNavigator().showErrorOthers();
     }
 
 }
