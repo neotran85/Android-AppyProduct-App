@@ -6,6 +6,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONObject;
@@ -13,7 +14,6 @@ import org.json.JSONObject;
 import io.reactivex.functions.Consumer;
 
 public class RequestEditViewModel extends RequestItemViewModel {
-
     public RequestEditViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -38,13 +38,15 @@ public class RequestEditViewModel extends RequestItemViewModel {
         return getDataManager().getCurrentPhoneNumber();
     }
 
-    public void editOrder(String additional, String amount) {
+    public void editOrder(String additional, String amount, String txn_ID) {
         OrderEditRequest request = new OrderEditRequest();
         request.setIdNumber(getIdNumber());
         request.setEditCode(getEditCode());
         JSONObject obj = new JSONObject();
         try {
-            obj.put("service1", additional+ "::" + amount);
+            String value = additional+ "_" + txn_ID + "::" + amount;
+            AppLogger.d("editOrder: " + value);
+            obj.put("service1", value);
             request.setAdditional(obj.toString());
             editOrder(request);
         } catch (Exception e) {

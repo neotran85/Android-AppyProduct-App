@@ -4,6 +4,7 @@ package com.appyhome.appyproduct.mvvm.utils.manager;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.molpay.molpayxdk.BuildConfig;
 import com.molpay.molpayxdk.MOLPayActivity;
 
 import java.util.HashMap;
@@ -53,8 +54,10 @@ public class PaymentManager {
             paymentDetails.put(MOLPayActivity.mp_bill_description, BILL_DESCRIPTION);
             paymentDetails.put(MOLPayActivity.mp_channel, MULTIPLE);
 
-            paymentDetails.put(MOLPayActivity.mp_sandbox_mode, true);
-            paymentDetails.put(MOLPayActivity.mp_dev_mode, true);
+            if (BuildConfig.DEBUG) {
+                paymentDetails.put(MOLPayActivity.mp_sandbox_mode, true);
+                paymentDetails.put(MOLPayActivity.mp_dev_mode, true);
+            }
 
             Intent intent = new Intent(currentActivity, MOLPayActivity.class);
             intent.putExtra(MOLPayActivity.MOLPayPaymentDetails, paymentDetails);

@@ -9,7 +9,6 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestEditBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemNavigator;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -112,9 +111,9 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
         finish();
     }
 
-    public void doAfterPaymentCompleted() {
+    public void doAfterPaymentCompleted(String txn_ID) {
         mRequestEditViewModel.editOrder(mBinder.etAdditionalInfo.getText().toString(),
-                mBinder.etAdditionalAmount.getText().toString());
+                mBinder.etAdditionalAmount.getText().toString(), txn_ID);
     }
 
     @Override
@@ -128,8 +127,7 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
                     // PAYMENT SUCCESS
                     String txn_ID = result.getString("txn_ID");
                     AppLogger.d(txn_ID);
-                    ServiceOrderInfo.getInstance().setTxn_ID(txn_ID);
-                    doAfterPaymentCompleted();
+                    doAfterPaymentCompleted(txn_ID);
                     AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
                 }
                 return;

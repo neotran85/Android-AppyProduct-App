@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
+
             <ScrollView
                 android:id="@+id/svMainView"
                 android:layout_width="match_parent"
@@ -37,18 +38,18 @@
                     android:padding="12dp">
 
                     <LinearLayout
-                        android:paddingLeft="20dp"
-                        android:paddingRight="14dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:paddingBottom="24dp">
+                        android:paddingBottom="24dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="14dp">
 
                         <LinearLayout
-                            android:layout_marginTop="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
 
@@ -60,18 +61,30 @@
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.timeCreated}"
-                                android:textColor="@color/dark_gray"
-                                android:textSize="11sp" />
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.timeCreatedLabel}"
+                                    android:textColor="@color/dark_gray"
+                                    android:textSize="11sp" />
+                                <TextView
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.timeCreated}"
+                                    android:textColor="@color/dark_gray"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <View
-                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/light_gray"></View>
 
                         <LinearLayout
@@ -93,10 +106,11 @@
                                     android:text="TOTAL"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
+
                                 <TextView
-                                    android:layout_marginTop="4dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
                                     android:text="incl. GST and additional services"
                                     android:textColor="@color/dark_gray"
                                     android:textSize="11sp" />
@@ -134,15 +148,17 @@
                             android:layout_marginBottom="16dp"
                             android:layout_marginTop="10dp"
                             android:background="@color/light_gray"></View>
+
                         <TextView
-                            android:visibility="@{viewModel.isSafetyCodeVisible}"
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="@{viewModel.safetyCode}"
                             android:textColor="@color/black"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            android:visibility="@{viewModel.isSafetyCodeVisible}" />
+
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
@@ -157,10 +173,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:visibility="gone"
                             android:text="@{viewModel.additionalServices}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:visibility="gone" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -176,30 +192,30 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isTimeSlot1Visible}"
                             android:text="@{viewModel.dateTime1}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:visibility="@{viewModel.isTimeSlot1Visible}" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isTimeSlot2Visible}"
                             android:text="@{viewModel.dateTime2}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:visibility="@{viewModel.isTimeSlot2Visible}" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isTimeSlot3Visible}"
                             android:text="@{viewModel.dateTime3}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:visibility="@{viewModel.isTimeSlot3Visible}" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -230,97 +246,103 @@
                             android:visibility="gone" />
 
                         <TextView
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="6dp"
                             android:text="@{viewModel.additionalDetail}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llAddServices"
-                        android:visibility="@{viewModel.isAddServiceVisible}"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:visibility="@{viewModel.isAddServiceVisible}">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_marginLeft="8dp"
+                            android:layout_weight="0.5"
                             android:gravity="center_vertical"
                             android:text="+ Add services"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
+
                         <ImageView
-                            android:background="@mipmap/icon_add"
                             android:layout_width="22dp"
-                            android:layout_height="22dp" />
+                            android:layout_height="22dp"
+                            android:background="@mipmap/icon_add" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="@{viewModel.isConfirmationVisible}"
                         android:id="@+id/llConfirmation"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:visibility="@{viewModel.isConfirmationVisible}">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_marginLeft="8dp"
+                            android:layout_weight="0.5"
                             android:gravity="center_vertical"
                             android:text="Confirm Completed"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
+
                         <ImageView
-                            android:background="@mipmap/icon_completed"
                             android:layout_width="22dp"
-                            android:layout_height="22dp" />
+                            android:layout_height="22dp"
+                            android:background="@mipmap/icon_completed" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="@{viewModel.isAdminReViewingVisible}"
                         android:id="@+id/llAdminReview"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:visibility="@{viewModel.isStatusViewVisible}">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_marginLeft="8dp"
+                            android:layout_weight="0.5"
                             android:gravity="center_vertical"
-                            android:text="Admin reviewing"
+                            android:text="@{viewModel.statusText}"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
+
                         <RatingBar
                             android:id="@+id/ratingBar"
-                            android:clickable="false"
                             style="?android:attr/ratingBarStyleSmall"
-                            android:rating="@{viewModel.rating}"
-                            android:stepSize="0.5"
-                            android:numStars="5"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:numStars="5"
+                            android:rating="@{viewModel.rating}"
+                            android:stepSize="0.5" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

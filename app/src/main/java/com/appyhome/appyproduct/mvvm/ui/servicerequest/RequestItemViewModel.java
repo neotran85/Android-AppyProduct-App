@@ -24,6 +24,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public ObservableField<String> price = new ObservableField<>("");
     public ObservableField<String> address = new ObservableField<>("");
     public ObservableField<String> timeCreated = new ObservableField<>("");
+    public ObservableField<String> timeCreatedLabel = new ObservableField<>("");
     public ObservableField<String> dateTime1 = new ObservableField<>("");
     public ObservableField<String> dateTime2 = new ObservableField<>("");
     public ObservableField<String> dateTime3 = new ObservableField<>("");
@@ -33,12 +34,13 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public ObservableField<String> additionalServices = new ObservableField<>("");
     public ObservableField<String> additionalDetail = new ObservableField<>("");
     public ObservableField<Float> rating = new ObservableField<>(-1.0f);
+    public ObservableField<String> statusText = new ObservableField<>(RequestStatus.ADMIN_REVIEWING);
 
     public ObservableField<Integer> isTimeSlot1Visible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isTimeSlot2Visible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isTimeSlot3Visible = new ObservableField<>(View.GONE);
 
-    public ObservableField<Integer> isAdminReViewingVisible = new ObservableField<>(View.GONE);
+    public ObservableField<Integer> isStatusViewVisible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isSafetyCodeVisible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isAddServiceVisible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isConfirmationVisible = new ObservableField<>(View.GONE);
@@ -51,6 +53,8 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
 
 
     private String phoneNumber = "";
+
+
 
     public RequestItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -89,7 +93,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                 isConfirmationVisible.set(isConfirmationVisible());
                 isAddServiceVisible.set(isAddServiceVisible());
                 isSafetyCodeVisible.set(isSafetyCodeVisible());
-                isAdminReViewingVisible.set(isAdminReViewingVisible());
+                isStatusViewVisible.set(isStatusVisible());
             }
             if (item.has("rating")) {
                 try {
@@ -118,7 +122,12 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                 AppLogger.d("processData: address: " + item.getString("address"));
             }
             if (item.has("time")) {
-                this.timeCreated.set("Time created: " + item.getString("time"));
+                this.timeCreated.set(item.getString("time"));
+            }
+            if (item.has("archived_at")) {
+                this.timeCreated.set(item.getString("archived_at"));
+                isStatusViewVisible.set(isStatusVisible());
+                this.statusText.set(RequestStatus.CLOSED);
             }
             if (item.has("datetime")) {
                 String dateTimeStr = item.getString("datetime");
@@ -183,10 +192,11 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         return isAddServiceVisible();
     }
 
-    private int isAdminReViewingVisible() {
-        return mType == RequestType.TYPE_ORDER
-                && statusOfOrder.get().equals(RequestStatus.ADMIN_REVIEW)
-                ? View.VISIBLE : View.GONE;
+    private int isStatusVisible() {
+        boolean value = (mType == RequestType.TYPE_ORDER
+                && statusOfOrder.get().equals(RequestStatus.ADMIN_REVIEW))
+                || (mType == RequestType.TYPE_CLOSED);
+        return value ? View.VISIBLE : View.GONE;
     }
 
     private int isTimeSlot2Visible() {
@@ -206,6 +216,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         setIdNumber(id);
         mType = type;
         if (type == RequestType.TYPE_REQUEST) {
+            timeCreatedLabel.set("Created at:");
             getCompositeDisposable().add(getDataManager()
                     .getAppointment(new AppointmentGetRequest(id))
                     .subscribeOn(getSchedulerProvider().io())
@@ -224,6 +235,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                     }));
         }
         if (type == RequestType.TYPE_ORDER) {
+            timeCreatedLabel.set("Validated at:");
             getCompositeDisposable().add(getDataManager()
                     .getOrder(new OrderGetRequest(id))
                     .subscribeOn(getSchedulerProvider().io())
@@ -242,6 +254,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                     }));
         }
         if (type == RequestType.TYPE_CLOSED) {
+            timeCreatedLabel.set("Archived at:");
             getCompositeDisposable().add(getDataManager()
                     .getReceipt(new ReceiptGetRequest(id))
                     .subscribeOn(getSchedulerProvider().io())

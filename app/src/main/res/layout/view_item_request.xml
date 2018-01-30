@@ -83,7 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="AWAITING SCHEDULE CONFIRMATION"
+                android:textAllCaps="true"
+                android:text="Awaiting Schedule Confirmation"
                 android:textColor="@color/semi_gray"
                 android:textSize="11sp" />
         </LinearLayout>
