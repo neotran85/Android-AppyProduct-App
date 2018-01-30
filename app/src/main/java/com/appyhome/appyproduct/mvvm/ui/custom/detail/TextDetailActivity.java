@@ -27,16 +27,10 @@ public class TextDetailActivity extends BaseActivity<ActivityDetailTextBinding, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityDetailTextBinding = getViewDataBinding();
+        mTextDetailViewModel.setNavigator(this);
+        mActivityDetailTextBinding.setViewModel(mTextDetailViewModel);
         Intent intent = getIntent();
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            if (bundle.containsKey("detail")) {
-                mActivityDetailTextBinding.tvTextDetail.setText(bundle.getString("detail"));
-            }
-            if (bundle.containsKey("title")) {
-                setTitle(bundle.getString("title"));
-            }
-        }
+        mTextDetailViewModel.processData(intent);
         activeBackButton();
     }
 
