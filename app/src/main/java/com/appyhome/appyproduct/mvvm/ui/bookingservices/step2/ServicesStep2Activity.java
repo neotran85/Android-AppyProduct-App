@@ -41,6 +41,9 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     private String mDateSelectedString = "";
     private MultipleChooseView mExtraServicesView;
 
+    private static final int SERVICE_TIME_START = 9;
+    private static final int SERVICE_TIME_END = 21;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep2Activity.class);
         return intent;
@@ -166,8 +169,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 true
         );
         AppyServiceTimepointLimiter limiter = new AppyServiceTimepointLimiter();
-        limiter.setMaxTime(new Timepoint(21, 0));
-        limiter.setMinTime(new Timepoint(8, 0));
+        limiter.setMaxTime(new Timepoint(SERVICE_TIME_END, 0));
+        limiter.setMinTime(new Timepoint(SERVICE_TIME_START, 0));
         timePicker.setTimepointLimiter(limiter);
         timePicker.setOnCancelListener(this);
         timePicker.show(getFragmentManager(), "Timepickerdialog");

@@ -103,20 +103,20 @@ public class ServiceOrderInfo {
                     service1.put("name", "A standard hp1.0-1.5 1 unit");
                     service1.put("price", "120");
                     service1.put("description", "");
-                    service1.put("detail", "-Cleaning and checking indoor filter\n" +
-                            "-Cleaning of AC evaporator coil\n" +
-                            "-Flushing of drainage system\n" +
-                            "-Checking ac fan bearing");
+                    service1.put("detail", "- Cleaning and checking indoor filter\n" +
+                            "- Cleaning of AC evaporator coil\n" +
+                            "- Flushing of drainage system\n" +
+                            "- Checking ac fan bearing");
 
                     service2.put("name", "Chemical servicing hp1.0-1.5");
                     service2.put("price", "160");
                     service2.put("description", "");
-                    service2.put("detail", "-Cleaning and checking indoor filter\n" +
-                            "-Cleaning of AC evaporator coil\n" +
-                            "-Flushing of drainage system\n" +
-                            "-Checking ac fan bearing" + "-Cleaning blower wheels and blades \n" +
-                            "-Checking thermostat and control\n" +
-                            "-Internal unit chemical wash");
+                    service2.put("detail", "- Cleaning and checking indoor filter\n" +
+                            "- Cleaning of AC evaporator coil\n" +
+                            "- Flushing of drainage system\n" +
+                            "- Checking ac fan bearing" + "-Cleaning blower wheels and blades \n" +
+                            "- Checking thermostat and control\n" +
+                            "- Internal unit chemical wash");
 
                     ArrayList<JSONObject> arrayList = new ArrayList<>();
                     arrayList.add(service1);
@@ -129,21 +129,21 @@ public class ServiceOrderInfo {
                     service1.put("price", "80");
                     service1.put("description", "1 Cleaner 3 Hours");
                     service1.put("detail", "- Cleaning of all bedrooms requested\n" +
-                            " \t     - Cleaning of all bathroom and toilets requested\n" +
-                            "\t     - Cleaning of living room and balcony (if applicable) \n" +
-                            "\t     - Cleaning including sweeping, mopping, dusting, general tidying and vacuuming \n" +
-                            "\t     - Not valid for moving in/out cleaning or Post Renovation cleaning\n");
+                            "- Cleaning of all bathroom and toilets requested\n" +
+                            "- Cleaning of living room and balcony (if applicable) \n" +
+                            "- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming \n" +
+                            "- Not valid for moving in/out cleaning or Post Renovation cleaning\n");
 
                     service2.put("name", "Standard Cleaning (Supplies Provided)");
                     service2.put("price", "105");
                     service2.put("description", "1 Cleaner 3 Hours");
                     service2.put("detail", "- Cleaning of all bedrooms requested\n" +
-                            " \t     - Cleaning of all bathroom and toilets requested\n" +
-                            "\t     - Cleaning of living room and balcony (if applicable) \n" +
-                            "\t     - Cleaning including sweeping, mopping, dusting, general tidying and vacuuming \n" +
-                            "\t     - Not valid for moving in/out cleaning or Post Renovation cleaning\n" +
-                            "\t     - Standard Cleaning Supplies \n" +
-                            "\t\t* Mop, Broom, Vacuum Cleaner, Multipurpose Chemicals and Detergents, Sponge and Brush, Wiping Cloth, Duster, Pail\n");
+                            "- Cleaning of all bathroom and toilets requested\n" +
+                            "- Cleaning of living room and balcony (if applicable) \n" +
+                            "- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming \n" +
+                            "- Not valid for moving in/out cleaning or Post Renovation cleaning\n" +
+                            "- Standard Cleaning Supplies \n\n" +
+                            "* Mop, Broom, Vacuum Cleaner, Multipurpose Chemicals and Detergents, Sponge and Brush, Wiping Cloth, Duster, Pail\n");
 
                     service3.put("name", "Moving in/out Cleaning");
                     service3.put("price", "210");
