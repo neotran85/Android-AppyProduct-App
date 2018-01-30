@@ -11,6 +11,8 @@ import javax.inject.Inject;
 
 
 public class AppPreferencesHelper implements PreferencesHelper {
+    private static final String PREF_KEY_CURRENT_USER_FIRST_NAME = "PREF_KEY_CURRENT_USER_FIRST_NAME";
+    private static final String PREF_KEY_CURRENT_USER_LAST_NAME = "PREF_KEY_CURRENT_USER_LAST_NAME";
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
     private static final String PREF_KEY_CURRENT_PHONE_NUMBER = "PREF_KEY_CURRENT_PHONE_NUMBER";
@@ -113,5 +115,21 @@ public class AppPreferencesHelper implements PreferencesHelper {
     public boolean isUserLoggedIn() {
         String accessToken = getAccessToken();
         return accessToken != null && accessToken.length() > 0;
+    }
+    @Override
+    public String getUserLastName() {
+        return mPrefs.getString(PREF_KEY_CURRENT_USER_LAST_NAME, "");
+    }
+    @Override
+    public void setUserLastName(String lastName) {
+        mPrefs.edit().putString(PREF_KEY_CURRENT_USER_LAST_NAME, lastName).apply();
+    }
+    @Override
+    public String getUserFirstName() {
+        return mPrefs.getString(PREF_KEY_CURRENT_USER_FIRST_NAME, "");
+    }
+    @Override
+    public void setUserFirstName(String firstName) {
+        mPrefs.edit().putString(PREF_KEY_CURRENT_USER_FIRST_NAME, firstName).apply();
     }
 }

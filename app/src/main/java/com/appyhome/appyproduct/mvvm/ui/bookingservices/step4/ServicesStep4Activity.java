@@ -131,7 +131,9 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     public void openBankPaymentActivity() {
         PaymentManager.getInstance().startPaymentActivity(this,
                 ServiceOrderInfo.getInstance().getTotalCost(), mAppointmentId,
-                mServicesStep4ViewModel.getPhoneNumberOfUser(), mServicesStep4ViewModel.getEmailOfUser());
+                mServicesStep4ViewModel.getPhoneNumberOfUser(),
+                mServicesStep4ViewModel.getEmailOfUser(),
+                mServicesStep4ViewModel.getNameOfUser());
     }
 
     @Override

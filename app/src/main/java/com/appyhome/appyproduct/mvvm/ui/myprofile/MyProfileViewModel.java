@@ -18,6 +18,7 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
     public ObservableField<String> firstName = new ObservableField<>("");
     public ObservableField<String> email = new ObservableField<>("");
     public ObservableField<String> phoneNumber = new ObservableField<>("");
+
     public MyProfileViewModel(DataManager dataManager,
                               SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -37,15 +38,30 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                     public void accept(JSONObject userGetResponse) throws Exception {
                         setIsLoading(false);
                         AppLogger.d(userGetResponse.toString());
-                        if(userGetResponse != null) {
-                            if(userGetResponse.getString("code").equals("200")) {
+                        if (userGetResponse != null) {
+                            if (userGetResponse.getString("code").equals("200")) {
                                 try {
-                                    JSONObject message = userGetResponse.getJSONObject("message");
-                                    lastName.set(message.getString("last_name"));
-                                    firstName.set(message.getString("first_name"));
-                                    email.set(message.getString("email"));
-                                    phoneNumber.set(message.getString("phone_number"));
-                                    return;
+                                    if (userGetResponse.has("message")) {
+                                        JSONObject message = userGetResponse.getJSONObject("message");
+                                        if (message != null) {
+                                            String lastNameStr = message.getString("last_name");
+                                            lastName.set(lastNameStr);
+                                            getDataManager().setUserLastName(lastNameStr);
+
+                                            String firstNameStr = message.getString("first_name");
+                                            firstName.set(firstNameStr);
+                                            getDataManager().setUserFirstName(firstNameStr);
+
+                                            String emailStr = message.getString("email");
+                                            email.set(emailStr);
+                                            getDataManager().setCurrentUserEmail(emailStr);
+
+                                            String phoneNumberStr = message.getString("phone_number");
+                                            phoneNumber.set(phoneNumberStr);
+                                            getDataManager().setCurrentPhoneNumber(phoneNumberStr);
+                                        }
+                                        return;
+                                    }
                                 } catch (Exception e) {
 
                                 }
@@ -61,6 +77,7 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                     }
                 }));
     }
+
     public void logout() {
         getDataManager().logout();
         getNavigator().backToHomeScreen();

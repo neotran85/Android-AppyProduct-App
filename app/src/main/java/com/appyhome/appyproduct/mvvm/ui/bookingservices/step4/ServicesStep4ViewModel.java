@@ -109,6 +109,13 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
         return additionalServices.get().length() > 0 ? View.VISIBLE : View.GONE;
     }
 
+    public String getNameOfUser() {
+        String firstName = getDataManager().getUserFirstName();
+        String lastName = getDataManager().getUserLastName();
+        if (firstName != null && firstName.length() > 0)
+            return firstName + " " + lastName;
+        return "";
+    }
 
     public String getEmailOfUser() {
         return getDataManager().getCurrentUserEmail();

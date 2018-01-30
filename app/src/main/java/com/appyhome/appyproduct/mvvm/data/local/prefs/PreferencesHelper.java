@@ -36,4 +36,12 @@ public interface PreferencesHelper {
     void logout();
 
     boolean isUserLoggedIn();
+
+    String getUserLastName();
+
+    void setUserLastName(String lastName);
+
+    String getUserFirstName();
+
+    void setUserFirstName(String firstName);
 }

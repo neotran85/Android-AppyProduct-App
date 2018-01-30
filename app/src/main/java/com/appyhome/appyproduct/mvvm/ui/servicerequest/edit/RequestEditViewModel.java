@@ -31,9 +31,18 @@ public class RequestEditViewModel extends RequestItemViewModel {
         }
     }
 
+    public String getNameOfUser() {
+        String firstName = getDataManager().getUserFirstName();
+        String lastName = getDataManager().getUserLastName();
+        if (firstName != null && firstName.length() > 0)
+            return firstName + " " + lastName;
+        return "";
+    }
+
     public String getEmailOfUser() {
         return getDataManager().getCurrentUserEmail();
     }
+
     public String getPhoneNumberOfUser() {
         return getDataManager().getCurrentPhoneNumber();
     }
@@ -44,7 +53,7 @@ public class RequestEditViewModel extends RequestItemViewModel {
         request.setEditCode(getEditCode());
         JSONObject obj = new JSONObject();
         try {
-            String value = additional+ "_" + txn_ID + "::" + amount;
+            String value = additional + "_" + txn_ID + "::" + amount;
             AppLogger.d("editOrder: " + value);
             obj.put("service1", value);
             request.setAdditional(obj.toString());
@@ -53,6 +62,7 @@ public class RequestEditViewModel extends RequestItemViewModel {
 
         }
     }
+
     private void editOrder(OrderEditRequest request) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
@@ -63,8 +73,8 @@ public class RequestEditViewModel extends RequestItemViewModel {
                     @Override
                     public void accept(JSONObject response) throws Exception {
                         setIsLoading(false);
-                        if(response != null && response.has("code")) {
-                            if(response.getString("code").equals("200")) {
+                        if (response != null && response.has("code")) {
+                            if (response.getString("code").equals("200")) {
                                 // EDIT COMPLETED SUCCESSFULLY
                                 setIsLoading(true);
                                 getNavigator().doAfterDataUpdated();

@@ -394,4 +394,21 @@ public class AppDataManager implements DataManager {
     public Single<JSONObject> editOrder(OrderEditRequest request) {
         return mApiHelper.editOrder(request);
     }
+
+    @Override
+    public String getUserLastName() {
+        return mPreferencesHelper.getUserLastName();
+    }
+    @Override
+    public void setUserLastName(String lastName) {
+        mPreferencesHelper.setUserLastName(lastName);
+    }
+    @Override
+    public String getUserFirstName() {
+        return mPreferencesHelper.getUserFirstName();
+    }
+    @Override
+    public void setUserFirstName(String firstName) {
+        mPreferencesHelper.setUserFirstName(firstName);
+    }
 }

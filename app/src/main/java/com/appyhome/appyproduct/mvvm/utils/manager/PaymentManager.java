@@ -32,7 +32,7 @@ public class PaymentManager {
         return mInstance;
     }
 
-    public void startPaymentActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email) {
+    public void startPaymentActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email, String name) {
         if (currentActivity != null) {
             HashMap<String, Object> paymentDetails = new HashMap<>();
             // Mandatory String. A value not less than '1.00'
@@ -44,6 +44,7 @@ public class PaymentManager {
             paymentDetails.put(MOLPayActivity.mp_password, PASSWORD);
             paymentDetails.put(MOLPayActivity.mp_app_name, APP_NAME);
             paymentDetails.put(MOLPayActivity.mp_verification_key, VERIFICATION_KEY);
+            paymentDetails.put(MOLPayActivity.mp_bill_name, name);
 
             // Mandatory String. Payment values
             paymentDetails.put(MOLPayActivity.mp_order_ID, orderId);
