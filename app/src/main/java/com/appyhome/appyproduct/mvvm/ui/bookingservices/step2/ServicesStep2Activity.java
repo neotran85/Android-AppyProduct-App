@@ -17,13 +17,10 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.MultipleChooseView;
-import com.appyhome.appyproduct.mvvm.utils.data.AppyServiceDateRangerLimiter;
-import com.appyhome.appyproduct.mvvm.utils.data.AppyServiceTimepointLimiter;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.Timepoint;
 
 import java.util.Calendar;
 
@@ -150,9 +147,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
-        AppyServiceDateRangerLimiter limiter = new AppyServiceDateRangerLimiter();
-        limiter.setStartDate(now);
-        datePicker.setDateRangeLimiter(limiter);
+        datePicker.setMinDate(now);
         datePicker.show(getFragmentManager(), "Datepickerdialog");
     }
 
@@ -168,10 +163,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 current.get(Calendar.MINUTE),
                 true
         );
-        AppyServiceTimepointLimiter limiter = new AppyServiceTimepointLimiter();
-        limiter.setMaxTime(new Timepoint(SERVICE_TIME_END, 0));
-        limiter.setMinTime(new Timepoint(SERVICE_TIME_START, 0));
-        timePicker.setTimepointLimiter(limiter);
+        timePicker.setMinTime(SERVICE_TIME_START, 0, 0);
+        timePicker.setMaxTime(SERVICE_TIME_END, 0, 0);
         timePicker.setOnCancelListener(this);
         timePicker.show(getFragmentManager(), "Timepickerdialog");
     }

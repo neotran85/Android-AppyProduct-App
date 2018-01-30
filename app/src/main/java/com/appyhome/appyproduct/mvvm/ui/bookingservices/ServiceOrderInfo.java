@@ -36,7 +36,9 @@ public class ServiceOrderInfo {
     private ServiceOrderInfo() {
 
     }
-
+    public void clear() {
+        mServiceOrderInfo = null;
+    }
     public static ServiceOrderInfo getInstance() {
         if (mServiceOrderInfo == null)
             mServiceOrderInfo = new ServiceOrderInfo();

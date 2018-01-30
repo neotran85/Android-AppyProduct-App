@@ -3,10 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices.step1;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -93,7 +90,9 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 } else AlertManager.getInstance(this).showLongToast("Please choose a service");
                 break;
             case R.id.btSeeDetailService:
-                viewDetailService();
+                if (ServiceOrderInfo.getInstance().getSelectedService() != null)
+                    viewDetailService();
+                else AlertManager.getInstance(this).showLongToast("Please choose a service");
                 break;
         }
     }
@@ -126,6 +125,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ServiceOrderInfo.getInstance().clear();
     }
 
 
