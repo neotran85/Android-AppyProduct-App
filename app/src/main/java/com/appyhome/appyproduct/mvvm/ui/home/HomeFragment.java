@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
@@ -31,8 +32,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private Toolbar mToolbar;
     private ImageButton mToolbarCartButton;
 
-    public final static int REQUEST_LOGIN_FOR_AIR_CON_SERVICING= 1113;
+    public final static int REQUEST_LOGIN_FOR_AIR_CON_SERVICING = 1113;
     public final static int REQUEST_LOGIN_FOR_HOME_CLEANING = 1114;
+
+    private final int[] mAppyServicesIds = {R.id.ibAirConServicing, R.id.ibElectricalService,
+            R.id.ibHomeCleaning, R.id.ibPlumbingService};
+
+    private final int[] mAppyProductsIds = {R.id.ibBedAndBath, R.id.ibDecor,
+            R.id.ibKitchen, R.id.ibAppliances, R.id.ibFurniture,
+            R.id.ibHomeImprovement, R.id.ibLighting, R.id.ibStorageAndOrganisation};
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,8 +64,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             case R.id.ibHomeCleaning:
                 openHomeCleaningBooking();
                 break;
+            default: // Coming soon...
+                AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
     }
+
     private void openHomeCleaningBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
             ServiceOrderInfo.getInstance().clear();
@@ -68,6 +79,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     REQUEST_LOGIN_FOR_HOME_CLEANING);
         }
     }
+
     private void openAirConServiceBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
             ServiceOrderInfo.getInstance().clear();
@@ -78,6 +90,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                     REQUEST_LOGIN_FOR_AIR_CON_SERVICING);
         }
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -102,8 +115,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setDisplayUseLogoEnabled(false);
             activity.getSupportActionBar().setTitle("");
         }
-        ViewUtils.setOnClickListener(mBinder.serviceView, R.id.ibHomeCleaning, this);
-        ViewUtils.setOnClickListener(mBinder.serviceView, R.id.ibAirConServicing, this);
+
+        for (int i = 0; i < mAppyServicesIds.length; i++) {
+            ViewUtils.setOnClickListener(mBinder.serviceView, mAppyServicesIds[i], this);
+        }
+        for (int i = 0; i < mAppyProductsIds.length; i++) {
+            ViewUtils.setOnClickListener(mBinder.categoryView, mAppyProductsIds[i], this);
+        }
     }
 
     @Override
@@ -131,12 +149,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_LOGIN_FOR_AIR_CON_SERVICING:
-                if(resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     openAirConServiceBooking();
                 }
                 break;
             case REQUEST_LOGIN_FOR_HOME_CLEANING:
-                if(resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     openHomeCleaningBooking();
                 }
                 break;

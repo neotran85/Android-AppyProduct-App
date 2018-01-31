@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 
@@ -46,5 +47,9 @@ public final class ViewUtils {
             if (view != null)
                 view.setOnClickListener(listener);
         }
+    }
+
+    public static void setOnClickListenersOfParentView(ViewGroup view) {
+
     }
 }

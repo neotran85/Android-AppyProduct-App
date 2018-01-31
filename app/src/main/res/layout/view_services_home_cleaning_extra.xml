@@ -33,7 +33,7 @@
             android:id="@+id/rbLanRise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Land Rise"
+            android:text="Landed"
             android:textSize="13sp" />
     </RadioGroup>
 

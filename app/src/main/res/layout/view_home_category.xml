@@ -7,20 +7,22 @@
     android:paddingTop="12dp">
 
     <TextView
-        fontPath="fonts/TitilliumWeb-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="12dp"
         android:text="Products"
-        android:textColor="#808083"
-        android:textSize="11sp" />
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp" />
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:paddingLeft="38dp">
 
         <ImageButton
+            android:id="@+id/ibBedAndBath"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -28,6 +30,8 @@
             android:background="@mipmap/category_bed_bath" />
 
         <ImageButton
+            android:id="@+id/ibDecor"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -36,6 +40,8 @@
             android:background="@mipmap/category_decor" />
 
         <ImageButton
+            android:id="@+id/ibKitchen"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -44,6 +50,8 @@
             android:background="@mipmap/category_kitchen" />
 
         <ImageButton
+            android:id="@+id/ibAppliances"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -60,6 +68,8 @@
         android:paddingLeft="38dp">
 
         <ImageButton
+            android:id="@+id/ibFurniture"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -68,6 +78,8 @@
             android:background="@mipmap/category_furniture" />
 
         <ImageButton
+            android:id="@+id/ibHomeImprovement"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -77,6 +89,8 @@
             android:background="@mipmap/category_home_improvement" />
 
         <ImageButton
+            android:id="@+id/ibLighting"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -86,6 +100,8 @@
             android:background="@mipmap/category_lighting" />
 
         <ImageButton
+            android:id="@+id/ibStorageAndOrganisation"
+            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
