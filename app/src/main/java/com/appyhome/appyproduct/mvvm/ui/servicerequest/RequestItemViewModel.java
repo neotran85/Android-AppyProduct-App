@@ -42,7 +42,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
 
     public ObservableField<Integer> isStatusViewVisible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isSafetyCodeVisible = new ObservableField<>(View.GONE);
-    public ObservableField<Integer> isAddServiceVisible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isConfirmationVisible = new ObservableField<>(View.GONE);
 
     private int mType = 0;
@@ -91,7 +90,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             if (item.has("status")) {
                 statusOfOrder.set(item.getString("status"));
                 isConfirmationVisible.set(isConfirmationVisible());
-                isAddServiceVisible.set(isAddServiceVisible());
                 isSafetyCodeVisible.set(isSafetyCodeVisible());
                 isStatusViewVisible.set(isStatusVisible());
             }
@@ -182,14 +180,10 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         return mType == RequestType.TYPE_ORDER ? View.VISIBLE : View.GONE;
     }
 
-    private int isAddServiceVisible() {
+    private int isConfirmationVisible() {
         return mType == RequestType.TYPE_ORDER
                 && statusOfOrder.get().equals(RequestStatus.PENDING_EXECUTION)
                 ? View.VISIBLE : View.GONE;
-    }
-
-    private int isConfirmationVisible() {
-        return isAddServiceVisible();
     }
 
     private int isStatusVisible() {

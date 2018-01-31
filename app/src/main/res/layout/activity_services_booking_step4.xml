@@ -153,8 +153,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:text="incl. GST and additional services"
-                                    android:textColor="@color/gray"
+                                    android:text="incl. GST"
+                                    android:textColor="@color/semi_gray"
                                     android:textSize="11sp" />
                             </LinearLayout>
 

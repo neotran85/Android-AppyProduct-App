@@ -55,6 +55,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         activeBackButton();
         mBinder.llAddServices.setOnClickListener(this);
         mBinder.llConfirmation.setOnClickListener(this);
+        mBinder.llRefundServices.setOnClickListener(this);
     }
 
     private void processDetailData(Intent data) {
@@ -90,6 +91,9 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
             case R.id.llAddServices:
                 openQRCodeScanActivity();
                 break;
+            case R.id.llRefundServices:
+                openRefundActivity();
+                break;
         }
     }
 
@@ -102,11 +106,21 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         startActivity(intent);
     }
 
+    private void openRefundActivity() {
+        Intent intent = getIntent();
+        intent.setClass(this, RequestConfirmedActivity.class);
+        intent.putExtra("id", mIdNumber);
+        intent.putExtra("type", mType);
+        intent.putExtra("mode", RequestConfirmedActivity.MODE_REFUND);
+        startActivity(intent);
+    }
+
     private void openConfirmationActivity() {
         Intent intent = getIntent();
         intent.setClass(this, RequestConfirmedActivity.class);
         intent.putExtra("id", mIdNumber);
         intent.putExtra("type", mType);
+        intent.putExtra("mode", RequestConfirmedActivity.MODE_CONFIRM);
         startActivity(intent);
     }
 

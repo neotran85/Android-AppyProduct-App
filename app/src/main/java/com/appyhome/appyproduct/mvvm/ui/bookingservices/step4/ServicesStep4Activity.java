@@ -82,7 +82,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
                 mBinder.svMainView.fullScroll(View.FOCUS_DOWN);
                 break;
             case R.id.rlVisaPayment:
-                AlertManager.getInstance(this).showLongToast(getString(R.string.error_coming_soon));
+                AlertManager.getInstance(this).showComingSoonDialog();
                 break;
             case R.id.rlBankPayment:
                 openBankPaymentActivity();

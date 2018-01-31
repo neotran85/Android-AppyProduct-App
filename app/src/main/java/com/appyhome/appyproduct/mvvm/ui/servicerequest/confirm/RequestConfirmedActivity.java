@@ -16,9 +16,13 @@ import javax.inject.Inject;
 
 public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfirmCompletedBinding, RequestConfirmedViewModel> implements RequestItemNavigator, View.OnClickListener {
 
+    public static final int MODE_REFUND = 0;
+    public static final int MODE_CONFIRM = 1;
+
     @Inject
     RequestConfirmedViewModel mRequestConfirmedViewModel;
     ActivityRequestConfirmCompletedBinding mBinder;
+    private int mode = MODE_CONFIRM;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestConfirmedActivity.class);
@@ -32,7 +36,6 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
         mBinder.setViewModel(mRequestConfirmedViewModel);
         mRequestConfirmedViewModel.setNavigator(this);
 
-        setTitle("Confirm Completed");
         activeBackButton();
         Intent intent = getIntent();
         if (intent.hasExtra("id") && intent.hasExtra("type")) {
@@ -40,6 +43,19 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
             int type = intent.getIntExtra("type", RequestType.TYPE_REQUEST);
             mRequestConfirmedViewModel.setIdNumber(idNumber);
             mRequestConfirmedViewModel.setType(type);
+        }
+        if (intent.hasExtra("mode")) {
+            mode = intent.getIntExtra("mode", MODE_CONFIRM);
+            if (mode == MODE_REFUND) {
+                setTitle("Request A Refund");
+                mBinder.btnSubmit.setText("Request A Refund");
+                mBinder.tvComments.setText("Please comment your reasons of requesting a refund.");
+            }
+            if (mode == MODE_CONFIRM) {
+                setTitle("Confirm Completed");
+                mBinder.btnSubmit.setText("Confirm Completed");
+                mBinder.tvComments.setText("Please add your comments on the service.");
+            }
         }
 
         mBinder.btnSubmit.setOnClickListener(this);
@@ -50,7 +66,11 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
         switch (view.getId()) {
             case R.id.btnSubmit:
                 String rating = mBinder.ratingBar.getRating() + "";
-                mRequestConfirmedViewModel.markOrderCompleted(mBinder.etAdditionalInfo.getText().toString(), rating);
+                String comments = mBinder.etAdditionalInfo.getText().toString();
+                if (mode == MODE_REFUND) {
+                    comments = "Request a refund: " + comments;
+                }
+                mRequestConfirmedViewModel.markOrderCompleted(comments, rating);
                 break;
         }
     }

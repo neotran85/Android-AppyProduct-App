@@ -267,7 +267,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:visibility="@{viewModel.isAddServiceVisible}">
+                        android:visibility="@{viewModel.isConfirmationVisible}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -284,7 +284,32 @@
                             android:layout_height="22dp"
                             android:background="@mipmap/icon_add" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llRefundServices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:visibility="@{viewModel.isConfirmationVisible}">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical"
+                            android:text="Request a refund"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@mipmap/icon_refund" />
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/llConfirmation"
                         android:layout_width="match_parent"
