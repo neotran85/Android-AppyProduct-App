@@ -20,4 +20,8 @@ public interface RegisterNavigator {
 
     void showErrorEmailDuplicated();
 
+    void openTermsOfUsage();
+
+    void openPrivacyPolicy();
+
 }

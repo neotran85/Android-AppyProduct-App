@@ -24,6 +24,13 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
         getNavigator().register();
     }
 
+    public void onPrivacyPolicyClick() {
+        getNavigator().openPrivacyPolicy();
+    }
+    public void onTermsOfUsageClick() {
+        getNavigator().openTermsOfUsage();
+    }
+
     public void register(String firstName, String lastName, String email, String phoneNumber, String password) {
         mEmail = email;
         mPhoneNumber = phoneNumber;

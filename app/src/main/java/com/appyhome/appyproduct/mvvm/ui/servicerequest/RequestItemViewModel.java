@@ -85,7 +85,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                 AppLogger.d("processData: phone: " + phoneNumber);
             }
             if (item.has("safety_code")) {
-                safetyCode.set("Safety Code: " + item.getString("safety_code"));
+                safetyCode.set(item.getString("safety_code"));
             }
             if (item.has("status")) {
                 statusOfOrder.set(item.getString("status"));

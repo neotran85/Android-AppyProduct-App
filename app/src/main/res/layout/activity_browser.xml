@@ -28,6 +28,8 @@
             <include layout="@layout/view_header"></include>
 
             <WebView
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_weight="0.5"
                 android:id="@+id/webView"
                 android:layout_width="match_parent"

@@ -156,16 +156,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@{viewModel.safetyCode}"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="@{viewModel.isSafetyCodeVisible}" />
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:text="Additional Services"
                             android:textColor="@color/black"
                             android:textSize="14sp"
@@ -355,7 +345,6 @@
                             android:textAllCaps="true"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_weight="0.5"
                             android:gravity="center_vertical"
                             android:text="@{viewModel.statusText}"
@@ -371,6 +360,37 @@
                             android:numStars="5"
                             android:rating="@{viewModel.rating}"
                             android:stepSize="0.5" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llSafetyCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:visibility="@{viewModel.isSafetyCodeVisible}"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical"
+                            android:text="Safety Code:"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:textAlignment="textEnd"
+                            android:layout_weight="0.5"
+                            android:text="@{viewModel.safetyCode}"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

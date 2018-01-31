@@ -222,4 +222,14 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         showError(getString(R.string.register_error_email_duplicated));
         showTextInputError(mBinder.etEmailAddress);
     }
+    @Override
+    public void openPrivacyPolicy() {
+        AlertManager.getInstance(this).openInformationBrowser("Privacy Policy",
+                "http://appyhomeplus.com/privacy-policy/");
+    }
+    @Override
+    public void openTermsOfUsage() {
+        AlertManager.getInstance(this).openInformationBrowser("Terms & Conditions",
+                "http://appyhomeplus.com/terms-conditions/");
+    }
 }

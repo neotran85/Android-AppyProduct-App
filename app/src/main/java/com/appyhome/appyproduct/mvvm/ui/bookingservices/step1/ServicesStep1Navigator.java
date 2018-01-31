@@ -6,4 +6,8 @@ public interface ServicesStep1Navigator {
     void goToStep2();
 
     void viewDetailService();
+
+    void viewOurFAQ();
+
+    String t = "";
 }

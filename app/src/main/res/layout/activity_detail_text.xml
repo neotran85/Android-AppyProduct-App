@@ -11,24 +11,23 @@
 
     </data>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/view_header"></include>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/view_header"></include>
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:padding="20dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <TextView
                     android:id="@+id/tvTextTitle"
@@ -50,6 +49,6 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

@@ -77,6 +77,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     private void setUpListeners() {
         mBinder.btnNext.setOnClickListener(this);
         mBinder.btSeeDetailService.setOnClickListener(this);
+        mBinder.btOurFAQ.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +94,9 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 if (ServiceOrderInfo.getInstance().getSelectedService() != null)
                     viewDetailService();
                 else AlertManager.getInstance(this).showLongToast("Please choose a service");
+                break;
+            case R.id.btOurFAQ:
+                viewOurFAQ();
                 break;
         }
     }
@@ -183,5 +187,11 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         } else {
             ServiceOrderInfo.getInstance().setSelectedService(null);
         }
+    }
+
+    @Override
+    public void viewOurFAQ() {
+        AlertManager.getInstance(this).openInformationBrowser("Booking / Ordering FAQ",
+                "file:///android_asset/html/our_faq.html");
     }
 }

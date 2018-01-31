@@ -14,7 +14,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.browser.BrowserActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
@@ -92,10 +91,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     private void openForgetPassword() {
-        Intent intent = BrowserActivity.getStartIntent(LoginActivity.this);
-        intent.putExtra("url", ApiUrlConfig.URL_FORGET_PASSWORD);
-        intent.putExtra("title", "Forget Password");
-        startActivity(intent);
+        AlertManager.getInstance(this).openInformationBrowser("Forget Password",
+                ApiUrlConfig.URL_FORGET_PASSWORD);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.utils.manager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.ui.browser.BrowserActivity;
 
 public class AlertManager {
     private static AlertManager mInstance;
@@ -76,5 +78,12 @@ public class AlertManager {
         } else {
             mComingSoonDialog.show();
         }
+    }
+
+    public void openInformationBrowser(String title, String url) {
+        Intent intent = BrowserActivity.getStartIntent(mContext);
+        intent.putExtra("title", title);
+        intent.putExtra("url", url);
+        mContext.startActivity(intent);
     }
 }
