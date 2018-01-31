@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class AirConOptionView {
     private View mMainView;
+    private int numberOfAirCons = 1;
 
     public AirConOptionView(View mainView) {
         mMainView = mainView;
@@ -63,8 +64,13 @@ public class AirConOptionView {
 
         TextInputEditText etAirConNumber = mMainView.findViewById(R.id.etAirConNumber);
         if(etAirConNumber.getText().length() > 0) {
-            result.add(etAirConNumber.getText().toString() + " air cons");
+            numberOfAirCons = Integer.valueOf(etAirConNumber.getText().toString());
+            result.add(numberOfAirCons + " air cons");
         }
         return result;
+    }
+
+    public int getNumberOfAirCons() {
+        return numberOfAirCons;
     }
 }

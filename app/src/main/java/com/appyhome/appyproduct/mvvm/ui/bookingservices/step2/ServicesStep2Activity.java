@@ -16,7 +16,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
-import com.appyhome.appyproduct.mvvm.ui.custom.MultipleChooseView;
+import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -36,7 +36,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     private Button mBtnTimeSlot;
     private String mDateSelectedShowedString = "";
     private String mDateSelectedString = "";
-    private MultipleChooseView mExtraServicesView;
+    private ItemsSelectionView mExtraServicesView;
 
     private static final int SERVICE_TIME_START = 9;
     private static final int SERVICE_TIME_END = 21;
@@ -97,7 +97,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         View llIroning = mBinder.llServiceExtra.findViewById(R.id.llIroning);
         View llLaundry = mBinder.llServiceExtra.findViewById(R.id.llLaundry);
         View llFolding = mBinder.llServiceExtra.findViewById(R.id.llFolding);
-        mExtraServicesView = new MultipleChooseView(llCeilingFan, llIroning, llLaundry, llFolding);
+        mExtraServicesView = new ItemsSelectionView(true, llCeilingFan, llIroning, llLaundry, llFolding);
         mExtraServicesView.setOnClickListener(this);
     }
 

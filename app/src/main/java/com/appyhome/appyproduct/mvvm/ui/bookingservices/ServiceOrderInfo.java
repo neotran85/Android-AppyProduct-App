@@ -33,6 +33,8 @@ public class ServiceOrderInfo {
 
     private String txn_ID;
 
+    private int mNumberOfAirCons = 1;
+
     private ServiceOrderInfo() {
 
     }
@@ -296,7 +298,11 @@ public class ServiceOrderInfo {
 
     public String getTotalCost() {
         try {
-            return getSelectedService().getString("price");
+            Integer value = Integer.valueOf(getSelectedService().getString("price"));
+            if(mType == SERVICE_AIR_CON_CLEANING) {
+                value = value * mNumberOfAirCons;
+            }
+            return value.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -325,5 +331,13 @@ public class ServiceOrderInfo {
 
     public void setTxn_ID(String txn_ID) {
         this.txn_ID = txn_ID;
+    }
+
+    public int getNumberOfAirCons() {
+        return mNumberOfAirCons;
+    }
+
+    public void setNumberOfAirCons(int numberOfAirCons) {
+        this.mNumberOfAirCons = numberOfAirCons;
     }
 }

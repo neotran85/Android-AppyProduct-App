@@ -98,7 +98,7 @@
             android:background="@drawable/input_text_rounded_light_gray_bg"
             android:cursorVisible="true"
             android:gravity="center_vertical"
-            android:hint="Enter the number of rooms"
+            android:hint="1 (As default)"
             android:inputType="number"
             android:maxLength="50"
             android:paddingBottom="10dp"

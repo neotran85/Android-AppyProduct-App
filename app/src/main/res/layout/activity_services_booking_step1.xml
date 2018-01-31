@@ -58,7 +58,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="You can choose multiple services"
+                            android:text="Please choose the service"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -73,19 +73,20 @@
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="20dp"
-                        android:visibility="@{viewModel.isHomeCleaningVisible()}">
+                        android:visibility="@{viewModel.isHomeCleaningVisible}">
 
                         <include layout="@layout/view_services_home_cleaning_extra"></include>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_marginTop="10dp"
                         android:id="@+id/llServiceAirConCleaning"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="20dp"
-                        android:visibility="@{viewModel.isAirConCleaningVisible()}">
+                        android:visibility="@{viewModel.isAirConCleaningVisible}">
 
                         <include layout="@layout/view_services_air_cond_cleaning_extra"></include>
                     </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -21,11 +22,37 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
     private final ObservableField<String> additionalDetail = new ObservableField<>("");
     private final ObservableField<String> additionalServices = new ObservableField<>("");
 
+    public final ObservableField<String> numberOfAirCons = new ObservableField<>("1");
+    public final ObservableField<Integer> isNumberOfAirConsVisible = new ObservableField<>(View.GONE);
+
+    private int mServiceType = ServiceOrderInfo.SERVICE_HOME_CLEANING;
+
     public ServicesStep4ViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
+    public void setUpData() {
+        setNumberOfAirCons("x " + ServiceOrderInfo.getInstance().getNumberOfAirCons() + "");
+        setServiceType(ServiceOrderInfo.getInstance().getType());
+        setAddress(ServiceOrderInfo.getInstance().getAddress());
+        setTimeSlot1(ServiceOrderInfo.getInstance().getTimeSlot1());
+        setTimeSlot2(ServiceOrderInfo.getInstance().getTimeSlot2());
+        setTimeSlot3(ServiceOrderInfo.getInstance().getTimeSlot3());
+        setTotalCost(ServiceOrderInfo.getInstance().getTotalCost());
+        setNameService(ServiceOrderInfo.getInstance().getServiceName());
+        setAdditionalDetail(ServiceOrderInfo.getInstance().getAdditionalInfo());
+        setAdditionalServices(ServiceOrderInfo.getInstance().getExtraServices());
+    }
+
+    public void setServiceType(int type) {
+        mServiceType = type;
+        if (mServiceType == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING) {
+            isNumberOfAirConsVisible.set(View.VISIBLE);
+        } else {
+            isNumberOfAirConsVisible.set(View.GONE);
+        }
+    }
 
     public ObservableField<String> getAddress() {
         return fieldAddress;
@@ -40,26 +67,28 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
     }
 
     public String getTimeSlot1() {
-        String value =timeSlot1.get();
+        String value = timeSlot1.get();
         return value.length() > 0 ? value : "Time slot 1 not allocated";
     }
 
     public String getTimeSlot2() {
-        String value =timeSlot2.get();
+        String value = timeSlot2.get();
         return value.length() > 0 ? value : "Time slot 2 not allocated";
     }
 
     public String getTimeSlot3() {
-        String value =timeSlot3.get();
+        String value = timeSlot3.get();
         return value.length() > 0 ? value : "Time slot 3 not allocated";
     }
 
     public void setTimeSlot1(String value) {
         timeSlot1.set(value);
     }
+
     public void setTimeSlot2(String value) {
         timeSlot2.set(value);
     }
+
     public void setTimeSlot3(String value) {
         timeSlot3.set(value);
     }
@@ -117,9 +146,14 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
         return "";
     }
 
+    public void setNumberOfAirCons(String number) {
+        numberOfAirCons.set(number);
+    }
+
     public String getEmailOfUser() {
         return getDataManager().getCurrentUserEmail();
     }
+
     public String getPhoneNumberOfUser() {
         return getDataManager().getCurrentPhoneNumber();
     }

@@ -10,6 +10,8 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator> {
     private final ObservableField<Integer> typeServices = new ObservableField<>(0);
+    private final ObservableField<Integer> isAirConCleaningVisible = new ObservableField<>(View.GONE);
+    private final ObservableField<Integer> isHomeCleaningVisible = new ObservableField<>(View.GONE);
 
     public ServicesStep1ViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
@@ -30,5 +32,7 @@ public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator
 
     public void setTypeServices(int type) {
         typeServices.set(type);
+        isAirConCleaningVisible.set(isAirConCleaningVisible());
+        isHomeCleaningVisible.set(isHomeCleaningVisible());
     }
 }

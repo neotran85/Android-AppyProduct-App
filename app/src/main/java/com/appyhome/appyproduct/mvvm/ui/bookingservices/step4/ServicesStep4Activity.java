@@ -60,19 +60,10 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setUpData() {
-        mServicesStep4ViewModel.setAddress(ServiceOrderInfo.getInstance().getAddress());
-        mServicesStep4ViewModel.setTimeSlot1(ServiceOrderInfo.getInstance().getTimeSlot1());
-        mServicesStep4ViewModel.setTimeSlot2(ServiceOrderInfo.getInstance().getTimeSlot2());
-        mServicesStep4ViewModel.setTimeSlot3(ServiceOrderInfo.getInstance().getTimeSlot3());
-        mServicesStep4ViewModel.setTotalCost(ServiceOrderInfo.getInstance().getTotalCost());
-        mServicesStep4ViewModel.setNameService(ServiceOrderInfo.getInstance().getServiceName());
-        mServicesStep4ViewModel.setAdditionalDetail(ServiceOrderInfo.getInstance().getAdditionalInfo());
-        mServicesStep4ViewModel.setAdditionalServices(ServiceOrderInfo.getInstance().getExtraServices());
-
+        mServicesStep4ViewModel.setUpData();
         mServicesList = new ArrayList<>();
         mServicesList.add(ServiceOrderInfo.getInstance().getSelectedService());
         mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
-
         mAppointmentId = setAppointmentId();
     }
 

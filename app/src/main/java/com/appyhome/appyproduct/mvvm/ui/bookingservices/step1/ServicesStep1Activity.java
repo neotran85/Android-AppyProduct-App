@@ -13,7 +13,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep1Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
-import com.appyhome.appyproduct.mvvm.ui.custom.MultipleChooseView;
+import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -33,7 +33,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     private ArrayList<JSONObject> mServicesList;
     private View mCurrentServiceView;
     private int mSelectedServiceIndex;
-    private MultipleChooseView mMainServiceView;
+    private ItemsSelectionView mMainServiceView;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep1Activity.class);
@@ -58,7 +58,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         View viewAirCon = mBinder.llServiceMain.findViewById(R.id.llAirCon);
         View viewPlumbing = mBinder.llServiceMain.findViewById(R.id.llPlumbing);
         View viewElectric = mBinder.llServiceMain.findViewById(R.id.llElectrical);
-        mMainServiceView = new MultipleChooseView(viewCleaning, viewAirCon, viewPlumbing, viewElectric);
+        mMainServiceView = new ItemsSelectionView(true, viewCleaning, viewAirCon, viewPlumbing, viewElectric);
         mMainServiceView.setOnClickListener(this);
     }
 
@@ -101,6 +101,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         if (ServiceOrderInfo.getInstance().getType() == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING) {
             AirConOptionView airConView = new AirConOptionView(mBinder.llServiceAirConCleaning);
             ServiceOrderInfo.getInstance().setArrayAirConOpts(airConView.getResultStrings());
+            ServiceOrderInfo.getInstance().setNumberOfAirCons(airConView.getNumberOfAirCons());
         }
         if (ServiceOrderInfo.getInstance().getType() == ServiceOrderInfo.SERVICE_HOME_CLEANING) {
             HomeCleaningOptionView homeView = new HomeCleaningOptionView(mBinder.llServiceHomeCleaning);
