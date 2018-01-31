@@ -71,7 +71,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void openHomeCleaningBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
-            ServiceOrderInfo.getInstance().clear();
             ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_HOME_CLEANING);
             startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
         } else {
@@ -82,7 +81,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void openAirConServiceBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
-            ServiceOrderInfo.getInstance().clear();
             ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_AIR_CON_CLEANING);
             startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
         } else {

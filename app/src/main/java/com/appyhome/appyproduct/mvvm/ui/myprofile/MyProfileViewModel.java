@@ -25,7 +25,8 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
     }
 
     public void onFieldClick(View view) {
-        getNavigator().onFieldClick(view);
+        if (getNavigator() != null)
+            getNavigator().onFieldClick(view);
     }
 
     public void fetchUserProfile() {
@@ -67,19 +68,22 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                                 }
                             }
                         }
-                        getNavigator().handleErrorService(null);
+                        if (getNavigator() != null)
+                            getNavigator().handleErrorService(null);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         setIsLoading(false);
-                        getNavigator().handleErrorService(null);
+                        if (getNavigator() != null)
+                            getNavigator().handleErrorService(null);
                     }
                 }));
     }
 
     public void logout() {
         getDataManager().logout();
-        getNavigator().backToHomeScreen();
+        if (getNavigator() != null)
+            getNavigator().backToHomeScreen();
     }
 }

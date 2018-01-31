@@ -12,9 +12,9 @@
         android:paddingTop="30dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/appyhome_logo_icon" />
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@mipmap/appyhome_logo_icon_big" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -38,22 +38,16 @@ public class ServiceOrderInfo {
     private ServiceOrderInfo() {
 
     }
-    public void clear() {
-        mServiceOrderInfo = null;
-    }
+
     public static ServiceOrderInfo getInstance() {
         if (mServiceOrderInfo == null)
             mServiceOrderInfo = new ServiceOrderInfo();
         return mServiceOrderInfo;
     }
 
-    public JSONObject getServiceInfo() {
-        return mServiceInfo;
-    }
-
     public String getServiceName() {
         try {
-            return mServiceInfo.getString("name");
+            return getServiceInfo().getString("name");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -62,7 +56,7 @@ public class ServiceOrderInfo {
 
     public ArrayList<JSONObject> getServices() {
         try {
-            ArrayList<JSONObject> array = (ArrayList<JSONObject>) mServiceInfo.get("services");
+            ArrayList<JSONObject> array = (ArrayList<JSONObject>) getServiceInfo().get("services");
             return array;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -94,6 +88,12 @@ public class ServiceOrderInfo {
         this.mIsFlexible = mIsFlexible;
     }
 
+    private JSONObject getServiceInfo() {
+        if(mServiceInfo == null) {
+            setUpData(mType);
+        }
+        return mServiceInfo;
+    }
     public void setUpData(int type) {
         mType = type;
         mServiceInfo = new JSONObject();
@@ -242,8 +242,8 @@ public class ServiceOrderInfo {
             request.setDateTime(datetime.toString());
 
             JSONObject services = new JSONObject();
-            String name = this.mServiceInfo.getString("name");
-            String price = getSelectedService().getString("price");
+            String name = getServiceInfo().getString("name");
+            String price = getTotalCost();
             if (mSelectedService != null) {
                 name = name + " - " + mSelectedService.getString("name");
             }
@@ -299,7 +299,7 @@ public class ServiceOrderInfo {
     public String getTotalCost() {
         try {
             Integer value = Integer.valueOf(getSelectedService().getString("price"));
-            if(mType == SERVICE_AIR_CON_CLEANING) {
+            if (mType == SERVICE_AIR_CON_CLEANING) {
                 value = value * mNumberOfAirCons;
             }
             return value.toString();

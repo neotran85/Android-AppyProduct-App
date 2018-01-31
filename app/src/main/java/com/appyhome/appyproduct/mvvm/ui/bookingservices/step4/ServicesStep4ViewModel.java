@@ -7,6 +7,7 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -43,6 +44,10 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
         setNameService(ServiceOrderInfo.getInstance().getServiceName());
         setAdditionalDetail(ServiceOrderInfo.getInstance().getAdditionalInfo());
         setAdditionalServices(ServiceOrderInfo.getInstance().getExtraServices());
+
+        // fetch profile
+        MyProfileViewModel profileViewModel = new MyProfileViewModel(getDataManager(), getSchedulerProvider());
+        profileViewModel.fetchUserProfile();
     }
 
     public void setServiceType(int type) {
