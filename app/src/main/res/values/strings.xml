@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Appyhome</string>
+    <string name="app_name">AppyHome</string>
 
     <!--Toolbar menus-->
 
@@ -91,7 +91,7 @@
     <string name="booking_service_read_scheduling_FAQ"><![CDATA[READ OUR SCHEDULING FAQ]]></string>
 
     <!--Map & Location-->
-    <string name="map_api_key">AIzaSyCSgHu3b8BSGopgbgXeVqPrZ7GhTxATYoY</string>
+    <string name="map_api_key">AIzaSyDlkZrhwwkWPxzhRcJIN0Q3RAFIJLLfKl0</string>
 
     <!--Payment-->
     <string name="payment_success">Payment success</string>

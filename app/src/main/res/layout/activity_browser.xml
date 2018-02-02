@@ -21,20 +21,26 @@
         android:background="@color/white">
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include layout="@layout/view_header"></include>
 
-            <WebView
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+            <LinearLayout
                 android:layout_weight="0.5"
-                android:id="@+id/webView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white" />
+            </LinearLayout>
 
         </LinearLayout>
 

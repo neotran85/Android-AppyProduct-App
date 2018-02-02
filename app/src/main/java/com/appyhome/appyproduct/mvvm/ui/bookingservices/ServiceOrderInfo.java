@@ -107,20 +107,27 @@ public class ServiceOrderInfo {
                     service1.put("name", "A standard hp1.0-1.5 1 unit");
                     service1.put("price", "120");
                     service1.put("description", "");
-                    service1.put("detail", "- Cleaning and checking indoor filter\n" +
-                            "- Cleaning of AC evaporator coil\n" +
+                    service1.put("detail", "Standard Aircon Cleaning\n" +
+                            "- Cleaning and checking of indoor filter\n" +
+                            "- Cleaning of evaporator coil\n" +
                             "- Flushing of drainage system\n" +
-                            "- Checking ac fan bearing");
+                            "- Checking of A/C fan bearing\n" +
+                            "- Test-run of the system to ensure it is in proper working condition\n" +
+                            "- Cleaning of blower wheels and blades\n" +
+                            "- Checking of thermostats and control R22 gas top up at no additional char\n");
 
                     service2.put("name", "Chemical servicing hp1.0-1.5");
                     service2.put("price", "160");
                     service2.put("description", "");
-                    service2.put("detail", "- Cleaning and checking indoor filter\n" +
-                            "- Cleaning of AC evaporator coil\n" +
+                    service2.put("detail", "Chemical Aircon Cleaning \n" +
+                            "- Cleaning and checking of indoor filter\n" +
+                            "- Cleaning of evaporator coil\n" +
                             "- Flushing of drainage system\n" +
-                            "- Checking ac fan bearing" + "-Cleaning blower wheels and blades \n" +
-                            "- Checking thermostat and control\n" +
-                            "- Internal unit chemical wash");
+                            "- Checking of A/C fan bearing\n" +
+                            "- Test-run of the system to ensure it is in proper working condition\n" +
+                            "- Chemical Cleaning of external and internal unit\n" +
+                            "- Cleaning of blower wheels and blades\n" +
+                            "- Checking of thermostats and control R22 gas top up at no additional charge\n");
 
                     ArrayList<JSONObject> arrayList = new ArrayList<>();
                     arrayList.add(service1);

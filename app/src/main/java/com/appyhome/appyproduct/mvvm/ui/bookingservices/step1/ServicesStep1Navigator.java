@@ -9,5 +9,7 @@ public interface ServicesStep1Navigator {
 
     void viewOurFAQ();
 
-    String t = "";
+    void viewOurTANDC();
+
+    void viewSuppliesMoreInformation();
 }

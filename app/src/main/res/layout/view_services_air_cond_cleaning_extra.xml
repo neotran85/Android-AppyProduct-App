@@ -47,29 +47,49 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <RadioGroup
-        android:id="@+id/rgTypeService"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/rbYes"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rbService1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:checked="true"
-            android:text="Standard service"
-            android:textSize="13sp" />
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rbService2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chemical service"
-            android:textSize="13sp" />
-    </RadioGroup>
+            <RadioGroup
+                android:id="@+id/rgTypeService"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/rbYes"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbService1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:checked="true"
+                    android:text="Standard service"
+                    android:textSize="13sp" />
+
+                <RadioButton
+                    android:id="@+id/rbService2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chemical service"
+                    android:textSize="13sp" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ibAirConTypeMoreInfo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@mipmap/icon_information" />
+    </LinearLayout>
 
     <TextView
         fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -115,43 +135,62 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <RadioGroup
-        android:id="@+id/rgSize"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/rbYes"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rbSize1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:checked="true"
-            android:text="1.0 - 1.5"
-            android:textSize="13sp" />
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rbSize2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2.0 - 2.5"
-            android:textSize="13sp" />
+            <RadioGroup
+                android:id="@+id/rgSize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/rbYes"
+                android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rbSize3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3.0 - 5.0"
-            android:textSize="13sp" />
+                <RadioButton
+                    android:id="@+id/rbSize1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:checked="true"
+                    android:text="1.0 - 1.5"
+                    android:textSize="13sp" />
 
-        <RadioButton
-            android:id="@+id/rbSize4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I don't know"
-            android:textSize="13sp" />
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/rbSize2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2.0 - 2.5"
+                    android:textSize="13sp" />
+
+                <RadioButton
+                    android:id="@+id/rbSize3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3.0 - 5.0"
+                    android:textSize="13sp" />
+
+                <RadioButton
+                    android:id="@+id/rbSize4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I don't know"
+                    android:textSize="13sp" />
+            </RadioGroup>
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/ibAirConSizeMoreInfo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@mipmap/icon_information" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

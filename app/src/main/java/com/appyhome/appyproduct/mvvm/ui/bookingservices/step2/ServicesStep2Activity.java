@@ -89,7 +89,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.btTimeslot1.setOnClickListener(this);
         mBinder.btTimeslot2.setOnClickListener(this);
         mBinder.btTimeslot3.setOnClickListener(this);
-
+        mBinder.rlReadOurSchedulingFAQ.setOnClickListener(this);
     }
 
     private void setUpMultipleExtraServices() {
@@ -113,9 +113,15 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 mBtnTimeSlot = (Button) view;
                 openDatePicker();
                 break;
+            case R.id.rlReadOurSchedulingFAQ:
+                viewReadOurSchedulingFAQ();
+                break;
         }
     }
-
+    public void viewReadOurSchedulingFAQ() {
+        AlertManager.getInstance(this).openInformationBrowser("OUR SCHEDULING FAQ",
+                "file:///android_asset/html/scheduling_faq.html");
+    }
     private boolean checkIfDateTimeInputted() {
         String datetime1 = ViewUtils.getStringByTag(mBinder.btTimeslot1);
         String datetime2 = ViewUtils.getStringByTag(mBinder.btTimeslot2);

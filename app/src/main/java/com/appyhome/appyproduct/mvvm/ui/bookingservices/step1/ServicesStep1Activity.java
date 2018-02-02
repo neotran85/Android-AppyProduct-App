@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import org.json.JSONException;
@@ -78,6 +79,10 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.btnNext.setOnClickListener(this);
         mBinder.btSeeDetailService.setOnClickListener(this);
         mBinder.btOurFAQ.setOnClickListener(this);
+        mBinder.btOurTANDC.setOnClickListener(this);
+        ViewUtils.setOnClickListener(mBinder.llServiceHomeCleaning, R.id.ibSuppliesMoreInfo, this);
+        ViewUtils.setOnClickListener(mBinder.llServiceAirConCleaning, R.id.ibAirConSizeMoreInfo, this);
+        ViewUtils.setOnClickListener(mBinder.llServiceAirConCleaning, R.id.ibAirConTypeMoreInfo, this);
     }
 
     @Override
@@ -97,6 +102,18 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 break;
             case R.id.btOurFAQ:
                 viewOurFAQ();
+                break;
+            case R.id.btOurTANDC:
+                viewOurTANDC();
+                break;
+            case R.id.ibSuppliesMoreInfo:
+                viewSuppliesMoreInformation();
+                break;
+            case R.id.ibAirConSizeMoreInfo:
+                viewAirConSizeMoreInformation();
+                break;
+            case R.id.ibAirConTypeMoreInfo:
+                viewAirConTypeMoreInformation();
                 break;
         }
     }
@@ -193,5 +210,25 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     public void viewOurFAQ() {
         AlertManager.getInstance(this).openInformationBrowser("Booking / Ordering FAQ",
                 "file:///android_asset/html/our_faq.html");
+    }
+    @Override
+    public void viewOurTANDC() {
+        AlertManager.getInstance(this).openInformationBrowser("OUR BOOKING T&C",
+                "http://appyhomeplus.com/terms-conditions/");
+    }
+
+    @Override
+    public void viewSuppliesMoreInformation() {
+        AlertManager.getInstance(this).openInformationBrowser("CLEANING SUPPLIES",
+                "file:///android_asset/html/cleaning_supplies.html");
+    }
+
+    public void viewAirConTypeMoreInformation() {
+        AlertManager.getInstance(this).openInformationBrowser("Aircon type of service",
+                "file:///android_asset/html/air_con_type_info.html");
+    }
+    public void viewAirConSizeMoreInformation() {
+        AlertManager.getInstance(this).openInformationBrowser("Aircon Size",
+                "file:///android_asset/html/air_con_size_info.html");
     }
 }
