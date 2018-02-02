@@ -41,7 +41,8 @@ public class ServiceOrderInfo {
     private ArrayList<AppyService> mArrayAppyService;
     private ArrayList<AppyServiceCategory> mArrayAppyServiceCategory;
 
-    private ServiceOrderInfo() {}
+    private ServiceOrderInfo() {
+    }
 
     public void clear() {
         mTimeSlot1 = "";
@@ -236,13 +237,16 @@ public class ServiceOrderInfo {
 
             String extra1 = mIsFlexible ? "flexible::0" : "not_flexible::0";
             additionalArrayOpts.add(extra1);
-            additionalArrayOpts.addAll(getPrice0Strings(mServiceExtra));
+            if (mServiceExtra != null && mServiceExtra.size() > 0)
+                additionalArrayOpts.addAll(getServicesWithPrice(mServiceExtra));
 
             if (mType == SERVICE_AIR_CON_CLEANING) {
-                additionalArrayOpts.addAll(getPrice0Strings(mArrayAirConOpts));
+                if (mArrayAirConOpts != null && mArrayAirConOpts.size() > 0)
+                    additionalArrayOpts.addAll(getServicesWithPrice(mArrayAirConOpts));
             }
             if (mType == SERVICE_HOME_CLEANING) {
-                additionalArrayOpts.addAll(getPrice0Strings(mArrayHomeCleaningOpts));
+                if (mArrayHomeCleaningOpts != null && mArrayHomeCleaningOpts.size() > 0)
+                    additionalArrayOpts.addAll(getServicesWithPrice(mArrayHomeCleaningOpts));
             }
             String additionalComment = "Additional details: " + mAdditionalInfo + "_" + txn_ID + "::0";
             additionalArrayOpts.add(additionalComment);
@@ -258,7 +262,7 @@ public class ServiceOrderInfo {
         return request;
     }
 
-    private ArrayList<String> getPrice0Strings(ArrayList<String> arrayList) {
+    private ArrayList<String> getServicesWithPrice(ArrayList<String> arrayList) {
         ArrayList<String> result = new ArrayList<>();
         for (String str : arrayList) {
             if (str != null && str.length() > 0) {
@@ -278,11 +282,13 @@ public class ServiceOrderInfo {
 
     public String getTotalCost() {
         try {
-            Integer value = Integer.valueOf(getSelectedService().price);
-            if (mType == SERVICE_AIR_CON_CLEANING) {
-                value = value * mNumberOfAirCons;
+            if(getSelectedService() != null) {
+                Integer value = Integer.valueOf(getSelectedService().price);
+                if (mType == SERVICE_AIR_CON_CLEANING) {
+                    value = value * mNumberOfAirCons;
+                }
+                return value.toString();
             }
-            return value.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }

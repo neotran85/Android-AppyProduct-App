@@ -46,10 +46,8 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .subscribe(new Consumer<ArrayList<AppyServiceCategory>>() {
                     @Override
                     public void accept(ArrayList<AppyServiceCategory> categories) throws Exception {
-                        AppLogger.d("loadCategories");
                         if (categories != null) {
                             ServiceOrderInfo.getInstance().setArrayAppyServiceCategory(categories);
-                            AppLogger.d("loadCategories:" + ServiceOrderInfo.getInstance().getArrayAppyServiceCategory().size());
                             loadServices();
                         }
                     }

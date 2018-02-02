@@ -44,8 +44,8 @@ public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator
                         setIsLoading(false);
                         if (response.getStatusCode().equals("200")) {
                             getNavigator().showCongratulationForm();
-                            AppLogger.d(response.getMessage());
                             isOrderSuccess.set(true);
+                            ServiceOrderInfo.getInstance().clear();
                         } else {
                             getNavigator().handleErrorService(null);
                             isOrderSuccess.set(false);

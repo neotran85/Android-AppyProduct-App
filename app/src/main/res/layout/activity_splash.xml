@@ -12,17 +12,24 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/activity_main"
+        android:gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:src="@mipmap/appyhome_logo_icon_big" />
+        <ImageView
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:src="@mipmap/appyhome_logo_text" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

@@ -141,7 +141,6 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ServiceOrderInfo.getInstance().clear();
     }
 
 
@@ -192,8 +191,6 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
             mSelectedServiceIndex = position;
             ServiceOrderInfo.getInstance().setSelectedService(mServicesList.get(position));
             view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
-        } else {
-            ServiceOrderInfo.getInstance().setSelectedService(null);
         }
     }
 

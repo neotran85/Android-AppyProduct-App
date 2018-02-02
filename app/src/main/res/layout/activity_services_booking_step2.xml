@@ -83,7 +83,7 @@
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etAdditionalInfo"
                             android:layout_width="match_parent"
-                            android:layout_height="80dp"
+                            android:layout_height="90dp"
                             android:layout_marginTop="12dp"
                             android:background="@drawable/input_text_rounded_light_gray_bg"
                             android:gravity="top|left"
