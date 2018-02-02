@@ -17,7 +17,7 @@ public class TextDetailViewModel extends BaseViewModel<TextDetailActivity> {
         super(dataManager, schedulerProvider);
     }
 
-    public void processData(Intent intent) {
+    public void setUp(Intent intent) {
         String titleStr = "";
         String detailStr = "";
         if (intent != null) {

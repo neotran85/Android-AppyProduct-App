@@ -115,13 +115,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setDisplayUseLogoEnabled(false);
             activity.getSupportActionBar().setTitle("");
         }
-
-        for (int i = 0; i < mAppyServicesIds.length; i++) {
-            ViewUtils.setOnClickListener(mBinder.serviceView, mAppyServicesIds[i], this);
-        }
-        for (int i = 0; i < mAppyProductsIds.length; i++) {
-            ViewUtils.setOnClickListener(mBinder.categoryView, mAppyProductsIds[i], this);
-        }
+        ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
+        ViewUtils.setOnClickListener(mBinder.categoryView, this, mAppyProductsIds);
     }
 
     @Override

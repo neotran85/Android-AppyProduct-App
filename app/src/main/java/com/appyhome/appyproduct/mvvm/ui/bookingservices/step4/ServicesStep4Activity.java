@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesAdapter;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5Activity;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
 import com.molpay.molpayxdk.MOLPayActivity;
@@ -54,10 +55,10 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setUpListener() {
+        ViewUtils.setOnClickListener(this, mBinder.btnNext,
+                mBinder.rlVisaPayment,
+                mBinder.rlBankPayment);
         mServicesStep4ViewModel.setNavigator(this);
-        mBinder.btnNext.setOnClickListener(this);
-        mBinder.rlVisaPayment.setOnClickListener(this);
-        mBinder.rlBankPayment.setOnClickListener(this);
     }
 
     private void setUpData() {
@@ -135,7 +136,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
             AppLogger.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
             try {
                 JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
-                if(result.getString("status_code").equals("00")) {
+                if (result.getString("status_code").equals("00")) {
                     // PAYMENT SUCCESS
                     String txn_ID = result.getString("txn_ID");
                     AppLogger.d(txn_ID);

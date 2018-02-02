@@ -41,11 +41,30 @@ public final class ViewUtils {
         return "";
     }
 
-    public static void setOnClickListener(View mainView, int idResourceButton, View.OnClickListener listener) {
+    public static void setOnClickListener(View mainView, int[] idResourceButtons, View.OnClickListener listener) {
         if (mainView != null) {
-            View view = mainView.findViewById(idResourceButton);
-            if (view != null)
-                view.setOnClickListener(listener);
+            for (int i = 0; i < idResourceButtons.length; i++) {
+                View view = mainView.findViewById(idResourceButtons[i]);
+                if (view != null)
+                    view.setOnClickListener(listener);
+            }
+        }
+    }
+
+    public static void setOnClickListener(View mainView, View.OnClickListener listener, int... idResourceButtons) {
+        if (mainView != null) {
+            for (int i = 0; i < idResourceButtons.length; i++) {
+                View view = mainView.findViewById(idResourceButtons[i]);
+                if (view != null)
+                    view.setOnClickListener(listener);
+            }
+        }
+    }
+
+    public static void setOnClickListener(View.OnClickListener listener, View... views) {
+        for (int i = 0; i < views.length; i++) {
+            if (views[i] != null)
+                views[i].setOnClickListener(listener);
         }
     }
 

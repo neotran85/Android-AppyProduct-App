@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 import com.google.android.gms.location.places.Place;
@@ -42,8 +43,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         mBinder = getViewDataBinding();
         mServicesStep3ViewModel.setNavigator(this);
         mBinder.setViewModel(mServicesStep3ViewModel);
-        mBinder.btnNext.setOnClickListener(this);
-        mBinder.llSearchLocationNearby.setOnClickListener(this);
+        ViewUtils.setOnClickListener(this, mBinder.btnNext, mBinder.llSearchLocationNearby);
         setTitle("Set Location");
         activeBackButton();
         mServicesStep3ViewModel.updateAddress();

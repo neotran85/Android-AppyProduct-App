@@ -74,13 +74,13 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setUpListeners() {
-        mBinder.btnNext.setOnClickListener(this);
-        mBinder.btSeeDetailService.setOnClickListener(this);
-        mBinder.btOurFAQ.setOnClickListener(this);
-        mBinder.btOurTANDC.setOnClickListener(this);
-        ViewUtils.setOnClickListener(mBinder.llServiceHomeCleaning, R.id.ibSuppliesMoreInfo, this);
-        ViewUtils.setOnClickListener(mBinder.llServiceAirConCleaning, R.id.ibAirConSizeMoreInfo, this);
-        ViewUtils.setOnClickListener(mBinder.llServiceAirConCleaning, R.id.ibAirConTypeMoreInfo, this);
+        ViewUtils.setOnClickListener(this, mBinder.btnNext,
+                mBinder.btSeeDetailService,
+                mBinder.btOurFAQ,
+                mBinder.btOurTANDC,
+                mBinder.llServiceHomeCleaning,
+                mBinder.llServiceAirConCleaning,
+                mBinder.llServiceAirConCleaning);
     }
 
     @Override

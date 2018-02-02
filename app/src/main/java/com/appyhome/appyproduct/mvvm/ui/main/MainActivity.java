@@ -24,6 +24,7 @@ import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.crashlytics.android.Crashlytics;
 
 import javax.inject.Inject;
@@ -90,11 +91,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void setUp() {
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
-        mBinder.rlHome.setOnClickListener(this);
-        mBinder.rlMyProfile.setOnClickListener(this);
-        mBinder.rlNotification.setOnClickListener(this);
-        mBinder.rlRequest.setOnClickListener(this);
-        mBinder.rlWishList.setOnClickListener(this);
+        ViewUtils.setOnClickListener(this, mBinder.rlHome, mBinder.rlMyProfile,
+                mBinder.rlNotification, mBinder.rlRequest, mBinder.rlWishList);
+
         currentTab = mBinder.rlHome;
         showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
 

@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedActivity;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.edit.RequestEditActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCaptureActivity;
@@ -53,9 +54,8 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         mRequestItemViewModel.setNavigator(this);
         setTitle("SUMMARY");
         activeBackButton();
-        mBinder.llAddServices.setOnClickListener(this);
-        mBinder.llConfirmation.setOnClickListener(this);
-        mBinder.llRefundServices.setOnClickListener(this);
+        ViewUtils.setOnClickListener(this, mBinder.llAddServices,
+                mBinder.llConfirmation, mBinder.llRefundServices);
     }
 
     private void processDetailData(Intent data) {

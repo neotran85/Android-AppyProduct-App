@@ -72,17 +72,17 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public void processData(JSONObject item, int type) {
         mType = type;
         try {
-            AppLogger.d("processData: hasID: " + item.has("id"));
+            AppLogger.d("setUp: hasID: " + item.has("id"));
 
             if (item.has("id"))
                 mIdNumber = item.getString("id");
             if (item.has("edit_code")) {
                 editCode = item.getString("edit_code");
-                AppLogger.d("processData: editCode: " + editCode);
+                AppLogger.d("setUp: editCode: " + editCode);
             }
             if (item.has("phone_number")) {
                 phoneNumber = item.getString("phone_number");
-                AppLogger.d("processData: phone: " + phoneNumber);
+                AppLogger.d("setUp: phone: " + phoneNumber);
             }
             if (item.has("safety_code")) {
                 safetyCode.set(item.getString("safety_code"));
@@ -117,7 +117,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             }
             if (item.has("address")) {
                 this.address.set(item.getString("address"));
-                AppLogger.d("processData: address: " + item.getString("address"));
+                AppLogger.d("setUp: address: " + item.getString("address"));
             }
             if (item.has("time")) {
                 this.timeCreated.set(item.getString("time"));

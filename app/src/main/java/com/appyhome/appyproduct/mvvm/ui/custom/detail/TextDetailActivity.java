@@ -30,7 +30,7 @@ public class TextDetailActivity extends BaseActivity<ActivityDetailTextBinding, 
         mTextDetailViewModel.setNavigator(this);
         mActivityDetailTextBinding.setViewModel(mTextDetailViewModel);
         Intent intent = getIntent();
-        mTextDetailViewModel.processData(intent);
+        mTextDetailViewModel.setUp(intent);
         activeBackButton();
     }
 

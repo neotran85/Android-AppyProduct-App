@@ -11,7 +11,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep5Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -34,9 +34,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mServicesStep5ViewModel);
         mServicesStep5ViewModel.setNavigator(this);
-        mBinder.btnNext.setOnClickListener(this);
-        mBinder.btnViewRequest.setOnClickListener(this);
-        AppLogger.d(ServiceOrderInfo.getInstance().getAppointmentCreateRequest().toString());
+        ViewUtils.setOnClickListener(this, mBinder.btnNext, mBinder.btnViewRequest);
         mServicesStep5ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
     }
 

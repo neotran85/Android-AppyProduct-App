@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
@@ -43,8 +44,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mLoginViewModel);
         mLoginViewModel.setNavigator(this);
-        mBinder.btnSignUp.setOnClickListener(this);
-        mBinder.btnForgetPassword.setOnClickListener(this);
+
+        ViewUtils.setOnClickListener(this, mBinder.btnForgetPassword,
+                mBinder.btnSignUp);
+
         ArrayList<TextInputEditText> arrayTextInputs = new ArrayList<>();
         arrayTextInputs.add(mBinder.etPhoneNumber);
         arrayTextInputs.add(mBinder.etPassword);

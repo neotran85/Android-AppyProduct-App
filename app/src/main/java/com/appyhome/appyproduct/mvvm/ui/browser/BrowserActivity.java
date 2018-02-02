@@ -41,7 +41,8 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, Browse
         mBinder.webView.loadUrl(url);
         mBinder.webView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
-                mBrowserViewModel.setIsLoading(false);
+                if (mBrowserViewModel != null)
+                    mBrowserViewModel.setIsLoading(false);
             }
         });
     }
