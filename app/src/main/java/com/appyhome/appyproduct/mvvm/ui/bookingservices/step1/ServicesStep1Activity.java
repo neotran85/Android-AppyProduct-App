@@ -141,6 +141,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ServiceOrderInfo.getInstance().clear();
     }
 
 

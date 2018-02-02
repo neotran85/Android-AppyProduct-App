@@ -37,12 +37,25 @@ public class ServiceOrderInfo {
 
     private int mNumberOfAirCons = 1;
 
-
+    // Keep these data for the whole life of the app.
     private ArrayList<AppyService> mArrayAppyService;
     private ArrayList<AppyServiceCategory> mArrayAppyServiceCategory;
 
-    private ServiceOrderInfo() {
+    private ServiceOrderInfo() {}
 
+    public void clear() {
+        mTimeSlot1 = "";
+        mTimeSlot2 = "";
+        mTimeSlot3 = "";
+        mServiceExtra = null;
+        mServiceMain = null;
+        mAppointmentId = "";
+        mArrayHomeCleaningOpts = null;
+        mArrayAirConOpts = null;
+        txn_ID = "";
+        mSelectedService = null;
+        mAdditionalInfo = "";
+        mAddress = "";
     }
 
     public static ServiceOrderInfo getInstance() {
