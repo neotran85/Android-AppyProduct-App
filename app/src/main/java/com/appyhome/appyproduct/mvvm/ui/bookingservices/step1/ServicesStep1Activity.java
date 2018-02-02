@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep1Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
@@ -17,9 +18,6 @@ import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     ServicesStep1ViewModel mServicesStep1ViewModel;
 
     ActivityServicesBookingStep1Binding mBinder;
-    private ArrayList<JSONObject> mServicesList;
+    private ArrayList<AppyService> mServicesList;
     private View mCurrentServiceView;
     private int mSelectedServiceIndex;
     private ItemsSelectionView mMainServiceView;
@@ -132,14 +130,10 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private boolean checkIfServiceSelected() {
-        JSONObject data = ServiceOrderInfo.getInstance().getSelectedService();
+        AppyService data = ServiceOrderInfo.getInstance().getSelectedService();
         if (data != null) {
-            try {
-                String nameService = data.getString("name");
-                return nameService != null && nameService.length() > 0;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            String nameService = data.name;
+            return nameService != null && nameService.length() > 0;
         }
         return false;
     }
@@ -178,16 +172,12 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void viewDetailService() {
-        JSONObject data = ServiceOrderInfo.getInstance().getSelectedService();
+        AppyService data = ServiceOrderInfo.getInstance().getSelectedService();
         if (data != null) {
-            try {
-                Intent intent = TextDetailActivity.getStartIntent(this);
-                intent.putExtra("title", data.get("name").toString());
-                intent.putExtra("detail", data.get("detail").toString());
-                startActivity(intent);
-            } catch (Exception e) {
-
-            }
+            Intent intent = TextDetailActivity.getStartIntent(this);
+            intent.putExtra("title", data.name);
+            intent.putExtra("detail", data.detail);
+            startActivity(intent);
         }
     }
 
@@ -211,6 +201,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         AlertManager.getInstance(this).openInformationBrowser("Booking / Ordering FAQ",
                 "file:///android_asset/html/our_faq.html");
     }
+
     @Override
     public void viewOurTANDC() {
         AlertManager.getInstance(this).openInformationBrowser("OUR BOOKING T&C",
@@ -227,6 +218,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         AlertManager.getInstance(this).openInformationBrowser("Aircon type of service",
                 "file:///android_asset/html/air_con_type_info.html");
     }
+
     public void viewAirConSizeMoreInformation() {
         AlertManager.getInstance(this).openInformationBrowser("Aircon Size",
                 "file:///android_asset/html/air_con_size_info.html");

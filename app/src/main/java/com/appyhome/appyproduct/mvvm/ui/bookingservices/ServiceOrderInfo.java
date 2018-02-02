@@ -2,6 +2,8 @@ package com.appyhome.appyproduct.mvvm.ui.bookingservices;
 
 
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +17,7 @@ public class ServiceOrderInfo {
     private int mType = SERVICE_HOME_CLEANING;
     private JSONObject mServiceInfo;
     private boolean mIsFlexible = false;
-    private JSONObject mSelectedService;
+    private AppyService mSelectedService;
     private String mAdditionalInfo = "";
     private String mAddress = "";
 
@@ -34,6 +36,10 @@ public class ServiceOrderInfo {
     private String txn_ID;
 
     private int mNumberOfAirCons = 1;
+
+
+    private ArrayList<AppyService> mArrayAppyService;
+    private ArrayList<AppyServiceCategory> mArrayAppyServiceCategory;
 
     private ServiceOrderInfo() {
 
@@ -54,9 +60,9 @@ public class ServiceOrderInfo {
         return "";
     }
 
-    public ArrayList<JSONObject> getServices() {
+    public ArrayList<AppyService> getServices() {
         try {
-            ArrayList<JSONObject> array = (ArrayList<JSONObject>) getServiceInfo().get("services");
+            ArrayList<AppyService> array = (ArrayList<AppyService>) getServiceInfo().get("services");
             return array;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -64,11 +70,11 @@ public class ServiceOrderInfo {
         return null;
     }
 
-    public JSONObject getSelectedService() {
+    public AppyService getSelectedService() {
         return mSelectedService;
     }
 
-    public void setSelectedService(JSONObject object) {
+    public void setSelectedService(AppyService object) {
         mSelectedService = object;
     }
 
@@ -89,83 +95,37 @@ public class ServiceOrderInfo {
     }
 
     private JSONObject getServiceInfo() {
-        if(mServiceInfo == null) {
+        if (mServiceInfo == null) {
             setUpData(mType);
         }
         return mServiceInfo;
     }
+
+    private ArrayList<AppyService> getArrayServiceByCategory(String category) {
+        ArrayList<AppyService> array = new ArrayList<>();
+        for (AppyService service : mArrayAppyService) {
+            if (service.category.equals(category)) {
+                array.add(service);
+            }
+        }
+        return array;
+    }
+
     public void setUpData(int type) {
         mType = type;
         mServiceInfo = new JSONObject();
-        JSONObject service1 = new JSONObject();
-        JSONObject service2 = new JSONObject();
-        JSONObject service3 = new JSONObject();
+        String name;
         try {
             switch (type) {
                 case SERVICE_AIR_CON_CLEANING:
-                    mServiceInfo.put("name", "Air-con servicing");
-                    service1.put("name", "A standard hp1.0-1.5 1 unit");
-                    service1.put("price", "120");
-                    service1.put("description", "");
-                    service1.put("detail", "Standard Aircon Cleaning\n" +
-                            "- Cleaning and checking of indoor filter\n" +
-                            "- Cleaning of evaporator coil\n" +
-                            "- Flushing of drainage system\n" +
-                            "- Checking of A/C fan bearing\n" +
-                            "- Test-run of the system to ensure it is in proper working condition\n" +
-                            "- Cleaning of blower wheels and blades\n" +
-                            "- Checking of thermostats and control R22 gas top up at no additional char\n");
-
-                    service2.put("name", "Chemical servicing hp1.0-1.5");
-                    service2.put("price", "160");
-                    service2.put("description", "");
-                    service2.put("detail", "Chemical Aircon Cleaning \n" +
-                            "- Cleaning and checking of indoor filter\n" +
-                            "- Cleaning of evaporator coil\n" +
-                            "- Flushing of drainage system\n" +
-                            "- Checking of A/C fan bearing\n" +
-                            "- Test-run of the system to ensure it is in proper working condition\n" +
-                            "- Chemical Cleaning of external and internal unit\n" +
-                            "- Cleaning of blower wheels and blades\n" +
-                            "- Checking of thermostats and control R22 gas top up at no additional charge\n");
-
-                    ArrayList<JSONObject> arrayList = new ArrayList<>();
-                    arrayList.add(service1);
-                    arrayList.add(service2);
-                    mServiceInfo.put("services", arrayList);
+                    name = mArrayAppyServiceCategory.get(SERVICE_AIR_CON_CLEANING).name;
+                    mServiceInfo.put("name", name);
+                    mServiceInfo.put("services", getArrayServiceByCategory(name));
                     break;
                 case SERVICE_HOME_CLEANING:
-                    mServiceInfo.put("name", "Home Cleaning");
-                    service1.put("name", "Standard Cleaning (Supplies Not Provided)");
-                    service1.put("price", "80");
-                    service1.put("description", "1 Cleaner 3 Hours");
-                    service1.put("detail", "- Cleaning of all bedrooms requested\n" +
-                            "- Cleaning of all bathroom and toilets requested\n" +
-                            "- Cleaning of living room and balcony (if applicable) \n" +
-                            "- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming \n" +
-                            "- Not valid for moving in/out cleaning or Post Renovation cleaning\n");
-
-                    service2.put("name", "Standard Cleaning (Supplies Provided)");
-                    service2.put("price", "105");
-                    service2.put("description", "1 Cleaner 3 Hours");
-                    service2.put("detail", "- Cleaning of all bedrooms requested\n" +
-                            "- Cleaning of all bathroom and toilets requested\n" +
-                            "- Cleaning of living room and balcony (if applicable) \n" +
-                            "- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming \n" +
-                            "- Not valid for moving in/out cleaning or Post Renovation cleaning\n" +
-                            "- Standard Cleaning Supplies \n\n" +
-                            "* Mop, Broom, Vacuum Cleaner, Multipurpose Chemicals and Detergents, Sponge and Brush, Wiping Cloth, Duster, Pail\n");
-
-                    service3.put("name", "Moving in/out Cleaning");
-                    service3.put("price", "210");
-                    service3.put("description", "2 Cleaners 4 hours");
-                    service3.put("detail", service2.get("detail"));
-
-                    arrayList = new ArrayList<>();
-                    arrayList.add(service1);
-                    arrayList.add(service2);
-                    arrayList.add(service3);
-                    mServiceInfo.put("services", arrayList);
+                    name = mArrayAppyServiceCategory.get(SERVICE_HOME_CLEANING).name;
+                    mServiceInfo.put("name", name);
+                    mServiceInfo.put("services", getArrayServiceByCategory(name));
                     break;
             }
         } catch (Exception e) {
@@ -252,7 +212,7 @@ public class ServiceOrderInfo {
             String name = getServiceInfo().getString("name");
             String price = getTotalCost();
             if (mSelectedService != null) {
-                name = name + " - " + mSelectedService.getString("name");
+                name = name + " - " + mSelectedService.name;
             }
             services.put("service1", name + "::" + price);
             request.setServices(services.toString());
@@ -305,7 +265,7 @@ public class ServiceOrderInfo {
 
     public String getTotalCost() {
         try {
-            Integer value = Integer.valueOf(getSelectedService().getString("price"));
+            Integer value = Integer.valueOf(getSelectedService().price);
             if (mType == SERVICE_AIR_CON_CLEANING) {
                 value = value * mNumberOfAirCons;
             }
@@ -346,5 +306,21 @@ public class ServiceOrderInfo {
 
     public void setNumberOfAirCons(int numberOfAirCons) {
         this.mNumberOfAirCons = numberOfAirCons;
+    }
+
+    public ArrayList<AppyService> getArrayAppyService() {
+        return mArrayAppyService;
+    }
+
+    public void setArrayAppyService(ArrayList<AppyService> arrayAppyService) {
+        this.mArrayAppyService = arrayAppyService;
+    }
+
+    public ArrayList<AppyServiceCategory> getArrayAppyServiceCategory() {
+        return mArrayAppyServiceCategory;
+    }
+
+    public void setArrayAppyServiceCategory(ArrayList<AppyServiceCategory> arrayAppyServiceCategory) {
+        this.mArrayAppyServiceCategory = arrayAppyServiceCategory;
     }
 }

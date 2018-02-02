@@ -8,16 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
-
-import org.json.JSONObject;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 
 import java.util.ArrayList;
 
 public class ServicesAdapter extends BaseAdapter {
     Context mContext;
-    private ArrayList<JSONObject> mListItem;
+    private ArrayList<AppyService> mListItem;
 
-    public ServicesAdapter(Context mContext, ArrayList<JSONObject> listItem) {
+    public ServicesAdapter(Context mContext, ArrayList<AppyService> listItem) {
         this.mContext = mContext;
         this.mListItem = listItem;
     }
@@ -35,7 +34,7 @@ public class ServicesAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View arg1, ViewGroup viewGroup) {
-        JSONObject data = mListItem.get(position);
+        AppyService data = mListItem.get(position);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.view_item_service_offer, viewGroup, false);
 
@@ -43,9 +42,9 @@ public class ServicesAdapter extends BaseAdapter {
         TextView tvDescription = (TextView) row.findViewById(R.id.tvDescription);
         TextView tvPrice = (TextView) row.findViewById(R.id.tvPrice);
         try {
-            tvTitle.setText(data.getString("name"));
-            tvDescription.setText(data.getString("description"));
-            tvPrice.setText(data.getString("price"));
+            tvTitle.setText(data.name);
+            tvDescription.setText(data.description);
+            tvPrice.setText(data.price);
         } catch (Exception e) {
         }
         return row;

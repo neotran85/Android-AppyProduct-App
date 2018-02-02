@@ -1,12 +1,10 @@
 package com.appyhome.appyproduct.mvvm.ui.main;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -15,19 +13,18 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.crashlytics.android.Crashlytics;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -70,6 +67,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUp();
+        AppLogger.d("loadServices:" + ServiceOrderInfo.getInstance().getArrayAppyService().size());
     }
 
     @Override
@@ -92,9 +90,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void setUp() {
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
-        mMainViewModel.updateAppVersion(version);
-        mMainViewModel.onNavMenuCreated();
-        subscribeToLiveData();
         mBinder.rlHome.setOnClickListener(this);
         mBinder.rlMyProfile.setOnClickListener(this);
         mBinder.rlNotification.setOnClickListener(this);
@@ -188,15 +183,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private void switchTabSelection(View view) {
         highLightTab(currentTab, view);
         currentTab = view;
-    }
-
-    private void subscribeToLiveData() {
-        mMainViewModel.getQuestionCardData().observe(this, new Observer<List<QuestionCardData>>() {
-            @Override
-            public void onChanged(@Nullable List<QuestionCardData> questionCardDatas) {
-                mMainViewModel.setQuestionDataList(questionCardDatas);
-            }
-        });
     }
 
     @Override

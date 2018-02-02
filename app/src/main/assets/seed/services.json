@@ -1,0 +1,42 @@
+[
+  {
+    "id": 0,
+    "name": "A standard hp1.0-1.5 1 unit",
+    "category": "Air-con Servicing",
+    "price": "120",
+    "description": "",
+    "detail": "- Cleaning and checking of indoor filter\n- Cleaning of evaporator coil\n- Checking of A/C fan bearing\n- Test-run of the system to ensure it is in proper working condition\n- Cleaning of blower wheels and blades\n- Checking of thermostats and control R22 gas top up at no additional char\n"
+  },
+  {
+    "id": 1,
+    "name": "Chemical servicing hp1.0-1.5",
+    "category": "Air-con Servicing",
+    "price": "160",
+    "description": "",
+    "detail": "- Cleaning and checking of indoor filter\n- Cleaning of evaporator coil\n- Flushing of drainage system\n- Checking of A/C fan bearing\n- Test-run of the system to ensure it is in proper working condition\n- Chemical Cleaning of external and internal unit\n- Cleaning of blower wheels and blades\n- Checking of thermostats and control R22 gas top up at no additional charge"
+  },
+  {
+    "id": 2,
+    "name": "Standard Cleaning (Supplies Not Provided)",
+    "category": "Home Cleaning",
+    "price": "80",
+    "description": "1 Cleaner 3 Hours",
+    "detail": "- Cleaning of all bedrooms requested\n- Cleaning of all bathroom and toilets requested\n- Cleaning of living room and balcony (if applicable)\n- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming\n- Not valid for moving in/out cleaning or Post Renovation cleaning"
+  },
+  {
+    "id": 3,
+    "name": "Standard Cleaning (Supplies Provided)",
+    "category": "Home Cleaning",
+    "price": "105",
+    "description": "1 Cleaner 3 Hours",
+    "detail": "- Cleaning of all bedrooms requested\n- Cleaning of all bathroom and toilets requested\n- Cleaning of living room and balcony (if applicable)\n- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming\n- Not valid for moving in/out cleaning or Post Renovation cleaning\n- Standard Cleaning Supplies\n\n* Mop, Broom, Vacuum Cleaner, Multipurpose Chemicals and Detergents, Sponge and Brush, Wiping Cloth, Duster, Pail"
+  },
+  {
+    "id": 4,
+    "name": "Moving in/out Cleaning",
+    "category": "Home Cleaning",
+    "price": "210",
+    "description": "2 Cleaners 4 hours",
+    "detail": "- Cleaning of all bedrooms requested\n- Cleaning of all bathroom and toilets requested\n- Cleaning of living room and balcony (if applicable)\n- Cleaning including sweeping, mopping, dusting, general tidying and vacuuming\n- Not valid for moving in/out cleaning or Post Renovation cleaning\n- Standard Cleaning Supplies\n\n* Mop, Broom, Vacuum Cleaner, Multipurpose Chemicals and Detergents, Sponge and Brush, Wiping Cloth, Duster, Pail"
+  }
+]

@@ -8,12 +8,11 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySplashBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
-public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {
+public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
 
     @Inject
     SplashViewModel mSplashViewModel;
@@ -27,7 +26,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSplashViewModel.setNavigator(this);
-        mSplashViewModel.startSeeding();
+        mSplashViewModel.setUp();
     }
 
     @Override
@@ -35,14 +34,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         super.onDestroy();
     }
 
-    @Override
-    public void openLoginActivity() {
-        Intent intent = LoginActivity.getStartIntent(SplashActivity.this);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     public void openMainActivity() {
         Intent intent = MainActivity.getStartIntent(SplashActivity.this);
         startActivity(intent);

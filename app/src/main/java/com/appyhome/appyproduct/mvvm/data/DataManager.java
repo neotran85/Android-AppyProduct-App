@@ -2,10 +2,11 @@ package com.appyhome.appyproduct.mvvm.data;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
-import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.reactivex.Observable;
 
@@ -16,11 +17,9 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
 
     void setUserAsLoggedOut();
 
-    Observable<Boolean> seedDatabaseQuestions();
+    Observable< ArrayList<AppyServiceCategory>> seedDatabaseCategories();
 
-    Observable<Boolean> seedDatabaseOptions();
-
-    Observable<List<QuestionCardData>> getQuestionCardData();
+    Observable<ArrayList<AppyService>> seedDatabaseServices();
 
     void updateUserInfo(
             String accessToken,

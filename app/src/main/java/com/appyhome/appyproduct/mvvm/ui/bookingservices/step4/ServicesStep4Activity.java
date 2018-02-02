@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep4Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
@@ -31,7 +32,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     ActivityServicesBookingStep4Binding mBinder;
 
-    private ArrayList<JSONObject> mServicesList;
+    private ArrayList<AppyService> mServicesList;
 
     private String mAppointmentId;
 

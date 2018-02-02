@@ -22,32 +22,29 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRespon
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
-import com.appyhome.appyproduct.mvvm.data.model.db.Option;
-import com.appyhome.appyproduct.mvvm.data.model.db.Question;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.data.model.db.User;
-import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
 import com.appyhome.appyproduct.mvvm.utils.helper.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Single;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function;
 
 @Singleton
 public class AppDataManager implements DataManager {
@@ -182,100 +179,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Boolean> isQuestionEmpty() {
-        return mDbHelper.isQuestionEmpty();
-    }
-
-    @Override
-    public Observable<Boolean> isOptionEmpty() {
-        return mDbHelper.isOptionEmpty();
-    }
-
-    @Override
-    public Observable<Boolean> saveQuestion(Question question) {
-        return mDbHelper.saveQuestion(question);
-    }
-
-    @Override
-    public Observable<Boolean> saveOption(Option option) {
-        return mDbHelper.saveOption(option);
-    }
-
-    @Override
-    public Observable<Boolean> saveQuestionList(List<Question> questionList) {
-        return mDbHelper.saveQuestionList(questionList);
-    }
-
-    @Override
-    public Observable<Boolean> saveOptionList(List<Option> optionList) {
-        return mDbHelper.saveOptionList(optionList);
-    }
-
-    @Override
-    public Observable<List<Question>> getAllQuestions() {
-        return mDbHelper.getAllQuestions();
-    }
-
-    @Override
-    public Observable<List<Option>> getOptionsForQuestionId(Long questionId) {
-        return mDbHelper.getOptionsForQuestionId(questionId);
-    }
-
-    @Override
-    public Observable<Boolean> seedDatabaseQuestions() {
-
-        GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = builder.create();
-
-        return mDbHelper.isQuestionEmpty()
-                .concatMap(new Function<Boolean, ObservableSource<? extends Boolean>>() {
-                    @Override
-                    public ObservableSource<? extends Boolean> apply(Boolean isEmpty)
-                            throws Exception {
-                        if (isEmpty) {
-                            Type type = $Gson$Types
-                                    .newParameterizedTypeWithOwner(null, List.class,
-                                            Question.class);
-                            List<Question> questionList = gson.fromJson(
-                                    CommonUtils.loadJSONFromAsset(mContext,
-                                            AppConstants.SEED_DATABASE_QUESTIONS),
-                                    type);
-
-                            return saveQuestionList(questionList);
-                        }
-                        return Observable.just(false);
-                    }
-                });
-    }
-
-    @Override
-    public Observable<Boolean> seedDatabaseOptions() {
-
-        GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = builder.create();
-
-        return mDbHelper.isOptionEmpty()
-                .concatMap(new Function<Boolean, ObservableSource<? extends Boolean>>() {
-                    @Override
-                    public ObservableSource<? extends Boolean> apply(Boolean isEmpty)
-                            throws Exception {
-                        if (isEmpty) {
-                            Type type = new TypeToken<List<Option>>() {
-                            }
-                                    .getType();
-                            List<Option> optionList = gson.fromJson(
-                                    CommonUtils.loadJSONFromAsset(mContext,
-                                            AppConstants.SEED_DATABASE_OPTIONS),
-                                    type);
-
-                            return saveOptionList(optionList);
-                        }
-                        return Observable.just(false);
-                    }
-                });
-    }
-
-    @Override
     public Single<BlogResponse> getBlogApiCall() {
         return mApiHelper.getBlogApiCall();
     }
@@ -283,32 +186,6 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<OpenSourceResponse> getOpenSourceApiCall() {
         return mApiHelper.getOpenSourceApiCall();
-    }
-
-    @Override
-    public Observable<List<QuestionCardData>> getQuestionCardData() {
-
-        return mDbHelper.getAllQuestions()
-                .flatMap(new Function<List<Question>, ObservableSource<Question>>() {
-                    @Override
-                    public ObservableSource<Question> apply(List<Question> questions) throws Exception {
-                        return Observable.fromIterable(questions);
-                    }
-                })
-                .flatMap(new Function<Question, ObservableSource<QuestionCardData>>() {
-                    @Override
-                    public ObservableSource<QuestionCardData> apply(Question question) throws Exception {
-                        return Observable.zip(mDbHelper.getOptionsForQuestionId(question.id), Observable.just(question),
-                                new BiFunction<List<Option>, Question, QuestionCardData>() {
-                                    @Override
-                                    public QuestionCardData apply(List<Option> options, Question question) throws Exception {
-                                        return new QuestionCardData(question, options);
-                                    }
-                                });
-                    }
-                })
-                .toList()
-                .toObservable();
     }
 
     @Override
@@ -385,6 +262,7 @@ public class AppDataManager implements DataManager {
     public void logout() {
         mPreferencesHelper.logout();
     }
+
     @Override
     public boolean isUserLoggedIn() {
         return mPreferencesHelper.isUserLoggedIn();
@@ -399,16 +277,53 @@ public class AppDataManager implements DataManager {
     public String getUserLastName() {
         return mPreferencesHelper.getUserLastName();
     }
+
     @Override
     public void setUserLastName(String lastName) {
         mPreferencesHelper.setUserLastName(lastName);
     }
+
     @Override
     public String getUserFirstName() {
         return mPreferencesHelper.getUserFirstName();
     }
+
     @Override
     public void setUserFirstName(String firstName) {
         mPreferencesHelper.setUserFirstName(firstName);
+    }
+
+    @Override
+    public Observable<ArrayList<AppyServiceCategory>> seedDatabaseCategories() {
+        return Observable.fromCallable(new Callable<ArrayList<AppyServiceCategory>>() {
+            @Override
+            public ArrayList<AppyServiceCategory> call() throws Exception {
+                Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {}.getType();
+                GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+                final Gson gson = builder.create();
+                ArrayList<AppyServiceCategory> appyServiceCategories = gson.fromJson(
+                        CommonUtils.loadJSONFromAsset(mContext,
+                                AppConstants.SEED_DATABASE_CATEGORIES),
+                        type);
+                return appyServiceCategories;
+            }
+        });
+    }
+
+    @Override
+    public Observable<ArrayList<AppyService>> seedDatabaseServices() {
+        return Observable.fromCallable(new Callable<ArrayList<AppyService>>() {
+            @Override
+            public ArrayList<AppyService> call() throws Exception {
+                Type type = new TypeToken<ArrayList<AppyService>>() {}.getType();
+                GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+                Gson gson = builder.create();
+                ArrayList<AppyService> arrayList  = gson.fromJson(
+                        CommonUtils.loadJSONFromAsset(mContext,
+                                AppConstants.SEED_DATABASE_SERVICES),
+                        type);
+                return arrayList;
+            }
+        });
     }
 }

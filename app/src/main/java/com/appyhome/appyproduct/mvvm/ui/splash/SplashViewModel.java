@@ -1,57 +1,59 @@
 package com.appyhome.appyproduct.mvvm.ui.splash;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+import java.util.ArrayList;
 
-public class SplashViewModel extends BaseViewModel<SplashNavigator> {
+import io.reactivex.functions.Consumer;
+
+public class SplashViewModel extends BaseViewModel<SplashActivity> {
 
     public SplashViewModel(DataManager dataManager,
                            SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void startSeeding() {
+    public void setUp() {
+        loadCategories();
+    }
+
+    public void loadServices() {
         getCompositeDisposable().add(getDataManager()
-                .seedDatabaseQuestions()
-                .flatMap(new Function<Boolean, ObservableSource<Boolean>>() {
-                    @Override
-                    public ObservableSource<Boolean> apply(Boolean aBoolean) throws Exception {
-                        return getDataManager().seedDatabaseOptions();
-                    }
-                })
+                .seedDatabaseServices()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<Boolean>() {
+                .subscribe(new Consumer<ArrayList<AppyService>>() {
                     @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        decideNextActivity();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        decideNextActivity();
+                    public void accept(ArrayList<AppyService> services) throws Exception {
+                        if (services != null) {
+                            ServiceOrderInfo.getInstance().setArrayAppyService(services);
+                            getNavigator().openMainActivity();
+                        }
                     }
                 }));
     }
-
-    private void decideNextActivity() {
-        getNavigator().openMainActivity();
-    }
-    private void decideNextActivityWithLoginRequired() {
-        if (isUserLoggedIn()) {
-            getNavigator().openMainActivity();
-        } else {
-            getNavigator().openLoginActivity();
-        }
-    }
-
-    private boolean isUserLoggedIn() {
-        return getDataManager().isUserLoggedIn();
+    public void loadCategories() {
+        getCompositeDisposable().add(getDataManager()
+                .seedDatabaseCategories()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<ArrayList<AppyServiceCategory>>() {
+                    @Override
+                    public void accept(ArrayList<AppyServiceCategory> categories) throws Exception {
+                        AppLogger.d("loadCategories");
+                        if (categories != null) {
+                            ServiceOrderInfo.getInstance().setArrayAppyServiceCategory(categories);
+                            AppLogger.d("loadCategories:" + ServiceOrderInfo.getInstance().getArrayAppyServiceCategory().size());
+                            loadServices();
+                        }
+                    }
+                }));
     }
 
 }
