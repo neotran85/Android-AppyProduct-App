@@ -13,7 +13,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
-public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, BrowserViewModel> implements BrowserNavigator {
+public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, BrowserViewModel> {
 
     @Inject
     BrowserViewModel mBrowserViewModel;
@@ -32,26 +32,18 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, Browse
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mBrowserViewModel);
         mBrowserViewModel.setNavigator(this);
-
-        Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
-        String title = intent.getStringExtra("title");
+        mBrowserViewModel.setUp(getIntent());
         activeBackButton();
-        if(url != null && url.length() > 0) {
-            mBinder.webView.getSettings().setJavaScriptEnabled(true);
-            mBinder.webView.loadUrl(url);
-            mBrowserViewModel.setIsLoading(true);
-            mBinder.webView.setWebViewClient(new WebViewClient() {
-                public void onPageFinished(WebView view, String url) {
-                    mBrowserViewModel.setIsLoading(false);
-                }
-            });
-            if(title != null && title.length() > 0) {
-                setTitle(title);
-            } else {
-                setTitle("");
+    }
+
+    public void openLink(String url) {
+        mBinder.webView.getSettings().setJavaScriptEnabled(true);
+        mBinder.webView.loadUrl(url);
+        mBinder.webView.setWebViewClient(new WebViewClient() {
+            public void onPageFinished(WebView view, String url) {
+                mBrowserViewModel.setIsLoading(false);
             }
-        }
+        });
     }
 
     @Override
