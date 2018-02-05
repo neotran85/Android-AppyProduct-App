@@ -7,7 +7,6 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -20,7 +19,7 @@ public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator
     public ServicesStep5ViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-        orderId.set(ServiceOrderInfo.getInstance().getAppointmentId());
+        orderId.set(getDataManager().getServiceOrderUserInput().getAppointmentId());
     }
 
     public String getOrderId() {
@@ -45,7 +44,7 @@ public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator
                         if (response.getStatusCode().equals("200")) {
                             getNavigator().showCongratulationForm();
                             isOrderSuccess.set(true);
-                            ServiceOrderInfo.getInstance().clear();
+                            getDataManager().getServiceOrderUserInput().clear();
                         } else {
                             getNavigator().handleErrorService(null);
                             isOrderSuccess.set(false);

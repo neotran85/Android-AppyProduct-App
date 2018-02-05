@@ -12,7 +12,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -75,7 +75,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 + mBinder.etAreaLine2.getText().toString() + ", "
                 + mBinder.etCityTown.getText().toString() + " "
                 + postcode;
-        ServiceOrderInfo.getInstance().setAddress(address);
+        ServiceOrderUserInput.getInstance().setAddress(address);
     }
 
     @Override

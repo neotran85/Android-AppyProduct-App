@@ -4,6 +4,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
 
 import java.util.ArrayList;
@@ -44,4 +45,6 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
             return mType;
         }
     }
+
+    ServiceOrderUserInput getServiceOrderUserInput();
 }

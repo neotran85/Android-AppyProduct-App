@@ -36,6 +36,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
                 <WebView
+                    android:scrollbars="none"
                     android:id="@+id/webView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

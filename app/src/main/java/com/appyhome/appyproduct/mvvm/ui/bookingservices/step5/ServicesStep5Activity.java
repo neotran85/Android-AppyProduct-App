@@ -9,7 +9,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep5Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -35,7 +35,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.setViewModel(mServicesStep5ViewModel);
         mServicesStep5ViewModel.setNavigator(this);
         ViewUtils.setOnClickListener(this, mBinder.btnNext, mBinder.btnViewRequest);
-        mServicesStep5ViewModel.createAppointment(ServiceOrderInfo.getInstance().getAppointmentCreateRequest());
+        mServicesStep5ViewModel.createAppointment(ServiceOrderUserInput.getInstance().getAppointmentCreateRequest());
     }
 
     @Override

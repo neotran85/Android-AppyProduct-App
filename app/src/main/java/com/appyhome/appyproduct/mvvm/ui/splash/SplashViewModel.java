@@ -4,8 +4,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                     @Override
                     public void accept(ArrayList<AppyService> services) throws Exception {
                         if (services != null) {
-                            ServiceOrderInfo.getInstance().setArrayAppyService(services);
+                            ServiceOrderUserInput.getInstance().setArrayAppyService(services);
                             getNavigator().openMainActivity();
                         }
                     }
@@ -47,7 +46,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                     @Override
                     public void accept(ArrayList<AppyServiceCategory> categories) throws Exception {
                         if (categories != null) {
-                            ServiceOrderInfo.getInstance().setArrayAppyServiceCategory(categories);
+                            ServiceOrderUserInput.getInstance().setArrayAppyServiceCategory(categories);
                             loadServices();
                         }
                     }

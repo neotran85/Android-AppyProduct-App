@@ -12,9 +12,9 @@ import android.widget.CompoundButton;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -75,14 +75,14 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
             public void afterTextChanged(Editable s) {
                 String text = mBinder.etAdditionalInfo.getText().toString();
                 if (text != null && text.length() > 0) {
-                    ServiceOrderInfo.getInstance().setAdditionalInfo(text);
+                    mServicesStep2ViewModel.getDataManager().getServiceOrderUserInput().setAdditionalInfo(text);
                 }
             }
         });
         mBinder.cbFlexible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ServiceOrderInfo.getInstance().setFlexible(isChecked);
+                mServicesStep2ViewModel.getDataManager().getServiceOrderUserInput().setFlexible(isChecked);
             }
         });
 
@@ -120,7 +120,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     }
     public void viewReadOurSchedulingFAQ() {
         AlertManager.getInstance(this).openInformationBrowser("OUR SCHEDULING FAQ",
-                "file:///android_asset/html/scheduling_faq.html");
+                ApiUrlConfig.URL_SCHEDULING_FAQ);
     }
     private boolean checkIfDateTimeInputted() {
         String datetime1 = ViewUtils.getStringByTag(mBinder.btTimeslot1);
@@ -131,18 +131,14 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
 
     private void clickNextButton() {
         if (checkIfDateTimeInputted()) {
-            updateServiceOrderInfo();
+            mServicesStep2ViewModel.updateServiceOrderInfo(ViewUtils.getStringByTag(mBinder.btTimeslot1),
+                    ViewUtils.getStringByTag(mBinder.btTimeslot2),
+                    ViewUtils.getStringByTag(mBinder.btTimeslot3),
+                    mExtraServicesView.getSelectedStringValue());
             goToStep3();
         } else {
             AlertManager.getInstance(this).showLongToast(getString(R.string.step2_warning_date_time));
         }
-    }
-
-    private void updateServiceOrderInfo() {
-        ServiceOrderInfo.getInstance().setTimeSlot1(ViewUtils.getStringByTag(mBinder.btTimeslot1));
-        ServiceOrderInfo.getInstance().setTimeSlot2(ViewUtils.getStringByTag(mBinder.btTimeslot2));
-        ServiceOrderInfo.getInstance().setTimeSlot3(ViewUtils.getStringByTag(mBinder.btTimeslot3));
-        ServiceOrderInfo.getInstance().setExtraServices(mExtraServicesView.getSelectedStringValue());
     }
 
     private void openDatePicker() {

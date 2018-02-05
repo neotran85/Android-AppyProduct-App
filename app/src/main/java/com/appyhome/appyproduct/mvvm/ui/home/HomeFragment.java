@@ -14,7 +14,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -71,8 +71,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void openHomeCleaningBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
-            ServiceOrderInfo.getInstance().clear();
-            ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_HOME_CLEANING);
+            ServiceOrderUserInput.getInstance().clear();
+            ServiceOrderUserInput.getInstance().setUpData(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
             startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
         } else {
             openLoginActivity(getString(R.string.login_required_message) + " book a service.",
@@ -82,8 +82,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void openAirConServiceBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
-            ServiceOrderInfo.getInstance().clear();
-            ServiceOrderInfo.getInstance().setUpData(ServiceOrderInfo.SERVICE_AIR_CON_CLEANING);
+            ServiceOrderUserInput.getInstance().clear();
+            ServiceOrderUserInput.getInstance().setUpData(ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING);
             startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
         } else {
             openLoginActivity(getString(R.string.login_required_message) + " book a service.",

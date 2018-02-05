@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -26,7 +26,7 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
     public final ObservableField<String> numberOfAirCons = new ObservableField<>("1");
     public final ObservableField<Integer> isNumberOfAirConsVisible = new ObservableField<>(View.GONE);
 
-    private int mServiceType = ServiceOrderInfo.SERVICE_HOME_CLEANING;
+    private int mServiceType = ServiceOrderUserInput.SERVICE_HOME_CLEANING;
 
     public ServicesStep4ViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
@@ -34,16 +34,16 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
     }
 
     public void setUpData() {
-        setNumberOfAirCons("x " + ServiceOrderInfo.getInstance().getNumberOfAirCons() + "");
-        setServiceType(ServiceOrderInfo.getInstance().getType());
-        setAddress(ServiceOrderInfo.getInstance().getAddress());
-        setTimeSlot1(ServiceOrderInfo.getInstance().getTimeSlot1());
-        setTimeSlot2(ServiceOrderInfo.getInstance().getTimeSlot2());
-        setTimeSlot3(ServiceOrderInfo.getInstance().getTimeSlot3());
-        setTotalCost(ServiceOrderInfo.getInstance().getTotalCost());
-        setNameService(ServiceOrderInfo.getInstance().getServiceName());
-        setAdditionalDetail(ServiceOrderInfo.getInstance().getAdditionalInfo());
-        setAdditionalServices(ServiceOrderInfo.getInstance().getExtraServices());
+        setNumberOfAirCons("x " + ServiceOrderUserInput.getInstance().getNumberOfAirCons() + "");
+        setServiceType(ServiceOrderUserInput.getInstance().getType());
+        setAddress(ServiceOrderUserInput.getInstance().getAddress());
+        setTimeSlot1(ServiceOrderUserInput.getInstance().getTimeSlot1());
+        setTimeSlot2(ServiceOrderUserInput.getInstance().getTimeSlot2());
+        setTimeSlot3(ServiceOrderUserInput.getInstance().getTimeSlot3());
+        setTotalCost(ServiceOrderUserInput.getInstance().getTotalCost());
+        setNameService(ServiceOrderUserInput.getInstance().getServiceName());
+        setAdditionalDetail(ServiceOrderUserInput.getInstance().getAdditionalInfo());
+        setAdditionalServices(ServiceOrderUserInput.getInstance().getExtraServices());
 
         // fetch profile
         MyProfileViewModel profileViewModel = new MyProfileViewModel(getDataManager(), getSchedulerProvider());
@@ -52,7 +52,7 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
 
     public void setServiceType(int type) {
         mServiceType = type;
-        if (mServiceType == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING) {
+        if (mServiceType == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING) {
             isNumberOfAirConsVisible.set(View.VISIBLE);
         } else {
             isNumberOfAirConsVisible.set(View.GONE);

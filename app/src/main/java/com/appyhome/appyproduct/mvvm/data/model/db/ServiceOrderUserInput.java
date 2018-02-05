@@ -1,19 +1,17 @@
-package com.appyhome.appyproduct.mvvm.ui.bookingservices;
+package com.appyhome.appyproduct.mvvm.data.model.db;
 
 
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
-import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ServiceOrderInfo {
+public class ServiceOrderUserInput {
     public static final int SERVICE_HOME_CLEANING = 0;
     public static final int SERVICE_AIR_CON_CLEANING = 1;
-    private static ServiceOrderInfo mServiceOrderInfo;
+    private static ServiceOrderUserInput mServiceOrderUserInput;
     private int mType = SERVICE_HOME_CLEANING;
     private JSONObject mServiceInfo;
     private boolean mIsFlexible = false;
@@ -41,7 +39,7 @@ public class ServiceOrderInfo {
     private ArrayList<AppyService> mArrayAppyService;
     private ArrayList<AppyServiceCategory> mArrayAppyServiceCategory;
 
-    private ServiceOrderInfo() {
+    private ServiceOrderUserInput() {
     }
 
     public void clear() {
@@ -59,10 +57,10 @@ public class ServiceOrderInfo {
         mAddress = "";
     }
 
-    public static ServiceOrderInfo getInstance() {
-        if (mServiceOrderInfo == null)
-            mServiceOrderInfo = new ServiceOrderInfo();
-        return mServiceOrderInfo;
+    public static ServiceOrderUserInput getInstance() {
+        if (mServiceOrderUserInput == null)
+            mServiceOrderUserInput = new ServiceOrderUserInput();
+        return mServiceOrderUserInput;
     }
 
     public String getServiceName() {

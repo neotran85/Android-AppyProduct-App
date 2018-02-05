@@ -45,6 +45,7 @@ public class ApiUrlConfig {
             + "api/read/user";
 
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
+    public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";
 
     private ApiUrlConfig() {
         // This class is not publicly instantiable

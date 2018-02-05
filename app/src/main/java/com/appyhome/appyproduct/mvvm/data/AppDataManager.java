@@ -25,6 +25,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
@@ -325,5 +326,10 @@ public class AppDataManager implements DataManager {
                 return arrayList;
             }
         });
+    }
+
+    @Override
+    public ServiceOrderUserInput getServiceOrderUserInput() {
+        return ServiceOrderUserInput.getInstance();
     }
 }

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.bookingservices.ServiceOrderInfo;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator> {
@@ -19,11 +19,11 @@ public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator
     }
 
     public int isAirConCleaningVisible() {
-        return typeServices.get() == ServiceOrderInfo.SERVICE_AIR_CON_CLEANING ? View.VISIBLE : View.GONE;
+        return typeServices.get() == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING ? View.VISIBLE : View.GONE;
     }
 
     public int isHomeCleaningVisible() {
-        return typeServices.get() == ServiceOrderInfo.SERVICE_HOME_CLEANING ? View.VISIBLE : View.GONE;
+        return typeServices.get() == ServiceOrderUserInput.SERVICE_HOME_CLEANING ? View.VISIBLE : View.GONE;
     }
 
     public ObservableField<Integer> getTypeServices() {
