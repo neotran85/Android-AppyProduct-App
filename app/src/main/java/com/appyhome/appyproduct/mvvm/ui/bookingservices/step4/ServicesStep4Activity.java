@@ -10,7 +10,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep4Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesAdapter;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step5.ServicesStep5Activity;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
@@ -55,7 +54,8 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setUpListener() {
-        ViewUtils.setOnClickListener(this, mBinder.btnNext,
+        ViewUtils.setOnClickListener(this,
+                mBinder.btnNext,
                 mBinder.rlVisaPayment,
                 mBinder.rlBankPayment);
         mServicesStep4ViewModel.setNavigator(this);
@@ -64,7 +64,8 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     private void setUpData() {
         mServicesStep4ViewModel.setUpData();
         mServicesList = new ArrayList<>();
-        mServicesList.add(ServiceOrderUserInput.getInstance().getSelectedService());
+        mServicesList.add(mServicesStep4ViewModel.getDataManager()
+                .getServiceOrderUserInput().getSelectedService());
         mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
         mAppointmentId = setAppointmentId();
     }
@@ -72,7 +73,8 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     private String setAppointmentId() {
         String id = System.currentTimeMillis() + "";
-        ServiceOrderUserInput.getInstance().setAppointmentId(id);
+        mServicesStep4ViewModel.getDataManager()
+                .getServiceOrderUserInput().setAppointmentId(id);
         return id;
     }
 
@@ -123,7 +125,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public void openBankPaymentActivity() {
         PaymentManager.getInstance().startPaymentActivity(this,
-                ServiceOrderUserInput.getInstance().getTotalCost(), mAppointmentId,
+                mServicesStep4ViewModel.getTotalCost(), mAppointmentId,
                 mServicesStep4ViewModel.getPhoneNumberOfUser(),
                 mServicesStep4ViewModel.getEmailOfUser(),
                 mServicesStep4ViewModel.getNameOfUser());
@@ -140,7 +142,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
                     // PAYMENT SUCCESS
                     String txn_ID = result.getString("txn_ID");
                     AppLogger.d(txn_ID);
-                    ServiceOrderUserInput.getInstance().setTxn_ID(txn_ID);
+                    mServicesStep4ViewModel.getDataManager().getServiceOrderUserInput().setTxn_ID(txn_ID);
                     goToStep5();
                     AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
                 }

@@ -103,10 +103,6 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
         totalCost.set(cost);
     }
 
-    public String getTotalCost() {
-        return totalCost.get();
-    }
-
     public void setNameService(String value) {
         nameService.set(value);
     }
@@ -161,5 +157,9 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
 
     public String getPhoneNumberOfUser() {
         return getDataManager().getCurrentPhoneNumber();
+    }
+
+    public String getTotalCost() {
+        return getDataManager().getServiceOrderUserInput().getTotalCost();
     }
 }

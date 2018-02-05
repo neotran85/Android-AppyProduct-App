@@ -46,6 +46,11 @@ public class ApiUrlConfig {
 
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";
+    public static final String URL_AIR_CON_TYPE_INFO = "file:///android_asset/html/air_con_type_info.html";
+    public static final String URL_AIR_CON_SIZE_INFO = "file:///android_asset/html/air_con_size_info.html";
+    public static final String URL_CLEANING_SUPPLIES = "file:///android_asset/html/cleaning_supplies.html";
+    public static final String URL_TERMS_CONDITIONS = "http://appyhomeplus.com/terms-conditions";
+    public static final String URL_OUR_FAQ = "file:///android_asset/html/our_faq.html";
 
     private ApiUrlConfig() {
         // This class is not publicly instantiable

@@ -92,7 +92,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public ServiceAddress getServiceAddress() {
+    public ServiceAddress loadServiceAddress() {
         ServiceAddress address = new ServiceAddress();
         String json = mPrefs.getString(PREF_KEY_SERVICE_ADDRESS, "");
         address.fromJSONString(json);
@@ -100,9 +100,9 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public void setServiceAddress(ServiceAddress serviceAddress) {
-        AppLogger.d("setServiceAddress: " + serviceAddress.toJSONString());
-        AppLogger.d("setServiceAddress: " + serviceAddress.toString());
+    public void saveServiceAddress(ServiceAddress serviceAddress) {
+        AppLogger.d("saveServiceAddress: " + serviceAddress.toJSONString());
+        AppLogger.d("saveServiceAddress: " + serviceAddress.toString());
         mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS, serviceAddress.toJSONString()).apply();
     }
 

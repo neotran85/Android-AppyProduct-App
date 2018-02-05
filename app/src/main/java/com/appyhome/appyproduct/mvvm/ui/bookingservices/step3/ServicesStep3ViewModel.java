@@ -22,11 +22,11 @@ public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator
     }
 
     public ServiceAddress getServiceAddress() {
-        return getDataManager().getServiceAddress();
+        return getDataManager().loadServiceAddress();
     }
 
-    public void setServiceAddress(ServiceAddress serviceAddress) {
-        getDataManager().setServiceAddress(serviceAddress);
+    public void saveServiceAddress(ServiceAddress serviceAddress) {
+        getDataManager().saveServiceAddress(serviceAddress);
     }
 
     public void updateAddress() {

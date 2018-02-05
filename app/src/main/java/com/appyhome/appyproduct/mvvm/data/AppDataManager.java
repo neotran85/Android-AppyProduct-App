@@ -200,13 +200,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public ServiceAddress getServiceAddress() {
-        return mPreferencesHelper.getServiceAddress();
+    public ServiceAddress loadServiceAddress() {
+        return mPreferencesHelper.loadServiceAddress();
     }
 
     @Override
-    public void setServiceAddress(ServiceAddress address) {
-        mPreferencesHelper.setServiceAddress(address);
+    public void saveServiceAddress(ServiceAddress address) {
+        mPreferencesHelper.saveServiceAddress(address);
     }
 
     @Override

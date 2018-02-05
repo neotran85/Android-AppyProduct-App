@@ -17,9 +17,4 @@ public class ServicesStep1ActivityModule {
                                                          SchedulerProvider schedulerProvider) {
         return new ServicesStep1ViewModel(dataManager, schedulerProvider);
     }
-
-    @Provides
-    ViewModelProvider.Factory servicesStep1ViewModelProvider(ServicesStep1ViewModel viewModel) {
-        return new ViewModelProviderFactory<>(viewModel);
-    }
 }

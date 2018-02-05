@@ -29,9 +29,9 @@ public interface PreferencesHelper {
 
     void setAccessToken(String token);
 
-    ServiceAddress getServiceAddress();
+    ServiceAddress loadServiceAddress();
 
-    void setServiceAddress(ServiceAddress serviceAddress);
+    void saveServiceAddress(ServiceAddress serviceAddress);
 
     void logout();
 

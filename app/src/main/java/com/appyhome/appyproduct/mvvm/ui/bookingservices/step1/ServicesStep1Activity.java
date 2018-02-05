@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep1Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
@@ -45,7 +46,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mServicesStep1ViewModel);
         mServicesStep1ViewModel.setNavigator(this);
-        setTitle(ServiceOrderUserInput.getInstance().getServiceName());
+        setTitle(mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getServiceName());
         activeBackButton();
         setUpData();
         setUpListeners();
@@ -63,8 +64,8 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
 
 
     private void setUpData() {
-        mServicesStep1ViewModel.setTypeServices(ServiceOrderUserInput.getInstance().getType());
-        mServicesList = ServiceOrderUserInput.getInstance().getServices();
+        mServicesStep1ViewModel.setTypeServices(mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType());
+        mServicesList = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getServices();
         if (mServicesList != null && mServicesList.size() > 0) {
             mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
             mBinder.lvServices.setOnItemClickListener(this);
@@ -96,7 +97,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 } else AlertManager.getInstance(this).showLongToast("Please choose a service");
                 break;
             case R.id.btSeeDetailService:
-                if (ServiceOrderUserInput.getInstance().getSelectedService() != null)
+                if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService() != null)
                     viewDetailService();
                 else AlertManager.getInstance(this).showLongToast("Please choose a service");
                 break;
@@ -119,20 +120,20 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void updateServiceOrderInfo() {
-        if (ServiceOrderUserInput.getInstance().getType() == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING) {
+        if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType() == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING) {
             AirConOptionView airConView = new AirConOptionView(mBinder.llServiceAirConCleaning);
-            ServiceOrderUserInput.getInstance().setArrayAirConOpts(airConView.getResultStrings());
-            ServiceOrderUserInput.getInstance().setNumberOfAirCons(airConView.getNumberOfAirCons());
+            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayAirConOpts(airConView.getResultStrings());
+            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setNumberOfAirCons(airConView.getNumberOfAirCons());
         }
-        if (ServiceOrderUserInput.getInstance().getType() == ServiceOrderUserInput.SERVICE_HOME_CLEANING) {
+        if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType() == ServiceOrderUserInput.SERVICE_HOME_CLEANING) {
             HomeCleaningOptionView homeView = new HomeCleaningOptionView(mBinder.llServiceHomeCleaning);
-            ServiceOrderUserInput.getInstance().setArrayHomeCleaningOpts(homeView.getResultStrings());
+            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayHomeCleaningOpts(homeView.getResultStrings());
         }
-        ServiceOrderUserInput.getInstance().setServiceMain(mMainServiceView.getSelectedStringValue());
+        mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setServiceMain(mMainServiceView.getSelectedStringValue());
     }
 
     private boolean checkIfServiceSelected() {
-        AppyService data = ServiceOrderUserInput.getInstance().getSelectedService();
+        AppyService data = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService();
         if (data != null) {
             String nameService = data.name;
             return nameService != null && nameService.length() > 0;
@@ -174,7 +175,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void viewDetailService() {
-        AppyService data = ServiceOrderUserInput.getInstance().getSelectedService();
+        AppyService data = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService();
         if (data != null) {
             Intent intent = TextDetailActivity.getStartIntent(this);
             intent.putExtra("title", data.name);
@@ -191,7 +192,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         if (view != null) {
             mCurrentServiceView = view;
             mSelectedServiceIndex = position;
-            ServiceOrderUserInput.getInstance().setSelectedService(mServicesList.get(position));
+            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setSelectedService(mServicesList.get(position));
             view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
         }
     }
@@ -199,28 +200,28 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public void viewOurFAQ() {
         AlertManager.getInstance(this).openInformationBrowser("Booking / Ordering FAQ",
-                "file:///android_asset/html/our_faq.html");
+                ApiUrlConfig.URL_OUR_FAQ);
     }
 
     @Override
     public void viewOurTANDC() {
         AlertManager.getInstance(this).openInformationBrowser("OUR BOOKING T&C",
-                "http://appyhomeplus.com/terms-conditions/");
+                ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
 
     @Override
     public void viewSuppliesMoreInformation() {
         AlertManager.getInstance(this).openInformationBrowser("CLEANING SUPPLIES",
-                "file:///android_asset/html/cleaning_supplies.html");
+                ApiUrlConfig.URL_CLEANING_SUPPLIES);
     }
 
     public void viewAirConTypeMoreInformation() {
         AlertManager.getInstance(this).openInformationBrowser("Aircon type of service",
-                "file:///android_asset/html/air_con_type_info.html");
+                ApiUrlConfig.URL_AIR_CON_TYPE_INFO);
     }
 
     public void viewAirConSizeMoreInformation() {
         AlertManager.getInstance(this).openInformationBrowser("Aircon Size",
-                "file:///android_asset/html/air_con_size_info.html");
+                ApiUrlConfig.URL_AIR_CON_SIZE_INFO);
     }
 }

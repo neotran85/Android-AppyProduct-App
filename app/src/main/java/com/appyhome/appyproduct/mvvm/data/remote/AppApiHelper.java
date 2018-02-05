@@ -31,7 +31,6 @@ import io.reactivex.Single;
 public class AppApiHelper implements ApiHelper {
 
     private ApiHeader mApiHeader;
-    private static final String KEY_ID_NUMBER = "id_number";
 
     @Inject
     public AppApiHelper(ApiHeader apiHeader) {
