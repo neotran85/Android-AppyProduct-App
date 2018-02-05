@@ -79,8 +79,10 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 mBinder.btOurFAQ,
                 mBinder.btOurTANDC,
                 mBinder.llServiceHomeCleaning,
-                mBinder.llServiceAirConCleaning,
                 mBinder.llServiceAirConCleaning);
+        ViewUtils.setOnClickListener(mBinder.llServiceAirConCleaning, this, R.id.ibAirConSizeMoreInfo,
+                R.id.ibAirConTypeMoreInfo);
+        ViewUtils.setOnClickListener(mBinder.llServiceHomeCleaning, this, R.id.ibSuppliesMoreInfo);
     }
 
     @Override

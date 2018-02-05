@@ -39,6 +39,7 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, Browse
     public void openLink(String url) {
         mBinder.webView.getSettings().setJavaScriptEnabled(true);
         mBinder.webView.loadUrl(url);
+        mBinder.webView.setScrollbarFadingEnabled(true);
         mBinder.webView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
                 if (mBrowserViewModel != null)
