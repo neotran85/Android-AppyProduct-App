@@ -71,8 +71,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void openHomeCleaningBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
-            ServiceOrderUserInput.getInstance().clear();
-            ServiceOrderUserInput.getInstance().setUpData(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
+            mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
+            mHomeViewModel.getDataManager().getServiceOrderUserInput().setUpData(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
             startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
         } else {
             openLoginActivity(getString(R.string.login_required_message) + " book a service.",
@@ -82,8 +82,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void openAirConServiceBooking() {
         if (mHomeViewModel.isUserLoggedIn()) {
-            ServiceOrderUserInput.getInstance().clear();
-            ServiceOrderUserInput.getInstance().setUpData(ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING);
+            mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
+            mHomeViewModel.getDataManager().getServiceOrderUserInput().setUpData(ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING);
             startActivity(ServicesStep1Activity.getStartIntent(this.getContext()));
         } else {
             openLoginActivity(getString(R.string.login_required_message) + " book a service.",

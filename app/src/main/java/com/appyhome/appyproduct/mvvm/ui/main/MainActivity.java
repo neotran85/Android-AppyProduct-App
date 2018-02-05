@@ -16,7 +16,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
@@ -68,7 +67,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUp();
-        AppLogger.d("loadServices:" + ServiceOrderUserInput.getInstance().getArrayAppyService().size());
     }
 
     @Override
