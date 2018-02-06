@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--rating dialog-->
+    <string name="rate_us">Rate Us</string>
+
+    <!--play store-->
+    <string name="app_google_play_store_link">"https://play.google.com/store/apps/details?id="</string>
+    <string name="app_market_link">"market://details?id="</string>
+
+    <!--button-->
+    <string name="later">Later</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+
+    <!--feed-->
+    <string name="title">My Feed</string>
+    <string name="open_source">Open Source</string>
+    <string name="blog">Blog</string>
+
+    <!--empty state-->
+    <string name="empty_screen">We do not have anything\nhere right now.</string>
+    <string name="please_retry">Please Retry</string>
+    <string name="retry">Retry</string>
+
+    <!--Categories-->
+
+    <string name="feature_more"><![CDATA[More >]]></string>
+    <string name="message_loading">Please wait for loading...</string>
+    <string name="booking_service_read_tandt"><![CDATA[READ OUR BOOKING T&C]]></string>
+    <string name="booking_service_read_scheduling_FAQ"><![CDATA[READ OUR SCHEDULING FAQ]]></string>
+
+    <!--Payment-->
+    <string name="payment_success">Payment success</string>
+    <string name="payment_error_something">Payment error. Please try again later.</string>
+    <string name="payment_advice">Please do the payment before completing the order</string>
+
+    <!-- Services -->
+    <string name="awaiting_schedule_confirmation">AWAITING SCHEDULE CONFIRMATION</string>
+    <string name="pending_execution">PENDING_EXECUTION</string>
+    <string name="closed_status">COMPLETED</string>
+    <string name="mark_order_completed">Thank you for your feedback.</string>
+
+    <!--Other-->
+    <string name="step2_warning_date_time">Please select the date and time for an appointment.</string>
+    <string name="step3_warning_location">Please fill your address.</string>
+    <string name="login_required_message">Please login to</string>
+
+
+</resources>

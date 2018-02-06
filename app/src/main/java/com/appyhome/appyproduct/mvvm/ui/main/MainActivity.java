@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -22,7 +21,6 @@ import com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragment;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.crashlytics.android.Crashlytics;
 
@@ -88,13 +86,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void setUp() {
-        String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
         ViewUtils.setOnClickListener(this, mBinder.rlHome, mBinder.rlMyProfile,
                 mBinder.rlNotification, mBinder.rlRequest, mBinder.rlWishList);
-
         currentTab = mBinder.rlHome;
         showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-
         Intent intent = getIntent();
         int tab = intent.getIntExtra(TAB, -1);
         switch (tab) {

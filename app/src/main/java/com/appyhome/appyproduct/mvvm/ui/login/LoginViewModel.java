@@ -9,8 +9,9 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import io.reactivex.functions.Consumer;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
-
     private String mPhoneNumber = "";
+    private String mPassword = "";
+    private int mTryCounter = 0;
 
     public LoginViewModel(DataManager dataManager,
                           SchedulerProvider schedulerProvider) {
@@ -24,6 +25,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     public void login(String phone, String password) {
         setIsLoading(true);
         mPhoneNumber = phone;
+        mPassword = password;
         getCompositeDisposable().add(getDataManager()
                 .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
@@ -62,13 +64,19 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 getNavigator().doAfterLoginSucceeded();
             }
         } else {
-            getNavigator().showErrorOthers();
+            // Failed
+            if (mTryCounter == 0) {
+                login("+" + mPhoneNumber, mPassword);
+            } else
+                getNavigator().showErrorOthers();
+            mTryCounter++;
         }
     }
 
     public void setAccessToken(String token) {
         getDataManager().setAccessToken(token);
     }
+
     public void setPhoneNumber(String phoneNumber) {
         getDataManager().setCurrentPhoneNumber(phoneNumber);
     }

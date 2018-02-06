@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.TextUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -74,7 +75,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         }
 
         Intent data = getIntent();
-        if(data.hasExtra("message")) {
+        if (data.hasExtra("message")) {
             String message = data.getStringExtra("message");
             showError(message);
         }
@@ -114,8 +115,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_SIGN_UP:
-                if(resultCode == RESULT_OK) {
-                   doAfterLoginSucceeded();
+                if (resultCode == RESULT_OK) {
+                    doAfterLoginSucceeded();
                 }
                 break;
         }
@@ -142,9 +143,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         if (!NetworkUtils.isNetworkConnected(this)) {
             return;
         }
-        String phoneNumber = mBinder.etPhoneNumber.getText().toString();
-        String password = mBinder.etPassword.getText().toString();
-        if (phoneNumber == null || phoneNumber.length() == 0) {
+        String phoneNumber = TextUtils.getString(mBinder.etPhoneNumber.getText().toString());
+        phoneNumber = "60" + phoneNumber;
+        String password = TextUtils.getString(mBinder.etPassword.getText().toString());
+
+        if (phoneNumber.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
             showTextInputError(mBinder.etPhoneNumber);
             return;
@@ -154,7 +157,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             return;
         }
 
-        if (password == null || password.length() == 0) {
+        if (password.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
             showTextInputError(mBinder.etPassword);
             return;

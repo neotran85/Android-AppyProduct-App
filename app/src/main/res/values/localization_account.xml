@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="please_note_all_values_are_required">Please note all values are required</string>
+    <string name="enter_a_valid_phone_number">Enter a valid phone number</string>
+    <string name="type_an_account_password">Type an account password</string>
+    <string name="retype_the_password">Retype the password</string>
+    <string name="next">Next</string>
+    <string name="terms_of_usage">Terms Of Usage</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="sign_up">Sign up</string>
+
+    <!--My Profile-->
+    <string name="my_profile_hint_old_password">Type your old password</string>
+    <string name="my_profile_hint_new_password">Type your new password</string>
+    <string name="my_profile_hint_retyped_password">Retype your new password</string>
+    <string name="my_profile_hint_phone">Type a new phone number</string>
+    <string name="my_profile_hint_email">Type a new email address</string>
+    <string name="my_profile_hint_address">Type a new address</string>
+    <string name="my_profile_hint_address_city">Town / City</string>
+    <string name="my_profile_hint_address_state">State</string>
+    <string name="my_profile_hint_address_code">Post Code</string>
+    <string name="my_profile_change_password">Change password</string>
+    <string name="my_profile_change_phone">Change phone number</string>
+    <string name="my_profile_change_email">Change email address</string>
+    <string name="my_profile_change_address">Change your address</string>
+
+    <!--Login-->
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="forgot_password"><u>Forgot Password?</u></string>
+
+    <!--Login Validation-->
+    <string name="login_error_missing_phone">Please input your phone number.</string>
+    <string name="login_error_invalid_password">Password must have at least 6 characters.</string>
+    <string name="login_error_invalid_phone">Your phone number is not valid.</string>
+    <string name="login_error_internal_server">We are sorry. The server encountered an internal error. Please try again later.</string>
+    <string name="login_error">Your phone number and password are not correct. Please check them again.</string>
+    <string name="login_success">Login success.</string>
+
+    <!--Register Validation-->
+    <string name="register_error_missing_first_name">Your first name is missing. Please input it.</string>
+    <string name="register_error_missing_last_name">Your last name is missing. Please input it.</string>
+    <string name="register_error_missing_email_address">Your email address is missing. Please input it.</string>
+    <string name="register_error_missing_phone">Your phone number is missing. Please input it.</string>
+    <string name="register_error_missing_password">Your password is missing. Please input it.</string>
+    <string name="register_error_missing_retyped_password">Your retyped password is missing. Please input it.</string>
+    <string name="register_error_password_not_matched">Your passwords do not match. Please check again.</string>
+    <string name="register_error_invalid_password">Password must have at least 6 characters.</string>
+    <string name="register_error_invalid_email">Your email address is not valid.</string>
+    <string name="register_error_invalid_phone">Your phone number is not valid.</string>
+    <string name="register_error_phone_duplicated">Your phone number was used before. Please enter a new phone number.</string>
+    <string name="register_error_email_duplicated">Your email address was used before. Please enter a new email address.</string>
+    <string name="register_error_something">Something error. Please try again later.</string>
+    <string name="register_success_logged">Successfully registered and logged in</string>
+    <string name="password_hint">Password</string>
+    <string name="mobile_no">Enter your phone number</string>
+    <string name="please_fill_this_form_to_login">Please fill this form to login.</string>
+    <string name="plus_60">(+60)</string>
+</resources>

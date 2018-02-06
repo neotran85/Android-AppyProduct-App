@@ -70,7 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Please all values are required."
+                        android:text="@string/please_note_all_values_are_required"
                         android:textColor="@color/red_dark"
                         android:textSize="12sp" />
 
@@ -161,7 +161,7 @@
                             android:background="@drawable/input_text_rounded_bg"
                             android:cursorVisible="true"
                             android:gravity="center_vertical"
-                            android:hint="Enter a valid phone number"
+                            android:hint="@string/enter_a_valid_phone_number"
                             android:inputType="phone"
                             android:maxLength="50"
                             android:paddingBottom="10dp"
@@ -187,7 +187,7 @@
                             android:background="@drawable/input_text_rounded_bg"
                             android:cursorVisible="true"
                             android:gravity="center_vertical"
-                            android:hint="Type an account password"
+                            android:hint="@string/type_an_account_password"
                             android:inputType="textPassword"
                             android:maxLength="50"
                             android:paddingBottom="10dp"
@@ -213,7 +213,7 @@
                             android:background="@drawable/input_text_rounded_bg"
                             android:cursorVisible="true"
                             android:gravity="center_vertical"
-                            android:hint="Retype the password"
+                            android:hint="@string/retype_the_password"
                             android:inputType="textPassword"
                             android:maxLength="50"
                             android:paddingBottom="10dp"
@@ -237,7 +237,7 @@
                         android:gravity="center"
                         android:onClick="@{() -> viewModel.onServerRegisterClick()}"
                         android:shadowRadius="0"
-                        android:text="Next"
+                        android:text="@string/next"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -267,10 +267,10 @@
                                 android:id="@+id/btTermsOfUsage"
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
-                                android:layout_height="16dp"
+                                android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:gravity="center"
-                                android:text="Terms Of Usage"
+                                android:text="@string/terms_of_usage"
                                 android:textColor="@color/light_blue"
                                 android:textSize="11sp" />
 
@@ -286,10 +286,10 @@
                                 android:id="@+id/btPrivacyPolicy"
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
-                                android:layout_height="16dp"
+                                android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:gravity="center"
-                                android:text="Privacy Policy"
+                                android:text="@string/privacy_policy"
                                 android:textColor="@color/light_blue"
                                 android:textSize="11sp" />
                         </LinearLayout>
