@@ -13,5 +13,7 @@ public interface LoginNavigator {
 
     void showErrorOthers();
 
+    void showSignUpDialog();
+
     void showSuccessLogin();
 }

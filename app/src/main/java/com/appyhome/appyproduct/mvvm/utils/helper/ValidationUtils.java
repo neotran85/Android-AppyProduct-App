@@ -18,4 +18,15 @@ public final class ValidationUtils {
     public static boolean isPasswordValid(String password) {
         return (password != null && password.length() >= 6);
     }
+
+    public static String correctNumberPhone(String phoneNumber, String countryNumber) {
+        if(phoneNumber != null && phoneNumber.length() > 0) {
+            String str = phoneNumber.substring(0,1);
+            if(str.equals("0")) {
+                phoneNumber = phoneNumber.substring(1, phoneNumber.length());
+            }
+        }
+        phoneNumber = countryNumber + phoneNumber;
+        return phoneNumber;
+    }
 }

@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.login;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -144,17 +145,18 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             return;
         }
         String phoneNumber = TextUtils.getString(mBinder.etPhoneNumber.getText().toString());
-        phoneNumber = "60" + phoneNumber;
         String password = TextUtils.getString(mBinder.etPassword.getText().toString());
-
         if (phoneNumber.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
             showTextInputError(mBinder.etPhoneNumber);
             return;
-        } else if (!ValidationUtils.isPhoneNumberValid(phoneNumber)) {
-            showError(getString(R.string.login_error_invalid_phone));
-            showTextInputError(mBinder.etPhoneNumber);
-            return;
+        } else {
+            phoneNumber = ValidationUtils.correctNumberPhone(phoneNumber, "60");
+            if (!ValidationUtils.isPhoneNumberValid(phoneNumber)) {
+                showError(getString(R.string.login_error_invalid_phone));
+                showTextInputError(mBinder.etPhoneNumber);
+                return;
+            }
         }
 
         if (password.length() == 0) {
@@ -206,6 +208,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
+    }
+
+    @Override
+    public void showSignUpDialog() {
+        AlertManager.getInstance(this).showDialog(getString(R.string.title_login_error), getString(R.string.suggestion_sign_up), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                openSignUpActivity();
+            }
+        });
     }
 
     @Override

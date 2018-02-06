@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.utils.manager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ public class AlertManager {
     private Toast mToast;
     private Context mContext;
     private ProgressDialog mProgressDialog;
-    private AlertDialog mComingSoonDialog;
+    private AlertDialog mAlertDialog;
 
     private AlertManager(Context context) {
         mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
@@ -60,7 +61,7 @@ public class AlertManager {
     }
 
     public void showComingSoonDialog() {
-        if(mComingSoonDialog == null) {
+        if(mAlertDialog == null) {
             final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
             LayoutInflater li = LayoutInflater.from(mContext);
             View theView = li.inflate(R.layout.dialog_coming_soon, null);
@@ -68,15 +69,34 @@ public class AlertManager {
             buttonClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mComingSoonDialog != null) {
-                        mComingSoonDialog.dismiss();
+                    if(mAlertDialog != null) {
+                        mAlertDialog.dismiss();
                     }
                 }
             });
             dialog.setView(theView);
-            mComingSoonDialog = dialog.show();
+            mAlertDialog = dialog.show();
         } else {
-            mComingSoonDialog.show();
+            mAlertDialog.show();
+        }
+    }
+
+    public void showDialog(String title, String detailText, DialogInterface.OnClickListener positiveListener) {
+        if(mAlertDialog == null) {
+            final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+            dialogBuilder.setTitle(title);
+            dialogBuilder.setMessage(detailText);
+            dialogBuilder.setPositiveButton("YES", positiveListener);
+            dialogBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(mAlertDialog != null)
+                        mAlertDialog.dismiss();
+                }
+            });
+            mAlertDialog = dialogBuilder.show();
+        } else {
+            mAlertDialog.show();
         }
     }
 

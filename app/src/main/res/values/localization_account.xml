@@ -35,7 +35,7 @@
     <string name="login_error_invalid_password">Password must have at least 6 characters.</string>
     <string name="login_error_invalid_phone">Your phone number is not valid.</string>
     <string name="login_error_internal_server">We are sorry. The server encountered an internal error. Please try again later.</string>
-    <string name="login_error">Your phone number and password are not correct. Please check them again.</string>
+    <string name="login_error">Your account and/or password is incorrect. Please try again.</string>
     <string name="login_success">Login success.</string>
 
     <!--Register Validation-->
@@ -57,4 +57,6 @@
     <string name="mobile_no">Enter your phone number</string>
     <string name="please_fill_this_form_to_login">Please fill this form to login.</string>
     <string name="plus_60">(+60)</string>
+    <string name="suggestion_sign_up">This account is not sign up with us. Do you want to sign up now?</string>
+    <string name="title_login_error">Login Error</string>
 </resources>

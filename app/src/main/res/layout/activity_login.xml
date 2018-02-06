@@ -72,6 +72,8 @@
                             android:textColor="@color/gray"
                             android:textSize="14sp"
                             android:text="@string/plus_60"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <android.support.design.widget.TextInputEditText
@@ -179,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}">
-            <include android:visibility="gone" layout="@layout/view_preloading"></include>
+            <include layout="@layout/view_preloading"></include>
         </LinearLayout>
 
     </FrameLayout>

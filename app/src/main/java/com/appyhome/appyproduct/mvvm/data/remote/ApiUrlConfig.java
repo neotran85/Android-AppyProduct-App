@@ -51,6 +51,7 @@ public class ApiUrlConfig {
     public static final String URL_CLEANING_SUPPLIES = "file:///android_asset/html/cleaning_supplies.html";
     public static final String URL_TERMS_CONDITIONS = "http://appyhomeplus.com/terms-conditions";
     public static final String URL_OUR_FAQ = "file:///android_asset/html/our_faq.html";
+    public static final String URL_PRIVACY_POLICY = "http://appyhomeplus.com/privacy-policy/";
 
     private ApiUrlConfig() {
         // This class is not publicly instantiable

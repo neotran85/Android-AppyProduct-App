@@ -11,9 +11,11 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.TextUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -121,8 +123,9 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
             return;
         }
 
-        String phoneNumber = mBinder.etNumberPhone.getText().toString();
-        if (phoneNumber == null || phoneNumber.length() == 0) {
+        String phoneNumber = TextUtils.getString(mBinder.etNumberPhone.getText().toString());
+        phoneNumber = ValidationUtils.correctNumberPhone(phoneNumber, "60");
+        if (phoneNumber.length() == 0) {
             showError(getString(R.string.register_error_missing_phone));
             showTextInputError(mBinder.etNumberPhone);
             return;
@@ -225,11 +228,11 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     public void openPrivacyPolicy() {
         AlertManager.getInstance(this).openInformationBrowser("Privacy Policy",
-                "http://appyhomeplus.com/privacy-policy/");
+                ApiUrlConfig.URL_PRIVACY_POLICY);
     }
     @Override
     public void openTermsOfUsage() {
         AlertManager.getInstance(this).openInformationBrowser("Terms & Conditions",
-                "http://appyhomeplus.com/terms-conditions/");
+                ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
 }

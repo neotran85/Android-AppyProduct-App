@@ -67,8 +67,12 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
             // Failed
             if (mTryCounter == 0) {
                 login("+" + mPhoneNumber, mPassword);
-            } else
+            } else {
+                // Account is exist
                 getNavigator().showErrorOthers();
+                // Account is not exist
+                getNavigator().showSignUpDialog();
+            }
             mTryCounter++;
         }
     }
