@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.RadioGroup;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep1Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step2.ServicesStep2Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
 import com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailActivity;
@@ -34,6 +35,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     private View mCurrentServiceView;
     private int mSelectedServiceIndex;
     private ItemsSelectionView mMainServiceView;
+    private String filteredTags = "yes_provided, standard";
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep1Activity.class);
@@ -60,18 +62,45 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         View viewElectric = mBinder.llServiceMain.findViewById(R.id.llElectrical);
         mMainServiceView = new ItemsSelectionView(true, viewCleaning, viewAirCon, viewPlumbing, viewElectric);
         mMainServiceView.setOnClickListener(this);
+        RadioGroup rgHomeCleaning = mBinder.llServiceHomeCleaning.findViewById(R.id.rgSupplies);
+        rgHomeCleaning.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbYes) {
+                    filteredTags = "yes_provided";
+                } else {
+                    filteredTags = "no_provided";
+                }
+                updateAdapterByFilter();
+            }
+        });
+        RadioGroup rgAirConService = mBinder.llServiceAirConCleaning.findViewById(R.id.rgTypeService);
+        rgAirConService.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbService1) {
+                    filteredTags = "standard";
+                } else {
+                    filteredTags = "chemical";
+                }
+                updateAdapterByFilter();
+            }
+        });
     }
 
-
-    private void setUpData() {
-        mServicesStep1ViewModel.setTypeServices(mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType());
-        mServicesList = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getServices();
+    private void updateAdapterByFilter() {
+        mServicesList = mServicesStep1ViewModel.getFilteredServices(filteredTags);
         if (mServicesList != null && mServicesList.size() > 0) {
             mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
             mBinder.lvServices.setOnItemClickListener(this);
         } else {
             mBinder.lvServices.setVisibility(View.GONE);
         }
+    }
+
+    private void setUpData() {
+        mServicesStep1ViewModel.setTypeServices(mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType());
+        updateAdapterByFilter();
     }
 
     private void setUpListeners() {

@@ -22,6 +22,11 @@ public class AppyService {
     public String category;
 
     @Expose
+    @SerializedName("tags")
+    @ColumnInfo(name = "tags")
+    public String tags;
+
+    @Expose
     @SerializedName("price")
     @ColumnInfo(name = "price")
     public String price;
