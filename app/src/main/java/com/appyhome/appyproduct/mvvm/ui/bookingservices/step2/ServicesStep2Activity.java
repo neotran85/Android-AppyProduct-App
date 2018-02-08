@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Bin
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3Activity;
 import com.appyhome.appyproduct.mvvm.ui.custom.ItemsSelectionView;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -86,10 +87,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
             }
         });
 
-        mBinder.btTimeslot1.setOnClickListener(this);
-        mBinder.btTimeslot2.setOnClickListener(this);
-        mBinder.btTimeslot3.setOnClickListener(this);
-        mBinder.rlReadOurSchedulingFAQ.setOnClickListener(this);
+        ViewUtils.setOnClickListener(this, mBinder.btTimeslot1,
+                mBinder.btTimeslot2, mBinder.btTimeslot3, mBinder.rlReadOurSchedulingFAQ);
     }
 
     private void setUpMultipleExtraServices() {
@@ -118,10 +117,12 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                 break;
         }
     }
+
     public void viewReadOurSchedulingFAQ() {
         AlertManager.getInstance(this).openInformationBrowser("OUR SCHEDULING FAQ",
                 ApiUrlConfig.URL_SCHEDULING_FAQ);
     }
+
     private boolean checkIfDateTimeInputted() {
         String datetime1 = ViewUtils.getStringByTag(mBinder.btTimeslot1);
         String datetime2 = ViewUtils.getStringByTag(mBinder.btTimeslot2);
@@ -158,15 +159,21 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         AlertManager.getInstance(this).showLongToast("Please select the exact time.");
     }
 
-    private void openTimePicker(Calendar current) {
+    private void openTimePicker(Calendar selected) {
         TimePickerDialog timePicker = TimePickerDialog.newInstance(
                 this,
-                current.get(Calendar.HOUR),
-                current.get(Calendar.MINUTE),
+                selected.get(Calendar.HOUR),
+                selected.get(Calendar.MINUTE),
                 true
         );
-        timePicker.setMinTime(SERVICE_TIME_START, 0, 0);
-        timePicker.setMaxTime(SERVICE_TIME_END, 0, 0);
+        Calendar today = Calendar.getInstance();
+        if (DataUtils.isTheSameDate(selected, today)) {
+            timePicker.setMinTime(today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), 0);
+            timePicker.setMaxTime(SERVICE_TIME_END, 0, 0);
+        } else {
+            timePicker.setMinTime(SERVICE_TIME_START, 0, 0);
+            timePicker.setMaxTime(SERVICE_TIME_END, 0, 0);
+        }
         timePicker.setOnCancelListener(this);
         timePicker.show(getFragmentManager(), "Timepickerdialog");
     }
