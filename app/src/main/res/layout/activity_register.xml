@@ -238,14 +238,19 @@
                             android:textSize="14sp" />
 
                     </LinearLayout>
-
+                    <CheckBox
+                        android:id="@+id/cbEmailNotification"
+                        android:layout_marginTop="16dp"
+                        android:text="I would like to receive exclusive offers and promotions by email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <Button
                         android:id="@+id/btnNext"
                         style="?android:attr/borderlessButtonStyle"
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:background="@drawable/button_rounded_bg_orange_click"
                         android:gravity="center"
                         android:onClick="@{() -> viewModel.onServerRegisterClick()}"
@@ -271,7 +276,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="16dp"
+                            android:layout_height="18dp"
                             android:gravity="center"
                             android:orientation="horizontal">
 

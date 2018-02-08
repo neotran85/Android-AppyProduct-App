@@ -108,6 +108,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openSignUpActivity() {
         Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
+        intent.putExtra("phone", mBinder.etPhoneNumber.getText().toString());
         startActivityForResult(intent, REQUEST_SIGN_UP);
     }
 

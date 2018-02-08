@@ -2,4 +2,7 @@
     <string name="app_name">AppyHome</string>
     <!--Map & Location-->
     <string name="map_api_key">AIzaSyDlkZrhwwkWPxzhRcJIN0Q3RAFIJLLfKl0</string>
+    <!--play store-->
+    <string name="app_google_play_store_link">"https://play.google.com/store/apps/details?id="</string>
+    <string name="app_market_link">"market://details?id="</string>
 </resources>

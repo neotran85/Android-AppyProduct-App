@@ -72,6 +72,9 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
                 }
             });
         }
+        if(getIntent().hasExtra("phone")) {
+            mBinder.etNumberPhone.setText(getIntent().getStringExtra("phone"));
+        }
     }
 
     @Override

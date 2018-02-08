@@ -26,6 +26,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         setIsLoading(true);
         mPhoneNumber = phone;
         mPassword = password;
+        mTryCounter = 0;
         getCompositeDisposable().add(getDataManager()
                 .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
@@ -69,9 +70,14 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 login("+" + mPhoneNumber, mPassword);
             } else {
                 // Account is exist
-                getNavigator().showErrorOthers();
-                // Account is not exist
-                getNavigator().showSignUpDialog();
+                if(message != null) {
+                    if(message.equals("invalid_phone_number"))
+                        // Account is not exist
+                        getNavigator().showSignUpDialog();
+                    else
+                        // Phone number is invalid
+                        getNavigator().showErrorOthers();
+                }
             }
             mTryCounter++;
         }
