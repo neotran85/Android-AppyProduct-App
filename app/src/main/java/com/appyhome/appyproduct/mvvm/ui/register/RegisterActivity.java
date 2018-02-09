@@ -198,6 +198,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     public void login() {
         // Do login after sign up succeeded
         String phoneNumber = mBinder.etNumberPhone.getText().toString();
+        phoneNumber = ValidationUtils.correctNumberPhone(phoneNumber, "60");
         String password = mBinder.etAccountPassword.getText().toString();
         mRegisterViewModel.doUserLogin(phoneNumber, password);
     }

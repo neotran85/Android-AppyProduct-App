@@ -38,4 +38,7 @@ public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator
         city.set(address.city);
         code.set(address.code);
     }
+    public boolean isUserLoggedIn() {
+        return getDataManager().isUserLoggedIn();
+    }
 }

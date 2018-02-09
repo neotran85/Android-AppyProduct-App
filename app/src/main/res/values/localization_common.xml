@@ -40,6 +40,7 @@
     <string name="step2_warning_date_time">Please select the date and time for an appointment.</string>
     <string name="step3_warning_location">Please fill your address.</string>
     <string name="login_required_message">Please login to</string>
+    <string name="login_to_book_service">complete booking the service.</string>
 
 
 </resources>

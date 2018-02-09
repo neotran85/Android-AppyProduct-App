@@ -13,6 +13,7 @@ import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
+import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
@@ -31,6 +32,9 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
 
     ActivityServicesBookingStep3Binding mBinder;
 
+
+    public final static int REQUEST_LOGIN_FOR_BOOKING = 1113;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep3Activity.class);
         return intent;
@@ -47,7 +51,6 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         activeBackButton();
         mServicesStep3ViewModel.updateAddress();
     }
-
 
 
     public void saveAddress(boolean isSaved) {
@@ -88,6 +91,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 break;
         }
     }
+
     private boolean checkIfLocationInputted() {
         return mBinder.etUnitNumberHouse.getText().length() > 0 ||
                 mBinder.etStreet.getText().length() > 0 ||
@@ -98,7 +102,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void clickNextButton() {
-        if(checkIfLocationInputted()) {
+        if (checkIfLocationInputted()) {
             setAddress();
             saveAddress(mBinder.cbSaveAddress.isChecked());
             goToStep4();
@@ -113,31 +117,38 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MapManager.PLACE_PICKER_REQUEST:
-                    if (data != null) {
-                        Place place = PlacePicker.getPlace(this, data);
-                        if (place != null) {
-                            Geocoder geocoder;
-                            List<Address> addresses;
-                            geocoder = new Geocoder(this, Locale.getDefault());
-                            try {
-                                addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
-                                String state = addresses.get(0).getAdminArea();
-                                String country = addresses.get(0).getCountryName();
-                                String city = addresses.get(0).getLocality();
-                                mBinder.etCityTown.setText(state + ", " + country);
-                                mBinder.etPostCode.setText(addresses.get(0).getPostalCode());
-                                mBinder.etUnitNumberHouse.setText(place.getName());
-                                mBinder.etStreet.setText(place.getAddress());
-                                mBinder.etAreaLine1.setText(city);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
+                    processDataAfterLocationSelected(data);
+                    break;
+                case REQUEST_LOGIN_FOR_BOOKING:
+                    goToStep4();
+                    break;
             }
         }
     }
 
+    private void processDataAfterLocationSelected(Intent data) {
+        if (data != null) {
+            Place place = PlacePicker.getPlace(this, data);
+            if (place != null) {
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(this, Locale.getDefault());
+                try {
+                    addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                    String state = addresses.get(0).getAdminArea();
+                    String country = addresses.get(0).getCountryName();
+                    String city = addresses.get(0).getLocality();
+                    mBinder.etCityTown.setText(state + ", " + country);
+                    mBinder.etPostCode.setText(addresses.get(0).getPostalCode());
+                    mBinder.etUnitNumberHouse.setText(place.getName());
+                    mBinder.etStreet.setText(place.getAddress());
+                    mBinder.etAreaLine1.setText(city);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -159,8 +170,20 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     @Override
-    public void goToStep4() {
-        startActivity(ServicesStep4Activity.getStartIntent(this));
+    public void openLoginActivity(String message, int requestCode) {
+        Intent intent = LoginActivity.getStartIntent(this);
+        intent.putExtra("message", message);
+        startActivityForResult(intent, requestCode);
     }
 
+    @Override
+    public void goToStep4() {
+        if (mServicesStep3ViewModel.isUserLoggedIn()) {
+            startActivity(ServicesStep4Activity.getStartIntent(this));
+        } else {
+            openLoginActivity(getString(R.string.login_required_message)
+                            + " " + getString(R.string.login_to_book_service),
+                    REQUEST_LOGIN_FOR_BOOKING);
+        }
+    }
 }

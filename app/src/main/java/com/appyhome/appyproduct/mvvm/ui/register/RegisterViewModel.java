@@ -27,6 +27,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
     public void onPrivacyPolicyClick() {
         getNavigator().openPrivacyPolicy();
     }
+
     public void onTermsOfUsageClick() {
         getNavigator().openTermsOfUsage();
     }
@@ -93,10 +94,9 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 getDataManager().updateApiHeader(message);
                 getNavigator().showSuccessLogin();
                 getNavigator().doAfterRegisterSucceeded();
-                return;
             }
-        }
-        getNavigator().showErrorOthers();
+        } else
+            getNavigator().showErrorOthers();
     }
 
     public void setAccessToken(String token) {
@@ -119,27 +119,24 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
             getNavigator().showErrorServer();
             return;
         }
-
-        String statusCode = response.getStatusCode();
         String message = response.getMessage();
-
-        if (message.equals("phone_number_duplicate")) {
-            getNavigator().showErrorPhoneDuplicated();
-            return;
-        }
-        if (message.equals("email_duplicate")) {
-            getNavigator().showErrorEmailDuplicated();
-            return;
-        }
-        if (statusCode.equals("200")) {
+        if (message != null) {
+            if (message.equals("phone_number_duplicate")) {
+                getNavigator().showErrorPhoneDuplicated();
+                return;
+            }
+            if (message.equals("email_duplicate")) {
+                getNavigator().showErrorEmailDuplicated();
+                return;
+            }
             if (message.contains("user_created")) {
                 String[] result = message.split(":");
                 if (result != null && result.length == 2) {
                     String userId = result[1];
                     getDataManager().setCurrentUserId(userId);
-                    getNavigator().login();
-                    return;
                 }
+                getNavigator().login();
+                return;
             }
         }
         getNavigator().showErrorOthers();
