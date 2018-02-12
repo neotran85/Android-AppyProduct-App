@@ -100,7 +100,7 @@
 
                     </LinearLayout>
                     <Button
-                        android:id="@+id/btnNext"
+                        android:id="@+id/btSendCode"
                         style="?android:attr/borderlessButtonStyle"
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="match_parent"
@@ -108,7 +108,6 @@
                         android:layout_marginTop="16dp"
                         android:background="@drawable/button_rounded_bg_orange_click"
                         android:gravity="center"
-                        android:onClick="@{() -> viewModel.onServerRegisterClick()}"
                         android:shadowRadius="0"
                         android:text="@string/send_code_verification"
                         android:textColor="@color/white"
@@ -117,13 +116,12 @@
                     <Button
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="12dp"
-                        android:id="@+id/btPrivacyPolicy"
+                        android:id="@+id/btResendCode"
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:gravity="center"
-                        android:onClick="@{()->viewModel.onPrivacyPolicyClick()}"
                         android:text="Resend the code"
                         android:textColor="@color/light_blue"
                         android:textSize="16sp" />

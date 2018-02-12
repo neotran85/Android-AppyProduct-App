@@ -178,4 +178,20 @@ public class AppApiHelper implements ApiHelper {
                 .build()
                 .getJSONObjectSingle();
     }
+
+    @Override
+    public Single<JSONObject> verifyUser() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.VERIFY_USER)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getJSONObjectSingle();
+    }
+
+    @Override
+    public Single<JSONObject> verifyTrue() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.VERIFY_TRUE)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getJSONObjectSingle();
+    }
 }

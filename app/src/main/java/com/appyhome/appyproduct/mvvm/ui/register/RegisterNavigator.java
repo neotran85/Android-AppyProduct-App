@@ -2,8 +2,6 @@ package com.appyhome.appyproduct.mvvm.ui.register;
 
 public interface RegisterNavigator {
 
-    void doAfterRegisterSucceeded();
-
     void handleErrorService(Throwable throwable);
 
     void register();
@@ -14,8 +12,6 @@ public interface RegisterNavigator {
 
     void showErrorOthers();
 
-    void showSuccessLogin();
-
     void showErrorPhoneDuplicated();
 
     void showErrorEmailDuplicated();
@@ -23,5 +19,7 @@ public interface RegisterNavigator {
     void openTermsOfUsage();
 
     void openPrivacyPolicy();
+
+    void openPhoneNumberVerification();
 
 }

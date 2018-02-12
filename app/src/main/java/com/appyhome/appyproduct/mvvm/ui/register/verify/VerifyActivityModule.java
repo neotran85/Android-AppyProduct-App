@@ -10,7 +10,7 @@ import dagger.Provides;
 public class VerifyActivityModule {
 
     @Provides
-    VerifyViewModel provideRegisterViewModel(DataManager dataManager,
+    VerifyViewModel provideVerifyViewModel(DataManager dataManager,
                                              SchedulerProvider schedulerProvider) {
         return new VerifyViewModel(dataManager, schedulerProvider);
     }

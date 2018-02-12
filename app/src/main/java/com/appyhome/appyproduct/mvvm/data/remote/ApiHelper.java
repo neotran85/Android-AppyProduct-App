@@ -59,4 +59,8 @@ public interface ApiHelper {
 
     Single<JSONObject> getUserProfile();
 
+    Single<JSONObject> verifyUser();
+
+    Single<JSONObject> verifyTrue();
+
 }

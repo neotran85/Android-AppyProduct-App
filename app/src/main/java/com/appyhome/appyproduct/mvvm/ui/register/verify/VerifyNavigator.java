@@ -6,22 +6,12 @@ public interface VerifyNavigator {
 
     void handleErrorService(Throwable throwable);
 
-    void register();
-
-    void login();
+    void verifyTrue();
 
     void showErrorServer();
 
     void showErrorOthers();
 
     void showSuccessLogin();
-
-    void showErrorPhoneDuplicated();
-
-    void showErrorEmailDuplicated();
-
-    void openTermsOfUsage();
-
-    void openPrivacyPolicy();
 
 }

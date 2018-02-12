@@ -332,4 +332,14 @@ public class AppDataManager implements DataManager {
     public ServiceOrderUserInput getServiceOrderUserInput() {
         return ServiceOrderUserInput.getInstance();
     }
+
+    @Override
+    public Single<JSONObject> verifyUser() {
+        return mApiHelper.verifyUser();
+    }
+
+    @Override
+    public Single<JSONObject> verifyTrue() {
+        return mApiHelper.verifyTrue();
+    }
 }

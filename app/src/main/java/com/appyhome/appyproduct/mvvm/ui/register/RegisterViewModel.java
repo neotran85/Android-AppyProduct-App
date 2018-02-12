@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
+import org.json.JSONObject;
+
 import io.reactivex.functions.Consumer;
 
 public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
@@ -54,6 +56,29 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     }
                 }));
     }
+    public void doVerifyUser() {
+        getCompositeDisposable().add(getDataManager()
+                .verifyUser()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<JSONObject>() {
+                    @Override
+                    public void accept(JSONObject response) throws Exception {
+                        setIsLoading(false);
+                        handleVerifyUser(response);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        setIsLoading(false);
+                        getNavigator().handleErrorService(throwable);
+                    }
+                }));
+    }
+
+    private void handleVerifyUser(JSONObject response) {
+        getNavigator().openPhoneNumberVerification();
+    }
 
     public void doUserLogin(String phone, String password) {
         setIsLoading(true);
@@ -92,8 +117,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 setEmailUser(mEmail);
                 setPhoneNumber(mPhoneNumber);
                 getDataManager().updateApiHeader(message);
-                getNavigator().showSuccessLogin();
-                getNavigator().doAfterRegisterSucceeded();
+                doVerifyUser();
             }
         } else
             getNavigator().showErrorOthers();

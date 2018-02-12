@@ -14,6 +14,8 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.ui.register.verify.VerifyActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.TextUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
@@ -82,12 +84,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         super.onDestroy();
         mArrayTextInputs.clear();
         mArrayTextInputs = null;
-    }
-
-    @Override
-    public void doAfterRegisterSucceeded() {
-        setResult(RESULT_OK);
-        finish();
     }
 
     @Override
@@ -204,11 +200,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     }
 
     @Override
-    public void showSuccessLogin() {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.register_success_logged));
-    }
-
-    @Override
     public void showErrorServer() {
         showError(getString(R.string.login_error_internal_server));
     }
@@ -239,4 +230,11 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         AlertManager.getInstance(this).openInformationBrowser("Terms & Conditions",
                 ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
+
+    @Override
+    public void openPhoneNumberVerification() {
+        Intent intent = VerifyActivity.getStartIntent(this);
+        startActivityForResult(intent, LoginActivity.REQUEST_SIGN_UP);
+    }
+
 }
