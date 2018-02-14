@@ -3,6 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.login;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -56,7 +58,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         }
         String statusCode = response.getStatusCode();
         String message = response.getMessage();
-        if (statusCode.equals("200")) {
+        if (statusCode.equals(ApiCode.OK_200)) {
             if (message != null && message.length() > 0) {
                 setAccessToken(message);
                 setPhoneNumber(mPhoneNumber);
@@ -71,7 +73,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
             } else {
                 // Account is exist
                 if(message != null) {
-                    if(message.equals("invalid_phone_number"))
+                    if(message.equals(ApiMessage.INVALID_PHONE_NUMBER))
                         // Account is not exist
                         getNavigator().showSignUpDialog();
                     else

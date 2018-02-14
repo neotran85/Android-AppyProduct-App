@@ -1,6 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.register.verify;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.StringUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -61,10 +63,10 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
             return;
         }
         try {
-            String statusCode = response.getString("code");
-            String message = response.getString("message");
-            if (statusCode.equals("200")) {
-                if (StringUtils.isEqualAndNotNull(message, "success")) {
+            String statusCode = response.getString(ApiCode.KEY_CODE);
+            String message = response.getString(ApiMessage.KEY_CODE);
+            if (statusCode.equals(ApiCode.OK_200)) {
+                if (StringUtils.isEqualAndNotNull(message, ApiMessage.SUCCESS)) {
                     getNavigator().showSuccessLogin();
                     getNavigator().doAfterRegisterSucceeded();
                     return;

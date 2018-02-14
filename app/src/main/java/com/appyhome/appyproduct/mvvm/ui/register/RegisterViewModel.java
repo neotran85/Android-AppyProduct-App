@@ -5,6 +5,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -111,7 +113,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
         }
         String statusCode = response.getStatusCode();
         String message = response.getMessage();
-        if (statusCode.equals("200")) {
+        if (statusCode.equals(ApiCode.OK_200)) {
             if (message != null && message.length() > 0) {
                 setAccessToken(message);
                 setEmailUser(mEmail);
@@ -145,15 +147,15 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
         }
         String message = response.getMessage();
         if (message != null) {
-            if (message.equals("phone_number_duplicate")) {
+            if (message.equals(ApiMessage.PHONE_NUMBER_DUPLICATE)) {
                 getNavigator().showErrorPhoneDuplicated();
                 return;
             }
-            if (message.equals("email_duplicate")) {
+            if (message.equals(ApiMessage.EMAIL_DUPLICATE)) {
                 getNavigator().showErrorEmailDuplicated();
                 return;
             }
-            if (message.contains("user_created")) {
+            if (message.contains(ApiMessage.USER_CREATED)) {
                 String[] result = message.split(":");
                 if (result != null && result.length == 2) {
                     String userId = result[1];
