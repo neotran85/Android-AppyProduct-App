@@ -16,7 +16,6 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.verify.VerifyActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.StringUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -74,7 +73,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
                 }
             });
         }
-        if(getIntent().hasExtra("phone")) {
+        if (getIntent().hasExtra("phone")) {
             mBinder.etNumberPhone.setText(getIntent().getStringExtra("phone"));
         }
     }
@@ -93,12 +92,14 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void register() {
+        if (!isNetworkConnected()) {
+            return;
+        }
+
         View view = getCurrentFocus();
         if (view != null)
             view.clearFocus();
-        if (!NetworkUtils.isNetworkConnected(this)) {
-            return;
-        }
+
         String firstName = mBinder.etFirstName.getText().toString();
         if (firstName == null || firstName.length() == 0) {
             showError(getString(R.string.register_error_missing_first_name));
@@ -192,6 +193,9 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void login() {
+        if (!isNetworkConnected()) {
+            return;
+        }
         // Do login after sign up succeeded
         String phoneNumber = mBinder.etNumberPhone.getText().toString();
         phoneNumber = ValidationUtils.correctNumberPhone(phoneNumber, "60");
@@ -220,11 +224,13 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         showError(getString(R.string.register_error_email_duplicated));
         showTextInputError(mBinder.etEmailAddress);
     }
+
     @Override
     public void openPrivacyPolicy() {
         AlertManager.getInstance(this).openInformationBrowser("Privacy Policy",
                 ApiUrlConfig.URL_PRIVACY_POLICY);
     }
+
     @Override
     public void openTermsOfUsage() {
         AlertManager.getInstance(this).openInformationBrowser("Terms & Conditions",

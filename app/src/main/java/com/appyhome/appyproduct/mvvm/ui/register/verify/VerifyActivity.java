@@ -40,10 +40,14 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btSendCode:
-                getViewModel().verifyTrue();
+                if(isNetworkConnected()) {
+                    getViewModel().verifyTrue();
+                }
                 break;
             case R.id.btResendCode:
-                getViewModel().doVerifyUser();
+                if(isNetworkConnected()) {
+                    getViewModel().doVerifyUser();
+                }
                 break;
         }
     }
@@ -88,14 +92,6 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     @Override
     public int getLayoutId() {
         return R.layout.activity_verify;
-    }
-
-    private void showTextInputError(TextInputEditText edt) {
-        edt.requestFocus();
-        if (edt.getText().length() > 0)
-            edt.setTextColor(ContextCompat.getColor(this, R.color.red_dark));
-        else
-            edt.setHintTextColor(ContextCompat.getColor(this, R.color.red_dark2));
     }
 
     @Override

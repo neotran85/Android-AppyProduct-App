@@ -19,10 +19,10 @@ import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.CommonUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 
 import dagger.android.AndroidInjection;
+import io.fabric.sdk.android.services.common.CommonUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity implements BaseFragment.Callback {

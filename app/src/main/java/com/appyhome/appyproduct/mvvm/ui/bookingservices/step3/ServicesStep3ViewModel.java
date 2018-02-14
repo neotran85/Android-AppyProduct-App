@@ -8,7 +8,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 public class ServicesStep3ViewModel extends BaseViewModel<ServicesStep3Navigator> {
-
     public ObservableField<String> number = new ObservableField<>("");
     public ObservableField<String> street = new ObservableField<>("");
     public ObservableField<String> area1 = new ObservableField<>("");
