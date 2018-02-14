@@ -29,6 +29,8 @@ import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.register.verify.VerifyActivity;
+import com.appyhome.appyproduct.mvvm.ui.register.verify.VerifyActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.detail.RequestDetailActivity;
@@ -84,6 +86,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = RequestDetailActivityModule.class)
     abstract RequestDetailActivity bindRequestDetailActivity();
+
+    @ContributesAndroidInjector(modules = VerifyActivityModule.class)
+    abstract VerifyActivity bindVerifyActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,

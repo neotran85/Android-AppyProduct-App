@@ -70,7 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="@string/please_note_all_values_are_required"
+                        android:text="@string/verification_code_message"
                         android:textColor="@color/red_dark"
                         android:textSize="12sp" />
 
@@ -117,14 +117,13 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="12dp"
                         android:id="@+id/btResendCode"
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:gravity="center"
                         android:text="Resend the code"
                         android:textColor="@color/light_blue"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </RelativeLayout>
 
