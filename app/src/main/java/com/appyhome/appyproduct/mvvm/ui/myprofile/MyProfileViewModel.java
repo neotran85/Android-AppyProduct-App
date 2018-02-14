@@ -4,6 +4,8 @@ import android.databinding.ObservableField;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -40,10 +42,10 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                         setIsLoading(false);
                         AppLogger.d(userGetResponse.toString());
                         if (userGetResponse != null) {
-                            if (userGetResponse.getString("code").equals("200")) {
+                            if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
                                 try {
-                                    if (userGetResponse.has("message")) {
-                                        JSONObject message = userGetResponse.getJSONObject("message");
+                                    if (userGetResponse.has(ApiMessage.KEY_CODE)) {
+                                        JSONObject message = userGetResponse.getJSONObject(ApiMessage.KEY_CODE);
                                         if (message != null) {
                                             String lastNameStr = message.getString("last_name");
                                             lastName.set(lastNameStr);
@@ -60,8 +62,8 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                                             String phoneNumberStr = message.getString("phone_number");
                                             phoneNumber.set(phoneNumberStr);
                                             getDataManager().setCurrentPhoneNumber(phoneNumberStr);
+                                            return;
                                         }
-                                        return;
                                     }
                                 } catch (Exception e) {
 
