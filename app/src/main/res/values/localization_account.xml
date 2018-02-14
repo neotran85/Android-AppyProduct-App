@@ -62,4 +62,5 @@
     <string name="suggestion_sign_up">This account is not sign up with us. Do you want to sign up now?</string>
     <string name="title_login_error">Login Error</string>
     <string name="verification_code_message">A verification code will be sent to your phone. Please check your messages.</string>
+    <string name="verification_code_error">Wrong verification code. Please check your message again or resend another code.</string>
 </resources>

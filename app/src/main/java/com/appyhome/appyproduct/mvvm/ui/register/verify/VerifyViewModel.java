@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.register.verify;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.StringUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONObject;
@@ -43,6 +44,7 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
                     @Override
                     public void accept(JSONObject response) throws Exception {
                         setIsLoading(false);
+                        getNavigator().showCodeSentMessage();
                         // Show message to user.
                     }
                 }, new Consumer<Throwable>() {
@@ -62,11 +64,11 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
             String statusCode = response.getString("code");
             String message = response.getString("message");
             if (statusCode.equals("200")) {
-                if (message != null && message.length() > 0) {
+                if (StringUtils.isEqualAndNotNull(message, "success")) {
                     getNavigator().showSuccessLogin();
                     getNavigator().doAfterRegisterSucceeded();
+                    return;
                 }
-                return;
             }
         } catch (Exception e) {
 

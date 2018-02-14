@@ -6,12 +6,12 @@ public interface VerifyNavigator {
 
     void handleErrorService(Throwable throwable);
 
-    void verifyTrue();
-
     void showErrorServer();
 
     void showErrorOthers();
 
     void showSuccessLogin();
+
+    void showCodeSentMessage();
 
 }

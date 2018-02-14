@@ -17,7 +17,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
-import com.appyhome.appyproduct.mvvm.utils.helper.TextUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.StringUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -145,8 +145,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         if (!NetworkUtils.isNetworkConnected(this)) {
             return;
         }
-        String phoneNumber = TextUtils.getString(mBinder.etPhoneNumber.getText().toString());
-        String password = TextUtils.getString(mBinder.etPassword.getText().toString());
+        String phoneNumber = StringUtils.getStringNotNull(mBinder.etPhoneNumber.getText().toString());
+        String password = StringUtils.getStringNotNull(mBinder.etPassword.getText().toString());
         if (phoneNumber.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
             showTextInputError(mBinder.etPhoneNumber);

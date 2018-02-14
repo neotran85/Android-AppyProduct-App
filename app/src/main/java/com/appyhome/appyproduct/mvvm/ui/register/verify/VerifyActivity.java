@@ -43,9 +43,16 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
                 getViewModel().verifyTrue();
                 break;
             case R.id.btResendCode:
+                getViewModel().doVerifyUser();
                 break;
         }
     }
+
+    @Override
+    public void showCodeSentMessage() {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.verification_code_message));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -92,11 +99,6 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     }
 
     @Override
-    public void verifyTrue() {
-
-    }
-
-    @Override
     public void showSuccessLogin() {
         AlertManager.getInstance(this).showLongToast(getString(R.string.register_success_logged));
     }
@@ -108,7 +110,7 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
 
     @Override
     public void showErrorOthers() {
-        showError(getString(R.string.register_error_something));
+        showError(getString(R.string.verification_code_error));
     }
 
 }
