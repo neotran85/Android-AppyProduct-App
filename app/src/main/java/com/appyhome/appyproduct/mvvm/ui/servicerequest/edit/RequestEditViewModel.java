@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
@@ -54,7 +55,6 @@ public class RequestEditViewModel extends RequestItemViewModel {
         JSONObject obj = new JSONObject();
         try {
             String value = additional + "_" + txn_ID + "::" + amount;
-            AppLogger.d("editOrder: " + value);
             obj.put("service1", value);
             request.setAdditional(obj.toString());
             editOrder(request);
@@ -73,8 +73,8 @@ public class RequestEditViewModel extends RequestItemViewModel {
                     @Override
                     public void accept(JSONObject response) throws Exception {
                         setIsLoading(false);
-                        if (response != null && response.has("code")) {
-                            if (response.getString("code").equals("200")) {
+                        if (response != null && response.has(ApiCode.KEY_CODE)) {
+                            if (response.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
                                 // EDIT COMPLETED SUCCESSFULLY
                                 setIsLoading(true);
                                 getNavigator().doAfterDataUpdated();

@@ -1,6 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.servicerequest;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -32,7 +34,6 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                         @Override
                         public void accept(JSONObject response) throws Exception {
                             setIsLoading(false);
-                            AppLogger.d("handleServiceResult");
                             handleServiceResult(response, type);
                         }
                     }, new Consumer<Throwable>() {
@@ -52,7 +53,6 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                         @Override
                         public void accept(JSONObject response) throws Exception {
                             setIsLoading(false);
-                            AppLogger.d("handleServiceResult");
                             handleServiceResult(response, type);
                         }
                     }, new Consumer<Throwable>() {
@@ -72,7 +72,6 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                         @Override
                         public void accept(JSONObject response) throws Exception {
                             setIsLoading(false);
-                            AppLogger.d("handleServiceResult");
                             handleServiceResult(response, type);
                         }
                     }, new Consumer<Throwable>() {
@@ -102,12 +101,12 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
 
     private void handleServiceResult(JSONObject response, int type) {
         try {
-            if (response != null && response.getString("code").equals("200")) {
-                if (response.getString("message").equals("list_empty")) {
+            if (response != null && response.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
+                if (response.getString(ApiMessage.KEY_CODE).equals(ApiMessage.LIST_EMPTY)) {
                     showEmptyList(type);
                     return;
                 } else {
-                    JSONArray arrayResult = new JSONArray(response.getString("message"));
+                    JSONArray arrayResult = new JSONArray(response.getString(ApiMessage.KEY_CODE));
                     if (arrayResult != null && arrayResult.length() > 0) {
                         ArrayList<RequestItemViewModel> arrayItems = new ArrayList<>();
                         for (int i = 0; i < arrayResult.length(); i++) {

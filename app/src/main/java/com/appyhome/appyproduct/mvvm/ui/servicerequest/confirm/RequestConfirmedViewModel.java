@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -24,7 +25,7 @@ public class RequestConfirmedViewModel extends RequestItemViewModel {
                 .subscribe(new Consumer<OrderCompletedResponse>() {
                     @Override
                     public void accept(OrderCompletedResponse response) throws Exception {
-                        if(response != null && response.getStatusCode().equals("200")) {
+                        if(response != null && response.getStatusCode().equals(ApiCode.OK_200)) {
                             // MARK COMPLETED SUCCESS
                             setIsLoading(true);
                             getNavigator().doAfterDataUpdated();
