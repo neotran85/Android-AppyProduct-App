@@ -86,10 +86,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSignUp:
-                openSignUpActivity();
+                if(isNetworkConnected()) {
+                    openSignUpActivity();
+                }
                 break;
             case R.id.btnForgetPassword:
-                openForgetPassword();
+                if(isNetworkConnected()) {
+                    openForgetPassword();
+                }
                 break;
         }
 
