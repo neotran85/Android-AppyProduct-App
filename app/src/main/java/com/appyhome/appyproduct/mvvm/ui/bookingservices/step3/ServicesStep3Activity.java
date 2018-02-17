@@ -27,13 +27,10 @@ import javax.inject.Inject;
 
 public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingStep3Binding, ServicesStep3ViewModel> implements ServicesStep3Navigator, View.OnClickListener {
 
+    public final static int REQUEST_LOGIN_FOR_BOOKING = 1113;
     @Inject
     ServicesStep3ViewModel mServicesStep3ViewModel;
-
     ActivityServicesBookingStep3Binding mBinder;
-
-
-    public final static int REQUEST_LOGIN_FOR_BOOKING = 1113;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep3Activity.class);
@@ -149,6 +146,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
             }
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

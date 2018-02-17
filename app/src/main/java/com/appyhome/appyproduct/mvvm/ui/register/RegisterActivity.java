@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityRegisterBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.verify.VerifyActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -122,7 +123,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
             return;
         }
 
-        String phoneNumber = StringUtils.getStringNotNull(mBinder.etNumberPhone.getText().toString());
+        String phoneNumber = DataUtils.getStringNotNull(mBinder.etNumberPhone.getText().toString());
         phoneNumber = ValidationUtils.correctNumberPhone(phoneNumber, "60");
         if (phoneNumber.length() == 0) {
             showError(getString(R.string.register_error_missing_phone));

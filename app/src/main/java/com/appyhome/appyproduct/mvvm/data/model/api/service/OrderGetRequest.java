@@ -12,6 +12,7 @@ public class OrderGetRequest {
     public OrderGetRequest(String number) {
         idNumber = number;
     }
+
     public OrderGetRequest() {
 
     }

@@ -10,5 +10,6 @@ import io.reactivex.Observable;
 public interface DbHelper {
 
     Observable<Boolean> insertUser(final User user);
+
     Observable<List<User>> getAllUsers();
 }

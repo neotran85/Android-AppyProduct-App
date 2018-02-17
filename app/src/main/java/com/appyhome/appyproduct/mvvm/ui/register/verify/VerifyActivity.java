@@ -3,8 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.register.verify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
@@ -40,12 +38,12 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btSendCode:
-                if(isNetworkConnected()) {
+                if (isNetworkConnected()) {
                     getViewModel().verifyTrue();
                 }
                 break;
             case R.id.btResendCode:
-                if(isNetworkConnected()) {
+                if (isNetworkConnected()) {
                     getViewModel().doVerifyUser();
                 }
                 break;

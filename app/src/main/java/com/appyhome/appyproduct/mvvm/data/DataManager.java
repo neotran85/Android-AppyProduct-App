@@ -18,7 +18,7 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
 
     void setUserAsLoggedOut();
 
-    Observable< ArrayList<AppyServiceCategory>> seedDatabaseCategories();
+    Observable<ArrayList<AppyServiceCategory>> seedDatabaseCategories();
 
     Observable<ArrayList<AppyService>> seedDatabaseServices();
 
@@ -30,6 +30,8 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
             String email,
             String profilePicPath,
             String token);
+
+    ServiceOrderUserInput getServiceOrderUserInput();
 
     enum LoggedInMode {
         LOGGED_OUT(0),
@@ -45,6 +47,4 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
             return mType;
         }
     }
-
-    ServiceOrderUserInput getServiceOrderUserInput();
 }

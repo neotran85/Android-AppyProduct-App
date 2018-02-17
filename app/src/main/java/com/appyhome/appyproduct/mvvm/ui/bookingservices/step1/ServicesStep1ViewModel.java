@@ -5,8 +5,8 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -42,8 +42,8 @@ public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator
     public ArrayList<AppyService> getFilteredServices(String tags) {
         ArrayList<AppyService> filteredServices = new ArrayList<>();
         ArrayList<AppyService> services = getDataManager().getServiceOrderUserInput().getServices();
-        for(AppyService service: services) {
-            if(tags.contains(service.tags)) {
+        for (AppyService service : services) {
+            if (tags.contains(service.tags)) {
                 filteredServices.add(service);
             }
         }

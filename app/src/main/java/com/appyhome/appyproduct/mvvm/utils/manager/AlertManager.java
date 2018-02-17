@@ -61,7 +61,7 @@ public class AlertManager {
     }
 
     public void showComingSoonDialog() {
-        if(mAlertDialog == null) {
+        if (mAlertDialog == null) {
             final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
             LayoutInflater li = LayoutInflater.from(mContext);
             View theView = li.inflate(R.layout.dialog_coming_soon, null);
@@ -69,7 +69,7 @@ public class AlertManager {
             buttonClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mAlertDialog != null) {
+                    if (mAlertDialog != null) {
                         mAlertDialog.dismiss();
                     }
                 }
@@ -82,7 +82,7 @@ public class AlertManager {
     }
 
     public void showDialog(String title, String detailText, DialogInterface.OnClickListener positiveListener) {
-        if(mAlertDialog == null) {
+        if (mAlertDialog == null) {
             final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
             dialogBuilder.setTitle(title);
             dialogBuilder.setMessage(detailText);
@@ -90,7 +90,7 @@ public class AlertManager {
             dialogBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if(mAlertDialog != null)
+                    if (mAlertDialog != null)
                         mAlertDialog.dismiss();
                 }
             });

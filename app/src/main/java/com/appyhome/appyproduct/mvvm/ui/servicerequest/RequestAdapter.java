@@ -23,13 +23,13 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     private OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        onItemClickListener = listener;
-    }
-
     public RequestAdapter(ArrayList arrayList, int type) {
         this.mRequestList = arrayList;
         mType = type;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
     }
 
     public void updateData(ArrayList list) {
@@ -133,6 +133,10 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         return 1;
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int type);
+    }
+
     public class RequestItemEmptyViewHolder extends BaseViewHolder {
         public RequestItemEmptyViewHolder(View view) {
             super(view);
@@ -196,9 +200,5 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
             }
         }
 
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int type);
     }
 }

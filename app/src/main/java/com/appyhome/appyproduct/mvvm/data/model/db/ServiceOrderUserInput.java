@@ -42,6 +42,12 @@ public class ServiceOrderUserInput {
     private ServiceOrderUserInput() {
     }
 
+    public static ServiceOrderUserInput getInstance() {
+        if (mServiceOrderUserInput == null)
+            mServiceOrderUserInput = new ServiceOrderUserInput();
+        return mServiceOrderUserInput;
+    }
+
     public void clear() {
         mTimeSlot1 = "";
         mTimeSlot2 = "";
@@ -55,12 +61,6 @@ public class ServiceOrderUserInput {
         mSelectedService = null;
         mAdditionalInfo = "";
         mAddress = "";
-    }
-
-    public static ServiceOrderUserInput getInstance() {
-        if (mServiceOrderUserInput == null)
-            mServiceOrderUserInput = new ServiceOrderUserInput();
-        return mServiceOrderUserInput;
     }
 
     public String getServiceName() {
@@ -280,7 +280,7 @@ public class ServiceOrderUserInput {
 
     public String getTotalCost() {
         try {
-            if(getSelectedService() != null) {
+            if (getSelectedService() != null) {
                 Integer value = Integer.valueOf(getSelectedService().price);
                 if (mType == SERVICE_AIR_CON_CLEANING) {
                     value = value * mNumberOfAirCons;

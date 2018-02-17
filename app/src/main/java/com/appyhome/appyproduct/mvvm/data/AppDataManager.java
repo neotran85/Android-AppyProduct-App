@@ -29,6 +29,7 @@ import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -298,11 +299,12 @@ public class AppDataManager implements DataManager {
         return Observable.fromCallable(new Callable<ArrayList<AppyServiceCategory>>() {
             @Override
             public ArrayList<AppyServiceCategory> call() throws Exception {
-                Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {}.getType();
+                Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {
+                }.getType();
                 GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
                 final Gson gson = builder.create();
                 ArrayList<AppyServiceCategory> appyServiceCategories = gson.fromJson(
-                        CommonUtils.loadJSONFromAsset(mContext,
+                        DataUtils.loadJSONFromAsset(mContext,
                                 AppConstants.SEED_DATABASE_CATEGORIES),
                         type);
                 return appyServiceCategories;
@@ -315,11 +317,12 @@ public class AppDataManager implements DataManager {
         return Observable.fromCallable(new Callable<ArrayList<AppyService>>() {
             @Override
             public ArrayList<AppyService> call() throws Exception {
-                Type type = new TypeToken<ArrayList<AppyService>>() {}.getType();
+                Type type = new TypeToken<ArrayList<AppyService>>() {
+                }.getType();
                 GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
                 Gson gson = builder.create();
-                ArrayList<AppyService> arrayList  = gson.fromJson(
-                        CommonUtils.loadJSONFromAsset(mContext,
+                ArrayList<AppyService> arrayList = gson.fromJson(
+                        DataUtils.loadJSONFromAsset(mContext,
                                 AppConstants.SEED_DATABASE_SERVICES),
                         type);
                 return arrayList;

@@ -25,7 +25,7 @@ public class RequestConfirmedViewModel extends RequestItemViewModel {
                 .subscribe(new Consumer<OrderCompletedResponse>() {
                     @Override
                     public void accept(OrderCompletedResponse response) throws Exception {
-                        if(response != null && response.getStatusCode().equals(ApiCode.OK_200)) {
+                        if (response != null && response.getStatusCode().equals(ApiCode.OK_200)) {
                             // MARK COMPLETED SUCCESS
                             setIsLoading(true);
                             getNavigator().doAfterDataUpdated();

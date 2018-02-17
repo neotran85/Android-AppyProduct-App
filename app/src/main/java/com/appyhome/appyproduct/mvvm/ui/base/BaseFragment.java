@@ -113,13 +113,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     @LayoutRes
     int getLayoutId();
 
-    public interface Callback {
-
-        void onFragmentAttached();
-
-        void onFragmentDetached(String tag);
-    }
-
     public void setTitle(String title) {
         if (mRootView != null) {
             TextView txt = mRootView.findViewById(R.id.tvTitle);
@@ -140,5 +133,12 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
                 }
             });
         }
+    }
+
+    public interface Callback {
+
+        void onFragmentAttached();
+
+        void onFragmentDetached(String tag);
     }
 }

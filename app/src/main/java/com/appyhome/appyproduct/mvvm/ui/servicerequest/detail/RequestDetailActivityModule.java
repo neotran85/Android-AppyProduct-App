@@ -12,7 +12,7 @@ public class RequestDetailActivityModule {
 
     @Provides
     RequestItemViewModel provideRequestItemViewModel(DataManager dataManager,
-                                                       SchedulerProvider schedulerProvider) {
+                                                     SchedulerProvider schedulerProvider) {
         return new RequestItemViewModel(dataManager, schedulerProvider);
     }
 

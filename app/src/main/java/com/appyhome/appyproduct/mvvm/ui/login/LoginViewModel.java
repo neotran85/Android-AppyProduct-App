@@ -72,8 +72,8 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 login("+" + mPhoneNumber, mPassword);
             } else {
                 // Account is exist
-                if(message != null) {
-                    if(message.equals(ApiMessage.INVALID_PHONE_NUMBER))
+                if (message != null) {
+                    if (message.equals(ApiMessage.INVALID_PHONE_NUMBER))
                         // Account is not exist
                         getNavigator().showSignUpDialog();
                     else

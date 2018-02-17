@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public final static int TAB_MY_PROFILE = 4;
     public final static String TAB = "tab";
 
-    public final static int REQUEST_LOGIN_FOR_REQUEST_TRACKING= 1111;
+    public final static int REQUEST_LOGIN_FOR_REQUEST_TRACKING = 1111;
     public final static int REQUEST_LOGIN_FOR_MY_PROFILE = 1112;
 
     @Inject
@@ -118,12 +118,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_LOGIN_FOR_MY_PROFILE:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     onClick(mBinder.rlMyProfile);
                 }
                 break;
             case REQUEST_LOGIN_FOR_REQUEST_TRACKING:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     onClick(mBinder.rlRequest);
                 }
                 break;

@@ -28,13 +28,10 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
     @Inject
     RequestViewModel mRequestViewModel;
-
+    FragmentRequestBinding mBinder;
     private RequestAdapter mRequestAdapter;
     private RequestAdapter mOrdersAdapter;
     private RequestAdapter mCloseAdapter;
-
-    FragmentRequestBinding mBinder;
-
     private Button mCurrentButton;
 
     private RecyclerView mCurrentRecyclerView;
@@ -170,6 +167,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
             mCloseAdapter.notifyDataSetChanged();
         }
     }
+
     @Override
     public void onItemClick(View view, int type) {
         Intent intent = RequestDetailActivity.getStartIntent(this.getActivity());

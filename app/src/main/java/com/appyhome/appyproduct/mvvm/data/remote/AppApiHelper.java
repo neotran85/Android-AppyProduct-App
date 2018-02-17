@@ -154,6 +154,7 @@ public class AppApiHelper implements ApiHelper {
                 .build()
                 .getObjectSingle(OrderCompletedResponse.class);
     }
+
     @Override
     public Single<JSONObject> getUserProfile() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.USER_GET)
@@ -161,6 +162,7 @@ public class AppApiHelper implements ApiHelper {
                 .build()
                 .getJSONObjectSingle();
     }
+
     @Override
     public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)

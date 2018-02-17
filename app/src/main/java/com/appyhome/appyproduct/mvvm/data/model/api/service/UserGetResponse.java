@@ -41,19 +41,19 @@ public class UserGetResponse {
     }
 
     public void parseInfo() {
-        if(result != null && result.length() > 0) {
+        if (result != null && result.length() > 0) {
             try {
                 JSONObject json = new JSONObject(result);
-                if(json.has("first_name")) {
+                if (json.has("first_name")) {
                     firstName = json.getString("first_name");
                 }
-                if(json.has("last_name")) {
+                if (json.has("last_name")) {
                     lastName = json.getString("last_name");
                 }
-                if(json.has("email")) {
+                if (json.has("email")) {
                     email = json.getString("email");
                 }
-                if(json.has("phone_number")) {
+                if (json.has("phone_number")) {
                     phoneNumber = json.getString("phone_number");
                 }
             } catch (Exception e) {
@@ -97,9 +97,9 @@ public class UserGetResponse {
     @Override
     public String toString() {
         String str = "first_name: " + firstName + " | ";
-         str = str + "last_name: " + lastName + " | ";
-         str = str + "email: " + email + " | ";
-         str = str + "phone_number: " + phoneNumber + " | ";
-         return str;
+        str = str + "last_name: " + lastName + " | ";
+        str = str + "email: " + email + " | ";
+        str = str + "phone_number: " + phoneNumber + " | ";
+        return str;
     }
 }

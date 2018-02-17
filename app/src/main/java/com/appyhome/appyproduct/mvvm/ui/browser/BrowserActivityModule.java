@@ -11,7 +11,7 @@ public class BrowserActivityModule {
 
     @Provides
     BrowserViewModel provideBrowserViewModel(DataManager dataManager,
-                                              SchedulerProvider schedulerProvider) {
+                                             SchedulerProvider schedulerProvider) {
         return new BrowserViewModel(dataManager, schedulerProvider);
     }
 

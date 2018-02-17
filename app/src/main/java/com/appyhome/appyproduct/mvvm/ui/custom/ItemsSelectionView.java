@@ -12,6 +12,7 @@ public class ItemsSelectionView implements View.OnClickListener {
     private View.OnClickListener mListener;
     private boolean mIsMultipleChoice = true;
     private View mCurrent = null;
+
     public ItemsSelectionView(boolean isMultipleChoice, View... items) {
         mIsMultipleChoice = true;
         mArrayItems = new ArrayList<>();
@@ -40,7 +41,7 @@ public class ItemsSelectionView implements View.OnClickListener {
                 view.setTag(R.id.selected, booleanValue);
             } else {
                 Boolean booleanValue = (Boolean) view.getTag(R.id.selected);
-                if(mCurrent != null) {
+                if (mCurrent != null) {
                     view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.white));
                 }
             }

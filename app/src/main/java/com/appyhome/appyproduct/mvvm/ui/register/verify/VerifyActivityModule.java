@@ -11,7 +11,7 @@ public class VerifyActivityModule {
 
     @Provides
     VerifyViewModel provideVerifyViewModel(DataManager dataManager,
-                                             SchedulerProvider schedulerProvider) {
+                                           SchedulerProvider schedulerProvider) {
         return new VerifyViewModel(dataManager, schedulerProvider);
     }
 

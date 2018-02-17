@@ -13,18 +13,19 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BaseViewModel<N> extends ViewModel {
 
+    public final ObservableBoolean isLoading = new ObservableBoolean(false);
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
-    public final ObservableBoolean isLoading = new ObservableBoolean(false);
-    private N mNavigator;
-    private CompositeDisposable mCompositeDisposable;
     public ObservableField<Integer> isLoadingVisible = new ObservableField<>(View.GONE);
     public ObservableField<Integer> isContentVisible = new ObservableField<>(View.GONE);
+    private N mNavigator;
+    private CompositeDisposable mCompositeDisposable;
 
     public BaseViewModel() {
         mDataManager = null;
         mSchedulerProvider = null;
     }
+
     public BaseViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {
         this.mDataManager = dataManager;

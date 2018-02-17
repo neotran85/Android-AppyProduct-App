@@ -1,7 +1,5 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
-import com.appyhome.appyproduct.mvvm.data.model.db.Option;
-import com.appyhome.appyproduct.mvvm.data.model.db.Question;
 import com.appyhome.appyproduct.mvvm.data.model.db.User;
 
 import java.util.List;

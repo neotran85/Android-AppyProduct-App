@@ -12,6 +12,7 @@ public class AppointmentGetRequest {
     public AppointmentGetRequest(String id) {
         idNumber = id;
     }
+
     public AppointmentGetRequest() {
 
     }

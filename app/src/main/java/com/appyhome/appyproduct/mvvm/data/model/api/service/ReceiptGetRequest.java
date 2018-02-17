@@ -12,6 +12,7 @@ public class ReceiptGetRequest {
     public ReceiptGetRequest(String id) {
         idNumber = id;
     }
+
     public ReceiptGetRequest() {
 
     }

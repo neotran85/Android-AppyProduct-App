@@ -49,25 +49,25 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSubmit:
-                if(checkIfValidationOK())
+                if (checkIfValidationOK())
                     openBankPaymentActivity();
                 break;
         }
     }
 
     private boolean checkIfValidationOK() {
-        if(mBinder.etAdditionalInfo.getText().length() <= 0) {
+        if (mBinder.etAdditionalInfo.getText().length() <= 0) {
             AlertManager.getInstance(this).showLongToast("Please enter the service name.");
             return false;
         }
-        if(mBinder.etAdditionalAmount.getText().length() <= 0) {
+        if (mBinder.etAdditionalAmount.getText().length() <= 0) {
             AlertManager.getInstance(this).showLongToast("Please enter an amount.");
             return false;
         }
         // Get price
         String amount = mBinder.etAdditionalAmount.getText().toString();
         mPrice = Double.valueOf(amount);
-        if(mPrice <= 0) {
+        if (mPrice <= 0) {
             AlertManager.getInstance(this).showLongToast("Please enter an amount greater than zero.");
             return false;
         }
@@ -125,7 +125,7 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
             AppLogger.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
             try {
                 JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
-                if(result.getString("status_code").equals("00")) {
+                if (result.getString("status_code").equals("00")) {
                     // PAYMENT SUCCESS
                     String txn_ID = result.getString("txn_ID");
                     AppLogger.d(txn_ID);

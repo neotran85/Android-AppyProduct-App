@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.register.RegisterActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -27,12 +28,10 @@ import javax.inject.Inject;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator, View.OnClickListener {
 
+    public static final int REQUEST_SIGN_UP = 2222;
     @Inject
     LoginViewModel mLoginViewModel;
-
     ActivityLoginBinding mBinder;
-
-    public static final int REQUEST_SIGN_UP = 2222;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -85,12 +84,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSignUp:
-                if(isNetworkConnected()) {
+                if (isNetworkConnected()) {
                     openSignUpActivity();
                 }
                 break;
             case R.id.btnForgetPassword:
-                if(isNetworkConnected()) {
+                if (isNetworkConnected()) {
                     openForgetPassword();
                 }
                 break;
@@ -148,8 +147,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         if (!NetworkUtils.isNetworkConnected(this)) {
             return;
         }
-        String phoneNumber = StringUtils.getStringNotNull(mBinder.etPhoneNumber.getText().toString());
-        String password = StringUtils.getStringNotNull(mBinder.etPassword.getText().toString());
+        String phoneNumber = DataUtils.getStringNotNull(mBinder.etPhoneNumber.getText().toString());
+        String password = DataUtils.getStringNotNull(mBinder.etPassword.getText().toString());
         if (phoneNumber.length() == 0) {
             showError(getString(R.string.login_error_missing_phone));
             showTextInputError(mBinder.etPhoneNumber);

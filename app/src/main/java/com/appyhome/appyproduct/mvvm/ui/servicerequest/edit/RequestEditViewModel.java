@@ -7,7 +7,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestType;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONObject;

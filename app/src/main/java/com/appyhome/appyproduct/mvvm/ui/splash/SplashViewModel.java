@@ -36,6 +36,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                     }
                 }));
     }
+
     public void loadCategories() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseCategories()

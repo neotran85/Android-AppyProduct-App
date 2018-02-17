@@ -24,19 +24,16 @@ import javax.inject.Inject;
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator, View.OnClickListener {
 
     public static final String TAG = "HomeFragment";
-
+    private final int[] mAppyServicesIds = {R.id.ibAirConServicing, R.id.ibElectricalService,
+            R.id.ibHomeCleaning, R.id.ibPlumbingService};
+    private final int[] mAppyProductsIds = {R.id.ibBedAndBath, R.id.ibDecor,
+            R.id.ibKitchen, R.id.ibAppliances, R.id.ibFurniture,
+            R.id.ibHomeImprovement, R.id.ibLighting, R.id.ibStorageAndOrganisation};
     @Inject
     HomeViewModel mHomeViewModel;
     FragmentHomeBinding mBinder;
     private Toolbar mToolbar;
     private ImageButton mToolbarCartButton;
-
-    private final int[] mAppyServicesIds = {R.id.ibAirConServicing, R.id.ibElectricalService,
-            R.id.ibHomeCleaning, R.id.ibPlumbingService};
-
-    private final int[] mAppyProductsIds = {R.id.ibBedAndBath, R.id.ibDecor,
-            R.id.ibKitchen, R.id.ibAppliances, R.id.ibFurniture,
-            R.id.ibHomeImprovement, R.id.ibLighting, R.id.ibStorageAndOrganisation};
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();

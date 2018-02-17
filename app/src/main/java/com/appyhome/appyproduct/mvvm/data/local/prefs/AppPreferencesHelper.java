@@ -116,18 +116,22 @@ public class AppPreferencesHelper implements PreferencesHelper {
         String accessToken = getAccessToken();
         return accessToken != null && accessToken.length() > 0;
     }
+
     @Override
     public String getUserLastName() {
         return mPrefs.getString(PREF_KEY_CURRENT_USER_LAST_NAME, "");
     }
+
     @Override
     public void setUserLastName(String lastName) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_LAST_NAME, lastName).apply();
     }
+
     @Override
     public String getUserFirstName() {
         return mPrefs.getString(PREF_KEY_CURRENT_USER_FIRST_NAME, "");
     }
+
     @Override
     public void setUserFirstName(String firstName) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_FIRST_NAME, firstName).apply();

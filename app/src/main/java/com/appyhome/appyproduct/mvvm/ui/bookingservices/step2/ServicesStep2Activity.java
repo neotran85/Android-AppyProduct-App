@@ -29,18 +29,15 @@ import javax.inject.Inject;
 
 public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingStep2Binding, ServicesStep2ViewModel> implements ServicesStep2Navigator, View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, DialogInterface.OnCancelListener {
 
+    private static final int SERVICE_TIME_START = 9;
+    private static final int SERVICE_TIME_END = 21;
     @Inject
     ServicesStep2ViewModel mServicesStep2ViewModel;
-
     ActivityServicesBookingStep2Binding mBinder;
-
     private Button mBtnTimeSlot;
     private String mDateSelectedShowedString = "";
     private String mDateSelectedString = "";
     private ItemsSelectionView mExtraServicesView;
-
-    private static final int SERVICE_TIME_START = 9;
-    private static final int SERVICE_TIME_END = 21;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep2Activity.class);

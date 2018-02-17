@@ -4,6 +4,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
                     }
                 }));
     }
+
     public void doVerifyUser() {
         getCompositeDisposable().add(getDataManager()
                 .verifyUser()
@@ -56,6 +58,7 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
                     }
                 }));
     }
+
     private void handleVerifyResponse(JSONObject response) {
         if (response == null) {
             getNavigator().showErrorServer();
@@ -65,7 +68,7 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
             String statusCode = response.getString(ApiCode.KEY_CODE);
             String message = response.getString(ApiMessage.KEY_CODE);
             if (statusCode.equals(ApiCode.OK_200)) {
-                if (StringUtils.isEqualAndNotNull(message, ApiMessage.SUCCESS)) {
+                if (DataUtils.isEqualAndNotNull(message, ApiMessage.SUCCESS)) {
                     getNavigator().showSuccessLogin();
                     getNavigator().doAfterRegisterSucceeded();
                     return;

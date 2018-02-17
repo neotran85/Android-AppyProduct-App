@@ -19,23 +19,23 @@ public class HomeCleaningOptionView {
         ArrayList<String> result = new ArrayList<>();
         RadioButton rbHighRise = mMainView.findViewById(R.id.rbHighRise);
         RadioButton rbLanRise = mMainView.findViewById(R.id.rbLanRise);
-        if(rbHighRise.isChecked()) {
+        if (rbHighRise.isChecked()) {
             result.add(rbHighRise.getText().toString());
         }
-        if(rbLanRise.isChecked()) {
+        if (rbLanRise.isChecked()) {
             result.add(rbLanRise.getText().toString());
         }
         RadioButton rbYes = mMainView.findViewById(R.id.rbYes);
         RadioButton rbNo = mMainView.findViewById(R.id.rbNo);
-        if(rbYes.isChecked()) {
+        if (rbYes.isChecked()) {
             result.add("provide cleaning supplies");
         }
-        if(rbNo.isChecked()) {
+        if (rbNo.isChecked()) {
             result.add("no provide cleaning supplies");
         }
         TextInputEditText etRoomNumber = mMainView.findViewById(R.id.etRoomNumber);
-        if(etRoomNumber.getText().length() > 0) {
-            result.add(etRoomNumber.getText().toString()+ " rooms");
+        if (etRoomNumber.getText().length() > 0) {
+            result.add(etRoomNumber.getText().toString() + " rooms");
         }
         return result;
     }

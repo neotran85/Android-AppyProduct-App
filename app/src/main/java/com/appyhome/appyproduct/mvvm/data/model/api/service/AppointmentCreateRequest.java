@@ -74,7 +74,7 @@ public class AppointmentCreateRequest {
 
     @Override
     public String toString() {
-         return getJSONObject().toString();
+        return getJSONObject().toString();
     }
 
     public JSONObject getJSONObject() {

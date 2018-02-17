@@ -10,7 +10,6 @@ import com.molpay.molpayxdk.MOLPayActivity;
 import java.util.HashMap;
 
 public class PaymentManager {
-    private static PaymentManager mInstance;
     private static final String BILL_DESCRIPTION = "Appyhome Service Payment";
     private static final String MERCHANT_ID = "appyhomeplus";
     private static final String USERNAME = "api_appyhomeplus";
@@ -20,6 +19,7 @@ public class PaymentManager {
     private static final String MULTIPLE = "multi";
     private static final String CURRENCY = "MYR";
     private static final String COUNTRY = "MY";
+    private static PaymentManager mInstance;
 
     private PaymentManager() {
 

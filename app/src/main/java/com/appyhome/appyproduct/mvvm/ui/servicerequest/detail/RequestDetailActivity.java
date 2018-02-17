@@ -25,13 +25,10 @@ import javax.inject.Inject;
 
 public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBinding, RequestItemViewModel> implements RequestItemNavigator, View.OnClickListener {
 
+    private static final int REQUEST_BARCODE_CAPTURE = 9001;
     @Inject
     RequestItemViewModel mRequestItemViewModel;
-
     ActivityRequestDetailBinding mBinder;
-
-    private static final int REQUEST_BARCODE_CAPTURE = 9001;
-
     private int mType = 0;
     private String mIdNumber = "";
 
@@ -169,7 +166,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     AppLogger.d("barcodeValue: " + barcode.displayValue);
-                    if(barcode.displayValue.equals(mRequestItemViewModel.getEditCode())) {
+                    if (barcode.displayValue.equals(mRequestItemViewModel.getEditCode())) {
                         // CODE MATCHED & ALLOW USER TO EDIT THE DETAIL
                         allowUserEditDetail();
                         return;

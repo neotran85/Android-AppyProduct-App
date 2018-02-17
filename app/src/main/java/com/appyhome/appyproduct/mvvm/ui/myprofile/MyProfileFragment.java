@@ -54,6 +54,7 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public void onResume() {
         super.onResume();

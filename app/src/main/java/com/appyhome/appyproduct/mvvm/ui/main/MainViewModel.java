@@ -5,7 +5,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 public class MainViewModel extends BaseViewModel<MainNavigator> {
-   public MainViewModel(DataManager dataManager,
+    public MainViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }

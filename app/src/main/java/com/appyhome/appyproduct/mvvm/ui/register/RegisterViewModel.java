@@ -58,6 +58,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                     }
                 }));
     }
+
     public void doVerifyUser() {
         getCompositeDisposable().add(getDataManager()
                 .verifyUser()

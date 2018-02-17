@@ -27,11 +27,13 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         super.onCreate(savedInstanceState);
         mSplashViewModel.setNavigator(this);
     }
+
     @Override
     public void onResume() {
         super.onResume();
         mSplashViewModel.setUp();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

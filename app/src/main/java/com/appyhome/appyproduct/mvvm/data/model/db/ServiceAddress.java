@@ -55,7 +55,7 @@ public class ServiceAddress {
             city = object.getString("city");
             code = object.getString("code");
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
 
         }
         return false;

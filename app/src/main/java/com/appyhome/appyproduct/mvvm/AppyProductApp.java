@@ -7,13 +7,13 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.appyhome.appyproduct.mvvm.di.component.DaggerAppComponent;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
-
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
 import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class AppyProductApp extends Application implements HasActivityInjector {
