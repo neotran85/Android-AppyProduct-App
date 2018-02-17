@@ -13,4 +13,56 @@
     <string name="services">Services</string>
     <string name="booking_offer">Booking Offer(s)</string>
     <string name="touch_to_choose_the_service_as_below">Touch to choose the service as below</string>
+    <string name="our_scheduling_faq">OUR SCHEDULING FAQ</string>
+    <string name="step2_warning_date_time">Please select the date and time for an appointment.</string>
+    <string name="step3_warning_location">Please fill your address.</string>
+    <string name="please_select_the_exact_time">Please select the exact time.</string>
+    <string name="additional_services_if_time_permits">Additional Services (if time permits)</string>
+    <string name="if_you_need_additional_services_please_let_us_know">If you need additional services, please let us know</string>
+    <string name="if_the_above_questions_are_not_enough_to_accurately_describe_your_job_request_please_add_a_text_description_here">If the above questions are not enough to accurately describe your job request, please add a text description here.</string>
+    <string name="schedule_your_session">Schedule your session</string>
+    <string name="please_choose_at_least_one_time_slot_below_adding_more_slots_will_help_us_confirm_without_going_front_and_back">Please choose at least one time slot below, adding more slots will help us confirm without going front and back.</string>
+    <string name="add_a_timeslot">+ Add a timeslot</string>
+    <string name="add_an_alternative_timeslot">+ Add an alternative timeslot</string>
+    <string name="i_am_flexible_30_mins_earlier_or_later">I am flexible 30 mins earlier or later.</string>
+    <string name="please_inform_your_apartment_security">Please inform your apartment security before the service visit, to make sure you comply with contractor visit hours</string>
+    <string name="set_location">Set Location</string>
+    <string name="search_your_location_on_map">Search your location on map</string>
+    <string name="your_address">Your Address</string>
+    <string name="building_street_name">BUILDING STREET NAME</string>
+    <string name="unit_house_number">UNIT / HOUSE NUMBER</string>
+    <string name="area_line_1">AREA LINE 1</string>
+    <string name="area_line_2">AREA LINE 2</string>
+    <string name="city_town">CITY / TOWN</string>
+    <string name="post_code">POST CODE</string>
+    <string name="save_this_address_for_future_requests">Save this address for future requests.</string>
+
+    <!--Payment-->
+    <string name="payment_success">Payment success</string>
+    <string name="payment_error_something">Payment error. Please try again later.</string>
+    <string name="payment_advice">Please do the payment before completing the order</string>
+
+    <!-- Services -->
+    <string name="awaiting_schedule_confirmation">AWAITING SCHEDULE CONFIRMATION</string>
+    <string name="pending_execution">PENDING_EXECUTION</string>
+    <string name="closed_status">COMPLETED</string>
+    <string name="mark_order_completed">Thank you for your feedback.</string>
+    <string name="login_to_book_service">complete booking the service.</string>
+    <string name="number_of_air_cons">Number of air cons</string>
+    <string name="add_promo_code_coming_soon">+ Add Promo Code (Coming soon)</string>
+    <string name="total">TOTAL</string>
+    <string name="additional_services">Additional Services</string>
+    <string name="scheduled_for">Scheduled for</string>
+    <string name="additional_detail">Additional Detail</string>
+    <string name="your_address">Your Address</string>
+    <string name="pay_credit_debit_card">Pay Credit/Debit card</string>
+    <string name="pay_by_bank">Pay by Bank</string>
+    <string name="summary_of">SUMMARY OF</string>
+    <string name="incl_gst">incl. GST</string>
+    <string name="congratulations">CONGRATULATIONS</string>
+    <string name="we_will_contact_you_once_the_appointment_is_confirmed">We will contact you once the appointment is confirmed.</string>
+    <string name="you_will_be_contacted_via">You will be contacted via</string>
+    <string name="phone_contact">0146302577</string>
+    <string name="view_requests">VIEW REQUESTS</string>
+    <string name="back_to_home_screen">BACK TO HOME SCREEN</string>
 </resources>

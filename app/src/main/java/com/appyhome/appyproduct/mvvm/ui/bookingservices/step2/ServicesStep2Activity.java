@@ -116,7 +116,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     public void viewReadOurSchedulingFAQ() {
-        AlertManager.getInstance(this).openInformationBrowser("OUR SCHEDULING FAQ",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.our_scheduling_faq),
                 ApiUrlConfig.URL_SCHEDULING_FAQ);
     }
 
@@ -153,7 +153,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void onCancel(DialogInterface dialogInterface) {
-        AlertManager.getInstance(this).showLongToast("Please select the exact time.");
+        AlertManager.getInstance(this).showLongToast(getString(R.string.please_select_the_exact_time));
     }
 
     private void openTimePicker(Calendar selected) {

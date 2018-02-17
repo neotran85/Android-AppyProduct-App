@@ -59,7 +59,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:text="SUMMARY OF"
+                                android:text="@string/summary_of"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -92,7 +92,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:text="Number of air cons"
+                                    android:text="@string/number_of_air_cons"
                                     android:textColor="@color/black"
                                     android:textSize="14sp" />
 
@@ -117,7 +117,7 @@
                             android:layout_marginLeft="20dp"
                             android:background="@null"
                             android:gravity="center_vertical|left"
-                            android:text="+ Add Promo Code (Coming soon)"
+                            android:text="@string/add_promo_code_coming_soon"
                             android:textColor="@color/light_green"
                             android:textSize="14sp" />
 
@@ -145,7 +145,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:text="TOTAL"
+                                    android:text="@string/total"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
                                 <TextView
@@ -153,7 +153,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:text="incl. GST"
+                                    android:text="@string/incl_gst"
                                     android:textColor="@color/semi_gray"
                                     android:textSize="11sp" />
                             </LinearLayout>
@@ -168,7 +168,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="RM"
+                                    android:text="@string/rm"
                                     android:textColor="@color/dark_gray"
                                     android:textSize="12sp" />
 
@@ -197,7 +197,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="Additional Services"
+                            android:text="@string/additional_services"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:visibility="@{viewModel.isAdditionalServiceViewVisible()}" />
@@ -218,7 +218,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="Scheduled for"
+                            android:text="@string/scheduled_for"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -255,7 +255,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="Your Address"
+                            android:text="@string/your_address"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -274,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="Additional Detail"
+                            android:text="@string/additional_detail"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:visibility="@{viewModel.isAdditionalDetailViewVisible()}" />
@@ -307,7 +307,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="Pay Credit/Debit card"
+                            android:text="@string/pay_credit_debit_card"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -344,7 +344,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="Pay by Bank"
+                            android:text="@string/pay_by_bank"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -375,7 +375,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
                 android:foreground="?attr/selectableItemBackground"
-                android:text="FINISH"
+                android:text="@string/finish"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -50,14 +50,14 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Additional Services (if time permits)"
+                            android:text="@string/additional_services_if_time_permits"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="If you need additional services, please let us know"
+                            android:text="@string/if_you_need_additional_services_please_let_us_know"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -87,7 +87,7 @@
                             android:layout_marginTop="12dp"
                             android:background="@drawable/input_text_rounded_light_gray_bg"
                             android:gravity="top|left"
-                            android:hint="If the above questions are not enough to accurately describe your job request, please add a text description here."
+                            android:hint="@string/if_the_above_questions_are_not_enough_to_accurately_describe_your_job_request_please_add_a_text_description_here"
                             android:inputType="textMultiLine"
                             android:maxLines="10"
                             android:minLines="6"
@@ -114,14 +114,14 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Schedule your session"
+                            android:text="@string/schedule_your_session"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Please choose at least one time slot below, adding more slots will help us confirm without going front and back."
+                            android:text="@string/please_choose_at_least_one_time_slot_below_adding_more_slots_will_help_us_confirm_without_going_front_and_back"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -132,7 +132,7 @@
                             android:layout_marginTop="10dp"
                             android:background="@null"
                             android:gravity="center_vertical|left"
-                            android:text="+ Add a timeslot"
+                            android:text="@string/add_a_timeslot"
                             android:textSize="14sp" />
 
                         <View
@@ -146,7 +146,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="center_vertical|left"
-                            android:text="+ Add an alternative timeslot"
+                            android:text="@string/add_an_alternative_timeslot"
                             android:textColor="@color/semi_gray"
                             android:textSize="14sp" />
 
@@ -161,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="center_vertical|left"
-                            android:text="+ Add an alternative timeslot"
+                            android:text="@string/add_an_alternative_timeslot"
                             android:textColor="@color/semi_gray"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -181,7 +181,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="I am flexible 30 mins earlier or later."
+                            android:text="@string/i_am_flexible_30_mins_earlier_or_later"
                             android:textColor="@color/black"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -205,7 +205,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="Please inform your apartment security before the service visit, to make sure you comply with contractor visit hours"
+                            android:text="@string/please_inform_your_apartment_security"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -247,7 +247,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
                 android:foreground="?attr/selectableItemBackground"
-                android:text="NEXT"
+                android:text="@string/next"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

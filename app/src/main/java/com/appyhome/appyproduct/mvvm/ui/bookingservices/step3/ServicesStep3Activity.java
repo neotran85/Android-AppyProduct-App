@@ -44,7 +44,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         mServicesStep3ViewModel.setNavigator(this);
         mBinder.setViewModel(mServicesStep3ViewModel);
         ViewUtils.setOnClickListener(this, mBinder.btnNext, mBinder.llSearchLocationNearby);
-        setTitle("Set Location");
+        setTitle(getString(R.string.set_location));
         activeBackButton();
         mServicesStep3ViewModel.updateAddress();
     }
