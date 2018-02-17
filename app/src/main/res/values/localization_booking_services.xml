@@ -43,10 +43,6 @@
     <string name="payment_advice">Please do the payment before completing the order</string>
 
     <!-- Services -->
-    <string name="awaiting_schedule_confirmation">AWAITING SCHEDULE CONFIRMATION</string>
-    <string name="pending_execution">PENDING_EXECUTION</string>
-    <string name="closed_status">COMPLETED</string>
-    <string name="mark_order_completed">Thank you for your feedback.</string>
     <string name="login_to_book_service">complete booking the service.</string>
     <string name="number_of_air_cons">Number of air cons</string>
     <string name="add_promo_code_coming_soon">+ Add Promo Code (Coming soon)</string>

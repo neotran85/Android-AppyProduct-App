@@ -2,6 +2,5 @@
 <resources>
     <string name="error_network_not_connected">Network error. Please check your internet again.</string>
     <string name="error_network_general">Internal Server Error. Please try again later.</string>
-    <string name="error_coming_soon">Sorry. This feature is coming soon.</string>
     <string name="coming_soon">Coming soon!!!</string>
 </resources>
