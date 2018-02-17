@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_choose_service">Please choose a service</string>
+    <string name="booking_ordering_faq">Booking / Ordering FAQ</string>
+    <string name="cleaning_supplies">CLEANING SUPPLIES</string>
+    <string name="aircon_type_service">Aircon type of service</string>
+    <string name="aircon_size">Aircon Size</string>
+    <string name="see_what_s_included_in_your_cleaning_session">See what\'s included in your cleaning session</string>
+    <string name="read_our_faq">READ OUR FAQ</string>
+    <string name="booking_service_read_tandt"><![CDATA[READ OUR BOOKING T&C]]></string>
+    <string name="booking_service_read_scheduling_FAQ"><![CDATA[READ OUR SCHEDULING FAQ]]></string>
+    <string name="our_booking_tc"><![CDATA[OUR BOOKING T&C]]></string>
+    <string name="services">Services</string>
+    <string name="booking_offer">Booking Offer(s)</string>
+    <string name="touch_to_choose_the_service_as_below">Touch to choose the service as below</string>
+</resources>

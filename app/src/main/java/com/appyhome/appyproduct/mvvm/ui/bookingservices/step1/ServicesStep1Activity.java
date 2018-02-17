@@ -108,21 +108,23 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 R.id.ibAirConTypeMoreInfo);
         ViewUtils.setOnClickListener(mBinder.llServiceHomeCleaning, this, R.id.ibSuppliesMoreInfo);
     }
-
+    private void pressNext() {
+        boolean selected = checkIfServiceSelected();
+        if (selected) {
+            goToStep2();
+            updateServiceOrderInfo();
+        } else AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                boolean selected = checkIfServiceSelected();
-                if (selected) {
-                    goToStep2();
-                    updateServiceOrderInfo();
-                } else AlertManager.getInstance(this).showLongToast("Please choose a service");
+                pressNext();
                 break;
             case R.id.btSeeDetailService:
                 if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService() != null)
                     viewDetailService();
-                else AlertManager.getInstance(this).showLongToast("Please choose a service");
+                else AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
                 break;
             case R.id.btOurFAQ:
                 viewOurFAQ();
@@ -225,29 +227,29 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void viewOurFAQ() {
-        AlertManager.getInstance(this).openInformationBrowser("Booking / Ordering FAQ",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.booking_ordering_faq),
                 ApiUrlConfig.URL_OUR_FAQ);
     }
 
     @Override
     public void viewOurTANDC() {
-        AlertManager.getInstance(this).openInformationBrowser("OUR BOOKING T&C",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.our_booking_tc),
                 ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
 
     @Override
     public void viewSuppliesMoreInformation() {
-        AlertManager.getInstance(this).openInformationBrowser("CLEANING SUPPLIES",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.cleaning_supplies),
                 ApiUrlConfig.URL_CLEANING_SUPPLIES);
     }
 
     public void viewAirConTypeMoreInformation() {
-        AlertManager.getInstance(this).openInformationBrowser("Aircon type of service",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.aircon_type_service),
                 ApiUrlConfig.URL_AIR_CON_TYPE_INFO);
     }
 
     public void viewAirConSizeMoreInformation() {
-        AlertManager.getInstance(this).openInformationBrowser("Aircon Size",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.aircon_size),
                 ApiUrlConfig.URL_AIR_CON_SIZE_INFO);
     }
 }

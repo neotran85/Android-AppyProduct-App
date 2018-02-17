@@ -51,14 +51,14 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Services"
+                            android:text="@string/services"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Please choose the service"
+                            android:text="@string/please_choose_service"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -105,14 +105,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:lineSpacingExtra="8dp"
-                            android:text="Booking Offer(s)"
+                            android:text="@string/booking_offer"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Touch to choose the service as below"
+                            android:text="@string/touch_to_choose_the_service_as_below"
                             android:textColor="@color/dark_gray"
                             android:textSize="12sp" />
 
@@ -139,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="See what's included in your cleaning session"
+                            android:text="@string/see_what_s_included_in_your_cleaning_session"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
 
@@ -167,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
                             android:paddingRight="6dp"
-                            android:text="READ OUR FAQ"
+                            android:text="@string/read_our_faq"
                             android:textColor="@color/colorAccent"
                             android:textSize="16sp" />
 
@@ -216,7 +216,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorAccent"
                 android:foreground="?attr/selectableItemBackground"
-                android:text="NEXT"
+                android:text="@string/next"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
