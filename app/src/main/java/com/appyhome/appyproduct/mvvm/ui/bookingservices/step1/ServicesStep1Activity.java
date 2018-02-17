@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingStep1Binding, ServicesStep1ViewModel> implements ServicesStep1Navigator, View.OnClickListener, AdapterView.OnItemClickListener {
+public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingStep1Binding, ServicesStep1ViewModel> implements ServicesStep1Navigator, View.OnClickListener, AdapterView.OnItemClickListener, RadioGroup.OnCheckedChangeListener {
 
     @Inject
     ServicesStep1ViewModel mServicesStep1ViewModel;
@@ -56,36 +56,30 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setUpMultipleExtraServices() {
-        View viewCleaning = mBinder.llServiceMain.findViewById(R.id.llCleaning);
-        View viewAirCon = mBinder.llServiceMain.findViewById(R.id.llAirCon);
-        View viewPlumbing = mBinder.llServiceMain.findViewById(R.id.llPlumbing);
-        View viewElectric = mBinder.llServiceMain.findViewById(R.id.llElectrical);
-        mMainServiceView = new ItemsSelectionView(true, viewCleaning, viewAirCon, viewPlumbing, viewElectric);
+        mMainServiceView = new ItemsSelectionView(true, mBinder.llServiceMain,
+                R.id.llCleaning, R.id.llAirCon,
+                R.id.llPlumbing, R.id.llElectrical);
         mMainServiceView.setOnClickListener(this);
-        RadioGroup rgHomeCleaning = mBinder.llServiceHomeCleaning.findViewById(R.id.rgSupplies);
-        rgHomeCleaning.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rbYes) {
-                    filteredTags = "yes_provided";
-                } else {
-                    filteredTags = "no_provided";
-                }
-                updateAdapterByFilter();
-            }
-        });
-        RadioGroup rgAirConService = mBinder.llServiceAirConCleaning.findViewById(R.id.rgTypeService);
-        rgAirConService.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rbService1) {
-                    filteredTags = "standard";
-                } else {
-                    filteredTags = "chemical";
-                }
-                updateAdapterByFilter();
-            }
-        });
+        ViewUtils.setOnCheckedChangeListener(getMainView(), this,
+                R.id.rgSupplies, R.id.rgTypeService);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rbYes:
+                filteredTags = "yes_provided";
+                break;
+            case R.id.rbNo:
+                filteredTags = "no_provided";
+                break;
+            case R.id.rbService1:
+                filteredTags = "standard";
+                break;
+            case R.id.rbService2:
+                filteredTags = "chemical";
+        }
+        updateAdapterByFilter();
     }
 
     private void updateAdapterByFilter() {
@@ -149,14 +143,17 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void updateServiceOrderInfo() {
-        if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType() == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING) {
-            AirConOptionView airConView = new AirConOptionView(mBinder.llServiceAirConCleaning);
-            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayAirConOpts(airConView.getResultStrings());
-            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setNumberOfAirCons(airConView.getNumberOfAirCons());
-        }
-        if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType() == ServiceOrderUserInput.SERVICE_HOME_CLEANING) {
-            HomeCleaningOptionView homeView = new HomeCleaningOptionView(mBinder.llServiceHomeCleaning);
-            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayHomeCleaningOpts(homeView.getResultStrings());
+        int type = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType();
+        switch (type) {
+            case ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING:
+                AirConOptionView airConView = new AirConOptionView(mBinder.llServiceAirConCleaning);
+                mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayAirConOpts(airConView.getResultStrings());
+                mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setNumberOfAirCons(airConView.getNumberOfAirCons());
+                break;
+            case ServiceOrderUserInput.SERVICE_HOME_CLEANING:
+                HomeCleaningOptionView homeView = new HomeCleaningOptionView(mBinder.llServiceHomeCleaning);
+                mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayHomeCleaningOpts(homeView.getResultStrings());
+                break;
         }
         mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setServiceMain(mMainServiceView.getSelectedStringValue());
     }

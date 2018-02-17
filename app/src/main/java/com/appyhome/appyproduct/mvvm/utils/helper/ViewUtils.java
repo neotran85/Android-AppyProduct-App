@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 
@@ -61,6 +62,15 @@ public final class ViewUtils {
         }
     }
 
+    public static void setOnCheckedChangeListener(View mainView, RadioGroup.OnCheckedChangeListener listener, int... idResources) {
+        if (mainView != null) {
+            for (int i = 0; i < idResources.length; i++) {
+                RadioGroup view = mainView.findViewById(idResources[i]);
+                if (view != null)
+                    view.setOnCheckedChangeListener(listener);
+            }
+        }
+    }
     public static void setOnClickListener(View.OnClickListener listener, View... views) {
         for (int i = 0; i < views.length; i++) {
             if (views[i] != null)

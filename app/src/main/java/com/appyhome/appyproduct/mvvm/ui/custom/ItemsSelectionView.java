@@ -13,6 +13,15 @@ public class ItemsSelectionView implements View.OnClickListener {
     private boolean mIsMultipleChoice = true;
     private View mCurrent = null;
 
+    public ItemsSelectionView(boolean isMultipleChoice, View mainView, int... idItems) {
+        mIsMultipleChoice = true;
+        mArrayItems = new ArrayList<>();
+        for (int i = 0; i < idItems.length; i++) {
+            View item = mainView.findViewById(idItems[i]);
+            mArrayItems.add(item);
+            item.setOnClickListener(this);
+        }
+    }
     public ItemsSelectionView(boolean isMultipleChoice, View... items) {
         mIsMultipleChoice = true;
         mArrayItems = new ArrayList<>();
