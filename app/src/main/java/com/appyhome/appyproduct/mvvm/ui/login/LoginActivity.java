@@ -53,30 +53,35 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         arrayTextInputs.add(mBinder.etPassword);
         for (int i = 0; i < arrayTextInputs.size(); i++) {
             final TextInputEditText edt = arrayTextInputs.get(i);
-            edt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            edt.addTextChangedListener(new LoginTextWatcher(edt));
+        }
+        showError(DataUtils.getStringSafely(getIntent(), "message"));
+    }
 
-                }
+    private class LoginTextWatcher implements TextWatcher {
+        private TextInputEditText editText;
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    edt.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
-                    edt.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
-                    showError("");
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+        public LoginTextWatcher(TextInputEditText e) {
+            editText = e;
         }
 
-        Intent data = getIntent();
-        if (data.hasExtra("message")) {
-            String message = data.getStringExtra("message");
-            showError(message);
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (editText != null) {
+                editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
+                editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
+            }
+            showError("");
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 

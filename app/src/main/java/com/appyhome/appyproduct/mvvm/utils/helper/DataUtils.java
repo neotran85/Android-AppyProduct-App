@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 
 import org.json.JSONException;
@@ -29,6 +30,15 @@ public final class DataUtils {
     public static boolean isEqualAndNotNull(String text1, String text2) {
         if (text1 == null || text2 == null) return false;
         return text1.equals(text2);
+    }
+
+    public static String getStringSafely(Intent object, String key) {
+        if (object.hasExtra(key)) {
+            String value = object.getStringExtra(key);
+            if (value != null)
+                return value;
+        }
+        return "";
     }
 
     public static String getStringSafely(JSONObject object, String key) {
