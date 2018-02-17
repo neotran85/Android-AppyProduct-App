@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONException;
@@ -54,7 +55,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     private String phoneNumber = "";
 
 
-
     public RequestItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -72,83 +72,52 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public void processData(JSONObject item, int type) {
         mType = type;
         try {
-            AppLogger.d("setUp: hasID: " + item.has("id"));
+            mIdNumber = DataUtils.getStringSafely(item, "id");
+            editCode = DataUtils.getStringSafely(item, "edit_code");
+            phoneNumber = DataUtils.getStringSafely(item, "phone_number");
+            safetyCode.set(DataUtils.getStringSafely(item, "safety_code"));
+            statusOfOrder.set(DataUtils.getStringSafely(item, "status"));
 
-            if (item.has("id"))
-                mIdNumber = item.getString("id");
-            if (item.has("edit_code")) {
-                editCode = item.getString("edit_code");
-                AppLogger.d("setUp: editCode: " + editCode);
-            }
-            if (item.has("phone_number")) {
-                phoneNumber = item.getString("phone_number");
-                AppLogger.d("setUp: phone: " + phoneNumber);
-            }
-            if (item.has("safety_code")) {
-                safetyCode.set(item.getString("safety_code"));
-            }
-            if (item.has("status")) {
-                statusOfOrder.set(item.getString("status"));
-                isConfirmationVisible.set(isConfirmationVisible());
-                isSafetyCodeVisible.set(isSafetyCodeVisible());
-                isStatusViewVisible.set(isStatusVisible());
-            }
-            if (item.has("rating")) {
-                try {
-                    String rate = item.getString("rating");
-                    rating.set(Float.parseFloat(rate));
-                } catch (Exception e) {
+            isConfirmationVisible.set(isConfirmationVisible());
+            isSafetyCodeVisible.set(isSafetyCodeVisible());
+            isStatusViewVisible.set(isStatusVisible());
 
-                }
+            rating.set(Float.parseFloat(DataUtils.getStringSafely(item, "rating")));
+
+            String serviceString = DataUtils.getStringSafely(item, "services");
+            if (serviceString.contains("{")) {
+                JSONObject temp = new JSONObject(serviceString);
+                String tempStr = DataUtils.getStringSafely(temp, "service1");
+                String[] result = tempStr.split("::");
+                this.title.set(result[0]);
+                this.price.set(result[1]);
+            } else {
+                this.title.set(serviceString);
+                String priceString = DataUtils.getStringSafely(item, "price");
+                this.price.set(priceString);
             }
-            if (item.has("services")) {
-                String serviceString = item.getString("services");
-                if (serviceString.contains("{")) {
-                    JSONObject temp = new JSONObject(serviceString);
-                    String tempStr = temp.getString("service1");
-                    String[] result = tempStr.split("::");
-                    this.title.set(result[0]);
-                    this.price.set(result[1]);
-                } else {
-                    this.title.set(serviceString);
-                    String priceString = item.getString("price");
-                    this.price.set(priceString);
-                }
-            }
-            if (item.has("address")) {
-                this.address.set(item.getString("address"));
-                AppLogger.d("setUp: address: " + item.getString("address"));
-            }
-            if (item.has("time")) {
-                this.timeCreated.set(item.getString("time"));
-            }
+            address.set(DataUtils.getStringSafely(item, "address"));
+            timeCreated.set(DataUtils.getStringSafely(item, "time"));
+
             if (item.has("archived_at")) {
                 this.timeCreated.set(item.getString("archived_at"));
                 isStatusViewVisible.set(isStatusVisible());
                 this.statusText.set(RequestStatus.CLOSED);
             }
-            if (item.has("datetime")) {
-                String dateTimeStr = item.getString("datetime");
-                if (dateTimeStr.contains("{")) {
-                    JSONObject datetime = new JSONObject(dateTimeStr);
-                    if (datetime != null) {
-                        if (datetime.has("datetime1")) {
-                            dateTime1.set(datetime.getString("datetime1"));
-                            isTimeSlot1Visible.set(isTimeSlot1Visible());
-                        }
-                        if (datetime.has("datetime2")) {
-                            dateTime2.set(datetime.getString("datetime2"));
-                            isTimeSlot2Visible.set(isTimeSlot2Visible());
-                        }
-                        if (datetime.has("datetime3")) {
-                            dateTime3.set(datetime.getString("datetime3"));
-                            isTimeSlot3Visible.set(isTimeSlot3Visible());
-                        }
-                    }
-                } else {
-                    dateTime1.set(dateTimeStr);
+            String dateTimeStr = DataUtils.getStringSafely(item, "datetime");
+            if (dateTimeStr.contains("{")) {
+                JSONObject datetime = new JSONObject(dateTimeStr);
+                if (datetime != null) {
+                    dateTime1.set(DataUtils.getStringSafely(datetime, "datetime1"));
                     isTimeSlot1Visible.set(isTimeSlot1Visible());
+                    dateTime2.set(DataUtils.getStringSafely(datetime, "datetime2"));
+                    isTimeSlot2Visible.set(isTimeSlot2Visible());
+                    dateTime3.set(DataUtils.getStringSafely(datetime, "datetime3"));
+                    isTimeSlot3Visible.set(isTimeSlot3Visible());
                 }
+            } else {
+                dateTime1.set(dateTimeStr);
+                isTimeSlot1Visible.set(isTimeSlot1Visible());
             }
 
             if (item.has("additional")) {
@@ -309,6 +278,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public String getEditCode() {
         return editCode;
     }
+
     public void setEditCode(String code) {
         editCode = code;
     }
