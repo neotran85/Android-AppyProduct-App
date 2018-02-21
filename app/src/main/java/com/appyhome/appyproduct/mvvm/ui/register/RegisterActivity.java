@@ -20,8 +20,6 @@ import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, RegisterViewModel> implements RegisterNavigator {
@@ -30,8 +28,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     RegisterViewModel mRegisterViewModel;
 
     ActivityRegisterBinding mBinder;
-
-    private ArrayList<TextInputEditText> mArrayTextInputs;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
@@ -45,44 +41,45 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         mBinder.setViewModel(mRegisterViewModel);
         mRegisterViewModel.setNavigator(this);
 
-        mArrayTextInputs = new ArrayList<>();
-        mArrayTextInputs.add(mBinder.etFirstName);
-        mArrayTextInputs.add(mBinder.etLastName);
-        mArrayTextInputs.add(mBinder.etEmailAddress);
-        mArrayTextInputs.add(mBinder.etNumberPhone);
-        mArrayTextInputs.add(mBinder.etAccountPassword);
-        mArrayTextInputs.add(mBinder.etRetypedPassword);
-        for (int i = 0; i < mArrayTextInputs.size(); i++) {
-            final TextInputEditText edt = mArrayTextInputs.get(i);
-            edt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        TextInputEditText[] arrayTextInputs = {mBinder.etFirstName, mBinder.etLastName,
+                mBinder.etEmailAddress, mBinder.etNumberPhone,
+                mBinder.etAccountPassword, mBinder.etRetypedPassword};
 
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    edt.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.white));
-                    edt.setHintTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.hint_text));
-                    showError("");
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+        for (TextInputEditText edt : arrayTextInputs) {
+            edt.addTextChangedListener(new InputTextWatcher(edt));
         }
+
         if (getIntent().hasExtra("phone")) {
             mBinder.etNumberPhone.setText(getIntent().getStringExtra("phone"));
+        }
+    }
+
+    private class InputTextWatcher implements TextWatcher {
+        private TextInputEditText edt;
+
+        public InputTextWatcher(TextInputEditText et) {
+            edt = et;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            clearTextInputError(edt);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mArrayTextInputs.clear();
-        mArrayTextInputs = null;
     }
 
     @Override
@@ -181,6 +178,12 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     public int getLayoutId() {
         return R.layout.activity_register;
+    }
+
+    private void clearTextInputError(TextInputEditText edt) {
+        edt.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.white));
+        edt.setHintTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.hint_text));
+        showError("");
     }
 
     private void showTextInputError(TextInputEditText edt) {
