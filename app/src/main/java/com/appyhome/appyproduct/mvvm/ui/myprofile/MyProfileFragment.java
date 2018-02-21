@@ -24,11 +24,7 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     @Inject
     MyProfileViewModel mMyProfileViewModel;
     FragmentMyProfileBinding mBinder;
-    private int etCurrent;
-
-    private TextInputUIHandler mTextInputHandler;
     private TextInputDialog mTextInputDialog;
-
     private String[] mPhoneHints;
     private String[] mPasswordHints;
     private String[] mEmailHints;
@@ -74,8 +70,7 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
                 "", "", ""};
         mEmailHints = new String[]{getResources().getString(R.string.my_profile_hint_email),
                 "", "", ""};
-
-        setTitle("My Profile");
+        setTitle(getString(R.string.my_profile));
         mBinder.tvLogout.setOnClickListener(this);
     }
 
