@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
+import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 
 public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
@@ -174,14 +175,21 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         return dateTime1.get() != null && dateTime1.get().length() > 0 ? View.VISIBLE : View.GONE;
     }
 
+    interface TypeRequestData {
+        Single<JSONObject> getRequestData(DataManager manager, String id);
+
+        String getDateLabel();
+    }
+
     public void fetchData(String id, final int type) {
         setIsLoading(true);
         setIdNumber(id);
         mType = type;
-        if (type == RequestType.TYPE_REQUEST) {
-            timeCreatedLabel.set("Created at:");
-            getCompositeDisposable().add(getDataManager()
-                    .getAppointment(new AppointmentGetRequest(id))
+        if (mType >= 0 && mType < mArrayTypeRequest.length) {
+            Single<JSONObject> target = mArrayTypeRequest[mType]
+                    .getRequestData(getDataManager(), id);
+
+            getCompositeDisposable().add(target
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(new Consumer<JSONObject>() {
@@ -196,44 +204,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                             setIsLoading(false);
                         }
                     }));
-        }
-        if (type == RequestType.TYPE_ORDER) {
-            timeCreatedLabel.set("Validated at:");
-            getCompositeDisposable().add(getDataManager()
-                    .getOrder(new OrderGetRequest(id))
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<JSONObject>() {
-                        @Override
-                        public void accept(JSONObject response) throws Exception {
-                            setIsLoading(false);
-                            handleResult(response);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            setIsLoading(false);
-                        }
-                    }));
-        }
-        if (type == RequestType.TYPE_CLOSED) {
-            timeCreatedLabel.set("Archived at:");
-            getCompositeDisposable().add(getDataManager()
-                    .getReceipt(new ReceiptGetRequest(id))
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<JSONObject>() {
-                        @Override
-                        public void accept(JSONObject response) throws Exception {
-                            setIsLoading(false);
-                            handleResult(response);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            setIsLoading(false);
-                        }
-                    }));
+            timeCreatedLabel.set(mArrayTypeRequest[mType].getDateLabel());
         }
     }
 
@@ -282,4 +253,34 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public void setEditCode(String code) {
         editCode = code;
     }
+
+    private TypeRequestData[] mArrayTypeRequest = new TypeRequestData[]{
+            new TypeRequestData() {
+                public Single<JSONObject> getRequestData(DataManager manager, String id) {
+                    return manager.getAppointment(new AppointmentGetRequest(id));
+                }
+
+                public String getDateLabel() {
+                    return "Created at:";
+                }
+            },
+            new TypeRequestData() {
+                public Single<JSONObject> getRequestData(DataManager manager, String id) {
+                    return manager.getOrder(new OrderGetRequest(id));
+                }
+
+                public String getDateLabel() {
+                    return "Validated at:";
+                }
+            },
+            new TypeRequestData() {
+                public Single<JSONObject> getRequestData(DataManager manager, String id) {
+                    return manager.getReceipt(new ReceiptGetRequest(id));
+                }
+
+                public String getDateLabel() {
+                    return "Archived at:";
+                }
+            }
+    };
 }
