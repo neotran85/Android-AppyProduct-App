@@ -22,8 +22,6 @@ import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator, View.OnClickListener {
@@ -48,14 +46,19 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         ViewUtils.setOnClickListener(this, mBinder.btnForgetPassword,
                 mBinder.btnSignUp);
 
-        ArrayList<TextInputEditText> arrayTextInputs = new ArrayList<>();
-        arrayTextInputs.add(mBinder.etPhoneNumber);
-        arrayTextInputs.add(mBinder.etPassword);
-        for (int i = 0; i < arrayTextInputs.size(); i++) {
-            final TextInputEditText edt = arrayTextInputs.get(i);
+        TextInputEditText[] arrayTextInputs = {mBinder.etPhoneNumber, mBinder.etPassword};
+        for (TextInputEditText edt : arrayTextInputs) {
             edt.addTextChangedListener(new LoginTextWatcher(edt));
         }
         showError(DataUtils.getStringSafely(getIntent(), "message"));
+    }
+
+    private void clearTextInputError(TextInputEditText editText) {
+        if (editText != null) {
+            editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
+            editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
+        }
+        showError("");
     }
 
     private class LoginTextWatcher implements TextWatcher {
@@ -72,11 +75,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (editText != null) {
-                editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
-                editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
-            }
-            showError("");
+            clearTextInputError(editText);
         }
 
         @Override
