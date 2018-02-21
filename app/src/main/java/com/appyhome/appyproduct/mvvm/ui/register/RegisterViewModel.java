@@ -104,26 +104,23 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 }));
     }
 
-    private void handleLoginResponse(LoginResponse response) {
-        if (response == null || response.getStatusCode() == null
-                || response.getStatusCode().length() <= 0
-                || response.getMessage() == null
-                || response.getMessage().length() <= 0) {
-            getNavigator().showErrorServer();
-            return;
-        }
-        String statusCode = response.getStatusCode();
-        String message = response.getMessage();
-        if (statusCode.equals(ApiCode.OK_200)) {
-            if (message != null && message.length() > 0) {
-                setAccessToken(message);
-                setEmailUser(mEmail);
-                setPhoneNumber(mPhoneNumber);
-                getDataManager().updateApiHeader(message);
-                doVerifyUser();
+    private void handleLoginResponse(LoginResponse loginResponse) {
+        if (loginResponse != null && !loginResponse.isEmpty()) {
+            String statusCode = loginResponse.getStatusCode();
+            String message = loginResponse.getMessage();
+            if (statusCode.equals(ApiCode.OK_200)) {
+                if (message != null && message.length() > 0) {
+                    setAccessToken(message);
+                    setEmailUser(mEmail);
+                    setPhoneNumber(mPhoneNumber);
+                    getDataManager().updateApiHeader(message);
+                    doVerifyUser();
+                    return;
+                }
             }
-        } else
-            getNavigator().showErrorOthers();
+        }
+        // Unknown Error.
+        getNavigator().showErrorOthers();
     }
 
     public void setAccessToken(String token) {

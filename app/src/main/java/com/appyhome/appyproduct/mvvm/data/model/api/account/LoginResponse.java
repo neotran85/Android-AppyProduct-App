@@ -50,4 +50,11 @@ public class LoginResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public boolean isEmpty() {
+        return getStatusCode() == null
+                || getStatusCode().length() <= 0
+                || getMessage() == null
+                || getMessage().length() <= 0;
+    }
 }
