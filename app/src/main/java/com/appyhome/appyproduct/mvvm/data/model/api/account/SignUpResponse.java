@@ -55,4 +55,11 @@ public class SignUpResponse {
     public String toString() {
         return "status_code = " + getStatusCode() + " | " + "message = " + getMessage();
     }
+
+    public boolean isEmpty() {
+        return getStatusCode() == null
+                || getStatusCode().length() <= 0
+                || getMessage() == null
+                || getMessage().length() <= 0;
+    }
 }

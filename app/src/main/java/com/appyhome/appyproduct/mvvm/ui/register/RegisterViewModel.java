@@ -136,15 +136,8 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
     }
 
     private void handleSignUpResponse(SignUpResponse response) {
-        if (response == null || response.getStatusCode() == null
-                || response.getStatusCode().length() <= 0
-                || response.getMessage() == null
-                || response.getMessage().length() <= 0) {
-            getNavigator().showErrorServer();
-            return;
-        }
-        String message = response.getMessage();
-        if (message != null) {
+        if (response != null && !response.isEmpty()) {
+            String message = response.getMessage();
             if (message.equals(ApiMessage.PHONE_NUMBER_DUPLICATE)) {
                 getNavigator().showErrorPhoneDuplicated();
                 return;
