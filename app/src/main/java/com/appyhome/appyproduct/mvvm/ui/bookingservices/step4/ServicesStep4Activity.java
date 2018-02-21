@@ -8,6 +8,7 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep4Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step1.ServicesAdapter;
@@ -64,8 +65,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     private void setUpData() {
         mServicesStep4ViewModel.setUpData();
         mServicesList = new ArrayList<>();
-        mServicesList.add(mServicesStep4ViewModel.getDataManager()
-                .getServiceOrderUserInput().getSelectedService());
+        mServicesList.add(getOrderUserInput().getSelectedService());
         mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
         mAppointmentId = setAppointmentId();
     }
@@ -73,8 +73,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     private String setAppointmentId() {
         String id = System.currentTimeMillis() + "";
-        mServicesStep4ViewModel.getDataManager()
-                .getServiceOrderUserInput().setAppointmentId(id);
+        getOrderUserInput().setAppointmentId(id);
         return id;
     }
 
@@ -142,7 +141,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
                     // PAYMENT SUCCESS
                     String txn_ID = result.getString("txn_ID");
                     AppLogger.d(txn_ID);
-                    mServicesStep4ViewModel.getDataManager().getServiceOrderUserInput().setTxn_ID(txn_ID);
+                    getOrderUserInput().setTxn_ID(txn_ID);
                     goToStep5();
                     AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
                 }
@@ -153,5 +152,9 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
             AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
         }
 
+    }
+
+    private ServiceOrderUserInput getOrderUserInput() {
+        return getViewModel().getDataManager().getServiceOrderUserInput();
     }
 }

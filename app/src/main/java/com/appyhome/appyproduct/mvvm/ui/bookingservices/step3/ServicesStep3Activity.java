@@ -10,6 +10,7 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4Activity;
@@ -74,7 +75,11 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 + mBinder.etAreaLine2.getText().toString() + ", "
                 + mBinder.etCityTown.getText().toString() + " "
                 + postcode;
-        mServicesStep3ViewModel.getDataManager().getServiceOrderUserInput().setAddress(address);
+        getOrderUserInput().setAddress(address);
+    }
+
+    private ServiceOrderUserInput getOrderUserInput() {
+        return getViewModel().getDataManager().getServiceOrderUserInput();
     }
 
     @Override

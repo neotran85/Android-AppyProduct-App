@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep5Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
@@ -34,7 +35,7 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         mBinder.setViewModel(mServicesStep5ViewModel);
         mServicesStep5ViewModel.setNavigator(this);
         ViewUtils.setOnClickListener(this, mBinder.btnNext, mBinder.btnViewRequest);
-        mServicesStep5ViewModel.createAppointment(mServicesStep5ViewModel.getDataManager().getServiceOrderUserInput().getAppointmentCreateRequest());
+        mServicesStep5ViewModel.createAppointment(getOrderUserInput().getAppointmentCreateRequest());
     }
 
     @Override
@@ -100,5 +101,9 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
     public void handleErrorService(Throwable throwable) {
         AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
         this.finish();
+    }
+
+    private ServiceOrderUserInput getOrderUserInput() {
+        return getViewModel().getDataManager().getServiceOrderUserInput();
     }
 }

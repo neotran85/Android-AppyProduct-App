@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep2Binding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -55,6 +56,10 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         setUpListeners();
         setUpMultipleExtraServices();
     }
+    
+    private ServiceOrderUserInput getOrderUserInput() {
+        return getViewModel().getDataManager().getServiceOrderUserInput();
+    }
 
     private void setUpListeners() {
         mBinder.btnNext.setOnClickListener(this);
@@ -73,14 +78,14 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
             public void afterTextChanged(Editable s) {
                 String text = mBinder.etAdditionalInfo.getText().toString();
                 if (text != null && text.length() > 0) {
-                    mServicesStep2ViewModel.getDataManager().getServiceOrderUserInput().setAdditionalInfo(text);
+                    getOrderUserInput().setAdditionalInfo(text);
                 }
             }
         });
         mBinder.cbFlexible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mServicesStep2ViewModel.getDataManager().getServiceOrderUserInput().setFlexible(isChecked);
+                getOrderUserInput().setFlexible(isChecked);
             }
         });
 

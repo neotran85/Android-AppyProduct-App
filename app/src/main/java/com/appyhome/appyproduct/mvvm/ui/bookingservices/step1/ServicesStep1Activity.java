@@ -48,13 +48,15 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mServicesStep1ViewModel);
         mServicesStep1ViewModel.setNavigator(this);
-        setTitle(mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getServiceName());
+        setTitle(getOrderUserInput().getServiceName());
         activeBackButton();
         setUpData();
         setUpListeners();
         setUpMultipleExtraServices();
     }
-
+    private ServiceOrderUserInput getOrderUserInput() {
+        return getViewModel().getDataManager().getServiceOrderUserInput();
+    }
     private void setUpMultipleExtraServices() {
         mMainServiceView = new ItemsSelectionView(true, mBinder.llServiceMain,
                 R.id.llCleaning, R.id.llAirCon,
@@ -93,7 +95,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void setUpData() {
-        mServicesStep1ViewModel.setTypeServices(mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType());
+        mServicesStep1ViewModel.setTypeServices(getOrderUserInput().getType());
         updateAdapterByFilter();
     }
 
@@ -122,7 +124,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 pressNext();
                 break;
             case R.id.btSeeDetailService:
-                if (mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService() != null)
+                if (getOrderUserInput().getSelectedService() != null)
                     viewDetailService();
                 else AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
                 break;
@@ -145,23 +147,23 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     private void updateServiceOrderInfo() {
-        int type = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getType();
+        int type = getOrderUserInput().getType();
         switch (type) {
             case ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING:
                 AirConOptionView airConView = new AirConOptionView(mBinder.llServiceAirConCleaning);
-                mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayAirConOpts(airConView.getResultStrings());
-                mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setNumberOfAirCons(airConView.getNumberOfAirCons());
+                getOrderUserInput().setArrayAirConOpts(airConView.getResultStrings());
+                getOrderUserInput().setNumberOfAirCons(airConView.getNumberOfAirCons());
                 break;
             case ServiceOrderUserInput.SERVICE_HOME_CLEANING:
                 HomeCleaningOptionView homeView = new HomeCleaningOptionView(mBinder.llServiceHomeCleaning);
-                mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setArrayHomeCleaningOpts(homeView.getResultStrings());
+                getOrderUserInput().setArrayHomeCleaningOpts(homeView.getResultStrings());
                 break;
         }
-        mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setServiceMain(mMainServiceView.getSelectedStringValue());
+        getOrderUserInput().setServiceMain(mMainServiceView.getSelectedStringValue());
     }
 
     private boolean checkIfServiceSelected() {
-        AppyService data = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService();
+        AppyService data = getOrderUserInput().getSelectedService();
         if (data != null) {
             String nameService = data.name;
             return nameService != null && nameService.length() > 0;
@@ -203,7 +205,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void viewDetailService() {
-        AppyService data = mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().getSelectedService();
+        AppyService data = getOrderUserInput().getSelectedService();
         if (data != null) {
             Intent intent = TextDetailActivity.getStartIntent(this);
             intent.putExtra("title", data.name);
@@ -220,7 +222,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         if (view != null) {
             mCurrentServiceView = view;
             mSelectedServiceIndex = position;
-            mServicesStep1ViewModel.getDataManager().getServiceOrderUserInput().setSelectedService(mServicesList.get(position));
+            getOrderUserInput().setSelectedService(mServicesList.get(position));
             view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
         }
     }
