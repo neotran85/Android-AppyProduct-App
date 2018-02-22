@@ -8,7 +8,7 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -55,6 +55,10 @@ android {
     }
     productFlavors {
     }
+}
+
+realm {
+    syncEnabled = true;
 }
 
 dependencies {

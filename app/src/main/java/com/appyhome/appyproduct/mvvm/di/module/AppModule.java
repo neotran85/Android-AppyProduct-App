@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.di.module;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
@@ -9,7 +8,6 @@ import com.appyhome.appyproduct.mvvm.BuildConfig;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.AppDataManager;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.AppDatabase;
 import com.appyhome.appyproduct.mvvm.data.local.db.AppDbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.AppPreferencesHelper;
@@ -27,6 +25,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 @Module
@@ -69,9 +68,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AppDatabase provideAppDatabase(@DatabaseInfo String dbName, Context context) {
-        return Room.databaseBuilder(context, AppDatabase.class, dbName).fallbackToDestructiveMigration()
-                .build();
+    Realm provideRealm() {
+        return Realm.getDefaultInstance();
     }
 
     @Provides

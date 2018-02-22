@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
@@ -26,7 +27,6 @@ import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
-import com.appyhome.appyproduct.mvvm.data.model.db.User;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
@@ -44,6 +44,7 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -82,13 +83,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Boolean> insertUser(User user) {
-        return mDbHelper.insertUser(user);
+    public Flowable<User> getUserByPhoneNumber(String phoneNumber) {
+        return mDbHelper.getUserByPhoneNumber(phoneNumber);
     }
 
     @Override
-    public Observable<List<User>> getAllUsers() {
-        return mDbHelper.getAllUsers();
+    public Flowable<User> createNewUser() {
+        return mDbHelper.createNewUser();
     }
 
     @Override

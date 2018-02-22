@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.login;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -49,40 +50,40 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     private void handleLoginResponse(LoginResponse response) {
-        if (response == null || response.getStatusCode() == null
-                || response.getStatusCode().length() <= 0
-                || response.getMessage() == null
-                || response.getMessage().length() <= 0) {
-            getNavigator().showErrorServer();
-            return;
-        }
-        String statusCode = response.getStatusCode();
-        String message = response.getMessage();
-        if (statusCode.equals(ApiCode.OK_200)) {
-            if (message != null && message.length() > 0) {
-                setAccessToken(message);
-                setPhoneNumber(mPhoneNumber);
-                getDataManager().updateApiHeader(message);
-                getNavigator().showSuccessLogin();
-                getNavigator().doAfterLoginSucceeded();
-            }
-        } else {
-            // Failed
-            if (mTryCounter == 0) {
-                login("+" + mPhoneNumber, mPassword);
-            } else {
-                // Account is exist
-                if (message != null) {
-                    if (message.equals(ApiMessage.INVALID_PHONE_NUMBER))
-                        // Account is not exist
-                        getNavigator().showSignUpDialog();
-                    else
-                        // Phone number is invalid
-                        getNavigator().showErrorOthers();
+        if (response != null && !response.isEmpty()) {
+            String statusCode = response.getStatusCode();
+            String message = response.getMessage();
+            if (statusCode.equals(ApiCode.OK_200)) {
+                if (message != null && message.length() > 0) {
+                    setAccessToken(message);
+                    setPhoneNumber(mPhoneNumber);
+                    getDataManager().updateApiHeader(message);
+                    getNavigator().showSuccessLogin();
+                    getNavigator().doAfterLoginSucceeded();
+                    getDataManager().getUserByPhoneNumber(mPhoneNumber);
+                    return;
                 }
+            } else {
+                // Failed
+                if (mTryCounter == 0) {
+                    login("+" + mPhoneNumber, mPassword);
+                } else {
+                    // Account is exist
+                    if (message != null) {
+                        if (message.equals(ApiMessage.INVALID_PHONE_NUMBER))
+                            // Account is not exist
+                            getNavigator().showSignUpDialog();
+                        else
+                            // Phone number is invalid
+                            getNavigator().showErrorOthers();
+                    }
+                }
+                mTryCounter++;
+                return;
             }
-            mTryCounter++;
         }
+        // Unknown Error
+        getNavigator().showErrorServer();
     }
 
     public void setAccessToken(String token) {

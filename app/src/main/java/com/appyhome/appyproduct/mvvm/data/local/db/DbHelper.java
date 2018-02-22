@@ -1,15 +1,15 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
-import com.appyhome.appyproduct.mvvm.data.model.db.User;
+
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 
 public interface DbHelper {
-
-    Observable<Boolean> insertUser(final User user);
-
-    Observable<List<User>> getAllUsers();
+    Flowable<User> createNewUser();
+    Flowable<User> getUserByPhoneNumber(String phoneNumber);
 }

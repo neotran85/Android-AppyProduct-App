@@ -1,6 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
-import com.appyhome.appyproduct.mvvm.data.model.db.User;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -8,38 +8,38 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 
 @Singleton
 public class AppDbHelper implements DbHelper {
 
-    private final AppDatabase mAppDatabase;
+    private final Realm mRealm;
 
     @Inject
-    public AppDbHelper(AppDatabase appDatabase) {
-        this.mAppDatabase = appDatabase;
+    public AppDbHelper(Realm realm) {
+        this.mRealm = realm;
     }
 
     @Override
-    public Observable<List<User>> getAllUsers() {
-        return Observable.fromCallable(new Callable<List<User>>() {
-            @Override
-            public List<User> call() throws Exception {
-                return mAppDatabase.userDao().loadAll();
-            }
-        });
+    public Flowable<User> getUserByPhoneNumber(final String phoneNumber) {
+        RealmQuery<User> results  = mRealm.where(User.class).equalTo("phoneNumber", phoneNumber);
+        if (results!= null && results.count() > 0)
+            return results.findFirst().asFlowable();
+        else {
+            User person = mRealm.createObject(User.class);
+            person.setPhoneNumber(phoneNumber);
+            return person.asFlowable();
+        }
     }
 
     @Override
-    public Observable<Boolean> insertUser(final User user) {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                mAppDatabase.userDao().insert(user);
-                return true;
-            }
-        });
+    public Flowable<User> createNewUser() {
+        User person = mRealm.createObject(User.class);
+        return person.asFlowable();
     }
 
 }

@@ -30,6 +30,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.fabric.sdk.android.Fabric;
+import io.realm.Realm;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
 
@@ -215,5 +216,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             View newHighLightView = newView.findViewWithTag("highlight");
             newHighLightView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Realm.getDefaultInstance().close();
     }
 }
