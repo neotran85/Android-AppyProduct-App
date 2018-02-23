@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.notification.NotificationItemViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationItemViewModel" />
 
     </data>
 

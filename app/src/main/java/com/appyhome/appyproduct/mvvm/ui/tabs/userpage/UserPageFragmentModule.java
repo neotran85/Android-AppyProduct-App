@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.userpage;
+package com.appyhome.appyproduct.mvvm.ui.tabs.userpage;
 
 import android.arch.lifecycle.ViewModelProvider;
 

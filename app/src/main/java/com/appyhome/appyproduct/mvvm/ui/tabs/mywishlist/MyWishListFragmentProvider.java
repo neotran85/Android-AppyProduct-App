@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.mywishlist;
+package com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

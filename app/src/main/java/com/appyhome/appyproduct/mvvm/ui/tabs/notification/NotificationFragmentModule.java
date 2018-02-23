@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.notification;
+package com.appyhome.appyproduct.mvvm.ui.tabs.notification;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.v7.widget.LinearLayoutManager;

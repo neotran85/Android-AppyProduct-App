@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.home;
+package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 
 
 import android.content.Intent;

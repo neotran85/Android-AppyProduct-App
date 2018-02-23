@@ -18,15 +18,15 @@ import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
 import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.home.HomeFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.account.myprofile.textinput.TextInputDialogProvider;
-import com.appyhome.appyproduct.mvvm.ui.mywishlist.MyWishListFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.notification.NotificationFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
@@ -40,7 +40,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit.RequestE
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit.RequestEditActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.userpage.UserPageFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragmentProvider;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

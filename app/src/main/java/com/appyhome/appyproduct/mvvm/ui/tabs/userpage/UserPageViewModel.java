@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.mywishlist;
+package com.appyhome.appyproduct.mvvm.ui.tabs.userpage;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
@@ -8,7 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
-public class MyWishListViewModel extends BaseViewModel<MyWishListNavigator> {
+public class UserPageViewModel extends BaseViewModel<UserPageNavigator> {
 
     public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
 
@@ -20,8 +20,8 @@ public class MyWishListViewModel extends BaseViewModel<MyWishListNavigator> {
 
     private int action = NO_ACTION;
 
-    public MyWishListViewModel(DataManager dataManager,
-                               SchedulerProvider schedulerProvider) {
+    public UserPageViewModel(DataManager dataManager,
+                             SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 

@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.notification;
+package com.appyhome.appyproduct.mvvm.ui.tabs.notification;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

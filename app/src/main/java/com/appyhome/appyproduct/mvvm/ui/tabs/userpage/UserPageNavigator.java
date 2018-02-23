@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.userpage;
+package com.appyhome.appyproduct.mvvm.ui.tabs.userpage;
 
 
 public interface UserPageNavigator {
