@@ -31,8 +31,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public ObservableField<String> dateTime2 = new ObservableField<>("");
     public ObservableField<String> dateTime3 = new ObservableField<>("");
     public ObservableField<String> safetyCode = new ObservableField<>("");
-    public ObservableField<String> additionalComments = new ObservableField<>("");
-    public ObservableField<String> statusOfOrder = new ObservableField<>("");
+    private ObservableField<String> statusOfOrder = new ObservableField<>("");
     public ObservableField<String> additionalServices = new ObservableField<>("");
     public ObservableField<String> additionalDetail = new ObservableField<>("");
     public ObservableField<Float> rating = new ObservableField<>(-1.0f);
@@ -52,10 +51,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
 
     private String editCode = "";
 
-
-    private String phoneNumber = "";
-
-
     public RequestItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -70,12 +65,11 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         processData(item, type);
     }
 
-    public void processData(JSONObject item, int type) {
+    private void processData(JSONObject item, int type) {
         mType = type;
         try {
             mIdNumber = DataUtils.getStringSafely(item, "id");
             editCode = DataUtils.getStringSafely(item, "edit_code");
-            phoneNumber = DataUtils.getStringSafely(item, "phone_number");
             safetyCode.set(DataUtils.getStringSafely(item, "safety_code"));
             statusOfOrder.set(DataUtils.getStringSafely(item, "status"));
 
@@ -108,21 +102,15 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             String dateTimeStr = DataUtils.getStringSafely(item, "datetime");
             if (dateTimeStr.contains("{")) {
                 JSONObject datetime = new JSONObject(dateTimeStr);
-                if (datetime != null) {
-                    dateTime1.set(DataUtils.getStringSafely(datetime, "datetime1"));
-                    isTimeSlot1Visible.set(isTimeSlot1Visible());
-                    dateTime2.set(DataUtils.getStringSafely(datetime, "datetime2"));
-                    isTimeSlot2Visible.set(isTimeSlot2Visible());
-                    dateTime3.set(DataUtils.getStringSafely(datetime, "datetime3"));
-                    isTimeSlot3Visible.set(isTimeSlot3Visible());
-                }
+                dateTime1.set(DataUtils.getStringSafely(datetime, "datetime1"));
+                isTimeSlot1Visible.set(isTimeSlot1Visible());
+                dateTime2.set(DataUtils.getStringSafely(datetime, "datetime2"));
+                isTimeSlot2Visible.set(isTimeSlot2Visible());
+                dateTime3.set(DataUtils.getStringSafely(datetime, "datetime3"));
+                isTimeSlot3Visible.set(isTimeSlot3Visible());
             } else {
                 dateTime1.set(dateTimeStr);
                 isTimeSlot1Visible.set(isTimeSlot1Visible());
-            }
-
-            if (item.has("additional")) {
-                // Do something
             }
 
         } catch (Exception e) {
@@ -188,7 +176,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         if (mType >= 0 && mType < mArrayTypeRequest.length) {
             Single<JSONObject> target = mArrayTypeRequest[mType]
                     .getRequestData(getDataManager(), id);
-
             getCompositeDisposable().add(target
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
@@ -215,7 +202,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                 if (code.equals("200") && result.has("message"))
                     handleResultSuccess(result.getJSONObject("message"));
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
     }
@@ -224,10 +211,9 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         try {
             result = getItemInside(result);
             processData(result, mType);
-            AppLogger.d("handleResultSuccess: " + result.toString());
             getNavigator().doAfterDataUpdated();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -248,10 +234,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
 
     public String getEditCode() {
         return editCode;
-    }
-
-    public void setEditCode(String code) {
-        editCode = code;
     }
 
     private TypeRequestData[] mArrayTypeRequest = new TypeRequestData[]{
