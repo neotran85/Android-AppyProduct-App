@@ -32,7 +32,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     private Button mCurrentButton;
     private RecyclerView[] mArrayRecycleView = null;
     private RecyclerView mCurrentRecyclerView;
-    private int[] mRequestTypes = {RequestType.TYPE_ORDER, RequestType.TYPE_REQUEST, RequestType.TYPE_CLOSED};
+    private int[] mRequestTypes = {RequestType.TYPE_REQUEST, RequestType.TYPE_ORDER, RequestType.TYPE_CLOSED};
     private Button[] mTabs = null;
 
     public static RequestFragment newInstance() {
@@ -103,9 +103,9 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
     private void setUp() {
         setTitle(getString(R.string.title_service_request_tracking));
-        mRequestViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mRequestViewModel);
+        getViewModel().setNavigator(this);
         mArrayRecycleView = new RecyclerView[]{mBinder.requestRecyclerView, mBinder.ordersRecyclerView, mBinder.closedRecyclerView};
         for (int i = 0; i < mArrayRecycleView.length; i++) {
             setUpRecyclerView(mArrayRecycleView[i], mRequestTypes[i]);
@@ -118,9 +118,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     @Override
     public void onResume() {
         super.onResume();
-        for (int i = 0; i < mRequestTypes.length; i++) {
-            mRequestViewModel.fetchData(mRequestTypes[i]);
-        }
+        getViewModel().fetchAllData();
     }
 
     @Override

@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 
 public class RequestViewModel extends BaseViewModel<RequestNavigator> {
@@ -22,65 +23,30 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void fetchData(final int type) {
+    public void fetchAllData() {
         setIsLoading(true);
-        if (type == RequestType.TYPE_REQUEST) {
-            getCompositeDisposable().add(getDataManager()
-                    .getAppointmentAll()
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<JSONObject>() {
-                        @Override
-                        public void accept(JSONObject response) throws Exception {
-                            setIsLoading(false);
-                            handleServiceResult(response, type);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            setIsLoading(false);
-                            showEmptyList(type);
-                        }
-                    }));
-        }
-        if (type == RequestType.TYPE_ORDER) {
-            getCompositeDisposable().add(getDataManager()
-                    .getOrderAll()
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<JSONObject>() {
-                        @Override
-                        public void accept(JSONObject response) throws Exception {
-                            setIsLoading(false);
-                            handleServiceResult(response, type);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            setIsLoading(false);
-                            showEmptyList(type);
-                        }
-                    }));
-        }
-        if (type == RequestType.TYPE_CLOSED) {
-            getCompositeDisposable().add(getDataManager()
-                    .getReceiptAll()
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<JSONObject>() {
-                        @Override
-                        public void accept(JSONObject response) throws Exception {
-                            setIsLoading(false);
-                            handleServiceResult(response, type);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            setIsLoading(false);
-                            showEmptyList(type);
-                        }
-                    }));
-        }
+        fetchDataByType(getDataManager().getAppointmentAll(), RequestType.TYPE_REQUEST);
+        fetchDataByType(getDataManager().getOrderAll(), RequestType.TYPE_ORDER);
+        fetchDataByType(getDataManager().getReceiptAll(), RequestType.TYPE_CLOSED);
+    }
+
+    private void fetchDataByType(Single<JSONObject> object, final int type) {
+        getCompositeDisposable().add(object
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<JSONObject>() {
+                    @Override
+                    public void accept(JSONObject response) throws Exception {
+                        setIsLoading(false);
+                        handleServiceResult(response, type);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        setIsLoading(false);
+                        showEmptyList(type);
+                    }
+                }));
     }
 
     private JSONObject getItemInside(JSONObject jsonObject) {
