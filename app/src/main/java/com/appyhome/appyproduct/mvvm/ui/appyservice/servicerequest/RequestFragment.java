@@ -93,12 +93,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     }
 
     private RequestAdapter getAdapterByType(int type) {
-        int index = 0;
-        for (int i = 0; i < mRequestTypes.length; i++) {
-            if (mRequestTypes[i] == type)
-                index = i;
-        }
-        return (RequestAdapter) mArrayRecycleView[index].getAdapter();
+        return (RequestAdapter) mArrayRecycleView[type].getAdapter();
     }
 
     private void setUp() {

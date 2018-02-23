@@ -32,6 +32,9 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     private int mType = 0;
     private String mIdNumber = "";
 
+    private int[] mIdTitle = {R.string.title_request_summary, R.string.title_order_summary,
+            R.string.title_receipt_summary};
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestDetailActivity.class);
         return intent;
@@ -59,37 +62,23 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         if (data != null && data.hasExtra("id")) {
             mIdNumber = data.getStringExtra("id");
             mType = data.getIntExtra("type", RequestType.TYPE_REQUEST);
-            mType = data.getIntExtra("type", RequestType.TYPE_REQUEST);
-            try {
-                mRequestItemViewModel.fetchData(mIdNumber, mType);
-                switch (mType) {
-                    case RequestType.TYPE_CLOSED:
-                        setTitle(getString(R.string.title_receipt_summary));
-                        break;
-                    case RequestType.TYPE_ORDER:
-                        setTitle(getString(R.string.title_order_summary));
-                        break;
-                    case RequestType.TYPE_REQUEST:
-                        setTitle(getString(R.string.title_request_summary));
-                        break;
-                }
-            } catch (Exception e) {
-
-            }
+            mRequestItemViewModel.fetchData(mIdNumber, mType);
+            setTitle(getString(mIdTitle[mType]));
         }
     }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llConfirmation:
-                openConfirmationActivity();
+                openExtraActivity(RequestConfirmedActivity.MODE_CONFIRM);
                 break;
             case R.id.llAddServices:
                 openQRCodeScanActivity();
                 break;
             case R.id.llRefundServices:
-                openRefundActivity();
+                openExtraActivity(RequestConfirmedActivity.MODE_REFUND);
                 break;
         }
     }
@@ -103,21 +92,12 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         startActivity(intent);
     }
 
-    private void openRefundActivity() {
+    private void openExtraActivity(int mode) {
         Intent intent = getIntent();
         intent.setClass(this, RequestConfirmedActivity.class);
         intent.putExtra("id", mIdNumber);
         intent.putExtra("type", mType);
-        intent.putExtra("mode", RequestConfirmedActivity.MODE_REFUND);
-        startActivity(intent);
-    }
-
-    private void openConfirmationActivity() {
-        Intent intent = getIntent();
-        intent.setClass(this, RequestConfirmedActivity.class);
-        intent.putExtra("id", mIdNumber);
-        intent.putExtra("type", mType);
-        intent.putExtra("mode", RequestConfirmedActivity.MODE_CONFIRM);
+        intent.putExtra("mode", mode);
         startActivity(intent);
     }
 

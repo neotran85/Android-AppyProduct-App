@@ -25,7 +25,6 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     private int[] idEmptyLayout = {R.layout.view_item_request_empty, R.layout.view_item_order_empty,
             R.layout.view_item_closed_empty};
-    private int[] mRequestTypes = {RequestType.TYPE_REQUEST, RequestType.TYPE_ORDER, RequestType.TYPE_CLOSED};
 
     public RequestAdapter(ArrayList<RequestItemViewModel> arrayList, int type) {
         this.mRequestList = arrayList;
@@ -94,18 +93,8 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     private RequestItemEmptyViewHolder getEmptyHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View view = inflater.inflate(getEmptyLayoutId(), parent, false);
+        View view = inflater.inflate(idEmptyLayout[mType], parent, false);
         return new RequestItemEmptyViewHolder(view);
-    }
-
-
-    private int getEmptyLayoutId() {
-        int index = 0;
-        for (int i = 0; i < mRequestTypes.length; i++) {
-            if (mRequestTypes[i] == mType)
-                index = i;
-        }
-        return idEmptyLayout[index];
     }
 
     @Override
@@ -135,6 +124,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         private RequestItemEmptyViewHolder(View view) {
             super(view);
         }
+
         @Override
         public void onBind(int position) {
 
@@ -145,6 +135,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         private RequestItemLoadingViewHolder(View view) {
             super(view);
         }
+
         @Override
         public void onBind(int position) {
 

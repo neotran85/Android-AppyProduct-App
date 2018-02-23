@@ -98,19 +98,19 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
             view.clearFocus();
 
         String firstName = mBinder.etFirstName.getText().toString();
-        if (firstName == null || firstName.length() == 0) {
+        if (firstName.length() == 0) {
             showError(getString(R.string.register_error_missing_first_name));
             showTextInputError(mBinder.etFirstName);
             return;
         }
         String lastName = mBinder.etLastName.getText().toString();
-        if (lastName == null || lastName.length() == 0) {
+        if (lastName.length() == 0) {
             showError(getString(R.string.register_error_missing_last_name));
             showTextInputError(mBinder.etLastName);
             return;
         }
         String email = mBinder.etEmailAddress.getText().toString();
-        if (email == null || email.length() == 0) {
+        if (email.length() == 0) {
             showError(getString(R.string.register_error_missing_email_address));
             showTextInputError(mBinder.etEmailAddress);
             return;
@@ -133,7 +133,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         }
 
         String password = mBinder.etAccountPassword.getText().toString();
-        if (password == null || password.length() == 0) {
+        if (password.length() == 0) {
             showError(getString(R.string.register_error_missing_password));
             showTextInputError(mBinder.etAccountPassword);
             return;
@@ -144,7 +144,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         }
 
         String retypedPassword = mBinder.etRetypedPassword.getText().toString();
-        if (retypedPassword == null || retypedPassword.length() == 0) {
+        if (retypedPassword.length() == 0) {
             showError(getString(R.string.register_error_missing_retyped_password));
             showTextInputError(mBinder.etRetypedPassword);
             return;
@@ -230,13 +230,13 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void openPrivacyPolicy() {
-        AlertManager.getInstance(this).openInformationBrowser("Privacy Policy",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.register_privacy_policy),
                 ApiUrlConfig.URL_PRIVACY_POLICY);
     }
 
     @Override
     public void openTermsOfUsage() {
-        AlertManager.getInstance(this).openInformationBrowser("Terms & Conditions",
+        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.register_terms),
                 ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
 

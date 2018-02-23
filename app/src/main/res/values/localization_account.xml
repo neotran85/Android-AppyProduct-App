@@ -63,4 +63,6 @@
     <string name="verification_code_message">A verification code will be sent to your phone. Please check your messages.</string>
     <string name="verification_code_error">Wrong verification code. Please check your message again or resend another code.</string>
     <string name="my_profile">My Profile</string>
+    <string name="register_privacy_policy">Privacy Policy</string>
+    <string name="register_terms"><![CDATA[Terms & Conditions]]></string>
 </resources>

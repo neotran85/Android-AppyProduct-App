@@ -177,26 +177,24 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         setIsLoading(true);
         setIdNumber(id);
         mType = type;
-        if (mType >= 0 && mType < mArrayTypeRequest.length) {
-            Single<JSONObject> target = mArrayTypeRequest[mType]
-                    .getRequestData(getDataManager(), id);
-            getCompositeDisposable().add(target
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(new Consumer<JSONObject>() {
-                        @Override
-                        public void accept(JSONObject response) throws Exception {
-                            setIsLoading(false);
-                            handleResult(response);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            setIsLoading(false);
-                        }
-                    }));
-            timeCreatedLabel.set(mArrayTypeRequest[mType].getDateLabel());
-        }
+        Single<JSONObject> target = mArrayTypeRequest[mType]
+                .getRequestData(getDataManager(), id);
+        getCompositeDisposable().add(target
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<JSONObject>() {
+                    @Override
+                    public void accept(JSONObject response) throws Exception {
+                        setIsLoading(false);
+                        handleResult(response);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        setIsLoading(false);
+                    }
+                }));
+        timeCreatedLabel.set(mArrayTypeRequest[mType].getDateLabel());
     }
 
     private void handleResult(JSONObject result) {

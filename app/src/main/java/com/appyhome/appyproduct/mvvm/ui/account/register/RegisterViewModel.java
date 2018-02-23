@@ -148,7 +148,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
             }
             if (message.contains(ApiMessage.USER_CREATED)) {
                 String[] result = message.split(":");
-                if (result != null && result.length == 2) {
+                if (result.length == 2) {
                     String userId = result[1];
                     getDataManager().setCurrentUserId(userId);
                 }
