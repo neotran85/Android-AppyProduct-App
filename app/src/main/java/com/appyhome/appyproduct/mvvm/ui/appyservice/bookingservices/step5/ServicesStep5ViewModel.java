@@ -33,7 +33,6 @@ public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator
 
     public void createAppointment(AppointmentCreateRequest requestData) {
         setIsLoading(true);
-        AppLogger.d(requestData.toString());
         getCompositeDisposable().add(getDataManager()
                 .createAppointment(requestData)
                 .subscribeOn(getSchedulerProvider().io())

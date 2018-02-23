@@ -90,11 +90,6 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     }
 
     @Override
-    public void goBack() {
-        getBaseActivity().onFragmentDetached(TAG);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }

@@ -5,8 +5,6 @@ import android.view.View;
 
 public interface MyProfileNavigator {
 
-    void goBack();
-
     void handleErrorService(Throwable throwable);
 
     void onFieldClick(View view);

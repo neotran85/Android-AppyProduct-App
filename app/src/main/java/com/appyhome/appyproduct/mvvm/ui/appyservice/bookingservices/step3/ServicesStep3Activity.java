@@ -42,18 +42,18 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
-        mServicesStep3ViewModel.setNavigator(this);
         mBinder.setViewModel(mServicesStep3ViewModel);
         ViewUtils.setOnClickListener(this, mBinder.btnNext, mBinder.llSearchLocationNearby);
         setTitle(getString(R.string.set_location));
         activeBackButton();
-        mServicesStep3ViewModel.updateAddress();
+        getViewModel().setNavigator(this);
+        getViewModel().updateAddress();
     }
 
 
     public void saveAddress(boolean isSaved) {
         if (isSaved) {
-            mServicesStep3ViewModel.saveServiceAddress(new ServiceAddress(
+            getViewModel().saveServiceAddress(new ServiceAddress(
                     mBinder.etUnitNumberHouse.getText().toString(),
                     mBinder.etStreet.getText().toString(),
                     mBinder.etAreaLine1.getText().toString(),
@@ -61,7 +61,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                     mBinder.etCityTown.getText().toString(),
                     mBinder.etPostCode.getText().toString()));
         } else {
-            mServicesStep3ViewModel.saveServiceAddress(new ServiceAddress());
+            getViewModel().saveServiceAddress(new ServiceAddress());
         }
     }
 
@@ -181,7 +181,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void goToStep4() {
-        if (mServicesStep3ViewModel.isUserLoggedIn()) {
+        if (getViewModel().isUserLoggedIn()) {
             startActivity(ServicesStep4Activity.getStartIntent(this));
         } else {
             openLoginActivity(getString(R.string.login_required_message)

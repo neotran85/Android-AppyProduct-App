@@ -59,11 +59,11 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
                 mBinder.btnNext,
                 mBinder.rlVisaPayment,
                 mBinder.rlBankPayment);
-        mServicesStep4ViewModel.setNavigator(this);
+        getViewModel().setNavigator(this);
     }
 
     private void setUpData() {
-        mServicesStep4ViewModel.setUpData();
+        getViewModel().setUpData();
         mServicesList = new ArrayList<>();
         mServicesList.add(getOrderUserInput().getSelectedService());
         mBinder.lvServices.setAdapter(new ServicesAdapter(this, mServicesList));
@@ -124,32 +124,23 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public void openBankPaymentActivity() {
         PaymentManager.getInstance().startPaymentActivity(this,
-                mServicesStep4ViewModel.getTotalCost(), mAppointmentId,
-                mServicesStep4ViewModel.getPhoneNumberOfUser(),
-                mServicesStep4ViewModel.getEmailOfUser(),
-                mServicesStep4ViewModel.getNameOfUser());
+                getViewModel().getTotalCost(), mAppointmentId,
+                getViewModel().getPhoneNumberOfUser(),
+                getViewModel().getEmailOfUser(),
+                getViewModel().getNameOfUser());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
-            AppLogger.d(MOLPayActivity.MOLPAY, "MOLPay result = " + data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
-            try {
-                JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
-                if (result.getString("status_code").equals("00")) {
-                    // PAYMENT SUCCESS
-                    String txn_ID = result.getString("txn_ID");
-                    AppLogger.d(txn_ID);
-                    getOrderUserInput().setTxn_ID(txn_ID);
-                    goToStep5();
-                    AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
-                }
-                return;
-            } catch (JSONException e) {
-                e.printStackTrace();
+            boolean success = getViewModel().setTxn_IDPayment(data);
+            if(success) {
+                AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
+                goToStep5();
+            } else  {
+                AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
             }
-            AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
         }
 
     }

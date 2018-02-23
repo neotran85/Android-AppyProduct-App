@@ -49,7 +49,7 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mRequestItemViewModel);
         mRequestItemViewModel.setNavigator(this);
-        setTitle("SUMMARY");
+        setTitle(getString(R.string.titlte_summary));
         activeBackButton();
         ViewUtils.setOnClickListener(this, mBinder.llAddServices,
                 mBinder.llConfirmation, mBinder.llRefundServices);
@@ -64,13 +64,13 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
                 mRequestItemViewModel.fetchData(mIdNumber, mType);
                 switch (mType) {
                     case RequestType.TYPE_CLOSED:
-                        setTitle("RECEIPT SUMMARY");
+                        setTitle(getString(R.string.title_receipt_summary));
                         break;
                     case RequestType.TYPE_ORDER:
-                        setTitle("ORDER SUMMARY");
+                        setTitle(getString(R.string.title_order_summary));
                         break;
                     case RequestType.TYPE_REQUEST:
-                        setTitle("REQUEST SUMMARY");
+                        setTitle(getString(R.string.title_request_summary));
                         break;
                 }
             } catch (Exception e) {
@@ -165,7 +165,6 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    AppLogger.d("barcodeValue: " + barcode.displayValue);
                     if (barcode.displayValue.equals(mRequestItemViewModel.getEditCode())) {
                         // CODE MATCHED & ALLOW USER TO EDIT THE DETAIL
                         allowUserEditDetail();

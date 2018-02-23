@@ -16,7 +16,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentRequestBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.detail.RequestDetailActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
 import java.util.ArrayList;
 
@@ -29,12 +29,11 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     @Inject
     RequestViewModel mRequestViewModel;
     FragmentRequestBinding mBinder;
-    private RequestAdapter mRequestAdapter;
-    private RequestAdapter mOrdersAdapter;
-    private RequestAdapter mCloseAdapter;
     private Button mCurrentButton;
-
+    private RecyclerView[] mArrayRecycleView = null;
     private RecyclerView mCurrentRecyclerView;
+    private int[] mRequestTypes = {RequestType.TYPE_ORDER, RequestType.TYPE_REQUEST, RequestType.TYPE_CLOSED};
+    private Button[] mTabs = null;
 
     public static RequestFragment newInstance() {
         Bundle args = new Bundle();
@@ -51,17 +50,7 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btClosed:
-                changeTabSelection((Button) view, mBinder.closedRecyclerView);
-                break;
-            case R.id.btOrders:
-                changeTabSelection((Button) view, mBinder.ordersRecyclerView);
-                break;
-            case R.id.btRequest:
-                changeTabSelection((Button) view, mBinder.requestRecyclerView);
-                break;
-        }
+        changeTabSelection((Button) view, getRecycleByTab(view.getId()));
     }
 
     private void changeTabSelection(Button view, RecyclerView recyclerView) {
@@ -85,49 +74,53 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         super.onCreate(savedInstanceState);
     }
 
+    private void setUpRecyclerView(RecyclerView rv, int type) {
+        rv.setLayoutManager(new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        RequestAdapter adapter = new RequestAdapter(null, type);
+        adapter.setOnItemClickListener(this);
+        rv.setAdapter(adapter);
+    }
+
+    private RecyclerView getRecycleByTab(int idTab) {
+        int index = 0;
+        for (int i = 0; i < mTabs.length; i++) {
+            if (mTabs[i].getId() == idTab)
+                index = i;
+        }
+        return mArrayRecycleView[index];
+    }
+
+    private RequestAdapter getAdapterByType(int type) {
+        int index = 0;
+        for (int i = 0; i < mRequestTypes.length; i++) {
+            if (mRequestTypes[i] == type)
+                index = i;
+        }
+        return (RequestAdapter) mArrayRecycleView[index].getAdapter();
+    }
+
     private void setUp() {
-        setTitle("Requests Service");
+        setTitle(getString(R.string.title_service_request_tracking));
         mRequestViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mRequestViewModel);
-
-        mBinder.requestRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mBinder.requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mBinder.ordersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mBinder.ordersRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mBinder.closedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mBinder.closedRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mRequestAdapter = new RequestAdapter(null, RequestType.TYPE_REQUEST);
-        mCloseAdapter = new RequestAdapter(null, RequestType.TYPE_CLOSED);
-        mOrdersAdapter = new RequestAdapter(null, RequestType.TYPE_ORDER);
-
-        mBinder.requestRecyclerView.setAdapter(mRequestAdapter);
-        mBinder.ordersRecyclerView.setAdapter(mOrdersAdapter);
-        mBinder.closedRecyclerView.setAdapter(mCloseAdapter);
-
-        mBinder.ordersRecyclerView.setVisibility(View.GONE);
-        mBinder.closedRecyclerView.setVisibility(View.VISIBLE);
-        mBinder.requestRecyclerView.setVisibility(View.GONE);
-
-        mBinder.btClosed.setOnClickListener(this);
-        mBinder.btRequest.setOnClickListener(this);
-        mBinder.btOrders.setOnClickListener(this);
-
+        mArrayRecycleView = new RecyclerView[]{mBinder.requestRecyclerView, mBinder.ordersRecyclerView, mBinder.closedRecyclerView};
+        for (int i = 0; i < mArrayRecycleView.length; i++) {
+            setUpRecyclerView(mArrayRecycleView[i], mRequestTypes[i]);
+        }
+        mTabs = new Button[]{mBinder.btRequest, mBinder.btOrders, mBinder.btClosed};
+        ViewUtils.setOnClickListener(this, mTabs);
         changeTabSelection(mBinder.btRequest, mBinder.requestRecyclerView);
-        mRequestAdapter.setOnItemClickListener(this);
-        mOrdersAdapter.setOnItemClickListener(this);
-        mCloseAdapter.setOnItemClickListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mRequestViewModel.fetchData(RequestType.TYPE_REQUEST);
-        mRequestViewModel.fetchData(RequestType.TYPE_ORDER);
-        mRequestViewModel.fetchData(RequestType.TYPE_CLOSED);
+        for (int i = 0; i < mRequestTypes.length; i++) {
+            mRequestViewModel.fetchData(mRequestTypes[i]);
+        }
     }
 
     @Override
@@ -153,26 +146,14 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
     @Override
     public void showResultList(ArrayList<RequestItemViewModel> array, int type) {
-        AppLogger.d("showResultList " + type);
-        if (type == RequestType.TYPE_REQUEST) {
-            mRequestAdapter.updateData(array);
-            mRequestAdapter.notifyDataSetChanged();
-        }
-        if (type == RequestType.TYPE_ORDER) {
-            mOrdersAdapter.updateData(array);
-            mOrdersAdapter.notifyDataSetChanged();
-        }
-        if (type == RequestType.TYPE_CLOSED) {
-            mCloseAdapter.updateData(array);
-            mCloseAdapter.notifyDataSetChanged();
-        }
+        getAdapterByType(type).updateData(array);
+        getAdapterByType(type).notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(View view, int type) {
         Intent intent = RequestDetailActivity.getStartIntent(this.getActivity());
         String idNumber = view.getTag().toString();
-        AppLogger.d("onItemClick: " + idNumber);
         intent.putExtra("id", idNumber);
         intent.putExtra("type", type);
         startActivity(intent);

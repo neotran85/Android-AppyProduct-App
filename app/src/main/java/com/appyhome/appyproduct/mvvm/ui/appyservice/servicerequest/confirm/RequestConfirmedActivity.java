@@ -48,13 +48,13 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
             mode = intent.getIntExtra("mode", MODE_CONFIRM);
             if (mode == MODE_REFUND) {
                 setTitle("Request A Refund");
-                mBinder.btnSubmit.setText("Request A Refund");
-                mBinder.tvComments.setText("Please comment your reasons of requesting a refund.");
+                mBinder.btnSubmit.setText(R.string.request_a_refund);
+                mBinder.tvComments.setText(R.string.reason_requesting_refund);
             }
             if (mode == MODE_CONFIRM) {
                 setTitle("Confirm Completed");
-                mBinder.btnSubmit.setText("Confirm Completed");
-                mBinder.tvComments.setText("Please add your comments on the service.");
+                mBinder.btnSubmit.setText(R.string.confirm_completed);
+                mBinder.tvComments.setText(R.string.add_comment);
             }
         }
 
@@ -68,7 +68,7 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
                 String rating = mBinder.ratingBar.getRating() + "";
                 String comments = mBinder.etAdditionalInfo.getText().toString();
                 if (mode == MODE_REFUND) {
-                    comments = "Request a refund: " + comments;
+                    comments = getString(R.string.request_refund) + comments;
                 }
                 mRequestConfirmedViewModel.markOrderCompleted(comments, rating);
                 break;

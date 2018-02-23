@@ -10,8 +10,4 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                          SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
-    public boolean isUserLoggedIn() {
-        return getDataManager().isUserLoggedIn();
-    }
 }

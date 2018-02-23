@@ -68,4 +68,8 @@ public abstract class BaseViewModel<N> extends ViewModel {
         mCompositeDisposable.dispose();
         super.onCleared();
     }
+
+    public boolean isUserLoggedIn() {
+        return getDataManager().isUserLoggedIn();
+    }
 }

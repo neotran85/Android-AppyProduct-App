@@ -36,7 +36,7 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mRequestEditViewModel);
         mRequestEditViewModel.setNavigator(this);
-        setTitle("Adding Services");
+        setTitle(getString(R.string.adding_services));
         activeBackButton();
         mRequestEditViewModel.setUpData(getIntent());
         mBinder.btnSubmit.setOnClickListener(this);
@@ -54,18 +54,18 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
 
     private boolean checkIfValidationOK() {
         if (mBinder.etAdditionalInfo.getText().length() <= 0) {
-            AlertManager.getInstance(this).showLongToast("Please enter the service name.");
+            AlertManager.getInstance(this).showLongToast(getString(R.string.enter_service_name));
             return false;
         }
         if (mBinder.etAdditionalAmount.getText().length() <= 0) {
-            AlertManager.getInstance(this).showLongToast("Please enter an amount.");
+            AlertManager.getInstance(this).showLongToast(getString(R.string.enter_amount));
             return false;
         }
         // Get price
         String amount = mBinder.etAdditionalAmount.getText().toString();
         mPrice = Double.valueOf(amount);
         if (mPrice <= 0) {
-            AlertManager.getInstance(this).showLongToast("Please enter an amount greater than zero.");
+            AlertManager.getInstance(this).showLongToast(getString(R.string.enter_amount_greater_zero));
             return false;
         }
         return true;

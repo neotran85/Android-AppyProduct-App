@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adding_services">Adding Services</string>
+    <string name="enter_amount">Please enter an amount.</string>
+    <string name="enter_service_name">Please enter the service name.</string>
+    <string name="enter_amount_greater_zero">Please enter an amount greater than zero.</string>
+    <string name="title_receipt_summary">RECEIPT SUMMARY</string>
+    <string name="title_order_summary">ORDER SUMMARY</string>
+    <string name="title_request_summary">REQUEST SUMMARY</string>
+    <string name="titlte_summary">SUMMARY</string>
+    <string name="request_refund">Request a refund:</string>
+    <string name="request_a_refund">Request A Refund</string>
+    <string name="reason_requesting_refund">Please comment your reasons of requesting a refund.</string>
+    <string name="confirm_completed">Confirm Completed</string>
+    <string name="add_comment">Please add your comments on the service.</string>
+    <string name="title_service_request_tracking">Service Requests Tracking</string>
+</resources>

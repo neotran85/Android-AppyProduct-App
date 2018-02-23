@@ -9,8 +9,4 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
                          SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
-    public boolean isUserLoggedIn() {
-        return getDataManager().isUserLoggedIn();
-    }
 }
