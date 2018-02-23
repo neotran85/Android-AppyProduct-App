@@ -31,7 +31,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     public ObservableField<String> dateTime2 = new ObservableField<>("");
     public ObservableField<String> dateTime3 = new ObservableField<>("");
     public ObservableField<String> safetyCode = new ObservableField<>("");
-    private ObservableField<String> statusOfOrder = new ObservableField<>("");
+    public ObservableField<String> statusOfOrder = new ObservableField<>("");
     public ObservableField<String> additionalServices = new ObservableField<>("");
     public ObservableField<String> additionalDetail = new ObservableField<>("");
     public ObservableField<Float> rating = new ObservableField<>(-1.0f);
@@ -169,6 +169,10 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         String getDateLabel();
     }
 
+    public void setEditCode(String code) {
+        editCode = code;
+    }
+
     public void fetchData(String id, final int type) {
         setIsLoading(true);
         setIdNumber(id);
@@ -236,7 +240,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         return editCode;
     }
 
-    private TypeRequestData[] mArrayTypeRequest = new TypeRequestData[]{
+    private TypeRequestData[] mArrayTypeRequest = {
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
                     return manager.getAppointment(new AppointmentGetRequest(id));

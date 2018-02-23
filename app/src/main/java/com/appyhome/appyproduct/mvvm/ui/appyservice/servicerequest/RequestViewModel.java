@@ -72,7 +72,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                     return;
                 } else {
                     JSONArray arrayResult = new JSONArray(response.getString(ApiMessage.KEY_CODE));
-                    if (arrayResult != null && arrayResult.length() > 0) {
+                    if (arrayResult.length() > 0) {
                         ArrayList<RequestItemViewModel> arrayItems = new ArrayList<>();
                         for (int i = 0; i < arrayResult.length(); i++) {
                             JSONObject valueItem = getItemInside(arrayResult.getJSONObject(i));

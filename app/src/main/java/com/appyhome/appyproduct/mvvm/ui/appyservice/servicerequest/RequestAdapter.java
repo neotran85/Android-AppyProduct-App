@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
 
-    public static final int VIEW_TYPE_NORMAL = 1;
-    public static final int VIEW_TYPE_EMPTY = 0;
-    public static final int VIEW_TYPE_LOADING = -1;
+    private static final int VIEW_TYPE_NORMAL = 1;
+    private static final int VIEW_TYPE_EMPTY = 0;
+    private static final int VIEW_TYPE_LOADING = -1;
 
     private int mType = RequestType.TYPE_REQUEST;
 
@@ -23,17 +23,13 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     private OnItemClickListener onItemClickListener;
 
-    public RequestAdapter(ArrayList arrayList, int type) {
+    private int[] idEmptyLayout = {R.layout.view_item_request_empty, R.layout.view_item_order_empty,
+            R.layout.view_item_closed_empty};
+    private int[] mRequestTypes = {RequestType.TYPE_REQUEST, RequestType.TYPE_ORDER, RequestType.TYPE_CLOSED};
+
+    public RequestAdapter(ArrayList<RequestItemViewModel> arrayList, int type) {
         this.mRequestList = arrayList;
         mType = type;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        onItemClickListener = listener;
-    }
-
-    public void updateData(ArrayList list) {
-        mRequestList = list;
     }
 
     @Override
@@ -41,6 +37,14 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(view, mType);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
+    }
+
+    public void updateData(ArrayList<RequestItemViewModel> list) {
+        mRequestList = list;
     }
 
     @Override
@@ -90,22 +94,18 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     private RequestItemEmptyViewHolder getEmptyHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View view = inflater.inflate(getEmptyLayoutId(parent), parent, false);
+        View view = inflater.inflate(getEmptyLayoutId(), parent, false);
         return new RequestItemEmptyViewHolder(view);
     }
 
-    private int getEmptyLayoutId(ViewGroup parent) {
-        int layoutId = parent.getId();
-        if (mType == RequestType.TYPE_REQUEST) {
-            layoutId = R.layout.view_item_request_empty;
+
+    private int getEmptyLayoutId() {
+        int index = 0;
+        for (int i = 0; i < mRequestTypes.length; i++) {
+            if (mRequestTypes[i] == mType)
+                index = i;
         }
-        if (mType == RequestType.TYPE_ORDER) {
-            layoutId = R.layout.view_item_order_empty;
-        }
-        if (mType == RequestType.TYPE_CLOSED) {
-            layoutId = R.layout.view_item_closed_empty;
-        }
-        return layoutId;
+        return idEmptyLayout[index];
     }
 
     @Override
@@ -113,7 +113,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         if (mRequestList == null) {
             return VIEW_TYPE_LOADING; // loading item
         }
-        if (mRequestList != null && mRequestList.size() == 0) {
+        if (mRequestList.size() == 0) {
             return VIEW_TYPE_EMPTY; // empty item
         }
         return VIEW_TYPE_NORMAL;
@@ -121,12 +121,6 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     @Override
     public int getItemCount() {
-        if (mRequestList == null) {
-            return 1; // loading item
-        }
-        if (mRequestList != null && mRequestList.size() == 0) {
-            return 1; // empty item
-        }
         if (mRequestList != null && mRequestList.size() > 0) {
             return mRequestList.size();
         }
@@ -138,10 +132,9 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     }
 
     public class RequestItemEmptyViewHolder extends BaseViewHolder {
-        public RequestItemEmptyViewHolder(View view) {
+        private RequestItemEmptyViewHolder(View view) {
             super(view);
         }
-
         @Override
         public void onBind(int position) {
 
@@ -149,10 +142,9 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     }
 
     public class RequestItemLoadingViewHolder extends BaseViewHolder {
-        public RequestItemLoadingViewHolder(View view) {
+        private RequestItemLoadingViewHolder(View view) {
             super(view);
         }
-
         @Override
         public void onBind(int position) {
 
@@ -163,7 +155,7 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
         private ViewItemRequestBinding mBinding;
 
-        public RequestItemViewHolder(ViewItemRequestBinding binding) {
+        private RequestItemViewHolder(ViewItemRequestBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }
