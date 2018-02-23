@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.myprofile.MyProfileViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileViewModel" />
 
     </data>
 

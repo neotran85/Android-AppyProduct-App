@@ -35,46 +35,46 @@
             android:screenOrientation="portrait" />
         <activity
             android:windowSoftInputMode="stateVisible"
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.account.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:windowSoftInputMode="stateVisible"
-            android:name=".ui.servicerequest.edit.RequestEditActivity"
+            android:name=".ui.appyservice.servicerequest.edit.RequestEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.bookingservices.step1.ServicesStep1Activity"
+            android:name=".ui.appyservice.bookingservices.step1.ServicesStep1Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.bookingservices.step2.ServicesStep2Activity"
+            android:name=".ui.appyservice.bookingservices.step2.ServicesStep2Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.bookingservices.step3.ServicesStep3Activity"
+            android:name=".ui.appyservice.bookingservices.step3.ServicesStep3Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.bookingservices.step4.ServicesStep4Activity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.bookingservices.step5.ServicesStep5Activity"
+            android:name=".ui.appyservice.bookingservices.step4.ServicesStep4Activity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.custom.detail.TextDetailActivity"
+            android:name=".ui.appyservice.bookingservices.step5.ServicesStep5Activity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.common.custom.detail.TextDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:windowSoftInputMode="stateVisible"
-            android:name=".ui.register.RegisterActivity"
+            android:name=".ui.account.register.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.servicerequest.detail.RequestDetailActivity"
+            android:name=".ui.appyservice.servicerequest.detail.RequestDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.servicerequest.confirm.RequestConfirmedActivity"
+            android:name=".ui.appyservice.servicerequest.confirm.RequestConfirmedActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
@@ -85,11 +85,11 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.browser.BrowserActivity"
+            android:name=".ui.common.browser.BrowserActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.register.verify.VerifyActivity"
+            android:name=".ui.account.register.verify.VerifyActivity"
             android:screenOrientation="portrait" />
 
         <activity

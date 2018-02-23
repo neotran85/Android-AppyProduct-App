@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.bookingservices.step4.ServicesStep4ViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step4.ServicesStep4ViewModel" />
 
     </data>
 
@@ -73,11 +73,11 @@
                                 android:textSize="16sp" />
                         </LinearLayout>
 
-                        <com.appyhome.appyproduct.mvvm.ui.custom.NonScrollListView
+                        <com.appyhome.appyproduct.mvvm.ui.common.custom.NonScrollListView
                             android:id="@+id/lvServices"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"></com.appyhome.appyproduct.mvvm.ui.custom.NonScrollListView>
+                            android:layout_marginTop="6dp"></com.appyhome.appyproduct.mvvm.ui.common.custom.NonScrollListView>
 
                         <LinearLayout
                             android:layout_width="match_parent"

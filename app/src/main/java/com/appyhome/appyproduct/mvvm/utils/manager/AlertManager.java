@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.ui.browser.BrowserActivity;
+import com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserActivity;
 
 public class AlertManager {
     private static AlertManager mInstance;

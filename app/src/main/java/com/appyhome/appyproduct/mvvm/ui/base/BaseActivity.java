@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.ui.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 

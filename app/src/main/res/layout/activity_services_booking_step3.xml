@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.bookingservices.step3.ServicesStep3ViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step3.ServicesStep3ViewModel" />
 
     </data>
 

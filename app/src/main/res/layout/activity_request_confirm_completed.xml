@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.servicerequest.confirm.RequestConfirmedViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedViewModel" />
 
     </data>
 

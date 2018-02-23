@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestItemViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestItemViewModel" />
 
     </data>
 

@@ -2,7 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.appyhome.appyproduct.mvvm.ui.login.LoginActivity">
+    tools:context=".ui.account.login.LoginActivity">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.browser.BrowserViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserViewModel" />
 
     </data>
 

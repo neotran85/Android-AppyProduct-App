@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.custom.detail.TextDetailViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.common.custom.detail.TextDetailViewModel" />
 
     </data>
 

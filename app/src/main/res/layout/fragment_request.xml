@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.servicerequest.RequestViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestViewModel" />
 
     </data>
 

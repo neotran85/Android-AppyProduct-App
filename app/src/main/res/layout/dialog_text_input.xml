@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.myprofile.textinput.TextInputViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.account.myprofile.textinput.TextInputViewModel" />
 
     </data>
 
