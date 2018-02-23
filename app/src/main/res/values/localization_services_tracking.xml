@@ -14,4 +14,6 @@
     <string name="confirm_completed">Confirm Completed</string>
     <string name="add_comment">Please add your comments on the service.</string>
     <string name="title_service_request_tracking">Service Requests Tracking</string>
+    <string name="title_request_refund">Request A Refund</string>
+    <string name="title_comfirm_completed">Confirm Completed</string>
 </resources>

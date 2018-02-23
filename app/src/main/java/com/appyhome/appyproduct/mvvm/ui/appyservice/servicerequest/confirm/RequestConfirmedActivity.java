@@ -47,12 +47,12 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
         if (intent.hasExtra("mode")) {
             mode = intent.getIntExtra("mode", MODE_CONFIRM);
             if (mode == MODE_REFUND) {
-                setTitle("Request A Refund");
+                setTitle(getString(R.string.title_request_refund));
                 mBinder.btnSubmit.setText(R.string.request_a_refund);
                 mBinder.tvComments.setText(R.string.reason_requesting_refund);
             }
             if (mode == MODE_CONFIRM) {
-                setTitle("Confirm Completed");
+                setTitle(getString(R.string.title_comfirm_completed));
                 mBinder.btnSubmit.setText(R.string.confirm_completed);
                 mBinder.tvComments.setText(R.string.add_comment);
             }

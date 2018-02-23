@@ -26,6 +26,7 @@ import javax.inject.Inject;
 public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBinding, RequestItemViewModel> implements RequestItemNavigator, View.OnClickListener {
 
     private static final int REQUEST_BARCODE_CAPTURE = 9001;
+
     @Inject
     RequestItemViewModel mRequestItemViewModel;
     ActivityRequestDetailBinding mBinder;
