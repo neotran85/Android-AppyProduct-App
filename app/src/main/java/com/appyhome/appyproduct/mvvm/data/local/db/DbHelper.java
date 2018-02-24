@@ -12,4 +12,5 @@ import io.reactivex.Observable;
 public interface DbHelper {
     Flowable<User> createNewUser();
     Flowable<User> getUserByPhoneNumber(String phoneNumber);
+    void closeDatabase();
 }

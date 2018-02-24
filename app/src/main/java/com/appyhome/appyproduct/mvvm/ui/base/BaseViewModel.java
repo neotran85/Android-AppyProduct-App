@@ -65,6 +65,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     @Override
     protected void onCleared() {
+        getDataManager().closeDatabase();
         mCompositeDisposable.dispose();
         super.onCleared();
     }

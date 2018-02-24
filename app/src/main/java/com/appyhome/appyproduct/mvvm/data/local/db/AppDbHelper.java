@@ -17,7 +17,7 @@ import io.realm.RealmResults;
 @Singleton
 public class AppDbHelper implements DbHelper {
 
-    private final Realm mRealm;
+    private Realm mRealm;
 
     @Inject
     public AppDbHelper(Realm realm) {
@@ -26,19 +26,35 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<User> getUserByPhoneNumber(final String phoneNumber) {
-        User result = mRealm.where(User.class)
+        User result = getRealm().where(User.class)
                 .equalTo("phoneNumber", phoneNumber)
-                .findFirst();
+                .findFirstAsync();
         if (result == null) {
-            return createNewUser();
+            User person = getRealm().createObject(User.class);
+            person.setPhoneNumber(phoneNumber);
+            getRealm().beginTransaction();
+            getRealm().copyToRealmOrUpdate(person);
+            getRealm().commitTransaction();
+            return person.asFlowable();
         } else {
             return result.asFlowable();
         }
     }
 
     @Override
+    public void closeDatabase() {
+        if (mRealm != null) mRealm.close();
+    }
+
+    private Realm getRealm() {
+        if (mRealm == null || mRealm.isClosed())
+            mRealm = Realm.getDefaultInstance();
+        return mRealm;
+    }
+
+    @Override
     public Flowable<User> createNewUser() {
-        User person = mRealm.createObject(User.class);
+        User person = getRealm().createObject(User.class);
         return person.asFlowable();
     }
 
