@@ -1,9 +1,9 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Address extends RealmObject {
-    private long id;
     private String unitOrNumberHouse;
     private String areaLine1;
     private String areaLine2;

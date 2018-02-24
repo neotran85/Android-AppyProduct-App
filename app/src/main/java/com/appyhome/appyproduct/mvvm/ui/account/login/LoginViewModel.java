@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
+
 import io.reactivex.functions.Consumer;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
@@ -51,7 +53,12 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     private void getUserByPhoneNumber(String phoneNumber) {
         getCompositeDisposable().add(getDataManager().getUserByPhoneNumber(phoneNumber)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new );
+                .subscribe(user -> {
+                    getNavigator().showAlert(user.toString());
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
     }
 
     private void handleLoginResponse(LoginResponse response) {

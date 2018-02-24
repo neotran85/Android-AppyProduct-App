@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -26,17 +27,18 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<User> getUserByPhoneNumber(final String phoneNumber) {
+        getRealm().beginTransaction();
         User result = getRealm().where(User.class)
                 .equalTo("phoneNumber", phoneNumber)
                 .findFirstAsync();
-        if (result == null) {
-            User person = getRealm().createObject(User.class);
+        if (result == null || !result.isValid()) {
+            User person = getRealm().createObject(User.class, phoneNumber);
             person.setPhoneNumber(phoneNumber);
-            getRealm().beginTransaction();
             getRealm().copyToRealmOrUpdate(person);
             getRealm().commitTransaction();
             return person.asFlowable();
         } else {
+            getRealm().commitTransaction();
             return result.asFlowable();
         }
     }

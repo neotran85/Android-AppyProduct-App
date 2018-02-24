@@ -63,9 +63,11 @@ public class AppyProductApp extends Application implements HasActivityInjector {
                 .build();
         try {
             Realm.migrateRealm(config, new AppyMigration());
-        } catch (FileNotFoundException ignored) {}
-
+        } catch (FileNotFoundException ignored) {
+            Crashlytics.logException(ignored);
+        }
         Realm.setDefaultConfiguration(config);
+
     }
 
 }
