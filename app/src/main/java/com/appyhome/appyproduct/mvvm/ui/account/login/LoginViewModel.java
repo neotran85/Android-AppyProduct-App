@@ -50,11 +50,11 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 }));
     }
 
-    private void getUserByPhoneNumber(String phoneNumber) {
-        getCompositeDisposable().add(getDataManager().getUserByPhoneNumber(phoneNumber)
+    private void updateUserInfo(String phoneNumber, String token) {
+        getCompositeDisposable().add(getDataManager().updateUserInfo(phoneNumber, token)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(user -> {
-                    getNavigator().showAlert(user.toString());
+                    getNavigator().showAlert(user.getToken());
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
@@ -72,7 +72,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     getDataManager().updateApiHeader(message);
                     //getNavigator().showSuccessLogin();
                     //getNavigator().doAfterLoginSucceeded();
-                    getUserByPhoneNumber(mPhoneNumber);
+                    updateUserInfo(mPhoneNumber, message);
                     return;
                 }
             } else {

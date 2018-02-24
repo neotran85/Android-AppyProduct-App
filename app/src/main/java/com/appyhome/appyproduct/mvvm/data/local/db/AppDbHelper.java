@@ -26,7 +26,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<User> getUserByPhoneNumber(final String phoneNumber) {
+    public Flowable<User> updateUserInfo(final String phoneNumber, String token) {
         getRealm().beginTransaction();
         User result = getRealm().where(User.class)
                 .equalTo("phoneNumber", phoneNumber)
@@ -34,10 +34,13 @@ public class AppDbHelper implements DbHelper {
         if (result == null || !result.isValid()) {
             User person = getRealm().createObject(User.class, phoneNumber);
             person.setPhoneNumber(phoneNumber);
-            getRealm().copyToRealmOrUpdate(person);
+            person.setToken(token);
+            person = getRealm().copyToRealmOrUpdate(person);
             getRealm().commitTransaction();
             return person.asFlowable();
         } else {
+            result.setToken(token);
+            result = getRealm().copyToRealmOrUpdate(result);
             getRealm().commitTransaction();
             return result.asFlowable();
         }

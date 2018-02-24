@@ -83,8 +83,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<User> getUserByPhoneNumber(String phoneNumber) {
-        return mDbHelper.getUserByPhoneNumber(phoneNumber);
+    public Flowable<User> updateUserInfo(String phoneNumber, String token) {
+        return mDbHelper.updateUserInfo(phoneNumber, token);
     }
 
     @Override
