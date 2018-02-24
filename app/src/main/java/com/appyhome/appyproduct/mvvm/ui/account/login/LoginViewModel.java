@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
@@ -53,11 +54,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         getNavigator().showAlert("getUserByPhoneNumber");
         getCompositeDisposable().add(getDataManager().getUserByPhoneNumber(phoneNumber)
                 .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<User>() {
                     @Override
                     public void accept(User user) throws Exception {
-                        getNavigator().showAlert("accept");
                         getNavigator().showAlert(user.getPhoneNumber());
                     }
                 }, new Consumer<Throwable>() {

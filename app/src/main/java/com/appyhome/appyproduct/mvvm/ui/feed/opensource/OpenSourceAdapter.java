@@ -106,7 +106,6 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             mBinding.executePendingBindings();
         }
 
-
         @Override
         public void onClick(View view) {
             if (mOpenSourceResponseList.get(0).projectUrl.get() != null) {
@@ -117,7 +116,8 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     intent.setData(Uri.parse(mOpenSourceResponseList.get(0).projectUrl.get()));
                     itemView.getContext().startActivity(intent);
                 } catch (Exception e) {
-                    Crashlytics.logException(e);                }
+                    Crashlytics.logException(e);
+                }
             }
         }
     }

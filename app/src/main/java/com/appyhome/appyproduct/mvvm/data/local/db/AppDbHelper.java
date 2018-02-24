@@ -28,10 +28,9 @@ public class AppDbHelper implements DbHelper {
     public Flowable<User> getUserByPhoneNumber(final String phoneNumber) {
         User result = mRealm.where(User.class)
                 .equalTo("phoneNumber", phoneNumber)
-                .findFirstAsync();
+                .findFirst();
         if (result == null) {
-            result.setPhoneNumber(phoneNumber);
-            return result.asFlowable();
+            return createNewUser();
         } else {
             return result.asFlowable();
         }
