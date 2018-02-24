@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
 public interface LoginNavigator {
+
     void doAfterLoginSucceeded();
 
     void handleErrorService(Throwable throwable);
@@ -16,4 +17,6 @@ public interface LoginNavigator {
     void showSignUpDialog();
 
     void showSuccessLogin();
+
+    void showAlert(String message);
 }

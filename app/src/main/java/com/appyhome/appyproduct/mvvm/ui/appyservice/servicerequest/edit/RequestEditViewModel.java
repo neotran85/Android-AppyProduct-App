@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestItemVi
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestType;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
 import com.molpay.molpayxdk.MOLPayActivity;
 
 import org.json.JSONException;
@@ -63,7 +64,7 @@ public class RequestEditViewModel extends RequestItemViewModel {
             request.setAdditional(obj.toString());
             editOrder(request);
         } catch (Exception e) {
-
+            Crashlytics.logException(e);
         }
     }
 
@@ -106,6 +107,7 @@ public class RequestEditViewModel extends RequestItemViewModel {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return null;
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,7 @@ public class ServicesAdapter extends BaseAdapter {
             tvDescription.setText(data.description);
             tvPrice.setText(data.price);
         } catch (Exception e) {
+            Crashlytics.logException(e);
         }
         return row;
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +50,7 @@ public final class DataUtils {
                 if (value != null)
                     return value;
             } catch (JSONException e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
         }

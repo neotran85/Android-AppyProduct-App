@@ -37,6 +37,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
+    public void showAlert(String message) {
+        AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();

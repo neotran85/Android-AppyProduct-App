@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.data.model.db;
 
 
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +69,7 @@ public class ServiceOrderUserInput {
             return getServiceInfo().getString("name");
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return "";
     }
@@ -78,6 +80,7 @@ public class ServiceOrderUserInput {
             return array;
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return null;
     }
@@ -141,7 +144,7 @@ public class ServiceOrderUserInput {
                     break;
             }
         } catch (Exception e) {
-
+            Crashlytics.logException(e);
         }
     }
 
@@ -255,6 +258,7 @@ public class ServiceOrderUserInput {
 
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
 
         return request;
@@ -289,6 +293,7 @@ public class ServiceOrderUserInput {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return "";
     }

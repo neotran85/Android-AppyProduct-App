@@ -66,7 +66,7 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                                         }
                                     }
                                 } catch (Exception e) {
-
+                                    Crashlytics.logException(e);
                                 }
                             }
                         }

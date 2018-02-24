@@ -12,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileViewModel;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
 import com.molpay.molpayxdk.MOLPayActivity;
 
 import org.json.JSONException;
@@ -178,6 +179,7 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return false;
     }

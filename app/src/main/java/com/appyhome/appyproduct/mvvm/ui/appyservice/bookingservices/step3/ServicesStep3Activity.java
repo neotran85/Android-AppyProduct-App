@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
@@ -147,6 +148,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                     mBinder.etAreaLine1.setText(city);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Crashlytics.logException(e);
                 }
             }
         }

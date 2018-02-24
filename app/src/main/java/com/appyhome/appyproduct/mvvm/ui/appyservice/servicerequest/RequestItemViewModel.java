@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,6 +116,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
     }
 
@@ -205,6 +207,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
                     handleResultSuccess(result.getJSONObject("message"));
             } catch (Exception e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             }
         }
     }
@@ -216,6 +219,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             getNavigator().doAfterDataUpdated();
         } catch (Exception e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
     }
 
@@ -230,6 +234,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             return result;
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return null;
     }

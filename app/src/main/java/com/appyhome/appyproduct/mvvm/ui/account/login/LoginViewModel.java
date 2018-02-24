@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -48,6 +49,24 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 }));
     }
 
+    private void getUserByPhoneNumber(String phoneNumber) {
+        getNavigator().showAlert("getUserByPhoneNumber");
+        getCompositeDisposable().add(getDataManager().getUserByPhoneNumber(phoneNumber)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<User>() {
+                    @Override
+                    public void accept(User user) throws Exception {
+                        getNavigator().showAlert("accept");
+                        getNavigator().showAlert(user.getPhoneNumber());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
+                }));
+    }
+
     private void handleLoginResponse(LoginResponse response) {
         if (response != null && !response.isEmpty()) {
             String statusCode = response.getStatusCode();
@@ -57,9 +76,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     setAccessToken(message);
                     setPhoneNumber(mPhoneNumber);
                     getDataManager().updateApiHeader(message);
-                    getNavigator().showSuccessLogin();
-                    getNavigator().doAfterLoginSucceeded();
-                    // getDataManager().getUserByPhoneNumber(mPhoneNumber);
+                    //getNavigator().showSuccessLogin();
+                    //getNavigator().doAfterLoginSucceeded();
+                    getUserByPhoneNumber(mPhoneNumber);
                     return;
                 }
             } else {

@@ -26,13 +26,14 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<User> getUserByPhoneNumber(final String phoneNumber) {
-        RealmQuery<User> results  = mRealm.where(User.class).equalTo("phoneNumber", phoneNumber);
-        if (results!= null && results.count() > 0)
-            return results.findFirst().asFlowable();
-        else {
-            User person = mRealm.createObject(User.class);
-            person.setPhoneNumber(phoneNumber);
-            return person.asFlowable();
+        User result = mRealm.where(User.class)
+                .equalTo("phoneNumber", phoneNumber)
+                .findFirstAsync();
+        if (result == null) {
+            result.setPhoneNumber(phoneNumber);
+            return result.asFlowable();
+        } else {
+            return result.asFlowable();
         }
     }
 

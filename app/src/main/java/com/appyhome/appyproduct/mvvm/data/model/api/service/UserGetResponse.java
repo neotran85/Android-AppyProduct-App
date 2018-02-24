@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.model.api.service;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -57,6 +58,7 @@ public class UserGetResponse {
                     phoneNumber = json.getString("phone_number");
                 }
             } catch (Exception e) {
+                Crashlytics.logException(e);
                 return;
             }
         }

@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.utils.manager;
 
 import android.app.Activity;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -19,9 +20,8 @@ public class MapManager {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
             current.startActivityForResult(builder.build(current), PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }

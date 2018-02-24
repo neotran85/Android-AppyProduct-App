@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.crashlytics.android.Crashlytics;
 
 public final class AppUtils {
 
@@ -20,6 +21,7 @@ public final class AppUtils {
                             .getResources()
                             .getString(R.string.app_market_link) + appPackageName)));
         } catch (android.content.ActivityNotFoundException e) {
+            Crashlytics.logException(e);
             context.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse(context
                             .getResources()

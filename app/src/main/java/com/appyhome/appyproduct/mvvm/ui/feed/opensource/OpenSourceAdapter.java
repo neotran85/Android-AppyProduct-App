@@ -116,8 +116,7 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     intent.setData(Uri.parse(mOpenSourceResponseList.get(0).projectUrl.get()));
                     itemView.getContext().startActivity(intent);
                 } catch (Exception e) {
-                    AppLogger.d("url error");
-                }
+                    Crashlytics.logException(e);                }
             }
         }
     }

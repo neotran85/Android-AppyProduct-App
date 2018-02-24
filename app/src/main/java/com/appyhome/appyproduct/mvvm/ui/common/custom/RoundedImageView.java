@@ -15,6 +15,8 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 public class RoundedImageView extends AppCompatImageView {
 
     private static final String TAG = "RoundedImageView";
@@ -67,7 +69,7 @@ public class RoundedImageView extends AppCompatImageView {
             Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, Math.min(w, h));
             canvas.drawBitmap(roundBitmap, 0, 0, null);
         } catch (Exception e) {
-            Log.e(TAG, "onDraw Exception", e);
+            Crashlytics.logException(e);
         }
 
     }

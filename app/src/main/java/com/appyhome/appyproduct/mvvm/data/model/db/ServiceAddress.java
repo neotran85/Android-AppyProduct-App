@@ -1,5 +1,7 @@
 package com.appyhome.appyproduct.mvvm.data.model.db;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +43,7 @@ public class ServiceAddress {
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return "";
     }
@@ -56,7 +59,7 @@ public class ServiceAddress {
             code = object.getString("code");
             return true;
         } catch (Exception e) {
-
+            Crashlytics.logException(e);
         }
         return false;
     }

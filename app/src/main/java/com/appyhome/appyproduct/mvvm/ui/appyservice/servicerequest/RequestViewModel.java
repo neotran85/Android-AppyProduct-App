@@ -5,6 +5,7 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +60,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
             result.put("id", str_Name);
             return result;
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
         return null;
@@ -87,6 +89,7 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
                 }
             }
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
         // Some error???

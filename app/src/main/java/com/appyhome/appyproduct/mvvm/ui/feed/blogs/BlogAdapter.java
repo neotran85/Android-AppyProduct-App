@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ItemBlogEmptyViewBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ItemBlogViewBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     intent.setData(Uri.parse(blogUrl));
                     itemView.getContext().startActivity(intent);
                 } catch (Exception e) {
-                    AppLogger.d("url error");
+                    Crashlytics.logException(e);
                 }
             }
         }
