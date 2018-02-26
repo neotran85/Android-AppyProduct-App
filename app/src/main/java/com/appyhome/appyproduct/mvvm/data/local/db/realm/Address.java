@@ -4,6 +4,8 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Address extends RealmObject {
+    @PrimaryKey
+    private String id;
     private String unitOrNumberHouse;
     private String areaLine1;
     private String areaLine2;
@@ -11,6 +13,7 @@ public class Address extends RealmObject {
     private String city;
     private String country;
     private String postCode;
+    private String phoneNumber;
 
     public String getUnitOrNumberHouse() {
         return unitOrNumberHouse;
@@ -66,5 +69,13 @@ public class Address extends RealmObject {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

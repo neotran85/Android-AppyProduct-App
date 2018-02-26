@@ -1,5 +1,14 @@
 package com.appyhome.appyproduct.mvvm.di.builder;
 
+import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.account.myprofile.textinput.TextInputDialogProvider;
+import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
+import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
+import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step2.ServicesStep2Activity;
@@ -10,6 +19,13 @@ import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step4.Servic
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step4.ServicesStep4ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step5.ServicesStep5Activity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step5.ServicesStep5ActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.detail.RequestDetailActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.detail.RequestDetailActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit.RequestEditActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit.RequestEditActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserActivity;
 import com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.common.custom.detail.TextDetailActivity;
@@ -18,28 +34,13 @@ import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
 import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.account.myprofile.textinput.TextInputDialogProvider;
-import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
-import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
-import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.detail.RequestDetailActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.detail.RequestDetailActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit.RequestEditActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit.RequestEditActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragmentProvider;
 
 import dagger.Module;
@@ -89,6 +90,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = VerifyActivityModule.class)
     abstract VerifyActivity bindVerifyActivity();
+
+    @ContributesAndroidInjector(modules = CategoryActivityModule.class)
+    abstract VerifyActivity bindCategoryActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,

@@ -1,15 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit;
 
-import android.app.Activity;
 import android.content.Intent;
 
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestType;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.molpay.molpayxdk.MOLPayActivity;

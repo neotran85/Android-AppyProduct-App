@@ -13,14 +13,14 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
+import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
-import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.crashlytics.android.Crashlytics;
 

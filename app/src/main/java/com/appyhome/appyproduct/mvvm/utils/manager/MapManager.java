@@ -3,8 +3,6 @@ package com.appyhome.appyproduct.mvvm.utils.manager;
 import android.app.Activity;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 /**

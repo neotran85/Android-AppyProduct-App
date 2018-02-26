@@ -8,9 +8,9 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityRequestConfirmCompletedBinding;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestType;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 

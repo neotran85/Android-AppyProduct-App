@@ -2,17 +2,11 @@ package com.appyhome.appyproduct.mvvm.data.local.db;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 
 @Singleton

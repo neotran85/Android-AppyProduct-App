@@ -10,7 +10,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.databinding.ItemBlogEmptyViewBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ItemBlogViewBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.crashlytics.android.Crashlytics;
 
 import java.util.List;

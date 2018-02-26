@@ -1,8 +1,5 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
