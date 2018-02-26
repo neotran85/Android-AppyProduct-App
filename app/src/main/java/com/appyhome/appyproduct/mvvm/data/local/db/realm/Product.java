@@ -1,8 +1,9 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Product extends SubCategory {
+public class Product extends RealmObject {
     @PrimaryKey
     private String id;
     private double price;
@@ -12,4 +13,8 @@ public class Product extends SubCategory {
     private int amountStock;
     private float rating;
     private int reviewCount;
+    private String title;
+    private String description;
+    private String imageURL;
+    private long idCategory;
 }

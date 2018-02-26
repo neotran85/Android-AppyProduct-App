@@ -6,10 +6,10 @@ import io.realm.annotations.PrimaryKey;
 public class Category extends RealmObject {
     @PrimaryKey
     private String id;
-    protected String title;
-    protected String description;
-    protected String imageURL;
-    protected String subCount;
+    private String title;
+    private String description;
+    private String imageURL;
+    private String subCount;
 
     public String getTitle() {
         return title;

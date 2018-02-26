@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1ActivityModule;
@@ -92,7 +93,7 @@ public abstract class ActivityBuilder {
     abstract VerifyActivity bindVerifyActivity();
 
     @ContributesAndroidInjector(modules = CategoryActivityModule.class)
-    abstract VerifyActivity bindCategoryActivity();
+    abstract CategoryActivity bindCategoryActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,
