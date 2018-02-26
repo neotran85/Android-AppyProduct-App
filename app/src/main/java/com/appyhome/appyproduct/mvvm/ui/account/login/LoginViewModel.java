@@ -34,18 +34,12 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse response) throws Exception {
-                        setIsLoading(false);
-                        handleLoginResponse(response);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    handleLoginResponse(response);
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 

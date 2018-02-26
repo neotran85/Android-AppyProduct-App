@@ -65,9 +65,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .seedDatabaseProductCategories()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(categories -> {
-                    addProductCategories(categories);
-                }, throwable -> {
+                .subscribe(this::addProductCategories, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
@@ -111,9 +109,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .seedDatabaseProductTopics()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(productTopics -> {
-                    addProductTopics(productTopics);
-                }, throwable -> {
+                .subscribe(this::addProductTopics, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
@@ -124,9 +120,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .seedDatabaseProductSubs()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(subs -> {
-                    addProductSubs(subs);
-                }, throwable -> {
+                .subscribe(this::addProductSubs, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
