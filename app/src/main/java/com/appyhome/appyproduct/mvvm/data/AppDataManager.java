@@ -49,6 +49,7 @@ import javax.inject.Singleton;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.realm.RealmResults;
 
 @Singleton
 public class AppDataManager implements DataManager {
@@ -402,5 +403,14 @@ public class AppDataManager implements DataManager {
                     type);
             return data;
         });
+    }
+    @Override
+    public Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic) {
+        return mDbHelper.getProductCategoryByTopic(idTopic);
+    }
+
+        @Override
+    public Flowable<RealmResults<ProductTopic>> getAllProductTopics() {
+        return mDbHelper.getAllProductTopics();
     }
 }

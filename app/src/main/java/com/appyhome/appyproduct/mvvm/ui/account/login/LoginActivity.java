@@ -112,11 +112,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void openSignUpActivity() {
         Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
         intent.putExtra("phone", mBinder.etPhoneNumber.getText().toString());

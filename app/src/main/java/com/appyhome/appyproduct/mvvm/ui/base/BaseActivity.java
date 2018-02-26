@@ -23,6 +23,7 @@ import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import dagger.android.AndroidInjection;
+import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity implements BaseFragment.Callback {
@@ -171,5 +172,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         AndroidInjection.inject(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Realm.getDefaultInstance().close();
+    }
 }
 

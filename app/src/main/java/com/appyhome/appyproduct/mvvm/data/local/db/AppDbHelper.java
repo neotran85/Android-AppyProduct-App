@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 import io.reactivex.Flowable;
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 
 @Singleton
@@ -48,6 +49,25 @@ public class AppDbHelper implements DbHelper {
             return result.asFlowable();
         }
     }
+
+    @Override
+    public Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductCategory>> categories = getRealm().where(ProductCategory.class)
+                .equalTo("id_topic", idTopic)
+                .findAllAsync().asFlowable();
+        getRealm().commitTransaction();
+        return categories;
+    }
+
+    @Override
+    public Flowable<RealmResults<ProductTopic>> getAllProductTopics() {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductTopic>> topcis = getRealm().where(ProductTopic.class).findAllAsync().asFlowable();
+        getRealm().commitTransaction();
+        return topcis;
+    }
+
     @Override
     public Flowable<Boolean> addProductCategories(ArrayList<ProductCategory> categories) {
         try {

@@ -13,7 +13,7 @@ public class ProductCategory extends RealmObject {
     @SerializedName("id")
     @ColumnInfo(name = "id")
     @PrimaryKey
-    public String id;
+    public int id;
 
     @Expose
     @SerializedName("name")
@@ -33,5 +33,5 @@ public class ProductCategory extends RealmObject {
     @Expose
     @SerializedName("id_topic")
     @ColumnInfo(name = "id_topic")
-    public String id_topic;
+    public int id_topic;
 }

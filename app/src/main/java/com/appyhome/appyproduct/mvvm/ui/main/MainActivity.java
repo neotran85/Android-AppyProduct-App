@@ -22,6 +22,7 @@ import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
 
 import javax.inject.Inject;
@@ -71,6 +72,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onResume() {
         super.onResume();
+        mMainViewModel.getAllProductTopics();
     }
 
     public void onFragmentDetached(String tag) {
@@ -219,8 +221,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Realm.getDefaultInstance().close();
+    public void showAlert(String message) {
+        AlertManager.getInstance(this).showLongToast(message);
     }
 }

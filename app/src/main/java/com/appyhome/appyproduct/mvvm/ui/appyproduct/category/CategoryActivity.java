@@ -36,11 +36,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void handleErrorService(Throwable throwable) {
         AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
     }

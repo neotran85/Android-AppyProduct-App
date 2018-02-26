@@ -13,7 +13,7 @@ public class ProductTopic extends RealmObject {
     @SerializedName("id")
     @ColumnInfo(name = "id")
     @PrimaryKey
-    public String id;
+    public int id;
 
     @Expose
     @SerializedName("name")

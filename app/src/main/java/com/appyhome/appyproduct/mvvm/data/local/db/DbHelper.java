@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import java.util.ArrayList;
 
 import io.reactivex.Flowable;
+import io.realm.RealmResults;
 
 
 public interface DbHelper {
@@ -21,6 +22,10 @@ public interface DbHelper {
     Flowable<Boolean> addProductTopics(ArrayList<ProductTopic> topics);
 
     Flowable<Boolean> addProductSubs(ArrayList<ProductSub> subs);
+
+    Flowable<RealmResults<ProductTopic>> getAllProductTopics();
+
+    Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic);
 
     void closeDatabase();
 }

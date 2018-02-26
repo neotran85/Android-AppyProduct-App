@@ -34,11 +34,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         mSplashViewModel.setUp();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     public void openMainActivity() {
         Intent intent = MainActivity.getStartIntent(SplashActivity.this);
         startActivity(intent);

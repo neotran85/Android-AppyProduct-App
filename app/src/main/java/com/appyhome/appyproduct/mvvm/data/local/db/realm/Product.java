@@ -5,7 +5,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Product extends RealmObject {
     @PrimaryKey
-    private String id;
+    private int id;
     private double price;
     private String thumbnailURL;
     private String dateAdded;
