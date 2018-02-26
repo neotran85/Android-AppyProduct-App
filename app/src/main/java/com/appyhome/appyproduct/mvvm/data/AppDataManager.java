@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
@@ -296,37 +299,29 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Observable<ArrayList<AppyServiceCategory>> seedDatabaseCategories() {
-        return Observable.fromCallable(new Callable<ArrayList<AppyServiceCategory>>() {
-            @Override
-            public ArrayList<AppyServiceCategory> call() throws Exception {
-                Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {
-                }.getType();
-                GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-                final Gson gson = builder.create();
-                ArrayList<AppyServiceCategory> appyServiceCategories = gson.fromJson(
-                        DataUtils.loadJSONFromAsset(mContext,
-                                AppConstants.SEED_DATABASE_CATEGORIES),
-                        type);
-                return appyServiceCategories;
-            }
+        return Observable.fromCallable(() -> {
+            Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {}.getType();
+            GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            final Gson gson = builder.create();
+            ArrayList<AppyServiceCategory> data = gson.fromJson(
+                    DataUtils.loadJSONFromAsset(mContext,
+                            AppConstants.SEED_DATABASE_SERVICE_CATEGORIES),
+                    type);
+            return data;
         });
     }
 
     @Override
     public Observable<ArrayList<AppyService>> seedDatabaseServices() {
-        return Observable.fromCallable(new Callable<ArrayList<AppyService>>() {
-            @Override
-            public ArrayList<AppyService> call() throws Exception {
-                Type type = new TypeToken<ArrayList<AppyService>>() {
-                }.getType();
-                GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-                Gson gson = builder.create();
-                ArrayList<AppyService> arrayList = gson.fromJson(
-                        DataUtils.loadJSONFromAsset(mContext,
-                                AppConstants.SEED_DATABASE_SERVICES),
-                        type);
-                return arrayList;
-            }
+        return Observable.fromCallable(() -> {
+            Type type = new TypeToken<ArrayList<AppyService>>() {}.getType();
+            GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            Gson gson = builder.create();
+            ArrayList<AppyService> data = gson.fromJson(
+                    DataUtils.loadJSONFromAsset(mContext,
+                            AppConstants.SEED_DATABASE_SERVICES),
+                    type);
+            return data;
         });
     }
 
@@ -348,5 +343,64 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<JSONObject> verifyTrue() {
         return mApiHelper.verifyTrue();
+    }
+
+
+    @Override
+    public Observable<ArrayList<ProductCategory>> seedDatabaseProductCategories() {
+        return Observable.fromCallable(() -> {
+            Type type = new TypeToken<ArrayList<ProductCategory>>() {
+            }.getType();
+            GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            final Gson gson = builder.create();
+            ArrayList<ProductCategory> data = gson.fromJson(
+                    DataUtils.loadJSONFromAsset(mContext,
+                            AppConstants.SEED_DATABASE_PRODUCT_CATEGORIES),
+                    type);
+            return data;
+        });
+    }
+
+    @Override
+    public Flowable<Boolean> addProductCategories(ArrayList<ProductCategory> categories) {
+        return mDbHelper.addProductCategories(categories);
+    }
+
+    @Override
+    public Flowable<Boolean> addProductTopics(ArrayList<ProductTopic> topics) {
+        return mDbHelper.addProductTopics(topics);
+    }
+
+    @Override
+    public Flowable<Boolean> addProductSubs(ArrayList<ProductSub> topics) {
+        return mDbHelper.addProductSubs(topics);
+    }
+
+    @Override
+    public Observable<ArrayList<ProductSub>> seedDatabaseProductSubs() {
+        return Observable.fromCallable(() -> {
+            Type type = new TypeToken<ArrayList<ProductSub>>() {}.getType();
+            GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            final Gson gson = builder.create();
+            ArrayList<ProductSub> data = gson.fromJson(
+                    DataUtils.loadJSONFromAsset(mContext,
+                            AppConstants.SEED_DATABASE_PRODUCT_SUBS),
+                    type);
+            return data;
+        });
+    }
+
+    @Override
+    public Observable<ArrayList<ProductTopic>> seedDatabaseProductTopics() {
+        return Observable.fromCallable(() -> {
+            Type type = new TypeToken<ArrayList<ProductTopic>>() {}.getType();
+            GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            final Gson gson = builder.create();
+            ArrayList<ProductTopic> data = gson.fromJson(
+                    DataUtils.loadJSONFromAsset(mContext,
+                            AppConstants.SEED_DATABASE_PRODUCT_TOPICS),
+                    type);
+            return data;
+        });
     }
 }

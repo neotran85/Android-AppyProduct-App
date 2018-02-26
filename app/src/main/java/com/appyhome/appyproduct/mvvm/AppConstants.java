@@ -12,7 +12,10 @@ public final class AppConstants {
 
     public static final String PREF_NAME = "mindorks_pref";
     public static final String SEED_DATABASE_SERVICES = "seed/services.json";
-    public static final String SEED_DATABASE_CATEGORIES = "seed/services_categories.json";
+    public static final String SEED_DATABASE_SERVICE_CATEGORIES = "seed/services_categories.json";
+    public static final String SEED_DATABASE_PRODUCT_CATEGORIES = "seed/product_categories.json";
+    public static final String SEED_DATABASE_PRODUCT_TOPICS = "seed/product_topics.json";
+    public static final String SEED_DATABASE_PRODUCT_SUBS = "seed/product_subs.json";
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;

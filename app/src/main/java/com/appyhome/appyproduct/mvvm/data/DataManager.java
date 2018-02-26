@@ -1,6 +1,9 @@
 package com.appyhome.appyproduct.mvvm.data;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
@@ -21,6 +24,12 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
     Observable<ArrayList<AppyServiceCategory>> seedDatabaseCategories();
 
     Observable<ArrayList<AppyService>> seedDatabaseServices();
+
+    Observable<ArrayList<ProductCategory>> seedDatabaseProductCategories();
+
+    Observable<ArrayList<ProductTopic>> seedDatabaseProductTopics();
+
+    Observable<ArrayList<ProductSub>> seedDatabaseProductSubs();
 
     void updateUserInfo(
             String accessToken,

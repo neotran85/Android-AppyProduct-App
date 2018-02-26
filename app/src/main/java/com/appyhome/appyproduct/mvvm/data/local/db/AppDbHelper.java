@@ -1,12 +1,21 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
+
+import org.reactivestreams.Subscriber;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.realm.Realm;
+import io.realm.RealmObject;
 
 
 @Singleton
@@ -39,6 +48,19 @@ public class AppDbHelper implements DbHelper {
             return result.asFlowable();
         }
     }
+    @Override
+    public Flowable<Boolean> addProductCategories(ArrayList<ProductCategory> categories) {
+        try {
+            getRealm().beginTransaction();
+            for (ProductCategory category : categories) {
+                getRealm().copyToRealmOrUpdate(category);
+            }
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
+    }
 
     @Override
     public void closeDatabase() {
@@ -55,6 +77,35 @@ public class AppDbHelper implements DbHelper {
     public Flowable<User> createNewUser() {
         User person = getRealm().createObject(User.class);
         return person.asFlowable();
+    }
+
+
+    @Override
+    public Flowable<Boolean> addProductSubs(ArrayList<ProductSub> items) {
+        try {
+            getRealm().beginTransaction();
+            for (ProductSub item : items) {
+                getRealm().copyToRealmOrUpdate(item);
+            }
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
+    }
+
+    @Override
+    public Flowable<Boolean> addProductTopics(ArrayList<ProductTopic> topics) {
+        try {
+            getRealm().beginTransaction();
+            for (ProductTopic topic : topics) {
+                getRealm().copyToRealmOrUpdate(topic);
+            }
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
     }
 
 }
