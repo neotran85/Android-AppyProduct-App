@@ -306,8 +306,7 @@ public class AppDataManager implements DataManager {
             final Gson gson = builder.create();
             ArrayList<AppyServiceCategory> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
-                            AppConstants.SEED_DATABASE_SERVICE_CATEGORIES),
-                    type);
+                            AppConstants.SEED_DATABASE_SERVICE_CATEGORIES), type);
             return data;
         });
     }
@@ -320,8 +319,7 @@ public class AppDataManager implements DataManager {
             Gson gson = builder.create();
             ArrayList<AppyService> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
-                            AppConstants.SEED_DATABASE_SERVICES),
-                    type);
+                            AppConstants.SEED_DATABASE_SERVICES), type);
             return data;
         });
     }
@@ -350,14 +348,12 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ArrayList<ProductCategory>> seedDatabaseProductCategories() {
         return Observable.fromCallable(() -> {
-            Type type = new TypeToken<ArrayList<ProductCategory>>() {
-            }.getType();
+            Type type = new TypeToken<ArrayList<ProductCategory>>() {}.getType();
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             final Gson gson = builder.create();
             ArrayList<ProductCategory> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
-                            AppConstants.SEED_DATABASE_PRODUCT_CATEGORIES),
-                    type);
+                            AppConstants.SEED_DATABASE_PRODUCT_CATEGORIES), type);
             return data;
         });
     }
@@ -385,8 +381,7 @@ public class AppDataManager implements DataManager {
             final Gson gson = builder.create();
             ArrayList<ProductSub> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
-                            AppConstants.SEED_DATABASE_PRODUCT_SUBS),
-                    type);
+                            AppConstants.SEED_DATABASE_PRODUCT_SUBS), type);
             return data;
         });
     }
@@ -399,8 +394,7 @@ public class AppDataManager implements DataManager {
             final Gson gson = builder.create();
             ArrayList<ProductTopic> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
-                            AppConstants.SEED_DATABASE_PRODUCT_TOPICS),
-                    type);
+                            AppConstants.SEED_DATABASE_PRODUCT_TOPICS), type);
             return data;
         });
     }

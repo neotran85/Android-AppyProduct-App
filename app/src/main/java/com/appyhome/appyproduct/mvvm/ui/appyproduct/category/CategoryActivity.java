@@ -3,19 +3,28 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCategoryBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestAdapter;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
+import io.realm.RealmResults;
+
 public class CategoryActivity extends BaseActivity<ActivityProductCategoryBinding, CategoryViewModel> implements CategoryNavigator {
     @Inject
     CategoryViewModel mCategoryViewModel;
     ActivityProductCategoryBinding mBinder;
+    private CategoryAdapter mCategoryAdapter;
+    private int ID_DEFAULT_TOPIC = 73;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
@@ -33,8 +42,18 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mCategoryViewModel);
         mCategoryViewModel.setNavigator(this);
+        mCategoryAdapter = new CategoryAdapter(null);
+        setUpRecyclerView(mBinder.categoryRecyclerView, mCategoryAdapter);
+        int idTopic = getIntent().getIntExtra("idTopic", ID_DEFAULT_TOPIC);
+        mCategoryViewModel.getProductCategoryByTopic(idTopic);
     }
 
+    private void setUpRecyclerView(RecyclerView rv, CategoryAdapter adapter) {
+        rv.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(adapter);
+    }
     @Override
     public void handleErrorService(Throwable throwable) {
         AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
@@ -62,6 +81,12 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
+    }
+
+    @Override
+    public void showCategories(RealmResults<ProductCategory> result) {
+        mCategoryAdapter.updateData(result);
+        mCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -37,13 +37,13 @@ public class AppDbHelper implements DbHelper {
                 .findFirstAsync();
         if (result == null || !result.isValid()) {
             User person = getRealm().createObject(User.class, phoneNumber);
-            person.setPhoneNumber(phoneNumber);
-            person.setToken(token);
+            person.phoneNumber = phoneNumber;
+            person.token = token;
             person = getRealm().copyToRealmOrUpdate(person);
             getRealm().commitTransaction();
             return person.asFlowable();
         } else {
-            result.setToken(token);
+            result.token = token;
             result = getRealm().copyToRealmOrUpdate(result);
             getRealm().commitTransaction();
             return result.asFlowable();

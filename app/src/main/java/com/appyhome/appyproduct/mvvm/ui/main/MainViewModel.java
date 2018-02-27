@@ -12,15 +12,4 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void getAllProductTopics() {
-        getCompositeDisposable().add(getDataManager().getProductCategoryByTopic(70)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(categories -> {
-                    // DONE
-                    getNavigator().showAlert(categories.size() + "");
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
-    }
 }

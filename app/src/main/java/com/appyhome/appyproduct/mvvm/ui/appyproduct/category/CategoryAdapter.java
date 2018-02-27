@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
+
+import io.realm.RealmResults;
 
 public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
 
@@ -36,8 +39,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         onItemClickListener = listener;
     }
 
-    public void updateData(ArrayList<CategoryItemViewModel> list) {
-        mCategories = list;
+    public void updateData(RealmResults<ProductCategory> results) {
+        mCategories = new ArrayList<>();
+        for(ProductCategory item: results) {
+            CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
+            itemViewModel.title.set(item.name);
+            itemViewModel.imageURL.set(item.thumbnail);
+            mCategories.add(itemViewModel);
+        }
     }
 
     @Override
@@ -47,7 +56,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater;
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
                 return getContentHolder(parent);

@@ -1,99 +1,47 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
+import android.arch.persistence.room.ColumnInfo;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class User extends RealmObject {
     @PrimaryKey
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String phoneNumber;
-    private String emailAddress;
-    private Address address;
-    private Address shippingAddress;
-    private String birthday;
-    private String gender;
-    private String token;
+    public String id;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    @ColumnInfo(name = "first_name")
+    public String firstName;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    @ColumnInfo(name = "last_name")
+    public String lastName;
 
-    public String getLastName() {
-        return lastName;
-    }
+    @ColumnInfo(name = "username")
+    public String userName;
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    @ColumnInfo(name = "phone_number")
+    public String phoneNumber;
 
-    public String getUserName() {
-        return userName;
-    }
+    @ColumnInfo(name = "email")
+    public String emailAddress;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    @ColumnInfo(name = "address")
+    public Address address;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    @ColumnInfo(name = "shipping_address")
+    public Address shippingAddress;
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    @ColumnInfo(name = "birthday")
+    public String birthday;
 
-    public Address getAddress() {
-        return address;
-    }
+    @ColumnInfo(name = "gender")
+    public String gender;
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+    @ColumnInfo(name = "token")
+    public String token;
 
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
+    @ColumnInfo(name = "avatar_path")
+    public String avatarPath;
 
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+    @ColumnInfo(name = "others")
+    public String others;
 }

@@ -9,11 +9,11 @@ import io.realm.RealmSchema;
 public class AppyMigration implements RealmMigration {
     @Override
     public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
-        RealmSchema schema = realm.getSchema();
-        if (oldVersion == 0) {
-            RealmObjectSchema personSchema = schema.get("User");
-            personSchema.addField("token", String.class, FieldAttribute.REQUIRED);
-            oldVersion++;
-        }
+        //RealmSchema schema = realm.getSchema();
+        //if (oldVersion == 0) {
+        //RealmObjectSchema personSchema = schema.get("User");
+        //personSchema.addField("token", String.class, FieldAttribute.REQUIRED);
+        //oldVersion++;
+        //}
     }
 }

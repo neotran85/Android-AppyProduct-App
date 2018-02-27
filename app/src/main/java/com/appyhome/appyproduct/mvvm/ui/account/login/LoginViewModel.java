@@ -47,7 +47,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         getCompositeDisposable().add(getDataManager().updateUserInfo(phoneNumber, token)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(user -> {
-                    getNavigator().showAlert(user.getToken());
+                    //UPDATE SUCCESS
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
@@ -63,8 +63,8 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     setAccessToken(message);
                     setPhoneNumber(mPhoneNumber);
                     getDataManager().updateApiHeader(message);
-                    //getNavigator().showSuccessLogin();
-                    //getNavigator().doAfterLoginSucceeded();
+                    getNavigator().showSuccessLogin();
+                    getNavigator().doAfterLoginSucceeded();
                     updateUserInfo(mPhoneNumber, message);
                     return;
                 }
