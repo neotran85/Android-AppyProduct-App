@@ -47,7 +47,7 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
                                                      request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_LOGIN)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_USER_LOGIN)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -56,7 +56,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<SignUpResponse> doUserSignUp(SignUpRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_SIGN_UP)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_USER_SIGN_UP)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -66,7 +66,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<LogoutResponse> doUserLogout() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_LOGOUT)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_USER_LOGOUT)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(LogoutResponse.class);
@@ -74,7 +74,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<BlogResponse> getBlogApiCall() {
-        return Rx2AndroidNetworking.get(ApiUrlConfig.ENDPOINT_BLOG)
+        return Rx2AndroidNetworking.get(ApiUrlConfig.API_ENDPOINT_BLOG)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(BlogResponse.class);
@@ -82,7 +82,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<OpenSourceResponse> getOpenSourceApiCall() {
-        return Rx2AndroidNetworking.get(ApiUrlConfig.ENDPOINT_OPEN_SOURCE)
+        return Rx2AndroidNetworking.get(ApiUrlConfig.API_ENDPOINT_OPEN_SOURCE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(OpenSourceResponse.class);
@@ -90,7 +90,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_CREATE)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_CREATE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addUrlEncodeFormBodyParameter(dataRequest)
                 .build()
@@ -99,7 +99,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getAppointment(AppointmentGetRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -108,7 +108,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getAppointmentAll() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
@@ -116,7 +116,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.APPOINTMENT_DELETE)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_DELETE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addUrlEncodeFormBodyParameter(request)
                 .build()
@@ -125,7 +125,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getOrder(OrderGetRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_ORDER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -134,7 +134,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getOrderAll() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_ORDER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
@@ -142,7 +142,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getReceiptAll() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_RECEIPT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
@@ -150,7 +150,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_COMPLETED)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_ORDER_COMPLETED)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addUrlEncodeFormBodyParameter(request)
                 .build()
@@ -159,7 +159,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getUserProfile() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.USER_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_USER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
@@ -167,7 +167,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.RECEIPT_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_RECEIPT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -176,7 +176,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> editOrder(OrderEditRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.ORDER_EDIT)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_ORDER_EDIT)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
                 .build()
@@ -185,7 +185,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> verifyUser() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.VERIFY_USER)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_VERIFY_USER)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
@@ -193,7 +193,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<JSONObject> verifyTrue() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.VERIFY_TRUE)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_VERIFY_TRUE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
@@ -201,7 +201,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<ProductListResponse> getProductsByIdCategory(ProductListRequest request) {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.PRODUCT_PER_CATEGORY_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)
                 .build()

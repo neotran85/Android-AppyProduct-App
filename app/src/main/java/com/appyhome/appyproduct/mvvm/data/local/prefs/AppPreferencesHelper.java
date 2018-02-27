@@ -101,8 +101,6 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     @Override
     public void saveServiceAddress(ServiceAddress serviceAddress) {
-        AppLogger.d("saveServiceAddress: " + serviceAddress.toJSONString());
-        AppLogger.d("saveServiceAddress: " + serviceAddress.toString());
         mPrefs.edit().putString(PREF_KEY_SERVICE_ADDRESS, serviceAddress.toJSONString()).apply();
     }
 
