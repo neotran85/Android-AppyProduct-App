@@ -7,6 +7,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -195,5 +197,14 @@ public class AppApiHelper implements ApiHelper {
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getJSONObjectSingle();
+    }
+
+    @Override
+    public Single<ProductListResponse> getProductsByIdCategory(ProductListRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.PRODUCT_PER_CATEGORY_GET)
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(ProductListResponse.class);
     }
 }

@@ -85,7 +85,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         onItemClickListener = listener;
     }
 
-    public void updateData(Object results, int type) {
+    public void addItems(Object results, int type) {
         mType = type;
         if (type == TYPE_CATEGORY) {
             mItems = new ArrayList<>();

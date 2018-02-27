@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;

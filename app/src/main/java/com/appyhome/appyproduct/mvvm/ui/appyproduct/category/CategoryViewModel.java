@@ -3,6 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -47,6 +49,21 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
+                }));
+    }
+
+
+    public void getProductsByIdSub(int idSub) {
+        getCompositeDisposable().add(getDataManager()
+                .getProductsByIdCategory(new ProductListRequest(idSub, 0))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    getNavigator().showAlert(response.message.length + "");
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 }

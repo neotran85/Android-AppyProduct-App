@@ -84,7 +84,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
             mCategoryViewModel.getProductSubCategoryByCategory(id);
         }
         if(adapter == mBinder.subCategoryRecyclerView.getAdapter()) {
-
+            mCategoryViewModel.getProductsByIdSub(id);
         }
     }
 
@@ -114,13 +114,13 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void showSubCategories(RealmResults<ProductSub> result) {
-        mSubCategoryAdapter.updateData(result, CategoryAdapter.TYPE_SUB_CATEGORY);
+        mSubCategoryAdapter.addItems(result, CategoryAdapter.TYPE_SUB_CATEGORY);
         mSubCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showCategories(RealmResults<ProductCategory> result) {
-        mCategoryAdapter.updateData(result, CategoryAdapter.TYPE_CATEGORY);
+        mCategoryAdapter.addItems(result, CategoryAdapter.TYPE_CATEGORY);
         mCategoryAdapter.notifyDataSetChanged();
         mCategoryAdapter.clickTheFirstItem();
     }

@@ -16,6 +16,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -422,5 +424,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory) {
         return mDbHelper.getSubProductCategoryByCategory(idCategory);
+    }
+
+    @Override
+    public Single<ProductListResponse> getProductsByIdCategory(ProductListRequest request) {
+        return mApiHelper.getProductsByIdCategory(request);
     }
 }

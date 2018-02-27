@@ -7,6 +7,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -62,5 +64,7 @@ public interface ApiHelper {
     Single<JSONObject> verifyUser();
 
     Single<JSONObject> verifyTrue();
+
+    Single<ProductListResponse> getProductsByIdCategory(ProductListRequest request);
 
 }
