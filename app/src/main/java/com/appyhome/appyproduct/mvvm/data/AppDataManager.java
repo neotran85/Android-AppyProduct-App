@@ -301,7 +301,8 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ArrayList<AppyServiceCategory>> seedDatabaseCategories() {
         return Observable.fromCallable(() -> {
-            Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {}.getType();
+            Type type = new TypeToken<ArrayList<AppyServiceCategory>>() {
+            }.getType();
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             final Gson gson = builder.create();
             ArrayList<AppyServiceCategory> data = gson.fromJson(
@@ -314,7 +315,8 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ArrayList<AppyService>> seedDatabaseServices() {
         return Observable.fromCallable(() -> {
-            Type type = new TypeToken<ArrayList<AppyService>>() {}.getType();
+            Type type = new TypeToken<ArrayList<AppyService>>() {
+            }.getType();
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             Gson gson = builder.create();
             ArrayList<AppyService> data = gson.fromJson(
@@ -348,7 +350,8 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ArrayList<ProductCategory>> seedDatabaseProductCategories() {
         return Observable.fromCallable(() -> {
-            Type type = new TypeToken<ArrayList<ProductCategory>>() {}.getType();
+            Type type = new TypeToken<ArrayList<ProductCategory>>() {
+            }.getType();
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             final Gson gson = builder.create();
             ArrayList<ProductCategory> data = gson.fromJson(
@@ -376,7 +379,8 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ArrayList<ProductSub>> seedDatabaseProductSubs() {
         return Observable.fromCallable(() -> {
-            Type type = new TypeToken<ArrayList<ProductSub>>() {}.getType();
+            Type type = new TypeToken<ArrayList<ProductSub>>() {
+            }.getType();
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             final Gson gson = builder.create();
             ArrayList<ProductSub> data = gson.fromJson(
@@ -389,7 +393,8 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ArrayList<ProductTopic>> seedDatabaseProductTopics() {
         return Observable.fromCallable(() -> {
-            Type type = new TypeToken<ArrayList<ProductTopic>>() {}.getType();
+            Type type = new TypeToken<ArrayList<ProductTopic>>() {
+            }.getType();
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             final Gson gson = builder.create();
             ArrayList<ProductTopic> data = gson.fromJson(
@@ -398,13 +403,24 @@ public class AppDataManager implements DataManager {
             return data;
         });
     }
+
     @Override
     public Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic) {
         return mDbHelper.getProductCategoryByTopic(idTopic);
     }
 
-        @Override
+    @Override
     public Flowable<RealmResults<ProductTopic>> getAllProductTopics() {
         return mDbHelper.getAllProductTopics();
+    }
+
+    @Override
+    public Flowable<ProductTopic> getProductTopicById(int idTopic) {
+        return mDbHelper.getProductTopicById(idTopic);
+    }
+
+    @Override
+    public Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory) {
+        return mDbHelper.getSubProductCategoryByCategory(idCategory);
     }
 }

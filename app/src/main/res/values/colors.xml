@@ -3,7 +3,7 @@
 <resources>
     <color name="colorPrimary">@color/blue_black_light</color>
     <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorAccent">#fd8204</color>
+    <color name="colorAccent">#FF8300</color>
     <color name="light_gray">#e3e4e5</color>
     <color name="gray">#e3e4e5</color>
     <color name="semi_gray">#979797</color>

@@ -2,166 +2,168 @@
   {
     "id": 305,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "KITCHEN CABINETS"
   },
   {
     "id": 81,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/leisure_dining_chairs.png",
     "description": "",
     "name": "LEISURE / DINING CHAIRS"
   },
   {
     "id": 84,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/benches_tools.png",
     "description": "",
     "name": "BENCHES & STOOLS"
   },
   {
     "id": 87,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/furniture_sets.png",
     "description": "",
     "name": "FURNITURE SETS"
   },
   {
     "id": 79,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/sofa_sectionals.png",
     "description": "",
     "name": "SOFAS & SECTIONALS"
   },
   {
     "id": 82,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/tables_desks.png",
     "description": "",
     "name": "TABLES & DESKS"
   },
   {
     "id": 306,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/home_office.png",
     "description": "",
     "name": "HOME OFFICE"
   },
   {
     "id": 307,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/outdoor_furnitures.png",
+    "description": "",
     "name": "OUTDOOR FURNITURES"
   },
   {
     "id": 80,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
+    "description": "",
     "name": "ACCENT"
   },
   {
     "id": 86,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/kids_furniture.png",
     "description": "",
     "name": "KIDS' FURNITURE"
   },
   {
     "id": 83,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "LIVING CABINETS"
   },
   {
     "id": 85,
     "id_topic": 70,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/bedroom_furniture.png",
     "description": "",
     "name": "BEDROOM"
   },
   {
     "id": 89,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "CUSHION & THROWS"
   },
   {
     "id": 90,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "RUGS & MATS"
   },
   {
     "id": 96,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "CANDLES & DIFFUSERS"
   },
   {
     "id": 95,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "WALL & TABLE CLOCKS"
   },
   {
     "id": 91,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "WALL DECORATIVE"
   },
   {
     "id": 308,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "MURALS"
   },
   {
     "id": 309,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "CURTAINS"
   },
   {
     "id": 97,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "MIRRORS"
   },
   {
     "id": 301,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "NURSERY"
   },
   {
     "id": 375,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "TABLE DECOR"
   },
   {
     "id": 94,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "FESTIVE DECORATION"
   },
   {
     "id": 92,
     "id_topic": 88,
-    "thumbnail": "",
+    "thumbnail": "images/product/furniture/accents.png",
     "description": "",
     "name": "OUTDOOR DÉCOR"
   }

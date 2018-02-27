@@ -72,7 +72,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onResume() {
         super.onResume();
-        mMainViewModel.getAllProductTopics();
     }
 
     public void onFragmentDetached(String tag) {

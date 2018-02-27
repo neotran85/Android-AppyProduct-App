@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -57,11 +58,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             case R.id.ibHomeCleaning:
                 openBookingSteps(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
                 break;
+            case R.id.ibFurniture:
+                openProductCategories(70);
+                break;
+            case R.id.ibDecor:
+                openProductCategories(88);
+                break;
             default: // Coming soon...
                 AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
     }
 
+    private void openProductCategories(int idTopic) {
+        Intent intent = CategoryActivity.getStartIntent(this.getContext());
+        intent.putExtra("id_topic", idTopic);
+        startActivity(intent);
+    }
     private void openBookingSteps(int type) {
         mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
         mHomeViewModel.getDataManager().getServiceOrderUserInput().setUpData(type);

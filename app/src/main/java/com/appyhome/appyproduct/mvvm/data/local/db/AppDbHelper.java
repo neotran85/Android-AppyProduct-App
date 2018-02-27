@@ -51,6 +51,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductSub>> subs = getRealm().where(ProductSub.class)
+                .equalTo("id_category", idCategory)
+                .findAllAsync().asFlowable();
+        getRealm().commitTransaction();
+        return subs;
+    }
+
+    @Override
     public Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic) {
         getRealm().beginTransaction();
         Flowable<RealmResults<ProductCategory>> categories = getRealm().where(ProductCategory.class)
@@ -128,4 +138,13 @@ public class AppDbHelper implements DbHelper {
         }
     }
 
+    @Override
+    public Flowable<ProductTopic> getProductTopicById(int idTopic) {
+        getRealm().beginTransaction();
+        Flowable<ProductTopic> topic = getRealm().where(ProductTopic.class)
+                .equalTo("id", idTopic)
+                .findFirstAsync().asFlowable();
+        getRealm().commitTransaction();
+        return topic;
+    }
 }

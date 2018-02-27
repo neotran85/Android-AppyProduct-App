@@ -2,8 +2,10 @@ package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
@@ -23,6 +25,12 @@ public final class BindingUtils {
     public static void setImageUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
         Glide.with(context).load(url).into(imageView);
+    }
+
+    @BindingAdapter("imageAssetsUrl")
+    public static void setImageAssetUrl(ImageView imageView, String path) {
+        Context context = imageView.getContext();
+        ViewUtils.loadImageAsset(context, imageView, path);
     }
 
     @BindingAdapter({"adapter"})

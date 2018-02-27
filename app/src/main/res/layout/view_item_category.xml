@@ -1,4 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,12 +11,26 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/llItemView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp">
+        android:id="@+id/llItemCategoryView"
+        android:layout_width="@dimen/menu_left_categories_width"
+        android:layout_height="@dimen/menu_left_item_height"
+        android:background="@mipmap/product_sub_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/ivThumbnail"
+            android:layout_width="@dimen/size_sub_image"
+            android:layout_height="@dimen/size_sub_image"
+            imageAssetsUrl="@{viewModel.imageURL}"/>
+        <TextView
+            android:id="@+id/tvTitleProduct"
+            android:maxLines="1"
+            android:paddingTop="8dp"
+            android:text="@{viewModel.title}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="8dp"
+            android:textColor="@color/semi_gray"
+            android:textSize="8sp" />
     </LinearLayout>
 </layout>

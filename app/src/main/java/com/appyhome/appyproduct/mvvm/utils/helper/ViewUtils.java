@@ -1,15 +1,19 @@
 package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
+
+import java.io.InputStream;
 
 public final class ViewUtils {
 
@@ -80,5 +84,16 @@ public final class ViewUtils {
 
     public static void setOnClickListenersOfParentView(ViewGroup view) {
 
+    }
+
+    public static void loadImageAsset(Context context, ImageView imageView, String imagePath) {
+        AssetManager assetManager = context.getAssets();
+        try {
+            InputStream ims = assetManager.open(imagePath);
+            Drawable d = Drawable.createFromStream(ims, null);
+            imageView.setImageDrawable(d);
+        } catch (Exception ex) {
+            return;
+        }
     }
 }

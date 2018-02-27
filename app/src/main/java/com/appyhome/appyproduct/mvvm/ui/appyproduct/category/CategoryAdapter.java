@@ -1,17 +1,23 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
 
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
@@ -20,18 +26,58 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_LOADING = -1;
 
-    private ArrayList<CategoryItemViewModel> mCategories;
+    public static final int TYPE_CATEGORY = 0;
+    public static final int TYPE_SUB_CATEGORY = 1;
+
+    private ArrayList<CategoryItemViewModel> mItems;
 
     private OnItemClickListener onItemClickListener;
 
+    private int mType = TYPE_CATEGORY;
+
     public CategoryAdapter(ArrayList<CategoryItemViewModel> arrayList) {
-        this.mCategories = arrayList;
+        this.mItems = arrayList;
     }
+
+    private CategoryItemViewModel mCurrentClickedViewModel = null;
 
     @Override
     public void onClick(View view) {
+        Object tag = view.getTag();
+        if (isCategory()) {
+            if (tag instanceof CategoryItemViewModel) {
+                CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
+                clickViewModel(viewModel);
+            }
+        } else if (onItemClickListener != null) {
+            if (tag instanceof CategoryItemViewModel) {
+                CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
+                onItemClickListener.onItemClick(this, view, viewModel.getIdCategory());
+            }
+        }
+    }
+
+    private void clickViewModel(CategoryItemViewModel viewModel) {
+        if (mCurrentClickedViewModel != viewModel) {
+            viewModel.isHighLight = true;
+            if (mCurrentClickedViewModel != null) {
+                mCurrentClickedViewModel.isHighLight = false;
+                int positionOld = mItems.indexOf(mCurrentClickedViewModel);
+                notifyItemChanged(positionOld);
+            }
+            int positionNew = mItems.indexOf(viewModel);
+            notifyItemChanged(positionNew);
+            mCurrentClickedViewModel = viewModel;
+        }
         if (onItemClickListener != null) {
-            onItemClickListener.onItemClick(view);
+            onItemClickListener.onItemClick(this, null, viewModel.getIdCategory());
+        }
+    }
+
+    public void clickTheFirstItem() {
+        if (mItems != null && mItems.size() > 0) {
+            CategoryItemViewModel viewModel = mItems.get(0);
+            clickViewModel(viewModel);
         }
     }
 
@@ -39,19 +85,34 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         onItemClickListener = listener;
     }
 
-    public void updateData(RealmResults<ProductCategory> results) {
-        mCategories = new ArrayList<>();
-        for(ProductCategory item: results) {
-            CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
-            itemViewModel.title.set(item.name);
-            itemViewModel.imageURL.set(item.thumbnail);
-            mCategories.add(itemViewModel);
+    public void updateData(Object results, int type) {
+        mType = type;
+        if (type == TYPE_CATEGORY) {
+            mItems = new ArrayList<>();
+            if (results != null) {
+                RealmResults<ProductCategory> temp = (RealmResults<ProductCategory>) results;
+                for (ProductCategory item : temp) {
+                    CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
+                    itemViewModel.title.set(item.name);
+                    itemViewModel.imageURL.set(item.thumbnail);
+                    itemViewModel.setIdCategory(item.id);
+                    mItems.add(itemViewModel);
+                }
+            }
         }
-    }
-
-    @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.onBind(position);
+        if (type == TYPE_SUB_CATEGORY) {
+            mItems = new ArrayList<>();
+            if (results != null) {
+                RealmResults<ProductSub> temp = (RealmResults<ProductSub>) results;
+                for (ProductSub item : temp) {
+                    CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
+                    itemViewModel.title.set(item.name);
+                    itemViewModel.imageURL.set(item.thumbnail);
+                    itemViewModel.setIdCategory(item.id);
+                    mItems.add(itemViewModel);
+                }
+            }
+        }
     }
 
     @Override
@@ -68,6 +129,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         }
     }
 
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
+        holder.onBind(position);
+    }
+
     private BaseViewHolder getDefaultHolder(ViewGroup parent) {
         return new BaseViewHolder(parent) {
             @Override
@@ -80,7 +146,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
     private CategoryItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemCategoryBinding itemViewBinding = ViewItemCategoryBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        itemViewBinding.getRoot().setOnClickListener(this);
         return new CategoryItemViewHolder(itemViewBinding);
     }
 
@@ -100,10 +165,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
     @Override
     public int getItemViewType(int position) {
-        if (mCategories == null) {
+        if (mItems == null) {
             return VIEW_TYPE_LOADING; // loading item
         }
-        if (mCategories.size() == 0) {
+        if (mItems.size() == 0) {
             return VIEW_TYPE_EMPTY; // empty item
         }
         return VIEW_TYPE_NORMAL;
@@ -111,14 +176,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
     @Override
     public int getItemCount() {
-        if (mCategories != null && mCategories.size() > 0) {
-            return mCategories.size();
+        if (mItems != null && mItems.size() > 0) {
+            return mItems.size();
         }
         return 1;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view);
+        void onItemClick(CategoryAdapter adapter, View view, int idCategory);
     }
 
     public class CategoryItemEmptyViewHolder extends BaseViewHolder {
@@ -128,7 +193,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
         @Override
         public void onBind(int position) {
-
         }
     }
 
@@ -136,21 +200,62 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         private CategoryItemLoadingViewHolder(View view) {
             super(view);
         }
+
         @Override
-        public void onBind(int position) {}
+        public void onBind(int position) {
+        }
+    }
+
+    public boolean isCategory() {
+        return mType == TYPE_CATEGORY;
     }
 
     public class CategoryItemViewHolder extends BaseViewHolder {
 
         private ViewItemCategoryBinding mBinding;
 
+        public ViewItemCategoryBinding getBinding() {
+            return mBinding;
+        }
+
+        public void setOnClickListener(View.OnClickListener listener) {
+            if (mBinding != null) {
+                mBinding.llItemCategoryView.setTag(mBinding.getViewModel());
+                mBinding.llItemCategoryView.setOnClickListener(listener);
+            }
+        }
+
         private CategoryItemViewHolder(ViewItemCategoryBinding binding) {
             super(binding.getRoot());
-            this.mBinding = binding;
+            mBinding = binding;
+        }
+
+        private void createCategoryView() {
+            View view = mBinding.llItemCategoryView;
+            boolean isHighLight = mBinding.getViewModel().isHighLight;
+            view.setBackgroundResource(isHighLight ? R.color.colorAccent : R.color.transparent);
+            Context context = view.getContext();
+            mBinding.tvTitleProduct.setTextColor(ContextCompat.getColor(context, isHighLight ? R.color.white : R.color.semi_gray));
+            ViewGroup.LayoutParams params = mBinding.ivThumbnail.getLayoutParams();
+            params.width = Math.round(context.getResources().getDimension(R.dimen.size_category_image));
+            params.height = params.width;
+            mBinding.ivThumbnail.setLayoutParams(params);
+        }
+
+        public void setViewModel(CategoryItemViewModel viewModel) {
+            if (mBinding != null) {
+                mBinding.setViewModel(viewModel);
+                if (isCategory()) {
+                    createCategoryView();
+                }
+            }
         }
 
         @Override
         public void onBind(int position) {
+            CategoryItemViewModel viewModel = mItems.get(position);
+            this.setViewModel(viewModel);
+            this.setOnClickListener(CategoryAdapter.this);
         }
 
     }

@@ -27,5 +27,9 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic);
 
+    Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory);
+
+    Flowable<ProductTopic> getProductTopicById(int idTopic);
+
     void closeDatabase();
 }
