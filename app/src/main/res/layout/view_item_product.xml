@@ -12,12 +12,13 @@
 
     <LinearLayout
         android:id="@+id/llItemView"
-        android:layout_width="@dimen/width_product_in_list"
-        android:layout_height="@dimen/height_product_in_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@mipmap/product_in_list_bg"
         android:orientation="vertical"
         android:paddingLeft="@dimen/padding_left_product_in_list"
         android:paddingRight="@dimen/padding_left_product_in_list"
+        android:paddingBottom="28dp"
         android:paddingTop="14dp">
 
         <ImageView
@@ -31,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="2"
-            android:paddingTop="4dp"
+            android:paddingTop="8dp"
             android:text="@{viewModel.title}"
             android:textColor="@color/gray_product_in_list"
             android:textSize="9sp" />
