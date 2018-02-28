@@ -14,7 +14,9 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 

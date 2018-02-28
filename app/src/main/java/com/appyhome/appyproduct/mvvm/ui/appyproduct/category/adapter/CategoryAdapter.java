@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
+package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemCategoryBinding;
@@ -17,7 +15,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
 
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {

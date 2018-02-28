@@ -1,8 +1,7 @@
-package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
+package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 
 import android.databinding.ObservableField;
 
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
