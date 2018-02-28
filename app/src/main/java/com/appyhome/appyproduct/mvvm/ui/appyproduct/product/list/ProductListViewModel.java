@@ -32,31 +32,45 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(response -> {
                     setIsLoading(false);
                     if (response.message != null && response.message.length > 0) {
-                        addProducts(response.message);
+                        //addProductsToDatabase(response.message);
+                        getNavigator().showAlert(response.message.length + "");
+                        getNavigator().showProducts(response.message);
                     }
                 }, throwable -> {
                     setIsLoading(false);
                     getNavigator().handleErrorService(throwable);
+                    Crashlytics.logException(throwable);
                 }));
     }
 
-    private void addProducts(Product[] list) {
+    private void addProductsToDatabase(Product[] list) {
         getCompositeDisposable().add(getDataManager().addProducts(list)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
-                    getProductsBySubCategory(mIdSub);
+                    if (success)
+                        getProductsBySubCategory(mIdSub, list);
+                    else {
+                        // IF ADDED FAILED
+                        getNavigator().showProducts(list);
+                    }
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
     }
-    private void getProductsBySubCategory(int idSub) {
+
+    private void getProductsBySubCategory(int idSub, Product[] cachedList) {
         getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     // DONE GET
-                    getNavigator().showProducts(products);
+                    if (products != null && products.size() > 0) {
+                        getNavigator().showProducts(products);
+                    } else {
+                        // SHOW CACHED LIST
+                        getNavigator().showProducts(cachedList);
+                    }
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

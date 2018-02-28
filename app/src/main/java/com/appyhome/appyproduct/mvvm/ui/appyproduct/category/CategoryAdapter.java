@@ -194,6 +194,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         }
     }
 
+    public boolean isSubCategory() {
+        return mType == TYPE_SUB_CATEGORY;
+    }
+
     public boolean isCategory() {
         return mType == TYPE_CATEGORY;
     }

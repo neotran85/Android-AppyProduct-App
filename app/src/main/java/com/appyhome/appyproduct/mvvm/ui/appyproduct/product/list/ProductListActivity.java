@@ -32,14 +32,16 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, View.OnClickListener {
+public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator  {
     @Inject
     ProductListViewModel mViewModel;
     ActivityProductListBinding mBinder;
 
+    private ProductAdapter mProductAdapter;
+
     private int mIdSubCategory;
     public static final int ID_DEFAULT_SUB = 138;
-    public static final int  DEFAULT_SPAN_COUNT = 4;
+    public static final int  DEFAULT_SPAN_COUNT = 3;
 
 
     public static Intent getStartIntent(Context context) {
@@ -55,19 +57,16 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.setNavigator(this);
         mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
-        setUpRecyclerViewGrid(mBinder.productsRecyclerView, null);
+        mProductAdapter = new ProductAdapter(null);
+        setUpRecyclerViewGrid(mBinder.productsRecyclerView, mProductAdapter);
     }
 
-    private void setUpRecyclerViewGrid(RecyclerView rv, CategoryAdapter adapter) {
+    private void setUpRecyclerViewGrid(RecyclerView rv, ProductAdapter adapter) {
         rv.setLayoutManager(new GridLayoutManager(this,
                 DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
-    }
-    @Override
-    public void onClick(View view) {
-
     }
 
     @Override
@@ -97,8 +96,21 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void showProducts(RealmResults<Product> result) {
+        mProductAdapter.addItems(result, this);
+        mProductAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProducts(Product[] list) {
+        mProductAdapter.addItems(list, this);
+        mProductAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showContent(CategoryAdapter adapter, View view, int idCategory) {
 
     }
+
 
     @Override
     public int getBindingVariable() {

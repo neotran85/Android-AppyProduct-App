@@ -79,10 +79,10 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void showContent(CategoryAdapter adapter, View view, int id) {
-        if(adapter == mBinder.categoryRecyclerView.getAdapter()) {
+        if(adapter.isCategory()) {
             mCategoryViewModel.getProductSubCategoryByCategory(id);
         }
-        if(adapter == mBinder.subCategoryRecyclerView.getAdapter()) {
+        if(adapter.isSubCategory()) {
             Intent intent = ProductListActivity.getStartIntent(this);
             intent.putExtra("id_sub", id);
             startActivity(intent);
