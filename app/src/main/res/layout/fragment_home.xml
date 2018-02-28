@@ -87,13 +87,13 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:paddingLeft="38dp"
                             android:id="@+id/categoryView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:orientation="horizontal">
 
-                            <include layout="@layout/view_home_category" />
                         </LinearLayout>
 
                         <LinearLayout

@@ -33,14 +33,13 @@ public class CategoryAdapter extends SampleAdapter {
     @Override
     public void onClick(View view) {
         Object tag = view.getTag();
-        if (isCategory()) {
-            if (tag instanceof CategoryItemViewModel) {
-                CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
-                clickViewModel(viewModel);
-            }
-        } else if (tag instanceof CategoryItemViewModel) {
+        if (tag instanceof CategoryItemViewModel) {
             CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getIdCategory());
+            if (isCategory()) {
+                clickViewModel(viewModel);
+            } else {
+                viewModel.getNavigator().showContent(this, view, viewModel.getIdCategory());
+            }
         }
     }
 

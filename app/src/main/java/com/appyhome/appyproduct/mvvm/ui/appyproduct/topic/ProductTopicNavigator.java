@@ -1,6 +1,10 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.topic;
 
 
-public interface ProductTopicNavigator {
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 
+import io.realm.RealmResults;
+
+public interface ProductTopicNavigator {
+    void showTopics(RealmResults<ProductTopic> topics);
 }

@@ -4,6 +4,8 @@ package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -24,12 +27,9 @@ import javax.inject.Inject;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator, View.OnClickListener {
 
-    public static final String TAG = "SampleTopicFragment";
+    public static final String TAG = "HomeFragment";
     private final int[] mAppyServicesIds = {R.id.ibAirConServicing, R.id.ibElectricalService,
             R.id.ibHomeCleaning, R.id.ibPlumbingService};
-    private final int[] mAppyProductsIds = {R.id.ibBedAndBath, R.id.ibDecor,
-            R.id.ibKitchen, R.id.ibAppliances, R.id.ibFurniture,
-            R.id.ibHomeImprovement, R.id.ibLighting, R.id.ibStorageAndOrganisation};
     @Inject
     HomeViewModel mHomeViewModel;
     FragmentHomeBinding mBinder;
@@ -58,21 +58,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             case R.id.ibHomeCleaning:
                 openBookingSteps(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
                 break;
-            case R.id.ibFurniture:
-                openProductCategories(70);
-                break;
-            case R.id.ibDecor:
-                openProductCategories(88);
-                break;
             default: // Coming soon...
                 AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
-    }
-
-    private void openProductCategories(int idTopic) {
-        Intent intent = CategoryActivity.getStartIntent(this.getContext());
-        intent.putExtra("id_topic", idTopic);
-        startActivity(intent);
     }
     private void openBookingSteps(int type) {
         mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
@@ -105,7 +93,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setTitle("");
         }
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
-        ViewUtils.setOnClickListener(mBinder.categoryView, this, mAppyProductsIds);
+        addProductTopicsFragment();
     }
 
     @Override
@@ -126,6 +114,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    private void addProductTopicsFragment() {
+        this.getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .replace(mBinder.categoryView.getId(), ProductTopicFragment.newInstance(), ProductTopicFragment.TAG)
+                .commit();
     }
 
 }
