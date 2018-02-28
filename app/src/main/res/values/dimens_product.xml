@@ -2,5 +2,5 @@
     <dimen name="menu_left_categories_width">120dp</dimen>
     <dimen name="menu_left_item_height">140dp</dimen>
     <dimen name="size_category_image">48dp</dimen>
-    <dimen name="size_sub_image">82dp</dimen>
+    <dimen name="size_sub_image">80dp</dimen>
 </resources>

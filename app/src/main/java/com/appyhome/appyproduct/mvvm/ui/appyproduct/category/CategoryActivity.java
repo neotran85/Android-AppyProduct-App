@@ -90,16 +90,12 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void showErrorServer() {
-        showError(getString(R.string.login_error_internal_server));
+        showAlert(getString(R.string.login_error_internal_server));
     }
 
     @Override
     public void showErrorOthers() {
-        showError(getString(R.string.login_error));
-    }
-
-    private void showError(String text) {
-        AlertManager.getInstance(this).showLongToast(text);
+        showAlert(getString(R.string.login_error));
     }
 
     @Override
