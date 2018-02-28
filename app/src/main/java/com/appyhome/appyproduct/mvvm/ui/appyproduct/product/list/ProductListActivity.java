@@ -49,7 +49,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.setNavigator(this);
         mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
-        mProductAdapter = new ProductAdapter(null);
+        mProductAdapter = new ProductAdapter();
         mBinder.tabLayout.setVisibility(View.GONE);
         setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);

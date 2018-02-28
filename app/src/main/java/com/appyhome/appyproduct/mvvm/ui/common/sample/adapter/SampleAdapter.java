@@ -19,10 +19,9 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     protected ArrayList<BaseViewModel> mItems;
 
-    @Override
-    public void onClick(View view) {
+    public abstract void onClick(View view);
 
-    }
+    protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,8 +50,6 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
             }
         };
     }
-
-    protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
 
     protected BaseViewHolder getLoadingHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
