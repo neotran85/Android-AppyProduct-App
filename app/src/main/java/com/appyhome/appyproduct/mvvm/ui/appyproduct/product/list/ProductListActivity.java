@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -21,7 +22,7 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator  {
+public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator {
     @Inject
     ProductListViewModel mViewModel;
     ActivityProductListBinding mBinder;
@@ -30,7 +31,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private int mIdSubCategory;
     public static final int ID_DEFAULT_SUB = 138;
-    public static final int  DEFAULT_SPAN_COUNT = 2;
+    public static final int DEFAULT_SPAN_COUNT = 2;
 
 
     public static Intent getStartIntent(Context context) {
@@ -47,20 +48,27 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
         mProductAdapter = new ProductAdapter(null);
-        setUpRecyclerViewGrid(mBinder.productsRecyclerView, mProductAdapter);
         setUpTabLayout(mBinder.tabLayout);
+        setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
+    }
+
+    private void setUpRecyclerViewList(RecyclerView rv, ProductAdapter adapter) {
+        rv.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(adapter);
     }
 
     private void setUpTabLayout(TabLayout tabs) {
         tabs.getTabAt(0).setCustomView(R.layout.view_item_product_tab_sort);
         tabs.getTabAt(1).setCustomView(R.layout.view_item_product_tab_filter);
     }
-    private void setUpRecyclerViewGrid(RecyclerView rv, ProductAdapter adapter) {
+
+    private void setUpRecyclerViewGrid(RecyclerView rv) {
         rv.setLayoutManager(new GridLayoutManager(this,
                 DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(adapter);
     }
 
     @Override
@@ -90,14 +98,20 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void showProducts(RealmResults<Product> result) {
-        mProductAdapter.addItems(result, this);
-        mProductAdapter.notifyDataSetChanged();
+        if (result != null && result.size() > 0) {
+            setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+            mProductAdapter.addItems(result, this);
+            mProductAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void showProducts(Product[] list) {
-        mProductAdapter.addItems(list, this);
-        mProductAdapter.notifyDataSetChanged();
+        if (list != null && list.length > 0) {
+            setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+            mProductAdapter.addItems(list, this);
+            mProductAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
