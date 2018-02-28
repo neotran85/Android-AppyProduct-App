@@ -22,7 +22,7 @@ public class ProductAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_LOADING = -1;
     private ArrayList<ProductItemViewModel> mItems;
-
+    private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
     public ProductAdapter(ArrayList<ProductItemViewModel> arrayList) {
         this.mItems = arrayList;
     }
@@ -44,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
     private ProductItemViewModel getViewModel(Product product, ProductItemNavigator navigator) {
         ProductItemViewModel itemViewModel = new ProductItemViewModel();
         itemViewModel.title.set(product.product_name);
-        itemViewModel.imageURL.set("https://i.ebayimg.com/images/g/YO4AAOSwtJZXVkee/s-l300.jpg");
+        itemViewModel.imageURL.set(imageTestPath);
         itemViewModel.setIdCategory(product.category_id);
         itemViewModel.setIdProduct(product.id);
         itemViewModel.setNavigator(navigator);

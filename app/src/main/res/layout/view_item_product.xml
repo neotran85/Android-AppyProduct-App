@@ -19,7 +19,7 @@
         android:paddingLeft="@dimen/padding_left_product_in_list"
         android:paddingRight="@dimen/padding_left_product_in_list"
         android:paddingBottom="28dp"
-        android:paddingTop="14dp">
+        android:paddingTop="16dp">
 
         <ImageView
             android:id="@+id/ivThumbnail"
@@ -38,6 +38,7 @@
             android:textSize="9sp" />
 
         <LinearLayout
+            android:paddingTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -47,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="4dp"
-                android:paddingTop="6dp"
                 android:text="RM 546.4"
                 android:textColor="@color/gray_product_in_list"
                 android:textSize="9sp" />
@@ -58,7 +58,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="4dp"
-                android:paddingTop="6dp"
                 android:text="RM 546.4"
                 android:textColor="@color/red_price"
                 android:textSize="9sp" />
@@ -69,11 +68,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="6dp">
+            android:paddingTop="4dp">
 
             <ImageButton
-                android:layout_width="@dimen/size_favorite_in_list"
-                android:layout_height="@dimen/size_favorite_in_list"
+                android:layout_width="16dp"
+                android:layout_height="13dp"
                 android:layout_marginTop="1dp"
                 android:background="@mipmap/icon_unfavorite" />
 
@@ -82,8 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="2dp"
-                android:layout_marginLeft="2dp"
-                android:text="(245)"
+                android:layout_marginLeft="4dp"
+                android:text="245"
                 android:textColor="@color/gray_product_in_list"
                 android:textSize="8sp" />
 

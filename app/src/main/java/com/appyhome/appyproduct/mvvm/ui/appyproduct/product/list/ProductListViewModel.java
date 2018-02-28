@@ -33,8 +33,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     setIsLoading(false);
                     if (response.message != null && response.message.length > 0) {
                         addProductsToDatabase(response.message);
-                        getNavigator().showAlert(response.message.length + "");
-                        //getNavigator().showProducts(response.message);
                     }
                 }, throwable -> {
                     setIsLoading(false);

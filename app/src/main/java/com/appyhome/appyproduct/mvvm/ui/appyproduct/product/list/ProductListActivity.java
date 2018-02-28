@@ -1,31 +1,20 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
-import com.appyhome.appyproduct.mvvm.databinding.ActivityLoginBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
-import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
-import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -59,8 +48,13 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
         mProductAdapter = new ProductAdapter(null);
         setUpRecyclerViewGrid(mBinder.productsRecyclerView, mProductAdapter);
+        setUpTabLayout(mBinder.tabLayout);
     }
 
+    private void setUpTabLayout(TabLayout tabs) {
+        tabs.getTabAt(0).setCustomView(R.layout.view_item_product_tab_sort);
+        tabs.getTabAt(1).setCustomView(R.layout.view_item_product_tab_filter);
+    }
     private void setUpRecyclerViewGrid(RecyclerView rv, ProductAdapter adapter) {
         rv.setLayoutManager(new GridLayoutManager(this,
                 DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
