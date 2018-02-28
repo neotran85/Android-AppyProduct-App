@@ -27,5 +27,7 @@
     <color name="text_hint">#ced0d1</color>
 
     <color name="hint_text">#cccccc</color>
+    <color name="gray_product_in_list">#6D6E71</color>
+    <color name="red_price">#EB1C24</color>
 
 </resources>

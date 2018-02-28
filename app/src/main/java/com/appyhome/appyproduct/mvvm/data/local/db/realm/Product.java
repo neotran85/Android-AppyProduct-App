@@ -18,47 +18,47 @@ public class Product extends RealmObject {
     @Expose
     @SerializedName("seller_id")
     @ColumnInfo(name = "seller_id")
-    public int idSeller;
+    public int seller_id;
 
     @Expose
     @SerializedName("category_id")
     @ColumnInfo(name = "category_id")
-    public int idCategory;
+    public int category_id;
 
     @Expose
     @SerializedName("product_name")
     @ColumnInfo(name = "product_name")
-    public String productName;
+    public String product_name;
 
     @Expose
     @SerializedName("stock_location")
     @ColumnInfo(name = "stock_location")
-    public String stockLocation;
+    public String stock_location;
 
     @Expose
     @SerializedName("country_manu")
     @ColumnInfo(name = "country_manu")
-    public String country;
+    public String country_manu;
 
     @Expose
     @SerializedName("avatar_name")
     @ColumnInfo(name = "avatar_name")
-    public String avatarName;
+    public String avatar_name;
 
     @Expose
     @SerializedName("shipping_type_id")
     @ColumnInfo(name = "shipping_type_id")
-    public int idTypeShipping;
+    public int shipping_type_id;
 
     @Expose
     @SerializedName("pricing_scheme_id")
     @ColumnInfo(name = "pricing_scheme_id")
-    public int idPricingScheme;
+    public int pricing_scheme_id;
 
     @Expose
     @SerializedName("tax_class_id")
     @ColumnInfo(name = "tax_class_id")
-    public int idTaxClass;
+    public int tax_class_id;
 
     @Expose
     @SerializedName("enabled")
@@ -73,7 +73,7 @@ public class Product extends RealmObject {
     @Expose
     @SerializedName("sort_order")
     @ColumnInfo(name = "sort_order")
-    public int sortOrder;
+    public int sort_order;
 
     @Expose
     @SerializedName("flag")
@@ -83,10 +83,10 @@ public class Product extends RealmObject {
     @Expose
     @SerializedName("created_at")
     @ColumnInfo(name = "created_at")
-    public String createdAt;
+    public String created_at;
 
     @Expose
     @SerializedName("updated_at")
     @ColumnInfo(name = "updated_at")
-    public String updatedAt;
+    public String updated_at;
 }

@@ -35,8 +35,8 @@
 
                 <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:elevation="0dp">
+                    app:elevation="6dp"
+                    android:layout_height="wrap_content">
 
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -44,8 +44,20 @@
                         android:layout_marginLeft="-14dp">
 
                         <include layout="@layout/view_toolbar" />
-                    </android.support.v7.widget.Toolbar>
 
+                    </android.support.v7.widget.Toolbar>
+                    <LinearLayout
+                        app:elevation="6dp"
+                        android:background="@drawable/linear_layout_shadow"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_tab_top_bar"
+                        android:gravity="center">
+                        <TableLayout
+                            android:background="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                        </TableLayout>
+                    </LinearLayout>
                 </android.support.design.widget.AppBarLayout>
 
                 <RelativeLayout
@@ -61,10 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@color/white"
-                            android:paddingLeft="4dp"
-                            android:paddingRight="4dp"
-                            android:paddingTop="50dp">
+                            android:background="@color/white">
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/productsRecyclerView"
@@ -73,12 +82,6 @@
 
                         </LinearLayout>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="@mipmap/bg_product_title"
-                        android:gravity="center"></LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>

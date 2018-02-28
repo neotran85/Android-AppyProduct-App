@@ -41,7 +41,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private int mIdSubCategory;
     public static final int ID_DEFAULT_SUB = 138;
-    public static final int  DEFAULT_SPAN_COUNT = 3;
+    public static final int  DEFAULT_SPAN_COUNT = 2;
 
 
     public static Intent getStartIntent(Context context) {

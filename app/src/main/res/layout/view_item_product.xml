@@ -12,25 +12,108 @@
 
     <LinearLayout
         android:id="@+id/llItemView"
-        android:layout_width="@dimen/menu_left_categories_width"
-        android:layout_height="@dimen/menu_left_item_height"
-        android:background="@mipmap/product_sub_bg"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_width="@dimen/width_product_in_list"
+        android:layout_height="@dimen/height_product_in_list"
+        android:background="@mipmap/product_in_list_bg"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_left_product_in_list"
+        android:paddingRight="@dimen/padding_left_product_in_list"
+        android:paddingTop="14dp">
+
         <ImageView
             android:id="@+id/ivThumbnail"
-            android:layout_width="@dimen/size_sub_image"
-            android:layout_height="@dimen/size_sub_image"
-            imageAssetsUrl="@{viewModel.imageURL}"/>
+            imageUrl="@{viewModel.imageURL}"
+            android:layout_width="@dimen/size_thumbnail_product_in_list"
+            android:layout_height="@dimen/size_thumbnail_product_in_list" />
+
         <TextView
             android:id="@+id/tvTitleProduct"
-            android:maxLines="1"
-            android:paddingTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:paddingTop="4dp"
             android:text="@{viewModel.title}"
+            android:textColor="@color/gray_product_in_list"
+            android:textSize="9sp" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="8dp"
-            android:textColor="@color/semi_gray"
-            android:textSize="8sp" />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvOriginalPrice"
+                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:paddingTop="6dp"
+                android:text="RM 546.4"
+                android:textColor="@color/gray_product_in_list"
+                android:textSize="9sp" />
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:id="@+id/tvPrice"
+                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:paddingTop="6dp"
+                android:text="RM 546.4"
+                android:textColor="@color/red_price"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="6dp">
+
+            <ImageButton
+                android:layout_width="@dimen/size_favorite_in_list"
+                android:layout_height="@dimen/size_favorite_in_list"
+                android:layout_marginTop="1dp"
+                android:background="@mipmap/icon_unfavorite" />
+
+            <TextView
+                android:id="@+id/favoriteCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:text="(245)"
+                android:textColor="@color/gray_product_in_list"
+                android:textSize="8sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:scaleX=".7"
+                    android:scaleY=".7"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/ratingCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingTop="2dp"
+                    android:text="(1245)"
+                    android:textColor="@color/gray_product_in_list"
+                    android:textSize="8sp" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,9 +43,9 @@ public class ProductAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     private ProductItemViewModel getViewModel(Product product, ProductItemNavigator navigator) {
         ProductItemViewModel itemViewModel = new ProductItemViewModel();
-        itemViewModel.title.set(product.productName);
-        itemViewModel.imageURL.set(product.avatarName);
-        itemViewModel.setIdCategory(product.idCategory);
+        itemViewModel.title.set(product.product_name);
+        itemViewModel.imageURL.set("https://i.ebayimg.com/images/g/YO4AAOSwtJZXVkee/s-l300.jpg");
+        itemViewModel.setIdCategory(product.category_id);
         itemViewModel.setIdProduct(product.id);
         itemViewModel.setNavigator(navigator);
         return itemViewModel;
@@ -157,6 +158,7 @@ public class ProductAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
         private ProductItemViewHolder(ViewItemProductBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
         @Override

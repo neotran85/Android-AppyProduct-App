@@ -3,4 +3,10 @@
     <dimen name="menu_left_item_height">140dp</dimen>
     <dimen name="size_category_image">48dp</dimen>
     <dimen name="size_sub_image">80dp</dimen>
+    <dimen name="width_product_in_list">180dp</dimen>
+    <dimen name="height_product_in_list">260dp</dimen>
+    <dimen name="padding_left_product_in_list">18dp</dimen>
+    <dimen name="size_thumbnail_product_in_list">144dp</dimen>
+    <dimen name="size_favorite_in_list">12dp</dimen>
+    <dimen name="height_tab_top_bar">60dp</dimen>
 </resources>
