@@ -2,55 +2,55 @@
   {
     "id": 73,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_bed_bath.png",
     "name": "Bed & Bath"
   },
   {
     "id": 88,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_decor.png",
     "name": "Decor"
   },
   {
     "id": 74,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_kitchen.png",
     "name": "Kitchen"
   },
   {
     "id": 78,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_appliances.png",
     "name": "Appliances"
   },
   {
     "id": 70,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_furniture.png",
     "name": "Funiture"
   },
   {
     "id": 77,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_home_improvement.png",
     "name": "Home Improvement"
   },
   {
     "id": 75,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_lighting.png",
     "name": "Lighting"
   },
   {
     "id": 76,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_storage.png",
     "name": "Storage & Organisation"
   },
   {
     "id": 72,
     "description": "",
-    "thumbnail": "",
+    "thumbnail": "images/product/topic/category_bed_bath.png",
     "name": "Appy Promo"
   }
 ]

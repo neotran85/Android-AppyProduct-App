@@ -12,4 +12,5 @@ public interface ProductListNavigator {
     void showAlert(String message);
     void showProducts(RealmResults<Product> result);
     void showProducts(Product[] list);
+    void showEmptyProducts();
 }

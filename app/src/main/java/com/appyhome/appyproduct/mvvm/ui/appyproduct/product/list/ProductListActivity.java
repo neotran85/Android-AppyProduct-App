@@ -48,6 +48,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
         mProductAdapter = new ProductAdapter(null);
+        mBinder.tabLayout.setVisibility(View.GONE);
         setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
     }
@@ -102,7 +103,21 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.addItems(result, this);
             mProductAdapter.notifyDataSetChanged();
+            toggleTabLayout(result.size());
         }
+    }
+
+    private void toggleTabLayout(int countProduct) {
+        if(countProduct > 1) {
+            mBinder.tabLayout.setVisibility(View.VISIBLE);
+        } else mBinder.tabLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmptyProducts() {
+        mProductAdapter.addItems(new Product[]{}, this);
+        mProductAdapter.notifyDataSetChanged();
+        mBinder.tabLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -111,6 +126,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.addItems(list, this);
             mProductAdapter.notifyDataSetChanged();
+            toggleTabLayout(list.length);
         }
     }
 

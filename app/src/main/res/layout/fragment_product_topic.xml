@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicViewModel" />
+
+    </data>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/clRootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false">
+
+            <LinearLayout
+                android:id="@+id/activityMain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.design.widget.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elevation="0dp">
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        style="@style/Toolbar"
+                        android:layout_marginLeft="-14dp">
+
+                        <include layout="@layout/view_toolbar" />
+                    </android.support.v7.widget.Toolbar>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/light_gray" />
+
+                </android.support.design.widget.AppBarLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/contentView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/headerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <include layout="@layout/view_home_header" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/serviceView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/view_home_service" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="4dp"
+                                android:background="@color/light_gray"></View>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/categoryView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_category" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/featureView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_features" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dealView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <include layout="@layout/view_home_deal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/adsView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/view_home_ads" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"></LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/address_looking_up"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</layout>

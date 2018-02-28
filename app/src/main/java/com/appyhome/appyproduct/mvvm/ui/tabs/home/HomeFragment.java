@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator, View.OnClickListener {
 
-    public static final String TAG = "HomeFragment";
+    public static final String TAG = "SampleTopicFragment";
     private final int[] mAppyServicesIds = {R.id.ibAirConServicing, R.id.ibElectricalService,
             R.id.ibHomeCleaning, R.id.ibPlumbingService};
     private final int[] mAppyProductsIds = {R.id.ibBedAndBath, R.id.ibDecor,

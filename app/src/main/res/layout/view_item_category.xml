@@ -24,12 +24,11 @@
             imageAssetsUrl="@{viewModel.imageURL}"/>
         <TextView
             android:id="@+id/tvTitleProduct"
-            android:maxLines="1"
+            android:lines="1"
             android:paddingTop="8dp"
             android:text="@{viewModel.title}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="8dp"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />
     </LinearLayout>

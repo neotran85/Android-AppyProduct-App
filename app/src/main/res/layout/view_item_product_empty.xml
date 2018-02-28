@@ -23,9 +23,10 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:alpha="0.6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_warning_gray" />
+                android:src="@mipmap/products_empty" />
 
             <TextView
                 android:id="@+id/tvTitle"
