@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCategoryBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -21,15 +22,15 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class CategoryActivity extends BaseActivity<ActivityProductCategoryBinding, CategoryViewModel> implements CategoryNavigator, CategoryAdapter.OnItemClickListener {
+public class CategoryActivity extends BaseActivity<ActivityProductCategoryBinding, CategoryViewModel> implements CategoryNavigator, CategoryItemNavigator {
     @Inject
     CategoryViewModel mCategoryViewModel;
     ActivityProductCategoryBinding mBinder;
     private CategoryAdapter mCategoryAdapter;
     private CategoryAdapter mSubCategoryAdapter;
 
-    private int ID_DEFAULT_TOPIC = 73;
-    private int DEFAULT_SPAN_COUNT = 2;
+    public static final int  ID_DEFAULT_TOPIC = 73;
+    public static final int  DEFAULT_SPAN_COUNT = 2;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
@@ -61,7 +62,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
                 DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        adapter.setOnItemClickListener(this);
         rv.setAdapter(adapter);
     }
 
@@ -69,7 +69,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        adapter.setOnItemClickListener(this);
         rv.setAdapter(adapter);
     }
 
@@ -79,12 +78,14 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
-    public void onItemClick(CategoryAdapter adapter, View view, int id) {
+    public void showContent(CategoryAdapter adapter, View view, int id) {
         if(adapter == mBinder.categoryRecyclerView.getAdapter()) {
             mCategoryViewModel.getProductSubCategoryByCategory(id);
         }
         if(adapter == mBinder.subCategoryRecyclerView.getAdapter()) {
-            mCategoryViewModel.getProductsByIdSub(id);
+            Intent intent = ProductListActivity.getStartIntent(this);
+            intent.putExtra("id_sub", id);
+            startActivity(intent);
         }
     }
 
@@ -110,13 +111,13 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void showSubCategories(RealmResults<ProductSub> result) {
-        mSubCategoryAdapter.addItems(result, CategoryAdapter.TYPE_SUB_CATEGORY);
+        mSubCategoryAdapter.addItems(result, CategoryAdapter.TYPE_SUB_CATEGORY, this);
         mSubCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showCategories(RealmResults<ProductCategory> result) {
-        mCategoryAdapter.addItems(result, CategoryAdapter.TYPE_CATEGORY);
+        mCategoryAdapter.addItems(result, CategoryAdapter.TYPE_CATEGORY, this);
         mCategoryAdapter.notifyDataSetChanged();
         mCategoryAdapter.clickTheFirstItem();
     }

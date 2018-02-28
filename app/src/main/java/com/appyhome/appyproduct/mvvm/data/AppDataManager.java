@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
@@ -428,7 +429,17 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<ProductListResponse> getProductsByIdCategory(ProductListRequest request) {
-        return mApiHelper.getProductsByIdCategory(request);
+    public Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request) {
+        return mApiHelper.fetchProductsByIdCategory(request);
+    }
+
+    @Override
+    public Flowable<Boolean> addProducts(Product[] list) {
+        return mDbHelper.addProducts(list);
+    }
+
+    @Override
+    public Flowable<RealmResults<Product>> getProductsBySubCategory(int idSub) {
+        return mDbHelper.getProductsBySubCategory(idSub);
     }
 }

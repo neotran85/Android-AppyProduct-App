@@ -51,19 +51,4 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
                     Crashlytics.logException(throwable);
                 }));
     }
-
-
-    public void getProductsByIdSub(int idSub) {
-        getCompositeDisposable().add(getDataManager()
-                .getProductsByIdCategory(new ProductListRequest(idSub, 0))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(response -> {
-                    setIsLoading(false);
-                    getNavigator().showAlert(response.message.length + "");
-                }, throwable -> {
-                    setIsLoading(false);
-                    getNavigator().handleErrorService(throwable);
-                }));
-    }
 }

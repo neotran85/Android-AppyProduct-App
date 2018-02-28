@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
@@ -30,6 +31,10 @@ public interface DbHelper {
     Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory);
 
     Flowable<ProductTopic> getProductTopicById(int idTopic);
+
+    Flowable<Boolean> addProducts(Product[] list);
+
+    Flowable<RealmResults<Product>> getProductsBySubCategory(int idSub);
 
     void closeDatabase();
 }

@@ -200,7 +200,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<ProductListResponse> getProductsByIdCategory(ProductListRequest request) {
+    public Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)

@@ -147,4 +147,28 @@ public class AppDbHelper implements DbHelper {
         getRealm().commitTransaction();
         return topic;
     }
+
+    @Override
+    public Flowable<RealmResults<Product>> getProductsBySubCategory(int idSub) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<Product>> topic = getRealm().where(Product.class)
+                .equalTo("category_id", idSub)
+                .findAllAsync().asFlowable();
+        getRealm().commitTransaction();
+        return topic;
+    }
+
+    @Override
+    public Flowable<Boolean> addProducts(Product[] list) {
+        try {
+            getRealm().beginTransaction();
+            for (Product product : list) {
+                getRealm().copyToRealmOrUpdate(product);
+            }
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
+    }
 }

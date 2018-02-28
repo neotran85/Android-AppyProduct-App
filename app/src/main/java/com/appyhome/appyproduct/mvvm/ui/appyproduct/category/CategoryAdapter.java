@@ -31,8 +31,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
     private ArrayList<CategoryItemViewModel> mItems;
 
-    private OnItemClickListener onItemClickListener;
-
     private int mType = TYPE_CATEGORY;
 
     public CategoryAdapter(ArrayList<CategoryItemViewModel> arrayList) {
@@ -49,11 +47,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
                 CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
                 clickViewModel(viewModel);
             }
-        } else if (onItemClickListener != null) {
-            if (tag instanceof CategoryItemViewModel) {
-                CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
-                onItemClickListener.onItemClick(this, view, viewModel.getIdCategory());
-            }
+        } else if (tag instanceof CategoryItemViewModel) {
+            CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
+            viewModel.getNavigator().showContent(this, view, viewModel.getIdCategory());
         }
     }
 
@@ -68,9 +64,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
             int positionNew = mItems.indexOf(viewModel);
             notifyItemChanged(positionNew);
             mCurrentClickedViewModel = viewModel;
-        }
-        if (onItemClickListener != null) {
-            onItemClickListener.onItemClick(this, null, viewModel.getIdCategory());
+            viewModel.getNavigator().showContent(this, null, viewModel.getIdCategory());
         }
     }
 
@@ -81,11 +75,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        onItemClickListener = listener;
-    }
-
-    public void addItems(Object results, int type) {
+    public void addItems(Object results, int type, CategoryItemNavigator navigator) {
         mType = type;
         if (type == TYPE_CATEGORY) {
             mItems = new ArrayList<>();
@@ -96,6 +86,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
                     itemViewModel.title.set(item.name);
                     itemViewModel.imageURL.set(item.thumbnail);
                     itemViewModel.setIdCategory(item.id);
+                    itemViewModel.setNavigator(navigator);
                     mItems.add(itemViewModel);
                 }
             }
@@ -109,6 +100,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
                     itemViewModel.title.set(item.name);
                     itemViewModel.imageURL.set(item.thumbnail);
                     itemViewModel.setIdCategory(item.id);
+                    itemViewModel.setNavigator(navigator);
                     mItems.add(itemViewModel);
                 }
             }
@@ -180,10 +172,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
             return mItems.size();
         }
         return 1;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(CategoryAdapter adapter, View view, int idCategory);
     }
 
     public class CategoryItemEmptyViewHolder extends BaseViewHolder {

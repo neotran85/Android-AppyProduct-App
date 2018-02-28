@@ -13,21 +13,80 @@ public class Product extends RealmObject {
     @SerializedName("id")
     @ColumnInfo(name = "id")
     @PrimaryKey
-    private int id;
+    public int id;
 
     @Expose
-    @SerializedName("id")
-    @ColumnInfo(name = "id")
-    private double price;
+    @SerializedName("seller_id")
+    @ColumnInfo(name = "seller_id")
+    public int idSeller;
 
-    private String thumbnailURL;
-    private String dateAdded;
-    private long supplierId;
-    private int amountStock;
-    private float rating;
-    private int reviewCount;
-    private String title;
-    private String description;
-    private String imageURL;
-    private long idCategory;
+    @Expose
+    @SerializedName("category_id")
+    @ColumnInfo(name = "category_id")
+    public int idCategory;
+
+    @Expose
+    @SerializedName("product_name")
+    @ColumnInfo(name = "product_name")
+    public String productName;
+
+    @Expose
+    @SerializedName("stock_location")
+    @ColumnInfo(name = "stock_location")
+    public String stockLocation;
+
+    @Expose
+    @SerializedName("country_manu")
+    @ColumnInfo(name = "country_manu")
+    public String country;
+
+    @Expose
+    @SerializedName("avatar_name")
+    @ColumnInfo(name = "avatar_name")
+    public String avatarName;
+
+    @Expose
+    @SerializedName("shipping_type_id")
+    @ColumnInfo(name = "shipping_type_id")
+    public int idTypeShipping;
+
+    @Expose
+    @SerializedName("pricing_scheme_id")
+    @ColumnInfo(name = "pricing_scheme_id")
+    public int idPricingScheme;
+
+    @Expose
+    @SerializedName("tax_class_id")
+    @ColumnInfo(name = "tax_class_id")
+    public int idTaxClass;
+
+    @Expose
+    @SerializedName("enabled")
+    @ColumnInfo(name = "enabled")
+    public int enabled;
+
+    @Expose
+    @SerializedName("description")
+    @ColumnInfo(name = "description")
+    public String description;
+
+    @Expose
+    @SerializedName("sort_order")
+    @ColumnInfo(name = "sort_order")
+    public int sortOrder;
+
+    @Expose
+    @SerializedName("flag")
+    @ColumnInfo(name = "flag")
+    public String flag;
+
+    @Expose
+    @SerializedName("created_at")
+    @ColumnInfo(name = "created_at")
+    public String createdAt;
+
+    @Expose
+    @SerializedName("updated_at")
+    @ColumnInfo(name = "updated_at")
+    public String updatedAt;
 }

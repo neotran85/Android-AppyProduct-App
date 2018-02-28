@@ -32,8 +32,4 @@ public class CategoryItemViewModel extends BaseViewModel<CategoryItemNavigator> 
         this.idCategory = idCategory;
     }
 
-    public void handleErrorService(Throwable a) {
-
-    }
-
 }
