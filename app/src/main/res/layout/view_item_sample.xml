@@ -20,6 +20,5 @@
         android:paddingRight="@dimen/padding_left_product_in_list"
         android:paddingBottom="28dp"
         android:paddingTop="16dp">
-
     </LinearLayout>
 </layout>

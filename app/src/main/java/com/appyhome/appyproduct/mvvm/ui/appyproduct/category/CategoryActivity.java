@@ -50,8 +50,8 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mCategoryViewModel);
         mCategoryViewModel.setNavigator(this);
-        mCategoryAdapter = new CategoryAdapter(null);
-        mSubCategoryAdapter = new CategoryAdapter(null);
+        mCategoryAdapter = new CategoryAdapter();
+        mSubCategoryAdapter = new CategoryAdapter();
         setUpRecyclerViewList(mBinder.categoryRecyclerView, mCategoryAdapter);
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);

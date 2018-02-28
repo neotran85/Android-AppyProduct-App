@@ -12,29 +12,23 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
-
-    private static final int VIEW_TYPE_NORMAL = 1;
-    private static final int VIEW_TYPE_EMPTY = 0;
-    private static final int VIEW_TYPE_LOADING = -1;
+public class CategoryAdapter extends SampleAdapter {
 
     public static final int TYPE_CATEGORY = 0;
     public static final int TYPE_SUB_CATEGORY = 1;
 
-    private ArrayList<CategoryItemViewModel> mItems;
-
     private int mType = TYPE_CATEGORY;
-
-    public CategoryAdapter(ArrayList<CategoryItemViewModel> arrayList) {
-        this.mItems = arrayList;
-    }
-
     private CategoryItemViewModel mCurrentClickedViewModel = null;
+
+    public CategoryAdapter() {
+        this.mItems = null;
+    }
 
     @Override
     public void onClick(View view) {
@@ -67,7 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
     public void clickTheFirstItem() {
         if (mItems != null && mItems.size() > 0) {
-            CategoryItemViewModel viewModel = mItems.get(0);
+            CategoryItemViewModel viewModel = (CategoryItemViewModel)mItems.get(0);
             clickViewModel(viewModel);
         }
     }
@@ -105,90 +99,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case VIEW_TYPE_NORMAL:
-                return getContentHolder(parent);
-            case VIEW_TYPE_EMPTY:
-                return getEmptyHolder(parent);
-            case VIEW_TYPE_LOADING:
-                return getLoadingHolder(parent);
-            default:
-                return getDefaultHolder(parent);
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(BaseViewHolder holder, final int position) {
-        holder.onBind(position);
-    }
-
-    private BaseViewHolder getDefaultHolder(ViewGroup parent) {
-        return new BaseViewHolder(parent) {
-            @Override
-            public void onBind(int position) {
-                // Do nothing
-            }
-        };
-    }
-
-    private CategoryItemViewHolder getContentHolder(ViewGroup parent) {
+    protected CategoryItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemCategoryBinding itemViewBinding = ViewItemCategoryBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CategoryItemViewHolder(itemViewBinding);
-    }
-
-    private CategoryItemLoadingViewHolder getLoadingHolder(ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(
-                parent.getContext());
-        View loadingView = inflater.inflate(R.layout.view_item_category_loading, parent, false);
-        return new CategoryItemLoadingViewHolder(loadingView);
-    }
-
-    private CategoryItemEmptyViewHolder getEmptyHolder(ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(
-                parent.getContext());
-        View view = inflater.inflate(R.layout.view_item_category_empty, parent, false);
-        return new CategoryItemEmptyViewHolder(view);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (mItems == null) {
-            return VIEW_TYPE_LOADING; // loading item
-        }
-        if (mItems.size() == 0) {
-            return VIEW_TYPE_EMPTY; // empty item
-        }
-        return VIEW_TYPE_NORMAL;
-    }
-
-    @Override
-    public int getItemCount() {
-        if (mItems != null && mItems.size() > 0) {
-            return mItems.size();
-        }
-        return 1;
-    }
-
-    public class CategoryItemEmptyViewHolder extends BaseViewHolder {
-        private CategoryItemEmptyViewHolder(View view) {
-            super(view);
-        }
-
-        @Override
-        public void onBind(int position) {
-        }
-    }
-
-    public class CategoryItemLoadingViewHolder extends BaseViewHolder {
-        private CategoryItemLoadingViewHolder(View view) {
-            super(view);
-        }
-
-        @Override
-        public void onBind(int position) {
-        }
     }
 
     public boolean isSubCategory() {
@@ -242,7 +156,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
         @Override
         public void onBind(int position) {
-            CategoryItemViewModel viewModel = mItems.get(position);
+            CategoryItemViewModel viewModel = (CategoryItemViewModel)mItems.get(position);
             this.setViewModel(viewModel);
             this.setOnClickListener(CategoryAdapter.this);
         }

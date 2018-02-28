@@ -1,57 +1,27 @@
 package com.appyhome.appyproduct.mvvm.ui.common.sample.adapter;
 
-import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Sample;
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemSampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 
 import java.util.ArrayList;
 
-import io.realm.RealmResults;
-
-public class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
+public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
 
     private static final int VIEW_TYPE_NORMAL = 1;
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_LOADING = -1;
-    private ArrayList<SampleItemViewModel> mItems;
-    public SampleAdapter(ArrayList<SampleItemViewModel> arrayList) {
-        this.mItems = arrayList;
-    }
+
+    protected ArrayList<BaseViewModel> mItems;
 
     @Override
     public void onClick(View view) {
 
-    }
-
-    public void addItems(Sample[] results, SampleItemNavigator navigator) {
-        mItems = new ArrayList<>();
-        if (results != null) {
-            for (Sample item : results) {
-                mItems.add(createViewModel(item, navigator));
-            }
-        }
-    }
-
-    private SampleItemViewModel createViewModel(Sample product, SampleItemNavigator navigator) {
-        SampleItemViewModel itemViewModel = new SampleItemViewModel();
-        return itemViewModel;
-    }
-
-    public void addItems(RealmResults<Sample> results, SampleItemNavigator navigator) {
-        mItems = new ArrayList<>();
-        if (results != null) {
-            for (Sample item : results) {
-                mItems.add(createViewModel(item, navigator));
-            }
-        }
     }
 
     @Override
@@ -82,20 +52,16 @@ public class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder> implemen
         };
     }
 
-    private SampleItemViewHolder getContentHolder(ViewGroup parent) {
-        ViewItemSampleBinding itemViewBinding = ViewItemSampleBinding
-                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new SampleItemViewHolder(itemViewBinding);
-    }
+    protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
 
-    private SampleItemLoadingViewHolder getLoadingHolder(ViewGroup parent) {
+    protected BaseViewHolder getLoadingHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View loadingView = inflater.inflate(R.layout.view_item_sample_loading, parent, false);
         return new SampleItemLoadingViewHolder(loadingView);
     }
 
-    private SampleItemEmptyViewHolder getEmptyHolder(ViewGroup parent) {
+    protected BaseViewHolder getEmptyHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View view = inflater.inflate(R.layout.view_item_sample_empty, parent, false);
@@ -138,30 +104,6 @@ public class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder> implemen
 
         @Override
         public void onBind(int position) {
-        }
-    }
-
-    public class SampleItemViewHolder extends BaseViewHolder {
-
-        private ViewItemSampleBinding mBinding;
-
-        public ViewItemSampleBinding getBinding() {
-            return mBinding;
-        }
-
-        private SampleItemViewHolder(ViewItemSampleBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
-        }
-
-        @Override
-        public void onBind(int position) {
-            SampleItemViewModel viewModel = mItems.get(position);
-            if (mBinding != null) {
-                mBinding.setViewModel(viewModel);
-                mBinding.llItemView.setTag(mBinding.getViewModel());
-                mBinding.llItemView.setOnClickListener(SampleAdapter.this);
-            }
         }
     }
 }
