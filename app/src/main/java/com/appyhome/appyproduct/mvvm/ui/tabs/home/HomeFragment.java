@@ -4,8 +4,6 @@ package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,16 +14,16 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.utils.helper.CompletedJobListener;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator, View.OnClickListener {
+public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator, View.OnClickListener, CompletedJobListener {
 
     public static final String TAG = "HomeFragment";
     private final int[] mAppyServicesIds = {R.id.ibAirConServicing, R.id.ibElectricalService,
@@ -112,15 +110,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
+    public void onJobCompleted(Object data) {
+        mBinder.svContent.scrollTo(0, 0);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
 
     private void addProductTopicsFragment() {
+        ProductTopicFragment fragment = ProductTopicFragment.newInstance();
+        fragment.setCompletedJobListener(this);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .replace(mBinder.categoryView.getId(), ProductTopicFragment.newInstance(), ProductTopicFragment.TAG)
+                .replace(mBinder.categoryView.getId(), fragment, ProductTopicFragment.TAG)
                 .commit();
     }
 

@@ -4,28 +4,20 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.topic;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageButton;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
-import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductTopicBinding;
-import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.helper.CompletedJobListener;
 
 import javax.inject.Inject;
 
@@ -39,8 +31,13 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
     @Inject
     ProductTopicViewModel mViewModel;
     FragmentProductTopicBinding mBinder;
-
     TopicAdapter mAdapter;
+
+    private CompletedJobListener mListener;
+
+    public void setCompletedJobListener(CompletedJobListener listener) {
+        mListener = listener;
+    }
 
     public static ProductTopicFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,6 +50,9 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
     public void showTopics(RealmResults<ProductTopic> topics) {
         mAdapter.addItems(topics, this);
         mAdapter.notifyDataSetChanged();
+        if(mListener != null) {
+            mListener.onJobCompleted(null);
+        }
     }
 
     @Override

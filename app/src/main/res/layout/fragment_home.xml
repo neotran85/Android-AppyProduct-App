@@ -51,6 +51,7 @@
                 </android.support.design.widget.AppBarLayout>
 
                 <ScrollView
+                    android:id="@+id/svContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -87,13 +88,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:paddingLeft="38dp"
-                            android:id="@+id/categoryView"
+                            android:paddingTop="12dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:orientation="horizontal">
+                            android:paddingBottom="6dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="12dp"
+                                android:text="Products"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="12sp" />
 
+                            <LinearLayout
+                                android:id="@+id/categoryView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingLeft="38dp"></LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
