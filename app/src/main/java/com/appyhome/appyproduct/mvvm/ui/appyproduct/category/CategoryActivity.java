@@ -31,8 +31,8 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     private CategoryAdapter mCategoryAdapter;
     private CategoryAdapter mSubCategoryAdapter;
 
-    public static final int  ID_DEFAULT_TOPIC = 73;
-    public static final int  DEFAULT_SPAN_COUNT = 2;
+    public static final int ID_DEFAULT_TOPIC = 73;
+    public static final int DEFAULT_SPAN_COUNT = 2;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
@@ -81,10 +81,10 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void showContent(CategoryAdapter adapter, View view, int id) {
-        if(adapter.isCategory()) {
+        if (adapter.isCategory()) {
             mCategoryViewModel.getProductSubCategoryByCategory(id);
         }
-        if(adapter.isSubCategory()) {
+        if (adapter.isSubCategory()) {
             Intent intent = ProductListActivity.getStartIntent(this);
             intent.putExtra("id_sub", id);
             startActivity(intent);

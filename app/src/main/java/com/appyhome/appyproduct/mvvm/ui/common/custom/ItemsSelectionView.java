@@ -22,6 +22,7 @@ public class ItemsSelectionView implements View.OnClickListener {
             item.setOnClickListener(this);
         }
     }
+
     public ItemsSelectionView(boolean isMultipleChoice, View... items) {
         mIsMultipleChoice = true;
         mArrayItems = new ArrayList<>();

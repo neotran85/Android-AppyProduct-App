@@ -75,6 +75,7 @@ public final class ViewUtils {
             }
         }
     }
+
     public static void setOnClickListener(View.OnClickListener listener, View... views) {
         for (int i = 0; i < views.length; i++) {
             if (views[i] != null)

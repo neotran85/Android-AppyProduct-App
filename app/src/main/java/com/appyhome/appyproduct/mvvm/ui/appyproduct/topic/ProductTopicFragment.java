@@ -50,7 +50,7 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
     public void showTopics(RealmResults<ProductTopic> topics) {
         mAdapter.addItems(topics, this);
         mAdapter.notifyDataSetChanged();
-        if(mListener != null) {
+        if (mListener != null) {
             mListener.onJobCompleted(null);
         }
     }

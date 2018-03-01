@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
-import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 
 import javax.inject.Inject;
 

@@ -11,7 +11,7 @@ public class CategoryActivityModule {
 
     @Provides
     CategoryViewModel provideCategoryViewModel(DataManager dataManager,
-                                            SchedulerProvider schedulerProvider) {
+                                               SchedulerProvider schedulerProvider) {
         return new CategoryViewModel(dataManager, schedulerProvider);
     }
 

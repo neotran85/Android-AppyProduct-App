@@ -11,7 +11,7 @@ public class ProductCartListActivityModule {
 
     @Provides
     ProductCartListViewModel provideProductCartListViewModel(DataManager dataManager,
-                                                         SchedulerProvider schedulerProvider) {
+                                                             SchedulerProvider schedulerProvider) {
         return new ProductCartListViewModel(dataManager, schedulerProvider);
     }
 

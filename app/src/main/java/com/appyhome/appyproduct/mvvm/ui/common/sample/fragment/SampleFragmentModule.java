@@ -14,7 +14,7 @@ public class SampleFragmentModule {
 
     @Provides
     SampleViewModel provideSampleViewModel(DataManager dataManager,
-                                                 SchedulerProvider schedulerProvider) {
+                                           SchedulerProvider schedulerProvider) {
         return new SampleViewModel(dataManager, schedulerProvider);
     }
 

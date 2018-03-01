@@ -14,7 +14,7 @@ public class ProductTopicFragmentModule {
 
     @Provides
     ProductTopicViewModel provideProductTopicViewModel(DataManager dataManager,
-                                               SchedulerProvider schedulerProvider) {
+                                                       SchedulerProvider schedulerProvider) {
         return new ProductTopicViewModel(dataManager, schedulerProvider);
     }
 

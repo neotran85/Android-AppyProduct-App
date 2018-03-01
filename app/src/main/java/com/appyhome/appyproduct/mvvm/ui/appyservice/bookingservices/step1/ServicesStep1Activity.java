@@ -54,9 +54,11 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         setUpListeners();
         setUpMultipleExtraServices();
     }
+
     private ServiceOrderUserInput getOrderUserInput() {
         return getViewModel().getDataManager().getServiceOrderUserInput();
     }
+
     private void setUpMultipleExtraServices() {
         mMainServiceView = new ItemsSelectionView(true, mBinder.llServiceMain,
                 R.id.llCleaning, R.id.llAirCon,
@@ -110,13 +112,16 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
                 R.id.ibAirConTypeMoreInfo);
         ViewUtils.setOnClickListener(mBinder.llServiceHomeCleaning, this, R.id.ibSuppliesMoreInfo);
     }
+
     private void pressNext() {
         boolean selected = checkIfServiceSelected();
         if (selected) {
             goToStep2();
             updateServiceOrderInfo();
-        } else AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
+        } else
+            AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -126,7 +131,8 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
             case R.id.btSeeDetailService:
                 if (getOrderUserInput().getSelectedService() != null)
                     viewDetailService();
-                else AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
+                else
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
                 break;
             case R.id.btOurFAQ:
                 viewOurFAQ();

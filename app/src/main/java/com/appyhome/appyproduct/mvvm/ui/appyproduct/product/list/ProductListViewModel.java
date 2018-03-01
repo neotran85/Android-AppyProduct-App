@@ -2,17 +2,10 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
-import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
-
-import java.util.ArrayList;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 

@@ -11,7 +11,7 @@ public class ProductListActivityModule {
 
     @Provides
     ProductListViewModel provideProductListViewModel(DataManager dataManager,
-                                               SchedulerProvider schedulerProvider) {
+                                                     SchedulerProvider schedulerProvider) {
         return new ProductListViewModel(dataManager, schedulerProvider);
     }
 

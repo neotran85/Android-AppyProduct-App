@@ -3,14 +3,13 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
 public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
+
     public CategoryViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);

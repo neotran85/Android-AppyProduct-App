@@ -1,15 +1,11 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
-import android.os.SystemClock;
-
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
-
-import org.reactivestreams.Subscriber;
 
 import java.util.ArrayList;
 
@@ -18,7 +14,6 @@ import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.realm.Realm;
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 

@@ -60,6 +60,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
     }
+
     private void openBookingSteps(int type) {
         mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
         mHomeViewModel.getDataManager().getServiceOrderUserInput().setUpData(type);

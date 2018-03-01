@@ -56,7 +56,7 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
         setUpListeners();
         setUpMultipleExtraServices();
     }
-    
+
     private ServiceOrderUserInput getOrderUserInput() {
         return getViewModel().getDataManager().getServiceOrderUserInput();
     }

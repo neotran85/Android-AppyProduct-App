@@ -1,8 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -18,7 +16,6 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
         getCompositeDisposable().add(getDataManager().getAllProductCarts(userId)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCarts -> {
-                    // DONE GET
                     getNavigator().showCart(productCarts);
                 }, throwable -> {
                     throwable.printStackTrace();

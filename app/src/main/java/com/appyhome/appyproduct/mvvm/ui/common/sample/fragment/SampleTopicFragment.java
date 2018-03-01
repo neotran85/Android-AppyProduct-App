@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentProductTopicBinding;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentSampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 

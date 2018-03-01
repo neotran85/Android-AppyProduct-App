@@ -2,7 +2,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class CategoryAdapter extends SampleAdapter {
 
     public void clickTheFirstItem() {
         if (mItems != null && mItems.size() > 0) {
-            CategoryItemViewModel viewModel = (CategoryItemViewModel)mItems.get(0);
+            CategoryItemViewModel viewModel = (CategoryItemViewModel) mItems.get(0);
             clickViewModel(viewModel);
         }
     }
@@ -155,7 +154,7 @@ public class CategoryAdapter extends SampleAdapter {
 
         @Override
         public void onBind(int position) {
-            CategoryItemViewModel viewModel = (CategoryItemViewModel)mItems.get(position);
+            CategoryItemViewModel viewModel = (CategoryItemViewModel) mItems.get(position);
             this.setViewModel(viewModel);
             this.setOnClickListener(CategoryAdapter.this);
         }

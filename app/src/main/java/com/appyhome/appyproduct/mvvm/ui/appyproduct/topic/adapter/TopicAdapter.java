@@ -1,19 +1,11 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemCategoryBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductTopicBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 

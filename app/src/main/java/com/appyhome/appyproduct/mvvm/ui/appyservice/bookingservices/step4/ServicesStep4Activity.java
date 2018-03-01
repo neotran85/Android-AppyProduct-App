@@ -131,10 +131,10 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
             boolean success = getViewModel().setTxn_IDPayment(data);
-            if(success) {
+            if (success) {
                 AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
                 goToStep5();
-            } else  {
+            } else {
                 AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
             }
         }
