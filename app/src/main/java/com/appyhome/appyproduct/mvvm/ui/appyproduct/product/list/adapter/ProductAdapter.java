@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
@@ -25,7 +26,13 @@ public class ProductAdapter extends SampleAdapter {
     }
 
     @Override
-    public void onClick(View view) {}
+    public void onClick(View view) {
+        Object tag = view.getTag();
+        if (tag instanceof ProductItemViewModel) {
+            ProductItemViewModel viewModel = (ProductItemViewModel) tag;
+            viewModel.getNavigator().showContent(this, view, viewModel.getIdProduct());
+        }
+    }
 
     public void addItems(Product[] results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();

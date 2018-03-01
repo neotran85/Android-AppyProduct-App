@@ -1,6 +1,9 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
+import android.os.SystemClock;
+
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
@@ -149,6 +152,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Product> getProductById(int idProduct) {
+        getRealm().beginTransaction();
+        Flowable<Product> topic = getRealm().where(Product.class)
+                .equalTo("id", idProduct)
+                .findFirstAsync().asFlowable();
+        getRealm().commitTransaction();
+        return topic;
+    }
+
+    @Override
     public Flowable<RealmResults<Product>> getProductsBySubCategory(int idSub) {
         getRealm().beginTransaction();
         Flowable<RealmResults<Product>> topic = getRealm().where(Product.class)
@@ -156,6 +169,16 @@ public class AppDbHelper implements DbHelper {
                 .findAllAsync().asFlowable();
         getRealm().commitTransaction();
         return topic;
+    }
+
+    @Override
+    public Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
+                .equalTo("user_id", userId)
+                .findAllAsync().asFlowable();
+        getRealm().commitTransaction();
+        return carts;
     }
 
     @Override
@@ -169,6 +192,32 @@ public class AppDbHelper implements DbHelper {
             return Flowable.just(true);
         } catch (Exception e) {
             return Flowable.just(false);
+        }
+    }
+
+    private ProductCart createProductCart(Product product, String userId) {
+        ProductCart cart = new ProductCart();
+        cart.id = System.currentTimeMillis();
+        cart.product_id = product.id;
+        cart.seller_id = product.seller_id;
+        cart.product_name = product.product_name;
+        cart.amount = 1;
+        cart.checked = true;
+        cart.product_avatar = product.avatar_name;
+        cart.user_id = userId;
+        return cart;
+    }
+
+    @Override
+    public Flowable<ProductCart> addProductToCart(Product product, String userId) {
+        try {
+            getRealm().beginTransaction();
+            ProductCart productCart = createProductCart(product, userId);
+            productCart = getRealm().copyToRealmOrUpdate(productCart);
+            getRealm().commitTransaction();
+            return Flowable.just(productCart);
+        } catch (Exception e) {
+            return Flowable.just(null);
         }
     }
 }

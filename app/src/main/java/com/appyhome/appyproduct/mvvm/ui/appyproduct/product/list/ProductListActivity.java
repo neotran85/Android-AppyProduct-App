@@ -133,12 +133,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void showContent(CategoryAdapter adapter, View view, int idCategory) {
-
-    }
-
-
-    @Override
     public int getBindingVariable() {
         return BR.viewModel;
     }
@@ -146,5 +140,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public int getLayoutId() {
         return R.layout.activity_product_list;
+    }
+
+    @Override
+    public void showContent(ProductAdapter adapter, View view, int idProduct) {
+        mViewModel.getProductById(idProduct);
     }
 }

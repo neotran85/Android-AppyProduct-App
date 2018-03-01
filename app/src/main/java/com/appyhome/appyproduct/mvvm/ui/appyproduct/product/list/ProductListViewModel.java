@@ -76,4 +76,43 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     Crashlytics.logException(throwable);
                 }));
     }
+
+    private void addProductToCart(Product product) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(product, "1234")
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCart -> {
+                    // DONE ADDED
+                    if (productCart != null) {
+                        //getNavigator().showAlert(productCart.product_name);
+                        getAllProductCarts("1234");
+                    }
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public void getAllProductCarts(String userId) {
+        getCompositeDisposable().add(getDataManager().getAllProductCarts(userId)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCarts -> {
+                    // DONE GET
+                    getNavigator().showAlert(productCarts.size() + "");
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public void getProductById(int idProduct) {
+        getCompositeDisposable().add(getDataManager().getProductById(idProduct)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(product -> {
+                    // DONE GET
+                    addProductToCart(product);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
 }
