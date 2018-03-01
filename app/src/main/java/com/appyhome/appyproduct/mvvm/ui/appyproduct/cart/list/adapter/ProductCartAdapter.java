@@ -39,9 +39,9 @@ public class ProductCartAdapter extends SampleAdapter {
         itemViewModel.imageURL.set(productCart.product_avatar);
         itemViewModel.setIdProduct(productCart.product_id);
         itemViewModel.sellerName.set(productCart.seller_name);
-        itemViewModel.amount.set(productCart.amount);
+        itemViewModel.amount.set(productCart.amount + "");
+        itemViewModel.price.set(productCart.price + "");
         itemViewModel.setNavigator(navigator);
-        itemViewModel.amount.set(productCart.amount);
         itemViewModel.checked.set(productCart.checked);
         return itemViewModel;
     }
