@@ -33,15 +33,6 @@ public class ProductCartAdapter extends SampleAdapter {
         }
     }
 
-    public void addItems(ProductCart[] results, ProductCartItemNavigator navigator) {
-        mItems = new ArrayList<>();
-        if (results != null) {
-            for (ProductCart item : results) {
-                mItems.add(createViewModel(item, navigator));
-            }
-        }
-    }
-
     private ProductCartItemViewModel createViewModel(ProductCart productCart, ProductCartItemNavigator navigator) {
         ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel();
         itemViewModel.title.set(productCart.product_name);
@@ -51,6 +42,7 @@ public class ProductCartAdapter extends SampleAdapter {
         itemViewModel.amount.set(productCart.amount);
         itemViewModel.setNavigator(navigator);
         itemViewModel.amount.set(productCart.amount);
+        itemViewModel.checked.set(productCart.checked);
         return itemViewModel;
     }
 

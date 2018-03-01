@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
@@ -24,13 +25,14 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator {
+public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator, TabLayout.OnTabSelectedListener {
     @Inject
     ProductListViewModel mViewModel;
     ActivityProductListBinding mBinder;
 
     private ProductAdapter mProductAdapter;
-
+    private static final int TAB_SORT = 0;
+    private static final int TAB_FILTER = 1;
     private int mIdSubCategory;
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
@@ -63,8 +65,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     private void setUpTabLayout(TabLayout tabs) {
-        tabs.getTabAt(0).setCustomView(R.layout.view_item_product_tab_sort);
-        tabs.getTabAt(1).setCustomView(R.layout.view_item_product_tab_filter);
+        tabs.addOnTabSelectedListener(this);
+        tabs.getTabAt(TAB_SORT).setCustomView(R.layout.view_item_product_tab_sort);
+        tabs.getTabAt(TAB_FILTER).setCustomView(R.layout.view_item_product_tab_filter);
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
@@ -110,7 +113,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     private void toggleTabLayout(int countProduct) {
-        if(countProduct > 1) {
+        if (countProduct > 1) {
             mBinder.tabLayout.setVisibility(View.VISIBLE);
         } else mBinder.tabLayout.setVisibility(View.GONE);
     }
@@ -145,5 +148,21 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void showContent(ProductAdapter adapter, View view, int idProduct) {
         mViewModel.getProductById(idProduct);
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        Intent intent = ProductCartListActivity.getStartIntent(this);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

@@ -13,10 +13,12 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -44,6 +46,16 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mViewModel.setNavigator(this);
+        mProductCartAdapter = new ProductCartAdapter();
+        setUpRecyclerViewList(mBinder.cartRecyclerView, mProductCartAdapter);
+        mViewModel.getAllProductCarts("1234");
+    }
+
+    private void setUpRecyclerViewList(RecyclerView rv, ProductCartAdapter adapter) {
+        rv.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(adapter);
     }
 
     @Override
@@ -74,6 +86,12 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void showContent(ProductCartAdapter adapter, View view, int idProduct) {
 
+    }
+
+    @Override
+    public void showCart(RealmResults<ProductCart> result) {
+        mProductCartAdapter.addItems(result, this);
+        mProductCartAdapter.notifyDataSetChanged();
     }
 
 

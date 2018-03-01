@@ -19,7 +19,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCarts -> {
                     // DONE GET
-                    getNavigator().showAlert(productCarts.size() + "");
+                    getNavigator().showCart(productCarts);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
