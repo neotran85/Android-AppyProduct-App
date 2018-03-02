@@ -74,6 +74,14 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(mProductCartAdapter != null) {
+            mProductCartAdapter.onUpdateDatabase();
+        }
+    }
+
+    @Override
     public ProductCartListViewModel getViewModel() {
         return mViewModel;
     }

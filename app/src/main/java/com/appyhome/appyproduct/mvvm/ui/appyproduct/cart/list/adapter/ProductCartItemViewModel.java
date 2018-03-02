@@ -28,8 +28,8 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         super(dataManager, schedulerProvider);
     }
 
-    public void productCartUpdateAmount(long idProductCart, int amount) {
-        getCompositeDisposable().add(getDataManager().productCartUpdateAmount(idProductCart, amount)
+    public void productCartUpdate() {
+        getCompositeDisposable().add(getDataManager().productCartUpdate(productCartId, checked.get(), Integer.valueOf(amount.get()))
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED

@@ -196,12 +196,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> productCartUpdateAmount(long idProductCart, int amount) {
+    public Flowable<Boolean> productCartUpdate(long idProductCart, boolean checked, int amount) {
         try {
             getRealm().beginTransaction();
             ProductCart productCart = getRealm().where(ProductCart.class)
                     .equalTo("id", idProductCart)
                     .findFirst();
+            productCart.checked = checked;
             productCart.amount = amount;
             getRealm().copyToRealmOrUpdate(productCart);
             getRealm().commitTransaction();

@@ -12,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ProductCartAdapter extends SampleAdapter {
 
     private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
     private ProductCartListViewModel mViewModel;
+    private boolean isChangedByUser = false;
 
     public ProductCartAdapter(ProductCartListViewModel viewModel) {
         this.mItems = null;
@@ -34,6 +36,18 @@ public class ProductCartAdapter extends SampleAdapter {
         if (tag instanceof ProductCartItemViewModel) {
             ProductCartItemViewModel viewModel = (ProductCartItemViewModel) tag;
             viewModel.getNavigator().showContent(this, view, viewModel.getProductId());
+        }
+    }
+
+    public void onUpdateDatabase() {
+        if(isChangedByUser) {
+            if (mItems != null && mItems.size() > 0) {
+                for (BaseViewModel item : mItems) {
+                    ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                    cartItem.productCartUpdate();
+                }
+            }
+            isChangedByUser = false;
         }
     }
 
@@ -109,8 +123,8 @@ public class ProductCartAdapter extends SampleAdapter {
                     amount = Integer.valueOf(mBinding.getViewModel().amount.get()) + 1;
                     break;
             }
+            isChangedByUser = true;
             viewModel.amount.set(amount + "");
-            viewModel.productCartUpdateAmount(viewModel.getProductCartId(), amount);
         }
 
         @Override
@@ -125,7 +139,8 @@ public class ProductCartAdapter extends SampleAdapter {
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+            isChangedByUser = true;
+            mBinding.getViewModel().checked.set(isChecked);
         }
     }
 }

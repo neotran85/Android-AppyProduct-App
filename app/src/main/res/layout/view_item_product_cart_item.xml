@@ -142,12 +142,18 @@
                             android:layout_height="wrap_content"
                             android:src="@mipmap/icon_decrease" />
 
-                        <TextView
-                            android:layout_width="42dp"
+                        <EditText
+                            android:descendantFocusability="beforeDescendants"
+                            android:focusableInTouchMode="true"
+                            android:focusedByDefault="false"
+                            android:inputType="number"
+                            android:background="@null"
+                            android:layout_width="48dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@{viewModel.amount}"
+                            android:textSize="12sp"
+                            android:text="@={viewModel.amount}"
                             android:textColor="@color/black" />
 
                         <ImageView

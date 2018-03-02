@@ -43,7 +43,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId);
 
-    Flowable<Boolean> productCartUpdateAmount(long idProductCart, int amount);
+    Flowable<Boolean> productCartUpdate(long idProductCart, boolean checked, int amount);
 
     void closeDatabase();
 }
