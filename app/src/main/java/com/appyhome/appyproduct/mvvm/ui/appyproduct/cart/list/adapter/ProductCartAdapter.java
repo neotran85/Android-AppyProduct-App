@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 import android.graphics.Paint;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.realm.RealmResults;
 
@@ -24,10 +26,12 @@ public class ProductCartAdapter extends SampleAdapter {
     private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
     private ProductCartListViewModel mViewModel;
     private boolean isChangedByUser = false;
+    private RecyclerView mRecyclerView = null;
 
-    public ProductCartAdapter(ProductCartListViewModel viewModel) {
+    public ProductCartAdapter(ProductCartListViewModel viewModel, RecyclerView recyclerView) {
         this.mItems = null;
         mViewModel = viewModel;
+        mRecyclerView = recyclerView;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class ProductCartAdapter extends SampleAdapter {
     }
 
     public void onUpdateDatabase() {
-        if(isChangedByUser) {
+        if (isChangedByUser) {
             if (mItems != null && mItems.size() > 0) {
                 for (BaseViewModel item : mItems) {
                     ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
@@ -67,18 +71,27 @@ public class ProductCartAdapter extends SampleAdapter {
         return itemViewModel;
     }
 
+    private HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager = new HashMap<>();
+
+    private void addProductCartToStore(ProductCartItemViewModel cartItem) {
+        String sellerName = cartItem.sellerName.get();
+        ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
+        if (array == null) {
+            array = new ArrayList<>();
+            cartItem.isFirstProductOfStore.set(true);
+            viewModelManager.put(sellerName, array);
+        } else {
+            cartItem.isFirstProductOfStore.set(false);
+        }
+        array.add(cartItem);
+    }
+
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
-        String sellerName = "";
         if (results != null) {
             for (ProductCart item : results) {
                 ProductCartItemViewModel cartItem = createViewModel(item, navigator);
-                if(!sellerName.equals(item.seller_name)) {
-                    sellerName = item.seller_name;
-                    cartItem.isFirstProductOfStore.set(true);
-                }else {
-                    cartItem.isFirstProductOfStore.set(false);
-                }
+                addProductCartToStore(cartItem);
                 mItems.add(cartItem);
             }
         }
@@ -98,6 +111,8 @@ public class ProductCartAdapter extends SampleAdapter {
         public ViewItemProductCartItemBinding getBinding() {
             return mBinding;
         }
+
+        private boolean isOnBinding = false;
 
         private ProductCartItemViewHolder(ViewItemProductCartItemBinding binding) {
             super(binding.getRoot());
@@ -127,10 +142,26 @@ public class ProductCartAdapter extends SampleAdapter {
             viewModel.amount.set(amount + "");
         }
 
+        private void updateCheckAll(ProductCartItemViewModel viewModel) {
+            ArrayList<ProductCartItemViewModel> array = viewModelManager.get(viewModel.sellerName.get());
+            if (array != null && array.size() > 0) {
+                boolean result = true;
+                for (ProductCartItemViewModel item : array) {
+                    if (!item.checked.get()) {
+                        result = false;
+                        break;
+                    }
+                }
+                ProductCartItemViewModel firstItem = array.get(0);
+                firstItem.checkedAll.set(result);
+            }
+        }
+
         @Override
         public void onBind(int position) {
             ProductCartItemViewModel viewModel = (ProductCartItemViewModel) mItems.get(position);
             if (mBinding != null) {
+                isOnBinding = true;
                 mBinding.setViewModel(viewModel);
                 mBinding.llItemView.setTag(mBinding.getViewModel());
                 mBinding.llItemView.setOnClickListener(ProductCartAdapter.this);
@@ -141,6 +172,7 @@ public class ProductCartAdapter extends SampleAdapter {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             isChangedByUser = true;
             mBinding.getViewModel().checked.set(isChecked);
+            updateCheckAll(mBinding.getViewModel());
         }
     }
 }

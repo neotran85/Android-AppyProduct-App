@@ -38,7 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:checked="@{viewModel.checked}"
+                android:id="@+id/cbCheckAll"
+                android:checked="@{viewModel.checkedAll}"
                 android:scaleX="0.8"
                 android:scaleY="0.8" />
 
@@ -145,7 +146,6 @@
                         <EditText
                             android:descendantFocusability="beforeDescendants"
                             android:focusableInTouchMode="true"
-                            android:focusedByDefault="false"
                             android:inputType="number"
                             android:background="@null"
                             android:layout_width="48dp"
