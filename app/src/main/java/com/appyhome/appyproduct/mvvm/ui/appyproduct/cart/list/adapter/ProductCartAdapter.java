@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -32,7 +33,7 @@ public class ProductCartAdapter extends SampleAdapter {
         Object tag = view.getTag();
         if (tag instanceof ProductCartItemViewModel) {
             ProductCartItemViewModel viewModel = (ProductCartItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getIdProduct());
+            viewModel.getNavigator().showContent(this, view, viewModel.getProductId());
         }
     }
 
@@ -42,7 +43,8 @@ public class ProductCartAdapter extends SampleAdapter {
         itemViewModel.title.set(productCart.product_name);
         //itemViewModel.imageURL.set(productCart.product_avatar);
         itemViewModel.imageURL.set(imageTestPath);
-        itemViewModel.setProductCart(productCart);
+        itemViewModel.setProductCartId(productCart.id);
+        itemViewModel.setProductId(productCart.product_id);
         itemViewModel.sellerName.set(productCart.seller_name);
         itemViewModel.amount.set(productCart.amount + "");
         itemViewModel.price.set(productCart.price + "");
@@ -75,7 +77,7 @@ public class ProductCartAdapter extends SampleAdapter {
         return new ProductCartItemViewHolder(itemViewBinding);
     }
 
-    public class ProductCartItemViewHolder extends BaseViewHolder implements View.OnClickListener {
+    public class ProductCartItemViewHolder extends BaseViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
         private ViewItemProductCartItemBinding mBinding;
 
@@ -89,13 +91,13 @@ public class ProductCartAdapter extends SampleAdapter {
             mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             mBinding.btnDecrease.setOnClickListener(this);
             mBinding.btnIncrease.setOnClickListener(this);
+            mBinding.cbWillBuy.setOnCheckedChangeListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int amount = 0;
             ProductCartItemViewModel viewModel = mBinding.getViewModel();
-            ProductCart productCart = viewModel.getProductCart();
             switch (view.getId()) {
                 case R.id.btnDecrease:
                     amount = Integer.valueOf(mBinding.getViewModel().amount.get());
@@ -108,8 +110,7 @@ public class ProductCartAdapter extends SampleAdapter {
                     break;
             }
             viewModel.amount.set(amount + "");
-            productCart.amount = amount;
-            viewModel.saveProductCart(productCart);
+            viewModel.productCartUpdateAmount(viewModel.getProductCartId(), amount);
         }
 
         @Override
@@ -120,6 +121,11 @@ public class ProductCartAdapter extends SampleAdapter {
                 mBinding.llItemView.setTag(mBinding.getViewModel());
                 mBinding.llItemView.setOnClickListener(ProductCartAdapter.this);
             }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
         }
     }
 }

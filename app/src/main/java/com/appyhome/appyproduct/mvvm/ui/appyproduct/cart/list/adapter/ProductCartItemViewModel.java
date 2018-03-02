@@ -19,15 +19,17 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(false);
     public ObservableField<Boolean> isFirstProductOfStore = new ObservableField<>(false);
-    private ProductCart productCart;
+
+    private int productId;
+    private long productCartId;
 
     public ProductCartItemViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void saveProductCart(ProductCart productCart) {
-        getCompositeDisposable().add(getDataManager().saveProductCart(productCart)
+    public void productCartUpdateAmount(long idProductCart, int amount) {
+        getCompositeDisposable().add(getDataManager().productCartUpdateAmount(idProductCart, amount)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
@@ -37,15 +39,19 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
                 }));
     }
 
-    public ProductCart getProductCart() {
-        return productCart;
+    public int getProductId() {
+        return productId;
     }
 
-    public int getIdProduct() {
-        return productCart.product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public void setProductCart(ProductCart productCart) {
-        this.productCart = productCart;
+    public long getProductCartId() {
+        return productCartId;
+    }
+
+    public void setProductCartId(long productCartId) {
+        this.productCartId = productCartId;
     }
 }

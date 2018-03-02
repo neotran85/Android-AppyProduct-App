@@ -167,16 +167,6 @@ public class AppDbHelper implements DbHelper {
         return topic;
     }
 
-    @Override
-    public Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId) {
-        getRealm().beginTransaction();
-        Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
-                .equalTo("user_id", userId)
-                .sort("seller_name")
-                .findAll().asFlowable();
-        getRealm().commitTransaction();
-        return carts;
-    }
 
     @Override
     public Flowable<Boolean> addProducts(Product[] list) {
@@ -192,10 +182,27 @@ public class AppDbHelper implements DbHelper {
         }
     }
 
+    /******* PRODUCT CART METHODS *******/
+
     @Override
-    public Flowable<Boolean> saveProductCart(ProductCart productCart) {
+    public Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
+                .equalTo("user_id", userId)
+                .sort("seller_name")
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return carts;
+    }
+
+    @Override
+    public Flowable<Boolean> productCartUpdateAmount(long idProductCart, int amount) {
         try {
             getRealm().beginTransaction();
+            ProductCart productCart = getRealm().where(ProductCart.class)
+                    .equalTo("id", idProductCart)
+                    .findFirst();
+            productCart.amount = amount;
             getRealm().copyToRealmOrUpdate(productCart);
             getRealm().commitTransaction();
             return Flowable.just(true);
