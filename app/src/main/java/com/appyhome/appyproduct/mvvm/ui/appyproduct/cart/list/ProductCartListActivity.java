@@ -40,7 +40,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mViewModel.setNavigator(this);
-        mProductCartAdapter = new ProductCartAdapter(mViewModel, mBinder.cartRecyclerView);
+        mProductCartAdapter = new ProductCartAdapter(mViewModel);
         setUpRecyclerViewList(mBinder.cartRecyclerView, mProductCartAdapter);
         mViewModel.getAllProductCarts("1234");
     }
