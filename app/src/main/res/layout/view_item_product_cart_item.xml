@@ -19,6 +19,7 @@
         android:orientation="vertical">
 
         <View
+            android:visibility="@{viewModel.isFirstProductOfStore}"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#DEDEDE"></View>
@@ -54,7 +55,7 @@
                 android:layout_marginStart="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="ABC Store"
+                android:text="@{viewModel.sellerName}"
                 android:textColor="@color/dark_gray"
                 android:textSize="13sp" />
 

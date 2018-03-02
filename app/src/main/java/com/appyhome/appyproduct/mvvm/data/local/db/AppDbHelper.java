@@ -207,17 +207,18 @@ public class AppDbHelper implements DbHelper {
     private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
 
     private ProductCart createNewProductCart(Product product, String userId) {
-        ProductCart cart = new ProductCart();
-        cart.id = System.currentTimeMillis();
-        cart.product_id = product.id;
-        cart.seller_id = product.seller_id;
+        ProductCart cartItem = new ProductCart();
+        cartItem.id = System.currentTimeMillis();
+        cartItem.product_id = product.id;
+        cartItem.seller_id = product.seller_id;
         int randomNum = new Random().nextInt(storeName.length);
-        cart.product_name = storeName[randomNum];
-        cart.amount = 0;
-        cart.checked = true;
-        cart.product_avatar = product.avatar_name;
-        cart.user_id = userId;
-        return cart;
+        cartItem.seller_name = storeName[randomNum];
+        cartItem.product_name = product.product_name;
+        cartItem.amount = 0;
+        cartItem.checked = true;
+        cartItem.product_avatar = product.avatar_name;
+        cartItem.user_id = userId;
+        return cartItem;
     }
 
     @Override

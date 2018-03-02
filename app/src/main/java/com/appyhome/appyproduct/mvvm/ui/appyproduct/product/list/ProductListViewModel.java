@@ -76,8 +76,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(productCart -> {
                     // DONE ADDED
                     if (productCart != null) {
-                        //getNavigator().showAlert(productCart.product_name);
-                        getAllProductCarts("1234");
+                        getNavigator().showAlert(productCart.seller_name);
+                        // getAllProductCarts("1234");
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
@@ -90,7 +90,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCarts -> {
                     // DONE GET
-                    getNavigator().showAlert(productCarts.size() + "");
+                    // getNavigator().showAlert(productCarts.size() + "");
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
