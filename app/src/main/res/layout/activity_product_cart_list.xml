@@ -42,16 +42,118 @@
                 android:src="@mipmap/icon_back" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_marginTop="2dp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cartRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="102dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="102dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_gray"></View>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingRight="14dp"
+                    android:paddingLeft="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <CheckBox
+                        android:id="@+id/cbCheckAll"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8" />
+
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/textView"
+                        fontPath="fonts/TitilliumWeb-Light.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select All"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="13sp" />
+                    <ImageView
+                        android:layout_marginStart="14dp"
+                        android:src="@mipmap/icon_percent_discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:gravity="center_vertical"
+                        android:paddingLeft="12dp"
+                        android:layout_marginStart="4dp"
+                        android:descendantFocusability="beforeDescendants"
+                        android:focusableInTouchMode="true"
+                        android:inputType="number"
+                        android:background="@mipmap/bg_edit_text_discount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:hint="Enter a promotion code"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_gray"></View>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_marginStart="14dp"
+                        android:layout_centerVertical="true"
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total:"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_marginStart="6dp"
+                        android:layout_centerVertical="true"
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/textView1"
+                        android:text="RM 1890.0"
+                        android:textColor="@color/red_price"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_marginRight="14dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:text="Check out"
+                        android:background="@mipmap/bg_checkout"
+                        android:layout_width="92dp"
+                        android:layout_height="36dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 </layout>

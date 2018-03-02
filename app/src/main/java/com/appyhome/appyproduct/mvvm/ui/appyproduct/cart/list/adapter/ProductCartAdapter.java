@@ -188,12 +188,8 @@ public class ProductCartAdapter extends SampleAdapter {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             isChangedByUser = true;
-            switch (buttonView.getId()) {
-                case R.id.cbWillBuy:
-                    mBinding.getViewModel().checked.set(isChecked);
-                    updateCheckAll();
-                    break;
-            }
+            mBinding.getViewModel().checked.set(isChecked);
+            updateCheckAll();
         }
     }
 }

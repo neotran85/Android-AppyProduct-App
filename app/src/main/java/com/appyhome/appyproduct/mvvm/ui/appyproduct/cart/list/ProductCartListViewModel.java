@@ -19,8 +19,12 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCarts -> {
                     getNavigator().showCart(productCarts);
-                    if (disposableGetAllProductCarts != null)
+                    // Clear disposableGetAllProductCarts
+                    if (disposableGetAllProductCarts != null) {
                         disposableGetAllProductCarts.dispose();
+                        getCompositeDisposable().remove(disposableGetAllProductCarts);
+                        disposableGetAllProductCarts = null;
+                    }
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
