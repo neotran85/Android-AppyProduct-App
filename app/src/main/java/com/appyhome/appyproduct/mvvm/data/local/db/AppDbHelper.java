@@ -196,6 +196,20 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Boolean> removeProductCartItem(long idProductCart) {
+        try {
+            getRealm().beginTransaction();
+            getRealm().where(ProductCart.class)
+                    .equalTo("id", idProductCart)
+                    .findFirst().deleteFromRealm();
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
+    }
+
+    @Override
     public Flowable<Boolean> productCartUpdate(long idProductCart, boolean checked, int amount) {
         try {
             getRealm().beginTransaction();

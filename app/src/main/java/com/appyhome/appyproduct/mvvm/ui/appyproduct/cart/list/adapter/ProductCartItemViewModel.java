@@ -32,6 +32,17 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         super(dataManager, schedulerProvider);
     }
 
+    public void removeProductCartItem(long idCartItem) {
+        getCompositeDisposable().add(getDataManager().removeProductCartItem(productCartId)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // REMOVED ADDED
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
     public void productCartUpdate() {
         getCompositeDisposable().add(getDataManager().productCartUpdate(productCartId, checked.get(), Integer.valueOf(amount.get()))
                 .observeOn(getSchedulerProvider().ui())
