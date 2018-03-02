@@ -190,13 +190,25 @@ public class AppDbHelper implements DbHelper {
         }
     }
 
-    private ProductCart createProductCart(Product product, String userId) {
+    @Override
+    public Flowable<Boolean> saveProductCart(ProductCart productCart) {
+        try {
+            getRealm().beginTransaction();
+            getRealm().copyToRealmOrUpdate(productCart);
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
+    }
+
+    private ProductCart createNewProductCart(Product product, String userId) {
         ProductCart cart = new ProductCart();
         cart.id = System.currentTimeMillis();
         cart.product_id = product.id;
         cart.seller_id = product.seller_id;
         cart.product_name = product.product_name;
-        cart.amount = 1;
+        cart.amount = 0;
         cart.checked = true;
         cart.product_avatar = product.avatar_name;
         cart.user_id = userId;
@@ -207,11 +219,18 @@ public class AppDbHelper implements DbHelper {
     public Flowable<ProductCart> addProductToCart(Product product, String userId) {
         try {
             getRealm().beginTransaction();
-            ProductCart productCart = createProductCart(product, userId);
+            ProductCart productCart = getRealm().where(ProductCart.class)
+                    .equalTo("product_id", product.id)
+                    .findFirst();
+            if (productCart == null) {
+                productCart = createNewProductCart(product, userId);
+            }
+            productCart.amount = productCart.amount + 1;
             productCart = getRealm().copyToRealmOrUpdate(productCart);
             getRealm().commitTransaction();
             return Flowable.just(productCart);
         } catch (Exception e) {
+            e.printStackTrace();
             return Flowable.just(null);
         }
     }

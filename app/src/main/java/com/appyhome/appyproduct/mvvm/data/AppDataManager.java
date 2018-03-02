@@ -456,4 +456,9 @@ public class AppDataManager implements DataManager {
     public Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId) {
         return mDbHelper.getAllProductCarts(userId);
     }
+
+    @Override
+    public Flowable<Boolean> saveProductCart(ProductCart productCart) {
+        return mDbHelper.saveProductCart(productCart);
+    }
 }

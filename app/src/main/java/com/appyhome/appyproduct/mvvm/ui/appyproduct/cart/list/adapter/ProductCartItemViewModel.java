@@ -3,8 +3,11 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
 
 public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavigator> {
 
@@ -16,22 +19,33 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(false);
 
-    private int idProduct;
+    private ProductCart productCart;
 
     public ProductCartItemViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public ProductCartItemViewModel() {
-        super();
+    public void saveProductCart(ProductCart productCart) {
+        getCompositeDisposable().add(getDataManager().saveProductCart(productCart)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // DONE ADDED
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public ProductCart getProductCart() {
+        return productCart;
     }
 
     public int getIdProduct() {
-        return idProduct;
+        return productCart.product_id;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+    public void setProductCart(ProductCart productCart) {
+        this.productCart = productCart;
     }
 }

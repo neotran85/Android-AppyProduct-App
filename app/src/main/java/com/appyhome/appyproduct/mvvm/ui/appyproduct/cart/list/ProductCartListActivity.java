@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -39,7 +40,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mViewModel.setNavigator(this);
-        mProductCartAdapter = new ProductCartAdapter();
+        mProductCartAdapter = new ProductCartAdapter(mViewModel);
         setUpRecyclerViewList(mBinder.cartRecyclerView, mProductCartAdapter);
         mViewModel.getAllProductCarts("1234");
     }
@@ -49,6 +50,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
+        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
     @Override
