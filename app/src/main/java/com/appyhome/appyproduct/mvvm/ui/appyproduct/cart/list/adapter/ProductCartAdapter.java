@@ -53,9 +53,17 @@ public class ProductCartAdapter extends SampleAdapter {
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
+        String sellerName = "";
         if (results != null) {
             for (ProductCart item : results) {
-                mItems.add(createViewModel(item, navigator));
+                ProductCartItemViewModel cartItem = createViewModel(item, navigator);
+                if(!sellerName.equals(item.seller_name)) {
+                    sellerName = item.seller_name;
+                    cartItem.isFirstProductOfStore.set(true);
+                }else {
+                    cartItem.isFirstProductOfStore.set(false);
+                }
+                mItems.add(cartItem);
             }
         }
     }

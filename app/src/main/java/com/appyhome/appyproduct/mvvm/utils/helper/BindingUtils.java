@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.utils.helper;
 import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
@@ -49,5 +50,10 @@ public final class BindingUtils {
             adapter.clearItems();
             adapter.addItems(blogs);
         }
+    }
+
+    @BindingAdapter("android:visibility")
+    public static void setVisibility(View view, Boolean value) {
+        view.setVisibility(value ? View.VISIBLE : View.GONE);
     }
 }

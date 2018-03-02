@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
@@ -56,6 +57,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             case R.id.ibHomeCleaning:
                 openBookingSteps(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
                 break;
+            case R.id.toolbarCartButton:
+                Intent intent = ProductCartListActivity.getStartIntent(this.getActivity());
+                startActivity(intent);
+                break;
             default: // Coming soon...
                 AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
@@ -93,6 +98,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
         addProductTopicsFragment();
+        mToolbarCartButton.setOnClickListener(this);
     }
 
     @Override

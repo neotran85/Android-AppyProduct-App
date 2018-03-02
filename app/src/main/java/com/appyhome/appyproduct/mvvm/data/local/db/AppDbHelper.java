@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -171,7 +172,8 @@ public class AppDbHelper implements DbHelper {
         getRealm().beginTransaction();
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)
-                .findAllAsync().asFlowable();
+                .sort("seller_name")
+                .findAll().asFlowable();
         getRealm().commitTransaction();
         return carts;
     }
@@ -202,12 +204,15 @@ public class AppDbHelper implements DbHelper {
         }
     }
 
+    private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
+
     private ProductCart createNewProductCart(Product product, String userId) {
         ProductCart cart = new ProductCart();
         cart.id = System.currentTimeMillis();
         cart.product_id = product.id;
         cart.seller_id = product.seller_id;
-        cart.product_name = product.product_name;
+        int randomNum = new Random().nextInt(storeName.length);
+        cart.product_name = storeName[randomNum];
         cart.amount = 0;
         cart.checked = true;
         cart.product_avatar = product.avatar_name;

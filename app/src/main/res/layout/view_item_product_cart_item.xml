@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel" />
@@ -14,114 +16,183 @@
         android:id="@+id/llItemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingBottom="14dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="8dp"
-        android:paddingTop="14dp">
+        android:orientation="vertical">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:checked="@{viewModel.checked}"
-            android:scaleX="0.8"
-            android:scaleY="0.8" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#DEDEDE"></View>
 
-        <ImageView
-            android:id="@+id/ivThumbnail"
-            imageUrl="@{viewModel.imageURL}"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="2dp" />
+        <LinearLayout
+            android:id="@+id/llStoreTitle"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="#F2F2F2"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="6dp"
+            android:visibility="@{viewModel.isFirstProductOfStore}">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:checked="@{viewModel.checked}"
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:src="@mipmap/icon_store" />
+
+            <TextView
+                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="ABC Store"
+                android:textColor="@color/dark_gray"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="Edit"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|left"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="14dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="8dp"
+            android:paddingTop="14dp">
 
-            <TextView
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{viewModel.title}"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:layout_gravity="center_vertical"
+                android:checked="@{viewModel.checked}"
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+
+            <ImageView
+                android:id="@+id/ivThumbnail"
+                imageUrl="@{viewModel.imageURL}"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="2dp" />
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_gravity="top|left"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#EAEAEA"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/btnDecrease"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/icon_decrease" />
-
-                    <TextView
-                        android:layout_width="42dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@{viewModel.amount}"
-                        android:textColor="@color/black" />
-
-                    <ImageView
-                        android:id="@+id/btnIncrease"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/icon_increase" />
-                </LinearLayout>
                 <TextView
-                    android:layout_marginStart="10dp"
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Variation 1"
-                    android:textColor="@color/semi_gray"
+                    android:text="@{viewModel.title}"
+                    android:textColor="@color/black"
                     android:textSize="13sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="6dp">
-
-                <TextView
-                    android:id="@+id/tvOriginalPrice"
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="4dp"
-                    android:text="RM 546.4"
-                    android:textColor="@color/gray_product_in_list"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tvPrice"
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                    android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#EAEAEA"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/btnDecrease"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_decrease" />
+
+                        <TextView
+                            android:layout_width="42dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@{viewModel.amount}"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/btnIncrease"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_increase" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Variation 1"
+                        android:textColor="@color/semi_gray"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="@{viewModel.price}"
-                    android:textColor="@color/red_price"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal"
+                    android:paddingTop="6dp">
+
+                    <TextView
+                        android:id="@+id/tvOriginalPrice"
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="4dp"
+                        android:text="RM 546.4"
+                        android:textColor="@color/gray_product_in_list"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@{viewModel.price}"
+                        android:textColor="@color/red_price"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
