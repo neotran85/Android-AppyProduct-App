@@ -19,7 +19,10 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(false);
     public ObservableField<Boolean> checkedAll = new ObservableField<>(false);
+
     public ObservableField<Boolean> isFirstProductOfStore = new ObservableField<>(false);
+
+    public ObservableField<Boolean> isEditMode = new ObservableField<>(false);
 
     private int productId;
     private long productCartId;

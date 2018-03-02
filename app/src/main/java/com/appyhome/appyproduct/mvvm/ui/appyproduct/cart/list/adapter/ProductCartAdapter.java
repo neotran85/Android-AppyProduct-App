@@ -122,6 +122,7 @@ public class ProductCartAdapter extends SampleAdapter {
             mBinding.btnIncrease.setOnClickListener(this);
             mBinding.cbWillBuy.setOnCheckedChangeListener(this);
             mBinding.cbCheckAll.setOnClickListener(this);
+            mBinding.tvEdit.setOnClickListener(this);
         }
 
         @Override
@@ -144,10 +145,23 @@ public class ProductCartAdapter extends SampleAdapter {
                     boolean isChecked = mBinding.cbCheckAll.isChecked();
                     pressCheckAll(isChecked);
                     break;
+                case R.id.tvEdit:
+                    boolean current = mBinding.getViewModel().isEditMode.get();
+                    updateEditMode(!current);
+                    break;
             }
             isChangedByUser = true;
         }
 
+        private void updateEditMode(boolean isEditable) {
+            ProductCartItemViewModel viewModel = mBinding.getViewModel();
+            ArrayList<ProductCartItemViewModel> array = viewModelManager.get(viewModel.sellerName.get());
+            if (array != null && array.size() > 0) {
+                for (ProductCartItemViewModel item : array) {
+                    item.isEditMode.set(isEditable);
+                }
+            }
+        }
         private void updateCheckAll() {
             ProductCartItemViewModel viewModel = mBinding.getViewModel();
             ArrayList<ProductCartItemViewModel> array = viewModelManager.get(viewModel.sellerName.get());

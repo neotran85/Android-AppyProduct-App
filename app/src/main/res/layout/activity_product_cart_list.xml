@@ -101,7 +101,7 @@
                         android:layout_marginStart="4dp"
                         android:descendantFocusability="beforeDescendants"
                         android:focusableInTouchMode="true"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:background="@mipmap/bg_edit_text_discount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -5,10 +5,6 @@ import android.app.Activity;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-/**
- * Created by namheo on 1/22/18.
- */
-
 public class MapManager {
     public static final int PLACE_PICKER_REQUEST = 9999;
 
