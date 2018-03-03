@@ -43,6 +43,14 @@ public final class DataUtils {
         return "";
     }
 
+    public  static double roundNumber(double number, int decimal) {
+        double scale = Math.pow(10, decimal);
+        number = number * scale;
+        long temp = Math.round(number);
+        number = temp / scale;
+        return number;
+    }
+
     public static String getStringSafely(JSONObject object, String key) {
         if (object.has(key)) {
             try {

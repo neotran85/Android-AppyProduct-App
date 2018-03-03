@@ -60,6 +60,11 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
+    public void askBeforeRemoved(DialogInterface.OnClickListener listener) {
+        AlertManager.getInstance(this).showConfirmationDialog("", "Do you want to remove this item from your cart?", listener);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivTrash:

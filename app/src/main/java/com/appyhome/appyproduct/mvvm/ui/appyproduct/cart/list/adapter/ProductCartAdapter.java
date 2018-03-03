@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +88,7 @@ public class ProductCartAdapter extends SampleAdapter {
                     totalCost = totalCost + (price * amount);
                 }
             }
-            mProductCartListViewModel.totalCost.set(totalCost + "");
+            mProductCartListViewModel.totalCost.set(DataUtils.roundNumber(totalCost, 2) + "");
         }
     }
 
@@ -163,6 +165,16 @@ public class ProductCartAdapter extends SampleAdapter {
             return true;
         }
         return false;
+    }
+
+    public void removeCartItem(ProductCartItemViewModel itemViewModel, boolean askBeforeRemoved) {
+        if (askBeforeRemoved) {
+            itemViewModel.getNavigator().askBeforeRemoved((dialog, which) -> {
+                removeCartItem(itemViewModel);
+            });
+        } else {
+            removeCartItem(itemViewModel);
+        }
     }
 
     public void removeCartItem(ProductCartItemViewModel itemViewModel) {
