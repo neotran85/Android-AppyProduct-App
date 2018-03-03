@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
@@ -24,6 +25,11 @@ public final class BindingUtils {
     public static void setImageUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
         Glide.with(context).load(url).into(imageView);
+    }
+
+    @BindingAdapter("editModeText")
+    public static void setEditModeText(TextView textView, boolean isEditMode) {
+        textView.setText(isEditMode ? "Done" : "Edit");
     }
 
     @BindingAdapter("imageAssetsUrl")
