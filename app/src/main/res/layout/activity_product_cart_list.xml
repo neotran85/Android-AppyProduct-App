@@ -96,7 +96,7 @@
 
                     <CheckBox
                         android:id="@+id/cbCheckAll"
-                        android:checked="@{viewModel.isCheckedAll}"
+                        android:checked="@={viewModel.isCheckedAll}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleX="0.8"

@@ -11,7 +11,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 import java.util.ArrayList;
 
-public class ProductCartItemViewHolder extends BaseViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class ProductCartItemViewHolder extends BaseViewHolder implements View.OnClickListener {
 
     private ViewItemProductCartItemBinding mBinding;
     private ProductCartAdapter mAdapter;
@@ -27,7 +27,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
         mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         mBinding.btnDecrease.setOnClickListener(this);
         mBinding.btnIncrease.setOnClickListener(this);
-        mBinding.cbWillBuy.setOnCheckedChangeListener(this);
+        mBinding.cbWillBuy.setOnClickListener(this);
         mBinding.cbCheckAll.setOnClickListener(this);
         mBinding.tvEdit.setOnClickListener(this);
         mBinding.llRemoveItemCart.setOnClickListener(this);
@@ -46,6 +46,9 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
                 viewModel.amount.set(amount + "");
                 mAdapter.updateTotalCost();
                 break;
+            case R.id.cbWillBuy:
+                mAdapter.updateCheckAllBySellerName(getSellerName());
+                break;
             case R.id.btnIncrease:
                 amount = Integer.valueOf(mBinding.getViewModel().amount.get()) + 1;
                 viewModel.amount.set(amount + "");
@@ -53,87 +56,25 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
                 break;
             case R.id.cbCheckAll:
                 boolean isChecked = mBinding.cbCheckAll.isChecked();
-                pressCheckAll(isChecked);
+                mAdapter.pressCheckAllBySellerName(isChecked, getSellerName());
                 break;
             case R.id.tvEdit:
                 boolean current = mBinding.getViewModel().isEditMode.get();
-                updateEditMode(!current);
+                mAdapter.updateEditModeBySellerName(!current, getSellerName());
                 break;
             case R.id.llRemoveItemCart:
                 removeCartItem();
                 break;
 
         }
-        mAdapter.isChangedByUser = true;
+    }
+
+    private String getSellerName() {
+        return mBinding.getViewModel().sellerName.get();
     }
 
     private void removeCartItem() {
-        if (checkIfItemsNotEmpty()) {
-            String sellerName = mBinding.getViewModel().sellerName.get();
-            ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(sellerName);
-            mBinding.getViewModel().removeProductCartItem(mBinding.getViewModel().getProductCartId());
-            int pos = mAdapter.getItems().indexOf(mBinding.getViewModel());
-            mAdapter.getItems().remove(mBinding.getViewModel());
-            mAdapter.notifyItemRemoved(pos);
-            array.remove(mBinding.getViewModel());
-
-            // UPDATE IF FIRST ITEM OF STORE IS REMOVED
-            if (array != null && array.size() > 0) {
-                ProductCartItemViewModel firstItem = array.get(0);
-                firstItem.isFirstProductOfStore.set(true);
-                updateCheckAll(firstItem);
-            }
-
-            // EMPTY CART
-            if(mAdapter.getItems().size() <= 0) {
-                mBinding.getViewModel().getNavigator().emptyProductCarts();
-            }
-        }
-    }
-
-    private boolean checkIfItemsNotEmpty() {
-        return mAdapter != null && mAdapter.getItems() != null && mAdapter.getItems().size() > 0;
-    }
-
-    private void updateEditMode(boolean isEditable) {
-        ProductCartItemViewModel viewModel = mBinding.getViewModel();
-        ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(viewModel.sellerName.get());
-        if (array != null && array.size() > 0) {
-            for (ProductCartItemViewModel item : array) {
-                item.isEditMode.set(isEditable);
-            }
-        }
-    }
-
-    private void updateCheckAll(ProductCartItemViewModel viewModel) {
-        ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(viewModel.sellerName.get());
-        if (array != null && array.size() > 0) {
-            boolean result = true;
-            for (ProductCartItemViewModel item : array) {
-                if (!item.checked.get()) {
-                    result = false;
-                    break;
-                }
-            }
-            ProductCartItemViewModel firstItem = array.get(0);
-            firstItem.checkedAll.set(result);
-        }
-        mAdapter.updateTotalCost();
-        mAdapter.updateIfCheckedAll();
-    }
-
-    private void pressCheckAll(boolean isChecked) {
-        mAdapter.isChangedByUser = true;
-        ProductCartItemViewModel viewModel = mBinding.getViewModel();
-        ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(viewModel.sellerName.get());
-        if (array != null && array.size() > 0) {
-            for (ProductCartItemViewModel item : array) {
-                item.checked.set(isChecked);
-            }
-            array.get(0).checkedAll.set(isChecked);
-        }
-        mAdapter.updateTotalCost();
-        mAdapter.updateIfCheckedAll();
+        mAdapter.removeCartItem(mBinding.getViewModel());
     }
 
     @Override
@@ -144,12 +85,5 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
             mBinding.llItemView.setTag(mBinding.getViewModel());
             mBinding.llItemView.setOnClickListener(mAdapter);
         }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        mAdapter.isChangedByUser = true;
-        mBinding.getViewModel().checked.set(isChecked);
-        updateCheckAll(mBinding.getViewModel());
     }
 }

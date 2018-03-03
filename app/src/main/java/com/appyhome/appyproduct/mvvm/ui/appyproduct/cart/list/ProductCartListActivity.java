@@ -50,7 +50,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder.ivTrash.setOnClickListener(this);
     }
 
-    @Override
     public void emptyProductCarts() {
         if(mProductCartAdapter != null) {
             mProductCartAdapter.getItems().clear();
@@ -130,16 +129,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         }
         mProductCartAdapter.addItems(result, this);
         mProductCartAdapter.notifyDataSetChanged();
-    }
-
-
-    @Override
-    public void updateIfAllChecked(boolean isAllChecked) {
-        mViewModel.isCheckedAll.set(isAllChecked);
-    }
-    @Override
-    public void updateTotalCost(float cost) {
-        mViewModel.totalCost.set(cost + "");
     }
 
     @Override

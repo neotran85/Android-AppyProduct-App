@@ -30,7 +30,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         super(dataManager, schedulerProvider);
     }
 
-    public void removeProductCartItem(long idCartItem) {
+    public void removeProductCartItem() {
         getCompositeDisposable().add(getDataManager().removeProductCartItem(productCartId)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {

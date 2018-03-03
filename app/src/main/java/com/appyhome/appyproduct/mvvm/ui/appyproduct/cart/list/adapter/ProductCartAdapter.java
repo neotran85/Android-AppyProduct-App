@@ -19,14 +19,13 @@ import io.realm.RealmResults;
 public class ProductCartAdapter extends SampleAdapter {
 
     private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
-    private ProductCartListViewModel mViewModel;
+    private ProductCartListViewModel mProductCartListViewModel;
     public boolean isChangedByUser = false;
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
-    private ProductCartItemNavigator mNavigator = null;
 
     public ProductCartAdapter(ProductCartListViewModel viewModel) {
         this.mItems = null;
-        mViewModel = viewModel;
+        mProductCartListViewModel = viewModel;
     }
 
     public ArrayList<BaseViewModel> getItems() {
@@ -55,8 +54,8 @@ public class ProductCartAdapter extends SampleAdapter {
     }
 
     private ProductCartItemViewModel createViewModel(ProductCart productCart, ProductCartItemNavigator navigator) {
-        ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(mViewModel.getDataManager(),
-                mViewModel.getSchedulerProvider());
+        ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(mProductCartListViewModel.getDataManager(),
+                mProductCartListViewModel.getSchedulerProvider());
         itemViewModel.title.set(productCart.product_name);
         //itemViewModel.imageURL.set(productCart.product_avatar);
         itemViewModel.imageURL.set(imageTestPath);
@@ -76,6 +75,7 @@ public class ProductCartAdapter extends SampleAdapter {
     }
 
     public void updateTotalCost() {
+        isChangedByUser = true;
         float totalCost = 0;
         if (mItems != null && mItems.size() > 0) {
             for (BaseViewModel item : mItems) {
@@ -86,12 +86,12 @@ public class ProductCartAdapter extends SampleAdapter {
                     totalCost = totalCost + (price * amount);
                 }
             }
-            mNavigator.updateTotalCost(totalCost);
+            mProductCartListViewModel.totalCost.set(totalCost + "");
         }
     }
 
 
-    private void addProductCartToStore(ProductCartItemViewModel cartItem) {
+    private void addProductCartToStoreBySellerName(ProductCartItemViewModel cartItem) {
         String sellerName = cartItem.sellerName.get();
         ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
         if (array == null) {
@@ -106,7 +106,6 @@ public class ProductCartAdapter extends SampleAdapter {
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
-        mNavigator = navigator;
         if (viewModelManager != null) {
             viewModelManager.clear();
         }
@@ -114,8 +113,11 @@ public class ProductCartAdapter extends SampleAdapter {
         if (results != null) {
             for (ProductCart item : results) {
                 ProductCartItemViewModel cartItem = createViewModel(item, navigator);
-                addProductCartToStore(cartItem);
+                addProductCartToStoreBySellerName(cartItem);
                 mItems.add(cartItem);
+            }
+            for (String sellerName : viewModelManager.keySet()) {
+                updateCheckAllBySellerName(sellerName);
             }
         }
         updateTotalCost();
@@ -134,12 +136,22 @@ public class ProductCartAdapter extends SampleAdapter {
             for (BaseViewModel item : mItems) {
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
                 cartItem.checked.set(isChecked);
+                cartItem.checkedAll.set(isChecked);
             }
         }
     }
 
+    public void checkIfCartEmpty() {
+        mProductCartListViewModel.isCartEmpty.set(isCartEmpty());
+    }
+
+    private boolean isCartEmpty() {
+        return getItems() == null || getItems().size() <= 0;
+    }
+
     public void updateIfCheckedAll() {
-        mNavigator.updateIfAllChecked(isAllItemsChecked());
+        isChangedByUser = true;
+        mProductCartListViewModel.isCheckedAll.set(isAllItemsChecked());
     }
 
     private boolean isAllItemsChecked() {
@@ -152,4 +164,77 @@ public class ProductCartAdapter extends SampleAdapter {
         }
         return false;
     }
+
+    public void removeCartItem(ProductCartItemViewModel itemViewModel) {
+        if (!isCartEmpty()) {
+            String sellerName = itemViewModel.sellerName.get();
+            ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
+            itemViewModel.removeProductCartItem();
+            int pos = getItems().indexOf(itemViewModel);
+            getItems().remove(itemViewModel);
+            notifyItemRemoved(pos);
+            array.remove(itemViewModel);
+
+            // UPDATE IF FIRST ITEM OF STORE IS REMOVED
+            if (array != null && array.size() > 0) {
+                ProductCartItemViewModel firstItem = array.get(0);
+                firstItem.isFirstProductOfStore.set(true);
+                updateCheckAllBySellerName(firstItem.sellerName.get());
+            }
+
+            // CHECK IF EMPTY CART
+            checkIfCartEmpty();
+        }
+    }
+
+    private boolean isAllItemsCheckedBySellerName(String sellerName) {
+        ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
+        if (array != null && array.size() > 0) {
+            for (ProductCartItemViewModel item : array) {
+                if (!item.checked.get()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private ProductCartItemViewModel getFirstItemOfStore(String sellerName) {
+        ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
+        if (array != null && array.size() > 0) {
+            return array.get(0);
+        }
+        return null;
+    }
+
+    public void updateCheckAllBySellerName(String sellerName) {
+        boolean isAllItemsCheckedBySellerName = isAllItemsCheckedBySellerName(sellerName);
+        ProductCartItemViewModel firstItem = getFirstItemOfStore(sellerName);
+        if (firstItem != null) firstItem.checkedAll.set(isAllItemsCheckedBySellerName);
+        updateTotalCost();
+        updateIfCheckedAll();
+    }
+
+    public void pressCheckAllBySellerName(boolean isChecked, String sellerName) {
+        ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
+        if (array != null && array.size() > 0) {
+            for (ProductCartItemViewModel item : array) {
+                item.checked.set(isChecked);
+            }
+            array.get(0).checkedAll.set(isChecked);
+        }
+        updateTotalCost();
+        updateIfCheckedAll();
+    }
+
+    public void updateEditModeBySellerName(boolean isEditable, String sellerName) {
+        ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
+        if (array != null && array.size() > 0) {
+            for (ProductCartItemViewModel item : array) {
+                item.isEditMode.set(isEditable);
+            }
+        }
+    }
+
 }
