@@ -59,10 +59,22 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
                 break;
             case R.id.llRemoveItemCart:
                 if (checkIfItemsNotEmpty()) {
+                    String sellerName = mBinding.getViewModel().sellerName.get();
+                    ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(sellerName);
+                    boolean isFirstItemOfStore = mBinding.getViewModel().isFirstProductOfStore.get();
                     mBinding.getViewModel().removeProductCartItem(mBinding.getViewModel().getProductCartId());
                     int pos = mAdapter.getItems().indexOf(mBinding.getViewModel());
                     mAdapter.getItems().remove(mBinding.getViewModel());
                     mAdapter.notifyItemRemoved(pos);
+
+                    // UPDATE IF FIRST ITEM OF STORE IS REMOVED
+                    if (array != null && array.size() > 0) {
+                        array.remove(mBinding.getViewModel());
+                        if (isFirstItemOfStore && array.size() > 0) {
+                            ProductCartItemViewModel firstItem = array.get(0);
+                            firstItem.isFirstProductOfStore.set(true);
+                        }
+                    }
                 }
                 break;
 
