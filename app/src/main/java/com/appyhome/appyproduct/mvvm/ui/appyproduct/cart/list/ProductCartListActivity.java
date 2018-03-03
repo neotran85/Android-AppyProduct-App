@@ -99,7 +99,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void showCart(RealmResults<ProductCart> result) {
-        if(result != null && result.size() > 0) {
+        if (result != null && result.size() > 0) {
             setUpRecyclerViewList(mBinder.cartRecyclerView);
         }
         mProductCartAdapter.addItems(result, this);

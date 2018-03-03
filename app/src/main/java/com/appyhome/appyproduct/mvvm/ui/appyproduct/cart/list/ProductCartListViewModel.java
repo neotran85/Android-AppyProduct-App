@@ -18,7 +18,9 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
+
     private Disposable disposableGetAllProductCarts = null;
+
     public void getAllProductCarts(String userId) {
         disposableGetAllProductCarts = getDataManager().getAllProductCarts(userId)
                 .observeOn(getSchedulerProvider().ui())

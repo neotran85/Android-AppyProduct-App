@@ -1,18 +1,13 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
-import android.graphics.Paint;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
@@ -84,7 +79,7 @@ public class ProductCartAdapter extends SampleAdapter {
         if (mItems != null && mItems.size() > 0) {
             for (BaseViewModel item : mItems) {
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                if(cartItem.checked.get()) {
+                if (cartItem.checked.get()) {
                     float price = Float.valueOf(cartItem.price.get());
                     int amount = Integer.valueOf(cartItem.amount.get());
                     totalCost = totalCost + (price * amount);
