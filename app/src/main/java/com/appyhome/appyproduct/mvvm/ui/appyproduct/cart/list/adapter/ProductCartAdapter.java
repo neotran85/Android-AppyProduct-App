@@ -22,6 +22,7 @@ public class ProductCartAdapter extends SampleAdapter {
     private ProductCartListViewModel mViewModel;
     public boolean isChangedByUser = false;
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
+    private ProductCartItemNavigator mNavigator = null;
 
     public ProductCartAdapter(ProductCartListViewModel viewModel) {
         this.mItems = null;
@@ -85,10 +86,8 @@ public class ProductCartAdapter extends SampleAdapter {
                     totalCost = totalCost + (price * amount);
                 }
             }
-            ProductCartItemViewModel cartItem = (ProductCartItemViewModel) mItems.get(0);
-            cartItem.getNavigator().updateTotalCost(totalCost);
+            mNavigator.updateTotalCost(totalCost);
         }
-
     }
 
 
@@ -107,6 +106,7 @@ public class ProductCartAdapter extends SampleAdapter {
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (viewModelManager != null) {
             viewModelManager.clear();
         }
@@ -119,6 +119,7 @@ public class ProductCartAdapter extends SampleAdapter {
             }
         }
         updateTotalCost();
+        updateIfCheckedAll();
     }
 
     @Override
@@ -135,5 +136,20 @@ public class ProductCartAdapter extends SampleAdapter {
                 cartItem.checked.set(isChecked);
             }
         }
+    }
+
+    public void updateIfCheckedAll() {
+        mNavigator.updateIfAllChecked(isAllItemsChecked());
+    }
+
+    private boolean isAllItemsChecked() {
+        if (mItems != null && mItems.size() > 0) {
+            for (BaseViewModel item : mItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                if (!cartItem.checked.get()) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

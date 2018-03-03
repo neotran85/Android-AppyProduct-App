@@ -6,4 +6,8 @@ public interface ProductCartItemNavigator {
     void showContent(ProductCartAdapter adapter, View view, int idProduct);
 
     void updateTotalCost(float cost);
+
+    void updateIfAllChecked(boolean flag);
+
+    void emptyProductCarts();
 }

@@ -71,22 +71,23 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
         if (checkIfItemsNotEmpty()) {
             String sellerName = mBinding.getViewModel().sellerName.get();
             ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(sellerName);
-            boolean isFirstItemOfStore = mBinding.getViewModel().isFirstProductOfStore.get();
             mBinding.getViewModel().removeProductCartItem(mBinding.getViewModel().getProductCartId());
             int pos = mAdapter.getItems().indexOf(mBinding.getViewModel());
             mAdapter.getItems().remove(mBinding.getViewModel());
             mAdapter.notifyItemRemoved(pos);
+            array.remove(mBinding.getViewModel());
 
             // UPDATE IF FIRST ITEM OF STORE IS REMOVED
             if (array != null && array.size() > 0) {
-                array.remove(mBinding.getViewModel());
-                if (isFirstItemOfStore && array.size() > 0) {
-                    ProductCartItemViewModel firstItem = array.get(0);
-                    firstItem.isFirstProductOfStore.set(true);
-                    updateCheckAll(firstItem);
-                }
+                ProductCartItemViewModel firstItem = array.get(0);
+                firstItem.isFirstProductOfStore.set(true);
+                updateCheckAll(firstItem);
             }
-            mAdapter.updateTotalCost();
+
+            // EMPTY CART
+            if(mAdapter.getItems().size() <= 0) {
+                mBinding.getViewModel().getNavigator().emptyProductCarts();
+            }
         }
     }
 
@@ -118,9 +119,11 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
             firstItem.checkedAll.set(result);
         }
         mAdapter.updateTotalCost();
+        mAdapter.updateIfCheckedAll();
     }
 
     private void pressCheckAll(boolean isChecked) {
+        mAdapter.isChangedByUser = true;
         ProductCartItemViewModel viewModel = mBinding.getViewModel();
         ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(viewModel.sellerName.get());
         if (array != null && array.size() > 0) {
@@ -130,6 +133,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
             array.get(0).checkedAll.set(isChecked);
         }
         mAdapter.updateTotalCost();
+        mAdapter.updateIfCheckedAll();
     }
 
     @Override
