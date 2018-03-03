@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductTopicBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
@@ -46,6 +47,11 @@ public class TopicAdapter extends SampleAdapter {
         ViewItemProductTopicBinding itemViewBinding = ViewItemProductTopicBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new TopicItemViewHolder(itemViewBinding);
+    }
+
+    @Override
+    protected int getEmptyItemLayout() {
+        return R.layout.view_item_product_cart_empty;
     }
 
     public class TopicItemViewHolder extends BaseViewHolder {

@@ -97,6 +97,11 @@ public class CategoryAdapter extends SampleAdapter {
     }
 
     @Override
+    protected int getEmptyItemLayout() {
+        return R.layout.view_item_sample_empty;
+    }
+
+    @Override
     protected CategoryItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemCategoryBinding itemViewBinding = ViewItemCategoryBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
@@ -158,6 +163,5 @@ public class CategoryAdapter extends SampleAdapter {
             this.setViewModel(viewModel);
             this.setOnClickListener(CategoryAdapter.this);
         }
-
     }
 }

@@ -44,10 +44,12 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
                     amount = amount - 1;
                 } else amount = 0;
                 viewModel.amount.set(amount + "");
+                mAdapter.updateTotalCost();
                 break;
             case R.id.btnIncrease:
                 amount = Integer.valueOf(mBinding.getViewModel().amount.get()) + 1;
                 viewModel.amount.set(amount + "");
+                mAdapter.updateTotalCost();
                 break;
             case R.id.cbCheckAll:
                 boolean isChecked = mBinding.cbCheckAll.isChecked();
@@ -58,28 +60,34 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
                 updateEditMode(!current);
                 break;
             case R.id.llRemoveItemCart:
-                if (checkIfItemsNotEmpty()) {
-                    String sellerName = mBinding.getViewModel().sellerName.get();
-                    ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(sellerName);
-                    boolean isFirstItemOfStore = mBinding.getViewModel().isFirstProductOfStore.get();
-                    mBinding.getViewModel().removeProductCartItem(mBinding.getViewModel().getProductCartId());
-                    int pos = mAdapter.getItems().indexOf(mBinding.getViewModel());
-                    mAdapter.getItems().remove(mBinding.getViewModel());
-                    mAdapter.notifyItemRemoved(pos);
-
-                    // UPDATE IF FIRST ITEM OF STORE IS REMOVED
-                    if (array != null && array.size() > 0) {
-                        array.remove(mBinding.getViewModel());
-                        if (isFirstItemOfStore && array.size() > 0) {
-                            ProductCartItemViewModel firstItem = array.get(0);
-                            firstItem.isFirstProductOfStore.set(true);
-                        }
-                    }
-                }
+                removeCartItem();
                 break;
 
         }
         mAdapter.isChangedByUser = true;
+    }
+
+    private void removeCartItem() {
+        if (checkIfItemsNotEmpty()) {
+            String sellerName = mBinding.getViewModel().sellerName.get();
+            ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(sellerName);
+            boolean isFirstItemOfStore = mBinding.getViewModel().isFirstProductOfStore.get();
+            mBinding.getViewModel().removeProductCartItem(mBinding.getViewModel().getProductCartId());
+            int pos = mAdapter.getItems().indexOf(mBinding.getViewModel());
+            mAdapter.getItems().remove(mBinding.getViewModel());
+            mAdapter.notifyItemRemoved(pos);
+
+            // UPDATE IF FIRST ITEM OF STORE IS REMOVED
+            if (array != null && array.size() > 0) {
+                array.remove(mBinding.getViewModel());
+                if (isFirstItemOfStore && array.size() > 0) {
+                    ProductCartItemViewModel firstItem = array.get(0);
+                    firstItem.isFirstProductOfStore.set(true);
+                    updateCheckAll(firstItem);
+                }
+            }
+            mAdapter.updateTotalCost();
+        }
     }
 
     private boolean checkIfItemsNotEmpty() {
@@ -96,8 +104,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
         }
     }
 
-    private void updateCheckAll() {
-        ProductCartItemViewModel viewModel = mBinding.getViewModel();
+    private void updateCheckAll(ProductCartItemViewModel viewModel) {
         ArrayList<ProductCartItemViewModel> array = mAdapter.viewModelManager.get(viewModel.sellerName.get());
         if (array != null && array.size() > 0) {
             boolean result = true;
@@ -110,6 +117,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
             ProductCartItemViewModel firstItem = array.get(0);
             firstItem.checkedAll.set(result);
         }
+        mAdapter.updateTotalCost();
     }
 
     private void pressCheckAll(boolean isChecked) {
@@ -121,6 +129,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
             }
             array.get(0).checkedAll.set(isChecked);
         }
+        mAdapter.updateTotalCost();
     }
 
     @Override
@@ -137,6 +146,6 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         mAdapter.isChangedByUser = true;
         mBinding.getViewModel().checked.set(isChecked);
-        updateCheckAll();
+        updateCheckAll(mBinding.getViewModel());
     }
 }

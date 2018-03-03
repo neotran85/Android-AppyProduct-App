@@ -41,15 +41,21 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder.setViewModel(mViewModel);
         mViewModel.setNavigator(this);
         mProductCartAdapter = new ProductCartAdapter(mViewModel);
-        setUpRecyclerViewList(mBinder.cartRecyclerView, mProductCartAdapter);
+        mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
+        setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts("1234");
     }
 
-    private void setUpRecyclerViewList(RecyclerView rv, ProductCartAdapter adapter) {
+    private void setUpEmptyRecyclerViewList(RecyclerView rv) {
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(adapter);
+    }
+
+    private void setUpRecyclerViewList(RecyclerView rv) {
+        rv.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
         rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
@@ -76,7 +82,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void onPause() {
         super.onPause();
-        if(mProductCartAdapter != null) {
+        if (mProductCartAdapter != null) {
             mProductCartAdapter.onUpdateDatabase();
         }
     }
@@ -93,10 +99,18 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void showCart(RealmResults<ProductCart> result) {
+        if(result != null && result.size() > 0) {
+            setUpRecyclerViewList(mBinder.cartRecyclerView);
+        }
         mProductCartAdapter.addItems(result, this);
         mProductCartAdapter.notifyDataSetChanged();
     }
 
+
+    @Override
+    public void updateTotalCost(float cost) {
+        mViewModel.totalCost.set(cost + "");
+    }
 
     @Override
     public int getBindingVariable() {

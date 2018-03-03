@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
@@ -38,6 +39,11 @@ public class ProductAdapter extends SampleAdapter {
                 mItems.add(createViewModel(item, navigator));
             }
         }
+    }
+
+    @Override
+    protected int getEmptyItemLayout() {
+        return R.layout.view_item_sample_empty;
     }
 
     private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator) {

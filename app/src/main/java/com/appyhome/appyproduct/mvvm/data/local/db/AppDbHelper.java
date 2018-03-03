@@ -227,6 +227,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
+    private float[] prices = {100.5f, 25.5f, 12.6f, 50.78f};
 
     private ProductCart createNewProductCart(Product product, String userId) {
         ProductCart cartItem = new ProductCart();
@@ -235,6 +236,7 @@ public class AppDbHelper implements DbHelper {
         cartItem.seller_id = product.seller_id;
         int randomNum = new Random().nextInt(storeName.length);
         cartItem.seller_name = storeName[randomNum];
+        cartItem.price = prices[randomNum];
         cartItem.product_name = product.product_name;
         cartItem.amount = 0;
         cartItem.checked = true;

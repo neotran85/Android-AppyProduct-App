@@ -14,4 +14,5 @@ public interface ProductCartListNavigator {
     void showAlert(String message);
 
     void showCart(RealmResults<ProductCart> result);
+
 }

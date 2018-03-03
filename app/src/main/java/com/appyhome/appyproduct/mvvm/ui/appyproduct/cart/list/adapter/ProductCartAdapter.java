@@ -74,6 +74,29 @@ public class ProductCartAdapter extends SampleAdapter {
         return itemViewModel;
     }
 
+    @Override
+    protected int getEmptyItemLayout() {
+        return R.layout.view_item_product_cart_empty;
+    }
+
+    public void updateTotalCost() {
+        float totalCost = 0;
+        if (mItems != null && mItems.size() > 0) {
+            for (BaseViewModel item : mItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                if(cartItem.checked.get()) {
+                    float price = Float.valueOf(cartItem.price.get());
+                    int amount = Integer.valueOf(cartItem.amount.get());
+                    totalCost = totalCost + (price * amount);
+                }
+            }
+            ProductCartItemViewModel cartItem = (ProductCartItemViewModel) mItems.get(0);
+            cartItem.getNavigator().updateTotalCost(totalCost);
+        }
+
+    }
+
+
     private void addProductCartToStore(ProductCartItemViewModel cartItem) {
         String sellerName = cartItem.sellerName.get();
         ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
@@ -100,6 +123,7 @@ public class ProductCartAdapter extends SampleAdapter {
                 mItems.add(cartItem);
             }
         }
+        updateTotalCost();
     }
 
     @Override

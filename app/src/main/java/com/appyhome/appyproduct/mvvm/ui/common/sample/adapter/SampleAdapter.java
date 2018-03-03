@@ -51,6 +51,8 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
         };
     }
 
+    protected abstract int getEmptyItemLayout();
+
     protected BaseViewHolder getLoadingHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
@@ -61,7 +63,7 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
     protected BaseViewHolder getEmptyHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View view = inflater.inflate(R.layout.view_item_sample_empty, parent, false);
+        View view = inflater.inflate(getEmptyItemLayout(), parent, false);
         return new SampleItemEmptyViewHolder(view);
     }
 
