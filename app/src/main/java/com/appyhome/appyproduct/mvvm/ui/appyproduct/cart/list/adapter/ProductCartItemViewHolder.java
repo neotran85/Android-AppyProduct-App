@@ -40,9 +40,12 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
         switch (view.getId()) {
             case R.id.btnDecrease:
                 amount = Integer.valueOf(mBinding.getViewModel().amount.get());
-                if (amount > 0) {
+                if (amount > 1) {
                     amount = amount - 1;
-                } else amount = 0;
+                } else {
+                    mAdapter.removeCartItem(viewModel);
+                    return;
+                }
                 viewModel.amount.set(amount + "");
                 mAdapter.updateTotalCost();
                 break;
