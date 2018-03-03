@@ -12,6 +12,7 @@ import io.reactivex.disposables.Disposable;
 public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavigator> {
 
     public ObservableField<Boolean> isCartEmpty = new ObservableField<>(true);
+    public ObservableField<Boolean> isCheckedAll = new ObservableField<>(false);
     public ObservableField<String> totalCost = new ObservableField<>("");
 
     public ProductCartListViewModel(DataManager dataManager,
@@ -21,6 +22,16 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
 
     private Disposable disposableGetAllProductCarts = null;
 
+    public void emptyProductCarts() {
+        getCompositeDisposable().add(getDataManager().emptyProductCarts()
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // EMPTY SUCCEEDED
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
     public void getAllProductCarts(String userId) {
         disposableGetAllProductCarts = getDataManager().getAllProductCarts(userId)
                 .observeOn(getSchedulerProvider().ui())

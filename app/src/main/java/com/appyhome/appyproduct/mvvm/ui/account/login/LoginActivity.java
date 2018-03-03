@@ -219,7 +219,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void showSignUpDialog() {
-        AlertManager.getInstance(this).showDialog(getString(R.string.title_login_error), getString(R.string.suggestion_sign_up), new DialogInterface.OnClickListener() {
+        AlertManager.getInstance(this).showConfirmationDialog(getString(R.string.title_login_error), getString(R.string.suggestion_sign_up), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 openSignUpActivity();

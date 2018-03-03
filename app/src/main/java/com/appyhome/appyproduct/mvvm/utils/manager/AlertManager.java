@@ -81,7 +81,7 @@ public class AlertManager {
         }
     }
 
-    public void showDialog(String title, String detailText, DialogInterface.OnClickListener positiveListener) {
+    public void showConfirmationDialog(String title, String detailText, DialogInterface.OnClickListener positiveListener) {
         if (mAlertDialog == null) {
             final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
             dialogBuilder.setTitle(title);

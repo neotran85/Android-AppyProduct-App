@@ -264,4 +264,17 @@ public class AppDbHelper implements DbHelper {
             return Flowable.just(null);
         }
     }
+    @Override
+    public Flowable<Boolean> emptyProductCarts() {
+        try {
+            getRealm().beginTransaction();
+            RealmResults<ProductCart> carts = getRealm().where(ProductCart.class).findAll();
+            carts.deleteAllFromRealm();
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Flowable.just(false);
+        }
+    }
 }

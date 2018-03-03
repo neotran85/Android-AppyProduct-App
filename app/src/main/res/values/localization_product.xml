@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="your_cart_is_empty">Your cart is empty.\n Please add items to buy.</string>
+    <string name="warning_empty_cart">Are you sure to empty your cart?</string>
 </resources>

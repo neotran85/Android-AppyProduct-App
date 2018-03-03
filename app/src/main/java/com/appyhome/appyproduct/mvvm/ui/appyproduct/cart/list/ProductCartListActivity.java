@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,7 +23,8 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class ProductCartListActivity extends BaseActivity<ActivityProductCartListBinding, ProductCartListViewModel> implements ProductCartListNavigator, ProductCartItemNavigator {
+public class ProductCartListActivity extends BaseActivity<ActivityProductCartListBinding, ProductCartListViewModel>
+        implements ProductCartListNavigator, ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
     @Inject
     ProductCartListViewModel mViewModel;
     ActivityProductCartListBinding mBinder;
@@ -44,6 +46,29 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts("1234");
+        mBinder.cbCheckAll.setOnClickListener(this);
+        mBinder.ivTrash.setOnClickListener(this);
+    }
+
+    private void emptyProductCarts() {
+        if(mProductCartAdapter != null) {
+            mProductCartAdapter.getItems().clear();
+            mProductCartAdapter.notifyDataSetChanged();
+            mViewModel.emptyProductCarts();
+            mViewModel.isCartEmpty.set(true);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ivTrash:
+                AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
+                break;
+            case R.id.cbCheckAll:
+                if(mProductCartAdapter != null) mProductCartAdapter.checkAllItems(mBinder.cbCheckAll.isChecked());
+                break;
+        }
     }
 
     private void setUpEmptyRecyclerViewList(RecyclerView rv) {
@@ -120,5 +145,10 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public int getLayoutId() {
         return R.layout.activity_product_cart_list;
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        emptyProductCarts();
     }
 }

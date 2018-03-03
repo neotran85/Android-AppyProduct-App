@@ -127,4 +127,13 @@ public class ProductCartAdapter extends SampleAdapter {
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductCartItemViewHolder(itemViewBinding, this);
     }
+
+    public void checkAllItems(boolean isChecked) {
+        if (mItems != null && mItems.size() > 0) {
+            for (BaseViewModel item : mItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                cartItem.checked.set(isChecked);
+            }
+        }
+    }
 }

@@ -47,5 +47,7 @@ public interface DbHelper {
 
     Flowable<Boolean> removeProductCartItem(long idProductCart);
 
+    Flowable<Boolean> emptyProductCarts();
+
     void closeDatabase();
 }
