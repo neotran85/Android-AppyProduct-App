@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -48,6 +49,8 @@ public interface DbHelper {
     Flowable<Boolean> removeProductCartItem(long idProductCart);
 
     Flowable<Boolean> emptyProductCarts();
+
+    Flowable<RealmResults<Address>> getAllShippingAddress(String userId);
 
     void closeDatabase();
 }

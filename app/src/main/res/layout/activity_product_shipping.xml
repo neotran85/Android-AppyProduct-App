@@ -86,6 +86,7 @@
                     android:layout_marginTop="1dp"
                     android:background="@color/white">
                     <android.support.v7.widget.RecyclerView
+                        android:visibility="@{!viewModel.isNoAddress, default=gone}"
                         android:background="@color/white"
                         android:id="@+id/rvAddressList"
                         android:layout_width="match_parent"
@@ -98,7 +99,7 @@
                 android:background="@color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="46dp">
+                android:layout_height="50dp">
                 <View
                     android:background="@color/gray"
                     android:layout_width="match_parent"
@@ -107,14 +108,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="14dp"
                     android:layout_marginEnd="14dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@mipmap/bg_long_button"
                     android:text="NEXT"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

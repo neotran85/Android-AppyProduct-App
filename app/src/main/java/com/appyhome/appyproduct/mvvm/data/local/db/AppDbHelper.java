@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -183,6 +184,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     /******* PRODUCT CART METHODS *******/
+    @Override
+    public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<Address>> carts = getRealm().where(Address.class)
+                .equalTo("user_id", userId)
+                .sort("id")
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return carts;
+    }
 
     @Override
     public Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId) {

@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.data;
 import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -470,5 +471,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Boolean> emptyProductCarts() {
         return mDbHelper.emptyProductCarts();
+    }
+
+    @Override
+    public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
+        return mDbHelper.getAllShippingAddress(userId);
     }
 }
