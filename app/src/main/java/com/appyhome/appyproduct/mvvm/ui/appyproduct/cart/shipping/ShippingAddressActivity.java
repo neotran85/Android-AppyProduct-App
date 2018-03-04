@@ -1,7 +1,5 @@
-package com.appyhome.appyproduct.mvvm.ui.common.sample.activity;
+package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,26 +8,22 @@ import android.support.v4.app.FragmentManager;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ActivityProductShippingBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleViewModel> implements SampleNavigator {
-
-    ActivitySampleBinding mBinder;
+public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator {
 
     @Inject
-    public SampleViewModel mMainViewModel;
+    ShippingAddressViewModel mMainViewModel;
+    ActivityProductShippingBinding mBinder;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, SampleActivity.class);
+        Intent intent = new Intent(context, ShippingAddressActivity.class);
         return intent;
     }
 
@@ -65,7 +59,7 @@ public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleVi
     }
 
     @Override
-    public SampleViewModel getViewModel() {
+    public ShippingAddressViewModel getViewModel() {
         return mMainViewModel;
     }
 
@@ -76,16 +70,7 @@ public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleVi
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_sample;
-    }
-
-
-    private void showFragment(BaseFragment fragment, String tag) {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .replace(R.id.screenView, fragment, tag)
-                .commit();
+        return R.layout.activity_product_shipping;
     }
 
     @Override

@@ -8,10 +8,6 @@ import io.realm.RealmResults;
 public interface CategoryNavigator {
     void handleErrorService(Throwable throwable);
 
-    void showErrorServer();
-
-    void showErrorOthers();
-
     void showAlert(String message);
 
     void showCategories(RealmResults<ProductCategory> result);

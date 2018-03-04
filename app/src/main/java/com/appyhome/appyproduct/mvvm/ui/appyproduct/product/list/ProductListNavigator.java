@@ -7,10 +7,6 @@ import io.realm.RealmResults;
 public interface ProductListNavigator {
     void handleErrorService(Throwable throwable);
 
-    void showErrorServer();
-
-    void showErrorOthers();
-
     void showAlert(String message);
 
     void showProducts(RealmResults<Product> result);

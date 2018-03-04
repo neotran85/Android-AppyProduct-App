@@ -76,7 +76,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
     }
 
     @Override
@@ -89,16 +89,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
             intent.putExtra("id_sub", id);
             startActivity(intent);
         }
-    }
-
-    @Override
-    public void showErrorServer() {
-        showAlert(getString(R.string.login_error_internal_server));
-    }
-
-    @Override
-    public void showErrorOthers() {
-        showAlert(getString(R.string.login_error));
     }
 
     @Override

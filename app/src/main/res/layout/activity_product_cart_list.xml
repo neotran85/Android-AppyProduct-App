@@ -189,6 +189,7 @@
                         android:layout_marginRight="14dp"
                         android:background="@mipmap/bg_checkout"
                         android:text="Check out"
+                        android:id="@+id/btNextStep"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
                 </RelativeLayout>

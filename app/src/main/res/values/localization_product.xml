@@ -2,4 +2,5 @@
 <resources>
     <string name="your_cart_is_empty">Your cart is empty.\n Please add items to buy.</string>
     <string name="warning_empty_cart">Are you sure to empty your cart?</string>
+    <string name="warning_remove_item">Do you want to remove this item from your cart?</string>
 </resources>

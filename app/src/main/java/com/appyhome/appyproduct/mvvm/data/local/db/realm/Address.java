@@ -1,81 +1,73 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
+import android.arch.persistence.room.ColumnInfo;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Address extends RealmObject {
+    @Expose
+    @SerializedName("id")
+    @ColumnInfo(name = "id")
     @PrimaryKey
-    private String id;
-    private String unitOrNumberHouse;
+    private long id;
+
+    @Expose
+    @SerializedName("unit")
+    @ColumnInfo(name = "unit")
+    private String unit;
+
+    @Expose
+    @SerializedName("place_id")
+    @ColumnInfo(name = "place_id")
+    private String place_id;
+
+    @Expose
+    @SerializedName("areaLine1")
+    @ColumnInfo(name = "areaLine1")
     private String areaLine1;
+
+    @Expose
+    @SerializedName("areaLine2")
+    @ColumnInfo(name = "areaLine2")
     private String areaLine2;
-    private String streetName;
+
+    @Expose
+    @SerializedName("street_name")
+    @ColumnInfo(name = "street_name")
+    private String street_name;
+
+    @Expose
+    @SerializedName("city")
+    @ColumnInfo(name = "city")
     private String city;
+
+    @Expose
+    @SerializedName("country")
+    @ColumnInfo(name = "country")
     private String country;
-    private String postCode;
-    private String phoneNumber;
 
-    public String getUnitOrNumberHouse() {
-        return unitOrNumberHouse;
-    }
+    @Expose
+    @SerializedName("post_code")
+    @ColumnInfo(name = "post_code")
+    private String post_code;
 
-    public void setUnitOrNumberHouse(String unitOrNumberHouse) {
-        this.unitOrNumberHouse = unitOrNumberHouse;
-    }
+    @Expose
+    @SerializedName("phone_number")
+    @ColumnInfo(name = "phone_number")
+    private String phone_number;
 
-    public String getAreaLine1() {
-        return areaLine1;
-    }
+    @Expose
+    @SerializedName("customer_name")
+    @ColumnInfo(name = "customer_name")
+    private String customer_name;
 
-    public void setAreaLine1(String areaLine1) {
-        this.areaLine1 = areaLine1;
-    }
+    @Expose
+    @SerializedName("customer_id")
+    @ColumnInfo(name = "customer_id")
+    private String customer_id;
 
-    public String getAreaLine2() {
-        return areaLine2;
-    }
-
-    public void setAreaLine2(String areaLine2) {
-        this.areaLine2 = areaLine2;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 }

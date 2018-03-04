@@ -16,7 +16,9 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -46,8 +48,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts("1234");
-        mBinder.cbCheckAll.setOnClickListener(this);
-        mBinder.ivTrash.setOnClickListener(this);
+        ViewUtils.setOnClickListener(this, mBinder.cbCheckAll, mBinder.ivTrash, mBinder.btNextStep);
     }
 
     public void emptyProductCarts() {
@@ -61,12 +62,20 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void askBeforeRemoved(DialogInterface.OnClickListener listener) {
-        AlertManager.getInstance(this).showConfirmationDialog("", "Do you want to remove this item from your cart?", listener);
+        AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_remove_item), listener);
+    }
+
+    private void goToShippingAddress() {
+        Intent intent = ShippingAddressActivity.getStartIntent(this);
+        startActivity(intent);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btNextStep:
+                goToShippingAddress();
+                break;
             case R.id.ivTrash:
                 AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
                 break;
@@ -91,17 +100,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
-    }
-
-    @Override
-    public void showErrorServer() {
-        showAlert(getString(R.string.login_error_internal_server));
-    }
-
-    @Override
-    public void showErrorOthers() {
-        showAlert(getString(R.string.login_error));
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
     }
 
     @Override

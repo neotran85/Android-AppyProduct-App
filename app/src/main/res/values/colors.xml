@@ -29,5 +29,6 @@
     <color name="hint_text">#cccccc</color>
     <color name="gray_product_in_list">#6D6E71</color>
     <color name="red_price">#EB1C24</color>
+    <color name="medium_dark_gray">#4A4A4A</color>
 
 </resources>

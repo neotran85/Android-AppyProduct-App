@@ -34,13 +34,13 @@
             android:name="com.google.android.gms.samples.vision.barcodereader.BarcodeCaptureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:windowSoftInputMode="stateVisible"
             android:name=".ui.account.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
-            android:windowSoftInputMode="stateVisible"
             android:name=".ui.appyservice.servicerequest.edit.RequestEditActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".ui.appyservice.bookingservices.step1.ServicesStep1Activity"
             android:screenOrientation="portrait"
@@ -65,9 +65,9 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:windowSoftInputMode="stateVisible"
             android:name=".ui.account.register.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
 
         <activity
             android:name=".ui.appyservice.servicerequest.detail.RequestDetailActivity"
@@ -102,6 +102,10 @@
 
         <activity
             android:name=".ui.appyproduct.cart.list.ProductCartListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.appyproduct.cart.shipping.ShippingAddressActivity"
             android:screenOrientation="portrait" />
 
         <activity

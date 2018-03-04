@@ -100,7 +100,7 @@
                             android:layout_marginTop="12dp"
                             android:background="@drawable/input_text_rounded_light_gray_bg"
                             android:gravity="top|left"
-                            android:text="@{viewModel.number}"
+                            android:text="@={viewModel.number}"
                             android:hint="@string/unit_house_number"
                             android:inputType="text"
                             android:paddingBottom="10dp"
@@ -114,7 +114,7 @@
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etStreet"
-                            android:text="@{viewModel.street}"
+                            android:text="@={viewModel.street}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -133,7 +133,7 @@
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etAreaLine1"
-                            android:text="@{viewModel.area1}"
+                            android:text="@={viewModel.area1}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -152,7 +152,7 @@
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etAreaLine2"
-                            android:text="@{viewModel.area2}"
+                            android:text="@={viewModel.area2}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -171,7 +171,7 @@
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etCityTown"
-                            android:text="@{viewModel.city}"
+                            android:text="@={viewModel.city}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -189,7 +189,7 @@
                             android:textSize="14sp" />
 
                         <android.support.design.widget.TextInputEditText
-                            android:text="@{viewModel.code}"
+                            android:text="@={viewModel.code}"
                             android:id="@+id/etPostCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

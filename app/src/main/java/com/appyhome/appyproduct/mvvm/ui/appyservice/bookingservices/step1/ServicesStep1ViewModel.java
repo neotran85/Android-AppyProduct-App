@@ -42,9 +42,11 @@ public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator
     public ArrayList<AppyService> getFilteredServices(String tags) {
         ArrayList<AppyService> filteredServices = new ArrayList<>();
         ArrayList<AppyService> services = getDataManager().getServiceOrderUserInput().getServices();
-        for (AppyService service : services) {
-            if (tags.contains(service.tags)) {
-                filteredServices.add(service);
+        if(services != null && services.size() > 0) {
+            for (AppyService service : services) {
+                if (tags.contains(service.tags)) {
+                    filteredServices.add(service);
+                }
             }
         }
         return filteredServices;

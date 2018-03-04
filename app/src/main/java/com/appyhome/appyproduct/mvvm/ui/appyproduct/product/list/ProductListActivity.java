@@ -78,17 +78,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
-    }
-
-    @Override
-    public void showErrorServer() {
-        showAlert(getString(R.string.login_error_internal_server));
-    }
-
-    @Override
-    public void showErrorOthers() {
-        showAlert(getString(R.string.login_error));
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
     }
 
     @Override
