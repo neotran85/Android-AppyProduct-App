@@ -190,7 +190,7 @@
                     <Button
                         android:id="@+id/btNextStep"
                         android:layout_width="92dp"
-                        android:onClick="@{(view) -> navigator.goToShippingAddress()}"
+                        android:onClick="@{(view) -> navigator.gotoNextStep()}"
                         android:layout_height="36dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"

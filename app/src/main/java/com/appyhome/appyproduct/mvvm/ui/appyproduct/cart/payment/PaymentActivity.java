@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductPaymentBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -38,8 +39,9 @@ public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding,
         ViewUtils.setOnClickListener(this, mBinder.llMolpay, mBinder.llVisa);
     }
 
-    public void goBack() {
-        finish();
+    @Override
+    public void gotoNextStep() {
+
     }
 
     @Override

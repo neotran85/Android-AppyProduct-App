@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
-public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator, View.OnClickListener {
+public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator {
 
     @Inject
     ShippingAddressViewModel mMainViewModel;
@@ -47,20 +47,16 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mBinder.setNavigator(this);
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
-        ViewUtils.setOnClickListener(this, mBinder.llNewAddress, mBinder.btNextStep);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btNextStep:
-                startActivity(PaymentActivity.getStartIntent(this));
-                break;
-            case R.id.llNewAddress:
-                Intent intent = NewAddressActivity.getStartIntent(this);
-                startActivity(intent);
-                break;
-        }
+    public void openNewShippingAddress() {
+        Intent intent = NewAddressActivity.getStartIntent(this);
+        startActivity(intent);
+    }
+    @Override
+    public void gotoNextStep() {
+        startActivity(PaymentActivity.getStartIntent(this));
     }
 
     @Override

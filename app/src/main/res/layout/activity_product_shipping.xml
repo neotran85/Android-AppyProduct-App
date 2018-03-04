@@ -83,6 +83,7 @@
                         android:layout_marginStart="20dp"
                         android:text="+ Add New Address"
                         android:textColor="@color/medium_dark_gray"
+                        android:onClick="@{(view) -> navigator.openNewShippingAddress()}"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -112,6 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"></View>
                 <Button
+                    android:onClick="@{(view) -> navigator.gotoNextStep()}"
                     android:foreground="?attr/selectableItemBackground"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="14dp"

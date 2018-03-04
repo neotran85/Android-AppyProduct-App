@@ -66,7 +66,8 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_remove_item), listener);
     }
 
-    public void goToShippingAddress() {
+    @Override
+    public void gotoNextStep() {
         Intent intent = ShippingAddressActivity.getStartIntent(this);
         startActivity(intent);
     }

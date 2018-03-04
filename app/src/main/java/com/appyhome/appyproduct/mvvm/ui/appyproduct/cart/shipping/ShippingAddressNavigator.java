@@ -6,5 +6,10 @@ import io.realm.RealmResults;
 
 public interface ShippingAddressNavigator {
     void showAlert(String message);
+
     void showAddressList(RealmResults<Address> addresses);
+
+    void gotoNextStep();
+
+    void openNewShippingAddress();
 }
