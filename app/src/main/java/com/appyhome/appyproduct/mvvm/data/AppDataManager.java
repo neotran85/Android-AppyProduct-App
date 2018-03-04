@@ -477,4 +477,9 @@ public class AppDataManager implements DataManager {
     public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
         return mDbHelper.getAllShippingAddress(userId);
     }
+
+    @Override
+    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault) {
+        return mDbHelper.addShippingAddress(userId, placeId, name, phoneNumber, addressStr, isDefault);
+    }
 }

@@ -16,12 +16,16 @@ public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavig
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
+
     public void getAllShippingAddress() {
         getCompositeDisposable().add(getDataManager().getAllShippingAddress("1234")
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addresses -> {
-                    getNavigator().showAddressList(addresses);
-                    isNoAddress.set(addresses.size() > 0 ? false : true);
+                    boolean isValid = addresses != null && addresses.isValid();
+                    if (isValid) {
+                        getNavigator().showAddressList(addresses);
+                    }
+                    isNoAddress.set(isValid && addresses.size() > 0 ? false : true);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

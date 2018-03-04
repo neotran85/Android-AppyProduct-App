@@ -12,6 +12,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListAct
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
@@ -110,6 +112,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = ShippingAddressActivityModule.class)
     abstract ShippingAddressActivity bindShippingAddressActivity();
+
+    @ContributesAndroidInjector(modules = NewAddressActivityModule.class)
+    abstract NewAddressActivity bindNewAddressActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,

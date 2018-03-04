@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductShippingBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -24,7 +25,7 @@ import javax.inject.Inject;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
-public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator {
+public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator, View.OnClickListener {
 
     @Inject
     ShippingAddressViewModel mMainViewModel;
@@ -44,24 +45,22 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
         mMainViewModel.getAllShippingAddress();
+        mBinder.llNewAddress.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.llNewAddress:
+                Intent intent = NewAddressActivity.getStartIntent(this);
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    public void onFragmentDetached(String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        if (fragment != null) {
-            fragmentManager
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                    .remove(fragment)
-                    .commitNow();
-        }
     }
 
     @Override

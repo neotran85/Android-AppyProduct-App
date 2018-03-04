@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Shipping Address"
+                android:text="@string/title_shipping_address"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -64,6 +64,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llNewAddress"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginTop="4dp"
@@ -77,7 +78,7 @@
                         android:layout_marginStart="14dp"
                         android:text="+ Add New Address"
                         android:textColor="@color/medium_dark_gray"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -108,8 +109,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="14dp"
                     android:layout_marginEnd="14dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@mipmap/bg_long_button"

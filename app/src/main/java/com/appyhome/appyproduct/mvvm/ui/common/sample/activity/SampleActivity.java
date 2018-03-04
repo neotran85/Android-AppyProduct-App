@@ -39,29 +39,11 @@ public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleVi
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        setUp();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    public void onFragmentDetached(String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        if (fragment != null) {
-            fragmentManager
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                    .remove(fragment)
-                    .commitNow();
-        }
-    }
-
-    private void setUp() {
-
     }
 
     @Override
@@ -77,15 +59,6 @@ public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleVi
     @Override
     public int getLayoutId() {
         return R.layout.activity_sample;
-    }
-
-
-    private void showFragment(BaseFragment fragment, String tag) {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .replace(R.id.screenView, fragment, tag)
-                .commit();
     }
 
     @Override

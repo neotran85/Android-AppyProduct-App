@@ -188,7 +188,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
         getRealm().beginTransaction();
         Flowable<RealmResults<Address>> carts = getRealm().where(Address.class)
-                .equalTo("user_id", userId)
+                .equalTo("customer_id", userId)
                 .sort("id")
                 .findAll().asFlowable();
         getRealm().commitTransaction();
@@ -204,6 +204,25 @@ public class AppDbHelper implements DbHelper {
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return carts;
+    }
+
+    @Override
+    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault) {
+        try {
+            getRealm().beginTransaction();
+            Address address = new Address();
+            address.id = System.currentTimeMillis();
+            address.customer_name = name;
+            address.address = addressStr;
+            address.customer_id = userId;
+            address.is_default = isDefault;
+            address.place_id = placeId;
+            address = getRealm().copyToRealmOrUpdate(address);
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
     }
 
     @Override
@@ -275,6 +294,7 @@ public class AppDbHelper implements DbHelper {
             return Flowable.just(null);
         }
     }
+
     @Override
     public Flowable<Boolean> emptyProductCarts() {
         try {

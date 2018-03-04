@@ -40,4 +40,9 @@ public class Address extends RealmObject {
     @ColumnInfo(name = "customer_id")
     public String customer_id;
 
+    @Expose
+    @SerializedName("is_default")
+    @ColumnInfo(name = "is_default")
+    public boolean is_default;
+
 }
