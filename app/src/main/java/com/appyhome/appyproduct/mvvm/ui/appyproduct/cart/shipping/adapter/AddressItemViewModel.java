@@ -22,7 +22,7 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
     }
 
     public void updateDefaultToDatabase() {
-        getCompositeDisposable().add(getDataManager().updateDefaultShippingAddress(idAddress, checked.get())
+        getCompositeDisposable().add(getDataManager().setDefaultShippingAddress(idAddress, checked.get())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // UPDATE DEFAULT ADDRESS SUCCEEDED
@@ -30,10 +30,6 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
-    }
-
-    public long getIdAddress() {
-        return idAddress;
     }
 
     public void setIdAddress(long idAddress) {

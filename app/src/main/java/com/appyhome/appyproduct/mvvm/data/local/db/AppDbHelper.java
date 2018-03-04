@@ -242,7 +242,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> updateDefaultShippingAddress(long id, boolean isChecked) {
+    public Flowable<Boolean> setDefaultShippingAddress(long id, boolean isChecked) {
         try {
             getRealm().beginTransaction();
             Address address = getRealm().where(Address.class)

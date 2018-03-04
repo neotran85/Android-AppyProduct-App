@@ -19,9 +19,6 @@ import io.realm.RealmResults;
 
 public class AddressAdapter extends SampleAdapter {
 
-    private int posDefaultAddress = -1;
-    private int posFirstDefaultAddress = 0;
-
     @Override
     public void onClick(View view) {
         // DO NOTHING
@@ -51,27 +48,22 @@ public class AddressAdapter extends SampleAdapter {
         }
     }
 
-    private void updateDefaultAddressItem(int pos) {
-        AddressItemViewModel vAddressItemViewModel = (AddressItemViewModel) mItems.get(pos);
-        vAddressItemViewModel.updateDefaultToDatabase();
-    }
     public void updateDefaultAddressToDatabase() {
-        if(posDefaultAddress > 0) {
-            updateDefaultAddressItem(posDefaultAddress);
-            updateDefaultAddressItem(posFirstDefaultAddress);
+        for (int i = 0; i < mItems.size(); i++) {
+            AddressItemViewModel vAddressItemViewModel = (AddressItemViewModel) mItems.get(i);
+            vAddressItemViewModel.updateDefaultToDatabase();
         }
     }
 
     private void updateCheckedDefaultAddress(AddressItemViewModel defaultAddress) {
-        for(BaseViewModel item: mItems) {
+        for (BaseViewModel item : mItems) {
             AddressItemViewModel vAddressItemViewModel = (AddressItemViewModel) item;
-            if(vAddressItemViewModel.checked.get()) {
+            if (vAddressItemViewModel.checked.get()) {
                 vAddressItemViewModel.checked.set(false);
                 notifyViewModelChanged(vAddressItemViewModel);
             }
         }
         defaultAddress.checked.set(true);
-        posDefaultAddress = mItems.indexOf(defaultAddress);
         notifyViewModelChanged(defaultAddress);
     }
 
@@ -86,7 +78,7 @@ public class AddressAdapter extends SampleAdapter {
         return new AddressItemViewHolder(itemViewBinding);
     }
 
-    public class AddressItemViewHolder extends BaseViewHolder implements View.OnClickListener{
+    public class AddressItemViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         private ViewItemProductShippingAddressBinding mBinding;
 
@@ -109,9 +101,7 @@ public class AddressAdapter extends SampleAdapter {
             AddressItemViewModel viewModel = (AddressItemViewModel) mItems.get(position);
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
-                mBinding.llItemView.setTag(mBinding.getViewModel());
-                mBinding.llItemView.setOnClickListener(AddressAdapter.this);
-                mBinding.rbDefault.setOnClickListener(this);
+                mBinding.llItemView.setOnClickListener(this);
             }
         }
     }

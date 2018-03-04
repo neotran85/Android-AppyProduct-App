@@ -484,7 +484,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> updateDefaultShippingAddress(long id, boolean isChecked) {
-        return updateDefaultShippingAddress(id, isChecked);
+    public Flowable<Boolean> setDefaultShippingAddress(long id, boolean isChecked) {
+        return mDbHelper.setDefaultShippingAddress(id, isChecked);
     }
 }
