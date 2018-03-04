@@ -16,6 +16,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
     private static final String PREF_KEY_CURRENT_PHONE_NUMBER = "PREF_KEY_CURRENT_PHONE_NUMBER";
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
+    private static final String PREF_KEY_PAYMENT_METHOD = "PREF_KEY_PAYMENT_METHOD";
     private static final String PREF_KEY_CURRENT_USER_PROFILE_PIC_URL
             = "PREF_KEY_CURRENT_USER_PROFILE_PIC_URL";
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
@@ -132,5 +133,15 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public void setUserFirstName(String firstName) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_FIRST_NAME, firstName).apply();
+    }
+
+    @Override
+    public void setDefaultPaymentMethod(String userId, String methodName) {
+        mPrefs.edit().putString(PREF_KEY_PAYMENT_METHOD + ":" + userId, methodName).apply();
+    }
+
+    @Override
+    public String getDefaultPaymentMethod(String userId) {
+        return mPrefs.getString(PREF_KEY_PAYMENT_METHOD + ":" + userId, "");
     }
 }

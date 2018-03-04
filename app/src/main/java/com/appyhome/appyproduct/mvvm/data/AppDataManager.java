@@ -492,4 +492,14 @@ public class AppDataManager implements DataManager {
     public Flowable<Address> getDefaultShippingAddress(String userId) {
         return mDbHelper.getDefaultShippingAddress(userId);
     }
+
+    @Override
+    public void setDefaultPaymentMethod(String userId, String methodName) {
+        mPreferencesHelper.setDefaultPaymentMethod(userId, methodName);
+    }
+
+    @Override
+    public String getDefaultPaymentMethod(String userId) {
+        return mPreferencesHelper.getDefaultPaymentMethod(userId);
+    }
 }

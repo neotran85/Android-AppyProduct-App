@@ -3,17 +3,19 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductPaymentBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding, PaymentViewModel> implements PaymentNavigator {
+public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding, PaymentViewModel> implements PaymentNavigator, View.OnClickListener {
 
     ActivityProductPaymentBinding mBinder;
 
@@ -31,8 +33,21 @@ public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding,
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
+        mMainViewModel.fetchPaymentMethods();
+        ViewUtils.setOnClickListener(this, mBinder.llMolpay, mBinder.llVisa);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.llVisa:
+                mMainViewModel.setDefaultPaymentMethod(PaymentViewModel.PAYMENT_VISA);
+                break;
+            case R.id.llMolpay:
+                mMainViewModel.setDefaultPaymentMethod(PaymentViewModel.PAYMENT_MOLPAY);
+                break;
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -50,7 +65,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding,
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_sample;
+        return R.layout.activity_product_payment;
     }
 
     @Override

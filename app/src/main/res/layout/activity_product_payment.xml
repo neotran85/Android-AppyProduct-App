@@ -38,13 +38,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="14dp"
                 android:src="@mipmap/icon_back" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -56,36 +57,125 @@
                     android:layout_marginTop="1dp"
                     android:background="@color/white"
                     android:gravity="center">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/product_order_step"/>
+                        android:src="@mipmap/product_order_step2" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/transparent"></View>
+
+                <LinearLayout
+                    android:id="@+id/llVisa"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <RadioButton
+                        android:enabled="false"
+                        android:clickable="false"
+                        android:checked="@={viewModel.isPaymentVisa, default = true}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/visa_credit_debit"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_marginEnd="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/payment_visa" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/transparent"/>
+
+                <LinearLayout
+                    android:id="@+id/llMolpay"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <RadioButton
+                        android:enabled="false"
+                        android:clickable="false"
+                        android:checked="@={viewModel.isPaymentMolpay}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/via_molpay"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_marginEnd="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/payment_molpay" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:orientation="vertical">
+
                 <View
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"></View>
+                    android:layout_height="2dp"
+                    android:background="@color/gray"></View>
+
                 <Button
-                    android:foreground="?attr/selectableItemBackground"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:id="@+id/btNextStep"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="8dp"
                     android:background="@mipmap/bg_long_button"
+                    android:foreground="?attr/selectableItemBackground"
                     android:text="NEXT"
-                    android:id="@+id/btNextStep"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>

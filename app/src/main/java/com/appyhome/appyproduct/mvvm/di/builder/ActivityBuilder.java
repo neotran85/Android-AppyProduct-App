@@ -10,6 +10,8 @@ import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
@@ -115,6 +117,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = NewAddressActivityModule.class)
     abstract NewAddressActivity bindNewAddressActivity();
+
+    @ContributesAndroidInjector(modules = PaymentActivityModule.class)
+    abstract PaymentActivity bindPaymentActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,

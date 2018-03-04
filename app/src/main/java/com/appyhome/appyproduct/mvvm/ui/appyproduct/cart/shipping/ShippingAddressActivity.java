@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductShippingBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -52,6 +53,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btNextStep:
+                startActivity(PaymentActivity.getStartIntent(this));
                 break;
             case R.id.llNewAddress:
                 Intent intent = NewAddressActivity.getStartIntent(this);

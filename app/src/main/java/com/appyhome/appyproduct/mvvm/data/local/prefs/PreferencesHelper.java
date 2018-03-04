@@ -44,4 +44,8 @@ public interface PreferencesHelper {
     String getUserFirstName();
 
     void setUserFirstName(String firstName);
+
+    void setDefaultPaymentMethod(String userId, String methodName);
+
+    String getDefaultPaymentMethod(String userId);
 }
