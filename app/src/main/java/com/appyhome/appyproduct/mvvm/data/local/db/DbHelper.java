@@ -54,5 +54,7 @@ public interface DbHelper {
 
     Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault);
 
+    Flowable<Boolean> updateDefaultShippingAddress(long id, boolean isChecked);
+
     void closeDatabase();
 }

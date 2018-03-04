@@ -9,16 +9,23 @@ import com.crashlytics.android.Crashlytics;
 
 import java.util.Observable;
 
+import io.reactivex.disposables.Disposable;
+
 public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavigator> {
     public ObservableField<Boolean> isNoAddress = new ObservableField<>(true);
-
+    Disposable getAllShippingAddress = null;
     public ShippingAddressViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
+    public void disposeGetAllShippingAddress() {
+        if(getAllShippingAddress != null)
+            getAllShippingAddress.dispose();
+    }
+
     public void getAllShippingAddress() {
-        getCompositeDisposable().add(getDataManager().getAllShippingAddress("1234")
+        getAllShippingAddress = getDataManager().getAllShippingAddress("1234")
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addresses -> {
                     boolean isValid = addresses != null && addresses.isValid();
@@ -29,7 +36,8 @@ public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavig
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
-                }));
+                });
+        getCompositeDisposable().add(getAllShippingAddress);
     }
 
 }

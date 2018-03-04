@@ -11,17 +11,20 @@
     </data>
 
     <LinearLayout
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:id="@+id/llItemView"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="152dp"
         android:orientation="horizontal">
         <RadioButton
+            android:id="@+id/rbDefault"
             android:layout_gravity="center_vertical"
             android:checked="@{viewModel.checked}"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -31,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                fontPath="fonts/TitilliumWeb-Light.ttf"
+                fontPath="fonts/TitilliumWeb-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.name}"

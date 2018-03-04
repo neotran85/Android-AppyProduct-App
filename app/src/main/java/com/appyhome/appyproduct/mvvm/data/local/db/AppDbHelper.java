@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 import io.reactivex.Flowable;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 
 @Singleton
@@ -187,9 +188,11 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
         getRealm().beginTransaction();
+        String[] fieldNames = {"id", "is_default"};
+        Sort sortOrder[] = {Sort.DESCENDING, Sort.DESCENDING};
         Flowable<RealmResults<Address>> carts = getRealm().where(Address.class)
                 .equalTo("customer_id", userId)
-                .sort("id")
+                .sort(fieldNames, sortOrder)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return carts;
@@ -213,13 +216,44 @@ public class AppDbHelper implements DbHelper {
             Address address = new Address();
             address.id = System.currentTimeMillis();
             address.customer_name = name;
+            address.phone_number = phoneNumber;
             address.address = addressStr;
             address.customer_id = userId;
             address.is_default = isDefault;
             address.place_id = placeId;
+            if (isDefault) {
+                RealmResults<Address> addressList = getRealm().where(Address.class)
+                        .equalTo("customer_id", userId)
+                        .equalTo("is_default", true)
+                        .findAll();
+                if (addressList != null && addressList.isValid() && addressList.size() > 0) {
+                    for (Address item : addressList) {
+                        item.is_default = false;
+                    }
+                    getRealm().copyToRealmOrUpdate(addressList);
+                }
+            }
             address = getRealm().copyToRealmOrUpdate(address);
             getRealm().commitTransaction();
-            return Flowable.just(true);
+            return Flowable.just(address != null && address.isValid());
+        } catch (Exception e) {
+            return Flowable.just(false);
+        }
+    }
+
+    @Override
+    public Flowable<Boolean> updateDefaultShippingAddress(long id, boolean isChecked) {
+        try {
+            getRealm().beginTransaction();
+            Address address = getRealm().where(Address.class)
+                    .equalTo("id", id)
+                    .findFirst();
+            if (address != null && address.isValid()) {
+                address.is_default = isChecked;
+                address = getRealm().copyToRealmOrUpdate(address);
+            }
+            getRealm().commitTransaction();
+            return Flowable.just(address != null && address.isValid());
         } catch (Exception e) {
             return Flowable.just(false);
         }
@@ -248,9 +282,9 @@ public class AppDbHelper implements DbHelper {
                     .findFirst();
             productCart.checked = checked;
             productCart.amount = amount;
-            getRealm().copyToRealmOrUpdate(productCart);
+            productCart = getRealm().copyToRealmOrUpdate(productCart);
             getRealm().commitTransaction();
-            return Flowable.just(true);
+            return Flowable.just(productCart != null && productCart.isValid());
         } catch (Exception e) {
             return Flowable.just(false);
         }

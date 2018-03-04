@@ -8,6 +8,8 @@ import android.location.Geocoder;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.places.Place;
@@ -27,6 +29,8 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> postCode = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(true);
 
+    private String placeId = "";
+
     public NewAddressViewModel(DataManager dataManager,
                                SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -35,7 +39,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public void saveShippingAddress() {
         String addressStr = unit.get() + ", " + street.get() + ", " + area1.get() + ", " + area2.get() + ", "
                 + city.get() + ", (Post Code: " + postCode.get() + ")";
-        getCompositeDisposable().add(getDataManager().addShippingAddress("1234", "",
+        getCompositeDisposable().add(getDataManager().addShippingAddress("1234", placeId,
                 name.get(), phoneNumber.get(), addressStr, checked.get())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
@@ -46,8 +50,18 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                     Crashlytics.logException(throwable);
                 }));
     }
+
     private void setValueNotNull(ObservableField<String> target, String value) {
         target.set(value != null ? value : "");
+    }
+
+    public boolean isPhoneNumberValid() {
+        return ValidationUtils.isPhoneNumberValid(phoneNumber.get());
+    }
+
+    public boolean checkIfContactInputted() {
+        return name.get().length() > 0 &&
+                phoneNumber.get().length() > 0;
     }
 
     public boolean checkIfLocationInputted() {
@@ -67,6 +81,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                 List<Address> addresses;
                 geocoder = new Geocoder(context, Locale.getDefault());
                 try {
+                    placeId = place.getId();
                     addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
                     String stateStr = addresses.get(0).getAdminArea();
                     String countryStr = addresses.get(0).getCountryName();

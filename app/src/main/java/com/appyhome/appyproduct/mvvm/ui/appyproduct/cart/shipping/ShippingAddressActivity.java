@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductShippingBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -44,13 +45,16 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
-        mMainViewModel.getAllShippingAddress();
-        mBinder.llNewAddress.setOnClickListener(this);
+        ViewUtils.setOnClickListener(this, mBinder.llNewAddress, mBinder.btNextStep);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btNextStep:
+                mMainViewModel.disposeGetAllShippingAddress();
+                mAdapter.updateDefaultAddressToDatabase();
+                break;
             case R.id.llNewAddress:
                 Intent intent = NewAddressActivity.getStartIntent(this);
                 startActivity(intent);
@@ -61,11 +65,12 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     protected void onResume() {
         super.onResume();
+        mMainViewModel.getAllShippingAddress();
     }
 
     @Override
     public void showAddressList(RealmResults<Address> addresses) {
-        mAdapter = new AddressAdapter(addresses);
+        mAdapter = new AddressAdapter(addresses, mMainViewModel);
         mBinder.rvAddressList.setAdapter(mAdapter);
     }
 

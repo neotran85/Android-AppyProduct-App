@@ -65,6 +65,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@color/white"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingLeft="18dp">
@@ -102,17 +104,17 @@
                             android:layout_height="wrap_content"
                             android:text="Customer Name:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:text="@={viewModel.name}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -135,17 +137,18 @@
                             android:layout_height="wrap_content"
                             android:text="Phone Number:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:inputType="phone"
+                            android:singleLine="true"
                             android:text="@={viewModel.phoneNumber}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -168,17 +171,17 @@
                             android:layout_height="wrap_content"
                             android:text="Unit / House Number:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:text="@={viewModel.unit}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -201,17 +204,17 @@
                             android:layout_height="wrap_content"
                             android:text="Street:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:text="@={viewModel.street}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -234,17 +237,17 @@
                             android:layout_height="wrap_content"
                             android:text="Area Line 1:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:text="@={viewModel.area1}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -267,17 +270,17 @@
                             android:layout_height="wrap_content"
                             android:text="Area Line 2:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:text="@={viewModel.area2}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -300,17 +303,17 @@
                             android:layout_height="wrap_content"
                             android:text="City / Town:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:text="@={viewModel.city}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -333,23 +336,24 @@
                             android:layout_height="wrap_content"
                             android:text="Post Code:"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
-                            android:lines="1"
+                            android:inputType="number"
+                            android:singleLine="true"
                             android:text="@={viewModel.postCode}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:background="@color/gray" />
 
                     <LinearLayout
@@ -367,7 +371,7 @@
                             android:layout_weight="1"
                             android:text="Set Default Address"
                             android:textColor="@color/dark_gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -376,13 +380,13 @@
                             android:checked="@={viewModel.checked}"
                             android:scaleX="0.8"
                             android:scaleY="0.8"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:background="@color/gray" />
                 </LinearLayout>
             </ScrollView>
@@ -409,6 +413,7 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="8dp"
                     android:background="@mipmap/bg_long_button"
+                    android:foreground="?attr/selectableItemBackground"
                     android:text="SAVE"
                     android:textColor="@color/white"
                     android:textSize="13sp" />

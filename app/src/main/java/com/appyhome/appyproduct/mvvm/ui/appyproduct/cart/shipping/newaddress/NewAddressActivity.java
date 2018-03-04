@@ -35,6 +35,18 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
                 MapManager.openMapForPlaceSelection(this);
                 break;
             case R.id.btSave:
+                if(!mMainViewModel.checkIfContactInputted()) {
+                    showAlert(getString(R.string.please_input_contact));
+                    return;
+                }
+                if(!mMainViewModel.isPhoneNumberValid()) {
+                    showAlert(getString(R.string.please_input_valid_phone));
+                    return;
+                }
+                if(!mMainViewModel.checkIfLocationInputted()) {
+                    showAlert(getString(R.string.please_input_shipping_address));
+                    return;
+                }
                 mMainViewModel.saveShippingAddress();
                 break;
         }
