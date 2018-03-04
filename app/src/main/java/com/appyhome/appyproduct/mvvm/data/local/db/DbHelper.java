@@ -56,5 +56,7 @@ public interface DbHelper {
 
     Flowable<Boolean> setDefaultShippingAddress(String userId, long id);
 
+    Flowable<Address> getDefaultShippingAddress(String userId);
+
     void closeDatabase();
 }

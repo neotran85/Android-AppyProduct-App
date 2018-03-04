@@ -185,17 +185,28 @@ public class AppDbHelper implements DbHelper {
     }
 
     /******* PRODUCT CART METHODS *******/
+
+    @Override
+    public Flowable<Address> getDefaultShippingAddress(String userId) {
+        getRealm().beginTransaction();
+        Flowable<Address> address = getRealm().where(Address.class)
+                .equalTo("customer_id", userId)
+                .equalTo("is_default", true)
+                .findFirstAsync().asFlowable();
+        getRealm().commitTransaction();
+        return address;
+    }
     @Override
     public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
         getRealm().beginTransaction();
         String[] fieldNames = {"is_default", "id"};
         Sort sortOrder[] = {Sort.DESCENDING, Sort.DESCENDING};
-        Flowable<RealmResults<Address>> carts = getRealm().where(Address.class)
+        Flowable<RealmResults<Address>> addresses = getRealm().where(Address.class)
                 .equalTo("customer_id", userId)
                 .sort(fieldNames, sortOrder)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
-        return carts;
+        return addresses;
     }
 
     @Override

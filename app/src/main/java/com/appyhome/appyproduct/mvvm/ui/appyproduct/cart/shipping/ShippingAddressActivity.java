@@ -46,7 +46,6 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
         ViewUtils.setOnClickListener(this, mBinder.llNewAddress, mBinder.btNextStep);
-        mMainViewModel.getAllShippingAddress();
     }
 
     @Override
@@ -64,6 +63,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     protected void onResume() {
         super.onResume();
+        mMainViewModel.getAllShippingAddress();
     }
 
     @Override

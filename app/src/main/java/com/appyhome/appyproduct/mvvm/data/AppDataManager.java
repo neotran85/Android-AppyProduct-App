@@ -487,4 +487,9 @@ public class AppDataManager implements DataManager {
     public Flowable<Boolean> setDefaultShippingAddress(String userId, long id) {
         return mDbHelper.setDefaultShippingAddress(userId, id);
     }
+
+    @Override
+    public Flowable<Address> getDefaultShippingAddress(String userId) {
+        return mDbHelper.getDefaultShippingAddress(userId);
+    }
 }
