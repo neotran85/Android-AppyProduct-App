@@ -43,12 +43,13 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
+        mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
         mProductCartAdapter = new ProductCartAdapter(mViewModel);
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts("1234");
-        ViewUtils.setOnClickListener(this, mBinder.cbCheckAll, mBinder.ivTrash, mBinder.btNextStep);
+        ViewUtils.setOnClickListener(this, mBinder.cbCheckAll, mBinder.ivTrash);
     }
 
     public void emptyProductCarts() {
@@ -65,7 +66,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_remove_item), listener);
     }
 
-    private void goToShippingAddress() {
+    public void goToShippingAddress() {
         Intent intent = ShippingAddressActivity.getStartIntent(this);
         startActivity(intent);
     }
@@ -73,9 +74,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btNextStep:
-                goToShippingAddress();
-                break;
             case R.id.ivTrash:
                 AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
                 break;

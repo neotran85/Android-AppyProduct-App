@@ -8,7 +8,9 @@
     <data>
 
         <import type="android.view.View" />
-
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity" />
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressViewModel" />
@@ -35,10 +37,11 @@
                 android:textSize="18sp" />
 
             <ImageView
+                android:onClick="@{(view) -> navigator.finish()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
+                android:padding="14dp"
                 android:src="@mipmap/icon_back" />
         </RelativeLayout>
 
@@ -60,7 +63,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/product_order_step"></ImageView>
+                        android:src="@mipmap/product_order_step"/>
                 </LinearLayout>
 
                 <LinearLayout

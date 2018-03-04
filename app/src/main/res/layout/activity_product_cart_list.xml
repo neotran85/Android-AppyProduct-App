@@ -10,6 +10,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity" />
+
+        <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel" />
 
@@ -38,17 +42,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
+                android:padding="14dp"
+                android:onClick="@{(view) -> navigator.finish()}"
                 android:src="@mipmap/icon_back" />
+
             <ImageView
                 android:id="@+id/ivTrash"
-                android:visibility="@{!viewModel.isCartEmpty, default=gone}"
-                android:layout_alignParentEnd="true"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="18dp"
-                android:src="@mipmap/icon_trash" />
+                android:src="@mipmap/icon_trash"
+                android:visibility="@{!viewModel.isCartEmpty, default=gone}" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -96,9 +102,9 @@
 
                     <CheckBox
                         android:id="@+id/cbCheckAll"
-                        android:checked="@={viewModel.isCheckedAll}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewModel.isCheckedAll}"
                         android:scaleX="0.8"
                         android:scaleY="0.8"
                         android:textColor="@color/dark_gray"
@@ -156,12 +162,12 @@
                         android:textSize="13sp" />
 
                     <LinearLayout
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/textView1"
-                        android:layout_marginStart="6dp"
-                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="6dp"
+                        android:layout_toEndOf="@+id/textView1"
+                        android:orientation="horizontal">
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -172,25 +178,26 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_marginStart="4dp"
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
                             android:text="@{viewModel.totalCost}"
                             android:textColor="@color/red_price"
                             android:textSize="15sp" />
                     </LinearLayout>
 
                     <Button
-                        android:foreground="?attr/selectableItemBackground"
+                        android:id="@+id/btNextStep"
                         android:layout_width="92dp"
+                        android:onClick="@{(view) -> navigator.goToShippingAddress()}"
                         android:layout_height="36dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="14dp"
                         android:background="@mipmap/bg_checkout"
+                        android:foreground="?attr/selectableItemBackground"
                         android:text="Check out"
-                        android:id="@+id/btNextStep"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
                 </RelativeLayout>

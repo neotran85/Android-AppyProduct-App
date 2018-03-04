@@ -68,6 +68,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
+        mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         mBinder.btSave.setOnClickListener(this);

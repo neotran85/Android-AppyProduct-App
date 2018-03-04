@@ -32,9 +32,14 @@ public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding,
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);
+        mBinder.setNavigator(this);
         mMainViewModel.setNavigator(this);
         mMainViewModel.fetchPaymentMethods();
         ViewUtils.setOnClickListener(this, mBinder.llMolpay, mBinder.llVisa);
+    }
+
+    public void goBack() {
+        finish();
     }
 
     @Override

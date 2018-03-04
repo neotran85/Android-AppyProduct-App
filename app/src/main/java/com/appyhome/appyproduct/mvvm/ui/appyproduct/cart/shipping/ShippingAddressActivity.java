@@ -44,6 +44,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);
+        mBinder.setNavigator(this);
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
         ViewUtils.setOnClickListener(this, mBinder.llNewAddress, mBinder.btNextStep);

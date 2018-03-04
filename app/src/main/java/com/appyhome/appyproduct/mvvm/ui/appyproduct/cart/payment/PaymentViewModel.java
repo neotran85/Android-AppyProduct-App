@@ -32,5 +32,4 @@ public class PaymentViewModel extends BaseViewModel<PaymentNavigator> {
         getDataManager().setDefaultPaymentMethod("1234", method);
         fetchPaymentMethods(method);
     }
-
 }

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.appyproduct.cart.shipping.ShippingAddressActivity">
+    tools:context=".ui.appyproduct.cart.payment.PaymentActivity">
 
     <data>
 
         <import type="android.view.View" />
+
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity" />
 
         <variable
             name="viewModel"
@@ -38,7 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="14dp"
+                android:padding="14dp"
+                android:onClick="@{(view) -> navigator.finish()}"
                 android:src="@mipmap/icon_back" />
         </RelativeLayout>
 
@@ -67,42 +71,41 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
-                    android:background="@color/transparent"></View>
+                    android:background="@color/transparent" />
 
                 <LinearLayout
                     android:id="@+id/llVisa"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@color/white"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp">
 
                     <RadioButton
-                        android:enabled="false"
-                        android:clickable="false"
-                        android:checked="@={viewModel.isPaymentVisa, default = true}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewModel.isPaymentVisa, default = true}"
+                        android:clickable="false"
                         android:scaleX="0.7"
                         android:scaleY="0.7" />
 
                     <TextView
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:layout_weight="1"
                         android:text="@string/visa_credit_debit"
                         android:textColor="@color/dark_gray"
                         android:textSize="15sp" />
 
                     <ImageView
-                        android:layout_marginEnd="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
                         android:background="@mipmap/payment_visa" />
 
                 </LinearLayout>
@@ -110,42 +113,41 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/transparent"/>
+                    android:background="@color/transparent" />
 
                 <LinearLayout
                     android:id="@+id/llMolpay"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@color/white"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp">
 
                     <RadioButton
-                        android:enabled="false"
-                        android:clickable="false"
-                        android:checked="@={viewModel.isPaymentMolpay}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewModel.isPaymentMolpay}"
+                        android:clickable="false"
                         android:scaleX="0.7"
                         android:scaleY="0.7" />
 
                     <TextView
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:layout_weight="1"
                         android:text="@string/via_molpay"
                         android:textColor="@color/dark_gray"
                         android:textSize="15sp" />
 
                     <ImageView
-                        android:layout_marginEnd="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
                         android:background="@mipmap/payment_molpay" />
 
                 </LinearLayout>

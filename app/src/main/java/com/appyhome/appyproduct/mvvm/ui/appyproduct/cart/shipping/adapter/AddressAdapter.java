@@ -55,11 +55,6 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
         }
     }
 
-    private void notifyViewModelChanged(AddressItemViewModel item) {
-        if (item != null && mItems != null && mItems.size() > 0)
-            notifyItemChanged(mItems.indexOf(item));
-    }
-
     @Override
     protected AddressItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductShippingAddressBinding itemViewBinding = ViewItemProductShippingAddressBinding
@@ -90,13 +85,11 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
             AddressItemViewModel viewModel = (AddressItemViewModel) mItems.get(position);
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
-                mBinding.rbDefault.setOnClickListener(v -> {
+                mBinding.llItemView.setOnClickListener(v -> {
                     if(mSelected != null)
                         mSelected.checked.set(false);
                     viewModel.checked.set(true);
                     viewModel.updateDefaultToDatabase();
-                    notifyViewModelChanged(mSelected);
-                    notifyViewModelChanged(viewModel);
                     mSelected = viewModel;
                 });
             }
