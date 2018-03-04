@@ -46,14 +46,29 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <TextView
-                fontPath="fonts/TitilliumWeb-Light.ttf"
+            <LinearLayout
+                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@{viewModel.phoneNumber}"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:layout_marginTop="6dp">
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_marginStart="4dp"
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.phoneNumber}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
 
             <TextView
                 fontPath="fonts/TitilliumWeb-Light.ttf"

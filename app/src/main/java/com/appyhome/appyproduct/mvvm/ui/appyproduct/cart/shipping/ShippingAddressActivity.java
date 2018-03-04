@@ -46,14 +46,13 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
         ViewUtils.setOnClickListener(this, mBinder.llNewAddress, mBinder.btNextStep);
+        mMainViewModel.getAllShippingAddress();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btNextStep:
-                mMainViewModel.disposeGetAllShippingAddress();
-                mAdapter.updateDefaultAddressToDatabase();
                 break;
             case R.id.llNewAddress:
                 Intent intent = NewAddressActivity.getStartIntent(this);
@@ -65,7 +64,6 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     protected void onResume() {
         super.onResume();
-        mMainViewModel.getAllShippingAddress();
     }
 
     @Override

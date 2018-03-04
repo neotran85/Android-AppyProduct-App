@@ -22,10 +22,11 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
     }
 
     public void updateDefaultToDatabase() {
-        getCompositeDisposable().add(getDataManager().setDefaultShippingAddress(idAddress, checked.get())
+        getCompositeDisposable().add(getDataManager().setDefaultShippingAddress("1234", idAddress)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // UPDATE DEFAULT ADDRESS SUCCEEDED
+                    getNavigator().updateDatabaseCompleted(this);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

@@ -4,6 +4,8 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class AddressAdapter extends SampleAdapter {
+public class AddressAdapter extends SampleAdapter implements AddressItemNavigator {
+
+    private AddressItemViewModel mSelected = null;
 
     @Override
     public void onClick(View view) {
@@ -32,10 +36,13 @@ public class AddressAdapter extends SampleAdapter {
     private AddressItemViewModel createViewModel(Address address, ShippingAddressViewModel viewModel) {
         AddressItemViewModel itemViewModel = new AddressItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.name.set(address.customer_name);
-        itemViewModel.phoneNumber.set("Phone Number: " + address.phone_number);
+        itemViewModel.phoneNumber.set(address.phone_number);
         itemViewModel.address.set(address.address);
         itemViewModel.checked.set(address.is_default);
         itemViewModel.setIdAddress(address.id);
+        itemViewModel.setNavigator(this);
+        if(address.is_default)
+            mSelected = itemViewModel;
         return itemViewModel;
     }
 
@@ -48,27 +55,9 @@ public class AddressAdapter extends SampleAdapter {
         }
     }
 
-    public void updateDefaultAddressToDatabase() {
-        for (int i = 0; i < mItems.size(); i++) {
-            AddressItemViewModel vAddressItemViewModel = (AddressItemViewModel) mItems.get(i);
-            vAddressItemViewModel.updateDefaultToDatabase();
-        }
-    }
-
-    private void updateCheckedDefaultAddress(AddressItemViewModel defaultAddress) {
-        for (BaseViewModel item : mItems) {
-            AddressItemViewModel vAddressItemViewModel = (AddressItemViewModel) item;
-            if (vAddressItemViewModel.checked.get()) {
-                vAddressItemViewModel.checked.set(false);
-                notifyViewModelChanged(vAddressItemViewModel);
-            }
-        }
-        defaultAddress.checked.set(true);
-        notifyViewModelChanged(defaultAddress);
-    }
-
     private void notifyViewModelChanged(AddressItemViewModel item) {
-        notifyItemChanged(mItems.indexOf(item));
+        if (item != null && mItems != null && mItems.size() > 0)
+            notifyItemChanged(mItems.indexOf(item));
     }
 
     @Override
@@ -78,7 +67,12 @@ public class AddressAdapter extends SampleAdapter {
         return new AddressItemViewHolder(itemViewBinding);
     }
 
-    public class AddressItemViewHolder extends BaseViewHolder implements View.OnClickListener {
+    @Override
+    public void updateDatabaseCompleted(AddressItemViewModel viewModel) {
+
+    }
+
+    public class AddressItemViewHolder extends BaseViewHolder {
 
         private ViewItemProductShippingAddressBinding mBinding;
 
@@ -92,16 +86,19 @@ public class AddressAdapter extends SampleAdapter {
         }
 
         @Override
-        public void onClick(View view) {
-            updateCheckedDefaultAddress(mBinding.getViewModel());
-        }
-
-        @Override
         public void onBind(int position) {
             AddressItemViewModel viewModel = (AddressItemViewModel) mItems.get(position);
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
-                mBinding.llItemView.setOnClickListener(this);
+                mBinding.rbDefault.setOnClickListener(v -> {
+                    if(mSelected != null)
+                        mSelected.checked.set(false);
+                    viewModel.checked.set(true);
+                    viewModel.updateDefaultToDatabase();
+                    notifyViewModelChanged(mSelected);
+                    notifyViewModelChanged(viewModel);
+                    mSelected = viewModel;
+                });
             }
         }
     }
