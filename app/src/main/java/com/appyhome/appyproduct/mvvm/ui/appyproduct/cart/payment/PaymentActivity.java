@@ -7,18 +7,18 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.ActivityProductPaymentBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
+import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartConfirmationBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartPaymentBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding, PaymentViewModel> implements PaymentNavigator, View.OnClickListener {
+public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBinding, PaymentViewModel> implements PaymentNavigator, View.OnClickListener {
 
-    ActivityProductPaymentBinding mBinder;
+    ActivityProductCartPaymentBinding mBinder;
 
     @Inject
     public PaymentViewModel mMainViewModel;
@@ -41,7 +41,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding,
 
     @Override
     public void gotoNextStep() {
-
+        startActivity(ConfirmationActivity.getStartIntent(this));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductPaymentBinding,
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_product_payment;
+        return R.layout.activity_product_cart_payment;
     }
 
     @Override

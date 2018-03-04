@@ -117,6 +117,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.appyproduct.cart.confirmation.ConfirmationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.main.MainActivity"

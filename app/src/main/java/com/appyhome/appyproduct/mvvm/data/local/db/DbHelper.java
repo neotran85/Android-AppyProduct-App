@@ -58,5 +58,7 @@ public interface DbHelper {
 
     Flowable<Address> getDefaultShippingAddress(String userId);
 
+    Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);
+
     void closeDatabase();
 }

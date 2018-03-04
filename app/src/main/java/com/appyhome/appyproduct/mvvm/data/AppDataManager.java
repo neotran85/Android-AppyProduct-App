@@ -502,4 +502,9 @@ public class AppDataManager implements DataManager {
     public String getDefaultPaymentMethod(String userId) {
         return mPreferencesHelper.getDefaultPaymentMethod(userId);
     }
+
+    @Override
+    public Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId) {
+        return mDbHelper.getAllCheckedProductCarts(userId);
+    }
 }

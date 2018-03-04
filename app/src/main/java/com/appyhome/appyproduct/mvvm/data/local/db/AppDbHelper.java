@@ -221,6 +221,18 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId) {
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
+                .equalTo("user_id", userId)
+                .equalTo("checked", true)
+                .sort("seller_name")
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return carts;
+    }
+
+    @Override
     public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault) {
         try {
             getRealm().beginTransaction();

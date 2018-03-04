@@ -167,13 +167,13 @@
                     android:background="@color/gray"></View>
 
                 <Button
-                    android:id="@+id/btNextStep"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="14dp"
                     android:layout_marginStart="14dp"
+                    android:onClick="@{(view) -> navigator.gotoNextStep()}"
                     android:layout_marginTop="8dp"
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
