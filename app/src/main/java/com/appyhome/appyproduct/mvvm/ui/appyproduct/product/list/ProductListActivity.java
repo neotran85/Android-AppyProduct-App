@@ -50,12 +50,19 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
+        mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
         mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
         mBinder.tabLayout.setVisibility(View.GONE);
         setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
+    }
+
+    @Override
+    public void openProductCart() {
+        Intent intent = ProductCartListActivity.getStartIntent(this);
+        startActivity(intent);
     }
 
     private void setUpRecyclerViewList(RecyclerView rv, ProductAdapter adapter) {
@@ -143,8 +150,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        Intent intent = ProductCartListActivity.getStartIntent(this);
-        startActivity(intent);
+
     }
 
     @Override
@@ -155,7 +161,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.updateTotalProductCart();
+        mViewModel.updateTotalCountProductCart();
     }
     @Override
     public void onTabReselected(TabLayout.Tab tab) {

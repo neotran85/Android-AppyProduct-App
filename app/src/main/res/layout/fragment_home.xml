@@ -127,7 +127,7 @@
                                         android:background="@mipmap/bg_count_carts"
                                         android:textColor="@color/white"
                                         android:textSize="10sp"
-                                        android:visibility="visible" />
+                                        android:visibility="gone" />
                                 </RelativeLayout>
                             </LinearLayout>
                         </LinearLayout>

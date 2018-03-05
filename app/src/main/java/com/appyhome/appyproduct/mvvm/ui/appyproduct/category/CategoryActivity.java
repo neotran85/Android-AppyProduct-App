@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCategoryBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
@@ -29,7 +30,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     CategoryViewModel mCategoryViewModel;
 
     CategoryAdapter mCategoryAdapter;
-    
+
     CategoryAdapter mSubCategoryAdapter;
 
     ActivityProductCategoryBinding mBinder;
@@ -43,6 +44,12 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
+    public void openProductCart() {
+        Intent intent = ProductCartListActivity.getStartIntent(this);
+        startActivity(intent);
+    }
+
+    @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
     }
@@ -52,6 +59,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mCategoryViewModel);
+        mBinder.setNavigator(this);
         mCategoryViewModel.setNavigator(this);
         mCategoryAdapter = new CategoryAdapter();
         mSubCategoryAdapter = new CategoryAdapter();
@@ -115,6 +123,12 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mCategoryAdapter.addItems(result, CategoryAdapter.TYPE_CATEGORY, this);
         mCategoryAdapter.notifyDataSetChanged();
         mCategoryAdapter.clickTheFirstItem();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCategoryViewModel.updateTotalCountProductCart();
     }
 
     @Override

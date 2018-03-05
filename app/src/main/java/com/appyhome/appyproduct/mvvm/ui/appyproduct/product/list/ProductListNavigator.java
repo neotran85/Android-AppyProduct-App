@@ -14,4 +14,6 @@ public interface ProductListNavigator {
     void showProducts(Product[] list);
 
     void showEmptyProducts();
+
+    void openProductCart();
 }

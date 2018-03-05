@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -16,9 +15,9 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
     public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
 
-    public void updateTotalProductCart() {
+    public void updateTotalCountProductCart() {
         getCompositeDisposable().add(getDataManager()
-                .getTotalProductCarts("1234")
+                .getTotalCountProductCarts("1234")
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(total -> {

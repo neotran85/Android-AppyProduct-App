@@ -13,4 +13,7 @@ public interface CategoryNavigator {
     void showCategories(RealmResults<ProductCategory> result);
 
     void showSubCategories(RealmResults<ProductSub> result);
+
+    void openProductCart();
+
 }

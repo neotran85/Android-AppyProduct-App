@@ -518,7 +518,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Integer> getTotalProductCarts(String userId) {
-        return mDbHelper.getTotalProductCarts(userId);
+    public Flowable<Integer> getTotalCountProductCarts(String userId) {
+        return mDbHelper.getTotalCountProductCarts(userId);
     }
 }

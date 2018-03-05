@@ -24,13 +24,7 @@ public class ProductAdapter extends SampleAdapter {
     }
 
     @Override
-    public void onClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof ProductItemViewModel) {
-            ProductItemViewModel viewModel = (ProductItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getIdProduct());
-        }
-    }
+    public void onClick(View view) {}
 
     public void addItems(Product[] results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
@@ -92,7 +86,13 @@ public class ProductAdapter extends SampleAdapter {
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
                 mBinding.llItemView.setTag(mBinding.getViewModel());
-                mBinding.llItemView.setOnClickListener(ProductAdapter.this);
+                mBinding.llItemView.setOnClickListener(view -> {
+                    Object tag = view.getTag();
+                    if (tag instanceof ProductItemViewModel) {
+                        ProductItemViewModel tempModel = (ProductItemViewModel) tag;
+                        tempModel.getNavigator().showContent(ProductAdapter.this, view, viewModel.getIdProduct());
+                    }
+                });
             }
         }
     }

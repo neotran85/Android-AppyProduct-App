@@ -66,7 +66,7 @@ public interface DbHelper {
                                String customerId, String customerName,
                                float totalCost, float discount);
 
-    Flowable<Integer> getTotalProductCarts(String userId);
+    Flowable<Integer> getTotalCountProductCarts(String userId);
 
     void closeDatabase();
 }

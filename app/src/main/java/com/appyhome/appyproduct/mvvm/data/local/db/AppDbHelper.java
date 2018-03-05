@@ -224,7 +224,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Integer> getTotalProductCarts(String userId) {
+    public Flowable<Integer> getTotalCountProductCarts(String userId) {
         getRealm().beginTransaction();
         RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)

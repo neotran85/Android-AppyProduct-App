@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onResume() {
         super.onResume();
-        mHomeViewModel.updateTotalProductCart();
+        mHomeViewModel.updateTotalCountProductCart();
     }
     @Override
     public void onClick(View view) {

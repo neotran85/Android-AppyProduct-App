@@ -80,20 +80,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     if (productCart != null) {
                         getNavigator().showAlert(productCart.seller_name);
                         // getAllProductCarts("1234");
-                        updateTotalProductCart();
+                        updateTotalCountProductCart();
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
-    }
-
-    public void getAllProductCarts(String userId) {
-        getCompositeDisposable().add(getDataManager().getAllProductCarts(userId)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(productCarts -> {
-                    // DONE GET
-                    // getNavigator().showAlert(productCarts.size() + "");
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
@@ -113,9 +101,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
-    public void updateTotalProductCart() {
+    public void updateTotalCountProductCart() {
         getCompositeDisposable().add(getDataManager()
-                .getTotalProductCarts("1234")
+                .getTotalCountProductCarts("1234")
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(total -> {
