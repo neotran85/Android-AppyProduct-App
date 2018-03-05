@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -520,5 +521,20 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Integer> getTotalCountProductCarts(String userId) {
         return mDbHelper.getTotalCountProductCarts(userId);
+    }
+
+    @Override
+    public Flowable<Boolean> addFavorite(int productId, String userId) {
+        return mDbHelper.addFavorite(productId, userId);
+    }
+
+    @Override
+    public Flowable<Boolean> unFavorite(int productId, String userId) {
+        return unFavorite(productId, userId);
+    }
+
+    @Override
+    public Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId) {
+        return mDbHelper.getAllProductFavorites(userId);
     }
 }

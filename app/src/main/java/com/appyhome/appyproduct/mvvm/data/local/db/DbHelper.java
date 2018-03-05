@@ -6,6 +6,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -67,6 +68,12 @@ public interface DbHelper {
                                float totalCost, float discount);
 
     Flowable<Integer> getTotalCountProductCarts(String userId);
+
+    Flowable<Boolean> addFavorite(int productId, String userId);
+
+    Flowable<Boolean> unFavorite(int productId, String userId);
+
+    Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId);
 
     void closeDatabase();
 }
