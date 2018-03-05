@@ -25,6 +25,10 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     private int productId;
     private long productCartId;
 
+    public ProductCartItemViewModel() {
+        super();
+    }
+
     public ProductCartItemViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);

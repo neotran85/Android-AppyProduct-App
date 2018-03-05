@@ -44,195 +44,61 @@
                 android:onClick="@{(view) -> navigator.finish()}"
                 android:padding="14dp"
                 android:src="@mipmap/icon_back" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/transparent" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/white"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/product_order_step3" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:background="@color/transparent" />
-
-                <LinearLayout
-                    android:id="@+id/llTotalCost"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-                    android:gravity="bottom"
-                    android:paddingBottom="12dp"
-                    android:orientation="horizontal"
-                    android:paddingLeft="14dp"
-                    android:paddingRight="14dp">
-
-                    <TextView
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="Total Cost:"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="RM"
-                        android:textColor="@color/red_price"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:text="@{viewModel.totalCost}"
-                        android:textColor="@color/red_price"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/transparent" />
-
-                <LinearLayout
-                    android:id="@+id/llShippingAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/white"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-SemiBold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
-                            android:text="Shipping Address"
-                            android:textColor="#4E4E4E"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Edit"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="14dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.name}"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Light.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Phone Number:"
-                                android:textColor="@color/black"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Light.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="@{viewModel.phoneNumber}"
-                                android:textColor="@color/black"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Light.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:text="@{viewModel.address}"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/transparent" />
-
-                <LinearLayout
-                    android:padding="14dp"
-                    android:id="@+id/llPaymentMethod"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/product_order_step3" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="@color/transparent" />
+
+                    <LinearLayout
+                        android:id="@+id/llTotalCost"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp">
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:layout_weight="1"
-                            android:text="Payment Method"
+                            android:text="Total Cost:"
                             android:textColor="#4E4E4E"
                             android:textSize="15sp" />
 
@@ -240,103 +106,275 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Edit"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
+                            android:layout_marginStart="4dp"
+                            android:text="RM"
+                            android:textColor="@color/red_price"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:text="@{viewModel.totalCost}"
+                            android:textColor="@color/red_price"
+                            android:textSize="20sp" />
+
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/transparent" />
 
                     <LinearLayout
-                        android:visibility="@{viewModel.isVisa, default=gone}"
-                        android:paddingTop="20dp"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:id="@+id/llVisa"
+                        android:id="@+id/llShippingAddress"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="200dp"
                         android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:padding="14dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                android:text="Shipping Address"
+                                android:textColor="#4E4E4E"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Edit"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="14dp"
                             android:layout_marginStart="4dp"
-                            android:layout_weight="1"
-                            android:text="@string/visa_credit_debit"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="15sp" />
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginStart="4dp"
-                            android:text="[*39399*]"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="15sp" />
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.name}"
+                                android:textColor="#4E4E4E"
+                                android:textSize="14sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:background="@mipmap/payment_visa" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Phone Number:"
+                                    android:textColor="#4E4E4E"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text="@{viewModel.phoneNumber}"
+                                    android:textColor="#4E4E4E"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Light.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:ellipsize="end"
+                                android:maxLines="3"
+                                android:text="@{viewModel.address}"
+                                android:textColor="#4E4E4E"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/transparent" />
+
                     <LinearLayout
-                        android:visibility="@{viewModel.isMolpay, default=gone}"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:id="@+id/llMolpay"
+                        android:id="@+id/llPaymentMethod"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:padding="14dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
-                            android:text="@string/via_molpay"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="15sp" />
+                            android:background="@color/white"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                android:text="Payment Method"
+                                android:textColor="#4E4E4E"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Edit"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llVisa"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingTop="20dp"
+                            android:visibility="@{viewModel.isVisa, default=gone}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                android:text="@string/visa_credit_debit"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="4dp"
+                                android:text="[*39399*]"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:background="@mipmap/payment_visa" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llMolpay"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="@{viewModel.isMolpay, default=gone}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                android:text="@string/via_molpay"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="4dp"
+                                android:text="ABC"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:background="@mipmap/payment_molpay" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/transparent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="60dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingTop="14dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginStart="4dp"
-                            android:text="ABC"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="15sp" />
+                            android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:background="@mipmap/payment_molpay" />
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="18dp"
+                                android:layout_weight="1"
+                                android:text="Your Cart"
+                                android:textColor="#4E4E4E"
+                                android:textSize="15sp" />
 
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="14dp"
+                                android:text="Edit"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llCartContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvCartRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/transparent" />
-
-                <LinearLayout
-                    android:id="@+id/llListProduct"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                </LinearLayout>
-            </LinearLayout>
+            </ScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"

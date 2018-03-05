@@ -140,6 +140,7 @@ public class ProductCartAdapter extends SampleAdapter {
                 cartItem.checked.set(isChecked);
                 cartItem.checkedAll.set(isChecked);
             }
+            updateTotalCost();
         }
     }
 
