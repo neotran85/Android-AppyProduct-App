@@ -7,17 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageButton;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.CompletedJobListener;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -33,6 +33,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     HomeViewModel mHomeViewModel;
     FragmentHomeBinding mBinder;
     private Toolbar mToolbar;
+
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,8 +52,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onResume() {
         super.onResume();
-        mHomeViewModel.updateTotalCountProductCart();
+        mSearchToolbarViewHolder.onBind(0);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -66,11 +69,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
     }
 
-    @Override
-    public void openProductCart() {
-        Intent intent = ProductCartListActivity.getStartIntent(this.getActivity());
-        startActivity(intent);
-    }
     private void openBookingSteps(int type) {
         mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
         mHomeViewModel.getDataManager().getServiceOrderUserInput().setUpData(type);
@@ -103,6 +101,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
         addProductTopicsFragment();
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar);
     }
 
     @Override

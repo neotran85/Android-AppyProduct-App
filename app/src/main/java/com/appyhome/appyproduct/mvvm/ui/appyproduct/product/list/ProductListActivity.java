@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListAct
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -40,6 +41,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public static final int DEFAULT_SPAN_COUNT = 2;
 
 
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
@@ -57,6 +60,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.tabLayout.setVisibility(View.GONE);
         setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
     }
 
     @Override
@@ -161,8 +165,14 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.updateTotalCountProductCart();
+        mSearchToolbarViewHolder.onBind(0);
     }
+
+    @Override
+    public void updateCartCount() {
+        mSearchToolbarViewHolder.onBind(0);
+    }
+
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 

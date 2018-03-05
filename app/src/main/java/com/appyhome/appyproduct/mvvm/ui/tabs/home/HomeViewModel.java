@@ -12,19 +12,4 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                          SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
-    public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
-
-    public void updateTotalCountProductCart() {
-        getCompositeDisposable().add(getDataManager()
-                .getTotalCountProductCarts("1234")
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(total -> {
-                    if (total >= 0)
-                        totalItemsCount.set(total);
-                }, throwable -> {
-                    Crashlytics.logException(throwable);
-                }));
-    }
 }

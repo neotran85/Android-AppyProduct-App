@@ -19,6 +19,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAda
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -34,6 +35,8 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     CategoryAdapter mSubCategoryAdapter;
 
     ActivityProductCategoryBinding mBinder;
+
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static final int ID_DEFAULT_TOPIC = 73;
     public static final int DEFAULT_SPAN_COUNT = 2;
@@ -68,6 +71,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
         mCategoryViewModel.getProductCategoryByTopic(idTopic);
         mCategoryViewModel.getProductTopicById(idTopic);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv, CategoryAdapter adapter) {
@@ -128,7 +132,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Override
     public void onResume() {
         super.onResume();
-        mCategoryViewModel.updateTotalCountProductCart();
+        mSearchToolbarViewHolder.onBind(0);
     }
 
     @Override

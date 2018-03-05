@@ -1,88 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="end|center"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder" />
+        <variable
+            name="viewModel"
+            type="com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewModel" />
+
+    </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/actionbar_icon_size"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/rectangle_round_gray"
-        android:gravity="center|start"
-        android:orientation="horizontal"
-        android:paddingBottom="2dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="16dp"
-        android:paddingTop="2dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/search_logo" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right|center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:gravity="end"
-                android:paddingRight="4dp"
-                android:text="Search"
-                android:textAlignment="textEnd"
-                android:textColor="@color/text_hint"
-                android:textSize="12dp"></TextView>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/search_icon" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/toolbarCartButton"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        android:gravity="left|center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|center"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/actionbar_icon_size"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_round_gray"
+            android:gravity="center|start"
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="16dp"
+            android:paddingTop="2dp">
 
             <ImageView
-                android:id="@+id/ivCart"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/icon_toolbar_cart" />
-
-            <TextView
-                android:layout_marginEnd="12dp"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="34dp"
-                android:background="@color/colorAccent"
-                android:padding="2dp"
-                android:text="12"
-                android:textColor="@color/white"
-                android:textSize="10sp" />
-        </RelativeLayout>
+                android:adjustViewBounds="true"
+                android:src="@mipmap/search_logo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="end"
+                    android:paddingRight="4dp"
+                    android:text="Search"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/text_hint"
+                    android:textSize="12dp"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/search_icon" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:gravity="left|center_vertical"
+            android:onClick="@{(view) -> navigator.openProductCart()}"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivCart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/icon_toolbar_cart" />
+
+                <TextView
+                    android:gravity="center"
+                    totalCart="@{viewModel.totalItemsCount}"
+                    android:layout_width="24dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="34dp"
+                    android:background="@mipmap/bg_count_carts"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>
