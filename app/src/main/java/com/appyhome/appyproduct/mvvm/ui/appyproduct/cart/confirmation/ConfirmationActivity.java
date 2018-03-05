@@ -19,6 +19,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListAct
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
@@ -43,6 +44,11 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ConfirmationActivity.class);
         return intent;
+    }
+
+    @Override
+    public void handleErrors(Throwable throwable) {
+        showAlert(getString(R.string.error_unknown));
     }
 
     @Override
@@ -110,6 +116,10 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     @Override
     public void gotoNextStep() {
+        mMainViewModel.addOrder();
+    }
+
+    public void addOrderOk() {
         if (mMainViewModel.isMolpay.get()) {
             PaymentManager.getInstance().startMolpayActivity(this,
                     mMainViewModel.totalCost.get().toString(), mMainViewModel.getOrderId(),
@@ -122,8 +132,10 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     public void gotoOrderCompleted() {
-        Intent intent = OrderCompleteActivity.getStartIntent(this);
-        startActivity(intent);
+        Intent i = OrderCompleteActivity.getStartIntent(this);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     @Override

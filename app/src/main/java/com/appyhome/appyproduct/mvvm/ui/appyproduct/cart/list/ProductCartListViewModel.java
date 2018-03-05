@@ -23,7 +23,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
     private Disposable disposableGetAllProductCarts = null;
 
     public void emptyProductCarts() {
-        getCompositeDisposable().add(getDataManager().emptyProductCarts()
+        getCompositeDisposable().add(getDataManager().emptyProductCarts("1234")
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // EMPTY SUCCEEDED

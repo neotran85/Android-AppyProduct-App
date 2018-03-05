@@ -199,6 +199,7 @@ public class AppDbHelper implements DbHelper {
         getRealm().commitTransaction();
         return address;
     }
+
     @Override
     public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
         getRealm().beginTransaction();
@@ -217,6 +218,7 @@ public class AppDbHelper implements DbHelper {
         getRealm().beginTransaction();
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)
+                .equalTo("order_id", 0)
                 .sort("seller_name")
                 .findAll().asFlowable();
         getRealm().commitTransaction();
@@ -227,11 +229,12 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Integer> getTotalCountProductCarts(String userId) {
         getRealm().beginTransaction();
         RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
+                .equalTo("order_id", 0)
                 .equalTo("user_id", userId)
                 .findAll();
         int total = 0;
-        if(carts != null) {
-            for(ProductCart item: carts) {
+        if (carts != null) {
+            for (ProductCart item : carts) {
                 total = total + item.amount;
             }
         }
@@ -244,6 +247,7 @@ public class AppDbHelper implements DbHelper {
         getRealm().beginTransaction();
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)
+                .equalTo("order_id", 0)
                 .equalTo("checked", true)
                 .sort("seller_name")
                 .findAll().asFlowable();
@@ -293,8 +297,8 @@ public class AppDbHelper implements DbHelper {
             RealmResults<Address> addressList = getRealm().where(Address.class)
                     .equalTo("customer_id", userId)
                     .findAll();
-            if(addressList != null && addressList.size() > 0) {
-                for(Address address1: addressList) {
+            if (addressList != null && addressList.size() > 0) {
+                for (Address address1 : addressList) {
                     address1.is_default = false;
                     getRealm().copyToRealmOrUpdate(address1);
                 }
@@ -357,6 +361,7 @@ public class AppDbHelper implements DbHelper {
         cartItem.checked = true;
         cartItem.product_avatar = product.avatar_name;
         cartItem.user_id = userId;
+        cartItem.order_id = 0;
         return cartItem;
     }
 
@@ -381,10 +386,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> emptyProductCarts() {
+    public Flowable<Boolean> emptyProductCarts(String userId) {
         try {
             getRealm().beginTransaction();
-            RealmResults<ProductCart> carts = getRealm().where(ProductCart.class).findAll();
+            RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
+                    .equalTo("user_id", userId)
+                    .equalTo("order_id", 0)
+                    .findAll();
             carts.deleteAllFromRealm();
             getRealm().commitTransaction();
             return Flowable.just(true);
@@ -396,9 +404,9 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
-                               Payment payment, Address shippingAddress,
-                               String customerId, String customerName,
-                               float totalCost, float discount) {
+                                      String paymentMethod, Address shippingAddress,
+                                      String customerId, String customerName,
+                                      float totalCost, float discount) {
         try {
             getRealm().beginTransaction();
             ProductOrder order = new ProductOrder();
@@ -406,13 +414,15 @@ public class AppDbHelper implements DbHelper {
             order.customer_name = customerName;
             order.discount = discount;
             order.customer_id = customerId;
-            order.payment_method = payment;
+            order.payment_method = paymentMethod;
             order.shipping_address = shippingAddress;
             order.cart = new RealmList<>();
             order.total_cost = totalCost;
-            for(ProductCart item: items) {
+            for (ProductCart item : items) {
+                item.order_id = order.id;
                 order.cart.add(item);
             }
+            getRealm().copyToRealmOrUpdate(items);
             order = getRealm().copyToRealmOrUpdate(order);
             getRealm().commitTransaction();
             return Flowable.just(order != null && order.isValid());

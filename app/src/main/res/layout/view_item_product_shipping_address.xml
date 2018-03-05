@@ -40,7 +40,7 @@
             android:orientation="vertical">
 
             <TextView
-                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.name}"

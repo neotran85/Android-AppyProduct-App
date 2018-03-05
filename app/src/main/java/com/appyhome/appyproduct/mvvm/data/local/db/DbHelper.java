@@ -49,7 +49,7 @@ public interface DbHelper {
 
     Flowable<Boolean> removeProductCartItem(long idProductCart);
 
-    Flowable<Boolean> emptyProductCarts();
+    Flowable<Boolean> emptyProductCarts(String userId);
 
     Flowable<RealmResults<Address>> getAllShippingAddress(String userId);
 
@@ -62,7 +62,7 @@ public interface DbHelper {
     Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);
 
     Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
-                               Payment payment, Address shippingAddress,
+                               String paymentMethod, Address shippingAddress,
                                String customerId, String customerName,
                                float totalCost, float discount);
 

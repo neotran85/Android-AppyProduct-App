@@ -11,4 +11,7 @@ public interface ConfirmationNavigator {
     void editShippingAddress();
     void editPaymentMethod();
     void editCart();
+    void handleErrors(Throwable throwable);
+    void addOrderOk();
+
 }

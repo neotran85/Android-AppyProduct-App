@@ -470,8 +470,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> emptyProductCarts() {
-        return mDbHelper.emptyProductCarts();
+    public Flowable<Boolean> emptyProductCarts(String userId) {
+        return mDbHelper.emptyProductCarts(userId);
     }
 
     @Override
@@ -511,10 +511,10 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
-                                      Payment payment, Address shippingAddress,
+                                      String paymentMethod, Address shippingAddress,
                                       String customerId, String customerName,
                                       float totalCost, float discount) {
-        return mDbHelper.addOrder(items, payment, shippingAddress, customerId, customerName, totalCost, discount);
+        return mDbHelper.addOrder(items, paymentMethod, shippingAddress, customerId, customerName, totalCost, discount);
     }
 
     @Override

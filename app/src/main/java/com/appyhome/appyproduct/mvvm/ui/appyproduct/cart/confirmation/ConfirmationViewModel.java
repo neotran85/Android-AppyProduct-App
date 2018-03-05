@@ -3,11 +3,15 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+
+import io.realm.RealmResults;
 
 public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> {
     public ObservableField<String> totalCost = new ObservableField<>("");
@@ -18,6 +22,9 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     public ObservableField<Boolean> isMolpay = new ObservableField<>(false);
 
     private float mTotalCost = 0;
+    private RealmResults<ProductCart> mCarts;
+    private String mPaymentMethod = "";
+    private Address mShippingAddress;
 
     public ConfirmationViewModel(DataManager dataManager,
                                  SchedulerProvider schedulerProvider) {
@@ -29,6 +36,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
+                    mShippingAddress = addressResult;
                     name.set(addressResult.customer_name);
                     phoneNumber.set(addressResult.phone_number);
                     address.set(addressResult.address);
@@ -39,9 +47,40 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     }
 
     public void fetchPaymentMethods() {
-        String paymentMethod = getDataManager().getDefaultPaymentMethod("1234");
-        isVisa.set(paymentMethod.equals(PaymentViewModel.PAYMENT_VISA));
-        isMolpay.set(paymentMethod.equals(PaymentViewModel.PAYMENT_MOLPAY));
+        mPaymentMethod = getDataManager().getDefaultPaymentMethod("1234");
+        isVisa.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_VISA));
+        isMolpay.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_MOLPAY));
+    }
+
+    public void addOrder() {
+        getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
+                mShippingAddress, "1234", "Nam Tran", mTotalCost, 0)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // GET SUCCEEDED
+                    if (success) {
+                        emptyProductCarts();
+                        getNavigator().showAlert("Order added");
+                        getNavigator().addOrderOk();
+                    } else {
+                        getNavigator().handleErrors(null);
+                    }
+                }, throwable -> {
+                    getNavigator().handleErrors(throwable);
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    private void emptyProductCarts() {
+        getCompositeDisposable().add(getDataManager().emptyProductCarts()
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // EMPTY SUCCEEDED
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
     }
 
     public void getAllCheckedProductCarts() {
@@ -49,6 +88,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(items -> {
                     // GET SUCCEEDED
+                    mCarts = items;
                     getNavigator().showCheckedItems(items);
                     if (items != null && items.size() > 0) {
                         mTotalCost = 0;
@@ -62,9 +102,11 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     Crashlytics.logException(throwable);
                 }));
     }
+
     public String getOrderId() {
         return System.currentTimeMillis() + "";
     }
+
     public String getNameOfUser() {
         String firstName = getDataManager().getUserFirstName();
         String lastName = getDataManager().getUserLastName();
