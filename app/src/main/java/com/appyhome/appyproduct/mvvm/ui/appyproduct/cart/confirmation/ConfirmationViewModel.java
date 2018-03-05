@@ -59,7 +59,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(success -> {
                     // GET SUCCEEDED
                     if (success) {
-                        emptyProductCarts();
                         getNavigator().showAlert("Order added");
                         getNavigator().addOrderOk();
                     } else {
@@ -67,17 +66,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     }
                 }, throwable -> {
                     getNavigator().handleErrors(throwable);
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
-    }
-
-    private void emptyProductCarts() {
-        getCompositeDisposable().add(getDataManager().emptyProductCarts()
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(success -> {
-                    // EMPTY SUCCEEDED
-                }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
