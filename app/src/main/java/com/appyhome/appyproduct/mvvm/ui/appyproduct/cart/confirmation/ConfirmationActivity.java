@@ -41,6 +41,8 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     public void onResume() {
         super.onResume();
         mMainViewModel.getAllCheckedProductCarts();
+        mMainViewModel.fetchPaymentMethods();
+        mMainViewModel.getDefaultShippingAddress();
     }
 
     @Override

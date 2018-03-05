@@ -78,9 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@color/white"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:gravity="center_vertical"
+                    android:gravity="bottom"
+                    android:paddingBottom="12dp"
                     android:orientation="horizontal"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp">
@@ -108,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:text="5000"
+                        android:text="@{viewModel.totalCost}"
                         android:textColor="@color/red_price"
                         android:textSize="20sp" />
 
@@ -135,12 +134,13 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
                             android:text="Shipping Address"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="#4E4E4E"
                             android:textSize="15sp" />
 
                         <TextView
@@ -164,7 +164,7 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ABC ABC ABC"
+                            android:text="@{viewModel.name}"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -187,7 +187,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="ABC ABC ABC"
+                                android:text="@{viewModel.phoneNumber}"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -199,8 +199,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:ellipsize="end"
-                            android:maxLines="4"
-                            android:text="ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABCABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABCABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC ABC"
+                            android:maxLines="3"
+                            android:text="@{viewModel.address}"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -213,27 +213,27 @@
                     android:background="@color/transparent" />
 
                 <LinearLayout
+                    android:padding="14dp"
                     android:id="@+id/llPaymentMethod"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="vertical"
-                    android:padding="14dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
+                            fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
                             android:text="Payment Method"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="#4E4E4E"
                             android:textSize="15sp" />
 
                         <TextView
@@ -246,12 +246,14 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="@{viewModel.isVisa, default=gone}"
+                        android:paddingTop="20dp"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
                         android:id="@+id/llVisa"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@color/white"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -278,6 +280,42 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="4dp"
                             android:background="@mipmap/payment_visa" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="@{viewModel.isMolpay, default=gone}"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:id="@+id/llMolpay"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_weight="1"
+                            android:text="@string/via_molpay"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="4dp"
+                            android:text="ABC"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:background="@mipmap/payment_molpay" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -313,7 +351,6 @@
                     android:background="@color/gray"></View>
 
                 <Button
-                    android:onClick="@{(view) -> navigator.gotoNextStep()}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -323,6 +360,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(view) -> navigator.gotoNextStep()}"
                     android:text="FINAL CONFIRM"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
