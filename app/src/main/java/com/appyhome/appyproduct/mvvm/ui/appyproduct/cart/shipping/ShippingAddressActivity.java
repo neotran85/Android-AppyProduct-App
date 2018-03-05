@@ -34,6 +34,8 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     ActivityProductShippingBinding mBinder;
     AddressAdapter mAdapter;
 
+    boolean isEditMode = false;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ShippingAddressActivity.class);
         return intent;
@@ -47,6 +49,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mBinder.setNavigator(this);
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
+        isEditMode = getIntent().getBooleanExtra("edit_mode", false);
     }
 
     @Override
@@ -54,9 +57,13 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         Intent intent = NewAddressActivity.getStartIntent(this);
         startActivity(intent);
     }
+
     @Override
     public void gotoNextStep() {
-        startActivity(PaymentActivity.getStartIntent(this));
+        if (isEditMode) {
+            finish();
+        } else
+            startActivity(PaymentActivity.getStartIntent(this));
     }
 
     @Override

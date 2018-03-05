@@ -40,8 +40,9 @@
                 android:src="@mipmap/icon_store" />
 
             <TextView
+                android:layout_weight="1"
                 fontPath="fonts/TitilliumWeb-Bold.ttf"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:ellipsize="end"
@@ -49,6 +50,30 @@
                 android:text="@{viewModel.sellerName}"
                 android:textColor="@color/dark_gray"
                 android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_marginEnd="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="4dp"
+                    android:text="RM"
+                    android:textColor="@color/red_price"
+                    android:textSize="14sp" />
+
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="@{viewModel.totalCostOfStore}"
+                    android:textColor="@color/red_price"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -75,12 +100,12 @@
                 android:paddingTop="8dp">
 
                 <TextView
-                    android:paddingEnd="14dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:paddingEnd="14dp"
                     android:text="@{viewModel.title}"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -91,6 +116,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,6 +124,7 @@
                         android:text="Amount: "
                         android:textColor="@color/dark_gray"
                         android:textSize="13sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

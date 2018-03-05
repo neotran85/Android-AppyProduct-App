@@ -10,7 +10,7 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
 public class CartItemViewModel extends ProductCartItemViewModel {
-
+    public ObservableField<String> totalCostOfStore = new ObservableField<>("");
     public CartItemViewModel() {
         super();
     }

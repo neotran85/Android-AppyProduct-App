@@ -8,4 +8,7 @@ public interface ConfirmationNavigator {
     void showAlert(String message);
     void gotoNextStep();
     void showCheckedItems(RealmResults<ProductCart> result);
+    void editShippingAddress();
+    void editPaymentMethod();
+    void editCart();
 }

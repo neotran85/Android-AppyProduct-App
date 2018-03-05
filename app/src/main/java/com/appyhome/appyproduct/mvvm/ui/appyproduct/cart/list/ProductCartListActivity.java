@@ -30,6 +30,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Inject
     ProductCartListViewModel mViewModel;
     ActivityProductCartListBinding mBinder;
+    boolean isEditMode = false;
 
     private ProductCartAdapter mProductCartAdapter;
 
@@ -50,10 +51,11 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts("1234");
         ViewUtils.setOnClickListener(this, mBinder.cbCheckAll, mBinder.ivTrash);
+        isEditMode = getIntent().getBooleanExtra("edit_mode", false);
     }
 
     public void emptyProductCarts() {
-        if(mProductCartAdapter != null) {
+        if (mProductCartAdapter != null) {
             mProductCartAdapter.getItems().clear();
             mProductCartAdapter.notifyDataSetChanged();
             mViewModel.emptyProductCarts();
@@ -68,8 +70,12 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void gotoNextStep() {
-        Intent intent = ShippingAddressActivity.getStartIntent(this);
-        startActivity(intent);
+        if (isEditMode) {
+            finish();
+        } else {
+            Intent intent = ShippingAddressActivity.getStartIntent(this);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -79,7 +85,8 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
                 AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
                 break;
             case R.id.cbCheckAll:
-                if(mProductCartAdapter != null) mProductCartAdapter.checkAllItems(mBinder.cbCheckAll.isChecked());
+                if (mProductCartAdapter != null)
+                    mProductCartAdapter.checkAllItems(mBinder.cbCheckAll.isChecked());
                 break;
         }
     }

@@ -19,6 +19,7 @@ import javax.inject.Inject;
 public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBinding, PaymentViewModel> implements PaymentNavigator, View.OnClickListener {
 
     ActivityProductCartPaymentBinding mBinder;
+    boolean isEditMode = false;
 
     @Inject
     public PaymentViewModel mMainViewModel;
@@ -37,11 +38,14 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
         mMainViewModel.setNavigator(this);
         mMainViewModel.fetchPaymentMethods();
         ViewUtils.setOnClickListener(this, mBinder.llMolpay, mBinder.llVisa);
+        isEditMode = getIntent().getBooleanExtra("edit_mode", false);
     }
 
     @Override
     public void gotoNextStep() {
-        startActivity(ConfirmationActivity.getStartIntent(this));
+        if (isEditMode)
+            finish();
+        else startActivity(ConfirmationActivity.getStartIntent(this));
     }
 
     @Override
@@ -55,6 +59,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
                 break;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();

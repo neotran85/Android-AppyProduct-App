@@ -153,8 +153,10 @@
                             <TextView
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:onClick="@{(view) -> navigator.editShippingAddress()}"
                                 android:text="Edit"
+                                android:paddingStart="60dp"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -247,6 +249,8 @@
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:onClick="@{(view) -> navigator.editPaymentMethod()}"
+                                android:paddingStart="60dp"
                                 android:text="Edit"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="14sp" />
@@ -356,7 +360,9 @@
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="14dp"
+                                android:onClick="@{(view) -> navigator.editCart()}"
+                                android:paddingStart="60dp"
+                                android:paddingEnd="14dp"
                                 android:text="Edit"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="14sp" />
@@ -366,6 +372,7 @@
                             android:id="@+id/llCartContainer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvCartRecyclerView"
                                 android:layout_width="match_parent"

@@ -16,6 +16,8 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartConfirmationBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.adapter.CartAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -59,6 +61,27 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         rv.setNestedScrollingEnabled(false);
+    }
+
+    @Override
+    public void editShippingAddress() {
+        Intent intent = ShippingAddressActivity.getStartIntent(this);
+        intent.putExtra("edit_mode", true);
+        startActivity(intent);
+    }
+
+    @Override
+    public void editPaymentMethod() {
+        Intent intent = PaymentActivity.getStartIntent(this);
+        intent.putExtra("edit_mode", true);
+        startActivity(intent);
+    }
+
+    @Override
+    public void editCart() {
+        Intent intent = ProductCartListActivity.getStartIntent(this);
+        intent.putExtra("edit_mode", true);
+        startActivity(intent);
     }
 
     @Override
