@@ -91,10 +91,12 @@
                     android:layout_height="18dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginStart="34dp"
+                    android:paddingBottom="1dp"
+                    android:text="11"
                     android:background="@mipmap/bg_count_carts"
                     android:textColor="@color/white"
                     android:textSize="10sp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

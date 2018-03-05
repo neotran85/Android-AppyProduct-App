@@ -9,12 +9,13 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
 public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
+    public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
+
     public SearchToolbarViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
     public void updateTotalCountProductCart() {
         getCompositeDisposable().add(getDataManager()
                 .getTotalCountProductCarts("1234")

@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ViewToolbarBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 public class SearchToolbarViewHolder extends BaseViewHolder {
 
@@ -29,8 +31,12 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     }
 
     public void openProductCart() {
-        Intent intent = ProductCartListActivity.getStartIntent(mActivity);
-        mActivity.startActivity(intent);
+        if (mBinding.getViewModel().totalItemsCount.get() > 0) {
+            Intent intent = ProductCartListActivity.getStartIntent(mActivity);
+            mActivity.startActivity(intent);
+        } else {
+            AlertManager.getInstance(mActivity).showLongToast(mActivity.getString(R.string.toast_your_cart_is_empty));
+        }
     }
 
     @Override
