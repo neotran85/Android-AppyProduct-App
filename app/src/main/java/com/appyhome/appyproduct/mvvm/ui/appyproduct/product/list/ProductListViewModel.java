@@ -49,7 +49,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
-                    getNavigator().showEmptyProducts();
+                    getNavigator().showProducts(list);
                     Crashlytics.logException(throwable);
                 }));
     }
@@ -67,7 +67,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
-                    getNavigator().showEmptyProducts();
+                    getNavigator().showProducts(cachedList);
                     Crashlytics.logException(throwable);
                 }));
     }
