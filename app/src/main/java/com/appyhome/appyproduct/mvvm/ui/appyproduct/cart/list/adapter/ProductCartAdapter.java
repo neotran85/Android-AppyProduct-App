@@ -1,14 +1,18 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartEmptyBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
@@ -24,7 +28,7 @@ public class ProductCartAdapter extends SampleAdapter {
     private ProductCartListViewModel mProductCartListViewModel;
     public boolean isChangedByUser = false;
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
-
+    private ProductCartItemNavigator mNavigator;
     public ProductCartAdapter() {
         this.mItems = null;
     }
@@ -32,6 +36,7 @@ public class ProductCartAdapter extends SampleAdapter {
     public void setMainViewModel(ProductCartListViewModel viewModel) {
         mProductCartListViewModel = viewModel;
     }
+
     public ArrayList<BaseViewModel> getItems() {
         return mItems;
     }
@@ -110,13 +115,14 @@ public class ProductCartAdapter extends SampleAdapter {
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (viewModelManager != null) {
             viewModelManager.clear();
         }
         viewModelManager = new HashMap();
         if (results != null) {
             for (ProductCart item : results) {
-                ProductCartItemViewModel cartItem = createViewModel(item, navigator);
+                ProductCartItemViewModel cartItem = createViewModel(item, mNavigator);
                 addProductCartToStoreBySellerName(cartItem);
                 mItems.add(cartItem);
             }
@@ -126,6 +132,13 @@ public class ProductCartAdapter extends SampleAdapter {
         }
         updateTotalCost();
         updateIfCheckedAll();
+    }
+
+    @Override
+    protected BaseViewHolder getEmptyHolder(ViewGroup parent) {
+        ViewItemProductCartEmptyBinding itemViewBinding = ViewItemProductCartEmptyBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ProductCartItemEmptyViewHolder(itemViewBinding, mNavigator);
     }
 
     @Override
@@ -251,5 +264,4 @@ public class ProductCartAdapter extends SampleAdapter {
             }
         }
     }
-
 }

@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCar
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -72,12 +73,28 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
+    public void backToHomeScreen() {
+        Intent i = MainActivity.getStartIntent(this);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
+    @Override
     public void gotoNextStep() {
         if (isEditMode) {
             finish();
         } else {
             Intent intent = ShippingAddressActivity.getStartIntent(this);
             startActivity(intent);
+        }
+    }
+
+    public void goBack() {
+        if(mViewModel.isCartEmpty.get()) {
+            backToHomeScreen();
+        } else {
+            finish();
         }
     }
 
@@ -115,6 +132,13 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.getAllProductCarts("1234");
     }
 
     @Override

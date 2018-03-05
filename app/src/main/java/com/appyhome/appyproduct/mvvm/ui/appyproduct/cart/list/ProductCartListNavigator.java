@@ -12,4 +12,6 @@ public interface ProductCartListNavigator {
     void showCart(RealmResults<ProductCart> result);
 
     void gotoNextStep();
+
+    void goBack();
 }

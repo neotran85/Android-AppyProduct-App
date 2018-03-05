@@ -87,7 +87,7 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     public class SampleItemEmptyViewHolder extends BaseViewHolder {
-        private SampleItemEmptyViewHolder(View view) {
+        public SampleItemEmptyViewHolder(View view) {
             super(view);
         }
 

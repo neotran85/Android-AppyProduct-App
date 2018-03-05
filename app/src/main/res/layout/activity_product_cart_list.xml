@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="14dp"
-                android:onClick="@{(view) -> navigator.finish()}"
+                android:onClick="@{(view) -> navigator.goBack()}"
                 android:src="@mipmap/icon_back" />
 
             <ImageView
