@@ -115,7 +115,7 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="2dp"
+                            android:layout_marginStart="6dp"
                             android:text="@{viewModel.totalCost}"
                             android:textColor="@color/red_price"
                             android:textSize="20sp" />

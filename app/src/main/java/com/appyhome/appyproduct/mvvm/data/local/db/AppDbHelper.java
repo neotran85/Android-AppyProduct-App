@@ -1,9 +1,11 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -16,6 +18,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -221,6 +224,22 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Integer> getTotalProductCarts(String userId) {
+        getRealm().beginTransaction();
+        RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
+                .equalTo("user_id", userId)
+                .findAll();
+        int total = 0;
+        if(carts != null) {
+            for(ProductCart item: carts) {
+                total = total + item.amount;
+            }
+        }
+        getRealm().commitTransaction();
+        return Flowable.just(total);
+    }
+
+    @Override
     public Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId) {
         getRealm().beginTransaction();
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
@@ -371,6 +390,33 @@ public class AppDbHelper implements DbHelper {
             return Flowable.just(true);
         } catch (Exception e) {
             e.printStackTrace();
+            return Flowable.just(false);
+        }
+    }
+
+    @Override
+    public Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
+                               Payment payment, Address shippingAddress,
+                               String customerId, String customerName,
+                               float totalCost, float discount) {
+        try {
+            getRealm().beginTransaction();
+            ProductOrder order = new ProductOrder();
+            order.id = System.currentTimeMillis();
+            order.customer_name = customerName;
+            order.discount = discount;
+            order.customer_id = customerId;
+            order.payment_method = payment;
+            order.shipping_address = shippingAddress;
+            order.cart = new RealmList<>();
+            order.total_cost = totalCost;
+            for(ProductCart item: items) {
+                order.cart.add(item);
+            }
+            order = getRealm().copyToRealmOrUpdate(order);
+            getRealm().commitTransaction();
+            return Flowable.just(order != null && order.isValid());
+        } catch (Exception e) {
             return Flowable.just(false);
         }
     }

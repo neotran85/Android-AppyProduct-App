@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
@@ -15,4 +16,8 @@ public class ProductListActivityModule {
         return new ProductListViewModel(dataManager, schedulerProvider);
     }
 
+    @Provides
+    ProductAdapter provideProductAdapter() {
+        return new ProductAdapter();
+    }
 }

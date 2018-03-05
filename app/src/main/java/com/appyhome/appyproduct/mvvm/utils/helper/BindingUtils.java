@@ -32,6 +32,23 @@ public final class BindingUtils {
         textView.setText(isEditMode ? "Done" : "Edit");
     }
 
+    @BindingAdapter("totalCart")
+    public static void setTotalCart(TextView textView, int totalCart) {
+        if (totalCart > 0) {
+            textView.setText((totalCart <= 99) ? totalCart + "" : "99+");
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setText("");
+            textView.setVisibility(View.GONE);
+        }
+    }
+
+
+    @BindingAdapter("saveModeText")
+    public static void setSaveModeText(TextView textView, boolean isSaveMode) {
+        textView.setText(isSaveMode ? "SAVE" : "NEXT");
+    }
+
     @BindingAdapter("imageAssetsUrl")
     public static void setImageAssetUrl(ImageView imageView, String path) {
         Context context = imageView.getContext();

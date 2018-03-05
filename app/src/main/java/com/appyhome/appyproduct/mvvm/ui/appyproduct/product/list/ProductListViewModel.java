@@ -1,5 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.databinding.ObservableField;
+
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -78,6 +80,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     if (productCart != null) {
                         getNavigator().showAlert(productCart.seller_name);
                         // getAllProductCarts("1234");
+                        updateTotalProductCart();
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
@@ -105,6 +108,20 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     addProductToCart(product);
                 }, throwable -> {
                     throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
+    public void updateTotalProductCart() {
+        getCompositeDisposable().add(getDataManager()
+                .getTotalProductCarts("1234")
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(total -> {
+                    if (total >= 0)
+                        totalItemsCount.set(total);
+                }, throwable -> {
                     Crashlytics.logException(throwable);
                 }));
     }

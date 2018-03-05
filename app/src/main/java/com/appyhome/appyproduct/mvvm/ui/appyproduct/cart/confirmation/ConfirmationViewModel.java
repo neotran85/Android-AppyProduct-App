@@ -62,4 +62,22 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     Crashlytics.logException(throwable);
                 }));
     }
+    public String getOrderId() {
+        return System.currentTimeMillis() + "";
+    }
+    public String getNameOfUser() {
+        String firstName = getDataManager().getUserFirstName();
+        String lastName = getDataManager().getUserLastName();
+        if (firstName != null && firstName.length() > 0)
+            return firstName + " " + lastName;
+        return "";
+    }
+
+    public String getEmailOfUser() {
+        return getDataManager().getCurrentUserEmail();
+    }
+
+    public String getPhoneNumberOfUser() {
+        return getDataManager().getCurrentPhoneNumber();
+    }
 }

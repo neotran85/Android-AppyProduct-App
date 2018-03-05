@@ -119,7 +119,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void openBankPaymentActivity() {
-        PaymentManager.getInstance().startPaymentActivity(this,
+        PaymentManager.getInstance().startMolpayActivity(this,
                 getViewModel().getTotalCost(), mAppointmentId,
                 getViewModel().getPhoneNumberOfUser(),
                 getViewModel().getEmailOfUser(),

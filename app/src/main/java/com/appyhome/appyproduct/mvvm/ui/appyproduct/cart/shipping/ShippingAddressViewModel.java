@@ -15,6 +15,7 @@ import io.realm.RealmResults;
 
 public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavigator> {
     public ObservableField<Boolean> isNoAddress = new ObservableField<>(true);
+    public ObservableField<Boolean> isEditMode = new ObservableField<Boolean>(false);
 
     private Disposable mGetAllShippingAddress = null;
 

@@ -21,7 +21,12 @@ import io.realm.RealmResults;
 
 public class AddressAdapter extends SampleAdapter implements AddressItemNavigator {
 
-    private AddressItemViewModel mSelected = null;
+    private AddressItemViewModel mSelected;
+
+    public AddressAdapter() {
+        mSelected = null;
+        mItems = null;
+    }
 
     @Override
     public void onClick(View view) {
@@ -41,12 +46,12 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
         itemViewModel.checked.set(address.is_default);
         itemViewModel.setIdAddress(address.id);
         itemViewModel.setNavigator(this);
-        if(address.is_default)
+        if (address.is_default)
             mSelected = itemViewModel;
         return itemViewModel;
     }
 
-    public AddressAdapter(RealmResults<Address> results, ShippingAddressViewModel viewModel) {
+    public void updateAdapter(RealmResults<Address> results, ShippingAddressViewModel viewModel) {
         mItems = new ArrayList<>();
         if (results != null) {
             for (Address item : results) {
@@ -86,7 +91,7 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
                 mBinding.llItemView.setOnClickListener(v -> {
-                    if(mSelected != null)
+                    if (mSelected != null)
                         mSelected.checked.set(false);
                     viewModel.checked.set(true);
                     viewModel.updateDefaultToDatabase();

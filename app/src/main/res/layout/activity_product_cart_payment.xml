@@ -177,7 +177,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
-                    android:text="NEXT"
+                    saveModeText="@{viewModel.isEditMode}"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>

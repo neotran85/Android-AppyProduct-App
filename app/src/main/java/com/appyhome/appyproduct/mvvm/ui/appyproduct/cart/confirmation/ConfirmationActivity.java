@@ -7,14 +7,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartConfirmationBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.adapter.CartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
@@ -22,6 +21,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddres
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
+import com.molpay.molpayxdk.MOLPayActivity;
 
 import javax.inject.Inject;
 
@@ -102,14 +103,36 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     private void updateCartContainerHeight(int count) {
         int height = count * HEIGHT_CART_ITEM + mAdapter.getTotalStores() * HEIGHT_TITLE_CART_ITEM;
         height = ViewUtils.dpToPx(height);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams ) mBinder.llCartContainer.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mBinder.llCartContainer.getLayoutParams();
         params.height = height;
         mBinder.llCartContainer.setLayoutParams(params);
     }
 
     @Override
     public void gotoNextStep() {
+        if (mMainViewModel.isMolpay.get()) {
+            PaymentManager.getInstance().startMolpayActivity(this,
+                    mMainViewModel.totalCost.get().toString(), mMainViewModel.getOrderId(),
+                    mMainViewModel.getPhoneNumberOfUser(),
+                    mMainViewModel.getEmailOfUser(),
+                    mMainViewModel.getNameOfUser());
+        } else {
+            gotoOrderCompleted();
+        }
+    }
 
+    public void gotoOrderCompleted() {
+        Intent intent = OrderCompleteActivity.getStartIntent(this);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
+            AlertManager.getInstance(this).showLongToast("Payment success" + data);
+            gotoOrderCompleted();
+        }
     }
 
     @Override

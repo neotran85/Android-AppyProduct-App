@@ -32,7 +32,7 @@ public class PaymentManager {
         return mInstance;
     }
 
-    public void startPaymentActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email, String name) {
+    public void startMolpayActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email, String name) {
         if (currentActivity != null) {
             HashMap<String, Object> paymentDetails = new HashMap<>();
             // Mandatory String. A value not less than '1.00'

@@ -39,6 +39,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
         mMainViewModel.fetchPaymentMethods();
         ViewUtils.setOnClickListener(this, mBinder.llMolpay, mBinder.llVisa);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
+        mMainViewModel.isEditMode.set(isEditMode);
     }
 
     @Override

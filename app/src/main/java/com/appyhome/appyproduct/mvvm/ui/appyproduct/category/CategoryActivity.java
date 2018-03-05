@@ -27,9 +27,12 @@ import io.realm.RealmResults;
 public class CategoryActivity extends BaseActivity<ActivityProductCategoryBinding, CategoryViewModel> implements CategoryNavigator, CategoryItemNavigator {
     @Inject
     CategoryViewModel mCategoryViewModel;
+
+    CategoryAdapter mCategoryAdapter;
+    
+    CategoryAdapter mSubCategoryAdapter;
+
     ActivityProductCategoryBinding mBinder;
-    private CategoryAdapter mCategoryAdapter;
-    private CategoryAdapter mSubCategoryAdapter;
 
     public static final int ID_DEFAULT_TOPIC = 73;
     public static final int DEFAULT_SPAN_COUNT = 2;

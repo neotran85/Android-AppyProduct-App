@@ -9,6 +9,8 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 public class PaymentViewModel extends BaseViewModel<PaymentNavigator> {
     public static final String PAYMENT_VISA = "visa";
     public static final String PAYMENT_MOLPAY = "molpay";
+
+    public ObservableField<Boolean> isEditMode = new ObservableField<Boolean>(false);
     public ObservableField<Boolean> isPaymentVisa = new ObservableField<Boolean>(true);
     public ObservableField<Boolean> isPaymentMolpay = new ObservableField<Boolean>(false);
 

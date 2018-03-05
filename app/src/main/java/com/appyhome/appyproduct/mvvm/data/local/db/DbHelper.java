@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.data.local.db;
 
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -59,6 +60,13 @@ public interface DbHelper {
     Flowable<Address> getDefaultShippingAddress(String userId);
 
     Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);
+
+    Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
+                               Payment payment, Address shippingAddress,
+                               String customerId, String customerName,
+                               float totalCost, float discount);
+
+    Flowable<Integer> getTotalProductCarts(String userId);
 
     void closeDatabase();
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -506,5 +507,18 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId) {
         return mDbHelper.getAllCheckedProductCarts(userId);
+    }
+
+    @Override
+    public Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
+                                      Payment payment, Address shippingAddress,
+                                      String customerId, String customerName,
+                                      float totalCost, float discount) {
+        return mDbHelper.addOrder(items, payment, shippingAddress, customerId, customerName, totalCost, discount);
+    }
+
+    @Override
+    public Flowable<Integer> getTotalProductCarts(String userId) {
+        return mDbHelper.getTotalProductCarts(userId);
     }
 }

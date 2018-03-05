@@ -25,11 +25,13 @@ public class ProductCartAdapter extends SampleAdapter {
     public boolean isChangedByUser = false;
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
 
-    public ProductCartAdapter(ProductCartListViewModel viewModel) {
+    public ProductCartAdapter() {
         this.mItems = null;
-        mProductCartListViewModel = viewModel;
     }
 
+    public void setMainViewModel(ProductCartListViewModel viewModel) {
+        mProductCartListViewModel = viewModel;
+    }
     public ArrayList<BaseViewModel> getItems() {
         return mItems;
     }

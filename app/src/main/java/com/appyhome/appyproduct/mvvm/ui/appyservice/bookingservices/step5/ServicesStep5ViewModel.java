@@ -23,7 +23,7 @@ public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator
     }
 
     public String getOrderId() {
-        return "Order Id: #" + orderId.get();
+        return "ProductOrder Id: #" + orderId.get();
     }
 
     public int isCongratulationsVisible() {

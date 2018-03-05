@@ -8,4 +8,5 @@
     <string name="please_input_valid_phone">Please input a valid phone number</string>
     <string name="visa_credit_debit">Visa Credit / Debit</string>
     <string name="via_molpay">Molpay</string>
+    <string name="thank_you_your_order_is_completed">Thank you.\n Your order is completed.</string>
 </resources>

@@ -33,7 +33,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     HomeViewModel mHomeViewModel;
     FragmentHomeBinding mBinder;
     private Toolbar mToolbar;
-    private ImageButton mToolbarCartButton;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -49,6 +48,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mHomeViewModel.updateTotalProductCart();
+    }
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibAirConServicing:
@@ -57,15 +61,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             case R.id.ibHomeCleaning:
                 openBookingSteps(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
                 break;
-            case R.id.toolbarCartButton:
-                Intent intent = ProductCartListActivity.getStartIntent(this.getActivity());
-                startActivity(intent);
-                break;
             default: // Coming soon...
                 AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
     }
 
+    @Override
+    public void openProductCart() {
+        Intent intent = ProductCartListActivity.getStartIntent(this.getActivity());
+        startActivity(intent);
+    }
     private void openBookingSteps(int type) {
         mHomeViewModel.getDataManager().getServiceOrderUserInput().clear();
         mHomeViewModel.getDataManager().getServiceOrderUserInput().setUpData(type);
@@ -87,8 +92,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mHomeViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mHomeViewModel);
+        mBinder.setNavigator(this);
         mToolbar = mBinder.toolbar;
-        mToolbarCartButton = mBinder.toolbar.findViewById(R.id.toolbarCartButton);
         mToolbar.setNavigationIcon(null);
         if (getActivity() instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -98,7 +103,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
         addProductTopicsFragment();
-        mToolbarCartButton.setOnClickListener(this);
     }
 
     @Override

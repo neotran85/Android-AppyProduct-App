@@ -31,7 +31,10 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Inject
     ShippingAddressViewModel mMainViewModel;
+
     ActivityProductShippingBinding mBinder;
+
+    @Inject
     AddressAdapter mAdapter;
 
     boolean isEditMode = false;
@@ -47,9 +50,11 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);
         mBinder.setNavigator(this);
+
         mMainViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.rvAddressList);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
+        mMainViewModel.isEditMode.set(isEditMode);
     }
 
     @Override
@@ -74,7 +79,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void showAddressList(RealmResults<Address> addresses) {
-        mAdapter = new AddressAdapter(addresses, mMainViewModel);
+        mAdapter.updateAdapter(addresses, mMainViewModel);
         mBinder.rvAddressList.setAdapter(mAdapter);
     }
 

@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
@@ -125,6 +127,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = ConfirmationActivityModule.class)
     abstract ConfirmationActivity bindConfirmationActivity();
+
+    @ContributesAndroidInjector(modules = OrderCompleteActivityModule.class)
+    abstract OrderCompleteActivity bindOrderCompleteActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class,

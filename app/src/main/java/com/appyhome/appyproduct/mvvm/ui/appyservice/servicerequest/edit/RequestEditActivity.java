@@ -98,7 +98,7 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
     }
 
     public void openBankPaymentActivity() {
-        PaymentManager.getInstance().startPaymentActivity(this,
+        PaymentManager.getInstance().startMolpayActivity(this,
                 mPrice.toString(), mRequestEditViewModel.getIdNumber(),
                 mRequestEditViewModel.getPhoneNumberOfUser(),
                 mRequestEditViewModel.getEmailOfUser(),

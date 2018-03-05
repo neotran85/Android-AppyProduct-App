@@ -29,10 +29,13 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         implements ProductCartListNavigator, ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
     @Inject
     ProductCartListViewModel mViewModel;
+    @Inject
+    ProductCartAdapter mProductCartAdapter;
+
     ActivityProductCartListBinding mBinder;
     boolean isEditMode = false;
 
-    private ProductCartAdapter mProductCartAdapter;
+
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductCartListActivity.class);
@@ -46,7 +49,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        mProductCartAdapter = new ProductCartAdapter(mViewModel);
+        mProductCartAdapter.setMainViewModel(mViewModel);
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts("1234");

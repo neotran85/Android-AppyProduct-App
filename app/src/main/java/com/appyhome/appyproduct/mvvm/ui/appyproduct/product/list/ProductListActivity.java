@@ -27,9 +27,12 @@ import io.realm.RealmResults;
 public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator, TabLayout.OnTabSelectedListener {
     @Inject
     ProductListViewModel mViewModel;
+
     ActivityProductListBinding mBinder;
 
-    private ProductAdapter mProductAdapter;
+    @Inject
+    ProductAdapter mProductAdapter;
+
     private static final int TAB_SORT = 0;
     private static final int TAB_FILTER = 1;
     private int mIdSubCategory;
@@ -50,7 +53,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.setNavigator(this);
         mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         mViewModel.fetchProductsByIdCategory(mIdSubCategory);
-        mProductAdapter = new ProductAdapter();
         mBinder.tabLayout.setVisibility(View.GONE);
         setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
@@ -150,6 +152,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.updateTotalProductCart();
+    }
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
