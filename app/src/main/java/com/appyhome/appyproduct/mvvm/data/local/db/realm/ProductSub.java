@@ -26,12 +26,9 @@ public class ProductSub extends RealmObject {
     public String description;
 
     @Expose
-    @SerializedName("thumbnail")
-    @ColumnInfo(name = "thumbnail")
-    public String thumbnail;
-
-    @Expose
     @SerializedName("id_category")
     @ColumnInfo(name = "id_category")
     public int id_category;
+
+    public String thumbnail;
 }

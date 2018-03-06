@@ -363,8 +363,17 @@ public class AppDataManager implements DataManager {
             ArrayList<ProductCategory> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
                             ApiUrlConfig.SEED_DATABASE_PRODUCT_CATEGORIES), type);
+            data = updateThumbnailsOfSub(data);
             return data;
         });
+    }
+
+    private ArrayList<ProductCategory> updateThumbnailsOfSub(ArrayList<ProductCategory> data) {
+        for(ProductCategory item: data) {
+            //item.thumbnail = "images/product/sub/" + item.id + ".png";
+            item.thumbnail = "images/product/sub/BASE_CABINETS.png";
+        }
+        return data;
     }
 
     @Override
