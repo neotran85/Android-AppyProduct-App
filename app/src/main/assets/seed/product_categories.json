@@ -166,6 +166,348 @@
     "thumbnail": "images/product/category/accents.png",
     "description": "",
     "name": "OUTDOOR DÉCOR"
+  },
+  {
+    "id": 103,
+    "id_topic": 73,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BATH LINEN"
+  },
+  {
+    "id": 101,
+    "id_topic": 73,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BEDDING"
+  },
+  {
+    "id": 106,
+    "id_topic": 73,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "SHOWER & CURTAINS"
+  },
+  {
+    "id": 104,
+    "id_topic": 73,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "OTHER BATHROOM ACCESSORIES"
+  },
+  {
+    "id": 105,
+    "id_topic": 73,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "MATTRESS & PILLOWS"
+  },
+  {
+    "id": 107,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "TABLEWARE"
+  },
+  {
+    "id": 311,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "CUTLERY"
+  },
+  {
+    "id": 109,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "GLASSWARE"
+  },
+  {
+    "id": 110,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BAKEWARE"
+  },
+  {
+    "id": 108,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "COOKWARE"
+  },
+  {
+    "id": 111,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "TABLE LINEN"
+  },
+  {
+    "id": 312,
+    "id_topic": 74,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "OTHER KITCHEN ACCESSORIES"
+  },
+  {
+    "id": 112,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BULBS"
+  },
+  {
+    "id": 313,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "LED BULBS"
+  },
+  {
+    "id": 314,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "TABLE LAMPS"
+  },
+  {
+    "id": 315,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "CEILING LIGHTS"
+  },
+  {
+    "id": 316,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "ACCENT LIGHTS"
+  },
+  {
+    "id": 317,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "WALL LIGHTS"
+  },
+  {
+    "id": 366,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "FLOOR LAMPS"
+  },
+  {
+    "id": 318,
+    "id_topic": 75,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "NURSERY"
+  },
+  {
+    "id": 113,
+    "id_topic": 76,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "KITCHEN ORGANISATION"
+  },
+  {
+    "id": 319,
+    "id_topic": 76,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "SHELVES"
+  },
+  {
+    "id": 320,
+    "id_topic": 76,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "RACKS & STANDS"
+  },
+  {
+    "id": 114,
+    "id_topic": 76,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BATHROOM"
+  },
+  {
+    "id": 321,
+    "id_topic": 76,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "HOUSEKEEPING"
+  },
+  {
+    "id": 388,
+    "id_topic": 76,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "SECONDARY STORAGE"
+  },
+  {
+    "id": 322,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "KITCHEN APPLIANCE (SMALL)"
+  },
+  {
+    "id": 323,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "KITCHEN APPLIANCE (LARGE)"
+  },
+  {
+    "id": 118,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "KITCHEN APPLIANCE ACCESSORIES"
+  },
+  {
+    "id": 120,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "AIRCOND & FANS"
+  },
+  {
+    "id": 119,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "LIVING APPLIANCE"
+  },
+  {
+    "id": 324,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BATHROOM APPLIANCE"
+  },
+  {
+    "id": 325,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "SECURITY"
+  },
+  {
+    "id": 326,
+    "id_topic": 78,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "SMART HOME"
+  },
+  {
+    "id": 115,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "SINK & FAUCETS"
+  },
+  {
+    "id": 304,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "BATH TUB & JACUZZI"
+  },
+  {
+    "id": 116,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "POWERTOOLS"
+  },
+  {
+    "id": 327,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "HARDWARE"
+  },
+  {
+    "id": 328,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "WALL FINISHING"
+  },
+  {
+    "id": 329,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "WALLPAPER"
+  },
+  {
+    "id": 330,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "FLOORING"
+  },
+  {
+    "id": 117,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "DOORS & GATES"
+  },
+  {
+    "id": 331,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "HAND TOOLS & STEP STOOLS"
+  },
+  {
+    "id": 332,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "LOCKS"
+  },
+  {
+    "id": 333,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "ELECTRICAL"
+  },
+  {
+    "id": 368,
+    "id_topic": 77,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "GARDENING TOOLS"
+  },
+  {
+    "id": 100,
+    "id_topic": 72,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "TOP 10 PRODUCTS"
+  },
+  {
+    "id": 98,
+    "id_topic": 72,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "FEATURED PRODUCTS"
+  },
+  {
+    "id": 99,
+    "id_topic": 72,
+    "thumbnail": "images/product/category/accents.png",
+    "description": "",
+    "name": "STYLES"
   }
-
 ]

@@ -343,6 +343,12 @@
     "name": "CARPETS"
   },
   {
+    "id": 174,
+    "id_category": 90,
+    "description": "",
+    "name": "RUGS"
+  },
+  {
     "id": 173,
     "id_category": 90,
     "description": "",
@@ -352,6 +358,1044 @@
     "id": 199,
     "id_category": 96,
     "description": "",
-    "name": "CANDLES"
+    "name": "CANDLES / HOLDERS"
+  },
+  {
+    "id": 202,
+    "id_category": 96,
+    "description": "",
+    "name": "AROMA DIFFUSERS"
+  },
+  {
+    "id": 203,
+    "id_category": 96,
+    "description": "",
+    "name": "ESSENTIAL OILS & FRAGRANCES"
+  },
+  {
+    "id": 183,
+    "id_category": 96,
+    "description": "",
+    "name": "WALL CLOCKS"
+  },
+  {
+    "id": 198,
+    "id_category": 96,
+    "description": "",
+    "name": "TABLE CLOCKS"
+  },
+  {
+    "id": 175,
+    "id_category": 96,
+    "description": "",
+    "name": "PAINTING "
+  },
+  {
+    "id": 182,
+    "id_category": 96,
+    "description": "",
+    "name": "POSTER & FRAMES"
+  },
+  {
+    "id": 178,
+    "id_category": 96,
+    "description": "",
+    "name": "PRINTS"
+  },
+  {
+    "id": 181,
+    "id_category": 96,
+    "description": "",
+    "name": "WRITING BOARDS"
+  },
+  {
+    "id": 200,
+    "id_category": 96,
+    "description": "",
+    "name": "WALL ART STICKERS"
+  },
+  {
+    "id": 201,
+    "id_category": 96,
+    "description": "",
+    "name": "WALL MIRROR STICKERS"
+  },
+  {
+    "id": 167,
+    "id_category": 96,
+    "description": "",
+    "name": "CURTAINS"
+  },
+  {
+    "id": 169,
+    "id_category": 96,
+    "description": "",
+    "name": "BLINDS "
+  },
+  {
+    "id": 205,
+    "id_category": 96,
+    "description": "",
+    "name": "BEDROOM"
+  },
+  {
+    "id": 204,
+    "id_category": 96,
+    "description": "",
+    "name": "BATHROOM"
+  },
+  {
+    "id": 206,
+    "id_category": 96,
+    "description": "",
+    "name": "ACCENTS"
+  },
+  {
+    "id": 170,
+    "id_category": 96,
+    "description": "",
+    "name": "NURSERY"
+  },
+  {
+    "id": 376,
+    "id_category": 96,
+    "description": "",
+    "name": "VASE"
+  },
+  {
+    "id": 379,
+    "id_category": 96,
+    "description": "",
+    "name": "TISSUE BOX HOLDER"
+  },
+  {
+    "id": 377,
+    "id_category": 96,
+    "description": "",
+    "name": "PHOTO FRAME"
+  },
+  {
+    "id": 380,
+    "id_category": 96,
+    "description": "",
+    "name": "OTHER TABLE DECORATIVES"
+  },
+  {
+    "id": 193,
+    "id_category": 96,
+    "description": "",
+    "name": "WEDDING"
+  },
+  {
+    "id": 196,
+    "id_category": 96,
+    "description": "",
+    "name": "XMAS"
+  },
+  {
+    "id": 194,
+    "id_category": 96,
+    "description": "",
+    "name": "CNY"
+  },
+  {
+    "id": 197,
+    "id_category": 96,
+    "description": "",
+    "name": "RAYA"
+  },
+  {
+    "id": 195,
+    "id_category": 96,
+    "description": "",
+    "name": "HALLOWEEN"
+  },
+  {
+    "id": 192,
+    "id_category": 96,
+    "description": "",
+    "name": "BIRTHDAY"
+  },
+  {
+    "id": 187,
+    "id_category": 96,
+    "description": "",
+    "name": "PILLOWS & CUSHIONS"
+  },
+  {
+    "id": 186,
+    "id_category": 96,
+    "description": "",
+    "name": "RUGS"
+  },
+  {
+    "id": 188,
+    "id_category": 96,
+    "description": "",
+    "name": "POTS & PLANTERS"
+  },
+  {
+    "id": 189,
+    "id_category": 96,
+    "description": "",
+    "name": "PETS"
+  },
+  {
+    "id": 191,
+    "id_category": 96,
+    "description": "",
+    "name": "CURTAINS"
+  },
+  {
+    "id": 230,
+    "id_category": 96,
+    "description": "",
+    "name": "HAND, FACE TOWELS"
+  },
+  {
+    "id": 228,
+    "id_category": 96,
+    "description": "",
+    "name": "BATH TOWELS"
+  },
+  {
+    "id": 227,
+    "id_category": 96,
+    "description": "",
+    "name": "TOWEL SETS"
+  },
+  {
+    "id": 216,
+    "id_category": 96,
+    "description": "",
+    "name": "BEDSHEETS"
+  },
+  {
+    "id": 217,
+    "id_category": 96,
+    "description": "",
+    "name": "DUVET COVERS"
+  },
+  {
+    "id": 220,
+    "id_category": 96,
+    "description": "",
+    "name": "BLANKETS & THROWS"
+  },
+  {
+    "id": 243,
+    "id_category": 96,
+    "description": "",
+    "name": "SHOWER HEADS"
+  },
+  {
+    "id": 245,
+    "id_category": 96,
+    "description": "",
+    "name": "SHOWER CURTAINS"
+  },
+  {
+    "id": 374,
+    "id_category": 96,
+    "description": "",
+    "name": "SHOWER LEVERS"
+  },
+  {
+    "id": 232,
+    "id_category": 96,
+    "description": "",
+    "name": "BATH ACCESSORIES SETS"
+  },
+  {
+    "id": 236,
+    "id_category": 96,
+    "description": "",
+    "name": "TOOTHPASTE/SOAP DISPENSERS"
+  },
+  {
+    "id": 234,
+    "id_category": 96,
+    "description": "",
+    "name": "ACCESSORIES HOLDER"
+  },
+  {
+    "id": 238,
+    "id_category": 96,
+    "description": "",
+    "name": "WEIGHING SCALES"
+  },
+  {
+    "id": 240,
+    "id_category": 96,
+    "description": "",
+    "name": "MATTRESS"
+  },
+  {
+    "id": 241,
+    "id_category": 96,
+    "description": "",
+    "name": "PILLOWS & BOLSTER"
+  },
+  {
+    "id": 242,
+    "id_category": 96,
+    "description": "",
+    "name": "COMFORTERS"
+  },
+  {
+    "id": 247,
+    "id_category": 96,
+    "description": "",
+    "name": "PLATES & BOWLS"
+  },
+  {
+    "id": 246,
+    "id_category": 96,
+    "description": "",
+    "name": "DINNER SETS"
+  },
+  {
+    "id": 251,
+    "id_category": 96,
+    "description": "",
+    "name": "CONDIMENT SETS "
+  },
+  {
+    "id": 256,
+    "id_category": 96,
+    "description": "",
+    "name": "SINGLES"
+  },
+  {
+    "id": 271,
+    "id_category": 96,
+    "description": "",
+    "name": "SETS"
+  },
+  {
+    "id": 258,
+    "id_category": 96,
+    "description": "",
+    "name": "GLASSES"
+  },
+  {
+    "id": 257,
+    "id_category": 96,
+    "description": "",
+    "name": "MUGS"
+  },
+  {
+    "id": 259,
+    "id_category": 96,
+    "description": "",
+    "name": "TEAPOTS & CUPS"
+  },
+  {
+    "id": 265,
+    "id_category": 96,
+    "description": "",
+    "name": "SHEETS & MATS"
+  },
+  {
+    "id": 262,
+    "id_category": 96,
+    "description": "",
+    "name": "DISHES & PANS"
+  },
+  {
+    "id": 270,
+    "id_category": 96,
+    "description": "",
+    "name": "MIXING BOWLS"
+  },
+  {
+    "id": 269,
+    "id_category": 96,
+    "description": "",
+    "name": "FOOD SCALES"
+  },
+  {
+    "id": 268,
+    "id_category": 96,
+    "description": "",
+    "name": "CUTTERS & MOLDS"
+  },
+  {
+    "id": 266,
+    "id_category": 96,
+    "description": "",
+    "name": "UTENSILS (MEASURING, BEATER)"
+  },
+  {
+    "id": 253,
+    "id_category": 96,
+    "description": "",
+    "name": "POTS & PANS"
+  },
+  {
+    "id": 254,
+    "id_category": 96,
+    "description": "",
+    "name": "PREP TOOLS"
+  },
+  {
+    "id": 255,
+    "id_category": 96,
+    "description": "",
+    "name": "UTENSILS"
+  },
+  {
+    "id": 272,
+    "id_category": 96,
+    "description": "",
+    "name": "TABLE LINEN / SEAT COVERS"
+  },
+  {
+    "id": 275,
+    "id_category": 96,
+    "description": "",
+    "name": "RUNNERS"
+  },
+  {
+    "id": 274,
+    "id_category": 96,
+    "description": "",
+    "name": "COASTERS"
+  },
+  {
+    "id": 273,
+    "id_category": 96,
+    "description": "",
+    "name": "PLACEMATS"
+  },
+  {
+    "id": 264,
+    "id_category": 96,
+    "description": "",
+    "name": "MITTS & APRONS"
+  },
+  {
+    "id": 260,
+    "id_category": 96,
+    "description": "",
+    "name": "SHAKERS"
+  },
+  {
+    "id": 261,
+    "id_category": 96,
+    "description": "",
+    "name": "FOOD TRAYS"
+  },
+  {
+    "id": 386,
+    "id_category": 96,
+    "description": "",
+    "name": "MISC ACCESSORIES"
+  },
+  {
+    "id": 278,
+    "id_category": 96,
+    "description": "",
+    "name": "BULBS"
+  },
+  {
+    "id": 277,
+    "id_category": 96,
+    "description": "",
+    "name": "LED BULBS"
+  },
+  {
+    "id": 280,
+    "id_category": 96,
+    "description": "",
+    "name": "TABLE LAMPS"
+  },
+  {
+    "id": 282,
+    "id_category": 96,
+    "description": "",
+    "name": "PENDANT LIGHTS"
+  },
+  {
+    "id": 283,
+    "id_category": 96,
+    "description": "",
+    "name": "MOOD LIGHTS"
+  },
+  {
+    "id": 276,
+    "id_category": 96,
+    "description": "",
+    "name": "WALL LIGHTS"
+  },
+  {
+    "id": 367,
+    "id_category": 96,
+    "description": "",
+    "name": "FLOOR LAMP"
+  },
+  {
+    "id": 281,
+    "id_category": 96,
+    "description": "",
+    "name": "NURSERY LIGHTS"
+  },
+  {
+    "id": 284,
+    "id_category": 96,
+    "description": "",
+    "name": "FOOD STORAGE "
+  },
+  {
+    "id": 285,
+    "id_category": 96,
+    "description": "",
+    "name": "CABINET ORGANIZERS"
+  },
+  {
+    "id": 286,
+    "id_category": 96,
+    "description": "",
+    "name": "COUNTER TOP"
+  },
+  {
+    "id": 289,
+    "id_category": 96,
+    "description": "",
+    "name": "WALL SHELVES"
+  },
+  {
+    "id": 231,
+    "id_category": 96,
+    "description": "",
+    "name": "SHOE CABINETS / RACKS"
+  },
+  {
+    "id": 229,
+    "id_category": 96,
+    "description": "",
+    "name": "COAT STANDS / HANGERS"
+  },
+  {
+    "id": 288,
+    "id_category": 96,
+    "description": "",
+    "name": "HOOKS & HANGERS"
+  },
+  {
+    "id": 290,
+    "id_category": 96,
+    "description": "",
+    "name": "SHOWER CADDY"
+  },
+  {
+    "id": 287,
+    "id_category": 96,
+    "description": "",
+    "name": "BASKET (LAUNDRY) "
+  },
+  {
+    "id": 244,
+    "id_category": 96,
+    "description": "",
+    "name": "TRASH CANS"
+  },
+  {
+    "id": 222,
+    "id_category": 96,
+    "description": "",
+    "name": "CLEANING TOOLS"
+  },
+  {
+    "id": 389,
+    "id_category": 96,
+    "description": "",
+    "name": "CLOTHS ORGANIZERS / VACCUM BAG"
+  },
+  {
+    "id": 239,
+    "id_category": 96,
+    "description": "",
+    "name": "FOOD PROCESSOR/BLENDER/JUICER"
+  },
+  {
+    "id": 237,
+    "id_category": 96,
+    "description": "",
+    "name": "AIR FRYERS/OVENS/MICROWAVES"
+  },
+  {
+    "id": 235,
+    "id_category": 96,
+    "description": "",
+    "name": "TOASTER/BREADMAKER"
+  },
+  {
+    "id": 233,
+    "id_category": 96,
+    "description": "",
+    "name": "RICE COOKER/STEAMERS/SLOW COOKER"
+  },
+  {
+    "id": 221,
+    "id_category": 96,
+    "description": "",
+    "name": "HOTPLATE/ELECTRIC GRIDDLES"
+  },
+  {
+    "id": 219,
+    "id_category": 96,
+    "description": "",
+    "name": "NURSERY"
+  },
+  {
+    "id": 218,
+    "id_category": 96,
+    "description": "",
+    "name": "KITCHEN GADGETS"
+  },
+  {
+    "id": 226,
+    "id_category": 96,
+    "description": "",
+    "name": "REFRIGERATOR"
+  },
+  {
+    "id": 224,
+    "id_category": 96,
+    "description": "",
+    "name": "FREEZERS & ICE MAKERS"
+  },
+  {
+    "id": 225,
+    "id_category": 96,
+    "description": "",
+    "name": "COOKTOPS/BUILT-IN-OVENS"
+  },
+  {
+    "id": 223,
+    "id_category": 96,
+    "description": "",
+    "name": "RANGE HOODS"
+  },
+  {
+    "id": 185,
+    "id_category": 96,
+    "description": "",
+    "name": "DISHWASHERS"
+  },
+  {
+    "id": 184,
+    "id_category": 96,
+    "description": "",
+    "name": "WASHING  MACHINES/DRYERS"
+  },
+  {
+    "id": 190,
+    "id_category": 96,
+    "description": "",
+    "name": "WINE COOLERS"
+  },
+  {
+    "id": 297,
+    "id_category": 96,
+    "description": "",
+    "name": "WATER FILTER  REPLACER"
+  },
+  {
+    "id": 302,
+    "id_category": 96,
+    "description": "",
+    "name": "MOUNTED AIRCOND"
+  },
+  {
+    "id": 301,
+    "id_category": 96,
+    "description": "",
+    "name": "PORTABLE AIRCOND"
+  },
+  {
+    "id": 303,
+    "id_category": 96,
+    "description": "",
+    "name": "CEILING FANS"
+  },
+  {
+    "id": 384,
+    "id_category": 96,
+    "description": "",
+    "name": "WALL FANS"
+  },
+  {
+    "id": 213,
+    "id_category": 96,
+    "description": "",
+    "name": "STAND FANS"
+  },
+  {
+    "id": 298,
+    "id_category": 96,
+    "description": "",
+    "name": "TVs"
+  },
+  {
+    "id": 300,
+    "id_category": 96,
+    "description": "",
+    "name": "TV AUDIOS"
+  },
+  {
+    "id": 299,
+    "id_category": 96,
+    "description": "",
+    "name": "AIR PURIFIER/HUMIDIFIER/DEHUMIDIFIER"
+  },
+  {
+    "id": 382,
+    "id_category": 96,
+    "description": "",
+    "name": "VACCUM / IRON "
+  },
+  {
+    "id": 263,
+    "id_category": 96,
+    "description": "",
+    "name": "WATER HEATER"
+  },
+  {
+    "id": 267,
+    "id_category": 96,
+    "description": "",
+    "name": "SAUNA ROOM"
+  },
+  {
+    "id": 215,
+    "id_category": 96,
+    "description": "",
+    "name": "SAFETY BOX"
+  },
+  {
+    "id": 373,
+    "id_category": 96,
+    "description": "",
+    "name": "ALARM"
+  },
+  {
+    "id": 209,
+    "id_category": 96,
+    "description": "",
+    "name": "SMART LOCKS"
+  },
+  {
+    "id": 248,
+    "id_category": 96,
+    "description": "",
+    "name": "SMART ENERGY MANAGEMENT"
+  },
+  {
+    "id": 252,
+    "id_category": 96,
+    "description": "",
+    "name": "SMART HOME KITS & HUBS"
+  },
+  {
+    "id": 249,
+    "id_category": 96,
+    "description": "",
+    "name": "SMART LIGHTING"
+  },
+  {
+    "id": 250,
+    "id_category": 96,
+    "description": "",
+    "name": "SMART SAFETY & SECURITY"
+  },
+  {
+    "id": 291,
+    "id_category": 96,
+    "description": "",
+    "name": "SINK"
+  },
+  {
+    "id": 293,
+    "id_category": 96,
+    "description": "",
+    "name": "FAUCETS"
+  },
+  {
+    "id": 383,
+    "id_category": 96,
+    "description": "",
+    "name": "OTHER PARTS"
+  },
+  {
+    "id": 292,
+    "id_category": 96,
+    "description": "",
+    "name": "BATH TUB"
+  },
+  {
+    "id": 334,
+    "id_category": 96,
+    "description": "",
+    "name": "JACUZZI"
+  },
+  {
+    "id": 335,
+    "id_category": 96,
+    "description": "",
+    "name": "HIGH PRESSURE SPRAYERS"
+  },
+  {
+    "id": 294,
+    "id_category": 96,
+    "description": "",
+    "name": "POWER SAWS / DRILLS"
+  },
+  {
+    "id": 336,
+    "id_category": 96,
+    "description": "",
+    "name": "NUTS / BOLTS"
+  },
+  {
+    "id": 337,
+    "id_category": 96,
+    "description": "",
+    "name": "MISC HARDWARE"
+  },
+  {
+    "id": 338,
+    "id_category": 96,
+    "description": "",
+    "name": "COATING"
+  },
+  {
+    "id": 339,
+    "id_category": 96,
+    "description": "",
+    "name": "PAINT"
+  },
+  {
+    "id": 340,
+    "id_category": 96,
+    "description": "",
+    "name": "PLAIN"
+  },
+  {
+    "id": 341,
+    "id_category": 96,
+    "description": "",
+    "name": "EMBOSSED"
+  },
+  {
+    "id": 342,
+    "id_category": 96,
+    "description": "",
+    "name": "ABSTRACT"
+  },
+  {
+    "id": 343,
+    "id_category": 96,
+    "description": "",
+    "name": "CHILDREN THEME"
+  },
+  {
+    "id": 344,
+    "id_category": 96,
+    "description": "",
+    "name": "CERAMIC TILE"
+  },
+  {
+    "id": 345,
+    "id_category": 96,
+    "description": "",
+    "name": "HARDWOOD"
+  },
+  {
+    "id": 346,
+    "id_category": 96,
+    "description": "",
+    "name": "LAMINATE"
+  },
+  {
+    "id": 347,
+    "id_category": 96,
+    "description": "",
+    "name": "MARBLE"
+  },
+  {
+    "id": 348,
+    "id_category": 96,
+    "description": "",
+    "name": "BAMBOO"
+  },
+  {
+    "id": 349,
+    "id_category": 96,
+    "description": "",
+    "name": "VINYL/SKIRTING"
+  },
+  {
+    "id": 350,
+    "id_category": 96,
+    "description": "",
+    "name": "OTHERS"
+  },
+  {
+    "id": 296,
+    "id_category": 96,
+    "description": "",
+    "name": "DOORS"
+  },
+  {
+    "id": 295,
+    "id_category": 96,
+    "description": "",
+    "name": "GATES"
+  },
+  {
+    "id": 351,
+    "id_category": 96,
+    "description": "",
+    "name": "SAWS"
+  },
+  {
+    "id": 352,
+    "id_category": 96,
+    "description": "",
+    "name": "HAMMERS"
+  },
+  {
+    "id": 353,
+    "id_category": 96,
+    "description": "",
+    "name": "HAND DRILLS"
+  },
+  {
+    "id": 354,
+    "id_category": 96,
+    "description": "",
+    "name": "PLIERS"
+  },
+  {
+    "id": 355,
+    "id_category": 96,
+    "description": "",
+    "name": "MEASUREMENT"
+  },
+  {
+    "id": 356,
+    "id_category": 96,
+    "description": "",
+    "name": "WRENCHES"
+  },
+  {
+    "id": 357,
+    "id_category": 96,
+    "description": "",
+    "name": "SCREWDRIVERS"
+  },
+  {
+    "id": 358,
+    "id_category": 96,
+    "description": "",
+    "name": "LADDERS/STEP STOOLS"
+  },
+  {
+    "id": 359,
+    "id_category": 96,
+    "description": "",
+    "name": "PADLOCKS"
+  },
+  {
+    "id": 360,
+    "id_category": 96,
+    "description": "",
+    "name": "DEADBOLTS"
+  },
+  {
+    "id": 361,
+    "id_category": 96,
+    "description": "",
+    "name": "KNOB LOCKS"
+  },
+  {
+    "id": 362,
+    "id_category": 96,
+    "description": "",
+    "name": "LEVERS"
+  },
+  {
+    "id": 363,
+    "id_category": 96,
+    "description": "",
+    "name": "CABLES, CORDS & ADAPTERS"
+  },
+  {
+    "id": 381,
+    "id_category": 96,
+    "description": "",
+    "name": "PEST CONTROL"
+  },
+  {
+    "id": 364,
+    "id_category": 96,
+    "description": "",
+    "name": "SWITCHES"
+  },
+  {
+    "id": 369,
+    "id_category": 96,
+    "description": "",
+    "name": "HOSE REELS"
+  },
+  {
+    "id": 370,
+    "id_category": 96,
+    "description": "",
+    "name": "WATERING SYSTEMS"
+  },
+  {
+    "id": 371,
+    "id_category": 96,
+    "description": "",
+    "name": "POOLS"
+  },
+  {
+    "id": 372,
+    "id_category": 96,
+    "description": "",
+    "name": "GRASS CUTTERS / TRIMMERS"
+  },
+  {
+    "id": 212,
+    "id_category": 96,
+    "description": "",
+    "name": "TOP 10"
+  },
+  {
+    "id": 207,
+    "id_category": 96,
+    "description": "",
+    "name": "FEATURED"
+  },
+  {
+    "id": 208,
+    "id_category": 96,
+    "description": "",
+    "name": "VICTORIAN"
+  },
+  {
+    "id": 210,
+    "id_category": 96,
+    "description": "",
+    "name": "MODERN"
+  },
+  {
+    "id": 211,
+    "id_category": 96,
+    "description": "",
+    "name": "HOTEL DÉCOR"
   }
 ]
