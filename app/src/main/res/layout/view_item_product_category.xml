@@ -31,7 +31,6 @@
             android:id="@+id/tvTitleProduct"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:lineSpacingExtra="-2dp"
             android:gravity="center"
             android:lines="2"
             android:paddingEnd="10dp"
