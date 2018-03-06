@@ -10,28 +10,28 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/llItemCategoryView"
         android:layout_width="@dimen/menu_left_categories_width"
         android:layout_height="@dimen/menu_left_item_height"
+        android:layout_centerHorizontal="true"
         android:background="@mipmap/product_sub_bg"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
 
         <ImageView
+            android:layout_marginTop="15dp"
             android:id="@+id/ivThumbnail"
             imageAssetsUrl="@{viewModel.imageURL}"
             android:layout_width="@dimen/size_sub_image"
-            android:layout_height="@dimen/size_sub_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp"
-            android:background="@color/gray" />
+            android:layout_height="@dimen/size_sub_image" />
 
         <TextView
             android:id="@+id/tvTitleProduct"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="16dp"
+            android:layout_height="40dp"
+            android:lineSpacingExtra="-2dp"
             android:gravity="center"
             android:lines="2"
             android:paddingEnd="10dp"
@@ -39,5 +39,5 @@
             android:text="@{viewModel.title}"
             android:textColor="@color/semi_gray"
             android:textSize="8sp" />
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -208,13 +208,13 @@
     "id": 176,
     "id_category": 307,
     "description": "",
-    "name": "SOFA_DAYBEDS"
+    "name": "SOFA DAYBEDS"
   },
   {
     "id": 179,
     "id_category": 307,
     "description": "",
-    "name": "PARASOLS_UMBRELLAS"
+    "name": "PARASOLS UMBRELLAS"
   },
   {
     "id": 180,
@@ -354,6 +354,4 @@
     "description": "",
     "name": "CANDLES"
   }
-
-
 ]
