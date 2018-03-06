@@ -42,7 +42,7 @@ public interface DbHelper {
 
     Flowable<Product> getProductById(int idProduct);
 
-    Flowable<ProductCart> addProductToCart(Product product, String userId);
+    Flowable<ProductCart> addProductToCart(int productId, String userId);
 
     Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId);
 

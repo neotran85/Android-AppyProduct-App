@@ -19,17 +19,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     private int idProduct;
 
-    public ProductItemViewModel(DataManager dataManager,
-                                SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-    }
-
     public ProductItemViewModel() {
         super();
-    }
-
-    public int getIdCategory() {
-        return idCategory;
     }
 
     public void setIdCategory(int idCategory) {

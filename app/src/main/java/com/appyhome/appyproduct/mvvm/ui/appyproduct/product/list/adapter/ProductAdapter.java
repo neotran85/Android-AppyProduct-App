@@ -100,7 +100,7 @@ public class ProductAdapter extends SampleAdapter {
                     Object tag = view.getTag();
                     if (tag instanceof ProductItemViewModel) {
                         ProductItemViewModel tempModel = (ProductItemViewModel) tag;
-                        tempModel.getNavigator().showContent(ProductAdapter.this, view, viewModel.getIdProduct());
+                        tempModel.getNavigator().onClickProductItem(ProductAdapter.this, view, viewModel.getIdProduct());
                     }
                 });
             }

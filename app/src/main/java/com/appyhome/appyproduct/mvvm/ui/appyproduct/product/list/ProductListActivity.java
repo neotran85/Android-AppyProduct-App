@@ -63,12 +63,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
     }
 
-    @Override
-    public void openProductCart() {
-        Intent intent = ProductCartListActivity.getStartIntent(this);
-        startActivity(intent);
-    }
-
     private void setUpRecyclerViewList(RecyclerView rv, ProductAdapter adapter) {
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
@@ -148,8 +142,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void showContent(ProductAdapter adapter, View view, int idProduct) {
-        mViewModel.getProductById(idProduct);
+    public void onClickProductItem(ProductAdapter adapter, View view, int idProduct) {
+        mViewModel.addProductToCart(idProduct);
     }
 
     @Override

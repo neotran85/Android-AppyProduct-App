@@ -36,6 +36,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private void addProductsToDatabase(Product[] list) {
         getCompositeDisposable().add(getDataManager().addProducts(list)
+                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
@@ -54,6 +55,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private void getProductsBySubCategory(int idSub, Product[] cachedList) {
         getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
+                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     // DONE GET
@@ -70,28 +72,15 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }));
     }
 
-    private void addProductToCart(Product product) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(product, "1234")
+    public void addProductToCart(int idProduct) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(idProduct, "1234")
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     // DONE ADDED
                     if (productCart != null) {
-                        getNavigator().showAlert(productCart.seller_name);
-                        // getAllProductCarts("1234");
+                        getNavigator().showAlert("addProductToCart");
                         getNavigator().updateCartCount();
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
-    }
-
-    public void getProductById(int idProduct) {
-        getCompositeDisposable().add(getDataManager().getProductById(idProduct)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(product -> {
-                    // DONE GET
-                    addProductToCart(product);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

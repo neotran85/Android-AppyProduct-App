@@ -377,10 +377,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCart> addProductToCart(Product product, String userId) {
+    public Flowable<ProductCart> addProductToCart(int productId, String userId) {
         return Flowable.fromCallable(() -> {
             try {
                 getRealm().beginTransaction();
+                Product product = getRealm().where(Product.class)
+                        .equalTo("id", productId)
+                        .findFirst();
                 ProductCart productCart = getRealm().where(ProductCart.class)
                         .equalTo("product_id", product.id)
                         .equalTo("user_id", userId)

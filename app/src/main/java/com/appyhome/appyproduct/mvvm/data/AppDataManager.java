@@ -460,8 +460,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<ProductCart> addProductToCart(Product product, String userId) {
-        return mDbHelper.addProductToCart(product, userId);
+    public Flowable<ProductCart> addProductToCart(int productId, String userId) {
+        return mDbHelper.addProductToCart(productId, userId);
     }
 
     @Override
