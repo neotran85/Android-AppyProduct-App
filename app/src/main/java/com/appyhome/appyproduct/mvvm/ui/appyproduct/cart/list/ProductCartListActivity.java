@@ -98,6 +98,12 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.getAllProductCarts("1234");
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivTrash:
@@ -134,19 +140,19 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         AlertManager.getInstance(this).showLongToast(message);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mViewModel.getAllProductCarts("1234");
-    }
-
     @Override
     public void onPause() {
         super.onPause();
         if (mProductCartAdapter != null) {
             mProductCartAdapter.onUpdateDatabase();
         }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mProductCartAdapter.recycle();
     }
 
     @Override
@@ -160,7 +166,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
-    public void showCart(RealmResults<ProductCart> result) {
+    public void showCarts(RealmResults<ProductCart> result) {
         if (result != null && result.size() > 0) {
             setUpRecyclerViewList(mBinder.cartRecyclerView);
         }

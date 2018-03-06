@@ -8,10 +8,11 @@ import android.widget.CompoundButton;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
 import java.util.ArrayList;
 
-public class ProductCartItemViewHolder extends BaseViewHolder implements View.OnClickListener {
+public class ProductCartItemViewHolder extends BaseViewHolder {
 
     private ViewItemProductCartItemBinding mBinding;
     private ProductCartAdapter mAdapter;
@@ -25,59 +26,15 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
         mBinding = binding;
         mAdapter = adapter;
         mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        mBinding.btnDecrease.setOnClickListener(this);
-        mBinding.btnIncrease.setOnClickListener(this);
-        mBinding.cbWillBuy.setOnClickListener(this);
-        mBinding.cbCheckAll.setOnClickListener(this);
-        mBinding.tvEdit.setOnClickListener(this);
-        mBinding.llRemoveItemCart.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View view) {
-        int amount = 0;
-        ProductCartItemViewModel viewModel = mBinding.getViewModel();
-        switch (view.getId()) {
-            case R.id.btnDecrease:
-                amount = Integer.valueOf(mBinding.getViewModel().amount.get());
-                if (amount > 1) {
-                    amount = amount - 1;
-                } else {
-                    mAdapter.removeCartItem(viewModel);
-                    return;
-                }
-                viewModel.amount.set(amount + "");
-                mAdapter.updateTotalCost();
-                break;
-            case R.id.cbWillBuy:
-                mAdapter.updateCheckAllBySellerName(getSellerName());
-                break;
-            case R.id.btnIncrease:
-                amount = Integer.valueOf(mBinding.getViewModel().amount.get()) + 1;
-                viewModel.amount.set(amount + "");
-                mAdapter.updateTotalCost();
-                break;
-            case R.id.cbCheckAll:
-                boolean isChecked = mBinding.cbCheckAll.isChecked();
-                mAdapter.pressCheckAllBySellerName(isChecked, getSellerName());
-                break;
-            case R.id.tvEdit:
-                boolean current = mBinding.getViewModel().isEditMode.get();
-                mAdapter.updateEditModeBySellerName(!current, getSellerName());
-                break;
-            case R.id.llRemoveItemCart:
-                removeCartItem();
-                break;
-
-        }
     }
 
     private String getSellerName() {
         return mBinding.getViewModel().sellerName.get();
     }
 
-    private void removeCartItem() {
-        mAdapter.removeCartItem(mBinding.getViewModel());
+    private void removeCartItem(ProductCartItemViewModel viewModel) {
+        mAdapter.removeCartItem(viewModel);
     }
 
     @Override
@@ -87,6 +44,54 @@ public class ProductCartItemViewHolder extends BaseViewHolder implements View.On
             mBinding.setViewModel(viewModel);
             mBinding.llItemView.setTag(mBinding.getViewModel());
             mBinding.llItemView.setOnClickListener(mAdapter);
+            OnClickItemListener handler = new OnClickItemListener(viewModel);
+            ViewUtils.setOnClickListener(handler, mBinding.btnDecrease,
+                    mBinding.btnIncrease, mBinding.cbWillBuy,
+                    mBinding.cbCheckAll, mBinding.tvEdit, mBinding.llRemoveItemCart);
+        }
+    }
+
+    public class OnClickItemListener implements View.OnClickListener {
+
+        ProductCartItemViewModel viewModel;
+
+        public OnClickItemListener(ProductCartItemViewModel item) {
+            viewModel = item;
+        }
+
+        public void onClick(View view) {
+            int amount = 0;
+            switch (view.getId()) {
+                case R.id.btnDecrease:
+                    amount = Integer.valueOf(viewModel.amount.get());
+                    amount = amount - 1;
+                    viewModel.amount.set(amount + "");
+                    if (amount <= 0) {
+                        removeCartItem(viewModel);
+                    }
+                    mAdapter.updateTotalCost();
+                    break;
+                case R.id.cbWillBuy:
+                    mAdapter.updateCheckAllBySellerName(getSellerName());
+                    break;
+                case R.id.btnIncrease:
+                    amount = Integer.valueOf(viewModel.amount.get()) + 1;
+                    viewModel.amount.set(amount + "");
+                    mAdapter.updateTotalCost();
+                    break;
+                case R.id.cbCheckAll:
+                    boolean isChecked = mBinding.cbCheckAll.isChecked();
+                    mAdapter.pressCheckAllBySellerName(isChecked, getSellerName());
+                    break;
+                case R.id.tvEdit:
+                    boolean current = viewModel.isEditMode.get();
+                    mAdapter.updateEditModeBySellerName(!current, getSellerName());
+                    break;
+                case R.id.llRemoveItemCart:
+                    removeCartItem(viewModel);
+                    break;
+
+            }
         }
     }
 }

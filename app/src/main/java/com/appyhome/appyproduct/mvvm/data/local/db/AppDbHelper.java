@@ -173,7 +173,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
-    private float[] prices = {100.5f, 25.5f, 12.6f, 50.78f};
+    private float[] prices = {100.50f, 25.50f, 12.60f, 50.78f};
     private float[] rates = {3, 4.5f, 5, 2};
     private int[] numberRates = {30, 415, 52, 211};
     private int[] numberFavorites = {130, 15, 522, 11};
@@ -327,16 +327,18 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Boolean> removeProductCartItem(long idProductCart) {
-        try {
-            getRealm().beginTransaction();
-            getRealm().where(ProductCart.class)
-                    .equalTo("id", idProductCart)
-                    .findFirst().deleteFromRealm();
-            getRealm().commitTransaction();
-            return Flowable.just(true);
-        } catch (Exception e) {
-            return Flowable.just(false);
-        }
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                getRealm().where(ProductCart.class)
+                        .equalTo("id", idProductCart)
+                        .findFirst().deleteFromRealm();
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -376,39 +378,45 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<ProductCart> addProductToCart(Product product, String userId) {
-        try {
-            getRealm().beginTransaction();
-            ProductCart productCart = getRealm().where(ProductCart.class)
-                    .equalTo("product_id", product.id)
-                    .findFirst();
-            if (productCart == null) {
-                productCart = createNewProductCart(product, userId);
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                ProductCart productCart = getRealm().where(ProductCart.class)
+                        .equalTo("product_id", product.id)
+                        .equalTo("user_id", userId)
+                        .equalTo("order_id", 0)
+                        .findFirst();
+                if (productCart == null) {
+                    productCart = createNewProductCart(product, userId);
+                }
+                productCart.amount = productCart.amount + 1;
+                productCart = getRealm().copyToRealmOrUpdate(productCart);
+                getRealm().commitTransaction();
+                return productCart;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
             }
-            productCart.amount = productCart.amount + 1;
-            productCart = getRealm().copyToRealmOrUpdate(productCart);
-            getRealm().commitTransaction();
-            return Flowable.just(productCart);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Flowable.just(null);
-        }
+        });
     }
 
     @Override
     public Flowable<Boolean> emptyProductCarts(String userId) {
-        try {
-            getRealm().beginTransaction();
-            RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
-                    .equalTo("user_id", userId)
-                    .equalTo("order_id", 0)
-                    .findAll();
-            carts.deleteAllFromRealm();
-            getRealm().commitTransaction();
-            return Flowable.just(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Flowable.just(false);
-        }
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
+                        .equalTo("user_id", userId)
+                        .equalTo("order_id", 0)
+                        .findAll();
+                carts.deleteAllFromRealm();
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        });
     }
 
     @Override

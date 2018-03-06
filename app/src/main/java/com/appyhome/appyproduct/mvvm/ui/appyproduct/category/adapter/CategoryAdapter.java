@@ -30,6 +30,13 @@ public class CategoryAdapter extends SampleAdapter {
     }
 
     @Override
+    public void recycle() {
+        mItems.clear();
+        mItems = null;
+        mCurrentClickedViewModel = null;
+    }
+
+    @Override
     public void onClick(View view) {
         Object tag = view.getTag();
         if (tag instanceof CategoryItemViewModel) {

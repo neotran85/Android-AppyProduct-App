@@ -29,6 +29,12 @@ public class TopicAdapter extends SampleAdapter {
         }
     }
 
+    @Override
+    public void recycle() {
+        mItems.clear();
+        mItems = null;
+    }
+
     public void addItems(RealmResults<ProductTopic> results, TopicItemNavigator navigator) {
         mItems = new ArrayList<>();
         if (results != null) {

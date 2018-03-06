@@ -34,6 +34,12 @@ public class CartAdapter extends SampleAdapter {
         return mItems;
     }
 
+    @Override
+    public void recycle() {
+        mItems.clear();
+        mItems = null;
+    }
+
     private CartItemViewModel createViewModel(ProductCart productCart) {
         CartItemViewModel itemViewModel = new CartItemViewModel();
         itemViewModel.title.set(productCart.product_name);
@@ -86,18 +92,19 @@ public class CartAdapter extends SampleAdapter {
     }
 
     private void updateTotalCostOfStore() {
-        for(String sellerName: viewModelManager.keySet()) {
+        for (String sellerName : viewModelManager.keySet()) {
             updateTotalCostOfStore(sellerName);
         }
     }
+
     private void updateTotalCostOfStore(String sellerName) {
         ArrayList<CartItemViewModel> array = viewModelManager.get(sellerName);
         float totalCost = 0;
-        if(array != null && array.size() > 0) {
-            for (CartItemViewModel item: array) {
+        if (array != null && array.size() > 0) {
+            for (CartItemViewModel item : array) {
                 totalCost = totalCost + Float.valueOf(item.price.get()) * Integer.valueOf(item.amount.get());
             }
-            for (CartItemViewModel item: array) {
+            for (CartItemViewModel item : array) {
                 item.totalCostOfStore.set(totalCost + "");
             }
         }

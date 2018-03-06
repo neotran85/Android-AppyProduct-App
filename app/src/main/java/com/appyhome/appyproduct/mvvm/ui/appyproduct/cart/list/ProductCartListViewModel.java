@@ -20,7 +20,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
         super(dataManager, schedulerProvider);
     }
 
-    private Disposable disposableGetAllProductCarts = null;
+    private Disposable mDisposable = null;
 
     public void emptyProductCarts() {
         getCompositeDisposable().add(getDataManager().emptyProductCarts("1234")
@@ -32,19 +32,22 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                     Crashlytics.logException(throwable);
                 }));
     }
-
+    private void disposeGetAllProductCarts() {
+        if (mDisposable != null) {
+            mDisposable.dispose();
+            mDisposable = null;
+        }
+    }
     public void getAllProductCarts(String userId) {
-        disposableGetAllProductCarts = getDataManager().getAllProductCarts(userId)
+        mDisposable = getDataManager().getAllProductCarts(userId)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCarts -> {
                     isCartEmpty.set(productCarts == null || productCarts.size() <= 0);
-                    getNavigator().showCart(productCarts);
+                    getNavigator().showCarts(productCarts);
                     // Clear disposableGetAllProductCarts
-                    if (disposableGetAllProductCarts != null) {
-                        disposableGetAllProductCarts.dispose();
-                        disposableGetAllProductCarts = null;
-                    }
+                    disposeGetAllProductCarts();
                 }, throwable -> {
+                    disposeGetAllProductCarts();
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 });

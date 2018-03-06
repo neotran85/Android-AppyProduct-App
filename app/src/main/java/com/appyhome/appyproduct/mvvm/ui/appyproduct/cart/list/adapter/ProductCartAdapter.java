@@ -23,12 +23,11 @@ import java.util.HashMap;
 import io.realm.RealmResults;
 
 public class ProductCartAdapter extends SampleAdapter {
-
-    private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
     private ProductCartListViewModel mProductCartListViewModel;
-    public boolean isChangedByUser = false;
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
     private ProductCartItemNavigator mNavigator;
+    private ArrayList<ProductCartItemViewModel> mDeletedItems = null;
+
     public ProductCartAdapter() {
         this.mItems = null;
     }
@@ -41,6 +40,17 @@ public class ProductCartAdapter extends SampleAdapter {
         return mItems;
     }
 
+    public void recycle() {
+        mProductCartListViewModel = null;
+        mNavigator = null;
+        viewModelManager.clear();
+        mDeletedItems.clear();
+        mItems.clear();
+        viewModelManager = null;
+        mDeletedItems = null;
+        mItems = null;
+    }
+
     @Override
     public void onClick(View view) {
         Object tag = view.getTag();
@@ -51,14 +61,17 @@ public class ProductCartAdapter extends SampleAdapter {
     }
 
     public void onUpdateDatabase() {
-        if (isChangedByUser) {
-            if (mItems != null && mItems.size() > 0) {
-                for (BaseViewModel item : mItems) {
-                    ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                    cartItem.productCartUpdate();
-                }
+        if (mItems != null && mItems.size() > 0) {
+            for (BaseViewModel item : mItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                cartItem.productCartUpdate();
             }
-            isChangedByUser = false;
+        }
+        if (mDeletedItems != null && mDeletedItems.size() > 0) {
+            for (BaseViewModel item : mDeletedItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                cartItem.removeProductCartItem();
+            }
         }
     }
 
@@ -66,8 +79,7 @@ public class ProductCartAdapter extends SampleAdapter {
         ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(mProductCartListViewModel.getDataManager(),
                 mProductCartListViewModel.getSchedulerProvider());
         itemViewModel.title.set(productCart.product_name);
-        //itemViewModel.imageURL.set(productCart.product_avatar);
-        itemViewModel.imageURL.set(imageTestPath);
+        itemViewModel.imageURL.set(productCart.product_avatar);
         itemViewModel.setProductCartId(productCart.id);
         itemViewModel.setProductId(productCart.product_id);
         itemViewModel.sellerName.set(productCart.seller_name);
@@ -84,7 +96,6 @@ public class ProductCartAdapter extends SampleAdapter {
     }
 
     public void updateTotalCost() {
-        isChangedByUser = true;
         float totalCost = 0;
         if (mItems != null && mItems.size() > 0) {
             for (BaseViewModel item : mItems) {
@@ -115,6 +126,7 @@ public class ProductCartAdapter extends SampleAdapter {
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
+        mDeletedItems = new ArrayList<>();
         mNavigator = navigator;
         if (viewModelManager != null) {
             viewModelManager.clear();
@@ -168,7 +180,6 @@ public class ProductCartAdapter extends SampleAdapter {
     }
 
     public void updateIfCheckedAll() {
-        isChangedByUser = true;
         mProductCartListViewModel.isCheckedAll.set(isAllItemsChecked());
     }
 
@@ -183,31 +194,21 @@ public class ProductCartAdapter extends SampleAdapter {
         return false;
     }
 
-    public void removeCartItem(ProductCartItemViewModel itemViewModel, boolean askBeforeRemoved) {
-        if (askBeforeRemoved) {
-            itemViewModel.getNavigator().askBeforeRemoved((dialog, which) -> {
-                removeCartItem(itemViewModel);
-            });
-        } else {
-            removeCartItem(itemViewModel);
-        }
-    }
-
     public void removeCartItem(ProductCartItemViewModel itemViewModel) {
         if (!isCartEmpty()) {
             String sellerName = itemViewModel.sellerName.get();
             ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
-            itemViewModel.removeProductCartItem();
+            mDeletedItems.add(itemViewModel);
             int pos = getItems().indexOf(itemViewModel);
             getItems().remove(itemViewModel);
-            notifyItemRemoved(pos);
             array.remove(itemViewModel);
+            notifyItemRemoved(pos);
 
             // UPDATE IF FIRST ITEM OF STORE IS REMOVED
             if (array != null && array.size() > 0) {
                 ProductCartItemViewModel firstItem = array.get(0);
                 firstItem.isFirstProductOfStore.set(true);
-                updateCheckAllBySellerName(firstItem.sellerName.get());
+                updateCheckAllBySellerName(sellerName);
             }
 
             // CHECK IF EMPTY CART

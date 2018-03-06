@@ -9,7 +9,7 @@ public interface ProductCartListNavigator {
 
     void showAlert(String message);
 
-    void showCart(RealmResults<ProductCart> result);
+    void showCarts(RealmResults<ProductCart> result);
 
     void gotoNextStep();
 

@@ -25,12 +25,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
-                    setIsLoading(false);
                     if (response.message != null && response.message.length > 0) {
                         addProductsToDatabase(response.message);
                     }
                 }, throwable -> {
-                    setIsLoading(false);
                     getNavigator().showEmptyProducts();
                     Crashlytics.logException(throwable);
                 }));

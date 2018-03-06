@@ -34,6 +34,12 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
     }
 
     @Override
+    public void recycle() {
+        mItems.clear();
+        mItems = null;
+    }
+
+    @Override
     protected int getEmptyItemLayout() {
         return R.layout.view_item_sample_empty;
     }

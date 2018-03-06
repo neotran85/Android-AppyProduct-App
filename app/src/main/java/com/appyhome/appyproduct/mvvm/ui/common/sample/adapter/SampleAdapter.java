@@ -22,6 +22,7 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public abstract void onClick(View view);
 
     protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
+    protected abstract void recycle();
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

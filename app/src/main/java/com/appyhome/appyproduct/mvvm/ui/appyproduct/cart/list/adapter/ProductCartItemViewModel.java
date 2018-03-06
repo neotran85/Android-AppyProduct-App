@@ -7,6 +7,8 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
+import io.reactivex.schedulers.Schedulers;
+
 public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavigator> {
 
     public ObservableField<String> title = new ObservableField<>("");
