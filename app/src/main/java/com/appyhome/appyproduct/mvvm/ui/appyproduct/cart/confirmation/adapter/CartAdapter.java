@@ -103,6 +103,7 @@ public class CartAdapter extends SampleAdapter {
         if (array != null && array.size() > 0) {
             for (CartItemViewModel item : array) {
                 totalCost = totalCost + Float.valueOf(item.price.get()) * Integer.valueOf(item.amount.get());
+                totalCost = DataUtils.roundNumber(totalCost, 2);
             }
             for (CartItemViewModel item : array) {
                 item.totalCostOfStore.set(totalCost + "");

@@ -23,9 +23,13 @@ import java.util.HashMap;
 import io.realm.RealmResults;
 
 public class ProductCartAdapter extends SampleAdapter {
+
     private ProductCartListViewModel mProductCartListViewModel;
+
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
+
     private ProductCartItemNavigator mNavigator;
+
     private ArrayList<ProductCartItemViewModel> mDeletedItems = null;
 
     public ProductCartAdapter() {

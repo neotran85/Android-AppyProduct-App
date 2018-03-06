@@ -7,6 +7,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -83,6 +84,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                         for (ProductCart item : items) {
                             mTotalCost = mTotalCost + (item.price * item.amount);
                         }
+                        mTotalCost = DataUtils.roundNumber(mTotalCost, 2);
                         totalCost.set(mTotalCost + "");
                     }
                 }, throwable -> {

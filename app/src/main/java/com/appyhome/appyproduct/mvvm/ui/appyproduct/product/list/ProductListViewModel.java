@@ -78,7 +78,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(productCart -> {
                     // DONE ADDED
                     if (productCart != null) {
-                        getNavigator().showAlert("addProductToCart");
+                        getNavigator().showAlert("Added to cart");
                         getNavigator().updateCartCount();
                     }
                 }, throwable -> {

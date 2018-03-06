@@ -43,8 +43,8 @@ public final class DataUtils {
         return "";
     }
 
-    public  static double roundNumber(double number, int decimal) {
-        double scale = Math.pow(10, decimal);
+    public static float roundNumber(float number, int decimal) {
+        float scale = (float) Math.pow(10, decimal);
         number = number * scale;
         long temp = Math.round(number);
         number = temp / scale;

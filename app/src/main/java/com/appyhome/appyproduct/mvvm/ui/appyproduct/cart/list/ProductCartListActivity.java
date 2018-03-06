@@ -148,7 +148,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
