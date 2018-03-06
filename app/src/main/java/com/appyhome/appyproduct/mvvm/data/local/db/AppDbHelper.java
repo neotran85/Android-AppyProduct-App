@@ -342,7 +342,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> productCartUpdate(long idProductCart, boolean checked, int amount) {
+    public Flowable<Boolean> updateProductCartItem(long idProductCart, boolean checked, int amount) {
         return Flowable.fromCallable(() -> {
             try {
                 getRealm().beginTransaction();

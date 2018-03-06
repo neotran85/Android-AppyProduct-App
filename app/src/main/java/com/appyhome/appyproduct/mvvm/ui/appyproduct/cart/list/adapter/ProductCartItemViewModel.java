@@ -47,8 +47,8 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
                 }));
     }
 
-    public void productCartUpdate() {
-        getCompositeDisposable().add(getDataManager().productCartUpdate(productCartId, checked.get(), Integer.valueOf(amount.get()))
+    public void updateProductCartItem() {
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()))
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED

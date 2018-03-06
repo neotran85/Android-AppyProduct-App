@@ -64,7 +64,7 @@ public class ProductCartAdapter extends SampleAdapter {
         if (mItems != null && mItems.size() > 0) {
             for (BaseViewModel item : mItems) {
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                cartItem.productCartUpdate();
+                cartItem.updateProductCartItem();
             }
         }
         if (mDeletedItems != null && mDeletedItems.size() > 0) {
