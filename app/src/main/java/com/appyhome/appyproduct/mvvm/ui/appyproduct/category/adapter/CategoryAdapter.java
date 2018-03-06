@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemCategoryBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
@@ -103,7 +103,7 @@ public class CategoryAdapter extends SampleAdapter {
 
     @Override
     protected CategoryItemViewHolder getContentHolder(ViewGroup parent) {
-        ViewItemCategoryBinding itemViewBinding = ViewItemCategoryBinding
+        ViewItemProductCategoryBinding itemViewBinding = ViewItemProductCategoryBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CategoryItemViewHolder(itemViewBinding);
     }
@@ -118,9 +118,9 @@ public class CategoryAdapter extends SampleAdapter {
 
     public class CategoryItemViewHolder extends BaseViewHolder {
 
-        private ViewItemCategoryBinding mBinding;
+        private ViewItemProductCategoryBinding mBinding;
 
-        public ViewItemCategoryBinding getBinding() {
+        public ViewItemProductCategoryBinding getBinding() {
             return mBinding;
         }
 
@@ -131,7 +131,7 @@ public class CategoryAdapter extends SampleAdapter {
             }
         }
 
-        private CategoryItemViewHolder(ViewItemCategoryBinding binding) {
+        private CategoryItemViewHolder(ViewItemProductCategoryBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
