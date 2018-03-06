@@ -66,7 +66,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic) {
+    public Flowable<RealmResults<ProductCategory>> getProductCategoriesByTopic(int idTopic) {
         getRealm().beginTransaction();
         Flowable<RealmResults<ProductCategory>> categories = getRealm().where(ProductCategory.class)
                 .equalTo("id_topic", idTopic)
@@ -85,16 +85,16 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Boolean> addProductCategories(ArrayList<ProductCategory> categories) {
-        try {
-            getRealm().beginTransaction();
-            for (ProductCategory category : categories) {
-                getRealm().copyToRealmOrUpdate(category);
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                getRealm().copyToRealmOrUpdate(categories);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                return false;
             }
-            getRealm().commitTransaction();
-            return Flowable.just(true);
-        } catch (Exception e) {
-            return Flowable.just(false);
-        }
+        });
     }
 
     @Override
@@ -116,16 +116,16 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Boolean> addProductSubs(ArrayList<ProductSub> items) {
-        try {
-            getRealm().beginTransaction();
-            for (ProductSub item : items) {
-                getRealm().copyToRealmOrUpdate(item);
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                getRealm().copyToRealmOrUpdate(items);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                return false;
             }
-            getRealm().commitTransaction();
-            return Flowable.just(true);
-        } catch (Exception e) {
-            return Flowable.just(false);
-        }
+        });
     }
 
     @Override

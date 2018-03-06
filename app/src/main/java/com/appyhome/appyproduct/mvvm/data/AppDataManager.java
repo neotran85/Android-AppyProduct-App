@@ -420,8 +420,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic) {
-        return mDbHelper.getProductCategoryByTopic(idTopic);
+    public Flowable<RealmResults<ProductCategory>> getProductCategoriesByTopic(int idTopic) {
+        return mDbHelper.getProductCategoriesByTopic(idTopic);
     }
 
     @Override

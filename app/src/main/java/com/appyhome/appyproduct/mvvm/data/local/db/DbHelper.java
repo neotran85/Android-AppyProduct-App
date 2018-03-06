@@ -30,7 +30,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductTopic>> getAllProductTopics();
 
-    Flowable<RealmResults<ProductCategory>> getProductCategoryByTopic(int idTopic);
+    Flowable<RealmResults<ProductCategory>> getProductCategoriesByTopic(int idTopic);
 
     Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory);
 

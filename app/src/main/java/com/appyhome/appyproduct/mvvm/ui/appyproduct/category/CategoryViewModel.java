@@ -15,11 +15,10 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void getProductCategoryByTopic(int idTopic) {
-        getCompositeDisposable().add(getDataManager().getProductCategoryByTopic(idTopic)
+    public void getProductCategoriesByTopic(int idTopic) {
+        getCompositeDisposable().add(getDataManager().getProductCategoriesByTopic(idTopic)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(categories -> {
-                    // DONE
                     getNavigator().showCategories(categories);
                 }, throwable -> {
                     throwable.printStackTrace();
