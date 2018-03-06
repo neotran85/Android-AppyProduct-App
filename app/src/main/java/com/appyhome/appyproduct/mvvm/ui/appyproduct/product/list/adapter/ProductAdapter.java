@@ -43,9 +43,10 @@ public class ProductAdapter extends SampleAdapter {
     private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator) {
         ProductItemViewModel itemViewModel = new ProductItemViewModel();
         itemViewModel.title.set(product.product_name);
-        itemViewModel.imageURL.set(imageTestPath);
+        itemViewModel.imageURL.set(product.avatar_name);
         itemViewModel.setIdCategory(product.category_id);
         itemViewModel.setIdProduct(product.id);
+        itemViewModel.price.set("RM " + product.price);
         itemViewModel.setNavigator(navigator);
         return itemViewModel;
     }

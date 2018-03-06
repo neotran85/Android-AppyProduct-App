@@ -10,6 +10,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
+    public ObservableField<String> price = new ObservableField<>("0");
 
     private int idCategory;
 

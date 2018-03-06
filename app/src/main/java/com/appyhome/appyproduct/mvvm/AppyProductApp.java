@@ -67,7 +67,6 @@ public class AppyProductApp extends Application implements HasActivityInjector {
             Crashlytics.logException(ignored);
         }
         Realm.setDefaultConfiguration(config);
-
     }
 
 }

@@ -13,6 +13,7 @@ import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,12 @@ public final class BindingUtils {
     public static void setImageUrl(ImageView imageView, String url) {
         if (url != null && url.length() > 0) {
             Context context = imageView.getContext();
-            Glide.with(context).load(url).into(imageView);
+            Glide.with(context)
+                    .load(url)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.mipmap.no_image)
+                    .into(imageView);
         } else {
             imageView.setBackgroundResource(R.mipmap.no_image);
         }
