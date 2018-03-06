@@ -30,5 +30,8 @@ public class ProductSub extends RealmObject {
     @ColumnInfo(name = "id_category")
     public int id_category;
 
+    @Expose
+    @SerializedName("thumbnail")
+    @ColumnInfo(name = "thumbnail")
     public String thumbnail;
 }

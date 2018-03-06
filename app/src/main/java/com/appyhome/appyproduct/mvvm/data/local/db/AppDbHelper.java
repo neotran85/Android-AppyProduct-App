@@ -114,7 +114,6 @@ public class AppDbHelper implements DbHelper {
         return person.asFlowable();
     }
 
-
     @Override
     public Flowable<Boolean> addProductSubs(ArrayList<ProductSub> items) {
         try {
@@ -173,12 +172,17 @@ public class AppDbHelper implements DbHelper {
         return topic;
     }
 
+    private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
+    private float[] prices = {100.5f, 25.5f, 12.6f, 50.78f};
 
     @Override
     public Flowable<Boolean> addProducts(Product[] list) {
         try {
             getRealm().beginTransaction();
             for (Product product : list) {
+                int randomNum = new Random().nextInt(storeName.length);
+                product.seller_name = storeName[randomNum];
+                product.price = prices[randomNum];
                 getRealm().copyToRealmOrUpdate(product);
             }
             getRealm().commitTransaction();
@@ -331,32 +335,30 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Boolean> productCartUpdate(long idProductCart, boolean checked, int amount) {
-        try {
-            getRealm().beginTransaction();
-            ProductCart productCart = getRealm().where(ProductCart.class)
-                    .equalTo("id", idProductCart)
-                    .findFirst();
-            productCart.checked = checked;
-            productCart.amount = amount;
-            productCart = getRealm().copyToRealmOrUpdate(productCart);
-            getRealm().commitTransaction();
-            return Flowable.just(productCart != null && productCart.isValid());
-        } catch (Exception e) {
-            return Flowable.just(false);
-        }
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                ProductCart productCart = getRealm().where(ProductCart.class)
+                        .equalTo("id", idProductCart)
+                        .findFirst();
+                productCart.checked = checked;
+                productCart.amount = amount;
+                productCart = getRealm().copyToRealmOrUpdate(productCart);
+                getRealm().commitTransaction();
+                return productCart != null && productCart.isValid();
+            } catch (Exception e) {
+                return false;
+            }
+        });
     }
-
-    private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
-    private float[] prices = {100.5f, 25.5f, 12.6f, 50.78f};
 
     private ProductCart createNewProductCart(Product product, String userId) {
         ProductCart cartItem = new ProductCart();
         cartItem.id = System.currentTimeMillis();
         cartItem.product_id = product.id;
         cartItem.seller_id = product.seller_id;
-        int randomNum = new Random().nextInt(storeName.length);
-        cartItem.seller_name = storeName[randomNum];
-        cartItem.price = prices[randomNum];
+        cartItem.seller_name = product.seller_name;
+        cartItem.price = product.price;
         cartItem.product_name = product.product_name;
         cartItem.amount = 0;
         cartItem.checked = true;
@@ -464,6 +466,7 @@ public class AppDbHelper implements DbHelper {
             return Flowable.just(false);
         }
     }
+
     @Override
     public Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId) {
         try {

@@ -21,6 +21,16 @@ public class Product extends RealmObject {
     public int seller_id;
 
     @Expose
+    @SerializedName("seller_id")
+    @ColumnInfo(name = "seller_id")
+    public String seller_name;
+
+    @Expose
+    @SerializedName("price")
+    @ColumnInfo(name = "price")
+    public float price;
+
+    @Expose
     @SerializedName("category_id")
     @ColumnInfo(name = "category_id")
     public int category_id;
