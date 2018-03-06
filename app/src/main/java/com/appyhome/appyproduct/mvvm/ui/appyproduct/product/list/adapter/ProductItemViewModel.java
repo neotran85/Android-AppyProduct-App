@@ -11,6 +11,9 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
     public ObservableField<String> price = new ObservableField<>("0");
+    public ObservableField<Float> rate = new ObservableField<>(0f);
+    public ObservableField<String> rateCount = new ObservableField<>("");
+    public ObservableField<String> favoriteCount = new ObservableField<>("");
 
     private int idCategory;
 

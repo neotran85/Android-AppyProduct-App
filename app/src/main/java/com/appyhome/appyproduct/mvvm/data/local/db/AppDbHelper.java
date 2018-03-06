@@ -174,6 +174,9 @@ public class AppDbHelper implements DbHelper {
 
     private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4"};
     private float[] prices = {100.5f, 25.5f, 12.6f, 50.78f};
+    private float[] rates = {3, 4.5f, 5, 2};
+    private int[] numberRates = {30, 415, 52, 211};
+    private int[] numberFavorites = {130, 15, 522, 11};
 
     @Override
     public Flowable<Boolean> addProducts(Product[] list) {
@@ -183,6 +186,9 @@ public class AppDbHelper implements DbHelper {
                 int randomNum = new Random().nextInt(storeName.length);
                 product.seller_name = storeName[randomNum];
                 product.price = prices[randomNum];
+                product.rate = rates[randomNum];
+                product.rate_count = numberRates[randomNum];
+                product.favorite_count = numberFavorites[randomNum];
                 getRealm().copyToRealmOrUpdate(product);
             }
             getRealm().commitTransaction();

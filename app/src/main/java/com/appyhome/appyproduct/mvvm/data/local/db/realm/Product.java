@@ -31,6 +31,21 @@ public class Product extends RealmObject {
     public float price;
 
     @Expose
+    @SerializedName("rate")
+    @ColumnInfo(name = "rate")
+    public float rate;
+
+    @Expose
+    @SerializedName("rate_count")
+    @ColumnInfo(name = "rate_count")
+    public int rate_count;
+
+    @Expose
+    @SerializedName("favorite_count")
+    @ColumnInfo(name = "favorite_count")
+    public int favorite_count;
+
+    @Expose
     @SerializedName("category_id")
     @ColumnInfo(name = "category_id")
     public int category_id;

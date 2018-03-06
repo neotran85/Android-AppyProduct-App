@@ -32,6 +32,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                     Crashlytics.logException(throwable);
                 }));
     }
+
     public void getAllProductCarts(String userId) {
         disposableGetAllProductCarts = getDataManager().getAllProductCarts(userId)
                 .observeOn(getSchedulerProvider().ui())
@@ -41,13 +42,11 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                     // Clear disposableGetAllProductCarts
                     if (disposableGetAllProductCarts != null) {
                         disposableGetAllProductCarts.dispose();
-                        getCompositeDisposable().remove(disposableGetAllProductCarts);
                         disposableGetAllProductCarts = null;
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 });
-        getCompositeDisposable().add(disposableGetAllProductCarts);
     }
 }

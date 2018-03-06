@@ -37,7 +37,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     boolean isEditMode = false;
 
 
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductCartListActivity.class);
         return intent;
@@ -91,7 +90,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     public void goBack() {
-        if(mViewModel.isCartEmpty.get()) {
+        if (mViewModel.isCartEmpty.get()) {
             backToHomeScreen();
         } else {
             finish();
@@ -121,7 +120,8 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        if (rv.getItemDecorationCount() <= 0)
+            rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
     @Override

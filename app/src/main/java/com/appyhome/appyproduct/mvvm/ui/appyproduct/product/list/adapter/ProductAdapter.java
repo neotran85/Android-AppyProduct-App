@@ -48,6 +48,9 @@ public class ProductAdapter extends SampleAdapter {
         itemViewModel.setIdProduct(product.id);
         itemViewModel.price.set("RM " + product.price);
         itemViewModel.setNavigator(navigator);
+        itemViewModel.rate.set(product.rate);
+        itemViewModel.rateCount.set(product.rate_count + "");
+        itemViewModel.favoriteCount.set(product.favorite_count + "");
         return itemViewModel;
     }
 
