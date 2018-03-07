@@ -5,10 +5,13 @@ import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+
+import java.util.ArrayList;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
@@ -38,7 +41,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private void addProductsToDatabase(Product[] list) {
         getCompositeDisposable().add(getDataManager().addProducts(list)
-                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
@@ -51,6 +53,25 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, throwable -> {
                     throwable.printStackTrace();
                     getNavigator().showProducts(list);
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public void getAllFavorites() {
+        getCompositeDisposable().add(getDataManager().getAllProductFavorites("1234")
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(favorites -> {
+                    // DONE GET
+                    ArrayList<Integer> arrayId = new ArrayList<>();
+                    if (favorites != null && favorites.size() > 0) {
+                        for (ProductFavorite item : favorites) {
+                            arrayId.add(item.product_id);
+                        }
+                    }
+                    getNavigator().updateFavorites(arrayId);
+                }, throwable -> {
+                    throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
     }

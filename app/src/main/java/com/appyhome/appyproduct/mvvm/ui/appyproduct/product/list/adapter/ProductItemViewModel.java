@@ -32,43 +32,17 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         this.idProduct = idProduct;
     }
 
-    public void checkIfFavorite() {
-        getCompositeDisposable().add(getDataManager().isFavorite(idProduct, "1234")
-                .subscribeOn(getSchedulerProvider().newThread())
+    public void updateProductFavorite(int position) {
+        getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(idProduct, "1234")
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
                     isFavorite.set(value);
+                    getNavigator().notifyItemChanged(position);
                 }, throwable -> {
-                    isFavorite.set(false);
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
-    }
-
-    public void updateProductFavorite(int position) {
-        boolean checkFavorite = !isFavorite.get();
-        if (checkFavorite)
-            getCompositeDisposable().add(getDataManager().addFavorite(idProduct, "1234")
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(value -> {
-                        getNavigator().showAlert("Favorited");
-                        isFavorite.set(true);
-                        getNavigator().notifyItemChanged(position);
-                    }, throwable -> {
-                        throwable.printStackTrace();
-                        Crashlytics.logException(throwable);
-                    }));
-        else
-            getCompositeDisposable().add(getDataManager().unFavorite(idProduct, "1234")
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(value -> {
-                        getNavigator().showAlert("Unfavorited");
-                        isFavorite.set(false);
-                        getNavigator().notifyItemChanged(position);
-                    }, throwable -> {
-                        throwable.printStackTrace();
-                        Crashlytics.logException(throwable);
-                    }));
     }
 
     public void addProductToCart() {

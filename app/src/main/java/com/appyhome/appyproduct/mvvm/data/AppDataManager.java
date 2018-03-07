@@ -533,13 +533,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addFavorite(int productId, String userId) {
-        return mDbHelper.addFavorite(productId, userId);
-    }
-
-    @Override
-    public Flowable<Boolean> unFavorite(int productId, String userId) {
-        return mDbHelper.unFavorite(productId, userId);
+    public Flowable<Boolean> addOrRemoveFavorite(int productId, String userId) {
+        return mDbHelper.addOrRemoveFavorite(productId, userId);
     }
 
     @Override

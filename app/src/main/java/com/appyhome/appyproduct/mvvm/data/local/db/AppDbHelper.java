@@ -453,19 +453,32 @@ public class AppDbHelper implements DbHelper {
 
 
     @Override
-    public Flowable<Boolean> addFavorite(int productId, String userId) {
-        try {
-            getRealm().beginTransaction();
-            ProductFavorite favorite = new ProductFavorite();
-            favorite.id = System.currentTimeMillis();
-            favorite.user_id = userId;
-            favorite.product_id = productId;
-            favorite = getRealm().copyToRealmOrUpdate(favorite);
-            getRealm().commitTransaction();
-            return Flowable.just(favorite != null && favorite.isValid());
-        } catch (Exception e) {
-            return Flowable.just(false);
-        }
+    public Flowable<Boolean> addOrRemoveFavorite(int productId, String userId) {
+        return Flowable.fromCallable(() -> {
+            try {
+                Boolean value = false;
+                getRealm().beginTransaction();
+                ProductFavorite favorite = getRealm().where(ProductFavorite.class)
+                        .equalTo("user_id", userId)
+                        .equalTo("product_id", productId)
+                        .findFirst();
+                if (favorite == null || !favorite.isValid()) {
+                    favorite = new ProductFavorite();
+                    favorite.id = System.currentTimeMillis();
+                    favorite.user_id = userId;
+                    favorite.product_id = productId;
+                    favorite = getRealm().copyToRealmOrUpdate(favorite);
+                    value = true;
+                } else {
+                    favorite.deleteFromRealm();
+                    value = false;
+                }
+                getRealm().commitTransaction();
+                return value;
+            } catch (Exception e) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -475,29 +488,11 @@ public class AppDbHelper implements DbHelper {
                 getRealm().beginTransaction();
                 ProductFavorite favorite = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
-                        .equalTo("productId", productId)
+                        .equalTo("product_id", productId)
                         .findFirst();
                 boolean isFavorite = (favorite != null && favorite.isValid());
                 getRealm().commitTransaction();
                 return isFavorite;
-            } catch (Exception e) {
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public Flowable<Boolean> unFavorite(int productId, String userId) {
-        return Flowable.fromCallable(() -> {
-            try {
-                getRealm().beginTransaction();
-                ProductFavorite favorite = getRealm().where(ProductFavorite.class)
-                        .equalTo("user_id", userId)
-                        .equalTo("product_id", productId)
-                        .findFirst();
-                favorite.deleteFromRealm();
-                getRealm().commitTransaction();
-                return true;
             } catch (Exception e) {
                 return false;
             }

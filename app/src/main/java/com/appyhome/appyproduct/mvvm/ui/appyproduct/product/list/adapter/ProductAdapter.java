@@ -10,6 +10,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -27,13 +28,23 @@ public class ProductAdapter extends SampleAdapter {
     @Override
     public void onClick(View view) {}
 
-    public void addItems(Product[] results, ProductItemNavigator navigator) {
+    public void addItems(Product[] results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
         mItems = new ArrayList<>();
         if (results != null) {
             for (Product item : results) {
-                mItems.add(createViewModel(item, navigator));
+                boolean isFavorite = checkIfFavorite(item.id, favoritesId);
+                mItems.add(createViewModel(item, navigator, isFavorite));
             }
         }
+    }
+
+    private boolean checkIfFavorite(int id, ArrayList<Integer> listId) {
+        if(listId == null || listId.size() <= 0) return false;
+        for(Integer item: listId) {
+            if(item.equals(id))
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -47,7 +58,7 @@ public class ProductAdapter extends SampleAdapter {
         return R.layout.view_item_sample_empty;
     }
 
-    private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator) {
+    private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isFavorited) {
         ProductListViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.title.set(product.product_name);
@@ -55,18 +66,19 @@ public class ProductAdapter extends SampleAdapter {
         itemViewModel.setIdProduct(product.id);
         itemViewModel.price.set("RM " + product.price);
         itemViewModel.setNavigator(navigator);
+        itemViewModel.isFavorite.set(isFavorited);
         itemViewModel.rate.set(product.rate);
         itemViewModel.rateCount.set(product.rate_count + "");
         itemViewModel.favoriteCount.set(product.favorite_count + "");
-        itemViewModel.checkIfFavorite();
         return itemViewModel;
     }
 
-    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator) {
+    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
         mItems = new ArrayList<>();
         if (results != null) {
             for (Product item : results) {
-                mItems.add(createViewModel(item, navigator));
+                boolean isFavorite = checkIfFavorite(item.id, favoritesId);
+                mItems.add(createViewModel(item, navigator, isFavorite));
             }
         }
     }
@@ -92,26 +104,27 @@ public class ProductAdapter extends SampleAdapter {
             mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
+        private View.OnClickListener getListener(ProductItemViewModel viewModel) {
+            return v -> {
+                switch (v.getId()) {
+                    case R.id.ibAddFavorite:
+                        viewModel.updateProductFavorite(mItems.indexOf(viewModel));
+                        break;
+                    case R.id.llItemView:
+                        viewModel.addProductToCart();
+                        break;
+                }
+            };
+        }
+
         @Override
         public void onBind(int position) {
             ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
-                mBinding.llItemView.setTag(mBinding.getViewModel());
-                mBinding.ibAddFavorite.setOnClickListener(view -> {
-                    Object tag = view.getTag();
-                    if (tag instanceof ProductItemViewModel) {
-                        ProductItemViewModel tempModel = (ProductItemViewModel) tag;
-                        tempModel.updateProductFavorite(mItems.indexOf(tempModel));
-                    }
-                });
-                mBinding.llItemView.setOnClickListener(view -> {
-                    Object tag = view.getTag();
-                    if (tag instanceof ProductItemViewModel) {
-                        ProductItemViewModel tempModel = (ProductItemViewModel) tag;
-                        tempModel.updateProductFavorite(mItems.indexOf(tempModel));
-                    }
-                });
+                View.OnClickListener listener = getListener(mBinding.getViewModel());
+                mBinding.ibAddFavorite.setOnClickListener(listener);
+                mBinding.llItemView.setOnClickListener(listener);
             }
         }
     }

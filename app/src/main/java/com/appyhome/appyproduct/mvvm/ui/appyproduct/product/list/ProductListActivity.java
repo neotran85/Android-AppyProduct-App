@@ -21,6 +21,8 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import io.realm.RealmResults;
@@ -36,11 +38,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private static final int TAB_SORT = 0;
     private static final int TAB_FILTER = 1;
-    private int mIdSubCategory;
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
 
-
+    private ArrayList<Integer> mFavoritesId;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static Intent getStartIntent(Context context) {
@@ -60,12 +61,16 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        mIdSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        mViewModel.fetchProductsByIdCategory(mIdSubCategory);
         mBinder.tabLayout.setVisibility(View.GONE);
         setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
+        mViewModel.getAllFavorites();
+    }
+
+    private void fetchProducts() {
+        int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
+        mViewModel.fetchProductsByIdCategory(idSubCategory);
     }
 
     private void setUpRecyclerViewList(RecyclerView rv, ProductAdapter adapter) {
@@ -104,10 +109,16 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
+    public void updateFavorites(ArrayList<Integer> listId) {
+        mFavoritesId = listId;
+        fetchProducts();
+    }
+
+    @Override
     public void showProducts(RealmResults<Product> result) {
         if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
-            mProductAdapter.addItems(result, this);
+            mProductAdapter.addItems(result, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
             toggleTabLayout(result.size());
         }
@@ -121,7 +132,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void showEmptyProducts() {
-        mProductAdapter.addItems(new Product[]{}, this);
+        mProductAdapter.addItems(new Product[]{}, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
         mBinder.tabLayout.setVisibility(View.GONE);
     }
@@ -130,7 +141,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public void showProducts(Product[] list) {
         if (list != null && list.length > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
-            mProductAdapter.addItems(list, this);
+            mProductAdapter.addItems(list, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
             toggleTabLayout(list.length);
         }

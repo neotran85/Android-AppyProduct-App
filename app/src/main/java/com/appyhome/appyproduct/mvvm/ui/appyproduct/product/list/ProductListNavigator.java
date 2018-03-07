@@ -2,6 +2,8 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 
+import java.util.ArrayList;
+
 import io.realm.RealmResults;
 
 public interface ProductListNavigator {
@@ -12,6 +14,8 @@ public interface ProductListNavigator {
     void showProducts(RealmResults<Product> result);
 
     void showProducts(Product[] list);
+
+    void updateFavorites(ArrayList<Integer> listId);
 
     void showEmptyProducts();
 
