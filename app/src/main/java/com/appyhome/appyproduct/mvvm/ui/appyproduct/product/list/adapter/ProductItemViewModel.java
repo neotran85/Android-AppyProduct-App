@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
 
 public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
@@ -14,18 +15,14 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Float> rate = new ObservableField<>(0f);
     public ObservableField<String> rateCount = new ObservableField<>("");
     public ObservableField<String> favoriteCount = new ObservableField<>("");
+    public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
 
-    private int idCategory;
+    public ProductItemViewModel(DataManager dataManager,
+                                SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
+    }
 
     private int idProduct;
-
-    public ProductItemViewModel() {
-        super();
-    }
-
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
-    }
 
     public int getIdProduct() {
         return idProduct;
@@ -33,5 +30,55 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
+    }
+
+    public void checkIfFavorite() {
+        getCompositeDisposable().add(getDataManager().isFavorite(idProduct, "1234")
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(value -> {
+                    isFavorite.set(value);
+                }, throwable -> {
+                    isFavorite.set(false);
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public void updateProductFavorite(int position) {
+        boolean checkFavorite = !isFavorite.get();
+        if (checkFavorite)
+            getCompositeDisposable().add(getDataManager().addFavorite(idProduct, "1234")
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(value -> {
+                        getNavigator().showAlert("Favorited");
+                        getNavigator().notifyItemChanged(position);
+                    }, throwable -> {
+                        throwable.printStackTrace();
+                        Crashlytics.logException(throwable);
+                    }));
+        else
+            getCompositeDisposable().add(getDataManager().unFavorite(idProduct, "1234")
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(value -> {
+                        getNavigator().showAlert("Unfavorited");
+                        getNavigator().notifyItemChanged(position);
+                    }, throwable -> {
+                        throwable.printStackTrace();
+                        Crashlytics.logException(throwable);
+                    }));
+    }
+
+    public void addProductToCart() {
+        getCompositeDisposable().add(getDataManager().addProductToCart(idProduct, "1234")
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCart -> {
+                    if (productCart != null) {
+                        getNavigator().showAlert("Added to cart");
+                        getNavigator().updateCartCount();
+                    }
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
     }
 }

@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -23,13 +24,14 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         getCompositeDisposable().add(getDataManager()
                 .fetchProductsByIdCategory(new ProductListRequest(idSub, 0))
                 .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
+                .observeOn(getSchedulerProvider().mainThread())
                 .subscribe(response -> {
                     if (response.message != null && response.message.length > 0) {
                         addProductsToDatabase(response.message);
                     }
                 }, throwable -> {
                     getNavigator().showEmptyProducts();
+                    throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
     }
@@ -68,22 +70,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, throwable -> {
                     throwable.printStackTrace();
                     getNavigator().showProducts(cachedList);
+                    Log.e("getProductsBySubCategory", throwable.getMessage());
                     Crashlytics.logException(throwable);
                 }));
     }
 
-    public void addProductToCart(int idProduct) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(idProduct, "1234")
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(productCart -> {
-                    // DONE ADDED
-                    if (productCart != null) {
-                        getNavigator().showAlert("Added to cart");
-                        getNavigator().updateCartCount();
-                    }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
-    }
 }

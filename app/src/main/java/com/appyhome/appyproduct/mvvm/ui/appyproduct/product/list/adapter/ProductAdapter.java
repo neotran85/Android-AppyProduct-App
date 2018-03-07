@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
@@ -47,10 +48,10 @@ public class ProductAdapter extends SampleAdapter {
     }
 
     private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator) {
-        ProductItemViewModel itemViewModel = new ProductItemViewModel();
+        ProductListViewModel viewModel = navigator.getMainViewModel();
+        ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.title.set(product.product_name);
         itemViewModel.imageURL.set(product.avatar_name);
-        itemViewModel.setIdCategory(product.category_id);
         itemViewModel.setIdProduct(product.id);
         itemViewModel.price.set("RM " + product.price);
         itemViewModel.setNavigator(navigator);
@@ -93,14 +94,22 @@ public class ProductAdapter extends SampleAdapter {
         @Override
         public void onBind(int position) {
             ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
+            //viewModel.checkIfFavorite();
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
                 mBinding.llItemView.setTag(mBinding.getViewModel());
+                mBinding.ibAddFavorite.setOnClickListener(view -> {
+                    Object tag = view.getTag();
+                    if (tag instanceof ProductItemViewModel) {
+                        ProductItemViewModel tempModel = (ProductItemViewModel) tag;
+                        tempModel.updateProductFavorite(mItems.indexOf(tempModel));
+                    }
+                });
                 mBinding.llItemView.setOnClickListener(view -> {
                     Object tag = view.getTag();
                     if (tag instanceof ProductItemViewModel) {
                         ProductItemViewModel tempModel = (ProductItemViewModel) tag;
-                        tempModel.getNavigator().onClickProductItem(ProductAdapter.this, view, viewModel.getIdProduct());
+                        tempModel.addProductToCart();
                     }
                 });
             }

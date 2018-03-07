@@ -2,6 +2,11 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListViewModel;
+
 public interface ProductItemNavigator {
-    void onClickProductItem(ProductAdapter adapter, View view, int idProduct);
+    ProductListViewModel getMainViewModel();
+    void updateCartCount();
+    void showAlert(String message);
+    void notifyItemChanged(int position);
 }

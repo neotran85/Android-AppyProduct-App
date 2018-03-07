@@ -72,9 +72,11 @@
             android:layout_marginTop="8dp">
 
             <ImageButton
+                android:id="@+id/ibAddFavorite"
                 android:layout_width="18dp"
                 android:layout_height="14dp"
                 android:layout_marginTop="1dp"
+                isFavorite="@{viewModel.isFavorite}"
                 android:background="@mipmap/icon_unfavorite" />
 
             <TextView

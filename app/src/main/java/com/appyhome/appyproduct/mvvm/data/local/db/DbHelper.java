@@ -75,5 +75,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId);
 
+    Flowable<Boolean> isFavorite(int productId, String userId);
+
     void closeDatabase();
 }

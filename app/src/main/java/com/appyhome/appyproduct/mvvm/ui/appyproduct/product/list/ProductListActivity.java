@@ -49,6 +49,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
+    public ProductListViewModel getMainViewModel() {
+        return mViewModel;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
@@ -142,11 +147,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void onClickProductItem(ProductAdapter adapter, View view, int idProduct) {
-        mViewModel.addProductToCart(idProduct);
-    }
-
-    @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
     }
@@ -154,6 +154,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void notifyItemChanged(int position) {
+        mProductAdapter.notifyItemChanged(position);
     }
 
     @Override

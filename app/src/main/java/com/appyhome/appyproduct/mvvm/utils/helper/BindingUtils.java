@@ -70,6 +70,16 @@ public final class BindingUtils {
         }
     }
 
+    @BindingAdapter("isFavorite")
+    public static void setIsFavorite(ImageView imageView, boolean isFavorite) {
+        if (isFavorite) {
+            imageView.setBackgroundResource(R.mipmap.icon_favorite);
+        } else {
+            imageView.setBackgroundResource(R.mipmap.icon_unfavorite);
+        }
+    }
+
+
     @BindingAdapter({"adapter"})
     public static void addOpenSourceItems(RecyclerView recyclerView,
                                           ArrayList<OpenSourceItemViewModel> openSourceItems) {

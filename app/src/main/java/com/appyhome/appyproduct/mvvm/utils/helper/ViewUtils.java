@@ -85,16 +85,12 @@ public final class ViewUtils {
         }
     }
 
-    public static void setOnClickListenersOfParentView(ViewGroup view) {
-
-    }
-
     public static void loadImageAsset(Context context, ImageView imageView, String imagePath) {
         AssetManager assetManager = context.getAssets();
         try {
             InputStream ims = assetManager.open(imagePath);
             Drawable d = Drawable.createFromStream(ims, null);
-            imageView.setImageDrawable(d);
+            imageView.setBackground(d);
         } catch (Exception ex) {
             return;
         }

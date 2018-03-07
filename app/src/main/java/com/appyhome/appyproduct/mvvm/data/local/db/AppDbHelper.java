@@ -469,6 +469,24 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Boolean> isFavorite(int productId, String userId) {
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                ProductFavorite favorite = getRealm().where(ProductFavorite.class)
+                        .equalTo("user_id", userId)
+                        .equalTo("productId", productId)
+                        .findFirst();
+                boolean isFavorite = (favorite != null && favorite.isValid());
+                getRealm().commitTransaction();
+                return isFavorite;
+            } catch (Exception e) {
+                return false;
+            }
+        });
+    }
+
+    @Override
     public Flowable<Boolean> unFavorite(int productId, String userId) {
         try {
             getRealm().beginTransaction();

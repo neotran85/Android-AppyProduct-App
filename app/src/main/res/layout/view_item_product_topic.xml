@@ -17,11 +17,9 @@
         android:layout_height="@dimen/height_topic_image">
         <ImageView
             android:scaleType="center"
-            android:scaleX="3"
-            android:scaleY="3"
             android:id="@+id/ivThumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="46dp"
+            android:layout_height="66dp"
             imageAssetsUrl="@{viewModel.imageURL}"/>
     </LinearLayout>
 </layout>

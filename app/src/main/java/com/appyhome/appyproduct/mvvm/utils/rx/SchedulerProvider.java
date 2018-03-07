@@ -12,4 +12,6 @@ public interface SchedulerProvider {
 
     Scheduler newThread();
 
+    Scheduler mainThread();
+
 }
