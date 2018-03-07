@@ -539,7 +539,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<Boolean> unFavorite(int productId, String userId) {
-        return unFavorite(productId, userId);
+        return mDbHelper.unFavorite(productId, userId);
     }
 
     @Override

@@ -58,6 +58,7 @@ public class ProductAdapter extends SampleAdapter {
         itemViewModel.rate.set(product.rate);
         itemViewModel.rateCount.set(product.rate_count + "");
         itemViewModel.favoriteCount.set(product.favorite_count + "");
+        itemViewModel.checkIfFavorite();
         return itemViewModel;
     }
 
@@ -94,7 +95,6 @@ public class ProductAdapter extends SampleAdapter {
         @Override
         public void onBind(int position) {
             ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
-            //viewModel.checkIfFavorite();
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
                 mBinding.llItemView.setTag(mBinding.getViewModel());
@@ -109,7 +109,7 @@ public class ProductAdapter extends SampleAdapter {
                     Object tag = view.getTag();
                     if (tag instanceof ProductItemViewModel) {
                         ProductItemViewModel tempModel = (ProductItemViewModel) tag;
-                        tempModel.addProductToCart();
+                        tempModel.updateProductFavorite(mItems.indexOf(tempModel));
                     }
                 });
             }

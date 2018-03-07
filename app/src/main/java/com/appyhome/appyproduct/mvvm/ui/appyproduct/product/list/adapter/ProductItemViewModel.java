@@ -34,6 +34,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void checkIfFavorite() {
         getCompositeDisposable().add(getDataManager().isFavorite(idProduct, "1234")
+                .subscribeOn(getSchedulerProvider().newThread())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
                     isFavorite.set(value);
@@ -51,6 +52,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(value -> {
                         getNavigator().showAlert("Favorited");
+                        isFavorite.set(true);
                         getNavigator().notifyItemChanged(position);
                     }, throwable -> {
                         throwable.printStackTrace();
@@ -61,6 +63,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(value -> {
                         getNavigator().showAlert("Unfavorited");
+                        isFavorite.set(false);
                         getNavigator().notifyItemChanged(position);
                     }, throwable -> {
                         throwable.printStackTrace();

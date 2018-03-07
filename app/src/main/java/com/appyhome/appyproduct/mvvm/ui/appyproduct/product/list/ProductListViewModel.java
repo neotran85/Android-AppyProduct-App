@@ -24,7 +24,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         getCompositeDisposable().add(getDataManager()
                 .fetchProductsByIdCategory(new ProductListRequest(idSub, 0))
                 .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().mainThread())
+                .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     if (response.message != null && response.message.length > 0) {
                         addProductsToDatabase(response.message);
@@ -57,7 +57,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private void getProductsBySubCategory(int idSub, Product[] cachedList) {
         getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
-                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     // DONE GET
@@ -70,7 +69,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, throwable -> {
                     throwable.printStackTrace();
                     getNavigator().showProducts(cachedList);
-                    Log.e("getProductsBySubCategory", throwable.getMessage());
                     Crashlytics.logException(throwable);
                 }));
     }
