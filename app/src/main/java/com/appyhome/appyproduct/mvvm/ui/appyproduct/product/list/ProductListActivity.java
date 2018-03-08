@@ -169,7 +169,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void notifyItemChanged(int position) {
+    public void notifyFavoriteChanged(int position, boolean isFavorite) {
         mProductAdapter.notifyItemChanged(position);
     }
 

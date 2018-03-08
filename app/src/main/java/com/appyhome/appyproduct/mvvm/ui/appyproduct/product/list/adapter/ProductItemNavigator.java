@@ -9,5 +9,5 @@ public interface ProductItemNavigator {
     BaseViewModel getMainViewModel();
     void updateCartCount();
     void showAlert(String message);
-    void notifyItemChanged(int position);
+    void notifyFavoriteChanged(int position, boolean isFavorite);
 }

@@ -502,11 +502,22 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
+        getRealm().beginTransaction();
         RealmQuery<Product> query = getRealm().where(Product.class);
-        for (Integer id : ids) {
-            query.or().equalTo("id", id);
+        if (ids.size() > 0) {
+            int i = 0;
+            for (int id : ids) {
+                if (i++ > 0) {
+                    query = query.or();
+                }
+                query = query.equalTo("id", id);
+            }
+        } else {
+            query = query.equalTo("id", 0);
         }
-        return query.findAll().asFlowable();
+        Flowable<RealmResults<Product>> result = query.findAll().asFlowable();
+        getRealm().commitTransaction();
+        return result;
     }
 
     @Override

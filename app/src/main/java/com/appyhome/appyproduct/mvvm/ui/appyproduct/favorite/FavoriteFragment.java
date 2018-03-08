@@ -36,6 +36,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Inject
     FavoriteAdapter mFavoriteAdapter;
 
+    @Override
+    public void notifyFavoriteChanged(int position, boolean isFavorite) {
+        mFavoriteAdapter.removedFavorite(position, isFavorite);
+    }
+
     public static FavoriteFragment newInstance() {
         Bundle args = new Bundle();
         FavoriteFragment fragment = new FavoriteFragment();
@@ -86,7 +91,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void showProducts(RealmResults<Product> result) {
-        if (result != null && result.size() > 0) {
+        if (result != null) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mFavoriteAdapter.addItems(result, this, true);
             mFavoriteAdapter.notifyDataSetChanged();
@@ -106,10 +111,5 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void showAlert(String message) {
 
-    }
-
-    @Override
-    public void notifyItemChanged(int position) {
-        mFavoriteAdapter.notifyItemChanged(position);
     }
 }

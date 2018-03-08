@@ -106,4 +106,8 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
         public void onBind(int position) {
         }
     }
+
+    public void empty() {
+        mItems = new ArrayList<>();
+    }
 }

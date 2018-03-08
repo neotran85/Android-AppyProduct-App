@@ -40,7 +40,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     int count = Integer.valueOf(favoriteCount.get());
                     count = value ? count + 1 : count - 1;
                     favoriteCount.set(count + "");
-                    getNavigator().notifyItemChanged(position);
+                    getNavigator().notifyFavoriteChanged(position, value);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
