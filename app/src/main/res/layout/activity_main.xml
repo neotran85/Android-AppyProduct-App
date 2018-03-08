@@ -29,6 +29,7 @@
 
         <LinearLayout
             android:id="@+id/llBottomBar"
+            android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:background="@drawable/rectangle_shadow"

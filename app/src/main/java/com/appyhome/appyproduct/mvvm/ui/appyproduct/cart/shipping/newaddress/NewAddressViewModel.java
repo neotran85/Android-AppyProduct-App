@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> name = new ObservableField<>("");
-    private ObservableField<String> phoneNumber = new ObservableField<>("");
+    public ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> street = new ObservableField<>("");
     public ObservableField<String> unit = new ObservableField<>("");
     public ObservableField<String> area1 = new ObservableField<>("");
