@@ -54,7 +54,7 @@
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/semi_gray"
                     android:textSize="8sp"
-                    android:text="Home"
+                    android:text="@string/tab_home"
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -80,7 +80,7 @@
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/semi_gray"
                     android:textSize="8sp"
-                    android:text="Notification"
+                    android:text="@string/tab_notification"
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -109,7 +109,7 @@
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/white"
                     android:textSize="8sp"
-                    android:text="Request"
+                    android:text="@string/tracking"
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -136,7 +136,7 @@
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/semi_gray"
                     android:textSize="8sp"
-                    android:text="Wish List"
+                    android:text="@string/tab_wish_list"
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -162,7 +162,7 @@
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/semi_gray"
                     android:textSize="8sp"
-                    android:text="My Profile"
+                    android:text="@string/tab_my_profile"
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

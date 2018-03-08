@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> name = new ObservableField<>("");
-    public ObservableField<String> phoneNumber = new ObservableField<>("");
+    private ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> street = new ObservableField<>("");
     public ObservableField<String> unit = new ObservableField<>("");
     public ObservableField<String> area1 = new ObservableField<>("");
@@ -40,7 +40,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         String addressStr = unit.get() + ", " + street.get() + ", " + area1.get() + ", " + area2.get() + ", "
                 + city.get() + ", (Post Code: " + postCode.get() + ")";
         getCompositeDisposable().add(getDataManager().addShippingAddress(getUserId(), placeId,
-                name.get(), phoneNumber.get(), addressStr, checked.get())
+                name.get(), getPhoneNumber(), addressStr, checked.get())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // ADD ADDRESS SUCCEEDED
@@ -55,8 +55,11 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         target.set(value != null ? value : "");
     }
 
+    private String getPhoneNumber() {
+        return "60" + phoneNumber.get();
+    }
     public boolean isPhoneNumberValid() {
-        return ValidationUtils.isPhoneNumberValid(phoneNumber.get());
+        return ValidationUtils.isPhoneNumberValid(getPhoneNumber());
     }
 
     public boolean checkIfContactInputted() {

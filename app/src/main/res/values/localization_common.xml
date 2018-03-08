@@ -21,4 +21,9 @@
     <string name="finish">FINISH</string>
     <string name="rm">RM</string>
     <string name="home_products">Products</string>
+    <string name="tracking">Tracking</string>
+    <string name="tab_wish_list">Wish List</string>
+    <string name="tab_my_profile">My Profile</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_notification">Notification</string>
 </resources>
