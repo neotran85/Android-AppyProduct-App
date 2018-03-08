@@ -25,7 +25,7 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
         } else totalCount.set("");
     }
     public void getAllFavorites() {
-        getCompositeDisposable().add(getDataManager().getAllProductFavorites("1234")
+        getCompositeDisposable().add(getDataManager().getAllProductFavorites(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(favorites -> {

@@ -27,11 +27,11 @@ public class PaymentViewModel extends BaseViewModel<PaymentNavigator> {
         isPaymentMolpay.set(method.equals(PAYMENT_MOLPAY));
     }
     private String getDefaultPaymentMethod() {
-        return getDataManager().getDefaultPaymentMethod("1234");
+        return getDataManager().getDefaultPaymentMethod(getUserId());
     }
 
     public void setDefaultPaymentMethod(String method) {
-        getDataManager().setDefaultPaymentMethod("1234", method);
+        getDataManager().setDefaultPaymentMethod(getUserId(), method);
         fetchPaymentMethods(method);
     }
 }

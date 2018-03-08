@@ -18,7 +18,7 @@ public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
 
     public void updateTotalCountProductCart() {
         getCompositeDisposable().add(getDataManager()
-                .getTotalCountProductCarts("1234")
+                .getTotalCountProductCarts(getUserId())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(total -> {

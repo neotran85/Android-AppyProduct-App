@@ -33,7 +33,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     }
 
     public void getDefaultShippingAddress() {
-        getCompositeDisposable().add(getDataManager().getDefaultShippingAddress("1234")
+        getCompositeDisposable().add(getDataManager().getDefaultShippingAddress(getUserId())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
@@ -48,14 +48,14 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     }
 
     public void fetchPaymentMethods() {
-        mPaymentMethod = getDataManager().getDefaultPaymentMethod("1234");
+        mPaymentMethod = getDataManager().getDefaultPaymentMethod(getUserId());
         isVisa.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_VISA));
         isMolpay.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_MOLPAY));
     }
 
     public void addOrder() {
         getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
-                mShippingAddress, "1234", "Nam Tran", mTotalCost, 0)
+                mShippingAddress, getUserId(), "Nam Tran", mTotalCost, 0)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // GET SUCCEEDED
@@ -73,7 +73,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     }
 
     public void getAllCheckedProductCarts() {
-        getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts("1234")
+        getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(items -> {
                     // GET SUCCEEDED

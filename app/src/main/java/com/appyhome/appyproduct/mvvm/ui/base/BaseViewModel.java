@@ -73,4 +73,8 @@ public abstract class BaseViewModel<N> extends ViewModel {
     public boolean isUserLoggedIn() {
         return getDataManager().isUserLoggedIn();
     }
+
+    public String getUserId() {
+        return "1234";
+    }
 }

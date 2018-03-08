@@ -39,7 +39,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public void saveShippingAddress() {
         String addressStr = unit.get() + ", " + street.get() + ", " + area1.get() + ", " + area2.get() + ", "
                 + city.get() + ", (Post Code: " + postCode.get() + ")";
-        getCompositeDisposable().add(getDataManager().addShippingAddress("1234", placeId,
+        getCompositeDisposable().add(getDataManager().addShippingAddress(getUserId(), placeId,
                 name.get(), phoneNumber.get(), addressStr, checked.get())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {

@@ -52,7 +52,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mProductCartAdapter.setMainViewModel(mViewModel);
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
-        mViewModel.getAllProductCarts("1234");
+        mViewModel.getAllProductCarts();
         ViewUtils.setOnClickListener(this, mBinder.cbCheckAll, mBinder.ivTrash);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
     }
@@ -100,7 +100,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.getAllProductCarts("1234");
+        mViewModel.getAllProductCarts();
     }
 
     @Override
