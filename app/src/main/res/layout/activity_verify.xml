@@ -22,7 +22,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/login_whole_bg"
+            android:background="@mipmap/bg_login"
             android:gravity="center_vertical">
 
             <LinearLayout

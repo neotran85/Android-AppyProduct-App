@@ -69,6 +69,8 @@ public class ProductAdapter extends SampleAdapter {
         itemViewModel.isFavorite.set(isAllFavorited);
         itemViewModel.rate.set(product.rate);
         itemViewModel.rateCount.set(product.rate_count + "");
+        itemViewModel.discount.set(product.discount + "%");
+        itemViewModel.isDiscount.set(product.discount > 0);
         itemViewModel.favoriteCount.set(product.favorite_count + "");
         return itemViewModel;
     }

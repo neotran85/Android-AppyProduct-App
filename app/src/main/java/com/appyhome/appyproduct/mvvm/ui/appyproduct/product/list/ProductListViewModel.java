@@ -24,19 +24,23 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     public void fetchProductsByIdCategory(int idSub) {
         mIdSub = idSub;
-        getCompositeDisposable().add(getDataManager()
-                .fetchProductsByIdCategory(new ProductListRequest(idSub, 0))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(response -> {
-                    if (response.message != null && response.message.length > 0) {
-                        addProductsToDatabase(response.message);
-                    }
-                }, throwable -> {
-                    getNavigator().showEmptyProducts();
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+        if (isOnline()) {
+            getCompositeDisposable().add(getDataManager()
+                    .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(response -> {
+                        if (response.message != null && response.message.length > 0) {
+                            addProductsToDatabase(response.message);
+                        }
+                    }, throwable -> {
+                        getNavigator().showEmptyProducts();
+                        throwable.printStackTrace();
+                        Crashlytics.logException(throwable);
+                    }));
+        } else {
+            getProductsBySubCategory(mIdSub, new Product[0]);
+        }
     }
 
     private void addProductsToDatabase(Product[] list) {

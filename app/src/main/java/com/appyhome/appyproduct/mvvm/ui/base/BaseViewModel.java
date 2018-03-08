@@ -1,11 +1,14 @@
 package com.appyhome.appyproduct.mvvm.ui.base;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -76,5 +79,12 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     public String getUserId() {
         return "1234";
+    }
+
+    public boolean isOnline() {
+        Activity activity = AppConstants.getFirstActivity();
+        if (activity != null)
+            return NetworkUtils.isNetworkConnected(activity);
+        return false;
     }
 }

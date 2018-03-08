@@ -15,7 +15,9 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Float> rate = new ObservableField<>(0f);
     public ObservableField<String> rateCount = new ObservableField<>("");
     public ObservableField<String> favoriteCount = new ObservableField<>("");
+    public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
+    public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
 
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {

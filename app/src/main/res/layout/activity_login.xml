@@ -22,7 +22,7 @@
             android:id="@+id/activityMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/login_whole_bg">
+            android:background="@mipmap/bg_login">
 
             <ImageView
                 android:id="@+id/logoImageView"
@@ -180,7 +180,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.isLoading, default=gone}">
             <include layout="@layout/view_preloading"></include>
         </LinearLayout>
 
