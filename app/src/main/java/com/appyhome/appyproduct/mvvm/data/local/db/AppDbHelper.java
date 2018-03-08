@@ -501,7 +501,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductFavorites(ArrayList<Integer>ids) {
+    public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
         RealmQuery<Product> query = getRealm().where(Product.class);
         for (Integer id : ids) {
             query.or().equalTo("id", id);
@@ -511,15 +511,11 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId) {
-        try {
-            getRealm().beginTransaction();
-            Flowable<RealmResults<ProductFavorite>> favorites = getRealm().where(ProductFavorite.class)
-                    .equalTo("user_id", userId)
-                    .findAll().asFlowable();
-            getRealm().commitTransaction();
-            return favorites;
-        } catch (Exception e) {
-            return Flowable.just(null);
-        }
+        getRealm().beginTransaction();
+        Flowable<RealmResults<ProductFavorite>> favorites = getRealm().where(ProductFavorite.class)
+                .equalTo("user_id", userId)
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return favorites;
     }
 }

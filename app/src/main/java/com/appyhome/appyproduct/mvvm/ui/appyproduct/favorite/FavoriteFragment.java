@@ -54,6 +54,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mViewModel.getAllFavorites();
+        mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
     }
 
     @Override

@@ -27,14 +27,14 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
                             arrayId.add(item.product_id);
                         }
                     }
-                    getAllProductFavorites(arrayId);
+                    getAllProductsFavorited(arrayId);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
     }
-    private void getAllProductFavorites(ArrayList<Integer> ids) {
-        getCompositeDisposable().add(getDataManager().getAllProductFavorites(ids)
+    private void getAllProductsFavorited(ArrayList<Integer> ids) {
+        getCompositeDisposable().add(getDataManager().getAllProductsFavorited(ids)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {

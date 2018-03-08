@@ -58,7 +58,7 @@ public class ProductAdapter extends SampleAdapter {
         return R.layout.view_item_sample_empty;
     }
 
-    private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isFavorited) {
+    private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isAllFavorited) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.title.set(product.product_name);
@@ -66,7 +66,7 @@ public class ProductAdapter extends SampleAdapter {
         itemViewModel.setIdProduct(product.id);
         itemViewModel.price.set("RM " + product.price);
         itemViewModel.setNavigator(navigator);
-        itemViewModel.isFavorite.set(isFavorited);
+        itemViewModel.isFavorite.set(isAllFavorited);
         itemViewModel.rate.set(product.rate);
         itemViewModel.rateCount.set(product.rate_count + "");
         itemViewModel.favoriteCount.set(product.favorite_count + "");

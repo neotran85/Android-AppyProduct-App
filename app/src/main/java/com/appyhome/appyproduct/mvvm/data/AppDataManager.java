@@ -548,7 +548,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductFavorites(ArrayList<Integer>ids) {
-        return mDbHelper.getAllProductFavorites(ids);
+    public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer>ids) {
+        return mDbHelper.getAllProductsFavorited(ids);
     }
 }
