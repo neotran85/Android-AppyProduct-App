@@ -39,6 +39,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
         mFavoriteAdapter.removedFavorite(position, isFavorite);
+        mViewModel.updateFavoriteCount(mFavoriteAdapter.getFavoriteCount());
     }
 
     public static FavoriteFragment newInstance() {

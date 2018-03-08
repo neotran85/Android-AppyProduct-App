@@ -39,7 +39,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="3dp"
             android:orientation="horizontal">
 
             <TextView
@@ -65,12 +65,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:clickable="true"
                 android:id="@+id/ibAddFavorite"
                 android:layout_width="wrap_content"
@@ -83,11 +84,12 @@
                     android:layout_height="14dp"
                     android:layout_marginTop="1dp"
                     android:background="@mipmap/icon_unfavorite"/>
+
                 <TextView
+                    android:layout_marginStart="2dp"
                     android:id="@+id/favoriteCount"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
                     android:paddingTop="2dp"
                     android:text="@{viewModel.favoriteCount}"
                     android:textColor="@color/gray_product_in_list"
@@ -97,9 +99,8 @@
 
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <RatingBar
                     android:id="@+id/ratingBar"
@@ -111,15 +112,15 @@
                     android:clickable="false"
                     android:numStars="5"
                     android:rating="@{viewModel.rate}"
-                    android:scaleX=".8"
-                    android:scaleY=".8"
+                    android:scaleX=".7"
+                    android:scaleY=".7"
                     android:stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/ratingCount"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-4dp"
+                    android:layout_marginStart="-10dp"
                     android:layout_toEndOf="@id/ratingBar"
                     android:paddingTop="2dp"
                     android:text="@{viewModel.rateCount}"

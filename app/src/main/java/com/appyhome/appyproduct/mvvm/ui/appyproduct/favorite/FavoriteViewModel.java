@@ -12,12 +12,18 @@ import java.util.ArrayList;
 
 public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
+    public ObservableField<String> totalCount = new ObservableField<>("");
 
     public FavoriteViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
+    public void updateFavoriteCount(int count) {
+        if(count > 0) {
+            totalCount.set("(" + count + ")");
+        } else totalCount.set("");
+    }
     public void getAllFavorites() {
         getCompositeDisposable().add(getDataManager().getAllProductFavorites("1234")
                 .take(1)
@@ -42,6 +48,7 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
                 .subscribe(products -> {
                     // DONE GET
                     getNavigator().showProducts(products);
+                    updateFavoriteCount(products.size());
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

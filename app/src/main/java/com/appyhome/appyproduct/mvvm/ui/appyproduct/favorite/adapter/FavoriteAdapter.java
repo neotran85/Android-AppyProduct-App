@@ -13,4 +13,8 @@ public class FavoriteAdapter extends ProductAdapter{
         }
     }
 
+    public int getFavoriteCount() {
+        return mItems.size();
+    }
+
 }
