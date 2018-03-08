@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListAct
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -50,7 +51,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public ProductListViewModel getMainViewModel() {
+    public BaseViewModel getMainViewModel() {
         return mViewModel;
     }
 

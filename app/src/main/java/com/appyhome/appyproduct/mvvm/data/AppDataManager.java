@@ -546,4 +546,9 @@ public class AppDataManager implements DataManager {
     public Flowable<Boolean> isFavorite(int productId, String userId) {
         return mDbHelper.isFavorite(productId, userId);
     }
+
+    @Override
+    public Flowable<RealmResults<Product>> getAllProductFavorites(ArrayList<Integer>ids) {
+        return mDbHelper.getAllProductFavorites(ids);
+    }
 }

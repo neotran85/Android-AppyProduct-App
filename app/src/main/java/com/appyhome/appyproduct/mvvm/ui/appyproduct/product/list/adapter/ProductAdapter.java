@@ -59,7 +59,7 @@ public class ProductAdapter extends SampleAdapter {
     }
 
     private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isFavorited) {
-        ProductListViewModel viewModel = navigator.getMainViewModel();
+        BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.title.set(product.product_name);
         itemViewModel.imageURL.set(product.avatar_name);
@@ -79,6 +79,15 @@ public class ProductAdapter extends SampleAdapter {
             for (Product item : results) {
                 boolean isFavorite = checkIfFavorite(item.id, favoritesId);
                 mItems.add(createViewModel(item, navigator, isFavorite));
+            }
+        }
+    }
+
+    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, boolean isAllFavorited) {
+        mItems = new ArrayList<>();
+        if (results != null) {
+            for (Product item : results) {
+                mItems.add(createViewModel(item, navigator, isAllFavorited));
             }
         }
     }

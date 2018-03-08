@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
@@ -153,7 +154,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 break;
             case R.id.rlWishList:
                 switchTabSelection(view);
-                showFragment(MyWishListFragment.newInstance(), MyWishListFragment.TAG);
+                showFragment(FavoriteFragment.newInstance(), FavoriteFragment.TAG);
                 break;
             case R.id.rlMyProfile:
                 if (mMainViewModel.isUserLoggedIn()) {

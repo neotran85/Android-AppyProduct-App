@@ -34,10 +34,12 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void updateProductFavorite(int position) {
         getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(idProduct, "1234")
-                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
                     isFavorite.set(value);
+                    int count = Integer.valueOf(favoriteCount.get());
+                    count = value ? count + 1 : count - 1;
+                    favoriteCount.set(count + "");
                     getNavigator().notifyItemChanged(position);
                 }, throwable -> {
                     throwable.printStackTrace();

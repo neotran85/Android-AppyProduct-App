@@ -2,7 +2,6 @@ package com.appyhome.appyproduct.mvvm.ui.common.sample.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
@@ -12,17 +11,17 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
 
-public class SampleTopicFragment extends BaseFragment<FragmentSampleBinding, SampleViewModel> implements SampleNavigator {
+public class SampleFragment extends BaseFragment<FragmentSampleBinding, SampleViewModel> implements SampleNavigator {
 
-    public static final String TAG = "SampleTopicFragment";
+    public static final String TAG = "FavoriteFragment";
 
     @Inject
     SampleViewModel mViewModel;
     FragmentSampleBinding mBinder;
 
-    public static SampleTopicFragment newInstance() {
+    public static SampleFragment newInstance() {
         Bundle args = new Bundle();
-        SampleTopicFragment fragment = new SampleTopicFragment();
+        SampleFragment fragment = new SampleFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,11 +30,6 @@ public class SampleTopicFragment extends BaseFragment<FragmentSampleBinding, Sam
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUp();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     private void setUp() {

@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 import io.reactivex.Flowable;
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -497,6 +498,15 @@ public class AppDbHelper implements DbHelper {
                 return false;
             }
         });
+    }
+
+    @Override
+    public Flowable<RealmResults<Product>> getAllProductFavorites(ArrayList<Integer>ids) {
+        RealmQuery<Product> query = getRealm().where(Product.class);
+        for (Integer id : ids) {
+            query.or().equalTo("id", id);
+        }
+        return query.findAll().asFlowable();
     }
 
     @Override

@@ -43,12 +43,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         return fragment;
     }
 
-    private void openLoginActivity(String message, int requestCode) {
-        Intent intent = LoginActivity.getStartIntent(getActivity());
-        intent.putExtra("message", message);
-        startActivityForResult(intent, requestCode);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
