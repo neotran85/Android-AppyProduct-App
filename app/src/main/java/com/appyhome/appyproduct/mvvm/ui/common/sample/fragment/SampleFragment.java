@@ -17,7 +17,16 @@ public class SampleFragment extends BaseFragment<FragmentSampleBinding, SampleVi
 
     @Inject
     SampleViewModel mViewModel;
+
     FragmentSampleBinding mBinder;
+
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static SampleFragment newInstance() {
         Bundle args = new Bundle();
@@ -46,11 +55,6 @@ public class SampleFragment extends BaseFragment<FragmentSampleBinding, SampleVi
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_sample;
     }
 
     @Override

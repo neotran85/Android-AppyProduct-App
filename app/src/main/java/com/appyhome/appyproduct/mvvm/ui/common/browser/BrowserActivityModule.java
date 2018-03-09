@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.common.browser;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -13,6 +14,11 @@ public class BrowserActivityModule {
     BrowserViewModel provideBrowserViewModel(DataManager dataManager,
                                              SchedulerProvider schedulerProvider) {
         return new BrowserViewModel(dataManager, schedulerProvider);
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_browser;
     }
 
 }

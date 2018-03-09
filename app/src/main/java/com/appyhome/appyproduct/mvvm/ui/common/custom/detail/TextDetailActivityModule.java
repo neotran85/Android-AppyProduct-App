@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.common.custom.detail;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -15,4 +16,8 @@ public class TextDetailActivityModule {
         return new TextDetailViewModel(dataManager, schedulerProvider);
     }
 
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_detail_text;
+    }
 }

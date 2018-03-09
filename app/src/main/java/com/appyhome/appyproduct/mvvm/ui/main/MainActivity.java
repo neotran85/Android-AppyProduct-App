@@ -47,10 +47,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
+
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
     ActivityMainBinding mBinder;
-    private MainViewModel mMainViewModel;
+
+    @Inject
+    MainViewModel mMainViewModel;
+
     private View currentTab;
 
     @Override

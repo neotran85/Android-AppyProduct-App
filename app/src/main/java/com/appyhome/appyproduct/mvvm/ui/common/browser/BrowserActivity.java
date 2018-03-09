@@ -20,6 +20,13 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, Browse
 
     ActivityBrowserBinding mBinder;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, BrowserActivity.class);
@@ -61,11 +68,6 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding, Browse
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_browser;
     }
 
 }
