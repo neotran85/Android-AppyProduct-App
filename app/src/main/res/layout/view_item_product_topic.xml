@@ -12,14 +12,15 @@
 
     <LinearLayout
         android:id="@+id/llItemView"
-        android:gravity="center"
         android:layout_width="@dimen/width_topic_image"
-        android:layout_height="@dimen/height_topic_image">
+        android:layout_height="@dimen/height_topic_image"
+        android:gravity="center">
+
         <ImageView
-            android:scaleType="center"
             android:id="@+id/ivThumbnail"
+            imageAssetsUrl="@{viewModel.imageURL}"
             android:layout_width="46dp"
             android:layout_height="66dp"
-            imageAssetsUrl="@{viewModel.imageURL}"/>
+            android:scaleType="center" />
     </LinearLayout>
 </layout>
