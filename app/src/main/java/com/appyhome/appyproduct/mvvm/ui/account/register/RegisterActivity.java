@@ -29,6 +29,14 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     ActivityRegisterBinding mBinder;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
         return intent;
@@ -173,11 +181,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_register;
     }
 
     private void clearTextInputError(TextInputEditText edt) {

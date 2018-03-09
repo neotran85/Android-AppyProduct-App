@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -13,6 +14,11 @@ public class LoginActivityModule {
     LoginViewModel provideLoginViewModel(DataManager dataManager,
                                          SchedulerProvider schedulerProvider) {
         return new LoginViewModel(dataManager, schedulerProvider);
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_login;
     }
 
 }

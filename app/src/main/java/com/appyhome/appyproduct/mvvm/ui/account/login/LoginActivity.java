@@ -27,9 +27,19 @@ import javax.inject.Inject;
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator, View.OnClickListener {
 
     public static final int REQUEST_SIGN_UP = 2222;
+
     @Inject
     LoginViewModel mLoginViewModel;
+
     ActivityLoginBinding mBinder;
+
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -225,10 +235,5 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 openSignUpActivity();
             }
         });
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_login;
     }
 }

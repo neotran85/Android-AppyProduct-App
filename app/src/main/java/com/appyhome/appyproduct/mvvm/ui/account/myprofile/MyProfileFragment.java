@@ -30,6 +30,15 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     private String[] mEmailHints;
     private String[] mAddressHints;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
+
     public static MyProfileFragment newInstance() {
         Bundle args = new Bundle();
         MyProfileFragment fragment = new MyProfileFragment();
@@ -82,11 +91,6 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_my_profile;
     }
 
     @Override
