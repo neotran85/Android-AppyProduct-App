@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.tabs.notification;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.NotificationResponse;
@@ -40,5 +41,11 @@ public class NotificationFragmentModule {
     @Provides
     LinearLayoutManager provideLinearLayoutManager(NotificationFragment fragment) {
         return new LinearLayoutManager(fragment.getActivity());
+    }
+
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.fragment_notification;
     }
 }

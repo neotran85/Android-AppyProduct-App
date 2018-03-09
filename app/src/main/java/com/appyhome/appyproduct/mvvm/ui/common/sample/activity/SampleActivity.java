@@ -28,6 +28,14 @@ public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleVi
     @Inject
     public SampleViewModel mMainViewModel;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SampleActivity.class);
         return intent;
@@ -54,11 +62,6 @@ public class SampleActivity extends BaseActivity<ActivitySampleBinding, SampleVi
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_sample;
     }
 
     @Override

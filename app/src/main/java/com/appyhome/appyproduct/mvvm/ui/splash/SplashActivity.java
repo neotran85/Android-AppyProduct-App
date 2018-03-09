@@ -17,6 +17,14 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Inject
     SplashViewModel mSplashViewModel;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SplashActivity.class);
         return intent;
@@ -48,11 +56,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_splash;
     }
 
 }

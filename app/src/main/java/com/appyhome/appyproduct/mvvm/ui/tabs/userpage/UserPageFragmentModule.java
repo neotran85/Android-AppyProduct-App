@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.tabs.userpage;
 
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -23,4 +24,8 @@ public class UserPageFragmentModule {
         return new ViewModelProviderFactory<>(userPageViewModel);
     }
 
+    @Provides
+    int provideLayoutId() {
+        return R.layout.fragment_user_page;
+    }
 }

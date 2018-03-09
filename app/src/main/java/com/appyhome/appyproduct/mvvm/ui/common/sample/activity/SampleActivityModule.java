@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.common.sample.activity;
 
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressViewModel;
@@ -19,4 +20,8 @@ public class SampleActivityModule {
         return new SampleViewModel(dataManager, schedulerProvider);
     }
 
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_sample;
+    }
 }

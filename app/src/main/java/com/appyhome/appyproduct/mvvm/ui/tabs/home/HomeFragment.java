@@ -31,10 +31,20 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             R.id.ibHomeCleaning, R.id.ibPlumbingService};
     @Inject
     HomeViewModel mHomeViewModel;
+
     FragmentHomeBinding mBinder;
+
     private Toolbar mToolbar;
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
+
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -106,11 +116,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_home;
     }
 
     @Override

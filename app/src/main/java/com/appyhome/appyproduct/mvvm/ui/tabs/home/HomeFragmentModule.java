@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -21,6 +22,12 @@ public class HomeFragmentModule {
     @Provides
     ViewModelProvider.Factory homeViewModelProvider(HomeViewModel homeViewModel) {
         return new ViewModelProviderFactory<>(homeViewModel);
+    }
+
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.fragment_home;
     }
 
 }

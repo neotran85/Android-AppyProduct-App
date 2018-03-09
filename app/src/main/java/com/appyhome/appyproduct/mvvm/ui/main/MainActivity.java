@@ -53,6 +53,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private MainViewModel mMainViewModel;
     private View currentTab;
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
@@ -188,11 +193,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
     }
 
     @Override

@@ -18,7 +18,16 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
 
     @Inject
     UserPageViewModel mUserPageViewModel;
+
     FragmentUserPageBinding mBinder;
+
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static UserPageFragment newInstance() {
         Bundle args = new Bundle();
@@ -52,11 +61,6 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_user_page;
     }
 
     @Override

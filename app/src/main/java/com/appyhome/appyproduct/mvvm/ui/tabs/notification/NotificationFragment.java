@@ -29,6 +29,14 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
 
     FragmentNotificationBinding mBinder;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static NotificationFragment newInstance() {
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
@@ -66,11 +74,6 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_notification;
     }
 
     @Override

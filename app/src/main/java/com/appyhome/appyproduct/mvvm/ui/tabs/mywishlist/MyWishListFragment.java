@@ -18,7 +18,16 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
 
     @Inject
     MyWishListViewModel mMyWishListViewModel;
+
     FragmentMyWishlistBinding mBinder;
+
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static MyWishListFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,11 +62,6 @@ public class MyWishListFragment extends BaseFragment<FragmentMyWishlistBinding, 
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_my_wishlist;
     }
 
     @Override
