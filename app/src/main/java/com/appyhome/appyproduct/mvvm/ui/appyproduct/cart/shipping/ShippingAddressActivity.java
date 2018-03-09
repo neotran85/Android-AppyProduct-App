@@ -39,6 +39,8 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     boolean isEditMode = false;
 
+    boolean isEmptyAddress = true;
+
     @Inject
     int mLayoutId;
 
@@ -73,6 +75,10 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void gotoNextStep() {
+        if(isEmptyAddress) {
+            showAlert(getString(R.string.please_add_address));
+            return;
+        }
         if (isEditMode) {
             finish();
         } else
@@ -87,6 +93,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void showAddressList(RealmResults<Address> addresses) {
+        isEmptyAddress = addresses.size() <= 0;
         mAdapter.updateAdapter(addresses, mMainViewModel);
         mBinder.rvAddressList.setAdapter(mAdapter);
     }
