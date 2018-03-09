@@ -30,8 +30,14 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     @Inject
     ProductTopicViewModel mViewModel;
+
     FragmentProductTopicBinding mBinder;
+
+    @Inject
     TopicAdapter mAdapter;
+
+    @Inject
+    int mLayoutId;
 
     private CompletedJobListener mListener;
 
@@ -77,7 +83,6 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         mViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
-        mAdapter = new TopicAdapter();
         mBinder.topicsRecyclerView.setAdapter(mAdapter);
         setUpRecyclerViewGrid(mBinder.topicsRecyclerView);
         mViewModel.getAllProductTopics();
@@ -101,7 +106,7 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_product_topic;
+        return mLayoutId;
     }
 
     @Override

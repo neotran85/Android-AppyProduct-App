@@ -30,8 +30,10 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Inject
     CategoryViewModel mCategoryViewModel;
 
+    @Inject
     CategoryAdapter mCategoryAdapter;
 
+    @Inject
     CategoryAdapter mSubCategoryAdapter;
 
     ActivityProductCategoryBinding mBinder;
@@ -64,8 +66,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mBinder.setViewModel(mCategoryViewModel);
         mBinder.setNavigator(this);
         mCategoryViewModel.setNavigator(this);
-        mCategoryAdapter = new CategoryAdapter();
-        mSubCategoryAdapter = new CategoryAdapter();
         setUpRecyclerViewList(mBinder.categoryRecyclerView, mCategoryAdapter);
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);

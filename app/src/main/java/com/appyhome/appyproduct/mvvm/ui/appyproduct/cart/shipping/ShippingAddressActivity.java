@@ -32,10 +32,10 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Inject
     ShippingAddressViewModel mMainViewModel;
 
-    ActivityProductShippingBinding mBinder;
-
     @Inject
     AddressAdapter mAdapter;
+
+    ActivityProductShippingBinding mBinder;
 
     boolean isEditMode = false;
 
