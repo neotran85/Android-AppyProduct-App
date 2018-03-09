@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -19,5 +20,10 @@ public class ProductListActivityModule {
     @Provides
     ProductAdapter provideProductAdapter() {
         return new ProductAdapter();
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_product_list;
     }
 }

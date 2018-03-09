@@ -37,6 +37,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Inject
     ProductAdapter mProductAdapter;
 
+    @Inject
+    int mLayoutId;
+
     private static final int TAB_SORT = 0;
     private static final int TAB_FILTER = 1;
     public static final int ID_DEFAULT_SUB = 138;
@@ -155,7 +158,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_product_list;
+        return mLayoutId;
     }
 
     @Override

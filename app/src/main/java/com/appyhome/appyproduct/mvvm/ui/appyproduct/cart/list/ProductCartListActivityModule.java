@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -15,9 +16,15 @@ public class ProductCartListActivityModule {
                                                              SchedulerProvider schedulerProvider) {
         return new ProductCartListViewModel(dataManager, schedulerProvider);
     }
+
     @Provides
     ProductCartAdapter provideProductCartAdapter() {
         return new ProductCartAdapter();
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_product_cart_list;
     }
 
 }

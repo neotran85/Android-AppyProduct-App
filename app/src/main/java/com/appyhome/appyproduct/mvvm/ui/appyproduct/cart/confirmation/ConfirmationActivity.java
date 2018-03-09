@@ -41,6 +41,14 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Inject
     public ConfirmationViewModel mMainViewModel;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ConfirmationActivity.class);
         return intent;
@@ -155,11 +163,6 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_cart_confirmation;
     }
 
     @Override

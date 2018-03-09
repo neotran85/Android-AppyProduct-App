@@ -39,6 +39,14 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     boolean isEditMode = false;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ShippingAddressActivity.class);
         return intent;
@@ -98,11 +106,6 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_shipping;
     }
 
     @Override

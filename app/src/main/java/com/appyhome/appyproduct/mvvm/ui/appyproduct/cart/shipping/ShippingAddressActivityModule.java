@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
@@ -23,5 +24,10 @@ public class ShippingAddressActivityModule {
     @Provides
     AddressAdapter provideAddressAdapter() {
         return new AddressAdapter();
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_product_shipping;
     }
 }

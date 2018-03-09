@@ -24,6 +24,14 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     @Inject
     public PaymentViewModel mMainViewModel;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, PaymentActivity.class);
         return intent;
@@ -74,11 +82,6 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_cart_payment;
     }
 
     @Override

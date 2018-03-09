@@ -36,6 +36,13 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     ActivityProductCartListBinding mBinder;
     boolean isEditMode = false;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductCartListActivity.class);
@@ -176,11 +183,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_cart_list;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
@@ -28,5 +29,10 @@ public class FavoriteFragmentModule {
     @Provides
     FavoriteAdapter provideFavoriteAdapter() {
         return new FavoriteAdapter();
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.fragment_favorite;
     }
 }

@@ -21,6 +21,14 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     @Inject
     public NewAddressViewModel mMainViewModel;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, NewAddressActivity.class);
         return intent;
@@ -92,12 +100,6 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     public int getBindingVariable() {
         return BR.viewModel;
     }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_shipping_new;
-    }
-
 
     @Override
     public void showAlert(String message) {

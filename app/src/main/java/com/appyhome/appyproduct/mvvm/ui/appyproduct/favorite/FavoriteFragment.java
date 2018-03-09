@@ -31,10 +31,15 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Inject
     FavoriteViewModel mViewModel;
-    FragmentFavoriteBinding mBinder;
 
     @Inject
     FavoriteAdapter mFavoriteAdapter;
+
+    @Inject
+    int mLayoutId;
+
+    FragmentFavoriteBinding mBinder;
+
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
@@ -75,7 +80,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_favorite;
+        return mLayoutId;
     }
 
     @Override

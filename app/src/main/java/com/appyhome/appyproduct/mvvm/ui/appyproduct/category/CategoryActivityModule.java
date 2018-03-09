@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -19,5 +20,11 @@ public class CategoryActivityModule {
     @Provides
     CategoryAdapter provideCategoryAdapter() {
         return new CategoryAdapter();
+    }
+
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_product_category;
     }
 }

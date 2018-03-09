@@ -40,6 +40,14 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
+    @Inject
+    int mLayoutId;
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
     public static final int ID_DEFAULT_TOPIC = 73;
     public static final int DEFAULT_SPAN_COUNT = 2;
 
@@ -135,8 +143,4 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mSearchToolbarViewHolder.onBind(0);
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_category;
-    }
 }
