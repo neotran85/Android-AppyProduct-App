@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -29,6 +28,12 @@ import io.realm.Sort;
 public class AppDbHelper implements DbHelper {
 
     private Realm mRealm;
+    private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4", "Store 5", "Store 6"};
+    private float[] prices = {100.50f, 25.50f, 12.60f, 50.78f, 51.2f, 12.62f};
+    private float[] rates = {3, 4.5f, 5, 2, 1, 0};
+    private int[] numberRates = {30, 415, 52, 211, 123, 985};
+    private int[] numberFavorites = {130, 15, 522, 11, 210, 205};
+    private int[] discountList = {0, 16, 0, 42, 12, 0};
 
     @Inject
     public AppDbHelper(Realm realm) {
@@ -172,13 +177,6 @@ public class AppDbHelper implements DbHelper {
         getRealm().commitTransaction();
         return topic;
     }
-
-    private String[] storeName = {"Store 1", "Store 2", "Store 3", "Store 4", "Store 5", "Store 6"};
-    private float[] prices = {100.50f, 25.50f, 12.60f, 50.78f, 51.2f, 12.62f};
-    private float[] rates = {3, 4.5f, 5, 2, 1, 0};
-    private int[] numberRates = {30, 415, 52, 211, 123, 985};
-    private int[] numberFavorites = {130, 15, 522, 11, 210, 205};
-    private int[] discountList = {0, 16, 0, 42, 12, 0};
 
     @Override
     public Flowable<Boolean> addProducts(Product[] list) {

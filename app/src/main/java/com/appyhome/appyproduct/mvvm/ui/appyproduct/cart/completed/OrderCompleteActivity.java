@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartCompletedBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -16,22 +14,20 @@ import javax.inject.Inject;
 
 public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompletedBinding, OrderCompleteViewModel> implements OrderCompleteNavigator {
 
-    ActivityProductCartCompletedBinding mBinder;
-
     @Inject
     public OrderCompleteViewModel mMainViewModel;
-
+    ActivityProductCartCompletedBinding mBinder;
     @Inject
     int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, OrderCompleteActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

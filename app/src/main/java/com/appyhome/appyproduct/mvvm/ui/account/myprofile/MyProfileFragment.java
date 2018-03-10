@@ -24,26 +24,24 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     @Inject
     MyProfileViewModel mMyProfileViewModel;
     FragmentMyProfileBinding mBinder;
+    @Inject
+    int mLayoutId;
     private TextInputDialog mTextInputDialog;
     private String[] mPhoneHints;
     private String[] mPasswordHints;
     private String[] mEmailHints;
     private String[] mAddressHints;
 
-    @Inject
-    int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
-
     public static MyProfileFragment newInstance() {
         Bundle args = new Bundle();
         MyProfileFragment fragment = new MyProfileFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

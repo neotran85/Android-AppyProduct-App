@@ -64,6 +64,11 @@ public class TopicAdapter extends SampleAdapter {
 
         private ViewItemProductTopicBinding mBinding;
 
+        private TopicItemViewHolder(ViewItemProductTopicBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
         public ViewItemProductTopicBinding getBinding() {
             return mBinding;
         }
@@ -73,11 +78,6 @@ public class TopicAdapter extends SampleAdapter {
                 mBinding.llItemView.setTag(mBinding.getViewModel());
                 mBinding.llItemView.setOnClickListener(listener);
             }
-        }
-
-        private TopicItemViewHolder(ViewItemProductTopicBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
         }
 
         public void setViewModel(TopicItemViewModel viewModel) {

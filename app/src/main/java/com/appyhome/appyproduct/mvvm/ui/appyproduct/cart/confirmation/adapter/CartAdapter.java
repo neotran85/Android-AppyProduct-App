@@ -6,12 +6,7 @@ import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemConfirmationBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewHolder;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
@@ -23,8 +18,8 @@ import io.realm.RealmResults;
 
 public class CartAdapter extends SampleAdapter {
 
-    private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
     public HashMap<String, ArrayList<CartItemViewModel>> viewModelManager;
+    private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
 
     public CartAdapter() {
         this.mItems = null;

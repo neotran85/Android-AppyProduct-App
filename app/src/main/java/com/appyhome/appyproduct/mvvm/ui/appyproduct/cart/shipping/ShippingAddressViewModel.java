@@ -8,8 +8,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-import java.util.Observable;
-
 import io.reactivex.disposables.Disposable;
 import io.realm.RealmResults;
 

@@ -27,33 +27,27 @@ import javax.inject.Inject;
 import io.realm.RealmResults;
 
 public class CategoryActivity extends BaseActivity<ActivityProductCategoryBinding, CategoryViewModel> implements CategoryNavigator, CategoryItemNavigator {
-    @Inject
-    CategoryViewModel mCategoryViewModel;
-
-    @Inject
-    CategoryAdapter mCategoryAdapter;
-
-    @Inject
-    CategoryAdapter mSubCategoryAdapter;
-
-    ActivityProductCategoryBinding mBinder;
-
-    private SearchToolbarViewHolder mSearchToolbarViewHolder;
-
-    @Inject
-    int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static final int ID_DEFAULT_TOPIC = 73;
     public static final int DEFAULT_SPAN_COUNT = 2;
+    @Inject
+    CategoryViewModel mCategoryViewModel;
+    @Inject
+    CategoryAdapter mCategoryAdapter;
+    @Inject
+    CategoryAdapter mSubCategoryAdapter;
+    ActivityProductCategoryBinding mBinder;
+    @Inject
+    int mLayoutId;
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

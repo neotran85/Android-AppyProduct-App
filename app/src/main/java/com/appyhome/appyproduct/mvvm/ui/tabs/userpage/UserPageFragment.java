@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentUserPageBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
@@ -24,16 +23,16 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static UserPageFragment newInstance() {
         Bundle args = new Bundle();
         UserPageFragment fragment = new UserPageFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

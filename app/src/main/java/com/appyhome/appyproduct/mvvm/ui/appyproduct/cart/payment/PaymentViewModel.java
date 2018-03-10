@@ -18,14 +18,17 @@ public class PaymentViewModel extends BaseViewModel<PaymentNavigator> {
                             SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
+
     public void fetchPaymentMethods() {
         String method = getDefaultPaymentMethod();
         fetchPaymentMethods(method);
     }
+
     public void fetchPaymentMethods(String method) {
         isPaymentVisa.set(method.equals(PAYMENT_VISA));
         isPaymentMolpay.set(method.equals(PAYMENT_MOLPAY));
     }
+
     private String getDefaultPaymentMethod() {
         return getDataManager().getDefaultPaymentMethod(getUserId());
     }

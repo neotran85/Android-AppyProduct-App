@@ -22,6 +22,7 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public abstract void onClick(View view);
 
     protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
+
     protected abstract void recycle();
 
     @Override
@@ -87,6 +88,10 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
         return 1;
     }
 
+    public void empty() {
+        mItems = new ArrayList<>();
+    }
+
     public class SampleItemEmptyViewHolder extends BaseViewHolder {
         public SampleItemEmptyViewHolder(View view) {
             super(view);
@@ -105,9 +110,5 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
         @Override
         public void onBind(int position) {
         }
-    }
-
-    public void empty() {
-        mItems = new ArrayList<>();
     }
 }

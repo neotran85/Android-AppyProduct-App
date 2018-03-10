@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityDetailTextBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 
@@ -21,14 +20,14 @@ public class TextDetailActivity extends BaseActivity<ActivityDetailTextBinding, 
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, TextDetailActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

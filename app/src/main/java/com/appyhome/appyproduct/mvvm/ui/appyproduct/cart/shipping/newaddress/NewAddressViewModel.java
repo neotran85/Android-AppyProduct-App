@@ -8,7 +8,6 @@ import android.location.Geocoder;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -58,6 +57,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     private String getPhoneNumber() {
         return "60" + phoneNumber.get();
     }
+
     public boolean isPhoneNumberValid() {
         return ValidationUtils.isPhoneNumberValid(getPhoneNumber());
     }

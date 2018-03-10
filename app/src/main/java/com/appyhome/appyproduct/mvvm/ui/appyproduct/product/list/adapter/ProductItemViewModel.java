@@ -18,13 +18,12 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
+    private int idProduct;
 
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
-    private int idProduct;
 
     public int getIdProduct() {
         return idProduct;

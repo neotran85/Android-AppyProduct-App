@@ -1,11 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 
-import android.arch.lifecycle.ViewModelProvider;
-
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 

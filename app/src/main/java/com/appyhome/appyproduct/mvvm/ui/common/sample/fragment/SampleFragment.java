@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentSampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
@@ -23,16 +22,16 @@ public class SampleFragment extends BaseFragment<FragmentSampleBinding, SampleVi
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static SampleFragment newInstance() {
         Bundle args = new Bundle();
         SampleFragment fragment = new SampleFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

@@ -16,22 +16,20 @@ import javax.inject.Inject;
 
 public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewBinding, NewAddressViewModel> implements NewAddressNavigator, View.OnClickListener {
 
-    ActivityProductShippingNewBinding mBinder;
-
     @Inject
     public NewAddressViewModel mMainViewModel;
-
+    ActivityProductShippingNewBinding mBinder;
     @Inject
     int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, NewAddressActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -41,15 +39,15 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
                 MapManager.openMapForPlaceSelection(this);
                 break;
             case R.id.btSave:
-                if(!mMainViewModel.checkIfContactInputted()) {
+                if (!mMainViewModel.checkIfContactInputted()) {
                     showAlert(getString(R.string.please_input_contact));
                     return;
                 }
-                if(!mMainViewModel.isPhoneNumberValid()) {
+                if (!mMainViewModel.isPhoneNumberValid()) {
                     showAlert(getString(R.string.please_input_valid_phone));
                     return;
                 }
-                if(!mMainViewModel.checkIfLocationInputted()) {
+                if (!mMainViewModel.checkIfLocationInputted()) {
                     showAlert(getString(R.string.please_input_shipping_address));
                     return;
                 }
@@ -64,7 +62,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MapManager.PLACE_PICKER_REQUEST:
-                    mMainViewModel.updateAddressFromGooglePlaceData(this,data);
+                    mMainViewModel.updateAddressFromGooglePlaceData(this, data);
                     break;
             }
         }

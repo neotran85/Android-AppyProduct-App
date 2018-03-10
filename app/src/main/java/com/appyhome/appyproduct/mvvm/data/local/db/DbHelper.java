@@ -2,7 +2,6 @@ package com.appyhome.appyproduct.mvvm.data.local.db;
 
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -75,7 +74,7 @@ public interface DbHelper {
 
     Flowable<Boolean> isFavorite(int productId, String userId);
 
-    Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer>ids);
+    Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids);
 
     void closeDatabase();
 }

@@ -14,13 +14,12 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
     public ObservableField<Boolean> isCartEmpty = new ObservableField<>(true);
     public ObservableField<Boolean> isCheckedAll = new ObservableField<>(false);
     public ObservableField<String> totalCost = new ObservableField<>("");
+    private Disposable mDisposable = null;
 
     public ProductCartListViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
-    private Disposable mDisposable = null;
 
     public void emptyProductCarts() {
         getCompositeDisposable().add(getDataManager().emptyProductCarts(getUserId())
@@ -32,12 +31,14 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                     Crashlytics.logException(throwable);
                 }));
     }
+
     private void disposeGetAllProductCarts() {
         if (mDisposable != null) {
             mDisposable.dispose();
             mDisposable = null;
         }
     }
+
     public void getAllProductCarts() {
         mDisposable = getDataManager().getAllProductCarts(getUserId())
                 .observeOn(getSchedulerProvider().ui())

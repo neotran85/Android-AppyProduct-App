@@ -14,7 +14,6 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -29,22 +28,17 @@ import javax.inject.Inject;
 import io.realm.RealmResults;
 
 public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator, TabLayout.OnTabSelectedListener {
-    @Inject
-    ProductListViewModel mViewModel;
-
-    ActivityProductListBinding mBinder;
-
-    @Inject
-    ProductAdapter mProductAdapter;
-
-    @Inject
-    int mLayoutId;
-
-    private static final int TAB_SORT = 0;
-    private static final int TAB_FILTER = 1;
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
-
+    private static final int TAB_SORT = 0;
+    private static final int TAB_FILTER = 1;
+    @Inject
+    ProductListViewModel mViewModel;
+    ActivityProductListBinding mBinder;
+    @Inject
+    ProductAdapter mProductAdapter;
+    @Inject
+    int mLayoutId;
     private ArrayList<Integer> mFavoritesId;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 

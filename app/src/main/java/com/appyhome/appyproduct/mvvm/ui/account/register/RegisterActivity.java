@@ -32,14 +32,14 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -59,29 +59,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
         if (getIntent().hasExtra("phone")) {
             mBinder.etNumberPhone.setText(getIntent().getStringExtra("phone"));
-        }
-    }
-
-    private class InputTextWatcher implements TextWatcher {
-        private TextInputEditText edt;
-
-        public InputTextWatcher(TextInputEditText et) {
-            edt = et;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            clearTextInputError(edt);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
         }
     }
 
@@ -247,6 +224,29 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     public void openPhoneNumberVerification() {
         Intent intent = VerifyActivity.getStartIntent(this);
         startActivityForResult(intent, LoginActivity.REQUEST_SIGN_UP);
+    }
+
+    private class InputTextWatcher implements TextWatcher {
+        private TextInputEditText edt;
+
+        public InputTextWatcher(TextInputEditText et) {
+            edt = et;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            clearTextInputError(edt);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 
 }

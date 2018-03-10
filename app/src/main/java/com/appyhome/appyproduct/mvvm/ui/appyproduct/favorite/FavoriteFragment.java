@@ -2,20 +2,15 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentSampleBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -40,18 +35,17 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     FragmentFavoriteBinding mBinder;
 
-
-    @Override
-    public void notifyFavoriteChanged(int position, boolean isFavorite) {
-        mFavoriteAdapter.removedFavorite(position, isFavorite);
-        mViewModel.updateFavoriteCount(mFavoriteAdapter.getFavoriteCount());
-    }
-
     public static FavoriteFragment newInstance() {
         Bundle args = new Bundle();
         FavoriteFragment fragment = new FavoriteFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void notifyFavoriteChanged(int position, boolean isFavorite) {
+        mFavoriteAdapter.removedFavorite(position, isFavorite);
+        mViewModel.updateFavoriteCount(mFavoriteAdapter.getFavoriteCount());
     }
 
     @Override

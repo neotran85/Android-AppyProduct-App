@@ -3,13 +3,10 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -19,12 +16,10 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
 public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator {
@@ -44,14 +39,14 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ShippingAddressActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -75,7 +70,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void gotoNextStep() {
-        if(isEmptyAddress) {
+        if (isEmptyAddress) {
             showAlert(getString(R.string.please_add_address));
             return;
         }

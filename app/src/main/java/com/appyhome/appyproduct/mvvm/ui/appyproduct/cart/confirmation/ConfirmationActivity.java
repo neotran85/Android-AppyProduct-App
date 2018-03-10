@@ -19,7 +19,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListAct
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
@@ -31,27 +30,24 @@ import io.realm.RealmResults;
 
 public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
 
-    ActivityProductCartConfirmationBinding mBinder;
-
     final int HEIGHT_CART_ITEM = 124;
     final int HEIGHT_TITLE_CART_ITEM = 40;
     @Inject
     public CartAdapter mAdapter;
-
     @Inject
     public ConfirmationViewModel mMainViewModel;
-
+    ActivityProductCartConfirmationBinding mBinder;
     @Inject
     int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ConfirmationActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

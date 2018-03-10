@@ -24,14 +24,14 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, VerifyActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

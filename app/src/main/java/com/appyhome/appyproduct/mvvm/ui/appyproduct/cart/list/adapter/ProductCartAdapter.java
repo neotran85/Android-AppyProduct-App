@@ -1,11 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
-import android.content.DialogInterface;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -24,10 +21,8 @@ import io.realm.RealmResults;
 
 public class ProductCartAdapter extends SampleAdapter {
 
-    private ProductCartListViewModel mProductCartListViewModel;
-
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
-
+    private ProductCartListViewModel mProductCartListViewModel;
     private ProductCartItemNavigator mNavigator;
 
     private ArrayList<ProductCartItemViewModel> mDeletedItems = null;

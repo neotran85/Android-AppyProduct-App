@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentNotificationBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
@@ -32,16 +31,16 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static NotificationFragment newInstance() {
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

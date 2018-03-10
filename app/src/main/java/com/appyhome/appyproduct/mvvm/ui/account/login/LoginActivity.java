@@ -36,14 +36,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Inject
     int mLayoutId;
 
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -74,29 +74,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
         }
         showError("");
-    }
-
-    private class LoginTextWatcher implements TextWatcher {
-        private TextInputEditText editText;
-
-        public LoginTextWatcher(TextInputEditText e) {
-            editText = e;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            clearTextInputError(editText);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
     }
 
     @Override
@@ -235,5 +212,28 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 openSignUpActivity();
             }
         });
+    }
+
+    private class LoginTextWatcher implements TextWatcher {
+        private TextInputEditText editText;
+
+        public LoginTextWatcher(TextInputEditText e) {
+            editText = e;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            clearTextInputError(editText);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 }

@@ -3,23 +3,16 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 import android.graphics.Paint;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
-import java.util.ArrayList;
-
 public class ProductCartItemViewHolder extends BaseViewHolder {
 
     private ViewItemProductCartItemBinding mBinding;
     private ProductCartAdapter mAdapter;
-
-    public ViewItemProductCartItemBinding getBinding() {
-        return mBinding;
-    }
 
     public ProductCartItemViewHolder(ViewItemProductCartItemBinding binding, ProductCartAdapter adapter) {
         super(binding.getRoot());
@@ -27,6 +20,10 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
         mAdapter = adapter;
         mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+    }
+
+    public ViewItemProductCartItemBinding getBinding() {
+        return mBinding;
     }
 
     private String getSellerName() {

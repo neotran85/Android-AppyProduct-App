@@ -50,6 +50,35 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     private String mIdNumber = "";
 
     private String editCode = "";
+    private TypeRequestData[] mArrayTypeRequest = {
+            new TypeRequestData() {
+                public Single<JSONObject> getRequestData(DataManager manager, String id) {
+                    return manager.getAppointment(new AppointmentGetRequest(id));
+                }
+
+                public String getDateLabel() {
+                    return "Created at:";
+                }
+            },
+            new TypeRequestData() {
+                public Single<JSONObject> getRequestData(DataManager manager, String id) {
+                    return manager.getOrder(new OrderGetRequest(id));
+                }
+
+                public String getDateLabel() {
+                    return "Validated at:";
+                }
+            },
+            new TypeRequestData() {
+                public Single<JSONObject> getRequestData(DataManager manager, String id) {
+                    return manager.getReceipt(new ReceiptGetRequest(id));
+                }
+
+                public String getDateLabel() {
+                    return "Archived at:";
+                }
+            }
+    };
 
     public RequestItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -164,16 +193,6 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         return dateTime1.get() != null && dateTime1.get().length() > 0 ? View.VISIBLE : View.GONE;
     }
 
-    interface TypeRequestData {
-        Single<JSONObject> getRequestData(DataManager manager, String id);
-
-        String getDateLabel();
-    }
-
-    public void setEditCode(String code) {
-        editCode = code;
-    }
-
     public void fetchData(String id, final int type) {
         setIsLoading(true);
         setIdNumber(id);
@@ -242,33 +261,13 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         return editCode;
     }
 
-    private TypeRequestData[] mArrayTypeRequest = {
-            new TypeRequestData() {
-                public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.getAppointment(new AppointmentGetRequest(id));
-                }
+    public void setEditCode(String code) {
+        editCode = code;
+    }
 
-                public String getDateLabel() {
-                    return "Created at:";
-                }
-            },
-            new TypeRequestData() {
-                public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.getOrder(new OrderGetRequest(id));
-                }
+    interface TypeRequestData {
+        Single<JSONObject> getRequestData(DataManager manager, String id);
 
-                public String getDateLabel() {
-                    return "Validated at:";
-                }
-            },
-            new TypeRequestData() {
-                public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.getReceipt(new ReceiptGetRequest(id));
-                }
-
-                public String getDateLabel() {
-                    return "Archived at:";
-                }
-            }
-    };
+        String getDateLabel();
+    }
 }

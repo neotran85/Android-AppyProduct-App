@@ -1,18 +1,14 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter;
 
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductShippingAddressBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -82,13 +78,13 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
 
         private ViewItemProductShippingAddressBinding mBinding;
 
-        public ViewItemProductShippingAddressBinding getBinding() {
-            return mBinding;
-        }
-
         private AddressItemViewHolder(ViewItemProductShippingAddressBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+        }
+
+        public ViewItemProductShippingAddressBinding getBinding() {
+            return mBinding;
         }
 
         @Override

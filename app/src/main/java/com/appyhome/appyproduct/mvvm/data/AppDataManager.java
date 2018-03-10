@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Payment;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -398,7 +397,7 @@ public class AppDataManager implements DataManager {
     }
 
     private ArrayList<ProductSub> updateThumbnailsOfSub(ArrayList<ProductSub> data) {
-        for(ProductSub item: data) {
+        for (ProductSub item : data) {
             //item.thumbnail = "images/product/sub/" + item.id + ".png";
             item.thumbnail = "images/product/sub/temp.png";
         }
@@ -548,7 +547,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer>ids) {
+    public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
         return mDbHelper.getAllProductsFavorited(ids);
     }
 }

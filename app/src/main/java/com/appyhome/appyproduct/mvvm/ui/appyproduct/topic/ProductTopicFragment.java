@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductTopicBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
@@ -41,15 +40,15 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     private CompletedJobListener mListener;
 
-    public void setCompletedJobListener(CompletedJobListener listener) {
-        mListener = listener;
-    }
-
     public static ProductTopicFragment newInstance() {
         Bundle args = new Bundle();
         ProductTopicFragment fragment = new ProductTopicFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setCompletedJobListener(CompletedJobListener listener) {
+        mListener = listener;
     }
 
     @Override

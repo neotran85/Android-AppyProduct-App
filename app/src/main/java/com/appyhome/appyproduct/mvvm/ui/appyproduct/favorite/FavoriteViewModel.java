@@ -20,10 +20,11 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
     }
 
     public void updateFavoriteCount(int count) {
-        if(count > 0) {
+        if (count > 0) {
             totalCount.set("(" + count + ")");
         } else totalCount.set("");
     }
+
     public void getAllFavorites() {
         getCompositeDisposable().add(getDataManager().getAllProductFavorites(getUserId())
                 .take(1)

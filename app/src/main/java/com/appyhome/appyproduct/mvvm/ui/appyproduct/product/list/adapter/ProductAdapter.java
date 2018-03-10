@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
@@ -26,7 +25,8 @@ public class ProductAdapter extends SampleAdapter {
     }
 
     @Override
-    public void onClick(View view) {}
+    public void onClick(View view) {
+    }
 
     public void addItems(Product[] results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
         mItems = new ArrayList<>();
@@ -39,9 +39,9 @@ public class ProductAdapter extends SampleAdapter {
     }
 
     private boolean checkIfFavorite(int id, ArrayList<Integer> listId) {
-        if(listId == null || listId.size() <= 0) return false;
-        for(Integer item: listId) {
-            if(item.equals(id))
+        if (listId == null || listId.size() <= 0) return false;
+        for (Integer item : listId) {
+            if (item.equals(id))
                 return true;
         }
         return false;
@@ -105,14 +105,14 @@ public class ProductAdapter extends SampleAdapter {
 
         private ViewItemProductBinding mBinding;
 
-        public ViewItemProductBinding getBinding() {
-            return mBinding;
-        }
-
         private ProductItemViewHolder(ViewItemProductBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
             mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
+        public ViewItemProductBinding getBinding() {
+            return mBinding;
         }
 
         private View.OnClickListener getListener(ProductItemViewModel viewModel) {

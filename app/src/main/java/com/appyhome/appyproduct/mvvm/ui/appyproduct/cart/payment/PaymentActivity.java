@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartConfirmationBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartPaymentBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -18,23 +17,21 @@ import javax.inject.Inject;
 
 public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBinding, PaymentViewModel> implements PaymentNavigator, View.OnClickListener {
 
-    ActivityProductCartPaymentBinding mBinder;
-    boolean isEditMode = false;
-
     @Inject
     public PaymentViewModel mMainViewModel;
-
+    ActivityProductCartPaymentBinding mBinder;
+    boolean isEditMode = false;
     @Inject
     int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, PaymentActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

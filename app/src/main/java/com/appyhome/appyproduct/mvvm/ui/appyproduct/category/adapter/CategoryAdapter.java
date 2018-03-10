@@ -127,6 +127,11 @@ public class CategoryAdapter extends SampleAdapter {
 
         private ViewItemProductCategoryBinding mBinding;
 
+        private CategoryItemViewHolder(ViewItemProductCategoryBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
         public ViewItemProductCategoryBinding getBinding() {
             return mBinding;
         }
@@ -136,11 +141,6 @@ public class CategoryAdapter extends SampleAdapter {
                 mBinding.llItemCategoryView.setTag(mBinding.getViewModel());
                 mBinding.llItemCategoryView.setOnClickListener(listener);
             }
-        }
-
-        private CategoryItemViewHolder(ViewItemProductCategoryBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
         }
 
         private void createCategoryView() {

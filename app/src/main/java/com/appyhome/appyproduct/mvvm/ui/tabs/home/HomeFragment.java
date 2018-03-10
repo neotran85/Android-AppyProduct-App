@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
-import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -33,24 +31,21 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     HomeViewModel mHomeViewModel;
 
     FragmentHomeBinding mBinder;
-
-    private Toolbar mToolbar;
-
-    private SearchToolbarViewHolder mSearchToolbarViewHolder;
-
     @Inject
     int mLayoutId;
-
-    @Override
-    public int getLayoutId() {
-        return mLayoutId;
-    }
+    private Toolbar mToolbar;
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override

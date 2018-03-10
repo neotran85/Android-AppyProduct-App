@@ -20,7 +20,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragme
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
-import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -58,14 +57,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private View currentTab;
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override

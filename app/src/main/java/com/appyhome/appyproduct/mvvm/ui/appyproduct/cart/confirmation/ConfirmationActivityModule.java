@@ -13,7 +13,7 @@ public class ConfirmationActivityModule {
 
     @Provides
     ConfirmationViewModel provideConfirmationViewModel(DataManager dataManager,
-                                                 SchedulerProvider schedulerProvider) {
+                                                       SchedulerProvider schedulerProvider) {
         return new ConfirmationViewModel(dataManager, schedulerProvider);
     }
 
