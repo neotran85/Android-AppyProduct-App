@@ -125,6 +125,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.appyproduct.product.detail.gallery.ProductGalleryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.main.MainActivity"

@@ -13,6 +13,7 @@ public final class AppConstants {
     public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
+
     private static Activity mFirstActivity;
 
     private AppConstants() {

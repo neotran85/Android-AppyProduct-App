@@ -87,7 +87,8 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         mViewModel.getAllProductTopics();
     }
 
-    private void openProductCategories(int idTopic) {
+    @Override
+    public void openProductCategories(int idTopic) {
         Intent intent = CategoryActivity.getStartIntent(this.getContext());
         intent.putExtra("id_topic", idTopic);
         startActivity(intent);
