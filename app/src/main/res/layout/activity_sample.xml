@@ -10,7 +10,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.common.sample.activity.SampleActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.common.sample.activity.SampleNavigator" />
 
         <variable
             name="viewModel"

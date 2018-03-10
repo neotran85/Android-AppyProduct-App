@@ -9,7 +9,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryNavigator" />
 
         <variable
             name="viewModel"

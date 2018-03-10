@@ -44,6 +44,7 @@ public class SampleFragment extends BaseFragment<FragmentSampleBinding, SampleVi
         mViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
+        mBinder.setNavigator(this);
     }
 
     @Override

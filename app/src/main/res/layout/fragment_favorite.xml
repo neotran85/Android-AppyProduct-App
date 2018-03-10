@@ -10,7 +10,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragment" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteNavigator" />
 
         <variable
             name="viewModel"
