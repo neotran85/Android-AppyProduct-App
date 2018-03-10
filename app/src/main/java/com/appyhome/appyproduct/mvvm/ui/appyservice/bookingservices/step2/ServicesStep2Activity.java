@@ -35,6 +35,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     @Inject
     ServicesStep2ViewModel mServicesStep2ViewModel;
     ActivityServicesBookingStep2Binding mBinder;
+    @Inject
+    int mLayoutId;
     private Button mBtnTimeSlot;
     private String mDateSelectedShowedString = "";
     private String mDateSelectedString = "";
@@ -43,6 +45,11 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep2Activity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -226,11 +233,6 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_services_booking_step2;
     }
 
     @Override

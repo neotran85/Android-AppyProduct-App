@@ -23,9 +23,17 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
 
     ActivityServicesBookingStep5Binding mBinder;
 
+    @Inject
+    int mLayoutId;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep5Activity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -65,10 +73,6 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
         return BR.viewModel;
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_services_booking_step5;
-    }
 
     @Override
     public void openRequestsScreen() {

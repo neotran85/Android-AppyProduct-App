@@ -7,8 +7,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
-import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityServicesBookingStep3Binding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step4.ServicesStep4Activity;
@@ -26,9 +24,17 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     ServicesStep3ViewModel mViewModel;
     ActivityServicesBookingStep3Binding mBinder;
 
+    @Inject
+    int mLayoutId;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep3Activity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -66,7 +72,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MapManager.PLACE_PICKER_REQUEST:
-                    mViewModel.updateAddressFromGooglePlaceData(this,data);
+                    mViewModel.updateAddressFromGooglePlaceData(this, data);
                     break;
                 case REQUEST_LOGIN_FOR_BOOKING:
                     goToStep4();
@@ -88,11 +94,6 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_services_booking_step3;
     }
 
     @Override

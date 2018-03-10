@@ -28,16 +28,23 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
 
     @Inject
     RequestItemViewModel mRequestItemViewModel;
+
     ActivityRequestDetailBinding mBinder;
+    @Inject
+    int mLayoutId;
     private int mType = 0;
     private String mIdNumber = "";
-
     private int[] mIdTitle = {R.string.title_request_summary, R.string.title_order_summary,
             R.string.title_receipt_summary};
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestDetailActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -115,11 +122,6 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_request_detail;
     }
 
     @Override

@@ -22,12 +22,18 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
     @Inject
     RequestEditViewModel mRequestEditViewModel;
     ActivityRequestEditBinding mBinder;
-
+    @Inject
+    int mLayoutId;
     private Double mPrice = 0.0;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestEditActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -85,11 +91,6 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_request_edit;
     }
 
     @Override

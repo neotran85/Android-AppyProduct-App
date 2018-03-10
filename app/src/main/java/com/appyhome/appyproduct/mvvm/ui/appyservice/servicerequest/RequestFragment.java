@@ -28,7 +28,10 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
     @Inject
     RequestViewModel mRequestViewModel;
+
     FragmentRequestBinding mBinder;
+    @Inject
+    int mLayoutId;
     private Button mCurrentButton;
     private RecyclerView[] mArrayRecycleView = null;
     private RecyclerView mCurrentRecyclerView;
@@ -40,6 +43,11 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         RequestFragment fragment = new RequestFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -125,12 +133,6 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
     public int getBindingVariable() {
         return BR.viewModel;
     }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_request;
-    }
-
 
     @Override
     public void onDestroyView() {

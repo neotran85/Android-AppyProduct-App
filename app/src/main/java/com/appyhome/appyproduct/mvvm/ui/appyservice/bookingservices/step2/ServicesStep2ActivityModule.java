@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step2;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -15,4 +16,9 @@ public class ServicesStep2ActivityModule {
         return new ServicesStep2ViewModel(dataManager, schedulerProvider);
     }
 
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.activity_services_booking_step2;
+    }
 }

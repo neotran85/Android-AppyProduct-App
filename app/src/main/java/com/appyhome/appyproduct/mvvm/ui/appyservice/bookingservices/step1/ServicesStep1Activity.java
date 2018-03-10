@@ -31,6 +31,8 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     ServicesStep1ViewModel mServicesStep1ViewModel;
 
     ActivityServicesBookingStep1Binding mBinder;
+    @Inject
+    int mLayoutId;
     private ArrayList<AppyService> mServicesList;
     private View mCurrentServiceView;
     private int mSelectedServiceIndex;
@@ -40,6 +42,11 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ServicesStep1Activity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -191,11 +198,6 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_services_booking_step1;
     }
 
     @Override

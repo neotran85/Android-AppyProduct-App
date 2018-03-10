@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest;
 
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -21,6 +22,11 @@ public class RequestFragmentModule {
     @Provides
     ViewModelProvider.Factory provideRequestViewModel(RequestViewModel requestViewModel) {
         return new ViewModelProviderFactory<>(requestViewModel);
+    }
+
+    @Provides
+    int provideLayoutId() {
+        return R.layout.fragment_request;
     }
 
 }

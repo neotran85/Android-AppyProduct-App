@@ -21,12 +21,20 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
 
     @Inject
     RequestConfirmedViewModel mRequestConfirmedViewModel;
+
     ActivityRequestConfirmCompletedBinding mBinder;
+    @Inject
+    int mLayoutId;
     private int mode = MODE_CONFIRM;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RequestConfirmedActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return mLayoutId;
     }
 
     @Override
@@ -90,11 +98,6 @@ public class RequestConfirmedActivity extends BaseActivity<ActivityRequestConfir
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_request_confirm_completed;
     }
 
     @Override
