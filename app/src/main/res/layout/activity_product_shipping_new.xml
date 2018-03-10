@@ -9,7 +9,7 @@
         <import type="android.view.View" />
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressNavigator" />
 
         <variable
             name="viewModel"
@@ -37,7 +37,7 @@
                 android:textSize="18sp" />
 
             <ImageView
-                android:onClick="@{(view) -> navigator.finish()}"
+                android:onClick="@{(view) -> navigator.close()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

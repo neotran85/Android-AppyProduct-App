@@ -43,7 +43,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // ADD ADDRESS SUCCEEDED
-                    getNavigator().done();
+                    getNavigator().close();
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

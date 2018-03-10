@@ -80,7 +80,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     }
 
     @Override
-    public void done() {
+    public void close() {
         finish();
     }
 

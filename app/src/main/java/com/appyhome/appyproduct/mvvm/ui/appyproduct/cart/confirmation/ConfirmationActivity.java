@@ -46,6 +46,11 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     @Override
+    public void close() {
+        finish();
+    }
+
+    @Override
     public int getLayoutId() {
         return mLayoutId;
     }

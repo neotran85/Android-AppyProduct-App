@@ -32,14 +32,20 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public static final int DEFAULT_SPAN_COUNT = 2;
     private static final int TAB_SORT = 0;
     private static final int TAB_FILTER = 1;
+
     @Inject
     ProductListViewModel mViewModel;
+
     ActivityProductListBinding mBinder;
+
     @Inject
     ProductAdapter mProductAdapter;
+
     @Inject
     int mLayoutId;
+
     private ArrayList<Integer> mFavoritesId;
+
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static Intent getStartIntent(Context context) {
@@ -156,9 +162,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-    }
+    public void onTabSelected(TabLayout.Tab tab) {}
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {

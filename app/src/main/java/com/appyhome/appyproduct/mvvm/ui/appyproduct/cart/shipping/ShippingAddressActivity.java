@@ -45,6 +45,11 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     }
 
     @Override
+    public void close() {
+        finish();
+    }
+
+    @Override
     public int getLayoutId() {
         return mLayoutId;
     }

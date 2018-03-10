@@ -4,4 +4,6 @@ public interface PaymentNavigator {
     void showAlert(String message);
 
     void gotoNextStep();
+
+    void close();
 }

@@ -21,4 +21,6 @@ public interface ConfirmationNavigator {
 
     void addOrderOk();
 
+    void close();
+
 }

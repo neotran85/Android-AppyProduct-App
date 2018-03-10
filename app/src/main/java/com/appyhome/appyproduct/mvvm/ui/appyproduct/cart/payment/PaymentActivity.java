@@ -30,6 +30,11 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     }
 
     @Override
+    public void close() {
+        finish();
+    }
+
+    @Override
     public int getLayoutId() {
         return mLayoutId;
     }

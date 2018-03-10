@@ -10,7 +10,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteNavigator" />
 
         <variable
             name="viewModel"

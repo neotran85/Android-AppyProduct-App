@@ -12,4 +12,6 @@ public interface ShippingAddressNavigator {
     void gotoNextStep();
 
     void openNewShippingAddress();
+
+    void close();
 }

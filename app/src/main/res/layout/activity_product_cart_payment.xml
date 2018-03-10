@@ -10,7 +10,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentNavigator" />
 
         <variable
             name="viewModel"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="14dp"
-                android:onClick="@{(view) -> navigator.finish()}"
+                android:onClick="@{(view) -> navigator.close()}"
                 android:src="@mipmap/icon_back" />
         </RelativeLayout>
 

@@ -11,7 +11,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListNavigator" />
 
         <variable
             name="viewModel"

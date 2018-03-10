@@ -6,11 +6,9 @@
     tools:context=".ui.account.login.LoginActivity">
 
     <data>
-
-        <import type="android.view.View" />
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListNavigator" />
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListViewModel" />
