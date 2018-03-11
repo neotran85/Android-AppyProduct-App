@@ -3,10 +3,11 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.imag
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductImage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
-public abstract class GalleryAdapter extends SampleAdapter {
+public abstract class GalleryAdapter extends SampleAdapter<ProductImage, GalleryItemNavigator> {
 
     @Override
     public void onClick(View view) {

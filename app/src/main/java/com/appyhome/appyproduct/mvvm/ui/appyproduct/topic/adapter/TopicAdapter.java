@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +22,7 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
 
     @Override
     public void onClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof TopicItemViewModel) {
-            TopicItemViewModel viewModel = (TopicItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getIdTopic());
-        }
+        // DO NOTHING
     }
 
     @Override
@@ -71,17 +66,6 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
             mBinding = binding;
         }
 
-        public ViewItemProductTopicBinding getBinding() {
-            return mBinding;
-        }
-
-        public void setOnClickListener(View.OnClickListener listener) {
-            if (mBinding != null) {
-                mBinding.llItemView.setTag(mBinding.getViewModel());
-                mBinding.llItemView.setOnClickListener(listener);
-            }
-        }
-
         public void setViewModel(TopicItemViewModel viewModel) {
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
@@ -92,8 +76,8 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
         public void onBind(int position) {
             TopicItemViewModel viewModel = (TopicItemViewModel) mItems.get(position);
             this.setViewModel(viewModel);
-            this.setOnClickListener(TopicAdapter.this);
+            mBinding.getRoot().setTag(viewModel);
+            mBinding.setNavigator(viewModel.getNavigator());
         }
-
     }
 }

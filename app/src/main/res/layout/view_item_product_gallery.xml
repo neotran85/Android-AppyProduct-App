@@ -5,10 +5,10 @@
     <data>
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleItemNavigator" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.imageadapter.GalleryItemNavigator" />
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleItemViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.imageadapter.GalleryItemViewModel" />
 
     </data>
 

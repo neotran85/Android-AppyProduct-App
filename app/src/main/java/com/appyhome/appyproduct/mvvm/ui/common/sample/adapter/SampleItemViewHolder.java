@@ -18,17 +18,11 @@ public class SampleItemViewHolder extends BaseViewHolder {
         mAdapter = adapter;
     }
 
-    public void setOnClickListener(View.OnClickListener listener) {
-        if (mBinding != null) {
-            mBinding.llItemView.setTag(mBinding.getViewModel());
-            mBinding.llItemView.setOnClickListener(listener);
-        }
-    }
-
     @Override
     public void onBind(int position) {
         SampleItemViewModel viewModel = (SampleItemViewModel) mAdapter.getItem(position);
         this.mBinding.setViewModel(viewModel);
+        this.mBinding.getRoot().setTag(viewModel);
         this.mBinding.setNavigator(viewModel.getNavigator());
     }
 }

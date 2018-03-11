@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.databinding.FragmentProductTopicBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.CompletedJobListener;
 
@@ -74,6 +75,15 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
     }
 
     @Override
+    public void onItemClick(View view) {
+        Object tag = view.getTag();
+        if (tag instanceof TopicItemViewModel) {
+            TopicItemViewModel viewModel = (TopicItemViewModel) tag;
+            openProductCategories(viewModel.getIdTopic());
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -114,8 +124,4 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         super.onDestroyView();
     }
 
-    @Override
-    public void showContent(TopicAdapter adapter, View view, int idTopic) {
-        openProductCategories(idTopic);
-    }
 }

@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemNavigator" />
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemViewModel" />
@@ -11,6 +13,7 @@
     </data>
 
     <LinearLayout
+        android:onClick="@{(view) -> navigator.onItemClick(view)}"
         android:id="@+id/llItemView"
         android:layout_width="@dimen/width_topic_image"
         android:layout_height="@dimen/height_topic_image"
