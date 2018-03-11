@@ -32,6 +32,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActi
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step2.ServicesStep2Activity;
@@ -146,6 +148,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = ProductDetailActivityModule.class)
     abstract ProductDetailActivity bindProductDetailActivity();
+
+    @ContributesAndroidInjector(modules = ProductTrackingActivityModule.class)
+    abstract ProductTrackingActivity bindProductTrackingActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
