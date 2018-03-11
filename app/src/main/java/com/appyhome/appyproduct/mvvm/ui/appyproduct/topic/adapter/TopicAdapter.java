@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class TopicAdapter extends SampleAdapter {
+public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator> {
 
     public TopicAdapter() {
         this.mItems = null;
@@ -35,6 +36,7 @@ public class TopicAdapter extends SampleAdapter {
         mItems = null;
     }
 
+    @Override
     public void addItems(RealmResults<ProductTopic> results, TopicItemNavigator navigator) {
         mItems = new ArrayList<>();
         if (results != null) {

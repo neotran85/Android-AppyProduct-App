@@ -17,9 +17,11 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.SubCategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -34,7 +36,8 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Inject
     CategoryAdapter mCategoryAdapter;
     @Inject
-    CategoryAdapter mSubCategoryAdapter;
+    SubCategoryAdapter mSubCategoryAdapter;
+
     ActivityProductCategoryBinding mBinder;
     @Inject
     int mLayoutId;
@@ -76,7 +79,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
     }
 
-    private void setUpRecyclerViewGrid(RecyclerView rv, CategoryAdapter adapter) {
+    private void setUpRecyclerViewGrid(RecyclerView rv, SampleAdapter adapter) {
         rv.setLayoutManager(new GridLayoutManager(this,
                 DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false));
@@ -84,7 +87,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         rv.setAdapter(adapter);
     }
 
-    private void setUpRecyclerViewList(RecyclerView rv, CategoryAdapter adapter) {
+    private void setUpRecyclerViewList(RecyclerView rv, SampleAdapter adapter) {
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -97,15 +100,15 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
+    public void showContent(SubCategoryAdapter adapter, View view, int id) {
+        Intent intent = ProductListActivity.getStartIntent(this);
+        intent.putExtra("id_sub", id);
+        startActivity(intent);
+    }
+
+    @Override
     public void showContent(CategoryAdapter adapter, View view, int id) {
-        if (adapter.isCategory()) {
-            mCategoryViewModel.getProductSubCategoryByCategory(id);
-        }
-        if (adapter.isSubCategory()) {
-            Intent intent = ProductListActivity.getStartIntent(this);
-            intent.putExtra("id_sub", id);
-            startActivity(intent);
-        }
+        mCategoryViewModel.getProductSubCategoryByCategory(id);
     }
 
     @Override
@@ -120,13 +123,13 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void showSubCategories(RealmResults<ProductSub> result) {
-        mSubCategoryAdapter.addItems(result, CategoryAdapter.TYPE_SUB_CATEGORY, this);
+        mSubCategoryAdapter.addItems(result, this);
         mSubCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showCategories(RealmResults<ProductCategory> result) {
-        mCategoryAdapter.addItems(result, CategoryAdapter.TYPE_CATEGORY, this);
+        mCategoryAdapter.addItems(result, this);
         mCategoryAdapter.notifyDataSetChanged();
         mCategoryAdapter.clickTheFirstItem();
     }

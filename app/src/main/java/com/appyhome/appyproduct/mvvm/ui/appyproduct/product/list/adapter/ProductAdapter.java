@@ -16,9 +16,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class ProductAdapter extends SampleAdapter {
-
-    private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
+public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator> {
 
     public ProductAdapter() {
         this.mItems = null;
@@ -73,6 +71,16 @@ public class ProductAdapter extends SampleAdapter {
         itemViewModel.isDiscount.set(product.discount > 0);
         itemViewModel.favoriteCount.set(product.favorite_count + "");
         return itemViewModel;
+    }
+
+    @Override
+    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator) {
+        mItems = new ArrayList<>();
+        if (results != null) {
+            for (Product item : results) {
+                mItems.add(createViewModel(item, navigator, false));
+            }
+        }
     }
 
     public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {

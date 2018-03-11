@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.SubCategoryAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
@@ -22,6 +23,10 @@ public class CategoryActivityModule {
         return new CategoryAdapter();
     }
 
+    @Provides
+    SubCategoryAdapter provideSubCategoryAdapter() {
+        return new SubCategoryAdapter();
+    }
 
     @Provides
     int provideLayoutId() {

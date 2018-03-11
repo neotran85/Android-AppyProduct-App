@@ -5,23 +5,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductShippingAddressBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
+import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class AddressAdapter extends SampleAdapter implements AddressItemNavigator {
+public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator> {
 
     private AddressItemViewModel mSelected;
+    private DataManager mDataManager;
+    private SchedulerProvider mSchedulerProvider;
 
-    public AddressAdapter() {
+    public AddressAdapter(DataManager dataManager, SchedulerProvider schedulerProvider) {
         mSelected = null;
         mItems = null;
+        mDataManager = dataManager;
+        mSchedulerProvider = schedulerProvider;
     }
 
     @Override
@@ -40,24 +46,25 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
         return R.layout.view_item_sample_empty;
     }
 
-    private AddressItemViewModel createViewModel(Address address, ShippingAddressViewModel viewModel) {
-        AddressItemViewModel itemViewModel = new AddressItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
+    private AddressItemViewModel createViewModel(Address address,  AddressItemNavigator itemNavigator) {
+        AddressItemViewModel itemViewModel = new AddressItemViewModel(mDataManager, mSchedulerProvider);
         itemViewModel.name.set(address.customer_name);
         itemViewModel.phoneNumber.set(address.phone_number);
         itemViewModel.address.set(address.address);
         itemViewModel.checked.set(address.is_default);
         itemViewModel.setIdAddress(address.id);
-        itemViewModel.setNavigator(this);
+        itemViewModel.setNavigator(itemNavigator);
         if (address.is_default)
             mSelected = itemViewModel;
         return itemViewModel;
     }
 
-    public void updateAdapter(RealmResults<Address> results, ShippingAddressViewModel viewModel) {
+    @Override
+    public void addItems(RealmResults<Address> results, AddressItemNavigator navigator) {
         mItems = new ArrayList<>();
         if (results != null) {
             for (Address item : results) {
-                mItems.add(createViewModel(item, viewModel));
+                mItems.add(createViewModel(item, navigator));
             }
         }
     }
@@ -67,11 +74,6 @@ public class AddressAdapter extends SampleAdapter implements AddressItemNavigato
         ViewItemProductShippingAddressBinding itemViewBinding = ViewItemProductShippingAddressBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new AddressItemViewHolder(itemViewBinding);
-    }
-
-    @Override
-    public void updateDatabaseCompleted(AddressItemViewModel viewModel) {
-
     }
 
     public class AddressItemViewHolder extends BaseViewHolder {

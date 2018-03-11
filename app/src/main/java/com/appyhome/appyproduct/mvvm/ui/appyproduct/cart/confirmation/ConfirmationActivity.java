@@ -110,7 +110,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     @Override
     public void showCheckedItems(RealmResults<ProductCart> result) {
-        mAdapter.addItems(result);
+        mAdapter.addItems(result, this);
         mAdapter.notifyDataSetChanged();
         updateCartContainerHeight(result.size());
     }

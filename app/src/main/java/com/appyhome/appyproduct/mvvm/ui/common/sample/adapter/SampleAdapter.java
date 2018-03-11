@@ -6,12 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 
 import java.util.ArrayList;
 
-public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
+import io.realm.RealmObject;
+import io.realm.RealmResults;
+
+public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
 
     private static final int VIEW_TYPE_NORMAL = 1;
     private static final int VIEW_TYPE_EMPTY = 0;
@@ -22,6 +26,8 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public abstract void onClick(View view);
 
     protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
+
+    protected abstract void addItems(RealmResults<T> items, L navigator);
 
     protected abstract void recycle();
 
@@ -37,6 +43,14 @@ public abstract class SampleAdapter extends RecyclerView.Adapter<BaseViewHolder>
             default:
                 return getDefaultHolder(parent);
         }
+    }
+
+
+    public BaseViewModel getItem(int post) {
+        return mItems.get(post);
+    }
+    public int indexOf(BaseViewModel item) {
+        return mItems.indexOf(item);
     }
 
     @Override

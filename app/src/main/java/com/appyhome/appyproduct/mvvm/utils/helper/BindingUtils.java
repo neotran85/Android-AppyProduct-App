@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
@@ -61,6 +62,11 @@ public final class BindingUtils {
     @BindingAdapter("saveModeText")
     public static void setSaveModeText(TextView textView, boolean isSaveMode) {
         textView.setText(isSaveMode ? "SAVE" : "NEXT");
+    }
+
+    @BindingAdapter("adapter")
+    public static void setAdapter(RecyclerView rc, SampleAdapter adapter) {
+        rc.setAdapter(adapter);
     }
 
     @BindingAdapter("imageAssetsUrl")

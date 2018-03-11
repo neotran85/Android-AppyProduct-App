@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemConfirmationBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 
 import io.realm.RealmResults;
 
-public class CartAdapter extends SampleAdapter {
+public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigator> {
 
     public HashMap<String, ArrayList<CartItemViewModel>> viewModelManager;
     private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
@@ -53,7 +54,7 @@ public class CartAdapter extends SampleAdapter {
         return R.layout.view_item_product_cart_empty;
     }
 
-    public void addItems(RealmResults<ProductCart> results) {
+    public void addItems(RealmResults<ProductCart> results, ConfirmationNavigator navigator) {
         mItems = new ArrayList<>();
         if (viewModelManager != null) {
             viewModelManager.clear();

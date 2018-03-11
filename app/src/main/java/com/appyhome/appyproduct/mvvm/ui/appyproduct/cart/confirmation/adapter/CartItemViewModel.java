@@ -8,13 +8,7 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 public class CartItemViewModel extends ProductCartItemViewModel {
     public ObservableField<String> totalCostOfStore = new ObservableField<>("");
-
     public CartItemViewModel() {
         super();
-    }
-
-    public CartItemViewModel(DataManager dataManager,
-                             SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
     }
 }

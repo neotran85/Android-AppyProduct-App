@@ -18,8 +18,9 @@ public class ShippingAddressActivityModule {
     }
 
     @Provides
-    AddressAdapter provideAddressAdapter() {
-        return new AddressAdapter();
+    AddressAdapter provideAddressAdapter(DataManager dataManager,
+                                         SchedulerProvider schedulerProvider) {
+        return new AddressAdapter(dataManager, schedulerProvider);
     }
 
     @Provides

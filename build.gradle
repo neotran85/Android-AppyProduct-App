@@ -42,7 +42,6 @@ ext {
     supportLibraryVersion = '26.1.0'
     gsonVersion = '2.8.0'
     calligraphyVersion = '2.2.0'
-    glideVersion = '4.4.0'
     roomDatabase = '1.0.0-beta2'
     rx2FastAndroidNetworking = '1.0.1'
 

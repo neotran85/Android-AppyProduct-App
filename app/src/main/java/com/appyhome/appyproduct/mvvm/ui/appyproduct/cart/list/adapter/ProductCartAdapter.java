@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 import io.realm.RealmResults;
 
-public class ProductCartAdapter extends SampleAdapter {
+public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartItemNavigator> {
 
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
     private ProductCartListViewModel mProductCartListViewModel;
