@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -29,9 +30,11 @@ public final class BindingUtils {
             Context context = imageView.getContext();
             Glide.with(context)
                     .load(url)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.mipmap.no_image)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .placeholder(R.mipmap.no_image)
+                            .error(R.mipmap.no_image)
+                            .centerCrop())
                     .into(imageView);
         } else {
             imageView.setBackgroundResource(R.mipmap.no_image);

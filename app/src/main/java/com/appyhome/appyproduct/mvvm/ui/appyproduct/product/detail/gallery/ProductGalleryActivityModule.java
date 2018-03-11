@@ -11,7 +11,7 @@ import dagger.Provides;
 public class ProductGalleryActivityModule {
 
     @Provides
-    ProductGalleryViewModel provideSampleViewModel(DataManager dataManager,
+    ProductGalleryViewModel provideProductGalleryViewModel(DataManager dataManager,
                                                    SchedulerProvider schedulerProvider) {
         return new ProductGalleryViewModel(dataManager, schedulerProvider);
     }

@@ -25,7 +25,6 @@ public final class AppConstants {
         SCREEN_WIDTH = 0;
         SCREEN_HEIGHT = 0;
         WindowManager w = firstActivity.getWindowManager();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             Point size = new Point();
             w.getDefaultDisplay().getSize(size);
