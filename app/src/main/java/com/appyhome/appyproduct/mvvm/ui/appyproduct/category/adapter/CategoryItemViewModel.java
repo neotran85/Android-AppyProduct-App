@@ -12,6 +12,8 @@ public class CategoryItemViewModel extends BaseViewModel<CategoryItemNavigator> 
 
     public boolean isHighLight = false;
 
+    public boolean isSub = false;
+
     private int idCategory;
 
     public CategoryItemViewModel(DataManager dataManager,

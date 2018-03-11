@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.SubCategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -60,6 +61,27 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
+    public void onItemClick(View view) {
+        Object tag = view.getTag();
+        if (tag instanceof CategoryItemViewModel) {
+            CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
+            if (viewModel.isSub) {
+                mSubCategoryAdapter.clickViewModel(viewModel);
+                Intent intent = ProductListActivity.getStartIntent(this);
+                intent.putExtra("id_sub", viewModel.getIdCategory());
+                startActivity(intent);
+            } else {
+                showFirstCategory(viewModel);
+            }
+        }
+    }
+
+    private void showFirstCategory(CategoryItemViewModel viewModel) {
+        mCategoryAdapter.clickViewModel(viewModel);
+        mCategoryViewModel.getProductSubCategoryByCategory(viewModel.getIdCategory());
+    }
+
+    @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
     }
@@ -100,18 +122,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
-    public void showContent(SubCategoryAdapter adapter, View view, int id) {
-        Intent intent = ProductListActivity.getStartIntent(this);
-        intent.putExtra("id_sub", id);
-        startActivity(intent);
-    }
-
-    @Override
-    public void showContent(CategoryAdapter adapter, View view, int id) {
-        mCategoryViewModel.getProductSubCategoryByCategory(id);
-    }
-
-    @Override
     public CategoryViewModel getViewModel() {
         return mCategoryViewModel;
     }
@@ -127,11 +137,14 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mSubCategoryAdapter.notifyDataSetChanged();
     }
 
+
     @Override
     public void showCategories(RealmResults<ProductCategory> result) {
         mCategoryAdapter.addItems(result, this);
         mCategoryAdapter.notifyDataSetChanged();
-        mCategoryAdapter.clickTheFirstItem();
+        if (result != null && result.size() > 0) {
+            showFirstCategory((CategoryItemViewModel) mCategoryAdapter.getItem(0));
+        }
     }
 
     @Override

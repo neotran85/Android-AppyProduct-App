@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemNavigator" />
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel" />
@@ -11,6 +13,7 @@
     </data>
 
     <LinearLayout
+        android:onClick="@{(view) -> navigator.onItemClick(view)}"
         android:id="@+id/llItemCategoryView"
         android:layout_width="@dimen/menu_left_categories_width"
         android:layout_height="@dimen/menu_left_item_height"

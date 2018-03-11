@@ -25,14 +25,6 @@ public class CategoryItemViewHolder extends BaseViewHolder {
     public ViewItemProductCategoryBinding getBinding() {
         return mBinding;
     }
-
-    public void setOnClickListener(View.OnClickListener listener) {
-        if (mBinding != null) {
-            mBinding.llItemCategoryView.setTag(mBinding.getViewModel());
-            mBinding.llItemCategoryView.setOnClickListener(listener);
-        }
-    }
-
     public void setViewModel(CategoryItemViewModel viewModel) {
         if (mBinding != null) {
             mBinding.setViewModel(viewModel);
@@ -43,6 +35,7 @@ public class CategoryItemViewHolder extends BaseViewHolder {
     public void onBind(int position) {
         CategoryItemViewModel viewModel = (CategoryItemViewModel) mAdapter.getItem(position);
         this.setViewModel(viewModel);
-        this.setOnClickListener(mAdapter);
+        mBinding.getRoot().setTag(viewModel);
+        mBinding.setNavigator(viewModel.getNavigator());
     }
 }

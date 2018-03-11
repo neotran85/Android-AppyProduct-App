@@ -32,14 +32,10 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
 
     @Override
     public void onClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof CategoryItemViewModel) {
-            CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getIdCategory());
-        }
+       // DO NOTHING
     }
 
-    private void clickViewModel(CategoryItemViewModel viewModel) {
+    public void clickViewModel(CategoryItemViewModel viewModel) {
         if (mCurrentClickedViewModel != viewModel) {
             viewModel.isHighLight = true;
             if (mCurrentClickedViewModel != null) {
@@ -50,7 +46,6 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
             int positionNew = mItems.indexOf(viewModel);
             notifyItemChanged(positionNew);
             mCurrentClickedViewModel = viewModel;
-            viewModel.getNavigator().showContent(this, null, viewModel.getIdCategory());
         }
     }
 
@@ -76,6 +71,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
                 itemViewModel.imageURL.set(item.thumbnail);
                 itemViewModel.setIdCategory(item.id);
                 itemViewModel.setNavigator(navigator);
+                itemViewModel.isSub = true;
                 mItems.add(itemViewModel);
             }
         }

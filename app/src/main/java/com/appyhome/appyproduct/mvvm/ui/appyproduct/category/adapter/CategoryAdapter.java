@@ -34,14 +34,10 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
 
     @Override
     public void onClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof CategoryItemViewModel) {
-            CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
-            clickViewModel(viewModel);
-        }
+        // DO NOTHING
     }
 
-    private void clickViewModel(CategoryItemViewModel viewModel) {
+    public void clickViewModel(CategoryItemViewModel viewModel) {
         if (mCurrentClickedViewModel != viewModel) {
             viewModel.isHighLight = true;
             if (mCurrentClickedViewModel != null) {
@@ -52,14 +48,6 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
             int positionNew = mItems.indexOf(viewModel);
             notifyItemChanged(positionNew);
             mCurrentClickedViewModel = viewModel;
-            viewModel.getNavigator().showContent(this, null, viewModel.getIdCategory());
-        }
-    }
-
-    public void clickTheFirstItem() {
-        if (mItems != null && mItems.size() > 0) {
-            CategoryItemViewModel viewModel = (CategoryItemViewModel) mItems.get(0);
-            clickViewModel(viewModel);
         }
     }
 
