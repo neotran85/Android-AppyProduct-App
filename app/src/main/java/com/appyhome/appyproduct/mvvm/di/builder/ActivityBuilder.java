@@ -23,6 +23,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.New
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
@@ -141,6 +143,9 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = SearchActivityModule.class)
     abstract SearchActivity bindSearchActivity();
+
+    @ContributesAndroidInjector(modules = ProductDetailActivityModule.class)
+    abstract ProductDetailActivity bindProductDetailActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
