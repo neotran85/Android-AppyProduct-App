@@ -43,9 +43,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void showContent(SearchAdapter adapter, View view, int idCategory) {
-
-    }
+    public void onItemClick(View view) {}
 
 
     @Override

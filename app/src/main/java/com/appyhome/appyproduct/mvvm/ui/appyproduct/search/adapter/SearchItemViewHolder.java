@@ -17,17 +17,11 @@ public class SearchItemViewHolder extends BaseViewHolder {
         mAdapter = adapter;
     }
 
-    public void setOnClickListener(View.OnClickListener listener) {
-        if (mBinding != null) {
-            mBinding.llItemView.setTag(mBinding.getViewModel());
-            mBinding.llItemView.setOnClickListener(listener);
-        }
-    }
-
     @Override
     public void onBind(int position) {
         SearchItemViewModel viewModel = (SearchItemViewModel) mAdapter.getItem(position);
-        this.mBinding.setViewModel(viewModel);
-        this.mBinding.setNavigator(viewModel.getNavigator());
+        mBinding.setViewModel(viewModel);
+        mBinding.getRoot().setTag(viewModel);
+        mBinding.setNavigator(viewModel.getNavigator());
     }
 }

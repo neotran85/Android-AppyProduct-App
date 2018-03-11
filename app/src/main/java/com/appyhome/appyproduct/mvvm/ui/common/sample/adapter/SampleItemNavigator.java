@@ -5,5 +5,5 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryAdapter;
 
 public interface SampleItemNavigator {
-    void showContent(SampleItemAdapter adapter, View view, int idCategory);
+    void onItemClick(View view);
 }
