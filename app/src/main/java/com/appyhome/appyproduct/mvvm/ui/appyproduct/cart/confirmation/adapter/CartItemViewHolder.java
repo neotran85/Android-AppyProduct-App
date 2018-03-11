@@ -25,8 +25,6 @@ public class CartItemViewHolder extends BaseViewHolder {
     @Override
     public void onBind(int position) {
         CartItemViewModel viewModel = (CartItemViewModel) mAdapter.getItems().get(position);
-        if (mBinding != null) {
-            mBinding.setViewModel(viewModel);
-        }
+        mBinding.setViewModel(viewModel);
     }
 }
