@@ -1,18 +1,17 @@
-package com.appyhome.appyproduct.mvvm.ui.common.sample.adapter;
+package com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter;
 
 import android.view.View;
 
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSampleBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
-public class SampleItemViewHolder extends BaseViewHolder {
+public class SearchItemViewHolder extends BaseViewHolder {
 
-    protected ViewItemProductSampleBinding mBinding;
-    protected SampleItemAdapter mAdapter;
+    protected ViewItemProductSearchItemBinding mBinding;
+    protected SearchAdapter mAdapter;
 
-    protected SampleItemViewHolder(ViewItemProductSampleBinding binding, SampleItemAdapter adapter) {
+    protected SearchItemViewHolder(ViewItemProductSearchItemBinding binding, SearchAdapter adapter) {
         super(binding.getRoot());
         mBinding = binding;
         mAdapter = adapter;
@@ -27,7 +26,7 @@ public class SampleItemViewHolder extends BaseViewHolder {
 
     @Override
     public void onBind(int position) {
-        SampleItemViewModel viewModel = (SampleItemViewModel) mAdapter.getItem(position);
+        SearchItemViewModel viewModel = (SearchItemViewModel) mAdapter.getItem(position);
         this.mBinding.setViewModel(viewModel);
         this.mBinding.setNavigator(viewModel.getNavigator());
     }

@@ -1,0 +1,26 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator" />
+        <variable
+            name="viewModel"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/llItemView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/product_in_list_bg"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_left_product_in_list"
+        android:paddingRight="@dimen/padding_left_product_in_list"
+        android:paddingBottom="28dp"
+        android:paddingTop="16dp">
+    </LinearLayout>
+</layout>

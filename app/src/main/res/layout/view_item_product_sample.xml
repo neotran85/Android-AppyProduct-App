@@ -5,7 +5,9 @@
     <data>
 
         <import type="android.view.View" />
-
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleItemNavigator" />
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleItemViewModel" />

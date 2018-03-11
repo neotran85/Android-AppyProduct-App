@@ -3,16 +3,19 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductSearchBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, SearchViewModel> implements SearchNavigator {
+public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, SearchViewModel> implements SearchNavigator, SearchItemNavigator {
 
     @Inject
     public SearchViewModel mMainViewModel;
@@ -38,6 +41,12 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
     }
+
+    @Override
+    public void showContent(SearchAdapter adapter, View view, int idCategory) {
+
+    }
+
 
     @Override
     protected void onResume() {
