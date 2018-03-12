@@ -104,6 +104,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
+    public void addedToCartCompleted() {
+        // DO NOTHING HERE
+    }
+
+    @Override
     public BaseViewModel getMainViewModel() {
         return mViewModel;
     }

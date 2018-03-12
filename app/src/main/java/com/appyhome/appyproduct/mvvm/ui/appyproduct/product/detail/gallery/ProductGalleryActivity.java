@@ -15,7 +15,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import javax.inject.Inject;
 
-public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryBinding, ProductGalleryViewModel> implements ProductGalleryNavigator {
+public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryBinding, ProductGalleryViewModel> implements ProductGalleryNavigator, BaseSliderView.OnSliderClickListener {
 
     @Inject
     public ProductGalleryViewModel mMainViewModel;
@@ -45,10 +45,11 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        loadImages();
+        int position = getIntent().getIntExtra("position", 0);
+        loadImages(position);
     }
 
-    private void loadImages() {
+    private void loadImages(int startPosition) {
         for (String name : getViewModel().images) {
             DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
             // initialize a SliderLayout
@@ -56,9 +57,12 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
                     .image(name)
                     .setScaleType(BaseSliderView.ScaleType.CenterInside);
             mBinder.slider.addSlider(vDefaultSliderView);
+            vDefaultSliderView.setOnSliderClickListener(this);
         }
         mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
         mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mBinder.slider.stopAutoCycle();
+        mBinder.slider.setCurrentPosition(startPosition);
     }
 
     @Override
@@ -79,5 +83,10 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
     }
 }

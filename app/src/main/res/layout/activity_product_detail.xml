@@ -14,7 +14,7 @@
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel" />
 
     </data>
 
@@ -77,19 +77,19 @@
                                 android:id="@+id/customIndicator"
                                 style="@style/AndroidImageSlider_Magnifier_Oval_Black"
                                 android:layout_width="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal" />
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="10dp" />
 
                             <TextView
-                                fontPath="fonts/TitilliumWeb-Semi.ttf"
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="10dp"
                                 android:maxLines="2"
-                                android:text="Remove Remove Remove Remove Remove"
+                                android:text="@{viewModel.title}"
                                 android:textColor="@color/medium_dark_gray"
                                 android:textSize="14sp" />
 
@@ -102,40 +102,46 @@
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal">
 
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Semi.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="RM 51.21"
-                                    android:textColor="@color/red_price"
-                                    android:textSize="16sp" />
-
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Semi.ttf"
+                                <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
                                     android:layout_weight="1"
-                                    android:text="(Available)"
-                                    android:textColor="@color/dark_gray"
-                                    android:textSize="14sp" />
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{viewModel.price}"
+                                        android:textColor="@color/red_price"
+                                        android:textSize="16sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="6dp"
+                                        android:text="(Stock: 100)"
+                                        android:textColor="@color/semi_gray"
+                                        android:textSize="13sp" />
+                                </LinearLayout>
 
                                 <LinearLayout
-                                    android:gravity="center"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="32dp">
+                                    android:layout_height="32dp"
+                                    android:gravity="center">
 
                                     <ImageView
-                                        android:padding="4dp"
-                                        android:layout_width="28dp"
-                                        android:layout_height="28dp"
-                                        android:src="@mipmap/icon_favorite" />
+                                        isFavorite="@{viewModel.isFavorite}"
+                                        android:layout_width="22dp"
+                                        android:layout_height="18dp"
+                                        android:onClick="@{(view) -> navigator.addToFavorite()}"
+                                        android:padding="4dp" />
 
                                     <ImageView
-                                        android:padding="4dp"
                                         android:layout_width="28dp"
                                         android:layout_height="28dp"
                                         android:layout_marginStart="6dp"
+                                        android:padding="4dp"
                                         android:src="@mipmap/icon_share" />
                                 </LinearLayout>
                             </LinearLayout>
@@ -161,14 +167,15 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:onClick="@{(view) -> navigator.decreaseAmount()}"
                                     android:padding="4dp"
                                     android:src="@mipmap/bg_minus" />
 
                                 <TextView
-                                    android:layout_width="28dp"
+                                    android:layout_width="24dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:text="12"
+                                    android:text="@{viewModel.amountAdded}"
                                     android:textColor="@color/red_price"
                                     android:textSize="14sp" />
 
@@ -180,6 +187,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:onClick="@{(view) -> navigator.increaseAmount()}"
                                         android:padding="4dp"
                                         android:src="@mipmap/bg_plus" />
                                 </LinearLayout>
@@ -247,7 +255,7 @@
                                         android:textSize="12sp" />
 
                                     <TextView
-                                        fontPath="fonts/TitilliumWeb-Semi.ttf"
+                                        fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="4dp"
@@ -284,24 +292,24 @@
                             </LinearLayout>
 
                             <android.support.v7.widget.CardView
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="4dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="420dp"
-                                android:layout_marginTop="24dp"
-                                android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:paddingTop="12dp">
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="24dp"
+                                android:paddingTop="12dp"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="4dp">
 
                                 <android.support.design.widget.TabLayout
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginEnd="12dp"
-                                    android:layout_marginStart="12dp"
+                                    style="@style/ProductDetailTabLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="12dp"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="10dp"
                                     app:tabPaddingEnd="-1dp"
-                                    app:tabPaddingStart="-1dp"
-                                    style="@style/ProductDetailTabLayout">
+                                    app:tabPaddingStart="-1dp">
 
                                     <android.support.design.widget.TabItem
                                         android:layout_width="wrap_content"
@@ -319,11 +327,13 @@
                                         android:text="REVIEW" />
                                 </android.support.design.widget.TabLayout>
                             </android.support.v7.widget.CardView>
+
                             <ImageView
-                                android:layout_marginTop="10dp"
-                                android:background="@mipmap/sample_product_bottom"
                                 android:layout_width="match_parent"
-                                android:layout_height="300dp" />
+                                android:layout_height="280dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@mipmap/sample_product_bottom" />
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="42dp" />
@@ -337,21 +347,21 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:onClick="@{(view) -> navigator.addToCart()}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:background="#BFBBBB"
+                            android:onClick="@{(view) -> navigator.addToCart()}"
                             android:text="ADD TO CART"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
 
                         <Button
-                            android:onClick="@{(view) -> navigator.gotoCart()}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:background="@color/colorAccent"
+                            android:onClick="@{(view) -> navigator.gotoCart()}"
                             android:text="BUY NOW"
                             android:textColor="@color/white"
                             android:textSize="13sp" />

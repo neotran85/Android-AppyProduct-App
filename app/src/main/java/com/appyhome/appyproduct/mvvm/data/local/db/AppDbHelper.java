@@ -378,7 +378,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCart> addProductToCart(int productId, String userId) {
+    public Flowable<ProductCart> addProductToCart(String userId, int productId, int amountAdded) {
         return Flowable.fromCallable(() -> {
             try {
                 getRealm().beginTransaction();
@@ -393,7 +393,7 @@ public class AppDbHelper implements DbHelper {
                 if (productCart == null) {
                     productCart = createNewProductCart(product, userId);
                 }
-                productCart.amount = productCart.amount + 1;
+                productCart.amount = productCart.amount + amountAdded;
                 productCart = getRealm().copyToRealmOrUpdate(productCart);
                 getRealm().commitTransaction();
                 return productCart;

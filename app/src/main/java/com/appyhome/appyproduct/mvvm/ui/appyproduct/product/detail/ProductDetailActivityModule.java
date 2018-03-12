@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
@@ -10,10 +11,12 @@ import dagger.Provides;
 @Module
 public class ProductDetailActivityModule {
 
+    public static ProductItemViewModel clickedViewModel;
+
     @Provides
-    ProductDetailViewModel provideSampleViewModel(DataManager dataManager,
+    ProductItemViewModel provideProductItemViewModel(DataManager dataManager,
                                                   SchedulerProvider schedulerProvider) {
-        return new ProductDetailViewModel(dataManager, schedulerProvider);
+        return clickedViewModel;
     }
 
     @Provides

@@ -22,6 +22,8 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         this.mItems = null;
     }
 
+    private ProductItemNavigator mNavigator;
+
     @Override
     public void onClick(View view) {
     }
@@ -76,6 +78,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     @Override
     public void addItems(RealmResults<Product> results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (results != null) {
             for (Product item : results) {
                 mItems.add(createViewModel(item, navigator, false));
@@ -85,6 +88,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
 
     public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (results != null) {
             for (Product item : results) {
                 boolean isFavorite = checkIfFavorite(item.id, favoritesId);
@@ -95,6 +99,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
 
     public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, boolean isAllFavorited) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (results != null) {
             for (Product item : results) {
                 mItems.add(createViewModel(item, navigator, isAllFavorited));
@@ -140,7 +145,8 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
                 mBinding.getRoot().setTag(viewModel);
-                mBinding.setNavigator(viewModel.getNavigator());
+                viewModel.setNavigator(mNavigator);
+                mBinding.setNavigator(mNavigator);
                 View.OnClickListener listener = getListener();
                 mBinding.ibAddFavorite.setTag(viewModel);
                 mBinding.ibAddFavorite.setOnClickListener(listener);
