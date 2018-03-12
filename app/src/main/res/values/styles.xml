@@ -77,4 +77,13 @@
         <item name="android:background">@drawable/button_primary_bg</item>
     </style>
 
+    <style name="ProductDetailTabLayout" parent="Base.Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabbarTextAppearance</item>
+    </style>
+
+    <style name="TabbarTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/text_size_tab</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="textAllCaps">true</item>
+    </style>
 </resources>

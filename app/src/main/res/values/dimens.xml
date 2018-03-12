@@ -5,4 +5,5 @@
     <dimen name="header_height">56dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_bar_height">56dp</dimen>
+    <dimen name="text_size_tab">14dp</dimen>
 </resources>
