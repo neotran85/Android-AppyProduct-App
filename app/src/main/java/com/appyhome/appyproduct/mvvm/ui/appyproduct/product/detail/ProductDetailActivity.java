@@ -6,9 +6,12 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import javax.inject.Inject;
 
@@ -19,6 +22,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     ActivityProductDetailBinding mBinder;
     @Inject
     int mLayoutId;
+
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -37,11 +42,27 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
+        loadImages();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mSearchToolbarViewHolder.onBind(0);
+    }
+
+    private void loadImages() {
+        for (String name : getViewModel().images) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .image(name)
+                    .setScaleType(BaseSliderView.ScaleType.CenterInside);
+            mBinder.slider.addSlider(textSliderView);
+        }
+        mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
+        mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
     }
 
     @Override

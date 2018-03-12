@@ -3,12 +3,9 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductGalleryBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.SliderLayout;
@@ -47,8 +44,11 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
+        loadImages();
+    }
 
-        for(String name : getViewModel().images){
+    private void loadImages() {
+        for (String name : getViewModel().images) {
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
             textSliderView

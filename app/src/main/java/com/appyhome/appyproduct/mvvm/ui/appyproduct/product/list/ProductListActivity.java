@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
@@ -174,7 +175,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onItemClick(View view) {
         ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
-        startActivity(ProductGalleryActivity.getStartIntent(this));
+        startActivity(ProductDetailActivity.getStartIntent(this));
     }
 
     @Override
