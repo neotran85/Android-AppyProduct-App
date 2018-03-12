@@ -86,4 +86,5 @@
         <item name="android:textColor">@color/dark_gray</item>
         <item name="textAllCaps">true</item>
     </style>
+
 </resources>

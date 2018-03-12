@@ -40,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
+                    android:stateListAnimator="@animator/appbar_always_elevated"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                     <android.support.v7.widget.Toolbar
@@ -65,12 +66,20 @@
                             android:background="@color/white"
                             android:orientation="vertical"
                             android:paddingLeft="10dp"
-                            android:paddingRight="8dp">
+                            android:paddingRight="10dp">
 
                             <com.daimajia.slider.library.SliderLayout
                                 android:id="@+id/slider"
                                 android:layout_width="match_parent"
                                 android:layout_height="240dp" />
+
+                            <com.daimajia.slider.library.Indicators.PagerIndicator
+                                android:id="@+id/customIndicator"
+                                style="@style/AndroidImageSlider_Magnifier_Oval_Black"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal" />
 
                             <TextView
                                 fontPath="fonts/TitilliumWeb-Semi.ttf"
@@ -89,7 +98,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginStart="10dp"
-                                android:layout_marginTop="12dp"
+                                android:layout_marginTop="4dp"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal">
 
@@ -112,18 +121,21 @@
                                     android:textSize="14sp" />
 
                                 <LinearLayout
+                                    android:gravity="center"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="32dp">
 
                                     <ImageView
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
+                                        android:padding="4dp"
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
                                         android:src="@mipmap/icon_favorite" />
 
                                     <ImageView
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:layout_marginStart="10dp"
+                                        android:padding="4dp"
+                                        android:layout_width="28dp"
+                                        android:layout_height="28dp"
+                                        android:layout_marginStart="6dp"
                                         android:src="@mipmap/icon_share" />
                                 </LinearLayout>
                             </LinearLayout>
@@ -153,7 +165,7 @@
                                     android:src="@mipmap/bg_minus" />
 
                                 <TextView
-                                    android:layout_width="36dp"
+                                    android:layout_width="28dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:text="12"
@@ -325,6 +337,7 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:onClick="@{(view) -> navigator.addToCart()}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
@@ -334,6 +347,7 @@
                             android:textSize="13sp" />
 
                         <Button
+                            android:onClick="@{(view) -> navigator.gotoCart()}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"

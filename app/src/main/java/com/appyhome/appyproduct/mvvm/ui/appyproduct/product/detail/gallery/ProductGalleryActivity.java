@@ -10,6 +10,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import javax.inject.Inject;
@@ -49,12 +50,12 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
 
     private void loadImages() {
         for (String name : getViewModel().images) {
-            TextSliderView textSliderView = new TextSliderView(this);
+            DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
             // initialize a SliderLayout
-            textSliderView
+            vDefaultSliderView
                     .image(name)
                     .setScaleType(BaseSliderView.ScaleType.CenterInside);
-            mBinder.slider.addSlider(textSliderView);
+            mBinder.slider.addSlider(vDefaultSliderView);
         }
         mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
         mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);

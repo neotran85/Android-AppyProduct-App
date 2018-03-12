@@ -123,15 +123,12 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
             return mBinding;
         }
 
-        private View.OnClickListener getListener(ProductItemViewModel viewModel) {
+        private View.OnClickListener getListener() {
             return v -> {
                 switch (v.getId()) {
                     case R.id.ibAddFavorite:
-                        viewModel.updateProductFavorite(mItems.indexOf(viewModel));
-                        break;
-                    case R.id.llItemView:
-                        // viewModel.addProductToCart();
-                        viewModel.getNavigator().onItemClick(v);
+                        ProductItemViewModel vm = (ProductItemViewModel) v.getTag();
+                        vm.updateProductFavorite(mItems.indexOf(vm));
                         break;
                 }
             };
@@ -142,9 +139,11 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
             ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
             if (mBinding != null) {
                 mBinding.setViewModel(viewModel);
-                View.OnClickListener listener = getListener(mBinding.getViewModel());
+                mBinding.getRoot().setTag(viewModel);
+                mBinding.setNavigator(viewModel.getNavigator());
+                View.OnClickListener listener = getListener();
+                mBinding.ibAddFavorite.setTag(viewModel);
                 mBinding.ibAddFavorite.setOnClickListener(listener);
-                mBinding.llItemView.setOnClickListener(listener);
             }
         }
     }
