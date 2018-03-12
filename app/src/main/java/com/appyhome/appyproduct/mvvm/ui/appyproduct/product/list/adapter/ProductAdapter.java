@@ -130,7 +130,8 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
                         viewModel.updateProductFavorite(mItems.indexOf(viewModel));
                         break;
                     case R.id.llItemView:
-                        viewModel.addProductToCart();
+                        // viewModel.addProductToCart();
+                        viewModel.getNavigator().onItemClick(v);
                         break;
                 }
             };

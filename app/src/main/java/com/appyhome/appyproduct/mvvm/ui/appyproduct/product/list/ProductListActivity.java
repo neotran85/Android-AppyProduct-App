@@ -14,8 +14,10 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
@@ -167,6 +169,12 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
+        startActivity(ProductGalleryActivity.getStartIntent(this));
     }
 
     @Override

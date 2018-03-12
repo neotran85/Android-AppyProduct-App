@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProductGalleryViewModel extends BaseViewModel<ProductGalleryNavigator> {
-    private static final ArrayList<String> images = new ArrayList<>(Arrays.asList(
+    public final ArrayList<String> images = new ArrayList<>(Arrays.asList(
             "https://static1.squarespace.com/static/59a6fac79f8dcef7791c8518/59a86285c534a555b4a3ff71/59ab01f33e00bebf33c19d02/1519863837665/Four-Olive-Oil-Bottles-2048px-4.4.jpg?format=2500w",
             "https://www.photigy.com/wp-content/uploads/2015/04/Glenfiddich.jpg",
             "http://www.westlightphoto.com.my/wp-content/uploads/2016/01/Untitled_00044_4-810x1080.jpg",

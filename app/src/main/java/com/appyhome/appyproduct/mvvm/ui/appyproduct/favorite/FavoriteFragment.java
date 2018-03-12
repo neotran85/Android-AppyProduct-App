@@ -99,6 +99,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
+    public void onItemClick(View view) {
+
+    }
+
+    @Override
     public BaseViewModel getMainViewModel() {
         return mViewModel;
     }
