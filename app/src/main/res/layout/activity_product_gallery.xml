@@ -17,17 +17,27 @@
 
     </data>
 
-    <LinearLayout
-        android:background="@color/black"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/black">
 
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:onClick="@{(view) -> navigator.close()}"
+            android:padding="14dp"
+            android:src="@mipmap/icon_back" />
+
+    </RelativeLayout>
 
 </layout>
