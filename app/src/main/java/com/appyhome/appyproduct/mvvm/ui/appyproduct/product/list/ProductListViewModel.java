@@ -1,5 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.databinding.ObservableField;
+
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -22,6 +24,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
+    public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {

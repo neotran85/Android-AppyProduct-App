@@ -75,25 +75,29 @@
                     <LinearLayout
                         android:id="@+id/llSortOption"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical" />
 
                 </android.support.design.widget.AppBarLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:paddingEnd="4dp"
-                    android:paddingStart="4dp">
-
+                    android:background="@color/white">
                     <android.support.v7.widget.RecyclerView
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginStart="4dp"
                         android:id="@+id/productsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
                         android:paddingTop="4dp" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:visibility="@{viewModel.isSortShowed, default=gone}"
+                        android:background="@color/black_opacity_50"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
 

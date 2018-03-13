@@ -229,5 +229,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
         showFragment(SortFragment.newInstance(), SortFragment.TAG, R.id.llSortOption);
+        mViewModel.isSortShowed.set(true);
     }
 }
