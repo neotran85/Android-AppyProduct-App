@@ -1,9 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,26 +19,36 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.main.MainViewModel;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
-public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemNavigator, TabLayout.OnTabSelectedListener {
+public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemNavigator, TabLayout.OnTabSelectedListener {
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
     private static final int TAB_SORT = 0;
     private static final int TAB_FILTER = 1;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
+    @Inject
+    ViewModelProvider.Factory mViewModelFactory;
 
     @Inject
     ProductListViewModel mViewModel;
@@ -45,9 +58,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Inject
     ProductAdapter mProductAdapter;
 
-    @Inject
-    int mLayoutId;
-
     private ArrayList<Integer> mFavoritesId;
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
@@ -55,6 +65,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
 
     @Override
@@ -113,6 +128,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public ProductListViewModel getViewModel() {
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProductListViewModel.class);
         return mViewModel;
     }
 
@@ -162,11 +178,12 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public int getLayoutId() {
-        return mLayoutId;
+        return R.layout.activity_product_list;
     }
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab) {}
+    public void onTabSelected(TabLayout.Tab tab) {
+    }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
@@ -211,6 +228,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
+        showFragment(SortFragment.newInstance(), SortFragment.TAG, R.id.llSortOption);
     }
 }

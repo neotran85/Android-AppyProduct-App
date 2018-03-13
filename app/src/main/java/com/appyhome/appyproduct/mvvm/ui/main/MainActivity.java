@@ -205,11 +205,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void showFragment(BaseFragment fragment, String tag) {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .replace(R.id.screenView, fragment, tag)
-                .commit();
+        this.showFragment(fragment, tag, R.id.screenView);
     }
 
     private void highLightTab(View oldView, View newView) {

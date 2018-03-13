@@ -171,5 +171,13 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         super.onDestroy();
         Realm.getDefaultInstance().close();
     }
+
+    public void showFragment(BaseFragment fragment, String tag, int idContainer) {
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .replace(idContainer, fragment, tag)
+                .commit();
+    }
 }
 

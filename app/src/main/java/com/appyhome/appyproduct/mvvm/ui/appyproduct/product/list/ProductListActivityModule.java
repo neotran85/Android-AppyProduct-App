@@ -1,8 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.arch.lifecycle.ViewModelProvider;
+
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.ViewModelProviderFactory;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
+import com.appyhome.appyproduct.mvvm.ui.main.MainViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
@@ -23,7 +27,7 @@ public class ProductListActivityModule {
     }
 
     @Provides
-    int provideLayoutId() {
-        return R.layout.activity_product_list;
+    ViewModelProvider.Factory productListViewModelProvider(ProductListViewModel viewModel) {
+        return new ViewModelProviderFactory<>(viewModel);
     }
 }

@@ -29,6 +29,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.Produ
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragmentProvider;
@@ -119,7 +120,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = CategoryActivityModule.class)
     abstract CategoryActivity bindCategoryActivity();
 
-    @ContributesAndroidInjector(modules = ProductListActivityModule.class)
+    @ContributesAndroidInjector(modules = {ProductListActivityModule.class, SortFragmentProvider.class})
     abstract ProductListActivity bindProductListActivity();
 
     @ContributesAndroidInjector(modules = ProductCartListActivityModule.class)
@@ -154,7 +155,7 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
-            NotificationFragmentProvider.class, RequestFragmentProvider.class, ProductTopicFragmentProvider.class})
+            NotificationFragmentProvider.class, RequestFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class})
     abstract MainActivity bindMainActivity();
 
     @ContributesAndroidInjector(modules = {FeedActivityModule.class,
