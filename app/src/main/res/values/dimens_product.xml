@@ -5,6 +5,7 @@
     <dimen name="menu_sub_categories_height">160dp</dimen>
     <dimen name="size_category_image">48dp</dimen>
     <dimen name="size_sub_image">100dp</dimen>
+    <dimen name="size_cat_image">90dp</dimen>
     <dimen name="width_topic_image">48dp</dimen>
     <dimen name="height_topic_image">80dp</dimen>
     <dimen name="width_product_in_list">180dp</dimen>

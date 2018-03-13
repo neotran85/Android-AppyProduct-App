@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -55,10 +55,10 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     }
 
     @Override
-    protected CategoryItemViewHolder getContentHolder(ViewGroup parent) {
-        ViewItemProductCategoryBinding itemViewBinding = ViewItemProductCategoryBinding
+    protected SubCategoryItemViewHolder getContentHolder(ViewGroup parent) {
+        ViewItemProductCategorySubBinding itemViewBinding = ViewItemProductCategorySubBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new CategoryItemViewHolder(itemViewBinding, this);
+        return new SubCategoryItemViewHolder(itemViewBinding, this);
     }
 
     @Override
