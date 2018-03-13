@@ -43,6 +43,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private boolean isBuyNow = false;
 
     private Point mCartPosition = new Point();
+    private Point mAddToCartPosition = new Point();
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -71,10 +72,14 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             public void onGlobalLayout() {
                 mBinder.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 View cartIcon = mBinder.toolbar.findViewById(R.id.ivCart);
-                int[] locations = new int[2];
-                cartIcon.getLocationOnScreen(locations);
-                mCartPosition.x = locations[0];
-                mCartPosition.y = locations[1];
+                int[] cartLocations = new int[2];
+                int[] addToCartLocations = new int[2];
+                cartIcon.getLocationOnScreen(cartLocations);
+                mCartPosition.x = cartLocations[0];
+                mCartPosition.y = cartLocations[1];
+                mBinder.btAddToCart.getLocationOnScreen(addToCartLocations);
+                mAddToCartPosition.x = addToCartLocations[0];
+                mAddToCartPosition.y = addToCartLocations[1];
             }
         });
     }
@@ -114,8 +119,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private void animateProductToCart() {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
-        Point start = new Point(-sizeInPixels / 2, ScreenUtils.getScreenHeight(this) - sizeInPixels / 2);
-        ViewUtils.animateMoving(mBinder.ivProductBox, sizeInPixels, start, mCartPosition, new AnimatorListenerAdapter() {
+        ViewUtils.animateMoving(mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);

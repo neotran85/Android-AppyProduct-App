@@ -353,6 +353,7 @@
                             android:background="#BFBBBB"
                             android:onClick="@{(view) -> navigator.addToCart()}"
                             android:text="ADD TO CART"
+                            android:id="@+id/btAddToCart"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
 
@@ -370,6 +371,7 @@
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
         <ImageView
+            android:visibility="gone"
             android:scaleType="center"
             android:id="@+id/ivProductBox"
             android:background="@mipmap/box_animate"
