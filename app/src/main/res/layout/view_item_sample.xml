@@ -16,7 +16,6 @@
         android:id="@+id/llItemView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@mipmap/product_in_list_bg"
         android:orientation="vertical"
         android:paddingLeft="@dimen/padding_left_product_in_list"
         android:paddingRight="@dimen/padding_left_product_in_list"

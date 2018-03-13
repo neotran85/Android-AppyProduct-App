@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public final class BindingUtils {
             Context context = imageView.getContext();
             Picasso.with(context)
                     .load(url)
+                    .config(Bitmap.Config.ARGB_8888)
                     .placeholder(R.mipmap.no_image)
                     .error(R.mipmap.no_image)
                     .centerCrop()
