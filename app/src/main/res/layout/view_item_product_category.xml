@@ -15,8 +15,10 @@
     <LinearLayout
         android:onClick="@{(view) -> navigator.onItemClick(view)}"
         android:id="@+id/llItemCategoryView"
-        android:layout_width="@dimen/menu_left_categories_width"
-        android:layout_height="@dimen/menu_left_item_height"
+        layout_width="@{ viewModel.isSub ? @dimen/menu_sub_categories_width : @dimen/menu_left_categories_width }"
+        layout_height="@{ viewModel.isSub ? @dimen/menu_sub_categories_height : @dimen/menu_left_categories_height }"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:background="@mipmap/product_sub_bg"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -25,7 +27,7 @@
         android:paddingBottom="16dp">
 
         <LinearLayout
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -33,6 +35,7 @@
 
             <ImageView
                 android:id="@+id/ivThumbnail"
+                android:background="@color/gray"
                 imageAssetsUrl="@{viewModel.imageURL}"
                 android:layout_width="@dimen/size_sub_image"
                 android:layout_height="@dimen/size_sub_image" />

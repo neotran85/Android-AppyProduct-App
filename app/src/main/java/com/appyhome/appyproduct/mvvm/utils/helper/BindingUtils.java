@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,20 @@ public final class BindingUtils {
         } else {
             imageView.setBackgroundResource(R.mipmap.no_image);
         }
+    }
+
+    @BindingAdapter("layout_height")
+    public static void setLayoutHeight(View view, float height) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = Math.round(height);
+        view.setLayoutParams(layoutParams);
+    }
+
+    @BindingAdapter("layout_width")
+    public static void setLayoutWidth(View view, float width) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = Math.round(width);
+        view.setLayoutParams(layoutParams);
     }
 
     @BindingAdapter("editModeText")

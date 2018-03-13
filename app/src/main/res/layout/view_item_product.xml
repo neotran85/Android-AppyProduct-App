@@ -166,7 +166,7 @@
             android:layout_height="32dp"
             android:layout_alignEnd="@+id/llItemView"
             android:layout_marginTop="2dp"
-            android:visibility="@{viewModel.isDiscount, default=visible}">
+            android:visibility="@{viewModel.isDiscount, default=gone}">
 
             <TextView
                 android:layout_width="match_parent"
