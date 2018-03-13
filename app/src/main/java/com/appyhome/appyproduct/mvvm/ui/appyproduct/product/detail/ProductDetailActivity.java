@@ -130,6 +130,14 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
+    public void share() {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mMainViewModel.title.get());
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         mSearchToolbarViewHolder.onBind(0);

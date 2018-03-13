@@ -11,4 +11,5 @@ public interface ProductDetailNavigator extends ProductItemNavigator{
     void increaseAmount();
     void decreaseAmount();
     void showGallery(int position);
+    void share();
 }

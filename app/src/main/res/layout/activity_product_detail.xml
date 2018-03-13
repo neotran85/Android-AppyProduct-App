@@ -131,6 +131,7 @@
                                     android:gravity="center">
 
                                     <ImageView
+                                        android:clickable="true"
                                         isFavorite="@{viewModel.isFavorite}"
                                         android:layout_width="22dp"
                                         android:layout_height="18dp"
@@ -138,6 +139,8 @@
                                         android:padding="4dp" />
 
                                     <ImageView
+                                        android:onClick="@{(view) -> navigator.share()}"
+                                        android:clickable="true"
                                         android:layout_width="28dp"
                                         android:layout_height="28dp"
                                         android:layout_marginStart="6dp"
@@ -165,6 +168,8 @@
                                     android:textSize="14sp" />
 
                                 <ImageView
+                                    android:foreground="?attr/selectableItemBackground"
+                                    android:clickable="true"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:onClick="@{(view) -> navigator.decreaseAmount()}"
@@ -185,6 +190,8 @@
                                     android:layout_weight="1">
 
                                     <ImageView
+                                        android:foreground="?attr/selectableItemBackground"
+                                        android:clickable="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:onClick="@{(view) -> navigator.increaseAmount()}"
@@ -347,13 +354,15 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/btAddToCart"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:background="#BFBBBB"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:onClick="@{(view) -> navigator.addToCart()}"
                             android:text="ADD TO CART"
-                            android:id="@+id/btAddToCart"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
 
@@ -362,6 +371,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:background="@color/colorAccent"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:onClick="@{(view) -> navigator.gotoCart()}"
                             android:text="BUY NOW"
                             android:textColor="@color/white"
@@ -370,13 +381,14 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
+
         <ImageView
-            android:visibility="gone"
-            android:scaleType="center"
             android:id="@+id/ivProductBox"
-            android:background="@mipmap/box_animate"
             android:layout_width="@dimen/size_box_animation"
-            android:layout_height="@dimen/size_box_animation" />
+            android:layout_height="@dimen/size_box_animation"
+            android:background="@mipmap/box_animate"
+            android:scaleType="center"
+            android:visibility="gone" />
     </FrameLayout>
 
 </layout>
