@@ -1,11 +1,16 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.appyhome.appyproduct.mvvm.BR;
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
@@ -13,6 +18,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.utils.helper.ScreenUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -35,6 +42,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private boolean isBuyNow = false;
 
+    private Point mCartPosition = new Point();
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductDetailActivity.class);
         return intent;
@@ -54,6 +63,20 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mMainViewModel.setNavigator(this);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
         loadImages();
+        getCartPosition();
+    }
+
+    private void getCartPosition() {
+        mBinder.toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
+                mBinder.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                View cartIcon = mBinder.toolbar.findViewById(R.id.ivCart);
+                int[] locations = new int[2];
+                cartIcon.getLocationOnScreen(locations);
+                mCartPosition.x = locations[0];
+                mCartPosition.y = locations[1];
+            }
+        });
     }
 
     @Override
@@ -85,7 +108,21 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void addToCart() {
-        mMainViewModel.addProductToCart();
+        animateProductToCart();
+    }
+
+    private void animateProductToCart() {
+        mBinder.ivProductBox.setVisibility(View.VISIBLE);
+        int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
+        Point start = new Point(-sizeInPixels / 2, ScreenUtils.getScreenHeight(this) - sizeInPixels / 2);
+        ViewUtils.animateMoving(mBinder.ivProductBox, sizeInPixels, start, mCartPosition, new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mMainViewModel.addProductToCart();
+                mBinder.ivProductBox.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

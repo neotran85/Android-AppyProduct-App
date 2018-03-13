@@ -369,7 +369,12 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
-
+        <ImageView
+            android:scaleType="center"
+            android:id="@+id/ivProductBox"
+            android:background="@mipmap/box_animate"
+            android:layout_width="@dimen/size_box_animation"
+            android:layout_height="@dimen/size_box_animation" />
     </FrameLayout>
 
 </layout>
