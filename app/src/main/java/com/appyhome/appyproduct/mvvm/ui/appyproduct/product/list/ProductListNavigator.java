@@ -19,4 +19,8 @@ public interface ProductListNavigator {
 
     void showEmptyProducts();
 
+    void toggleSortOptions();
+
+    void toggleFilters();
+
 }

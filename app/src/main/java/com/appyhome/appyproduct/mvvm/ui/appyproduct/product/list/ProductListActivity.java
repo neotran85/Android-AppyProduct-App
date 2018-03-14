@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,11 +21,14 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetail
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter.FilterFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
-import com.appyhome.appyproduct.mvvm.ui.main.MainViewModel;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
-public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemNavigator, TabLayout.OnTabSelectedListener {
+public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemNavigator, SortNavigator {
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
     private static final int TAB_SORT = 0;
@@ -62,6 +64,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
+    private SortFragment mSortFragment;
+
+    private FilterFragment mFilterFragment;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
@@ -84,8 +90,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        mBinder.tabLayout.setVisibility(View.GONE);
-        setUpTabLayout(mBinder.tabLayout);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
         mViewModel.getAllFavorites();
@@ -101,12 +105,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
-    }
-
-    private void setUpTabLayout(TabLayout tabs) {
-        tabs.addOnTabSelectedListener(this);
-        tabs.getTabAt(TAB_SORT).setCustomView(R.layout.view_item_product_tab_sort);
-        tabs.getTabAt(TAB_FILTER).setCustomView(R.layout.view_item_product_tab_filter);
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
@@ -182,15 +180,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         ProductDetailActivityModule.clickedViewModel = null;
@@ -226,9 +215,58 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mSearchToolbarViewHolder.onBind(0);
     }
 
+
     @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-        showFragment(SortFragment.newInstance(), SortFragment.TAG, R.id.llSortOption);
-        mViewModel.isSortShowed.set(true);
+    public void toggleFilters() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FilterFragment.TAG);
+        boolean isShowed = fragment != null;
+        if (isShowed) {
+            closeFragment(FilterFragment.TAG);
+            mFilterFragment = null;
+        } else {
+            mFilterFragment = FilterFragment.newInstance();
+            showFragment(mFilterFragment, FilterFragment.TAG, R.id.llSortFilterContainer);
+        }
     }
+
+    @Override
+    public void toggleSortOptions() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SortFragment.TAG);
+        boolean isShowed = fragment != null;
+        if (isShowed) {
+            closeFragment(SortFragment.TAG);
+            mSortFragment = null;
+        } else {
+            mSortFragment = SortFragment.newInstance(this);
+            showFragment(mSortFragment, SortFragment.TAG, R.id.llSortFilterContainer);
+        }
+        mViewModel.isSortShowed.set(!isShowed);
+    }
+
+
+    @Override
+    public void onSortItemClick(View view) {
+        if (mSortFragment != null) {
+            SortOption opt = mSortFragment.getCurrentSortOption();
+            opt.checked.set(false);
+            SortOption option = (SortOption) view.getTag();
+            option.checked.set(true);
+            mSortFragment.setCurrentSortOption(opt);
+            mViewModel.currentSortOption.set(option.getName());
+            toggleSortOptions();
+        }
+    }
+
+    @Override
+    public void showFragment(BaseFragment fragment, String tag, int idContainer) {
+        mBinder.llSortFilterContainer.setVisibility(View.VISIBLE);
+        super.showFragment(fragment, tag, idContainer);
+    }
+
+    @Override
+    public void closeFragment(String tag) {
+        mBinder.llSortFilterContainer.setVisibility(View.GONE);
+        super.closeFragment(tag);
+    }
+
 }

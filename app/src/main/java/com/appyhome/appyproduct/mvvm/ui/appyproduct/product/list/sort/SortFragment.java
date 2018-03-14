@@ -3,25 +3,23 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentSampleBinding;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentSortBinding;
+import com.appyhome.appyproduct.mvvm.databinding.FragmentProductSortBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 
 import javax.inject.Inject;
 
-public class SortFragment extends BaseFragment<FragmentSortBinding, SortViewModel> implements SortNavigator {
+public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortViewModel> {
 
-    public static final String TAG = "SortFragment";
+    public static final String TAG = "FilterFragment";
 
     @Inject
     SortViewModel mViewModel;
 
-    FragmentSortBinding mBinder;
+    FragmentProductSortBinding mBinder;
 
     @Inject
     int mLayoutId;
@@ -30,11 +28,17 @@ public class SortFragment extends BaseFragment<FragmentSortBinding, SortViewMode
     SortOptionsAdapter mAdapter;
 
     private SortOption mCurrentOption;
+    private SortNavigator mNavigator;
 
-    public static SortFragment newInstance() {
+    public void setNavigator(SortNavigator navigator) {
+        mNavigator = navigator;
+    }
+
+    public static SortFragment newInstance(SortNavigator navigator) {
         Bundle args = new Bundle();
         SortFragment fragment = new SortFragment();
         fragment.setArguments(args);
+        fragment.setNavigator(navigator);
         return fragment;
     }
 
@@ -50,21 +54,24 @@ public class SortFragment extends BaseFragment<FragmentSortBinding, SortViewMode
     }
 
     private void setUp() {
-        mViewModel.setNavigator(this);
+        mViewModel.setNavigator(mNavigator);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
-        mBinder.setNavigator(this);
-        mAdapter.setUp(this.getContext(), mViewModel.sortOptions, this);
+        mBinder.setNavigator(mNavigator);
+        mAdapter.setUp(this.getContext(), mViewModel.sortOptions, mNavigator);
         mBinder.lvSortOptions.setAdapter(mAdapter);
         mCurrentOption = mViewModel.getCurrentSortOption();
+        int heightOfView = mViewModel.sortOptions.length * getResources().getDimensionPixelSize(R.dimen.height_sort_option_item);
+        AppAnimator.dropdown(mBinder.lvSortOptions, heightOfView);
+        AppAnimator.fadeIn(mBinder.llRestOfLayout);
     }
 
-    @Override
-    public void onItemClick(View view) {
-        mCurrentOption.checked.set(false);
-        SortOption option = (SortOption) view.getTag();
-        option.checked.set(true);
-        mCurrentOption = option;
+    public void setCurrentSortOption(SortOption opt) {
+        mCurrentOption = opt;
+    }
+
+    public SortOption getCurrentSortOption() {
+        return mCurrentOption;
     }
 
     @Override

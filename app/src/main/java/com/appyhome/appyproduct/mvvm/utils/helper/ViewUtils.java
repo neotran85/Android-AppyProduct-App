@@ -101,22 +101,4 @@ public final class ViewUtils {
         }
     }
 
-    public static void animateMoving(View view, int sizeInPixels, Point start, Point end, AnimatorListenerAdapter listenerAdapter) {
-        AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator posX = null;
-        ObjectAnimator posY = null;
-        ObjectAnimator alpha = null;
-        ObjectAnimator scaleX = null;
-        ObjectAnimator scaleY = null;
-        posX = ObjectAnimator.ofFloat(view, "translationX", start.x, end.x - sizeInPixels / 2);
-        posY = ObjectAnimator.ofFloat(view, "translationY", start.y, end.y - sizeInPixels / 2);
-        alpha = ObjectAnimator.ofFloat(view, "alpha", 1, 0);
-        scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1, 0.3f);
-        scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1, 0.3f);
-        animatorSet.setDuration(1500);
-        animatorSet.playTogether(posX, posY, scaleX, scaleY);
-        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
-        animatorSet.addListener(listenerAdapter);
-        animatorSet.start();
-    }
 }

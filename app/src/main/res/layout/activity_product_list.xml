@@ -48,35 +48,70 @@
                         android:layout_marginLeft="-14dp"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>
 
-                    <android.support.design.widget.TabLayout
+                    <LinearLayout
                         android:id="@+id/tabLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_tab_top_bar"
                         android:background="@color/white"
-                        app:tabGravity="fill"
-                        app:tabIndicatorHeight="2dp"
-                        app:tabMode="fixed"
-                        app:tabSelectedTextColor="@color/colorAccent"
-                        app:tabTextColor="@color/colorAccent">
+                        android:orientation="horizontal"
+                        android:paddingEnd="14dp"
+                        android:paddingStart="14dp">
 
-                        <android.support.design.widget.TabItem
+                        <LinearLayout
                             android:id="@+id/tabSort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/height_tab_top_bar"
-                            android:text="Sort" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <android.support.design.widget.TabItem
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:onClick="@{(view) -> navigator.toggleSortOptions()}"
+                                android:text="@{viewModel.currentSortOption}"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="6dp"
+                                android:layout_marginStart="10dp"
+                                android:background="@mipmap/icon_dropdown"
+                                android:visibility="@{!viewModel.isSortShowed, default=visible}" />
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="6dp"
+                                android:layout_marginStart="10dp"
+                                android:background="@mipmap/icon_dropup"
+                                android:visibility="@{viewModel.isSortShowed, default=gone}" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/tabFilter"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/height_tab_top_bar"
-                            android:text="Filter" />
-                    </android.support.design.widget.TabLayout>
+                            android:gravity="center_vertical"
+                            android:onClick="@{(view) -> navigator.toggleFilters()}"
+                            android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/llSortOption"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="Filter"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginStart="8dp"
+                                android:background="@mipmap/icon_filter" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </android.support.design.widget.AppBarLayout>
 
@@ -84,19 +119,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white">
+
                     <android.support.v7.widget.RecyclerView
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginStart="4dp"
                         android:id="@+id/productsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginStart="4dp"
                         android:clipToPadding="false"
                         android:paddingTop="4dp" />
+
                     <LinearLayout
-                        android:visibility="@{viewModel.isSortShowed, default=gone}"
-                        android:background="@color/black_opacity_50"
+                        android:clickable="true"
+                        android:id="@+id/llSortFilterContainer"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></LinearLayout>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" />
+
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>

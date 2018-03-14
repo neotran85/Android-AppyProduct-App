@@ -56,6 +56,11 @@ public final class BindingUtils {
         view.setLayoutParams(layoutParams);
     }
 
+    @BindingAdapter("clickable")
+    public static void setClickable(View view, boolean clickable) {
+        view.setClickable(clickable);
+    }
+
     @BindingAdapter("editModeText")
     public static void setEditModeText(TextView textView, boolean isEditMode) {
         textView.setText(isEditMode ? "Done" : "Edit");

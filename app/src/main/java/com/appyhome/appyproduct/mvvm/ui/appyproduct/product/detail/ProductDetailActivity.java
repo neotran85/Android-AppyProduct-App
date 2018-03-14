@@ -18,8 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
-import com.appyhome.appyproduct.mvvm.utils.helper.ScreenUtils;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -119,7 +118,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private void animateProductToCart() {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
-        ViewUtils.animateMoving(mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
+        AppAnimator.animateMoving(mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);

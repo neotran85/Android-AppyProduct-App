@@ -25,6 +25,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
+    public ObservableField<String> currentSortOption = new ObservableField<>("Sort By Popular");
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {

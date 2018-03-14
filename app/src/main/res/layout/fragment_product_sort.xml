@@ -7,7 +7,7 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortNavigator" />
 
         <variable
             name="viewModel"
@@ -18,12 +18,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/black_opacity_50"
         android:orientation="vertical">
         <ListView
             android:id="@+id/lvSortOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"></ListView>
+        <LinearLayout
+            android:id="@+id/llRestOfLayout"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></LinearLayout>
     </LinearLayout>
 </layout>

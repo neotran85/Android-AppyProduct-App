@@ -15,7 +15,7 @@ public class SortFragmentModule {
 
     @Provides
     int provideLayoutId() {
-        return R.layout.fragment_sort;
+        return R.layout.fragment_product_sort;
     }
 
     @Provides

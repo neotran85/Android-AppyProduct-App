@@ -8,7 +8,7 @@ public enum SortOption {
     LATEST(2, "Latest Arrival"),
     PROMOTION(3, "Promotion"),
     RATING(4, "Rating"),
-    POPULAR(5, "Popular");
+    POPULAR(5, "The Most Popular");
 
     private int value;
     private String name;

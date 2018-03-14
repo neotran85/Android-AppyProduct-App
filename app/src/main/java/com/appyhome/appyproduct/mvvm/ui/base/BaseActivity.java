@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -178,6 +179,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
                 .disallowAddToBackStack()
                 .replace(idContainer, fragment, tag)
                 .commit();
+    }
+    public void closeFragment(String tag) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if(fragment != null)
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 }
 
