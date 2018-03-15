@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 
@@ -98,6 +99,12 @@ public final class ViewUtils {
             imageView.setBackground(d);
         } catch (Exception ex) {
             return;
+        }
+    }
+
+    public static void requestFocus(EditText editText) {
+        if(editText != null && editText.getParent() != null) {
+            editText.getParent().requestChildFocus(editText, editText);
         }
     }
 

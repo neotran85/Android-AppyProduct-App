@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.account.myprofile.MyProfileFragment;
+import com.appyhome.appyproduct.mvvm.ui.account.register.verify.VerifyActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUp();
+        //startActivity(VerifyActivity.getStartIntent(this));
     }
 
     @Override

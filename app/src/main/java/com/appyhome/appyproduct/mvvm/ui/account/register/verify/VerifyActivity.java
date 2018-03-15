@@ -7,20 +7,17 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityVerifyBinding;
-import com.appyhome.appyproduct.mvvm.ui.account.register.RegisterActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyViewModel> implements VerifyNavigator{
+public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyViewModel> implements VerifyNavigator {
 
     @Inject
     VerifyViewModel mVerifyViewModel;
@@ -57,10 +54,11 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
             getViewModel().doVerifyUser();
         }
     }
+
     @Override
     public void sendVerifyingCode() {
         String verifyCode = mBinder.etVerifyingCode.getText().toString();
-        if(verifyCode == null || verifyCode.length() <= 0) {
+        if (verifyCode == null || verifyCode.length() <= 0) {
             AlertManager.getInstance(this).showQuickToast(getString(R.string.pls_enter_the_code));
             return;
         }
@@ -68,24 +66,27 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
             hideKeyboard();
             getViewModel().verifyTrue(verifyCode);
         } else {
-            AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_not_connected));
+            AlertManager.getInstance(this).showQuickToast(getString(R.string.error_network_not_connected));
         }
     }
 
     @Override
     public void showCodeSentMessage() {
         clearTextInputError(mBinder.etVerifyingCode);
-        AlertManager.getInstance(this).showLongToast(getString(R.string.verification_code_message));
+        mBinder.etVerifyingCode.setText("");
+        mBinder.etVerifyingCode.requestFocus();
+        showError(getString(R.string.verification_code_message));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(getViewModel().isVerified()) {
+        if (getViewModel().isVerified()) {
             setResult(RESULT_OK);
             finish();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -93,7 +94,7 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
 
     @Override
     public void doAfterRegisterSucceeded() {
-        AlertManager.getInstance(this).showOKDialog("",getString(R.string.phone_activated), (dialogInterface, i) -> {
+        AlertManager.getInstance(this).showOKDialog("", getString(R.string.phone_activated), (dialogInterface, i) -> {
             AlertManager.getInstance(this).closeDialog();
             setResult(RESULT_OK);
             finish();
@@ -106,7 +107,7 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     }
 
     private void showTextInputError(TextInputEditText edt) {
-        edt.requestFocus();
+        mBinder.etVerifyingCode.getParent().requestChildFocus(mBinder.etVerifyingCode, mBinder.etVerifyingCode);
         if (edt.getText().length() > 0)
             edt.setTextColor(ContextCompat.getColor(this, R.color.red_dark));
         else
@@ -115,7 +116,7 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+        AlertManager.getInstance(this).showQuickToast(getString(R.string.error_network_general));
     }
 
     private void showError(String text) {
@@ -141,8 +142,10 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     @Override
     public void showErrorOthers() {
         showTextInputError(mBinder.etVerifyingCode);
+        mBinder.etVerifyingCode.getParent().requestChildFocus(mBinder.etVerifyingCode, mBinder.etVerifyingCode);
         showError(getString(R.string.verification_code_error));
     }
+
     private void clearTextInputError(TextInputEditText edt) {
         edt.setTextColor(ContextCompat.getColor(this, R.color.white));
         edt.setHintTextColor(ContextCompat.getColor(this, R.color.hint_text));
