@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,10 +22,23 @@ public class AlertManager {
     private ProgressDialog mProgressDialog;
     private AlertDialog mAlertDialog;
 
+    private AlertManager(Context context, int gravity) {
+        mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+        mToast.setGravity(gravity, 0, 0);
+        mContext = context;
+    }
+
     private AlertManager(Context context) {
         mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mContext = context;
+    }
+
+    public static AlertManager getInstance(Context context, int gravity) {
+        if (mInstance == null || mInstance.mContext != context) {
+            mInstance = new AlertManager(context, gravity);
+        }
+        return mInstance;
     }
 
     public static AlertManager getInstance(Context context) {
@@ -34,6 +48,12 @@ public class AlertManager {
         return mInstance;
     }
 
+    public void closeDialog() {
+        if(mAlertDialog != null && mAlertDialog.isShowing()) {
+            mAlertDialog.dismiss();
+            mAlertDialog = null;
+        }
+    }
     public void closeLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
@@ -76,6 +96,18 @@ public class AlertManager {
             });
             dialog.setView(theView);
             mAlertDialog = dialog.show();
+        } else {
+            mAlertDialog.show();
+        }
+    }
+
+    public void showOKDialog(String title, String detailText, DialogInterface.OnClickListener positiveListener) {
+        if (mAlertDialog == null) {
+            final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+            dialogBuilder.setTitle(title);
+            dialogBuilder.setMessage(detailText);
+            dialogBuilder.setPositiveButton("OK", positiveListener);
+            mAlertDialog = dialogBuilder.show();
         } else {
             mAlertDialog.show();
         }

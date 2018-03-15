@@ -7,4 +7,5 @@
     <string name="app_market_link">"market://details?id="</string>
     <string name="next">NEXT</string>
     <string name="title_shipping_address">Shipping Address</string>
+    <string name="new_code_sent">A new code is sent. Please check your messages.</string>
 </resources>

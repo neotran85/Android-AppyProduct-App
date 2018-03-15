@@ -61,36 +61,34 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
-                        android:background="@drawable/input_text_rounded_bg"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/input_text_rounded_bg"
                         android:gravity="center_vertical"
-                        android:layout_marginTop="20dp">
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:layout_marginLeft="16dp"
-                            android:textColor="@color/gray"
-                            android:textSize="14sp"
-                            android:text="@string/plus_60"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="10dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="@string/plus_60"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+
                         <android.support.design.widget.TextInputEditText
-                            android:background="@null"
                             android:id="@+id/etPhoneNumber"
                             fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@null"
                             android:cursorVisible="true"
                             android:gravity="center_vertical"
                             android:hint="@string/mobile_no"
                             android:inputType="phone"
                             android:maxLength="50"
-                            android:paddingBottom="10dp"
                             android:paddingLeft="8dp"
                             android:paddingRight="16dp"
-                            android:paddingTop="12dp"
                             android:textColor="@color/white"
                             android:textColorHint="@color/hint_text"
                             android:textSize="14sp" />
@@ -106,7 +104,7 @@
                             android:id="@+id/etPassword"
                             fontPath="fonts/TitilliumWeb-SemiBoldItalic.ttf"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="42dp"
                             android:background="@drawable/input_text_rounded_bg"
                             android:cursorVisible="true"
                             android:gravity="center_vertical"
@@ -151,7 +149,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -163,9 +161,11 @@
                             android:textColor="#a8a9ab" />
 
                         <Button
+                            android:layout_marginStart="10dp"
+                            android:foreground="?attr/selectableItemBackground"
                             android:id="@+id/btnSignUp"
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="80dp"
+                            android:layout_height="42dp"
                             android:background="@null"
                             android:gravity="center"
                             android:text="@string/sign_up"
@@ -181,6 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.isLoading, default=gone}">
+
             <include layout="@layout/view_preloading"></include>
         </LinearLayout>
 

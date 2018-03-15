@@ -63,7 +63,7 @@ public interface ApiHelper {
 
     Single<JSONObject> verifyUser();
 
-    Single<JSONObject> verifyTrue();
+    Single<JSONObject> verifyTrue(String code);
 
     Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request);
 

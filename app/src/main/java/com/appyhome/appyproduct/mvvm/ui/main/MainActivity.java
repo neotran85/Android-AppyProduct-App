@@ -21,6 +21,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
@@ -170,7 +171,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     switchTabSelection(view);
                     showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
                 } else {
-                    openLoginActivity(getString(R.string.login_required_message) + " see your profile.",
+                    openLoginActivity(getString(R.string.login_required_message) + getString(R.string.see_your_profile),
                             REQUEST_LOGIN_FOR_MY_PROFILE);
                 }
                 break;

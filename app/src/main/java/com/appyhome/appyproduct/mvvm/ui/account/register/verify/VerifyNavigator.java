@@ -10,8 +10,12 @@ public interface VerifyNavigator {
 
     void showErrorOthers();
 
-    void showSuccessLogin();
-
     void showCodeSentMessage();
+
+    void showAlert(String message);
+
+    void resendNewCode();
+
+    void sendVerifyingCode();
 
 }

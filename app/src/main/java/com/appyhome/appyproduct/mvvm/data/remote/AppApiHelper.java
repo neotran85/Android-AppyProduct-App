@@ -192,9 +192,10 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> verifyTrue() {
+    public Single<JSONObject> verifyTrue(String code) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_VERIFY_TRUE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter("code", code)
                 .build()
                 .getJSONObjectSingle();
     }

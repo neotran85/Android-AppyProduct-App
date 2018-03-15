@@ -347,8 +347,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<JSONObject> verifyTrue() {
-        return mApiHelper.verifyTrue();
+    public Single<JSONObject> verifyTrue(String code) {
+        return mApiHelper.verifyTrue(code);
     }
 
 

@@ -10,53 +10,43 @@ import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONObject;
 
-import io.reactivex.functions.Consumer;
-
 public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
+
+    private boolean isVerified = false;
 
     public VerifyViewModel(DataManager dataManager,
                            SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void verifyTrue() {
+    public void verifyTrue(String code) {
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .verifyTrue()
+                .verifyTrue(code)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject response) throws Exception {
-                        handleVerifyResponse(response);
-                        setIsLoading(false);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                .subscribe(response -> {
+                    handleVerifyResponse(response);
+                    setIsLoading(false);
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 
     public void doVerifyUser() {
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .verifyUser()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject response) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().showCodeSentMessage();
-                        // Show message to user.
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    getNavigator().showCodeSentMessage();
+                    // Show message to user.
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 
@@ -68,16 +58,20 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
         try {
             String statusCode = response.getString(ApiCode.KEY_CODE);
             String message = response.getString(ApiMessage.KEY_CODE);
-            if (statusCode.equals(ApiCode.OK_200)) {
-                if (DataUtils.isEqualAndNotNull(message, ApiMessage.SUCCESS)) {
-                    getNavigator().showSuccessLogin();
-                    getNavigator().doAfterRegisterSucceeded();
-                    return;
-                }
+            boolean success = statusCode.equals(ApiCode.OK_200) && DataUtils.isEqualAndNotNull(message, ApiMessage.PHONE_NUMBER_ACTIVATED);
+            success = success || (statusCode.equals(ApiCode.BAD_REQUEST_400) && DataUtils.isEqualAndNotNull(message, ApiMessage.PHONE_NUMBER_ALREADY_CONFIRMED));
+            if (success) {
+                isVerified = true;
+                getNavigator().doAfterRegisterSucceeded();
+                return;
             }
         } catch (Exception e) {
             Crashlytics.logException(e);
         }
         getNavigator().showErrorOthers();
+    }
+
+    public boolean isVerified() {
+        return isVerified;
     }
 }
