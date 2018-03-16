@@ -42,8 +42,7 @@
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         style="@style/Toolbar"
-                        android:layout_marginStart="-14dp">
-                    </android.support.v7.widget.Toolbar>
+                        android:layout_marginStart="-14dp"></android.support.v7.widget.Toolbar>
 
                     <View
                         android:layout_width="match_parent"
@@ -99,6 +98,7 @@
                             android:paddingTop="12dp">
 
                             <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/home_products"
@@ -119,31 +119,15 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <include layout="@layout/view_home_features" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/dealView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <include layout="@layout/view_home_deal" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/adsView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <include layout="@layout/view_home_ads" />
+                            <include
+                                layout="@layout/view_home_features"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"></LinearLayout>
+                            android:layout_height="10dp"></LinearLayout>
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>

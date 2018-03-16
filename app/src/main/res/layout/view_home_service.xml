@@ -7,6 +7,7 @@
     android:paddingTop="12dp">
 
     <TextView
+        fontPath="fonts/TitilliumWeb-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="12dp"
