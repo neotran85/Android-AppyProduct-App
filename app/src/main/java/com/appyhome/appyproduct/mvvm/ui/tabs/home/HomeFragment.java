@@ -129,6 +129,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
+    public void updateBannersHeight() {
+        ViewUtils.setListViewHeightBasedOnItems(mBinder.lvBanners);
+    }
+    @Override
     public void showBanners(BannerResponse[] list) {
         mBannersAdapter.setUp(this.getActivity(), list,this);
     }

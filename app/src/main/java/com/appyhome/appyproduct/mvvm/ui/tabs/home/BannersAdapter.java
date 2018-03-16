@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.tabs.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,13 @@ import android.widget.BaseAdapter;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BannerResponse;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemBannerBinding;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class BannersAdapter extends BaseAdapter {
 
     Context mContext;
+
     private BannerResponse[] mListItem;
 
     private HomeNavigator mNavigator;
@@ -46,6 +49,7 @@ public class BannersAdapter extends BaseAdapter {
         binding.setNavigator(mNavigator);
         Picasso.with(mContext)
                 .load(data.image)
+                .config(Bitmap.Config.ARGB_8888)
                 .into(binding.ivBanner);
         return binding.getRoot();
     }
