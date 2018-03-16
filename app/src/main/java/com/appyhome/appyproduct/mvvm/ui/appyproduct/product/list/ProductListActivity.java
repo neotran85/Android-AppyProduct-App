@@ -188,8 +188,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onItemClick(View view) {
         ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
-        ProductDetailActivityModule.clickedViewModel = viewModel;
-        Intent intent = ProductDetailActivity.getStartIntent(this);
+        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
         startActivity(intent);
     }
 

@@ -37,6 +37,7 @@ android {
     }
     buildTypes {
         debug {
+            ext.alwaysUpdateBuildId = false
             buildConfigField("String", "BASE_URL", "\"http://dev.lara.appycms.com/\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
             signingConfig signingConfigs.config
@@ -53,8 +54,7 @@ android {
     dataBinding {
         enabled = true
     }
-    productFlavors {
-    }
+    productFlavors {}
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

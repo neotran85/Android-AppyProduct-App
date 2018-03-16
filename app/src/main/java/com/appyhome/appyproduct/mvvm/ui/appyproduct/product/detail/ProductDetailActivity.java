@@ -44,7 +44,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private Point mCartPosition = new Point();
     private Point mAddToCartPosition = new Point();
 
-    public static Intent getStartIntent(Context context) {
+    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel) {
+        ProductDetailActivityModule.clickedViewModel = viewModel;
         Intent intent = new Intent(context, ProductDetailActivity.class);
         return intent;
     }
@@ -194,6 +195,13 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     public void increaseAmount() {
         int amount = mMainViewModel.getIntegerAmountAdded() + 1;
         mMainViewModel.setIntegerAmountAdded(amount);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMainViewModel = null;
+        ProductDetailActivityModule.clickedViewModel = null;
     }
 
     @Override
