@@ -22,6 +22,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
+import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -78,7 +79,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
         setUp();
-        //startActivity(VerifyActivity.getStartIntent(this));
     }
 
     @Override
@@ -171,7 +171,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             case R.id.rlMyProfile:
                 if (mMainViewModel.isUserLoggedIn()) {
                     switchTabSelection(view);
-                    showFragment(MyProfileFragment.newInstance(), MyProfileFragment.TAG);
+                    showFragment(UserPageFragment.newInstance(), UserPageFragment.TAG);
                 } else {
                     openLoginActivity(getString(R.string.login_required_message) + getString(R.string.see_your_profile),
                             REQUEST_LOGIN_FOR_MY_PROFILE);

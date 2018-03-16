@@ -53,6 +53,9 @@ public class ApiUrlConfig {
     public static final String API_PRODUCT_PER_CATEGORY_GET = BuildConfig.BASE_URL
             + "api/appyproduct/get/product/percategory";
 
+    public static final String API_BANNERS_GET = BuildConfig.BASE_URL
+            + "api/get/banners";
+
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";
     public static final String URL_AIR_CON_TYPE_INFO = "file:///android_asset/html/air_con_type_info.html";

@@ -18,34 +18,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold" />
-    <ImageView
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/banner_17"
+    <ListView
+        android:id="@+id/lvBanners"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/banner_18"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/banner_19"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/banner_20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/banner_21"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"></ListView>
 </LinearLayout>

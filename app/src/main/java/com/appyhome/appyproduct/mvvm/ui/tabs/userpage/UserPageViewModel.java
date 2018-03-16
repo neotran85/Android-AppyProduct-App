@@ -8,7 +8,9 @@ import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
-public class UserPageViewModel extends BaseViewModel<UserPageNavigator> {
+public class
+
+UserPageViewModel extends BaseViewModel<UserPageNavigator> {
 
     public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
 
@@ -43,5 +45,11 @@ public class UserPageViewModel extends BaseViewModel<UserPageNavigator> {
 
     public int getAction() {
         return action;
+    }
+
+    public void logout() {
+        getDataManager().logout();
+        if (getNavigator() != null)
+            getNavigator().backToHomeScreen();
     }
 }

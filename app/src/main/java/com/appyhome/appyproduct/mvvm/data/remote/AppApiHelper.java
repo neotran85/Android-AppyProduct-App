@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
+import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
@@ -207,5 +208,13 @@ public class AppApiHelper implements ApiHelper {
                 .addBodyParameter(request)
                 .build()
                 .getObjectSingle(ProductListResponse.class);
+    }
+
+    @Override
+    public Single<BannersResponse> fetchBanners() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_BANNERS_GET)
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                .build()
+                .getObjectSingle(BannersResponse.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,7 +12,9 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 
@@ -100,7 +103,9 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void onItemClick(View view) {
-
+        ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
+        Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel);
+        startActivity(intent);
     }
 
     @Override

@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.model.api.BannerResponse;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceOrderUserInput;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentHomeBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragment;
@@ -19,6 +21,7 @@ import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewH
 import com.appyhome.appyproduct.mvvm.utils.helper.CompletedJobListener;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -31,8 +34,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     HomeViewModel mHomeViewModel;
 
     FragmentHomeBinding mBinder;
+
+    @Inject
+    BannersAdapter mBannersAdapter;
+
     @Inject
     int mLayoutId;
+
     private Toolbar mToolbar;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
@@ -100,7 +108,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
         addProductTopicsFragment();
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar, true);
+        mBinder.lvBanners.setAdapter(mBannersAdapter);
+        getViewModel().fetchBanners();
     }
 
     @Override
@@ -116,6 +126,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onJobCompleted(Object data) {
         mBinder.svContent.scrollTo(0, 0);
+    }
+
+    @Override
+    public void showBanners(BannerResponse[] list) {
+        mBannersAdapter.setUp(this.getActivity(), list,this);
     }
 
     @Override

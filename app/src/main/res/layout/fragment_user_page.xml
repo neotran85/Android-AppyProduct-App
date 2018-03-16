@@ -4,7 +4,9 @@
     <data>
 
         <import type="android.view.View" />
-
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageNavigator" />
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageViewModel" />
@@ -38,40 +40,42 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
+                <ImageView
+                    android:layout_width="82dp"
+                    android:layout_height="82dp"
+                    android:layout_marginBottom="10dp"
                     android:adjustViewBounds="true"
                     android:background="@mipmap/user_page_header_avatar" />
 
                 <Button
+                    android:visibility="gone"
                     android:layout_width="64dp"
                     android:layout_height="24dp"
-                    android:layout_marginTop="10dp"
                     android:background="@mipmap/user_page_header_login"
                     android:text="LOGIN"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
                 <Button
+                    android:onClick="@{(view) -> navigator.logout()}"
+                    android:foreground="?attr/selectableItemBackground"
                     android:layout_width="64dp"
                     android:layout_height="24dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/button_transparent_bg"
-                    android:text="SIGN UP"
+                    android:text="LOG OUT"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
             </LinearLayout>
 
-            <ImageButton
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/llCartIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
-                android:adjustViewBounds="true"
-                android:background="@mipmap/user_page_header_cart" />
+                android:layout_marginTop="12dp"/>
         </RelativeLayout>
 
         <LinearLayout

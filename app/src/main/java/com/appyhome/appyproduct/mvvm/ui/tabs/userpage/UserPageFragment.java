@@ -1,13 +1,17 @@
 package com.appyhome.appyproduct.mvvm.ui.tabs.userpage;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentUserPageBinding;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -23,6 +27,8 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
     @Inject
     int mLayoutId;
 
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
+
     public static UserPageFragment newInstance() {
         Bundle args = new Bundle();
         UserPageFragment fragment = new UserPageFragment();
@@ -30,6 +36,11 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSearchToolbarViewHolder.onBind(0);
+    }
     @Override
     public int getLayoutId() {
         return mLayoutId;
@@ -50,6 +61,8 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
         mUserPageViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mUserPageViewModel);
+        mBinder.setNavigator(this);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mBinder.llCartIcon, false);
     }
 
     @Override
@@ -70,6 +83,19 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void backToHomeScreen() {
+        Intent i = MainActivity.getStartIntent(this.getActivity());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
+    @Override
+    public void logout() {
+        getViewModel().logout();
     }
 
     @Override

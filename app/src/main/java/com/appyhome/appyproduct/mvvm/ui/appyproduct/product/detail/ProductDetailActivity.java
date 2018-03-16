@@ -62,7 +62,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true);
         loadImages();
         getCartPosition();
     }

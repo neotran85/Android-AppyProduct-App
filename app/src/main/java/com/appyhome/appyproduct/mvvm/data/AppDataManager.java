@@ -12,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
+import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
@@ -556,5 +557,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
         return mDbHelper.getAllProductsFavorited(ids);
+    }
+
+    @Override
+    public Single<BannersResponse> fetchBanners() {
+        return mApiHelper.fetchBanners();
     }
 }

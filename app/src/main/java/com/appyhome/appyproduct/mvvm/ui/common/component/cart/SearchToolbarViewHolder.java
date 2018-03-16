@@ -18,7 +18,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
 
     private BaseActivity mActivity;
 
-    public SearchToolbarViewHolder(BaseActivity activity, ViewGroup parent) {
+    public SearchToolbarViewHolder(BaseActivity activity, ViewGroup parent, boolean isFullMode) {
         super(parent);
         mBinding = ViewToolbarBinding
                 .inflate(LayoutInflater.from(activity), parent, true);
@@ -27,7 +27,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
         BaseViewModel baseViewModel = mActivity.getViewModel();
         SearchToolbarViewModel viewModel = new SearchToolbarViewModel(baseViewModel.getDataManager(), baseViewModel.getSchedulerProvider());
         mBinding.setViewModel(viewModel);
-
+        viewModel.isFullMode.set(isFullMode);
     }
 
     public void openProductCart() {

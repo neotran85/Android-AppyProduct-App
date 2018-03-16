@@ -20,6 +20,11 @@ public class HomeFragmentModule {
     }
 
     @Provides
+    BannersAdapter provideBannersAdapter() {
+        return new BannersAdapter();
+    }
+
+    @Provides
     ViewModelProvider.Factory homeViewModelProvider(HomeViewModel homeViewModel) {
         return new ViewModelProviderFactory<>(homeViewModel);
     }

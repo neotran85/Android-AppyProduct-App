@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
+import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
@@ -66,5 +67,7 @@ public interface ApiHelper {
     Single<JSONObject> verifyTrue(String code);
 
     Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request);
+
+    Single<BannersResponse> fetchBanners();
 
 }

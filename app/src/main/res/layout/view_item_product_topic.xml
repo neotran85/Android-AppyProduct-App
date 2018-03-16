@@ -15,15 +15,16 @@
     <LinearLayout
         android:onClick="@{(view) -> navigator.onItemClick(view)}"
         android:id="@+id/llItemView"
-        android:layout_width="@dimen/width_topic_image"
-        android:layout_height="@dimen/height_topic_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="18dp"
         android:gravity="center">
 
         <ImageView
             android:id="@+id/ivThumbnail"
             imageAssetsUrl="@{viewModel.imageURL}"
-            android:layout_width="46dp"
-            android:layout_height="66dp"
+            android:layout_width="@dimen/width_topic_image"
+            android:layout_height="@dimen/height_topic_image"
             android:scaleType="center" />
     </LinearLayout>
 </layout>

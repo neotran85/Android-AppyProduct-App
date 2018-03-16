@@ -91,7 +91,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true);
         mViewModel.getAllFavorites();
     }
 

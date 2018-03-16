@@ -1,10 +1,11 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="navigator"
             type="com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder" />
+
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewModel" />
@@ -28,7 +29,8 @@
             android:paddingBottom="2dp"
             android:paddingLeft="12dp"
             android:paddingRight="16dp"
-            android:paddingTop="2dp">
+            android:paddingTop="2dp"
+            android:visibility="@{viewModel.isFullMode, default=gone}">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -51,7 +53,7 @@
                     android:text="Search"
                     android:textAlignment="textEnd"
                     android:textColor="@color/text_hint"
-                    android:textSize="12dp"></TextView>
+                    android:textSize="12dp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -85,15 +87,15 @@
                     android:src="@mipmap/icon_toolbar_cart" />
 
                 <TextView
-                    android:gravity="center"
                     totalCart="@{viewModel.totalItemsCount}"
                     android:layout_width="24dp"
                     android:layout_height="18dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginStart="34dp"
+                    android:background="@mipmap/bg_count_carts"
+                    android:gravity="center"
                     android:paddingBottom="1dp"
                     android:text="11"
-                    android:background="@mipmap/bg_count_carts"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:visibility="visible" />
