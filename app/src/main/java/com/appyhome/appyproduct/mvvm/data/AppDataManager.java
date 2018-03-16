@@ -362,6 +362,7 @@ public class AppDataManager implements DataManager {
             ArrayList<ProductCategory> data = gson.fromJson(
                     DataUtils.loadJSONFromAsset(mContext,
                             ApiUrlConfig.SEED_DATABASE_PRODUCT_CATEGORIES), type);
+            data = updateThumbnailsOfCategories(data);
             return data;
         });
     }
@@ -400,6 +401,12 @@ public class AppDataManager implements DataManager {
         for (ProductSub item : data) {
             //item.thumbnail = "images/product/sub/" + item.id + ".png";
             item.thumbnail = "images/product/sub/temp.png";
+        }
+        return data;
+    }
+    private ArrayList<ProductCategory> updateThumbnailsOfCategories(ArrayList<ProductCategory> data) {
+        for (ProductCategory item : data) {
+            item.thumbnail = "images/product/category/" + item.id + ".png";
         }
         return data;
     }
