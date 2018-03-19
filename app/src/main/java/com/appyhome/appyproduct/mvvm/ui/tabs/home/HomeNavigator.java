@@ -5,5 +5,4 @@ import com.appyhome.appyproduct.mvvm.data.model.api.BannerResponse;
 
 public interface HomeNavigator {
     void showBanners(BannerResponse[] list);
-    void updateBannersHeight();
 }

@@ -36,9 +36,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     FragmentHomeBinding mBinder;
 
     @Inject
-    BannersAdapter mBannersAdapter;
-
-    @Inject
     int mLayoutId;
 
     private Toolbar mToolbar;
@@ -109,7 +106,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
         addProductTopicsFragment();
         mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar, true);
-        mBinder.lvBanners.setAdapter(mBannersAdapter);
         getViewModel().fetchBanners();
     }
 
@@ -129,12 +125,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
-    public void updateBannersHeight() {
-        ViewUtils.setListViewHeightBasedOnItems(mBinder.lvBanners);
-    }
-    @Override
     public void showBanners(BannerResponse[] list) {
-        mBannersAdapter.setUp(this.getActivity(), list,this);
+        mBinder.lvBanners.setAdapter(list);
     }
 
     @Override
