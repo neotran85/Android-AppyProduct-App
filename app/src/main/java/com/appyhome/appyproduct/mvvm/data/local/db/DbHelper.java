@@ -6,6 +6,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -77,4 +78,8 @@ public interface DbHelper {
     Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids);
 
     void closeDatabase();
+
+    Flowable<Boolean> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
+
+    Flowable<ProductFilter> getCurrentFilter(String userId);
 }

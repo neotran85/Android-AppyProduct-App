@@ -56,6 +56,7 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/btnLocal"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
@@ -64,12 +65,13 @@
                             android:textSize="13sp" />
 
                         <Button
+                            android:id="@+id/btnOversea"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="16dp"
-                            android:background="@mipmap/bg_radius_button"
+                            android:background="@mipmap/bg_radius_button_gray"
                             android:text="Oversea"
-                            android:textColor="@color/white"
+                            android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -96,6 +98,7 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/btnBulkPurchase"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
@@ -104,16 +107,18 @@
                             android:textSize="13sp" />
 
                         <Button
+                            android:id="@+id/btnPromotional"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="16dp"
-                            android:background="@mipmap/bg_radius_button"
+                            android:background="@mipmap/bg_radius_button_gray"
                             android:text="Promotional"
-                            android:textColor="@color/white"
+                            android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <Button
+                        android:id="@+id/btnPremium"
                         android:layout_width="124dp"
                         android:layout_height="32dp"
                         android:layout_marginTop="16dp"
@@ -146,6 +151,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/etPriceMin"
                             android:layout_width="114dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
@@ -161,6 +167,7 @@
                             android:background="@color/gray" />
 
                         <EditText
+                            android:id="@+id/etPriceMax"
                             android:layout_width="114dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
@@ -219,6 +226,7 @@
                     android:textSize="13sp" />
 
                 <Button
+                    android:onClick="@{(view) -> navigator.applyFilter()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"

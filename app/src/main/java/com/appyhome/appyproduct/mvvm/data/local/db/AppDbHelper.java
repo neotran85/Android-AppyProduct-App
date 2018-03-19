@@ -5,6 +5,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
@@ -452,6 +453,47 @@ public class AppDbHelper implements DbHelper {
         }
     }
 
+    @Override
+    public Flowable<ProductFilter> getCurrentFilter(String userId) {
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                ProductFilter filter = getRealm().where(ProductFilter.class)
+                        .equalTo("user_id", userId)
+                        .findFirst();
+                getRealm().commitTransaction();
+                return filter;
+            } catch (Exception e) {
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public Flowable<Boolean> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax) {
+        return Flowable.fromCallable(() -> {
+            try {
+                getRealm().beginTransaction();
+                ProductFilter filter = getRealm().where(ProductFilter.class)
+                        .equalTo("user_id", userId)
+                        .findFirst();
+                if (filter == null || !filter.isValid()) {
+                    filter = new ProductFilter();
+                    filter.id = System.currentTimeMillis();
+                    filter.user_id = userId;
+                }
+                filter.discount = discount;
+                filter.rating = rating;
+                filter.price_min = priceMin;
+                filter.price_max = priceMax;
+                filter = getRealm().copyToRealmOrUpdate(filter);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        });
+    }
 
     @Override
     public Flowable<Boolean> addOrRemoveFavorite(int productId, String userId) {

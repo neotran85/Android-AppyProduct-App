@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -405,6 +406,7 @@ public class AppDataManager implements DataManager {
         }
         return data;
     }
+
     private ArrayList<ProductCategory> updateThumbnailsOfCategories(ArrayList<ProductCategory> data) {
         for (ProductCategory item : data) {
             item.thumbnail = "images/product/category/" + item.id + ".png";
@@ -562,5 +564,15 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<BannersResponse> fetchBanners() {
         return mApiHelper.fetchBanners();
+    }
+
+    @Override
+    public Flowable<Boolean> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax) {
+        return mDbHelper.saveProductFilter(userId, shippingFrom, discount, rating, priceMin, priceMax);
+    }
+
+    @Override
+    public Flowable<ProductFilter> getCurrentFilter(String userId) {
+        return mDbHelper.getCurrentFilter(userId);
     }
 }
