@@ -119,4 +119,14 @@ public class Product extends RealmObject {
     @SerializedName("updated_at")
     @ColumnInfo(name = "updated_at")
     public String updated_at;
+
+    @Expose
+    @SerializedName("lowest_price")
+    @ColumnInfo(name = "lowest_price")
+    public String lowest_price;
+
+    @Expose
+    @SerializedName("like")
+    @ColumnInfo(name = "like")
+    public int like;
 }

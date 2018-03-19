@@ -97,7 +97,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private void fetchProducts() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        mViewModel.fetchProductsByIdCategory(idSubCategory);
+        mViewModel.fetchProductsByIdCategory(idSubCategory, "");
     }
 
     private void setUpRecyclerViewList(RecyclerView rv, ProductAdapter adapter) {
@@ -253,6 +253,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             mSortFragment.setCurrentSortOption(opt);
             mViewModel.currentSortOption.set(option.getName());
             toggleSortOptions();
+
+            int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
+            mViewModel.fetchProductsByIdCategory(idSubCategory, option.getValue());
         }
     }
 

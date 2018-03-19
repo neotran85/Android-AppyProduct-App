@@ -64,7 +64,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         itemViewModel.title.set(product.product_name);
         itemViewModel.imageURL.set(product.avatar_name);
         itemViewModel.setIdProduct(product.id);
-        itemViewModel.price.set("RM " + product.price);
+        itemViewModel.price.set("RM " + product.lowest_price);
         itemViewModel.setNavigator(navigator);
         itemViewModel.isFavorite.set(isAllFavorited);
         itemViewModel.rate.set(product.rate);

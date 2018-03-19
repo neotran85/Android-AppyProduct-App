@@ -13,8 +13,13 @@ public class ProductListRequest {
     @SerializedName("page")
     private int page;
 
-    public ProductListRequest(int id, int pageNumber) {
+    @Expose
+    @SerializedName("type")
+    private String type;
+
+    public ProductListRequest(int id, int pageNumber, String t) {
         page = pageNumber;
         categoryId = id;
+        type = t;
     }
 }

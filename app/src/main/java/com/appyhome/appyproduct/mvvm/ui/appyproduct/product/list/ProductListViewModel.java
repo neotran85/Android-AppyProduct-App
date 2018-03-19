@@ -22,18 +22,19 @@ import io.reactivex.disposables.Disposable;
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
+    private String mSortType = "";
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
     public ObservableField<String> currentSortOption = new ObservableField<>("Sort By Popular");
-
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void fetchProductsByIdCategory(int idSub) {
+    public void fetchProductsByIdCategory(int idSub, String sortType) {
         mIdSub = idSub;
+        mSortType = sortType;
         if (isOnline()) {
             Disposable disposable = Observable.create((ObservableEmitter<ProductListResponse> subscriber) -> {
                 fetchProducts().subscribe(response -> {
@@ -55,7 +56,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private Single<ProductListResponse> fetchProducts() {
         return getDataManager()
-                .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0)).subscribeOn(getSchedulerProvider().io())
+                .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0, mSortType)).subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui());
     }
 
