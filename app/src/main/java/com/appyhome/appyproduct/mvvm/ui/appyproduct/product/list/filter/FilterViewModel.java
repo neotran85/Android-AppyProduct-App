@@ -17,8 +17,8 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
         getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), shippingFrom,
                 discount, rating, priceMin, priceMax)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(value -> {
-
+                .subscribe(filter -> {
+                    getNavigator().updateUIFilter(filter);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

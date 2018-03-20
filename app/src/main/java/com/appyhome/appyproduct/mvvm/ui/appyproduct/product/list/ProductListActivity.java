@@ -182,6 +182,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mViewModel.resetFilter();
         ProductDetailActivityModule.clickedViewModel = null;
     }
 

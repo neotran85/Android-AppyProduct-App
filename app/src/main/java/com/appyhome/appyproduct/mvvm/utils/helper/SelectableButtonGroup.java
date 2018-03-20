@@ -5,7 +5,7 @@ import android.widget.Button;
 
 public class SelectableButtonGroup implements View.OnClickListener {
     private Button[] mViews;
-    private int mCurrent = 0;
+    private int mCurrent = -1;
     private int mHighLight;
     private int mNormal;
     private int mHighLightColor;
@@ -19,9 +19,6 @@ public class SelectableButtonGroup implements View.OnClickListener {
         mHighLightColor = highlightColor;
         mNormalColor = normalColor;
         ViewUtils.setOnClickListener(this, mViews);
-        mViews[0].setBackgroundResource(mHighLight);
-        mViews[0].setTextColor(mHighLightColor);
-        mCurrent = 0;
     }
 
     @Override
@@ -30,8 +27,8 @@ public class SelectableButtonGroup implements View.OnClickListener {
     }
 
     public void setCurrent(String text) {
-        for (Button button: mViews) {
-            if(button.getText().equals(text)) {
+        for (Button button : mViews) {
+            if (button.getText().equals(text)) {
                 setCurrent(button);
                 return;
             }
@@ -40,9 +37,11 @@ public class SelectableButtonGroup implements View.OnClickListener {
 
     public void setCurrent(Button view) {
         int pos = getPosition(view);
-        if(pos >= 0) {
-            getCurrent().setBackgroundResource(mNormal);
-            getCurrent().setTextColor(mNormalColor);
+        if (pos >= 0) {
+            if (mCurrent >= 0) {
+                getCurrent().setBackgroundResource(mNormal);
+                getCurrent().setTextColor(mNormalColor);
+            }
             view.setBackgroundResource(mHighLight);
             view.setTextColor(mHighLightColor);
             mCurrent = pos;
@@ -57,8 +56,14 @@ public class SelectableButtonGroup implements View.OnClickListener {
         return -1;
     }
 
-    public Button getCurrent() {
+    private Button getCurrent() {
         return mViews[mCurrent];
+    }
+
+    public String getCurrentValue() {
+        if (mCurrent >= 0 && mCurrent < mViews.length)
+            return mViews[mCurrent].getText().toString();
+        return "";
     }
 
 }

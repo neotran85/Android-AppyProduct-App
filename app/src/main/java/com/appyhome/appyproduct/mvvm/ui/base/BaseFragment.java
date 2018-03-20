@@ -135,6 +135,11 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         }
     }
 
+    public void finish() {
+        getFragmentManager().beginTransaction()
+                .remove(this).commit();
+    }
+
     public interface Callback {
 
         void onFragmentAttached();

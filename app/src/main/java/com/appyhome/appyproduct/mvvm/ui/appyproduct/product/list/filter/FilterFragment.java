@@ -53,9 +53,15 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
     }
 
     @Override
+    public void resetFilter() {
+        getViewModel().updateFilter("", "", "", "", 5);
+    }
+
+    @Override
     public void applyFilter() {
-        getViewModel().updateFilter(mShippingForm.getCurrent().getText().toString(), mDiscount.getCurrent().getText().toString(),
+        getViewModel().updateFilter(mShippingForm.getCurrentValue(), mDiscount.getCurrentValue(),
                 mBinder.etPriceMin.getText().toString(), mBinder.etPriceMax.getText().toString(), mBinder.ratingBar.getRating());
+        finish();
     }
 
     @Override

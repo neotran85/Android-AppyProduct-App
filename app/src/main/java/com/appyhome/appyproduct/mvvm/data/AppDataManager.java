@@ -567,7 +567,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax) {
+    public Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax)  {
         return mDbHelper.saveProductFilter(userId, shippingFrom, discount, rating, priceMin, priceMax);
     }
 

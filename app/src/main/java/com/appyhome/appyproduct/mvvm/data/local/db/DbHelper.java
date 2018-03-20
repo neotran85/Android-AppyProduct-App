@@ -79,7 +79,7 @@ public interface DbHelper {
 
     void closeDatabase();
 
-    Flowable<Boolean> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
+    Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
 
     Flowable<ProductFilter> getCurrentFilter(String userId);
 }

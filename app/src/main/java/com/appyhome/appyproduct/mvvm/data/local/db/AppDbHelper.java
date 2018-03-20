@@ -470,7 +470,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax) {
+    public Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax) {
         return Flowable.fromCallable(() -> {
             try {
                 getRealm().beginTransaction();
@@ -482,15 +482,16 @@ public class AppDbHelper implements DbHelper {
                     filter.id = System.currentTimeMillis();
                     filter.user_id = userId;
                 }
+                filter.shipping_from = shippingFrom;
                 filter.discount = discount;
                 filter.rating = rating;
                 filter.price_min = priceMin;
                 filter.price_max = priceMax;
                 filter = getRealm().copyToRealmOrUpdate(filter);
                 getRealm().commitTransaction();
-                return true;
+                return filter;
             } catch (Exception e) {
-                return false;
+                return null;
             }
         });
     }

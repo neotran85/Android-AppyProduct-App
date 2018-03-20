@@ -27,6 +27,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
     public ObservableField<String> currentSortOption = new ObservableField<>("Sort By Popular");
+
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -115,4 +116,16 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }));
     }
 
+
+    public void resetFilter() {
+        getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), "",
+                "", -1, "", "")
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(filter -> {
+                    // DO NOTHING
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
 }
