@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -31,6 +32,18 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+    }
+
+    public void fetchProductsWithFilter(ProductFilter filter, int idSub, String sortType) {
+        getCompositeDisposable().add(getDataManager().getAllProductsFilter(filter, idSub)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(products -> {
+                    getNavigator().showProducts(products);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
     }
 
     public void fetchProductsByIdCategory(int idSub, String sortType) {

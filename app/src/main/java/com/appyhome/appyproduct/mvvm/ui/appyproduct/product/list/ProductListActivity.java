@@ -15,6 +15,7 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
@@ -71,6 +72,12 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
+    }
+
+    @Override
+    public void applyFilter(ProductFilter filter) {
+        int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
+        getViewModel().fetchProductsWithFilter(filter, idSubCategory, "");
     }
 
     @Override
@@ -225,6 +232,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             mFilterFragment = null;
         } else {
             mFilterFragment = FilterFragment.newInstance();
+            mFilterFragment.setNavigator(this);
             showFragment(mFilterFragment, FilterFragment.TAG, R.id.llSortFilterContainer);
         }
     }

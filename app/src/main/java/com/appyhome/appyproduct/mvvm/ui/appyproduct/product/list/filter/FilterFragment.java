@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductFilterBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ScreenUtils;
@@ -32,6 +33,10 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
 
     private SelectableButtonGroup mDiscount;
 
+    private ProductListNavigator mNavigator;
+
+    private boolean isFilterApplied = false;
+
     public static FilterFragment newInstance() {
         Bundle args = new Bundle();
         FilterFragment fragment = new FilterFragment();
@@ -43,9 +48,17 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
     public void updateUIFilter(ProductFilter filter) {
         mShippingForm.setCurrent(filter.shipping_from);
         mDiscount.setCurrent(filter.discount);
-        mBinder.etPriceMax.setText(filter.price_max);
-        mBinder.etPriceMin.setText(filter.price_min);
+
+        mBinder.etPriceMax.setText((filter.price_max > 0) ? filter.price_max + "" : "");
+        mBinder.etPriceMin.setText((filter.price_min > 0) ? filter.price_min + "" : "");
+
         mBinder.ratingBar.setRating(filter.rating);
+        if (isFilterApplied) {
+            if (mNavigator != null)
+                mNavigator.applyFilter(filter);
+            finish();
+        }
+        isFilterApplied = false;
     }
 
     @Override
@@ -62,17 +75,24 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
     public void applyFilter() {
         String etPriceMin = mBinder.etPriceMin.getText().toString();
         String etPriceMax = mBinder.etPriceMax.getText().toString();
-        if(etPriceMax.length() > 0 && etPriceMin.length() > 0) {
+        if (etPriceMax.length() > 0 && etPriceMin.length() > 0) {
             float min = Float.valueOf(mBinder.etPriceMin.getText().toString());
             float max = Float.valueOf(mBinder.etPriceMax.getText().toString());
             if (min > max) {
-                AlertManager.getInstance(getActivity()).showConfirmationDialog("", "Please input the price min < max", null);
+                AlertManager.getInstance(getActivity()).showOKDialog("",
+                        "Please input the price min < max", null);
                 return;
             }
         }
         getViewModel().updateFilter(mShippingForm.getCurrentValue(), mDiscount.getCurrentValue(),
                 etPriceMin, etPriceMax, mBinder.ratingBar.getRating());
-        finish();
+        isFilterApplied = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        hideKeyboard();
     }
 
     @Override
@@ -112,4 +132,7 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
         super.onDestroyView();
     }
 
+    public void setNavigator(ProductListNavigator navigator) {
+        this.mNavigator = navigator;
+    }
 }

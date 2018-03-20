@@ -485,8 +485,10 @@ public class AppDbHelper implements DbHelper {
                 filter.shipping_from = shippingFrom;
                 filter.discount = discount;
                 filter.rating = rating;
-                filter.price_min = priceMin;
-                filter.price_max = priceMax;
+
+                filter.price_min = (priceMin.length() > 0) ? Float.valueOf(priceMin) : -1;
+                filter.price_max = (priceMax.length() > 0) ? Float.valueOf(priceMax) : -1;
+
                 filter = getRealm().copyToRealmOrUpdate(filter);
                 getRealm().commitTransaction();
                 return filter;
@@ -541,6 +543,28 @@ public class AppDbHelper implements DbHelper {
                 return false;
             }
         });
+    }
+
+    @Override
+    public Flowable<RealmResults<Product>> getAllProductsFilter(ProductFilter filter, int idSubCategory) {
+        getRealm().beginTransaction();
+
+        RealmQuery query = getRealm().where(Product.class)
+                .equalTo("category_id", idSubCategory);
+
+        if (filter.shipping_from.length() > 0)
+            query = query.equalTo("", filter.shipping_from);
+        if (filter.discount.length() > 0)
+            query = query.equalTo("", filter.shipping_from);
+        if (filter.price_min > 0)
+            query = query.greaterThanOrEqualTo("lowest_price", filter.price_min);
+        if (filter.price_max > 0)
+            query = query.lessThanOrEqualTo("lowest_price", filter.price_max);
+        if (filter.rating >= 0)
+            query = query.greaterThanOrEqualTo("rate", filter.rating);
+        Flowable<RealmResults<Product>> result = query.findAll().asFlowable();
+        getRealm().commitTransaction();
+        return result;
     }
 
     @Override

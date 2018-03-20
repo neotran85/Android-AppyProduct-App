@@ -78,7 +78,9 @@ public abstract class BaseViewModel<N> extends ViewModel {
     }
 
     public String getUserId() {
-        return "1234";
+        if (!isUserLoggedIn())
+            return "anonymous";
+        return getDataManager().getCurrentPhoneNumber();
     }
 
     public boolean isOnline() {

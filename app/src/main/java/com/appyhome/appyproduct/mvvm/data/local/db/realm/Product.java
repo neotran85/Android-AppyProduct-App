@@ -123,7 +123,7 @@ public class Product extends RealmObject {
     @Expose
     @SerializedName("lowest_price")
     @ColumnInfo(name = "lowest_price")
-    public String lowest_price;
+    public float lowest_price;
 
     @Expose
     @SerializedName("like")

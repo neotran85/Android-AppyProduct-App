@@ -82,4 +82,6 @@ public interface DbHelper {
     Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
 
     Flowable<ProductFilter> getCurrentFilter(String userId);
+
+    Flowable<RealmResults<Product>> getAllProductsFilter(ProductFilter filter, int idSubCategory);
 }
