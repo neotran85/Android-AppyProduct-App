@@ -28,6 +28,7 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
     SortOptionsAdapter mAdapter;
 
     private SortOption mCurrentOption;
+
     private SortNavigator mNavigator;
 
     public void setNavigator(SortNavigator navigator) {

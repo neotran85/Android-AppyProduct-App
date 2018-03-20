@@ -36,4 +36,16 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
                 }));
     }
 
+    public void resetFilter() {
+        getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), "",
+                "", -1, "", "")
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(filter -> {
+                    getNavigator().updateUIFilter(filter);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
 }

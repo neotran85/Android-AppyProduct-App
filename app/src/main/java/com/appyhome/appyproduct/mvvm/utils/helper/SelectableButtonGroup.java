@@ -27,6 +27,14 @@ public class SelectableButtonGroup implements View.OnClickListener {
     }
 
     public void setCurrent(String text) {
+        if (text.length() <= 0) {
+            if (mCurrent >= 0) {
+                getCurrent().setBackgroundResource(mNormal);
+                getCurrent().setTextColor(mNormalColor);
+            }
+            mCurrent = -1;
+            return;
+        }
         for (Button button : mViews) {
             if (button.getText().equals(text)) {
                 setCurrent(button);

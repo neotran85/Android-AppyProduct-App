@@ -12,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ScreenUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.SelectableButtonGroup;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
@@ -54,13 +55,23 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
 
     @Override
     public void resetFilter() {
-        getViewModel().updateFilter("", "", "", "", 5);
+        getViewModel().resetFilter();
     }
 
     @Override
     public void applyFilter() {
+        String etPriceMin = mBinder.etPriceMin.getText().toString();
+        String etPriceMax = mBinder.etPriceMax.getText().toString();
+        if(etPriceMax.length() > 0 && etPriceMin.length() > 0) {
+            float min = Float.valueOf(mBinder.etPriceMin.getText().toString());
+            float max = Float.valueOf(mBinder.etPriceMax.getText().toString());
+            if (min > max) {
+                AlertManager.getInstance(getActivity()).showConfirmationDialog("", "Please input the price min < max", null);
+                return;
+            }
+        }
         getViewModel().updateFilter(mShippingForm.getCurrentValue(), mDiscount.getCurrentValue(),
-                mBinder.etPriceMin.getText().toString(), mBinder.etPriceMax.getText().toString(), mBinder.ratingBar.getRating());
+                etPriceMin, etPriceMax, mBinder.ratingBar.getRating());
         finish();
     }
 
@@ -78,10 +89,10 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
         int width = ScreenUtils.getScreenWidth(getContext());
         AppAnimator.slideFromRight(mBinder.llContent, width);
         mShippingForm = new SelectableButtonGroup(R.mipmap.bg_radius_button, R.mipmap.bg_radius_button_gray,
-                getResources().getColor(R.color.white), getResources().getColor(R.color.dark_gray),
+                getResources().getColor(R.color.white), getResources().getColor(R.color.semi_gray),
                 mBinder.btnLocal, mBinder.btnOversea);
         mDiscount = new SelectableButtonGroup(R.mipmap.bg_radius_button, R.mipmap.bg_radius_button_gray,
-                getResources().getColor(R.color.white), getResources().getColor(R.color.dark_gray),
+                getResources().getColor(R.color.white), getResources().getColor(R.color.semi_gray),
                 mBinder.btnBulkPurchase, mBinder.btnPromotional, mBinder.btnPremium);
         getViewModel().getCurrentFilter();
     }
