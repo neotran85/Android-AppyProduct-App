@@ -401,8 +401,8 @@ public class AppDataManager implements DataManager {
 
     private ArrayList<ProductSub> updateThumbnailsOfSub(ArrayList<ProductSub> data) {
         for (ProductSub item : data) {
-            //item.thumbnail = "images/product/sub/" + item.id + ".png";
-            item.thumbnail = "images/product/sub/temp.png";
+            item.thumbnail = "images/product/sub/" + item.id + ".jpg";
+            //item.thumbnail = "images/product/sub/temp.png";
         }
         return data;
     }
