@@ -90,6 +90,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
+    public void removeFragment(String tag) {
+        closeFragment(tag);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
