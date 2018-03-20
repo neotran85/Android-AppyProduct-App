@@ -24,6 +24,6 @@ public interface ProductListNavigator {
 
     void toggleFilters();
 
-    void applyFilter(ProductFilter filter);
+    void applyFilter();
 
 }

@@ -577,7 +577,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductsFilter(ProductFilter filter, int idSubCategory) {
-        return mDbHelper.getAllProductsFilter(filter, idSubCategory);
+    public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
+        return mDbHelper.getAllProductsFilter(userId, idSubCategory);
     }
 }

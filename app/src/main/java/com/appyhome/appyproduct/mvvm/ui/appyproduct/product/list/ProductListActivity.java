@@ -15,7 +15,6 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
@@ -75,9 +74,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void applyFilter(ProductFilter filter) {
+    public void applyFilter() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        getViewModel().fetchProductsWithFilter(filter, idSubCategory, "");
+        getViewModel().fetchProductsWithFilter(idSubCategory, "");
     }
 
     @Override
@@ -149,21 +148,13 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.addItems(result, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
-            toggleTabLayout(result.size());
         }
-    }
-
-    private void toggleTabLayout(int countProduct) {
-        if (countProduct > 1) {
-            mBinder.tabLayout.setVisibility(View.VISIBLE);
-        } else mBinder.tabLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void showEmptyProducts() {
         mProductAdapter.addItems(new Product[]{}, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
-        mBinder.tabLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -172,7 +163,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.addItems(list, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
-            toggleTabLayout(list.length);
         }
     }
 
@@ -189,7 +179,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewModel.resetFilter();
+        //mViewModel.resetFilter();
         ProductDetailActivityModule.clickedViewModel = null;
     }
 

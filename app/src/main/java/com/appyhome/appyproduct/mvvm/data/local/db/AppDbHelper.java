@@ -546,20 +546,25 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductsFilter(ProductFilter filter, int idSubCategory) {
+    public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
         getRealm().beginTransaction();
+
+        ProductFilter filter = getRealm().where(ProductFilter.class)
+                .equalTo("user_id", userId)
+                .findFirst();
 
         RealmQuery query = getRealm().where(Product.class)
                 .equalTo("category_id", idSubCategory);
 
-        if (filter.shipping_from.length() > 0)
-            query = query.equalTo("", filter.shipping_from);
-        if (filter.discount.length() > 0)
-            query = query.equalTo("", filter.shipping_from);
-        if (filter.price_min > 0)
-            query = query.greaterThanOrEqualTo("lowest_price", filter.price_min);
-        if (filter.price_max > 0)
-            query = query.lessThanOrEqualTo("lowest_price", filter.price_max);
+        //if (filter.shipping_from.length() > 0)
+        //query = query.equalTo("", filter.shipping_from);
+        //if (filter.discount.length() > 0)
+        //query = query.equalTo("", filter.shipping_from);
+
+        float min = filter.price_min > 0 ? filter.price_min : 0;
+        float max = filter.price_max > 0 ? filter.price_max : 1000000000;
+
+        query = query.between("lowest_price", min, max);
         if (filter.rating >= 0)
             query = query.greaterThanOrEqualTo("rate", filter.rating);
         Flowable<RealmResults<Product>> result = query.findAll().asFlowable();

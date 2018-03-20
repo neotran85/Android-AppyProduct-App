@@ -16,6 +16,7 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
     public void updateFilter(String shippingFrom, String discount, String priceMin, String priceMax, float rating) {
         getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), shippingFrom,
                 discount, rating, priceMin, priceMax)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     getNavigator().updateUIFilter(filter);
@@ -27,6 +28,7 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
 
     public void getCurrentFilter() {
         getCompositeDisposable().add(getDataManager().getCurrentFilter(getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     getNavigator().updateUIFilter(filter);
@@ -39,6 +41,7 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
     public void resetFilter() {
         getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), "",
                 "", -1, "", "")
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     getNavigator().updateUIFilter(filter);

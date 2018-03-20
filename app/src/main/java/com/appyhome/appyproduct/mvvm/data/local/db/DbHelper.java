@@ -83,5 +83,5 @@ public interface DbHelper {
 
     Flowable<ProductFilter> getCurrentFilter(String userId);
 
-    Flowable<RealmResults<Product>> getAllProductsFilter(ProductFilter filter, int idSubCategory);
+    Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory);
 }

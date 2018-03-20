@@ -5,7 +5,6 @@ import android.databinding.ObservableField;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -34,12 +33,14 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void fetchProductsWithFilter(ProductFilter filter, int idSub, String sortType) {
-        getCompositeDisposable().add(getDataManager().getAllProductsFilter(filter, idSub)
+    public void fetchProductsWithFilter(int idSub, String sortType) {
+        getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), idSub)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
-                    getNavigator().showProducts(products);
+                    if (products != null && products.size() > 0) {
+                        getNavigator().showProducts(products);
+                    } else getNavigator().showEmptyProducts();
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
@@ -80,7 +81,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(success -> {
                     // DONE ADDED
                     if (success)
-                        getProductsBySubCategory(mIdSub, list);
+                        fetchProductsWithFilter(mIdSub, "");
                     else {
                         // IF ADDED FAILED
                         getNavigator().showProducts(list);
