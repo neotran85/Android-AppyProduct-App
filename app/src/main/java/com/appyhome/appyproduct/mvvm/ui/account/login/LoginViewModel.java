@@ -43,6 +43,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     private void updateUserInfo(String phoneNumber, String token) {
         getCompositeDisposable().add(getDataManager().updateUserInfo(phoneNumber, token)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(user -> {
                     //UPDATE SUCCESS

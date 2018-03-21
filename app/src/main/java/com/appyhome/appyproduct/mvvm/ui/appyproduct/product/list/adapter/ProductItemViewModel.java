@@ -53,6 +53,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void updateProductFavorite(int position) {
         getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(idProduct, getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
                     isFavorite.set(value);
@@ -73,6 +74,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void addProductToCart() {
         getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, getIntegerAmountAdded())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null) {

@@ -72,12 +72,14 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private Single<ProductListResponse> fetchProducts() {
         return getDataManager()
-                .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0, mSortType)).subscribeOn(getSchedulerProvider().io())
+                .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0, mSortType))
+                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui());
     }
 
     private void addProductsToDatabase(Product[] list) {
         getCompositeDisposable().add(getDataManager().addProducts(list)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
@@ -124,6 +126,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private void getProductsBySubCategory(int idSub, Product[] cachedList) {
         getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     // DONE GET
@@ -139,6 +142,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public void resetFilter() {
         getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), "",
                 "", -1, "", "")
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     fetchProductsWithFilter(mIdSub, mSortType);

@@ -15,7 +15,7 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void getProductCategoriesByTopic(int idTopic) {
+    private void getProductCategoriesByTopic(int idTopic) {
         getCompositeDisposable().add(getDataManager().getProductCategoriesByTopic(idTopic)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(categories -> {
@@ -25,9 +25,10 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
 
     public void getProductTopicById(int idTopic) {
         getCompositeDisposable().add(getDataManager().getProductTopicById(idTopic)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(topic -> {
-                    // DONE
+                    getProductCategoriesByTopic(idTopic);
                     title.set(topic.name);
                 }, Crashlytics::logException));
     }

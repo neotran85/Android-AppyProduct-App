@@ -130,8 +130,8 @@
                                     android:textSize="10sp"
                                     android:text="@{viewModel.filterNumber}"
                                     android:gravity="center"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp" />
                             </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>

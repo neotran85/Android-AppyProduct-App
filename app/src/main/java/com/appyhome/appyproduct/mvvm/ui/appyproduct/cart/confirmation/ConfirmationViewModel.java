@@ -33,6 +33,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
 
     public void getDefaultShippingAddress() {
         getCompositeDisposable().add(getDataManager().getDefaultShippingAddress(getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
@@ -52,6 +53,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     public void addOrder() {
         getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
                 mShippingAddress, getUserId(), "Nam Tran", mTotalCost, 0)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // GET SUCCEEDED
@@ -69,6 +71,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
 
     public void getAllCheckedProductCarts() {
         getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(items -> {
                     // GET SUCCEEDED

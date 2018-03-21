@@ -23,6 +23,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
 
     public void emptyProductCarts() {
         getCompositeDisposable().add(getDataManager().emptyProductCarts(getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // EMPTY SUCCEEDED
@@ -38,6 +39,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
 
     public void getAllProductCarts() {
         mDisposable = getDataManager().getAllProductCarts(getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCarts -> {
                     isCartEmpty.set(productCarts == null || productCarts.size() <= 0);

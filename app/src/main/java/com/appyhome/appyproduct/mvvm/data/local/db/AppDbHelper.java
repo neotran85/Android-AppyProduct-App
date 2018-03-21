@@ -547,9 +547,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
-
         getRealm().beginTransaction();
-
         ProductFilter filter = getRealm().where(ProductFilter.class)
                 .equalTo("user_id", userId)
                 .findFirst();
@@ -563,13 +561,10 @@ public class AppDbHelper implements DbHelper {
             else
                 query = query.notEqualTo("stock_location", "MY");
         }
-
         //if (filter.discount.length() > 0)
         //query = query.equalTo("", filter.shipping_from);
-
         float min = filter.price_min > 0 ? filter.price_min : 0;
         float max = filter.price_max > 0 ? filter.price_max : 1000000000;
-
         query = query.between("lowest_price", min, max);
         if (filter.rating >= 0)
             query = query.greaterThanOrEqualTo("rate", filter.rating);

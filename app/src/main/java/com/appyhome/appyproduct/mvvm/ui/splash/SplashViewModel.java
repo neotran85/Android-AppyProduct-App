@@ -28,6 +28,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     private void loadServices() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseServices()
+                .take(1)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(services -> {
@@ -41,6 +42,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     private void loadServicesCategories() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseCategories()
+                .take(1)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(categories -> {
@@ -53,6 +55,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     private void loadProductCategory() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseProductCategories()
+                .take(1)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(this::addProductCategories, Crashlytics::logException));
@@ -60,6 +63,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
 
     private void addProductCategories(ArrayList<ProductCategory> categories) {
         getCompositeDisposable().add(getDataManager().addProductCategories(categories)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE
@@ -68,6 +72,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
 
     private void addProductSubs(ArrayList<ProductSub> subs) {
         getCompositeDisposable().add(getDataManager().addProductSubs(subs)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE
@@ -79,6 +84,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
 
     private void addProductTopics(ArrayList<ProductTopic> topics) {
         getCompositeDisposable().add(getDataManager().addProductTopics(topics)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE
@@ -88,6 +94,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     private void loadProductSubs() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseProductTopics()
+                .take(1)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(this::addProductTopics, Crashlytics::logException));
@@ -96,6 +103,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     private void loadProductTopics() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseProductSubs()
+                .take(1)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(this::addProductSubs, Crashlytics::logException));

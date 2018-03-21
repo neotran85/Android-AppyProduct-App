@@ -24,6 +24,7 @@ public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavig
 
     public void getAllShippingAddress() {
         mGetAllShippingAddress = getDataManager().getAllShippingAddress(getUserId())
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe((RealmResults<Address> addresses) -> {
                     if (mGetAllShippingAddress != null && !mGetAllShippingAddress.isDisposed())

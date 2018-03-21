@@ -36,6 +36,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public void removeProductCartItem() {
         getCompositeDisposable().add(getDataManager().removeProductCartItem(productCartId)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // REMOVED ADDED
@@ -44,6 +45,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public void updateProductCartItem() {
         getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()))
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
