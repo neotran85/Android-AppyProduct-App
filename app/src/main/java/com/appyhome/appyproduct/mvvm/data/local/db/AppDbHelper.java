@@ -547,6 +547,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
+
         getRealm().beginTransaction();
 
         ProductFilter filter = getRealm().where(ProductFilter.class)
@@ -556,8 +557,13 @@ public class AppDbHelper implements DbHelper {
         RealmQuery query = getRealm().where(Product.class)
                 .equalTo("category_id", idSubCategory);
 
-        //if (filter.shipping_from.length() > 0)
-        //query = query.equalTo("", filter.shipping_from);
+        if (filter.shipping_from.length() > 0) {
+            if (filter.shipping_from.equals("Local"))
+                query = query.equalTo("stock_location", "MY");
+            else
+                query = query.notEqualTo("stock_location", "MY");
+        }
+
         //if (filter.discount.length() > 0)
         //query = query.equalTo("", filter.shipping_from);
 

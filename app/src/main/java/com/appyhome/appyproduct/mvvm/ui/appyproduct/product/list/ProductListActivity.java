@@ -77,6 +77,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public void applyFilter() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         getViewModel().fetchProductsWithFilter(idSubCategory, "");
+        getViewModel().getCurrentFilter();
     }
 
     @Override
@@ -104,6 +105,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true);
         mViewModel.getAllFavorites();
+        mViewModel.getCurrentFilter();
     }
 
     private void fetchProducts() {

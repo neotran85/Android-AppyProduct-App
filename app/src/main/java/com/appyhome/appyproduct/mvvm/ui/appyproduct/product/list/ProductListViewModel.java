@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -27,6 +28,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
     public ObservableField<String> currentSortOption = new ObservableField<>("Sort By Popular");
+    public ObservableField<String> filterNumber = new ObservableField<>("");
+    public ObservableField<Boolean> isFilter = new ObservableField<>(false);
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -137,6 +140,39 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     // DO NOTHING
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    private void updateCountFilter(ProductFilter filter) {
+        int count = 0;
+        if (filter.shipping_from.length() > 0) {
+            count++;
+        }
+        if (filter.discount.length() > 0) {
+            count++;
+        }
+        if (filter.rating > 0) {
+            count++;
+        }
+        if (filter.price_max > 0) {
+            count++;
+        }
+        if (filter.price_min > 0) {
+            count++;
+        }
+        filterNumber.set(count + "");
+        isFilter.set(count > 0);
+    }
+
+    public void getCurrentFilter() {
+        getCompositeDisposable().add(getDataManager().getCurrentFilter(getUserId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(filter -> {
+                    updateCountFilter(filter);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
