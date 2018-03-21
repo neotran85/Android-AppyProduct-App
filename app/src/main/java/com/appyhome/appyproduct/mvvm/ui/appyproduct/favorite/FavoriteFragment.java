@@ -52,6 +52,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.getAllFavorites();
+    }
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUp();
@@ -61,8 +66,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         mViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
-        mViewModel.getAllFavorites();
         mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
+        mViewModel.getAllFavorites();
     }
 
     @Override

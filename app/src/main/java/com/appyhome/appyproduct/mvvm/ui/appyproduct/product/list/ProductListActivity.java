@@ -164,6 +164,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         setUpRecyclerViewList(mBinder.productsRecyclerView);
         mProductAdapter.addItems(new Product[]{}, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
+        getViewModel().getCurrentFilter();
     }
 
     @Override
