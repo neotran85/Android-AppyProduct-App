@@ -98,7 +98,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
         mCategoryViewModel.getProductCategoriesByTopic(idTopic);
         mCategoryViewModel.getProductTopicById(idTopic);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv, SampleAdapter adapter) {

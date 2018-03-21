@@ -16,12 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end|center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="14dp">
+
+        <LinearLayout
+            android:onClick="@{(view)-> navigator.back()}"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingEnd="10dp"
+            android:visibility="@{viewModel.isBackButtonShowed, default=visible}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_back" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/actionbar_icon_size"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/rectangle_round_gray"
             android:gravity="center|start"
@@ -30,7 +44,8 @@
             android:paddingLeft="12dp"
             android:paddingRight="16dp"
             android:paddingTop="2dp"
-            android:visibility="@{viewModel.isFullMode, default=gone}">
+            android:visibility="@{viewModel.isFullMode, default=visible}">
+
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -53,7 +68,7 @@
                     android:text="Search"
                     android:textAlignment="textEnd"
                     android:textColor="@color/text_hint"
-                    android:textSize="12dp"/>
+                    android:textSize="12dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"

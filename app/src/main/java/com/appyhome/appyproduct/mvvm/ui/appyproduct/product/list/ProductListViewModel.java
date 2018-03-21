@@ -19,6 +19,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
+import io.realm.RealmResults;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
@@ -37,13 +38,13 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     public void fetchProductsWithFilter(int idSub, String sortType) {
+        mIdSub = idSub;
+        mSortType = sortType;
         getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), idSub)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
-                    if (products != null && products.size() > 0) {
-                        getNavigator().showProducts(products);
-                    } else getNavigator().showEmptyProducts();
+                    showProductList(products);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
@@ -87,13 +88,25 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                         fetchProductsWithFilter(mIdSub, "");
                     else {
                         // IF ADDED FAILED
-                        getNavigator().showProducts(list);
+                        showCachedList(list);
                     }
                 }, throwable -> {
                     throwable.printStackTrace();
-                    getNavigator().showProducts(list);
+                    showCachedList(list);
                     Crashlytics.logException(throwable);
                 }));
+    }
+
+    private void showProductList(RealmResults<Product> products) {
+        if (products != null && products.size() > 0) {
+            getNavigator().showProducts(products);
+        } else getNavigator().showEmptyProducts();
+    }
+
+    private void showCachedList(Product[] list) {
+        if (list != null && list.length > 0)
+            getNavigator().showProducts(list);
+        else getNavigator().showEmptyProducts();
     }
 
     public void getAllFavorites() {
@@ -120,15 +133,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     // DONE GET
-                    if (products != null && products.size() > 0) {
-                        getNavigator().showProducts(products);
-                    } else {
-                        // SHOW CACHED LIST
-                        getNavigator().showProducts(cachedList);
-                    }
+                    showProductList(products);
                 }, throwable -> {
                     throwable.printStackTrace();
-                    getNavigator().showProducts(cachedList);
+                    showCachedList(cachedList);
                     Crashlytics.logException(throwable);
                 }));
     }
@@ -139,7 +147,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 "", -1, "", "")
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
-                    // DO NOTHING
+                    fetchProductsWithFilter(mIdSub, mSortType);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

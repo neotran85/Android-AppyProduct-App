@@ -62,7 +62,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
         loadImages();
         getCartPosition();
     }
@@ -95,7 +95,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (isBuyNow) {
             startActivity(ProductCartListActivity.getStartIntent(this));
         } else {
-            showAlert(mMainViewModel.amountAdded.get() + " items added to your cart");
+            showAlert(mMainViewModel.amountAdded.get() + getString(R.string.items_added_to_your_card));
         }
         isBuyNow = false;
     }

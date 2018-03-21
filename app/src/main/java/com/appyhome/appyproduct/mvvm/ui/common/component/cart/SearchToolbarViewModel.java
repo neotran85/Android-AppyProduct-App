@@ -11,6 +11,7 @@ import com.crashlytics.android.Crashlytics;
 public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
     public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
     public ObservableField<Boolean> isFullMode = new ObservableField<>(true);
+    public ObservableField<Boolean> isBackButtonShowed = new ObservableField<>(false);
 
     public SearchToolbarViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {

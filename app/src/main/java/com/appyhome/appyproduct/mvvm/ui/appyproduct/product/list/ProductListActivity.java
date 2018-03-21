@@ -19,6 +19,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemFilterNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter.FilterFragment;
@@ -40,7 +41,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
-public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemNavigator, SortNavigator {
+public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
     private static final int TAB_SORT = 0;
@@ -102,10 +103,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        setUpRecyclerViewList(mBinder.productsRecyclerView, mProductAdapter);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true);
+        setUpRecyclerViewList(mBinder.productsRecyclerView);
+        mBinder.productsRecyclerView.setAdapter(mProductAdapter);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
         mViewModel.getAllFavorites();
-        mViewModel.getCurrentFilter();
     }
 
     private void fetchProducts() {
@@ -113,11 +114,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.fetchProductsByIdCategory(idSubCategory, "");
     }
 
-    private void setUpRecyclerViewList(RecyclerView rv, ProductAdapter adapter) {
+    private void setUpRecyclerViewList(RecyclerView rv) {
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(adapter);
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
@@ -155,11 +155,13 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.addItems(result, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
+            getViewModel().getCurrentFilter();
         }
     }
 
     @Override
     public void showEmptyProducts() {
+        setUpRecyclerViewList(mBinder.productsRecyclerView);
         mProductAdapter.addItems(new Product[]{}, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
     }
@@ -170,6 +172,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.addItems(list, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
+            getViewModel().getCurrentFilter();
         }
     }
 
@@ -186,8 +189,17 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mViewModel.resetFilter();
         ProductDetailActivityModule.clickedViewModel = null;
+    }
+
+    @Override
+    public void editFilter() {
+        toggleFilters();
+    }
+
+    @Override
+    public void resetFilter() {
+        getViewModel().resetFilter();
     }
 
     @Override

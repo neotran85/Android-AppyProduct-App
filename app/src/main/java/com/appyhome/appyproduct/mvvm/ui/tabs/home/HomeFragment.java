@@ -105,7 +105,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         }
         ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
         addProductTopicsFragment();
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar, true);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar, true, false);
         getViewModel().fetchBanners();
     }
 
