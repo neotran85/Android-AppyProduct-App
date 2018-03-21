@@ -46,10 +46,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(user -> {
                     //UPDATE SUCCESS
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void handleLoginResponse(LoginResponse response) {

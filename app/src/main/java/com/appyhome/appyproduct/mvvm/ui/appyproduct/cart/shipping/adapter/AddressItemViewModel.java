@@ -27,10 +27,7 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
                 .subscribe(success -> {
                     // UPDATE DEFAULT ADDRESS SUCCEEDED
                     getNavigator().updateDatabaseCompleted(this);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void setIdAddress(long idAddress) {

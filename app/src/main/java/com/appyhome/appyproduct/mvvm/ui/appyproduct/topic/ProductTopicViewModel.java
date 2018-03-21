@@ -20,9 +20,6 @@ public class ProductTopicViewModel extends BaseViewModel<ProductTopicNavigator> 
                     if (topics != null && topics.size() > 0) {
                         getNavigator().showTopics(topics);
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

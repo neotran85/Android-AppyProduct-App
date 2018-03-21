@@ -20,9 +20,6 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     if (response != null && response.code.equals(ApiCode.OK_200)) {
                         getNavigator().showBanners(response.message);
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

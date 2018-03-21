@@ -43,9 +43,6 @@ public class ProductItemEmptyViewModel extends BaseViewModel<ProductItemNavigato
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     updateCountFilter(filter);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

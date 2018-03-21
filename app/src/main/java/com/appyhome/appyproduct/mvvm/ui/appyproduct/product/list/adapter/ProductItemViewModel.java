@@ -60,10 +60,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     count = value ? count + 1 : count - 1;
                     favoriteCount.set(count + "");
                     getNavigator().notifyFavoriteChanged(position, value);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public int getIntegerAmountAdded() {

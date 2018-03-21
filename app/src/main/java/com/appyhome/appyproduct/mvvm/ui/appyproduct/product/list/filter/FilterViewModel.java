@@ -19,10 +19,7 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     getNavigator().updateUIFilter(filter);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void getCurrentFilter() {
@@ -31,10 +28,7 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     getNavigator().updateUIFilter(filter);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void resetFilter() {

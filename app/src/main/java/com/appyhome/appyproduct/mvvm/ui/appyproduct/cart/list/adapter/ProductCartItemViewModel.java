@@ -39,10 +39,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // REMOVED ADDED
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void updateProductCartItem() {
@@ -50,10 +47,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public int getProductId() {

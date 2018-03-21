@@ -17,7 +17,6 @@
     <TextView
         android:text="Title"
         android:id="@+id/tvTitle"
-        fontPath="fonts/TitilliumWeb-Bold.ttf"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"

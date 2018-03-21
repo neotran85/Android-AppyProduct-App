@@ -40,10 +40,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     name.set(addressResult.customer_name);
                     phoneNumber.set(addressResult.phone_number);
                     address.set(addressResult.address);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void fetchPaymentMethods() {
@@ -66,7 +63,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     }
                 }, throwable -> {
                     getNavigator().handleErrors(throwable);
-                    throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 }));
     }
@@ -86,10 +82,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                         mTotalCost = DataUtils.roundNumber(mTotalCost, 2);
                         totalCost.set(mTotalCost + "");
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public String getOrderId() {

@@ -45,10 +45,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     showProductList(products);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void fetchProductsByIdCategory(int idSub, String sortType) {
@@ -122,10 +119,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                         }
                     }
                     getNavigator().updateFavorites(arrayId);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void getProductsBySubCategory(int idSub, Product[] cachedList) {
@@ -148,10 +142,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     fetchProductsWithFilter(mIdSub, mSortType);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void updateCountFilter(ProductFilter filter) {

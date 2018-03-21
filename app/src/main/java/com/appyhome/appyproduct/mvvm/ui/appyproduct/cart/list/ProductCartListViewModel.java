@@ -26,10 +26,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // EMPTY SUCCEEDED
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void disposeGetAllProductCarts() {

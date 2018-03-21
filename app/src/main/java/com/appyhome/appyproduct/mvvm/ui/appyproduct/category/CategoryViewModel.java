@@ -20,10 +20,7 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(categories -> {
                     getNavigator().showCategories(categories);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void getProductTopicById(int idTopic) {
@@ -32,10 +29,7 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
                 .subscribe(topic -> {
                     // DONE
                     title.set(topic.name);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void getProductSubCategoryByCategory(int idCategory) {
@@ -44,9 +38,6 @@ public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
                 .subscribe(subs -> {
                     // DONE
                     getNavigator().showSubCategories(subs);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

@@ -50,9 +50,6 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
                     // DONE GET
                     getNavigator().showProducts(products);
                     updateFavoriteCount(products.size());
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

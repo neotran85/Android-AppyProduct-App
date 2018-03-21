@@ -35,10 +35,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                         getDataManager().getServiceOrderUserInput().setArrayAppyService(services);
                         getNavigator().openMainActivity();
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void loadServicesCategories() {
@@ -50,10 +47,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                     if (categories != null) {
                         getDataManager().getServiceOrderUserInput().setArrayAppyServiceCategory(categories);
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void loadProductCategory() {
@@ -61,10 +55,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .seedDatabaseProductCategories()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(this::addProductCategories, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                .subscribe(this::addProductCategories, Crashlytics::logException));
     }
 
     private void addProductCategories(ArrayList<ProductCategory> categories) {
@@ -72,10 +63,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void addProductSubs(ArrayList<ProductSub> subs) {
@@ -94,10 +82,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void loadProductSubs() {
@@ -105,10 +90,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .seedDatabaseProductTopics()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(this::addProductTopics, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                .subscribe(this::addProductTopics, Crashlytics::logException));
     }
 
     private void loadProductTopics() {
@@ -116,10 +98,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .seedDatabaseProductSubs()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(this::addProductSubs, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                .subscribe(this::addProductSubs, Crashlytics::logException));
     }
 
 }

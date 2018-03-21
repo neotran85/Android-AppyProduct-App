@@ -44,10 +44,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                 .subscribe(success -> {
                     // ADD ADDRESS SUCCEEDED
                     getNavigator().close();
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     private void setValueNotNull(ObservableField<String> target, String value) {

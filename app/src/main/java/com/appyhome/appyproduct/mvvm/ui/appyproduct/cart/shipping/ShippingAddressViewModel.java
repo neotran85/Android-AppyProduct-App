@@ -33,10 +33,7 @@ public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavig
                         getNavigator().showAddressList(addresses);
                     }
                     isNoAddress.set(isValid && addresses.size() > 0 ? false : true);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                });
+                }, Crashlytics::logException);
         getCompositeDisposable().add(mGetAllShippingAddress);
     }
 
