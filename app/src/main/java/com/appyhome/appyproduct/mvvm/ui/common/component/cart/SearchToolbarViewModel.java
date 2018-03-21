@@ -21,13 +21,12 @@ public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
     public void updateTotalCountProductCart() {
         getCompositeDisposable().add(getDataManager()
                 .getTotalCountProductCarts(getUserId())
-                .subscribeOn(getSchedulerProvider().io())
+                .take(1)
+                .subscribeOn(getSchedulerProvider().newThread())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(total -> {
                     if (total >= 0)
                         totalItemsCount.set(total);
-                }, throwable -> {
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

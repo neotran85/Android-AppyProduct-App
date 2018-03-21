@@ -53,7 +53,6 @@
     <string name="register_error_phone_duplicated">Your phone number was used before. Please enter a new phone number.</string>
     <string name="register_error_email_duplicated">Your email address was used before. Please enter a new email address.</string>
     <string name="register_error_something">Something error. Please try again later.</string>
-    <string name="register_success_logged">Successfully registered and logged in</string>
     <string name="password_hint">Password</string>
     <string name="mobile_no">Enter your phone number</string>
     <string name="please_fill_this_form_to_login">Please fill this form to login.</string>

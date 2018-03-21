@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--rating dialog-->
-    <string name="rate_us">Rate Us</string>
     <!--button-->
-    <string name="later">Later</string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <!--feed-->
@@ -14,7 +12,6 @@
     <string name="empty_screen">We do not have anything\nhere right now.</string>
     <string name="please_retry">Please Retry</string>
     <string name="retry">Retry</string>
-    <string name="feature_more"><![CDATA[More >]]></string>
     <string name="message_loading">Please wait for loading...</string>
     <!--Other-->
     <string name="login_required_message">Please login to</string>
