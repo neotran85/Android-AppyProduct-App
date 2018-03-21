@@ -54,7 +54,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onResume() {
         super.onResume();
-        mSearchToolbarViewHolder.onBind(0);
     }
 
     @Override
@@ -105,6 +104,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         addProductTopicsFragment();
         mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar, true, false);
         getViewModel().fetchBanners();
+        mSearchToolbarViewHolder.onBind(0);
     }
 
     @Override

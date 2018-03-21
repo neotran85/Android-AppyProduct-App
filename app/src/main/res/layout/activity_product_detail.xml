@@ -211,7 +211,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:numStars="5"
-                                        android:rating="4.5"
+                                        android:rating="@{viewModel.rate}"
                                         android:stepSize="0.5" />
 
                                     <TextView
@@ -219,7 +219,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="2dp"
                                         android:gravity="center"
-                                        android:text="(124)"
+                                        android:text="@{viewModel.rateCount}"
                                         android:textColor="@color/dark_gray"
                                         android:textSize="11sp" />
                                 </LinearLayout>

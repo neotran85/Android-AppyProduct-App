@@ -168,6 +168,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
         filterNumber.set(count + "");
         isFilter.set(count > 0);
+        getNavigator().updatedFilterCount();
     }
 
     public void getCurrentFilter() {

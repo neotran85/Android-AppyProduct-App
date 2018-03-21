@@ -27,4 +27,6 @@ public interface ProductListNavigator {
 
     void removeFragment(String tag);
 
+    void updatedFilterCount();
+
 }

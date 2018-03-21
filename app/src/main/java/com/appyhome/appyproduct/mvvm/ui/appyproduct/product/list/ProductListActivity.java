@@ -149,6 +149,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
+    public void updatedFilterCount() {
+        mSearchToolbarViewHolder.onBind(0);
+    }
+
+    @Override
     public void showProducts(RealmResults<Product> result) {
         if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
@@ -222,8 +227,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onResume() {
         super.onResume();
-        mProductAdapter.notifyDataSetChanged();
         mSearchToolbarViewHolder.onBind(0);
+        mProductAdapter.notifyDataSetChanged();
     }
 
     @Override

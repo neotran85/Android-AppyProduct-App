@@ -134,6 +134,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     public void showSubCategories(RealmResults<ProductSub> result) {
         mSubCategoryAdapter.addItems(result, this);
         mSubCategoryAdapter.notifyDataSetChanged();
+        mSearchToolbarViewHolder.onBind(0);
     }
 
 
@@ -149,7 +150,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Override
     public void onResume() {
         super.onResume();
-        mSearchToolbarViewHolder.onBind(0);
     }
 
 }

@@ -43,7 +43,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<User> updateUserInfo(final String phoneNumber, String token) {
-        getRealm().beginTransaction();
+        beginTransaction();
         User result = getRealm().where(User.class)
                 .equalTo("phoneNumber", phoneNumber)
                 .findFirstAsync();
@@ -64,7 +64,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductSub>> getSubProductCategoryByCategory(int idCategory) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<ProductSub>> subs = getRealm().where(ProductSub.class)
                 .equalTo("id_category", idCategory)
                 .findAllAsync().asFlowable();
@@ -74,7 +74,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductCategory>> getProductCategoriesByTopic(int idTopic) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<ProductCategory>> categories = getRealm().where(ProductCategory.class)
                 .equalTo("id_topic", idTopic)
                 .findAllAsync().asFlowable();
@@ -84,7 +84,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductTopic>> getAllProductTopics() {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<ProductTopic>> topcis = getRealm().where(ProductTopic.class).findAllAsync().asFlowable();
         getRealm().commitTransaction();
         return topcis;
@@ -94,11 +94,12 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addProductCategories(ArrayList<ProductCategory> categories) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 getRealm().copyToRealmOrUpdate(categories);
                 getRealm().commitTransaction();
                 return true;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return false;
             }
         });
@@ -125,11 +126,12 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addProductSubs(ArrayList<ProductSub> items) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 getRealm().copyToRealmOrUpdate(items);
                 getRealm().commitTransaction();
                 return true;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return false;
             }
         });
@@ -138,20 +140,21 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<Boolean> addProductTopics(ArrayList<ProductTopic> topics) {
         try {
-            getRealm().beginTransaction();
+            beginTransaction();
             for (ProductTopic topic : topics) {
                 getRealm().copyToRealmOrUpdate(topic);
             }
             getRealm().commitTransaction();
             return Flowable.just(true);
         } catch (Exception e) {
+            getRealm().cancelTransaction();
             return Flowable.just(false);
         }
     }
 
     @Override
     public Flowable<ProductTopic> getProductTopicById(int idTopic) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<ProductTopic> topic = getRealm().where(ProductTopic.class)
                 .equalTo("id", idTopic)
                 .findFirstAsync().asFlowable();
@@ -161,7 +164,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Product> getProductById(int idProduct) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<Product> topic = getRealm().where(Product.class)
                 .equalTo("id", idProduct)
                 .findFirstAsync().asFlowable();
@@ -171,7 +174,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Product>> getProductsBySubCategory(int idSub) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<Product>> topic = getRealm().where(Product.class)
                 .equalTo("category_id", idSub)
                 .findAllAsync().asFlowable();
@@ -182,7 +185,7 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<Boolean> addProducts(Product[] list) {
         try {
-            getRealm().beginTransaction();
+            beginTransaction();
             for (Product product : list) {
                 int randomNum = new Random().nextInt(storeName.length);
                 product.seller_name = storeName[randomNum];
@@ -196,6 +199,7 @@ public class AppDbHelper implements DbHelper {
             getRealm().commitTransaction();
             return Flowable.just(true);
         } catch (Exception e) {
+            getRealm().cancelTransaction();
             return Flowable.just(false);
         }
     }
@@ -204,7 +208,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Address> getDefaultShippingAddress(String userId) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<Address> address = getRealm().where(Address.class)
                 .equalTo("customer_id", userId)
                 .equalTo("is_default", true)
@@ -215,7 +219,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
-        getRealm().beginTransaction();
+        beginTransaction();
         String[] fieldNames = {"is_default", "id"};
         Sort sortOrder[] = {Sort.DESCENDING, Sort.DESCENDING};
         Flowable<RealmResults<Address>> addresses = getRealm().where(Address.class)
@@ -228,7 +232,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)
                 .equalTo("order_id", 0)
@@ -240,7 +244,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<Integer> getTotalCountProductCarts(String userId) {
-        getRealm().beginTransaction();
+        beginTransaction();
         RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
                 .equalTo("order_id", 0)
                 .equalTo("user_id", userId)
@@ -257,7 +261,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)
                 .equalTo("order_id", 0)
@@ -271,7 +275,7 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault) {
         try {
-            getRealm().beginTransaction();
+            beginTransaction();
             Address address = new Address();
             address.id = System.currentTimeMillis();
             address.customer_name = name;
@@ -296,6 +300,7 @@ public class AppDbHelper implements DbHelper {
             getRealm().commitTransaction();
             return Flowable.just(address != null && address.isValid());
         } catch (Exception e) {
+            getRealm().cancelTransaction();
             return Flowable.just(false);
         }
     }
@@ -303,7 +308,7 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<Boolean> setDefaultShippingAddress(String userId, long id) {
         try {
-            getRealm().beginTransaction();
+            beginTransaction();
             Address address = getRealm().where(Address.class)
                     .equalTo("id", id)
                     .findFirst();
@@ -323,6 +328,7 @@ public class AppDbHelper implements DbHelper {
             getRealm().commitTransaction();
             return Flowable.just(address != null && address.isValid());
         } catch (Exception e) {
+            getRealm().cancelTransaction();
             return Flowable.just(false);
         }
     }
@@ -331,13 +337,14 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> removeProductCartItem(long idProductCart) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 getRealm().where(ProductCart.class)
                         .equalTo("id", idProductCart)
                         .findFirst().deleteFromRealm();
                 getRealm().commitTransaction();
                 return true;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return false;
             }
         });
@@ -347,7 +354,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> updateProductCartItem(long idProductCart, boolean checked, int amount) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 ProductCart productCart = getRealm().where(ProductCart.class)
                         .equalTo("id", idProductCart)
                         .findFirst();
@@ -357,6 +364,7 @@ public class AppDbHelper implements DbHelper {
                 getRealm().commitTransaction();
                 return productCart != null && productCart.isValid();
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return false;
             }
         });
@@ -382,7 +390,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<ProductCart> addProductToCart(String userId, int productId, int amountAdded) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 Product product = getRealm().where(Product.class)
                         .equalTo("id", productId)
                         .findFirst();
@@ -399,6 +407,7 @@ public class AppDbHelper implements DbHelper {
                 getRealm().commitTransaction();
                 return productCart;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 e.printStackTrace();
                 return null;
             }
@@ -409,7 +418,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> emptyProductCarts(String userId) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
                         .equalTo("user_id", userId)
                         .equalTo("order_id", 0)
@@ -418,6 +427,7 @@ public class AppDbHelper implements DbHelper {
                 getRealm().commitTransaction();
                 return true;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 e.printStackTrace();
                 return false;
             }
@@ -430,7 +440,7 @@ public class AppDbHelper implements DbHelper {
                                       String customerId, String customerName,
                                       float totalCost, float discount) {
         try {
-            getRealm().beginTransaction();
+            beginTransaction();
             ProductOrder order = new ProductOrder();
             order.id = System.currentTimeMillis();
             order.customer_name = customerName;
@@ -449,6 +459,7 @@ public class AppDbHelper implements DbHelper {
             getRealm().commitTransaction();
             return Flowable.just(order != null && order.isValid());
         } catch (Exception e) {
+            getRealm().cancelTransaction();
             return Flowable.just(false);
         }
     }
@@ -457,13 +468,14 @@ public class AppDbHelper implements DbHelper {
     public Flowable<ProductFilter> getCurrentFilter(String userId) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 ProductFilter filter = getRealm().where(ProductFilter.class)
                         .equalTo("user_id", userId)
                         .findFirst();
                 getRealm().commitTransaction();
                 return filter;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return null;
             }
         });
@@ -473,7 +485,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 ProductFilter filter = getRealm().where(ProductFilter.class)
                         .equalTo("user_id", userId)
                         .findFirst();
@@ -493,6 +505,7 @@ public class AppDbHelper implements DbHelper {
                 getRealm().commitTransaction();
                 return filter;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return null;
             }
         });
@@ -503,7 +516,7 @@ public class AppDbHelper implements DbHelper {
         return Flowable.fromCallable(() -> {
             try {
                 Boolean value = false;
-                getRealm().beginTransaction();
+                beginTransaction();
                 ProductFavorite favorite = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
                         .equalTo("product_id", productId)
@@ -522,16 +535,24 @@ public class AppDbHelper implements DbHelper {
                 getRealm().commitTransaction();
                 return value;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return false;
             }
         });
+    }
+
+    private void beginTransaction() {
+        if (getRealm().isInTransaction()) {
+            getRealm().commitTransaction();
+        }
+        getRealm().beginTransaction();
     }
 
     @Override
     public Flowable<Boolean> isFavorite(int productId, String userId) {
         return Flowable.fromCallable(() -> {
             try {
-                getRealm().beginTransaction();
+                beginTransaction();
                 ProductFavorite favorite = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
                         .equalTo("product_id", productId)
@@ -540,6 +561,7 @@ public class AppDbHelper implements DbHelper {
                 getRealm().commitTransaction();
                 return isFavorite;
             } catch (Exception e) {
+                getRealm().cancelTransaction();
                 return false;
             }
         });
@@ -547,7 +569,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
-        getRealm().beginTransaction();
+        beginTransaction();
         ProductFilter filter = getRealm().where(ProductFilter.class)
                 .equalTo("user_id", userId)
                 .findFirst();
@@ -575,7 +597,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
-        getRealm().beginTransaction();
+        beginTransaction();
         RealmQuery<Product> query = getRealm().where(Product.class);
         if (ids.size() > 0) {
             int i = 0;
@@ -595,7 +617,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId) {
-        getRealm().beginTransaction();
+        beginTransaction();
         Flowable<RealmResults<ProductFavorite>> favorites = getRealm().where(ProductFavorite.class)
                 .equalTo("user_id", userId)
                 .findAll().asFlowable();

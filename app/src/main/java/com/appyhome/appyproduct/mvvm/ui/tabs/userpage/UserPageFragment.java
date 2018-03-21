@@ -39,7 +39,6 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
     @Override
     public void onResume() {
         super.onResume();
-        mSearchToolbarViewHolder.onBind(0);
     }
 
     @Override
@@ -64,6 +63,7 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
         mBinder.setViewModel(mUserPageViewModel);
         mBinder.setNavigator(this);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mBinder.llCartIcon, false, false);
+        mSearchToolbarViewHolder.onBind(0);
     }
 
     @Override
