@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 
@@ -49,6 +48,7 @@ public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerVi
     public BaseViewModel getItem(int post) {
         return mItems.get(post);
     }
+
     public int indexOf(BaseViewModel item) {
         return mItems.indexOf(item);
     }

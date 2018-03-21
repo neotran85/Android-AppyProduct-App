@@ -23,14 +23,14 @@ import io.realm.RealmResults;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
-    private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
-    private String mSortType = "";
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
     public ObservableField<String> currentSortOption = new ObservableField<>("Sort By Popular");
     public ObservableField<String> filterNumber = new ObservableField<>("");
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
+    private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
+    private String mSortType = "";
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {

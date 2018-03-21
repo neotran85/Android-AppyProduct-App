@@ -12,7 +12,7 @@ public class ProductTrackingActivityModule {
 
     @Provides
     ProductTrackingViewModel provideProductTrackingViewModel(DataManager dataManager,
-                                                    SchedulerProvider schedulerProvider) {
+                                                             SchedulerProvider schedulerProvider) {
         return new ProductTrackingViewModel(dataManager, schedulerProvider);
     }
 

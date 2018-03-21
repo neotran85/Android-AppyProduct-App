@@ -1,10 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.common.sample.adapter;
 
-import android.view.View;
-
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSampleBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 
 public class SampleItemViewHolder extends BaseViewHolder {

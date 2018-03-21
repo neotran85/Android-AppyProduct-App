@@ -19,13 +19,12 @@ import io.realm.RealmResults;
 
 public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator> {
 
+    private ProductItemNavigator mNavigator;
+    private ProductItemEmptyViewModel mViewModelEmpty;
+
     public ProductAdapter() {
         this.mItems = null;
     }
-
-    private ProductItemNavigator mNavigator;
-
-    private ProductItemEmptyViewModel mViewModelEmpty;
 
     @Override
     public void onClick(View view) {

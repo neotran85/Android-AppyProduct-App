@@ -56,6 +56,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         super.onResume();
         mViewModel.getAllFavorites();
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

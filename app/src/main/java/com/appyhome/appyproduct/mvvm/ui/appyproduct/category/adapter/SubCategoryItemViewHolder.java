@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;

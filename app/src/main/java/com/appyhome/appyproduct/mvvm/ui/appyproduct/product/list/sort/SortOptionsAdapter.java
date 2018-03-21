@@ -5,12 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSortBinding;
-
-import java.util.ArrayList;
 
 public class SortOptionsAdapter extends BaseAdapter {
 
@@ -19,9 +15,10 @@ public class SortOptionsAdapter extends BaseAdapter {
 
     private SortNavigator mNavigator;
 
-    public SortOptionsAdapter() {}
+    public SortOptionsAdapter() {
+    }
 
-    public void setUp(Context context, SortOption[] listItem, SortNavigator navigator){
+    public void setUp(Context context, SortOption[] listItem, SortNavigator navigator) {
         this.mContext = context;
         this.mListItem = listItem;
         this.mNavigator = navigator;

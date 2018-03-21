@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -49,11 +48,12 @@ public class AlertManager {
     }
 
     public void closeDialog() {
-        if(mAlertDialog != null && mAlertDialog.isShowing()) {
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
             mAlertDialog = null;
         }
     }
+
     public void closeLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();

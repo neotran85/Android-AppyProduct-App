@@ -10,9 +10,9 @@ public enum SortOption {
     RATING("RATING", "Rating"),
     POPULAR("POPULAR", "The Most Popular");
 
+    public ObservableField<Boolean> checked = new ObservableField<>(false);
     private String value;
     private String name;
-    public ObservableField <Boolean> checked = new ObservableField<>(false);
 
     SortOption(String v, String n) {
         value = v;

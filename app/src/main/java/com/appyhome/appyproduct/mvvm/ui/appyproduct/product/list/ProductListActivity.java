@@ -20,7 +20,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetail
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemFilterNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter.FilterFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;

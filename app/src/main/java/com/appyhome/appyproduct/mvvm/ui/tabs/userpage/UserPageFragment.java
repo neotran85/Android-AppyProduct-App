@@ -41,6 +41,7 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
         super.onResume();
         mSearchToolbarViewHolder.onBind(0);
     }
+
     @Override
     public int getLayoutId() {
         return mLayoutId;

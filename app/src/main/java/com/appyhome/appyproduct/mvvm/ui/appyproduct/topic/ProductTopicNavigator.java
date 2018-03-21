@@ -7,5 +7,6 @@ import io.realm.RealmResults;
 
 public interface ProductTopicNavigator {
     void showTopics(RealmResults<ProductTopic> topics);
+
     void openProductCategories(int idTopic);
 }

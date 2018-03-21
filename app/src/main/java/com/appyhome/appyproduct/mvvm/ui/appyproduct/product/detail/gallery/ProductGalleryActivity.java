@@ -11,7 +11,6 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import javax.inject.Inject;
 

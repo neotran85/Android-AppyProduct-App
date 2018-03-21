@@ -1,8 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -13,6 +11,7 @@ public class FilterViewModel extends BaseViewModel<FilterNavigator> {
                            SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
+
     public void updateFilter(String shippingFrom, String discount, String priceMin, String priceMax, float rating) {
         getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), shippingFrom,
                 discount, rating, priceMin, priceMax)

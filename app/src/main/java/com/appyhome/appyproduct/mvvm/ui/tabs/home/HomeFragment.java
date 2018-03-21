@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ListView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -21,7 +20,6 @@ import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewH
 import com.appyhome.appyproduct.mvvm.utils.helper.CompletedJobListener;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 

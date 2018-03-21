@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.base;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -180,9 +179,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
                 .replace(idContainer, fragment, tag)
                 .commit();
     }
+
     public void closeFragment(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if(fragment != null)
+        if (fragment != null)
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 }

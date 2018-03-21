@@ -15,7 +15,7 @@ public class ProductDetailActivityModule {
 
     @Provides
     ProductItemViewModel provideProductItemViewModel(DataManager dataManager,
-                                                  SchedulerProvider schedulerProvider) {
+                                                     SchedulerProvider schedulerProvider) {
         return clickedViewModel;
     }
 

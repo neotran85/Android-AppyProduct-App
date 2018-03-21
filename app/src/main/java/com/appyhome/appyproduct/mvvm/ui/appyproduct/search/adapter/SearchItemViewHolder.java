@@ -1,8 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter;
 
-import android.view.View;
-
-import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSampleBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchItemBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 

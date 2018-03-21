@@ -12,7 +12,7 @@ public class ProductGalleryActivityModule {
 
     @Provides
     ProductGalleryViewModel provideProductGalleryViewModel(DataManager dataManager,
-                                                   SchedulerProvider schedulerProvider) {
+                                                           SchedulerProvider schedulerProvider) {
         return new ProductGalleryViewModel(dataManager, schedulerProvider);
     }
 

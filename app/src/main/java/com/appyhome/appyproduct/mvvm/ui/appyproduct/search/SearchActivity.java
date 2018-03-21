@@ -7,8 +7,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductSearchBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -43,7 +41,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void onItemClick(View view) {}
+    public void onItemClick(View view) {
+    }
 
 
     @Override

@@ -1,12 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Sample;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;

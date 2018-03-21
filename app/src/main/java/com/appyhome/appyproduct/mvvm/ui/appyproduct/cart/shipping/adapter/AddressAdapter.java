@@ -8,7 +8,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductShippingAddressBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -46,7 +45,7 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
         return R.layout.view_item_sample_empty;
     }
 
-    private AddressItemViewModel createViewModel(Address address,  AddressItemNavigator itemNavigator) {
+    private AddressItemViewModel createViewModel(Address address, AddressItemNavigator itemNavigator) {
         AddressItemViewModel itemViewModel = new AddressItemViewModel(mDataManager, mSchedulerProvider);
         itemViewModel.name.set(address.customer_name);
         itemViewModel.phoneNumber.set(address.phone_number);

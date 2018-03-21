@@ -17,7 +17,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .fetchBanners().subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
-                    if(response != null && response.code.equals(ApiCode.OK_200)) {
+                    if (response != null && response.code.equals(ApiCode.OK_200)) {
                         getNavigator().showBanners(response.message);
                     }
                 }, throwable -> {

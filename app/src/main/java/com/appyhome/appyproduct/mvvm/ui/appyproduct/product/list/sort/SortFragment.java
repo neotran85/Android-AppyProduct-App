@@ -31,16 +31,16 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
 
     private SortNavigator mNavigator;
 
-    public void setNavigator(SortNavigator navigator) {
-        mNavigator = navigator;
-    }
-
     public static SortFragment newInstance(SortNavigator navigator) {
         Bundle args = new Bundle();
         SortFragment fragment = new SortFragment();
         fragment.setArguments(args);
         fragment.setNavigator(navigator);
         return fragment;
+    }
+
+    public void setNavigator(SortNavigator navigator) {
+        mNavigator = navigator;
     }
 
     @Override
@@ -67,12 +67,12 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
         AppAnimator.fadeIn(mBinder.llRestOfLayout);
     }
 
-    public void setCurrentSortOption(SortOption opt) {
-        mCurrentOption = opt;
-    }
-
     public SortOption getCurrentSortOption() {
         return mCurrentOption;
+    }
+
+    public void setCurrentSortOption(SortOption opt) {
+        mCurrentOption = opt;
     }
 
     @Override

@@ -29,7 +29,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.Produ
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter.FilterFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter.FilterFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivity;

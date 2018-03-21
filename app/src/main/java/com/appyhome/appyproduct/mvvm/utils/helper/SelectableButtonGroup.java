@@ -43,6 +43,18 @@ public class SelectableButtonGroup implements View.OnClickListener {
         }
     }
 
+    private int getPosition(Button view) {
+        for (int i = 0; i < mViews.length; i++) {
+            if (mViews[i] == view)
+                return i;
+        }
+        return -1;
+    }
+
+    private Button getCurrent() {
+        return mViews[mCurrent];
+    }
+
     public void setCurrent(Button view) {
         int pos = getPosition(view);
         if (pos >= 0) {
@@ -54,18 +66,6 @@ public class SelectableButtonGroup implements View.OnClickListener {
             view.setTextColor(mHighLightColor);
             mCurrent = pos;
         }
-    }
-
-    private int getPosition(Button view) {
-        for (int i = 0; i < mViews.length; i++) {
-            if (mViews[i] == view)
-                return i;
-        }
-        return -1;
-    }
-
-    private Button getCurrent() {
-        return mViews[mCurrent];
     }
 
     public String getCurrentValue() {

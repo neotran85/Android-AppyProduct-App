@@ -22,10 +22,12 @@ public class ProductGalleryViewModel extends BaseViewModel<ProductGalleryNavigat
             "http://timstubbings.com/commercial/wp-content/uploads/2017/03/17-10334-pp_gallery/Marketing_and_advertising_photography_Kent-001-1(pp_w500_h333).jpg",
             "https://www.shell.in/business-customers/lubricants-for-business/lubricants-product-range/shell-argina-and-gadina-power-engine-oils/_jcr_content/pagePromo/image.img.800.jpeg/1457361752025/argina-gadina-products.jpeg"
     ));
+
     public ProductGalleryViewModel(DataManager dataManager,
                                    SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 
-    public void getPhotos() {}
+    public void getPhotos() {
+    }
 }

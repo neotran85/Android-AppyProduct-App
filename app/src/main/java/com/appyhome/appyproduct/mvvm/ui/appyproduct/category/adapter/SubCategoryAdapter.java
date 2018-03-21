@@ -32,7 +32,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
 
     @Override
     public void onClick(View view) {
-       // DO NOTHING
+        // DO NOTHING
     }
 
     public void clickViewModel(CategoryItemViewModel viewModel) {

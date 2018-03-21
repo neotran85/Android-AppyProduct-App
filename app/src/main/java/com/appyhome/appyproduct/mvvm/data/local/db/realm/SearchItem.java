@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class SearchItem extends RealmObject{
+public class SearchItem extends RealmObject {
     @Expose
     @SerializedName("id")
     @ColumnInfo(name = "id")

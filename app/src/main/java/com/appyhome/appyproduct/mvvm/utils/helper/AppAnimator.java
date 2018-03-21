@@ -34,6 +34,7 @@ public class AppAnimator {
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.start();
     }
+
     public static void slideFromRight(View view, int width) {
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator alpha = null;
@@ -45,6 +46,7 @@ public class AppAnimator {
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.start();
     }
+
     public static void dropdown(View view, int height) {
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator alpha = null;

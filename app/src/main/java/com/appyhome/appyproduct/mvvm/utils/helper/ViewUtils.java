@@ -1,20 +1,14 @@
 package com.appyhome.appyproduct.mvvm.utils.helper;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -139,7 +133,7 @@ public final class ViewUtils {
     }
 
     public static void requestFocus(EditText editText) {
-        if(editText != null && editText.getParent() != null) {
+        if (editText != null && editText.getParent() != null) {
             editText.getParent().requestChildFocus(editText, editText);
         }
     }
