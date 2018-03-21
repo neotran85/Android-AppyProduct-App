@@ -172,6 +172,16 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         Realm.getDefaultInstance().close();
     }
 
+    public void showFragment(BaseFragment fragment, String tag, int idContainer, boolean addToBackStack) {
+        if (addToBackStack)
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(tag)
+                    .replace(idContainer, fragment, tag)
+                    .commit();
+        else showFragment(fragment, tag, idContainer);
+    }
+
     public void showFragment(BaseFragment fragment, String tag, int idContainer) {
         this.getSupportFragmentManager()
                 .beginTransaction()
@@ -180,10 +190,22 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
                 .commit();
     }
 
+    public void closeFragment(String tag, boolean addToBackStack) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragment).commit();
+            if (addToBackStack)
+                getSupportFragmentManager().popBackStack();
+        }
+    }
+
     public void closeFragment(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (fragment != null)
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragment).commit();
+        }
     }
 }
 

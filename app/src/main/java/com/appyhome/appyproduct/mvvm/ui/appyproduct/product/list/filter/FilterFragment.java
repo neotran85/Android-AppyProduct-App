@@ -54,12 +54,18 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
 
         mBinder.ratingBar.setRating(filter.rating);
         if (isFilterApplied) {
-            if (mNavigator != null) {
-                mNavigator.applyFilter();
-                mNavigator.removeFragment(TAG);
-            }
+            mNavigator.applyFilter();
+            close();
         }
         isFilterApplied = false;
+    }
+
+
+    @Override
+    public void close() {
+        if (mNavigator != null) {
+            mNavigator.removeFragment(TAG);
+        }
     }
 
     @Override

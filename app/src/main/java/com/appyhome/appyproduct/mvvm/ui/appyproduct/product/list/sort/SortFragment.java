@@ -90,4 +90,5 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
         super.onDestroyView();
     }
 
+
 }

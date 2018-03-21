@@ -9,4 +9,6 @@ public interface FilterNavigator {
     void resetFilter();
 
     void updateUIFilter(ProductFilter filter);
+
+    void close();
 }

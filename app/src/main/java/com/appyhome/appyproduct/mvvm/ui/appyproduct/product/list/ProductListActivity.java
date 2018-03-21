@@ -198,6 +198,11 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
+    public void clearFragment() {
+        closeFragment(FilterFragment.TAG);
+        closeFragment(SortFragment.TAG);
+    }
+    @Override
     public void editFilter() {
         toggleFilters();
     }
@@ -284,14 +289,15 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void showFragment(BaseFragment fragment, String tag, int idContainer) {
+        clearFragment();
         mBinder.llSortFilterContainer.setVisibility(View.VISIBLE);
-        super.showFragment(fragment, tag, idContainer);
+        super.showFragment(fragment, tag, idContainer, true);
     }
 
     @Override
     public void closeFragment(String tag) {
         mBinder.llSortFilterContainer.setVisibility(View.GONE);
-        super.closeFragment(tag);
+        super.closeFragment(tag, true);
     }
 
 }

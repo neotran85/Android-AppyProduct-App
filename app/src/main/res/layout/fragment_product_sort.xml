@@ -22,14 +22,16 @@
         android:background="@color/black_opacity_50"
         android:orientation="vertical">
         <ListView
+            android:clickable="true"
             android:id="@+id/lvSortOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"></ListView>
         <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/llRestOfLayout"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>

@@ -96,13 +96,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:onClick="@{(view) -> navigator.toggleFilters()}">
+
                             <LinearLayout
                                 android:id="@+id/filterIcon"
-                                android:paddingRight="8dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/height_tab_top_bar"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:paddingRight="8dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -118,20 +119,22 @@
                                     android:layout_marginStart="8dp"
                                     android:background="@mipmap/icon_filter" />
                             </LinearLayout>
+
                             <LinearLayout
-                                android:visibility="@{viewModel.isFilter, default=gone}"
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
                                 android:layout_alignRight="@+id/filterIcon"
                                 android:background="@drawable/circle"
-                                android:layout_width="14dp"
                                 android:gravity="center"
-                                android:layout_height="14dp">
+                                android:visibility="@{viewModel.isFilter, default=gone}">
+
                                 <TextView
-                                    android:textColor="@color/white"
-                                    android:textSize="10sp"
-                                    android:text="@{viewModel.filterNumber}"
-                                    android:gravity="center"
                                     android:layout_width="14dp"
-                                    android:layout_height="14dp" />
+                                    android:layout_height="14dp"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.filterNumber}"
+                                    android:textColor="@color/white"
+                                    android:textSize="10sp" />
                             </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -153,10 +156,10 @@
                         android:paddingTop="4dp" />
 
                     <LinearLayout
+                        android:clickable="true"
                         android:id="@+id/llSortFilterContainer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:clickable="true"
                         android:orientation="vertical"
                         android:visibility="gone" />
 
