@@ -44,6 +44,11 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mNavigator.onFragmentClosed();
+    }
+    @Override
     public int getLayoutId() {
         return mLayoutId;
     }

@@ -295,6 +295,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
+    public void onFragmentClosed() {
+        mBinder.llSortFilterContainer.setVisibility(View.GONE);
+    }
+    @Override
     public void closeFragment(String tag) {
         mBinder.llSortFilterContainer.setVisibility(View.GONE);
         super.closeFragment(tag, true);

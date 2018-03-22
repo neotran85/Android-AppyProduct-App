@@ -45,10 +45,11 @@
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         style="@style/Toolbar"
-                        android:layout_marginLeft="-14dp"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>
+                        android:layout_marginStart="-14dp"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
                     <LinearLayout
+                        android:baselineAligned="false"
                         android:id="@+id/tabLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_tab_top_bar"
@@ -59,7 +60,7 @@
 
                         <LinearLayout
                             android:id="@+id/tabSort"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:clickable="true"

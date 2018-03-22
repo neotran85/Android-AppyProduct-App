@@ -31,4 +31,6 @@ public interface ProductListNavigator {
 
     void clearFragment();
 
+    void onFragmentClosed();
+
 }

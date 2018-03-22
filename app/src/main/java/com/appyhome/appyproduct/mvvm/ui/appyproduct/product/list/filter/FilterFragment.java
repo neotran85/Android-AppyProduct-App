@@ -99,6 +99,7 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mNavigator.onFragmentClosed();
         hideKeyboard();
     }
 
