@@ -53,6 +53,11 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
     }
 
     @Override
+    protected int getLoadingItemLayout() {
+        return R.layout.view_item_topic_loading;
+    }
+
+    @Override
     protected int getEmptyItemLayout() {
         return R.layout.view_item_product_cart_empty;
     }

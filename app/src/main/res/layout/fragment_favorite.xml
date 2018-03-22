@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="My Wishlist"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_gray"
                     android:textSize="18sp" />
                 <TextView
                     android:layout_marginStart="4dp"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@{viewModel.totalCount}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_gray"
                     android:textSize="18sp" />
             </LinearLayout>
 

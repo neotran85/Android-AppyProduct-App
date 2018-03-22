@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
             mItems = null;
         }
         mCurrentClickedViewModel = null;
+    }
+
+    @Override
+    protected int getLoadingItemLayout() {
+        return R.layout.view_item_sub_category_loading;
     }
 
     @Override

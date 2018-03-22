@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -29,6 +30,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.common.decoration.SpacesItemDecoration;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
@@ -43,8 +45,6 @@ import io.realm.RealmResults;
 public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
     public static final int ID_DEFAULT_SUB = 138;
     public static final int DEFAULT_SPAN_COUNT = 2;
-    private static final int TAB_SORT = 0;
-    private static final int TAB_FILTER = 1;
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -67,6 +67,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     private SortFragment mSortFragment;
 
     private FilterFragment mFilterFragment;
+
+    private boolean isGridViewSetup = false;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
@@ -120,10 +122,13 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
-        rv.setLayoutManager(new GridLayoutManager(this,
-                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
-                false));
-        rv.setItemAnimator(new DefaultItemAnimator());
+        if (!isGridViewSetup) {
+            rv.setLayoutManager(new GridLayoutManager(this,
+                    DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                    false));
+            rv.setItemAnimator(new DefaultItemAnimator());
+            isGridViewSetup = true;
+        }
     }
 
     @Override
@@ -202,6 +207,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         closeFragment(FilterFragment.TAG);
         closeFragment(SortFragment.TAG);
     }
+
     @Override
     public void editFilter() {
         toggleFilters();
@@ -298,6 +304,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public void onFragmentClosed() {
         mBinder.llSortFilterContainer.setVisibility(View.GONE);
     }
+
     @Override
     public void closeFragment(String tag) {
         mBinder.llSortFilterContainer.setVisibility(View.GONE);

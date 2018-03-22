@@ -69,10 +69,14 @@ public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerVi
 
     protected abstract int getEmptyItemLayout();
 
+    protected int getLoadingItemLayout() {
+        return R.layout.view_item_sample_loading;
+    }
+
     protected BaseViewHolder getLoadingHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View loadingView = inflater.inflate(R.layout.view_item_sample_loading, parent, false);
+        View loadingView = inflater.inflate(getLoadingItemLayout(), parent, false);
         return new SampleItemLoadingViewHolder(loadingView);
     }
 
