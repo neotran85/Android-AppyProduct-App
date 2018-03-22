@@ -14,9 +14,10 @@
     </data>
 
     <android.support.v7.widget.CardView
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginEnd="@dimen/sub_horizontal_padding"
+        android:layout_marginStart="@dimen/sub_horizontal_padding"
+        android:layout_marginBottom="@dimen/sub_vertical_padding"
+        android:layout_marginTop="@dimen/sub_vertical_padding"
         card_view:cardCornerRadius="6dp"
         android:id="@+id/llItemCategoryView"
         card_view:cardPreventCornerOverlap="false"
@@ -26,25 +27,27 @@
         card_view:cardElevation="4dp"
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{(view) -> navigator.onItemClick(view)}"
-        android:paddingBottom="12dp">
+        android:paddingBottom="10dp">
 
         <LinearLayout
+            android:layout_marginTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_marginTop="6dp"
                 android:id="@+id/ivThumbnail"
                 imageAssetsUrl="@{viewModel.imageURL}"
-                android:layout_width="@dimen/size_sub_image"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/size_sub_image"
                 android:background="@color/gray" />
 
             <TextView
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:id="@+id/tvTitleProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
