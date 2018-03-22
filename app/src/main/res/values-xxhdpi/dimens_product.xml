@@ -1,8 +1,0 @@
-<resources>
-    <dimen name="menu_sub_categories_width">110dp</dimen>
-    <dimen name="menu_sub_categories_height">150dp</dimen>
-    <dimen name="size_sub_image">100dp</dimen>
-
-    <dimen name="sub_vertical_padding">6dp</dimen>
-    <dimen name="sub_horizontal_padding">5dp</dimen>
-</resources>
