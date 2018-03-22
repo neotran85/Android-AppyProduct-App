@@ -97,6 +97,7 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".ui.appyproduct.product.list.ProductListActivity"
             android:screenOrientation="portrait" />
 
