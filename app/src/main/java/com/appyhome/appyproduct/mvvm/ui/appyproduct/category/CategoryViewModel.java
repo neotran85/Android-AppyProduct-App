@@ -10,6 +10,10 @@ import com.crashlytics.android.Crashlytics;
 public class CategoryViewModel extends BaseViewModel<CategoryNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
 
+    public ObservableField<Float> widthLeftMenu = new ObservableField<>(0f);
+    public ObservableField<Float> widthItem = new ObservableField<>(0f);
+
+
     public CategoryViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
