@@ -1,10 +1,10 @@
 <resources>
     <dimen name="menu_left_categories_width">110dp</dimen>
     <dimen name="menu_left_categories_height">140dp</dimen>
-    <dimen name="menu_sub_categories_width">110dp</dimen>
+    <dimen name="menu_sub_categories_width">124dp</dimen>
     <dimen name="menu_sub_categories_height">160dp</dimen>
     <dimen name="size_category_image">48dp</dimen>
-    <dimen name="size_sub_image">100dp</dimen>
+    <dimen name="size_sub_image">110dp</dimen>
     <dimen name="size_cat_image">86dp</dimen>
     <dimen name="width_topic_image">67dp</dimen>
     <dimen name="height_topic_image">74dp</dimen>
