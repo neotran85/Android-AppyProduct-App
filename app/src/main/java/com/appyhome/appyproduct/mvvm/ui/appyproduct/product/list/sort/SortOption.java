@@ -6,7 +6,6 @@ public enum SortOption {
     PRICE_HIGHEST("PRICEHTL", "Price High To Low"),
     PRICE_LOWEST("PRICELTH", "Price Low To High"),
     LATEST("LATEST", "Latest Arrival"),
-    PROMOTION("", "Promotion"),
     RATING("RATING", "Rating"),
     POPULAR("POPULAR", "The Most Popular");
 

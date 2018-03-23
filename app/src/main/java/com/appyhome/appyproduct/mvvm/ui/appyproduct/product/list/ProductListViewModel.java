@@ -26,7 +26,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
-    public ObservableField<String> currentSortOption = new ObservableField<>("Sort By Popular");
+    public ObservableField<String> currentSortLabel = new ObservableField<>("Sort");
     public ObservableField<String> filterNumber = new ObservableField<>("");
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
     private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
@@ -37,7 +37,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void fetchProductsWithFilter(int idSub, String sortType) {
+    public void getAllProductsWithFilter(int idSub, String sortType) {
         mIdSub = idSub;
         mSortType = sortType;
         getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), idSub)
@@ -73,7 +73,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
             getCompositeDisposable().add(disposable);
         } else {
-            getProductsBySubCategory(mIdSub, new Product[0]);
+            getAllProductsWithFilter(mIdSub, mSortType);
         }
     }
 
@@ -98,7 +98,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(success -> {
                     // DONE ADDED
                     if (success) {
-                        fetchProductsWithFilter(mIdSub, "");
+                        getAllProductsWithFilter(mIdSub, "");
                     } else {
                         // IF ADDED FAILED
                         showCachedList(list);
@@ -159,7 +159,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
-                    fetchProductsWithFilter(mIdSub, mSortType);
+                    getAllProductsWithFilter(mIdSub, mSortType);
                 }, Crashlytics::logException));
     }
 

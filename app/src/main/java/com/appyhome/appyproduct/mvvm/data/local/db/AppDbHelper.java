@@ -572,10 +572,10 @@ public class AppDbHelper implements DbHelper {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
-                getRealm().where(Product.class)
+                boolean success = getRealm().where(Product.class)
                         .findAll().deleteAllFromRealm();
                 getRealm().commitTransaction();
-                return true;
+                return success;
             } catch (Exception e) {
                 getRealm().cancelTransaction();
                 return false;

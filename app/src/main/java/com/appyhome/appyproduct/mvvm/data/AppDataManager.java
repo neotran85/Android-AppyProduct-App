@@ -582,7 +582,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> clearProductCached() {
-        return mDbHelper.clearProductCached();
+    public Flowable<Boolean> clearProductsCached() {
+        return mDbHelper.clearProductsCached();
     }
 }

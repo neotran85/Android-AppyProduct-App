@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -30,7 +29,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
-import com.appyhome.appyproduct.mvvm.ui.common.decoration.SpacesItemDecoration;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void applyFilter() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        getViewModel().fetchProductsWithFilter(idSubCategory, "");
+        getViewModel().getAllProductsWithFilter(idSubCategory, "");
         getViewModel().getCurrentFilter();
     }
 
@@ -285,7 +283,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             SortOption option = (SortOption) view.getTag();
             option.checked.set(true);
             mSortFragment.setCurrentSortOption(opt);
-            mViewModel.currentSortOption.set(option.getName());
+            mViewModel.currentSortLabel.set(option.getName());
             toggleSortOptions();
 
             int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
