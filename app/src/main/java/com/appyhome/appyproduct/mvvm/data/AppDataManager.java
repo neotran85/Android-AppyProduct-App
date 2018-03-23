@@ -580,4 +580,9 @@ public class AppDataManager implements DataManager {
     public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
         return mDbHelper.getAllProductsFilter(userId, idSubCategory);
     }
+
+    @Override
+    public Flowable<Boolean> clearProductCached() {
+        return mDbHelper.clearProductCached();
+    }
 }

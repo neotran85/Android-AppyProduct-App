@@ -568,6 +568,22 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Boolean> clearProductsCached() {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                getRealm().where(Product.class)
+                        .findAll().deleteAllFromRealm();
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
+    }
+
+    @Override
     public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
         beginTransaction();
         ProductFilter filter = getRealm().where(ProductFilter.class)

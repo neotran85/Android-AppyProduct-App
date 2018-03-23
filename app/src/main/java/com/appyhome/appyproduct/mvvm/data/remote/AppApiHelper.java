@@ -203,9 +203,17 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("page", request.page);
+            jsonObject.put("category_id", request.categoryId);
+            jsonObject.put("type", request.type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET)
                 .addHeaders(mApiHeader.getPublicApiHeader())
-                .addBodyParameter(request)
+                .addJSONObjectBody(jsonObject)
                 .build()
                 .getObjectSingle(ProductListResponse.class);
     }

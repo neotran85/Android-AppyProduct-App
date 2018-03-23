@@ -48,9 +48,16 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public void fetchProductsByIdCategory(int idSub, String sortType) {
-        mIdSub = idSub;
-        mSortType = sortType;
+    private void clearProductsCached() {
+        getCompositeDisposable().add(getDataManager().clearProductsCached()
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    fetchProductsByIdCategory();
+                }, Crashlytics::logException));
+    }
+
+    private void fetchProductsByIdCategory() {
         if (isOnline()) {
             Disposable disposable = Observable.create((ObservableEmitter<ProductListResponse> subscriber) -> {
                 fetchProducts().subscribe(response -> {
@@ -70,6 +77,13 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
+    public void fetchProductsByIdCategory(int idSub, String sortType) {
+        mIdSub = idSub;
+        mSortType = sortType;
+        // Clear Product Cached First, then fetchProductsByIdCategory();
+        clearProductsCached();
+    }
+
     private Single<ProductListResponse> fetchProducts() {
         return getDataManager()
                 .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0, mSortType))
@@ -83,9 +97,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
-                    if (success)
+                    if (success) {
                         fetchProductsWithFilter(mIdSub, "");
-                    else {
+                    } else {
                         // IF ADDED FAILED
                         showCachedList(list);
                     }
