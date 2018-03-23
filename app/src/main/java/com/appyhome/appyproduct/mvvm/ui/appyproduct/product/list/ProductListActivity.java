@@ -76,7 +76,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void applyFilter() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        getViewModel().getAllProductsWithFilter(idSubCategory, "");
+        getViewModel().getAllProductsWithFilter();
         getViewModel().getCurrentFilter();
     }
 

@@ -37,10 +37,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void getAllProductsWithFilter(int idSub, String sortType) {
-        mIdSub = idSub;
-        mSortType = sortType;
-        getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), idSub)
+    public void getAllProductsWithFilter() {
+        getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), mIdSub)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
@@ -73,7 +71,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
             getCompositeDisposable().add(disposable);
         } else {
-            getAllProductsWithFilter(mIdSub, mSortType);
+            getAllProductsWithFilter();
         }
     }
 
@@ -98,7 +96,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(success -> {
                     // DONE ADDED
                     if (success) {
-                        getAllProductsWithFilter(mIdSub, "");
+                        getAllProductsWithFilter();
                     } else {
                         // IF ADDED FAILED
                         showCachedList(list);
@@ -159,7 +157,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
-                    getAllProductsWithFilter(mIdSub, mSortType);
+                    getAllProductsWithFilter();
                 }, Crashlytics::logException));
     }
 
