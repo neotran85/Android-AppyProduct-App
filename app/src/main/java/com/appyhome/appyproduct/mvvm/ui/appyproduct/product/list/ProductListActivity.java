@@ -75,7 +75,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void applyFilter() {
-        int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         getViewModel().getAllProductsWithFilter();
         getViewModel().getCurrentFilter();
     }
@@ -108,9 +107,13 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.getAllFavorites();
     }
 
-    private void fetchProducts() {
+    private int  getIdSubCategory() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        mViewModel.fetchProductsByIdCategory(idSubCategory, "");
+        return idSubCategory;
+    }
+
+    private void fetchProducts() {
+        mViewModel.fetchProductsByIdCategory(getIdSubCategory());
     }
 
     private void setUpRecyclerViewList(RecyclerView rv) {
@@ -271,23 +274,18 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             mSortFragment = SortFragment.newInstance(this);
             showFragment(mSortFragment, SortFragment.TAG, R.id.llSortFilterContainer);
         }
-        mViewModel.isSortShowed.set(!isShowed);
+        getViewModel().updateSortCurrentLabel();
+        getViewModel().isSortShowed.set(!isShowed);
     }
 
 
     @Override
     public void onSortItemClick(View view) {
         if (mSortFragment != null) {
-            SortOption opt = mSortFragment.getCurrentSortOption();
-            opt.checked.set(false);
             SortOption option = (SortOption) view.getTag();
-            option.checked.set(true);
-            mSortFragment.setCurrentSortOption(opt);
-            mViewModel.currentSortLabel.set(option.getName());
+            getViewModel().saveSortCurrent(option);
             toggleSortOptions();
-
-            int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-            mViewModel.fetchProductsByIdCategory(idSubCategory, option.getValue());
+            getViewModel().fetchProductsByIdCategory(getIdSubCategory());
         }
     }
 

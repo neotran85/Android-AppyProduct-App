@@ -15,8 +15,7 @@ public class SortOptionsAdapter extends BaseAdapter {
 
     private SortNavigator mNavigator;
 
-    public SortOptionsAdapter() {
-    }
+    public SortOptionsAdapter() {}
 
     public void setUp(Context context, SortOption[] listItem, SortNavigator navigator) {
         this.mContext = context;

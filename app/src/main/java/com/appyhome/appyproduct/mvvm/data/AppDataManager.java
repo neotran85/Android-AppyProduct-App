@@ -585,4 +585,14 @@ public class AppDataManager implements DataManager {
     public Flowable<Boolean> clearProductsCached() {
         return mDbHelper.clearProductsCached();
     }
+
+    @Override
+    public void setProductsSortCurrent(String userId, String sort) {
+        mPreferencesHelper.setProductsSortCurrent(userId, sort);
+    }
+
+    @Override
+    public String getProductsSortCurrent(String userId) {
+        return mPreferencesHelper.getProductsSortCurrent(userId);
+    }
 }

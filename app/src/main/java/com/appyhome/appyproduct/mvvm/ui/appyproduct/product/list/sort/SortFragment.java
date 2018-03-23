@@ -27,8 +27,6 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
     @Inject
     SortOptionsAdapter mAdapter;
 
-    private SortOption mCurrentOption;
-
     private SortNavigator mNavigator;
 
     public static SortFragment newInstance(SortNavigator navigator) {
@@ -66,18 +64,9 @@ public class SortFragment extends BaseFragment<FragmentProductSortBinding, SortV
         mBinder.setNavigator(mNavigator);
         mAdapter.setUp(this.getContext(), mViewModel.sortOptions, mNavigator);
         mBinder.lvSortOptions.setAdapter(mAdapter);
-        mCurrentOption = mViewModel.getCurrentSortOption();
         int heightOfView = mViewModel.sortOptions.length * getResources().getDimensionPixelSize(R.dimen.height_sort_option_item);
         AppAnimator.dropdown(mBinder.lvSortOptions, heightOfView);
         AppAnimator.fadeIn(mBinder.llRestOfLayout);
-    }
-
-    public SortOption getCurrentSortOption() {
-        return mCurrentOption;
-    }
-
-    public void setCurrentSortOption(SortOption opt) {
-        mCurrentOption = opt;
     }
 
     @Override

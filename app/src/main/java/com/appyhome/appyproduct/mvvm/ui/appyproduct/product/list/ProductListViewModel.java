@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -35,7 +36,29 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        updateSortCurrentLabel();
     }
+
+    /******************************  SORT CURRENT METHODS *************** ***************/
+
+    public void updateSortCurrentLabel() {
+        currentSortLabel.set(getCurrentSortOption().getName());
+    }
+
+    public void saveSortCurrent(SortOption option) {
+        getDataManager().setProductsSortCurrent(getUserId(), option.toJson());
+    }
+
+    private SortOption getCurrentSortOption() {
+        String json = getDataManager().getProductsSortCurrent(getUserId());
+        if (json.length() > 0) {
+            SortOption.UNKNOWN.fromJson(json);
+        }
+        return SortOption.UNKNOWN;
+    }
+
+
+    /******************************  PRODUCTS METHODS *************** ***************/
 
     public void getAllProductsWithFilter() {
         getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), mIdSub)
@@ -75,9 +98,11 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    public void fetchProductsByIdCategory(int idSub, String sortType) {
+    public void fetchProductsByIdCategory(int idSub) {
         mIdSub = idSub;
-        mSortType = sortType;
+        String json = getDataManager().getProductsSortCurrent(getUserId());
+        SortOption.UNKNOWN.fromJson(json);
+        mSortType = SortOption.UNKNOWN.getValue();
         // Clear Product Cached First, then fetchProductsByIdCategory();
         clearProductsCached();
     }
@@ -120,6 +145,22 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         else getNavigator().showEmptyProducts();
     }
 
+    private void getProductsBySubCategory(int idSub, Product[] cachedList) {
+        getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(products -> {
+                    // DONE GET
+                    showProductList(products);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    showCachedList(cachedList);
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    /******************************  FAVORITE METHODS *************** ***************/
+
     public void getAllFavorites() {
         getCompositeDisposable().add(getDataManager().getAllProductFavorites(getUserId())
                 .take(1)
@@ -136,20 +177,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, Crashlytics::logException));
     }
 
-    private void getProductsBySubCategory(int idSub, Product[] cachedList) {
-        getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(products -> {
-                    // DONE GET
-                    showProductList(products);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    showCachedList(cachedList);
-                    Crashlytics.logException(throwable);
-                }));
-    }
-
+    /******************************  FILTER METHODS ******************************/
 
     public void resetFilter() {
         getCompositeDisposable().add(getDataManager().saveProductFilter(getUserId(), "",

@@ -48,4 +48,8 @@ public interface PreferencesHelper {
     void setDefaultPaymentMethod(String userId, String methodName);
 
     String getDefaultPaymentMethod(String userId);
+
+    String getProductsSortCurrent(String userId);
+
+    void setProductsSortCurrent(String userId, String sort);
 }
