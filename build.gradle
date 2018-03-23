@@ -59,6 +59,9 @@ ext {
     mockitoVersion = '2.7.1'
 
     // Others
+    picassoVersion = '2.4.0'
+    sliderVersion = '1.1.5@aar'
+    findbugsVersion = '1.3.9'
     molpaymobilexdkVersion = '3.17.0'
     materialdatetimepickerVersion = '3.5.0'
     playservicesplacesVersion = '11.6.0'
