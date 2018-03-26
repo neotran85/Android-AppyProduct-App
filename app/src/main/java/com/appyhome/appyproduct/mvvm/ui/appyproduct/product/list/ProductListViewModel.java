@@ -92,8 +92,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    private void clearProductsCached() {
-        getCompositeDisposable().add(getDataManager().clearProductsCached()
+    private void clearProductsLoaded() {
+        getCompositeDisposable().add(getDataManager().clearProductsLoaded()
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
@@ -135,8 +135,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         String json = getDataManager().getProductsSortCurrent(getUserId());
         SortOption.UNKNOWN.fromJson(json);
         mSortType = SortOption.UNKNOWN.getValue();
-        // Clear Product Cached First, then fetchProductsByIdCategory();
-        clearProductsCached();
+        // Clear Product Loaded Before First, then fetchProductsByIdCategory();
+        clearProductsLoaded();
     }
 
     private Single<JSONObject> fetchProducts() {

@@ -86,7 +86,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory);
 
-    Flowable<Boolean> clearProductsCached();
+    Flowable<Boolean> clearProductsLoaded();
 
     Flowable<Boolean> addProductsCached(ProductCached[] list);
 

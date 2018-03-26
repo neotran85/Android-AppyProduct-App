@@ -589,7 +589,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> clearProductsCached() {
+    public Flowable<Boolean> clearProductsLoaded() {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
