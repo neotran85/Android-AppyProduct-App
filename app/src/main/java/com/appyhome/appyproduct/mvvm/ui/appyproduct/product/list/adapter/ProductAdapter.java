@@ -73,17 +73,8 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isAllFavorited) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
-        itemViewModel.title.set(product.product_name);
-        itemViewModel.imageURL.set(product.avatar_name);
-        itemViewModel.setIdProduct(product.id);
-        itemViewModel.price.set("RM " + product.lowest_price);
         itemViewModel.setNavigator(navigator);
-        itemViewModel.isFavorite.set(isAllFavorited);
-        itemViewModel.rate.set(product.rate);
-        itemViewModel.rateCount.set(product.rate_count + "");
-        itemViewModel.discount.set(product.discount + "%");
-        itemViewModel.isDiscount.set(product.discount > 0);
-        itemViewModel.favoriteCount.set(product.favorite_count + "");
+        itemViewModel.inputValue(product, isAllFavorited);
         return itemViewModel;
     }
 

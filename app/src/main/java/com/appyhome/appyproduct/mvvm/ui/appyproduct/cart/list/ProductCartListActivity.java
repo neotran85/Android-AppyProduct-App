@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -168,7 +169,9 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void showContent(ProductCartAdapter adapter, View view, int idProduct) {
-
+        Intent intent = ProductDetailActivity.getStartIntent(this, null);
+        intent.putExtra("product_id", idProduct);
+        startActivity(intent);
     }
 
     @Override

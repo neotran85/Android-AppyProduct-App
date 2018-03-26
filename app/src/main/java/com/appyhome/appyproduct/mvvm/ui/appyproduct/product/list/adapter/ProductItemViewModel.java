@@ -3,6 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -36,19 +38,11 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
     public ObservableField<String> amountAdded = new ObservableField<>("1");
-    protected int idProduct;
+    private int idProduct;
 
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-    }
-
-    public int getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
     }
 
     public void updateProductFavorite(int position) {
@@ -74,12 +68,38 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void addProductToCart() {
         getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, getIntegerAmountAdded())
-                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
-                    if (productCart != null) {
+                    if (productCart != null && getUserId().equals(productCart.user_id)) {
                         getNavigator().updateCartCount();
                         getNavigator().addedToCartCompleted();
+                    }
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                }));
+    }
+
+    public void inputValue(Product product, boolean isAllFavorited) {
+        title.set(product.product_name);
+        imageURL.set(product.avatar_name);
+        idProduct = product.id;
+        price.set("RM " + product.lowest_price);
+        isFavorite.set(isAllFavorited);
+        rate.set(product.rate);
+        rateCount.set(product.rate_count + "");
+        discount.set(product.discount + "%");
+        isDiscount.set(product.discount > 0);
+        favoriteCount.set(product.favorite_count + "");
+    }
+
+    public void getProductCachedById(int productId) {
+        getCompositeDisposable().add(getDataManager().getProductCachedById(productId)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCached -> {
+                    if (productCached != null && productCached.isValid()) {
+                        inputValue(productCached.convertToProduct(), false);
                     }
                 }, throwable -> {
                     throwable.printStackTrace();

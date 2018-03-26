@@ -164,6 +164,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<ProductCached> getProductCachedById(int idProduct) {
+        beginTransaction();
+        Flowable<ProductCached> product = getRealm().where(ProductCached.class)
+                .equalTo("id", idProduct)
+                .findFirstAsync().asFlowable();
+        getRealm().commitTransaction();
+        return product;
+    }
+
+    @Override
     public Flowable<Product> getProductById(int idProduct) {
         beginTransaction();
         Flowable<Product> topic = getRealm().where(Product.class)
@@ -395,6 +405,7 @@ public class AppDbHelper implements DbHelper {
     private ProductCart createNewProductCart(Product product, String userId) {
         ProductCart cartItem = new ProductCart();
         cartItem.id = System.currentTimeMillis();
+        cartItem.price = product.lowest_price;
         cartItem.product_id = product.id;
         cartItem.seller_id = product.seller_id;
         cartItem.seller_name = product.seller_name;
@@ -412,16 +423,16 @@ public class AppDbHelper implements DbHelper {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
-                Product product = getRealm().where(Product.class)
-                        .equalTo("id", productId)
-                        .findFirst();
                 ProductCart productCart = getRealm().where(ProductCart.class)
-                        .equalTo("product_id", product.id)
+                        .equalTo("product_id", productId)
                         .equalTo("user_id", userId)
                         .equalTo("order_id", 0)
                         .findFirst();
-                if (productCart == null) {
-                    productCart = createNewProductCart(product, userId);
+                if (productCart == null || !productCart.isValid()) {
+                    ProductCached product = getRealm().where(ProductCached.class)
+                            .equalTo("id", productId)
+                            .findFirst();
+                    productCart = createNewProductCart(product.convertToProduct(), userId);
                 }
                 productCart.amount = productCart.amount + amountAdded;
                 productCart = getRealm().copyToRealmOrUpdate(productCart);
@@ -430,7 +441,7 @@ public class AppDbHelper implements DbHelper {
             } catch (Exception e) {
                 getRealm().cancelTransaction();
                 e.printStackTrace();
-                return null;
+                return new ProductCart();
             }
         });
     }

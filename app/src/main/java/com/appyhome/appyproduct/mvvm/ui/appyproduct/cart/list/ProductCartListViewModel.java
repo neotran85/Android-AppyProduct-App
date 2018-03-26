@@ -30,13 +30,6 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 }, Crashlytics::logException));
     }
 
-    private void disposeGetAllProductCarts() {
-        if (mDisposable != null) {
-            mDisposable.dispose();
-            mDisposable = null;
-        }
-    }
-
     public void getAllProductCarts() {
         mDisposable = getDataManager().getAllProductCarts(getUserId())
                 .take(1)
@@ -44,12 +37,6 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 .subscribe(productCarts -> {
                     isCartEmpty.set(productCarts == null || productCarts.size() <= 0);
                     getNavigator().showCarts(productCarts);
-                    // Clear disposableGetAllProductCarts
-                    disposeGetAllProductCarts();
-                }, throwable -> {
-                    disposeGetAllProductCarts();
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                });
+                }, Crashlytics::logException);
     }
 }

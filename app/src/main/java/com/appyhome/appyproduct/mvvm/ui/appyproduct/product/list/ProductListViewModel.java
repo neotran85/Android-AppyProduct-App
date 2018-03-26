@@ -74,6 +74,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     showProductList(products);
+                    // CACHED ALL PRODUCTS LOADED
                     addProductsCachedToDatabase();
                 }, Crashlytics::logException));
     }
@@ -85,10 +86,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(success -> {
                         cachedResponse = null;
-                    }, throwable -> {
-                        throwable.printStackTrace();
-                        Crashlytics.logException(throwable);
-                    }));
+                    }, Crashlytics::logException));
         }
     }
 
@@ -235,11 +233,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
                     if (filter != null)
-                        if (filter.user_id != null && filter.user_id.length() > 0)
+                        if (getUserId().equals(filter.user_id))
                             updateCountFilter(filter);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 }

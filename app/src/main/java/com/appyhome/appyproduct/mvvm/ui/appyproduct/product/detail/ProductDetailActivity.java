@@ -65,6 +65,14 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
         loadImages();
         getCartPosition();
+        getProductIdByIntent();
+    }
+
+    private void getProductIdByIntent() {
+        int productId = getIntent().getIntExtra("product_id", 0);
+        if(productId != 0) {
+            getViewModel().getProductCachedById(productId);
+        }
     }
 
     private void getCartPosition() {

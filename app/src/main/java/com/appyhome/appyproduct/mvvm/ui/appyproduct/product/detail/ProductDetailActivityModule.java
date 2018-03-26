@@ -16,7 +16,10 @@ public class ProductDetailActivityModule {
     @Provides
     ProductItemViewModel provideProductItemViewModel(DataManager dataManager,
                                                      SchedulerProvider schedulerProvider) {
-        return clickedViewModel;
+        if (clickedViewModel != null)
+            return clickedViewModel;
+        else
+            return new ProductItemViewModel(dataManager, schedulerProvider);
     }
 
     @Provides

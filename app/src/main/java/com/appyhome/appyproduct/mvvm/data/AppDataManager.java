@@ -601,4 +601,8 @@ public class AppDataManager implements DataManager {
     public Flowable<Boolean> addProductsCached(ProductCached[] list) {
         return mDbHelper.addProductsCached(list);
     }
+    @Override
+    public Flowable<ProductCached> getProductCachedById(int idProduct) {
+        return mDbHelper.getProductCachedById(idProduct);
+    }
 }

@@ -90,4 +90,5 @@ public interface DbHelper {
 
     Flowable<Boolean> addProductsCached(ProductCached[] list);
 
+    Flowable<ProductCached> getProductCachedById(int idProduct);
 }

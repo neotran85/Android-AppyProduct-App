@@ -150,6 +150,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Override
     public void onResume() {
         super.onResume();
+        mSearchToolbarViewHolder.onBind(0);
     }
 
 }
