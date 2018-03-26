@@ -111,7 +111,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         }
     }
 
-    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, boolean isAllFavorited) {
+    public void addItems(Product[] results, ProductItemNavigator navigator, boolean isAllFavorited) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         mViewModelEmpty = createEmptyViewModel(navigator);

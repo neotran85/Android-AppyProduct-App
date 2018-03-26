@@ -202,7 +202,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request) {
+    public Single<JSONObject> fetchProductsByIdCategory(ProductListRequest request) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("page", request.page);
@@ -215,7 +215,7 @@ public class AppApiHelper implements ApiHelper {
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addJSONObjectBody(jsonObject)
                 .build()
-                .getObjectSingle(ProductListResponse.class);
+                .getJSONObjectSingle();
     }
 
     @Override

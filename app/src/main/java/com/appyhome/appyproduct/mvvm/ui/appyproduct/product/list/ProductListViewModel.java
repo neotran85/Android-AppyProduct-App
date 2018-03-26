@@ -6,12 +6,17 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListCachedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +37,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
     private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
     private String mSortType = "";
+    private ProductListCachedResponse cachedResponse;
+
+    private boolean showCachedList = true;
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -66,7 +74,22 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
                     showProductList(products);
+                    addProductsCachedToDatabase();
                 }, Crashlytics::logException));
+    }
+
+    private void addProductsCachedToDatabase() {
+        if (cachedResponse != null && cachedResponse.message != null && cachedResponse.message.length > 0) {
+            getCompositeDisposable().add(getDataManager().addProductsCached(cachedResponse.message)
+                    .take(1)
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(success -> {
+                        cachedResponse = null;
+                    }, throwable -> {
+                        throwable.printStackTrace();
+                        Crashlytics.logException(throwable);
+                    }));
+        }
     }
 
     private void clearProductsCached() {
@@ -81,10 +104,19 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private void fetchProductsByIdCategory() {
         if (isOnline()) {
             Disposable disposable = Observable.create((ObservableEmitter<ProductListResponse> subscriber) -> {
-                fetchProducts().subscribe(response -> {
-                    if (response.message != null && response.message.length > 0) {
-                        addProductsToDatabase(response.message);
+                fetchProducts().subscribe(jsonResult -> {
+                    // 200 OK
+                    if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+                        Gson gson = new Gson();
+                        ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
+                        cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
+                        if (response.message != null && response.message.length > 0) {
+                            addProductsToDatabase(response.message);
+                            return;
+                        }
                     }
+                    // NOT OK
+                    getNavigator().showEmptyProducts();
                 }, throwable -> {
                     getNavigator().showEmptyProducts();
                     throwable.printStackTrace();
@@ -107,7 +139,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         clearProductsCached();
     }
 
-    private Single<ProductListResponse> fetchProducts() {
+    private Single<JSONObject> fetchProducts() {
         return getDataManager()
                 .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0, mSortType))
                 .subscribeOn(getSchedulerProvider().io())
@@ -140,23 +172,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void showCachedList(Product[] list) {
-        if (list != null && list.length > 0)
+        if (showCachedList && list != null && list.length > 0)
             getNavigator().showProducts(list);
         else getNavigator().showEmptyProducts();
-    }
-
-    private void getProductsBySubCategory(int idSub, Product[] cachedList) {
-        getCompositeDisposable().add(getDataManager().getProductsBySubCategory(idSub)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(products -> {
-                    // DONE GET
-                    showProductList(products);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    showCachedList(cachedList);
-                    Crashlytics.logException(throwable);
-                }));
     }
 
     /******************************  FAVORITE METHODS *************** ***************/
@@ -216,7 +234,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
-                    updateCountFilter(filter);
+                    if (filter != null)
+                        if (filter.user_id != null && filter.user_id.length() > 0)
+                            updateCountFilter(filter);
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);

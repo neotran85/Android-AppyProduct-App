@@ -5,6 +5,7 @@ import android.content.Context;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -449,7 +450,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<ProductListResponse> fetchProductsByIdCategory(ProductListRequest request) {
+    public Single<JSONObject> fetchProductsByIdCategory(ProductListRequest request) {
         return mApiHelper.fetchProductsByIdCategory(request);
     }
 
@@ -557,7 +558,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
+    public Flowable<RealmResults<ProductCached>> getAllProductsFavorited(ArrayList<Integer> ids) {
         return mDbHelper.getAllProductsFavorited(ids);
     }
 
@@ -594,5 +595,10 @@ public class AppDataManager implements DataManager {
     @Override
     public String getProductsSortCurrent(String userId) {
         return mPreferencesHelper.getProductsSortCurrent(userId);
+    }
+
+    @Override
+    public Flowable<Boolean> addProductsCached(ProductCached[] list) {
+        return mDbHelper.addProductsCached(list);
     }
 }

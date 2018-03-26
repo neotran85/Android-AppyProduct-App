@@ -66,8 +66,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private FilterFragment mFilterFragment;
 
-    private boolean isGridViewSetup = false;
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
@@ -107,7 +105,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.getAllFavorites();
     }
 
-    private int  getIdSubCategory() {
+    private int getIdSubCategory() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
         return idSubCategory;
     }
@@ -123,13 +121,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
-        if (!isGridViewSetup) {
-            rv.setLayoutManager(new GridLayoutManager(this,
-                    DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
-                    false));
-            rv.setItemAnimator(new DefaultItemAnimator());
-            isGridViewSetup = true;
-        }
+        rv.setLayoutManager(new GridLayoutManager(this,
+                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                false));
+        rv.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
@@ -99,7 +100,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void showProducts(RealmResults<Product> result) {
+    public void showProducts(Product[] result) {
         if (result != null) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mFavoriteAdapter.addItems(result, this, true);

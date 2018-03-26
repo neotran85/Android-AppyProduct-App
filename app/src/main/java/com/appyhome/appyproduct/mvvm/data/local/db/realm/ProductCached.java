@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
 import android.arch.persistence.room.ColumnInfo;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +11,7 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Product extends RealmObject {
+public class ProductCached extends RealmObject {
     @Expose
     @SerializedName("id")
     @ColumnInfo(name = "id")
@@ -126,4 +127,37 @@ public class Product extends RealmObject {
     @SerializedName("like")
     @ColumnInfo(name = "like")
     public int like;
+
+    @Expose
+    @SerializedName("time_db_added")
+    @ColumnInfo(name = "time_db_added")
+    public long time_db_added;
+
+    public Product convertToProduct() {
+        Product product = new Product();
+        product.id = id;
+        product.stock_location = stock_location;
+        product.lowest_price = lowest_price;
+        product.avatar_name = avatar_name;
+        product.category_id = category_id;
+        product.country_manu = country_manu;
+        product.created_at =  created_at;
+        product.description = description;
+        product.discount = discount;
+        product.enabled = enabled;
+        product.favorite_count = favorite_count;
+        product.flag = flag;
+        product.like = like;
+        product.pricing_scheme_id = pricing_scheme_id;
+        product.product_name = product_name;
+        product.rate = rate;
+        product.rate_count = rate_count;
+        product.seller_id = seller_id;
+        product.seller_name = seller_name;
+        product.shipping_type_id = shipping_type_id;
+        product.sort_order = sort_order;
+        product.tax_class_id = tax_class_id;
+        product.updated_at = updated_at;
+        return product;
+    }
 }

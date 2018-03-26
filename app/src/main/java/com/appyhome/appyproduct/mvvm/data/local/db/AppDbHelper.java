@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.data.local.db;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -189,11 +190,32 @@ public class AppDbHelper implements DbHelper {
             for (Product product : list) {
                 int randomNum = new Random().nextInt(storeName.length);
                 product.seller_name = storeName[randomNum];
-                product.price = prices[randomNum];
                 product.rate = rates[randomNum];
                 product.discount = discountList[randomNum];
                 product.rate_count = numberRates[randomNum];
                 product.favorite_count = numberFavorites[randomNum];
+                getRealm().copyToRealmOrUpdate(product);
+            }
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            getRealm().cancelTransaction();
+            return Flowable.just(false);
+        }
+    }
+
+    @Override
+    public Flowable<Boolean> addProductsCached(ProductCached[] list) {
+        try {
+            beginTransaction();
+            for (ProductCached product : list) {
+                int randomNum = new Random().nextInt(storeName.length);
+                product.seller_name = storeName[randomNum];
+                product.rate = rates[randomNum];
+                product.discount = discountList[randomNum];
+                product.rate_count = numberRates[randomNum];
+                product.favorite_count = numberFavorites[randomNum];
+                product.time_db_added = System.currentTimeMillis();
                 getRealm().copyToRealmOrUpdate(product);
             }
             getRealm().commitTransaction();
@@ -376,7 +398,6 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_id = product.id;
         cartItem.seller_id = product.seller_id;
         cartItem.seller_name = product.seller_name;
-        cartItem.price = product.price;
         cartItem.product_name = product.product_name;
         cartItem.amount = 0;
         cartItem.checked = true;
@@ -473,10 +494,10 @@ public class AppDbHelper implements DbHelper {
                         .equalTo("user_id", userId)
                         .findFirst();
                 getRealm().commitTransaction();
-                return filter;
+                return filter != null ? filter : new ProductFilter();
             } catch (Exception e) {
                 getRealm().cancelTransaction();
-                return null;
+                return new ProductFilter();
             }
         });
     }
@@ -589,32 +610,30 @@ public class AppDbHelper implements DbHelper {
         ProductFilter filter = getRealm().where(ProductFilter.class)
                 .equalTo("user_id", userId)
                 .findFirst();
-
         RealmQuery query = getRealm().where(Product.class)
                 .equalTo("category_id", idSubCategory);
-
-        if (filter.shipping_from.length() > 0) {
-            if (filter.shipping_from.equals("Local"))
-                query = query.equalTo("stock_location", "MY");
-            else
-                query = query.notEqualTo("stock_location", "MY");
+        if (filter != null) {
+            if (filter.shipping_from != null && filter.shipping_from.length() > 0) {
+                if (filter.shipping_from.equals("Local"))
+                    query = query.equalTo("stock_location", "MY");
+                else
+                    query = query.notEqualTo("stock_location", "MY");
+            }
+            float min = filter.price_min > 0 ? filter.price_min : 0;
+            float max = filter.price_max > 0 ? filter.price_max : 1000000000;
+            query = query.between("lowest_price", min, max);
+            if (filter.rating >= 0)
+                query = query.greaterThanOrEqualTo("rate", filter.rating);
         }
-        //if (filter.discount.length() > 0)
-        //query = query.equalTo("", filter.shipping_from);
-        float min = filter.price_min > 0 ? filter.price_min : 0;
-        float max = filter.price_max > 0 ? filter.price_max : 1000000000;
-        query = query.between("lowest_price", min, max);
-        if (filter.rating >= 0)
-            query = query.greaterThanOrEqualTo("rate", filter.rating);
         Flowable<RealmResults<Product>> result = query.findAll().asFlowable();
         getRealm().commitTransaction();
         return result;
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductsFavorited(ArrayList<Integer> ids) {
+    public Flowable<RealmResults<ProductCached>> getAllProductsFavorited(ArrayList<Integer> ids) {
         beginTransaction();
-        RealmQuery<Product> query = getRealm().where(Product.class);
+        RealmQuery<ProductCached> query = getRealm().where(ProductCached.class);
         if (ids.size() > 0) {
             int i = 0;
             for (int id : ids) {
@@ -626,7 +645,7 @@ public class AppDbHelper implements DbHelper {
         } else {
             query = query.equalTo("id", 0);
         }
-        Flowable<RealmResults<Product>> result = query.findAll().asFlowable();
+        Flowable<RealmResults<ProductCached>> result = query.findAll().sort("time_db_added", Sort.DESCENDING).asFlowable();
         getRealm().commitTransaction();
         return result;
     }

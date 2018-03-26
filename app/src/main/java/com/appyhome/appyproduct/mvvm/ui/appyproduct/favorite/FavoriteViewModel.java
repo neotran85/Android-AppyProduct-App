@@ -3,6 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -46,10 +48,15 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
         getCompositeDisposable().add(getDataManager().getAllProductsFavorited(ids)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(products -> {
-                    // DONE GET
+                .subscribe(productsCached -> {
+                    Product[] products = new Product[productsCached.size()];
+                    int index = 0;
+                    for(ProductCached item: productsCached) {
+                        products[index] = item.convertToProduct();
+                        index++;
+                    }
                     getNavigator().showProducts(products);
-                    updateFavoriteCount(products.size());
+                    updateFavoriteCount(productsCached.size());
                 }, Crashlytics::logException));
     }
 }
