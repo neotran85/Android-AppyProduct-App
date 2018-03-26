@@ -24,6 +24,7 @@ import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 

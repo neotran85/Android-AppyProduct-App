@@ -163,8 +163,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         }
         mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
         mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mBinder.slider.setCustomIndicator((PagerIndicator) mBinder.customIndicator);
+        mBinder.slider.setCustomIndicator(mBinder.customIndicator);
         mBinder.slider.stopAutoCycle();
+        mBinder.slider.setCurrentPosition(0);
     }
 
     @Override
