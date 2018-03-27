@@ -6,7 +6,7 @@
     <string name="type_an_account_password">Type an account password</string>
     <string name="retype_the_password">Retype the password</string>
     <string name="retype_verifying_code">Type the code sent to you via SMS</string>
-    <string name="send_code_verification">Send Verification Code</string>
+    <string name="send_code_verification">Submit Verification Code</string>
     <string name="terms_of_usage">Terms Of Usage</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="sign_up">Sign up</string>

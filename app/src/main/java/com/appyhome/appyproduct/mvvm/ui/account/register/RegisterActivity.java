@@ -249,4 +249,18 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case LoginActivity.REQUEST_SIGN_UP:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = getIntent();
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                break;
+        }
+    }
+
 }
