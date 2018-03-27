@@ -134,6 +134,7 @@
                                 android:textSize="12sp" />
 
                             <com.appyhome.appyproduct.mvvm.ui.tabs.home.BannerListView
+                                adapter="@{viewModel.bannersAdapter}"
                                 android:id="@+id/lvBanners"
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"

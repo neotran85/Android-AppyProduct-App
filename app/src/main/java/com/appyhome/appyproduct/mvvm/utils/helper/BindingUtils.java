@@ -6,11 +6,14 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
+import com.appyhome.appyproduct.mvvm.ui.common.component.LinearListView;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
@@ -42,6 +45,11 @@ public final class BindingUtils {
         } else {
             imageView.setBackgroundResource(R.mipmap.no_image);
         }
+    }
+
+    @BindingAdapter("adapter")
+    public static void setAdapter(LinearListView view, ArrayList data) {
+        view.setAdapter(data);
     }
 
     @BindingAdapter("layout_height")

@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 public class GlideConfiguration extends AppGlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        int diskCacheSizeBytes = 1024 * 1024 * 100; // 100 MB
+        int diskCacheSizeBytes = 1024 * 1024 * 100; // 100 MB size cache for images
         builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskCacheSizeBytes));
         builder.setDefaultRequestOptions(new RequestOptions().format(DecodeFormat.PREFER_RGB_565));
     }

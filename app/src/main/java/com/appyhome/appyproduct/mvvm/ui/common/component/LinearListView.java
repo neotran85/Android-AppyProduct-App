@@ -5,24 +5,26 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 import javax.annotation.Nullable;
 
 public abstract class LinearListView<T> extends LinearLayout {
 
-    private T[] mListItem;
+    private ArrayList<T> mListItem;
 
     public LinearListView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs, 0);
     }
 
-    public void setAdapter(T[] listItems) {
+    public void setAdapter(ArrayList<T> listItems) {
         mListItem = listItems;
         notifyAdapter();
     }
 
     public void notifyAdapter() {
-        if (mListItem != null && mListItem.length > 0) {
-            for (int i = 0; i < mListItem.length; i++) {
+        if (mListItem != null && mListItem.size() > 0) {
+            for (int i = 0; i < mListItem.size(); i++) {
                 View view = getItemView(i);
                 this.addView(view);
             }
@@ -30,7 +32,7 @@ public abstract class LinearListView<T> extends LinearLayout {
     }
 
     public T getItem(int i) {
-        return mListItem != null && mListItem.length > 0 ? mListItem[i] : null;
+        return mListItem != null && mListItem.size() > 0 ? mListItem.get(i) : null;
     }
 
     public abstract View getItemView(int position);

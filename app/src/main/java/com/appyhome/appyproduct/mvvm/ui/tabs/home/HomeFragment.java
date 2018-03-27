@@ -36,7 +36,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Inject
     int mLayoutId;
 
-    private Toolbar mToolbar;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     public static HomeFragment newInstance() {
@@ -93,18 +92,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mHomeViewModel);
         mBinder.setNavigator(this);
-        mToolbar = mBinder.toolbar;
-        mToolbar.setNavigationIcon(null);
+        setUpToolbar();
+        ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
+        addProductTopicsFragment();
+        getViewModel().fetchBanners();
+    }
+
+    private void setUpToolbar() {
+        Toolbar vToolbar = mBinder.toolbar;
+        vToolbar.setNavigationIcon(null);
         if (getActivity() instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) getActivity();
-            activity.setSupportActionBar(mToolbar);
+            activity.setSupportActionBar(vToolbar);
             activity.getSupportActionBar().setDisplayUseLogoEnabled(false);
             activity.getSupportActionBar().setTitle("");
         }
-        ViewUtils.setOnClickListener(mBinder.serviceView, this, mAppyServicesIds);
-        addProductTopicsFragment();
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mToolbar, true, false);
-        getViewModel().fetchBanners();
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), vToolbar, true, false);
         mSearchToolbarViewHolder.onBind(0);
     }
 
@@ -121,11 +124,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onJobCompleted(Object data) {
         mBinder.svContent.scrollTo(0, 0);
-    }
-
-    @Override
-    public void showBanners(BannerResponse[] list) {
-        mBinder.lvBanners.setAdapter(list);
     }
 
     @Override
