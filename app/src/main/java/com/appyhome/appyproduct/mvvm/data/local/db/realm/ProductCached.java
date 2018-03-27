@@ -136,28 +136,28 @@ public class ProductCached extends RealmObject {
     public Product convertToProduct() {
         Product product = new Product();
         product.id = id;
-        product.stock_location = stock_location;
+        product.stock_location = new String(stock_location.toCharArray());
         product.lowest_price = lowest_price;
-        product.avatar_name = avatar_name;
+        product.avatar_name = new String(avatar_name.toCharArray());
         product.category_id = category_id;
-        product.country_manu = country_manu;
-        product.created_at =  created_at;
-        product.description = description;
+        product.country_manu = new String(country_manu.toCharArray());
+        product.created_at =  new String(created_at.toCharArray());
+        product.description = new String(description.toCharArray());
         product.discount = discount;
         product.enabled = enabled;
         product.favorite_count = favorite_count;
-        product.flag = flag;
+        product.flag = new String(flag.toCharArray());
         product.like = like;
         product.pricing_scheme_id = pricing_scheme_id;
-        product.product_name = product_name;
+        product.product_name = new String(product_name.toCharArray());
         product.rate = rate;
         product.rate_count = rate_count;
         product.seller_id = seller_id;
-        product.seller_name = seller_name;
+        product.seller_name = new String(seller_name.toCharArray());
         product.shipping_type_id = shipping_type_id;
         product.sort_order = sort_order;
         product.tax_class_id = tax_class_id;
-        product.updated_at = updated_at;
+        product.updated_at = new String(updated_at.toCharArray());
         return product;
     }
 }
