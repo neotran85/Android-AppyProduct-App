@@ -22,21 +22,15 @@ public class RequestConfirmedViewModel extends RequestItemViewModel {
                 .markOrderCompleted(new OrderCompletedRequest(getIdNumber(), comments, rating))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<OrderCompletedResponse>() {
-                    @Override
-                    public void accept(OrderCompletedResponse response) throws Exception {
-                        if (response != null && response.getStatusCode().equals(ApiCode.OK_200)) {
-                            // MARK COMPLETED SUCCESS
-                            setIsLoading(true);
-                            getNavigator().doAfterDataUpdated();
-                        }
+                .subscribe(response -> {
+                    if (response != null && response.getStatusCode().equals(ApiCode.OK_200)) {
+                        // MARK COMPLETED SUCCESS
+                        setIsLoading(true);
+                        getNavigator().doAfterDataUpdated();
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 }

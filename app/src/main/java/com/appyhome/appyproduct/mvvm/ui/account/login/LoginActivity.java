@@ -89,8 +89,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     openForgetPassword();
                 }
                 break;
+            default:
+                // DO NOTHING
+                break;
         }
-
     }
 
     private void openForgetPassword() {

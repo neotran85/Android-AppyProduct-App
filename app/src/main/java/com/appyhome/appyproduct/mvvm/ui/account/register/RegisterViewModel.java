@@ -44,18 +44,12 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 .doUserSignUp(new SignUpRequest(firstName, lastName, email, phoneNumber, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<SignUpResponse>() {
-                    @Override
-                    public void accept(SignUpResponse response) throws Exception {
-                        setIsLoading(false);
-                        handleSignUpResponse(response);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    handleSignUpResponse(response);
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 
@@ -64,18 +58,12 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 .verifyUser()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject response) throws Exception {
-                        setIsLoading(false);
-                        handleVerifyUser(response);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    handleVerifyUser(response);
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 
@@ -86,21 +74,15 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
     public void doUserLogin(String phone, String password) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
+                .doUserLogin(new LoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse response) throws Exception {
-                        handleLoginResponse(response);
-                        setIsLoading(false);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
-                    }
+                .subscribe(response -> {
+                    handleLoginResponse(response);
+                    setIsLoading(false);
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
                 }));
     }
 

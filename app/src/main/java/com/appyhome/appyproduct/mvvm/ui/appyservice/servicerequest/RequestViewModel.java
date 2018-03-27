@@ -35,18 +35,12 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
         getCompositeDisposable().add(object
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject response) throws Exception {
-                        setIsLoading(false);
-                        handleServiceResult(response, type);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        showEmptyList(type);
-                    }
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    handleServiceResult(response, type);
+                }, throwable -> {
+                    setIsLoading(false);
+                    showEmptyList(type);
                 }));
     }
 

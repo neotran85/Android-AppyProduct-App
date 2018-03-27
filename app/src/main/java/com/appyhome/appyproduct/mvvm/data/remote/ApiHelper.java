@@ -30,7 +30,7 @@ public interface ApiHelper {
 
     ApiHeader getApiHeader();
 
-    Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest request);
+    Single<LoginResponse> doUserLogin(LoginRequest request);
 
     Single<SignUpResponse> doUserSignUp(SignUpRequest request);
 

@@ -104,8 +104,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
-                                                     request) {
+    public Single<LoginResponse> doUserLogin(LoginRequest request) {
         return mApiHelper.doUserLogin(request);
     }
 

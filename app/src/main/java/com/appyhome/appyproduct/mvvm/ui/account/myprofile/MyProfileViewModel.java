@@ -37,43 +37,40 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
         getCompositeDisposable().add(getDataManager().getUserProfile()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject userGetResponse) throws Exception {
-                        setIsLoading(false);
-                        AppLogger.d(userGetResponse.toString());
-                        if (userGetResponse != null) {
-                            if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
-                                try {
-                                    if (userGetResponse.has(ApiMessage.KEY_CODE)) {
-                                        JSONObject message = userGetResponse.getJSONObject(ApiMessage.KEY_CODE);
-                                        if (message != null) {
-                                            String lastNameStr = message.getString("last_name");
-                                            lastName.set(lastNameStr);
-                                            getDataManager().setUserLastName(lastNameStr);
+                .subscribe(userGetResponse -> {
+                    setIsLoading(false);
+                    AppLogger.d(userGetResponse.toString());
+                    if (userGetResponse != null) {
+                        if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
+                            try {
+                                if (userGetResponse.has(ApiMessage.KEY_CODE)) {
+                                    JSONObject message = userGetResponse.getJSONObject(ApiMessage.KEY_CODE);
+                                    if (message != null) {
+                                        String lastNameStr = message.getString("last_name");
+                                        lastName.set(lastNameStr);
+                                        getDataManager().setUserLastName(lastNameStr);
 
-                                            String firstNameStr = message.getString("first_name");
-                                            firstName.set(firstNameStr);
-                                            getDataManager().setUserFirstName(firstNameStr);
+                                        String firstNameStr = message.getString("first_name");
+                                        firstName.set(firstNameStr);
+                                        getDataManager().setUserFirstName(firstNameStr);
 
-                                            String emailStr = message.getString("email");
-                                            email.set(emailStr);
-                                            getDataManager().setCurrentUserEmail(emailStr);
+                                        String emailStr = message.getString("email");
+                                        email.set(emailStr);
+                                        getDataManager().setCurrentUserEmail(emailStr);
 
-                                            String phoneNumberStr = message.getString("phone_number");
-                                            phoneNumber.set(phoneNumberStr);
-                                            getDataManager().setCurrentPhoneNumber(phoneNumberStr);
-                                            return;
-                                        }
+                                        String phoneNumberStr = message.getString("phone_number");
+                                        phoneNumber.set(phoneNumberStr);
+                                        getDataManager().setCurrentPhoneNumber(phoneNumberStr);
+                                        return;
                                     }
-                                } catch (Exception e) {
-                                    Crashlytics.logException(e);
                                 }
+                            } catch (Exception e) {
+                                Crashlytics.logException(e);
                             }
                         }
-                        if (getNavigator() != null)
-                            getNavigator().handleErrorService(null);
                     }
+                    if (getNavigator() != null)
+                        getNavigator().handleErrorService(null);
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {

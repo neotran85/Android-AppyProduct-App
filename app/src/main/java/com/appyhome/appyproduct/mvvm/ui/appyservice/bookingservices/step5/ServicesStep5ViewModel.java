@@ -36,26 +36,20 @@ public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator
                 .createAppointment(requestData)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<AppointmentCreateResponse>() {
-                    @Override
-                    public void accept(AppointmentCreateResponse response) throws Exception {
-                        setIsLoading(false);
-                        if (response.getStatusCode().equals(ApiCode.OK_200)) {
-                            getNavigator().showCongratulationForm();
-                            isOrderSuccess.set(true);
-                            getDataManager().getServiceOrderUserInput().clear();
-                        } else {
-                            getNavigator().handleErrorService(null);
-                            isOrderSuccess.set(false);
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleErrorService(throwable);
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    if (response.getStatusCode().equals(ApiCode.OK_200)) {
+                        getNavigator().showCongratulationForm();
+                        isOrderSuccess.set(true);
+                        getDataManager().getServiceOrderUserInput().clear();
+                    } else {
+                        getNavigator().handleErrorService(null);
                         isOrderSuccess.set(false);
                     }
+                }, throwable -> {
+                    setIsLoading(false);
+                    getNavigator().handleErrorService(throwable);
+                    isOrderSuccess.set(false);
                 }));
     }
 }

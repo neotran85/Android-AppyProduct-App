@@ -202,18 +202,10 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
         getCompositeDisposable().add(target
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<JSONObject>() {
-                    @Override
-                    public void accept(JSONObject response) throws Exception {
-                        setIsLoading(false);
-                        handleResult(response);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                    }
-                }));
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    handleResult(response);
+                }, throwable -> setIsLoading(false)));
         timeCreatedLabel.set(mArrayTypeRequest[mType].getDateLabel());
     }
 

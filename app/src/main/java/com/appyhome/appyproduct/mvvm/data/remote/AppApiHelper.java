@@ -46,8 +46,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<LoginResponse> doUserLogin(LoginRequest.ServerLoginRequest
-                                                     request) {
+    public Single<LoginResponse> doUserLogin(LoginRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_USER_LOGIN)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)

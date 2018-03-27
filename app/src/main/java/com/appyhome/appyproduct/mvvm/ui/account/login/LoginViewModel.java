@@ -29,7 +29,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         mPassword = password;
         mTryCounter = 0;
         getCompositeDisposable().add(getDataManager()
-                .doUserLogin(new LoginRequest.ServerLoginRequest(phone, password))
+                .doUserLogin(new LoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
