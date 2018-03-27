@@ -64,33 +64,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private SortFragment mSortFragment;
 
-    private FilterFragment mFilterFragment;
-
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, ProductListActivity.class);
-        return intent;
-    }
-
-    @Override
-    public void applyFilter() {
-        getViewModel().getAllProductsWithFilter();
-        getViewModel().getCurrentFilter();
-    }
-
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentDispatchingAndroidInjector;
-    }
-
-    @Override
-    public BaseViewModel getMainViewModel() {
-        return mViewModel;
-    }
-
-    @Override
-    public void removeFragment(String tag) {
-        closeFragment(tag);
-    }
+    /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +79,30 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mViewModel.getAllFavorites();
     }
 
-    private int getIdSubCategory() {
-        int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
-        return idSubCategory;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ProductDetailActivityModule.clickedViewModel = null;
     }
+
+    @Override
+    public void onFragmentClosed() {
+        mBinder.llSortFilterContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSearchToolbarViewHolder.onBind(0);
+        mProductAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
+    /************************* SETUP  ************************/
 
     private void fetchProducts() {
         mViewModel.fetchProductsByIdCategory(getIdSubCategory());
@@ -127,20 +121,136 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         rv.setItemAnimator(new DefaultItemAnimator());
     }
 
-    @Override
-    public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
-    }
+    /************************* GET METHODS ************************/
 
     @Override
-    public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+    public BaseViewModel getMainViewModel() {
+        return mViewModel;
+    }
+
+    private int getIdSubCategory() {
+        int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
+        return idSubCategory;
+    }
+
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, ProductListActivity.class);
+        return intent;
     }
 
     @Override
     public ProductListViewModel getViewModel() {
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProductListViewModel.class);
         return mViewModel;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_product_list;
+    }
+
+    /************************* USER INTERACTION METHODS ************************/
+
+    @Override
+    public void onItemClick(View view) {
+        ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
+        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
+        startActivity(intent);
+    }
+
+    /************************* NAVIGATOR METHODS ************************/
+
+    @Override
+    public void applyFilter() {
+        getViewModel().getAllProductsWithFilter();
+        getViewModel().getCurrentFilter();
+    }
+
+    @Override
+    public void clearFragment() {
+        closeFragment(FilterFragment.TAG);
+        closeFragment(SortFragment.TAG);
+    }
+
+    @Override
+    public void editFilter() {
+        toggleFilters();
+    }
+
+    @Override
+    public void resetFilter() {
+        getViewModel().resetFilter();
+    }
+
+    @Override
+    public void addedToCartCompleted() {
+
+    }
+
+    @Override
+    public void notifyFavoriteChanged(int position, boolean isFavorite) {
+        mProductAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void showFragment(BaseFragment fragment, String tag, int idContainer) {
+        clearFragment();
+        mBinder.llSortFilterContainer.setVisibility(View.VISIBLE);
+        super.showFragment(fragment, tag, idContainer, true);
+    }
+
+    @Override
+    public void closeFragment(String tag) {
+        mBinder.llSortFilterContainer.setVisibility(View.GONE);
+        super.closeFragment(tag, true);
+    }
+
+    @Override
+    public void onSortItemClick(View view) {
+        if (mSortFragment != null) {
+            SortOption option = (SortOption) view.getTag();
+            getViewModel().saveSortCurrent(option);
+            toggleSortOptions();
+            getViewModel().fetchProductsByIdCategory(getIdSubCategory());
+        }
+    }
+
+    @Override
+    public void toggleSortOptions() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SortFragment.TAG);
+        boolean isShowed = fragment != null;
+        if (isShowed) {
+            closeFragment(SortFragment.TAG);
+            mSortFragment = null;
+        } else {
+            mSortFragment = SortFragment.newInstance(this);
+            showFragment(mSortFragment, SortFragment.TAG, R.id.llSortFilterContainer);
+        }
+        getViewModel().updateSortCurrentLabel();
+        getViewModel().isSortShowed.set(!isShowed);
+    }
+
+    @Override
+    public void toggleFilters() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FilterFragment.TAG);
+        boolean isShowed = fragment != null;
+        if (isShowed) {
+            closeFragment(FilterFragment.TAG);
+        } else {
+            FilterFragment vFilterFragment = FilterFragment.newInstance();
+            vFilterFragment.setNavigator(this);
+            showFragment(vFilterFragment, FilterFragment.TAG, R.id.llSortFilterContainer);
+        }
+    }
+
+    @Override
+    public void updateCartCount() {
+        mSearchToolbarViewHolder.onBind(0);
     }
 
     @Override
@@ -183,123 +293,18 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public int getBindingVariable() {
-        return BR.viewModel;
+    public void handleErrorService(Throwable throwable) {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_list;
+    public void showAlert(String message) {
+        AlertManager.getInstance(this).showLongToast(message);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ProductDetailActivityModule.clickedViewModel = null;
-    }
-
-    @Override
-    public void clearFragment() {
-        closeFragment(FilterFragment.TAG);
-        closeFragment(SortFragment.TAG);
-    }
-
-    @Override
-    public void editFilter() {
-        toggleFilters();
-    }
-
-    @Override
-    public void resetFilter() {
-        getViewModel().resetFilter();
-    }
-
-    @Override
-    public void onItemClick(View view) {
-        ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
-        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
-        startActivity(intent);
-    }
-
-    @Override
-    public void addedToCartCompleted() {
-
-    }
-
-    @Override
-    public void notifyFavoriteChanged(int position, boolean isFavorite) {
-        mProductAdapter.notifyItemChanged(position);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mSearchToolbarViewHolder.onBind(0);
-        mProductAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void updateCartCount() {
-        mSearchToolbarViewHolder.onBind(0);
-    }
-
-
-    @Override
-    public void toggleFilters() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FilterFragment.TAG);
-        boolean isShowed = fragment != null;
-        if (isShowed) {
-            closeFragment(FilterFragment.TAG);
-            mFilterFragment = null;
-        } else {
-            mFilterFragment = FilterFragment.newInstance();
-            mFilterFragment.setNavigator(this);
-            showFragment(mFilterFragment, FilterFragment.TAG, R.id.llSortFilterContainer);
-        }
-    }
-
-    @Override
-    public void toggleSortOptions() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SortFragment.TAG);
-        boolean isShowed = fragment != null;
-        if (isShowed) {
-            closeFragment(SortFragment.TAG);
-            mSortFragment = null;
-        } else {
-            mSortFragment = SortFragment.newInstance(this);
-            showFragment(mSortFragment, SortFragment.TAG, R.id.llSortFilterContainer);
-        }
-        getViewModel().updateSortCurrentLabel();
-        getViewModel().isSortShowed.set(!isShowed);
-    }
-
-
-    @Override
-    public void onSortItemClick(View view) {
-        if (mSortFragment != null) {
-            SortOption option = (SortOption) view.getTag();
-            getViewModel().saveSortCurrent(option);
-            toggleSortOptions();
-            getViewModel().fetchProductsByIdCategory(getIdSubCategory());
-        }
-    }
-
-    @Override
-    public void showFragment(BaseFragment fragment, String tag, int idContainer) {
-        clearFragment();
-        mBinder.llSortFilterContainer.setVisibility(View.VISIBLE);
-        super.showFragment(fragment, tag, idContainer, true);
-    }
-
-    @Override
-    public void onFragmentClosed() {
-        mBinder.llSortFilterContainer.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void closeFragment(String tag) {
-        mBinder.llSortFilterContainer.setVisibility(View.GONE);
-        super.closeFragment(tag, true);
+    public void removeFragment(String tag) {
+        closeFragment(tag);
     }
 
 }

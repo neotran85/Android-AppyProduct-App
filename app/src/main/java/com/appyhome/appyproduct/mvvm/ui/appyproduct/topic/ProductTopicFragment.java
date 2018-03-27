@@ -40,7 +40,6 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     private CompletedJobListener mListener;
 
-
     /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
