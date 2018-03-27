@@ -61,14 +61,11 @@
 
 
             <LinearLayout
-                android:gravity="end"
                 android:layout_marginTop="30dp"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/llCartIcon"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:orientation="vertical" />
 
             <TextView
