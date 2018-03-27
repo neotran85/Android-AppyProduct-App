@@ -133,31 +133,34 @@ public class ProductCached extends RealmObject {
     @ColumnInfo(name = "time_db_added")
     public long time_db_added;
 
+    private String copyString(String value) {
+        return value != null ? new String(value.toCharArray()) : null;
+    }
     public Product convertToProduct() {
         Product product = new Product();
         product.id = id;
-        product.stock_location = new String(stock_location.toCharArray());
+        product.stock_location = copyString(stock_location);
         product.lowest_price = lowest_price;
-        product.avatar_name = new String(avatar_name.toCharArray());
+        product.avatar_name = copyString(avatar_name);
         product.category_id = category_id;
-        product.country_manu = new String(country_manu.toCharArray());
-        product.created_at =  new String(created_at.toCharArray());
-        product.description = new String(description.toCharArray());
+        product.country_manu = copyString(country_manu);
+        product.created_at =  copyString(created_at);
+        product.description = copyString(description);
         product.discount = discount;
         product.enabled = enabled;
         product.favorite_count = favorite_count;
-        product.flag = new String(flag.toCharArray());
+        product.flag = copyString(flag);
         product.like = like;
         product.pricing_scheme_id = pricing_scheme_id;
-        product.product_name = new String(product_name.toCharArray());
+        product.product_name = copyString(product_name);
         product.rate = rate;
         product.rate_count = rate_count;
         product.seller_id = seller_id;
-        product.seller_name = new String(seller_name.toCharArray());
+        product.seller_name = copyString(seller_name);
         product.shipping_type_id = shipping_type_id;
         product.sort_order = sort_order;
         product.tax_class_id = tax_class_id;
-        product.updated_at = new String(updated_at.toCharArray());
+        product.updated_at = copyString(updated_at);
         return product;
     }
 }

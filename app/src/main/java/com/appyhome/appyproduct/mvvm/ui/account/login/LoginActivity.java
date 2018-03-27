@@ -119,8 +119,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         }
     }
 
+
     @Override
     public void doAfterLoginSucceeded() {
+        getViewModel().fetchUserProfile();
+    }
+
+    @Override
+    public void doAfterFetchProfile() {
         Intent intent = getIntent();
         setResult(RESULT_OK, intent);
         finish();

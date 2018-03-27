@@ -97,4 +97,45 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         getDataManager().setCurrentPhoneNumber(phoneNumber);
     }
 
+    public void fetchUserProfile() {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager().getUserProfile()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(userGetResponse -> {
+                    if (userGetResponse != null) {
+                        if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
+                            try {
+                                if (userGetResponse.has(ApiMessage.KEY_CODE)) {
+                                    JSONObject message = userGetResponse.getJSONObject(ApiMessage.KEY_CODE);
+                                    if (message != null) {
+                                        String lastNameStr = message.getString("last_name");
+                                        getDataManager().setUserLastName(lastNameStr);
+
+                                        String firstNameStr = message.getString("first_name");
+                                        getDataManager().setUserFirstName(firstNameStr);
+
+                                        String emailStr = message.getString("email");
+                                        getDataManager().setCurrentUserEmail(emailStr);
+
+                                        String phoneNumberStr = message.getString("phone_number");
+
+                                        getDataManager().setCurrentPhoneNumber(phoneNumberStr);
+
+                                        getDataManager().setCurrentUserId(phoneNumberStr);
+
+                                        getDataManager().setCurrentUsername(phoneNumberStr);
+
+                                        getNavigator().doAfterFetchProfile();
+
+                                        return;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                Crashlytics.logException(e);
+                            }
+                        }
+                    }
+                }, throwable -> {}));
+    }
 }

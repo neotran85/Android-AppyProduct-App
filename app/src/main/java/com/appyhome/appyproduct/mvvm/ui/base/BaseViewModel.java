@@ -15,7 +15,6 @@ import io.reactivex.disposables.CompositeDisposable;
 
 
 public abstract class BaseViewModel<N> extends ViewModel {
-
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
@@ -80,7 +79,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
     public String getUserId() {
         if (!isUserLoggedIn())
             return "anonymous";
-        return getDataManager().getCurrentPhoneNumber();
+        return getDataManager().getCurrentUserId();
     }
 
     public boolean isOnline() {

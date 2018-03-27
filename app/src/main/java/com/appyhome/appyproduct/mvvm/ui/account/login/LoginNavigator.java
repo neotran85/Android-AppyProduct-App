@@ -19,4 +19,6 @@ public interface LoginNavigator {
     void showSuccessLogin();
 
     void showAlert(String message);
+
+    void doAfterFetchProfile();
 }

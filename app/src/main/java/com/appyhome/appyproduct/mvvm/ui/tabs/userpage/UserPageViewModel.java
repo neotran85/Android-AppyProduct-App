@@ -26,48 +26,17 @@ UserPageViewModel extends BaseViewModel<UserPageNavigator> {
 
     }
 
+    public void updateAccountInfo() {
+        if (getDataManager().isUserLoggedIn()) {
+            String fullNameStr = getDataManager().getUserFirstName() + " " + getDataManager().getUserLastName();
+            fullName.set("Hi, " + fullNameStr);
+        } else fullName.set("");
+    }
+
     public void logout() {
         getDataManager().logout();
         if (getNavigator() != null)
             getNavigator().backToHomeScreen();
     }
 
-
-    public void fetchUserProfile() {
-        setIsLoading(true);
-        getCompositeDisposable().add(getDataManager().getUserProfile()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(userGetResponse -> {
-                    if (userGetResponse != null) {
-                        if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
-                            try {
-                                if (userGetResponse.has(ApiMessage.KEY_CODE)) {
-                                    JSONObject message = userGetResponse.getJSONObject(ApiMessage.KEY_CODE);
-                                    if (message != null) {
-                                        String lastNameStr = message.getString("last_name");
-                                        getDataManager().setUserLastName(lastNameStr);
-
-                                        String firstNameStr = message.getString("first_name");
-                                        getDataManager().setUserFirstName(firstNameStr);
-
-                                        String emailStr = message.getString("email");
-                                        getDataManager().setCurrentUserEmail(emailStr);
-
-                                        String phoneNumberStr = message.getString("phone_number");
-                                        getDataManager().setCurrentPhoneNumber(phoneNumberStr);
-
-                                        String fullNameStr = firstNameStr+ " " + lastNameStr;
-                                        fullName.set("Hi, " + fullNameStr);
-
-                                        return;
-                                    }
-                                }
-                            } catch (Exception e) {
-                                Crashlytics.logException(e);
-                            }
-                        }
-                    }
-                }, throwable -> {}));
-    }
 }
