@@ -4,9 +4,11 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="navigator"
             type="com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageNavigator" />
+
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageViewModel" />
@@ -35,63 +37,55 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="20dp"
-                android:layout_marginEnd="36dp"
+                android:layout_marginEnd="24dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="82dp"
                     android:layout_height="82dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="4dp"
                     android:adjustViewBounds="true"
                     android:background="@mipmap/user_page_header_avatar" />
-
                 <Button
-                    android:visibility="gone"
-                    android:layout_width="64dp"
-                    android:layout_height="24dp"
-                    android:background="@mipmap/user_page_header_login"
-                    android:text="LOGIN"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
-
-                <Button
-                    android:onClick="@{(view) -> navigator.logout()}"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:layout_width="68dp"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_width="62dp"
+                    android:layout_height="22dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/button_transparent_bg"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(view) -> navigator.logout()}"
                     android:text="@string/log_out"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
+
             <LinearLayout
-                android:orientation="vertical"
+                android:gravity="end"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentEnd="true"
                 android:id="@+id/llCartIcon"
+                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="12dp"
-                android:layout_marginTop="12dp"/>
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical" />
 
             <TextView
-                android:layout_alignParentBottom="true"
                 fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="end"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
                 android:alpha="0.7"
                 android:background="@drawable/view_rounded_bg_orange"
                 android:gravity="end"
-                android:paddingTop="2dp"
                 android:paddingBottom="2dp"
-                android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="10dp"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
                 android:text="@{viewModel.fullName}"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
