@@ -55,8 +55,15 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         Object tag = view.getTag();
         if (tag instanceof ProductCartItemViewModel) {
             ProductCartItemViewModel viewModel = (ProductCartItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getProductId());
+            viewModel.getNavigator().showContent(this, view, viewModel.getProductId(), getIndexOfItem(viewModel));
         }
+    }
+
+    private int getIndexOfItem(ProductCartItemViewModel item) {
+        if (mItems != null && mItems.size() > 0) {
+            return mItems.indexOf(item);
+        }
+        return -1;
     }
 
     public void onUpdateDatabase() {
@@ -121,6 +128,10 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
             cartItem.isFirstProductOfStore.set(false);
         }
         array.add(cartItem);
+    }
+
+    public void replaceItem(ProductCart cart, int pos) {
+        mItems.add(pos, createViewModel(cart, mNavigator));
     }
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {

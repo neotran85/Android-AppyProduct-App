@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -204,6 +205,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     public void increaseAmount() {
         int amount = mMainViewModel.getIntegerAmountAdded() + 1;
         mMainViewModel.setIntegerAmountAdded(amount);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override

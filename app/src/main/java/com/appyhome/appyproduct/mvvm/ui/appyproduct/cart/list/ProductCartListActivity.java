@@ -40,6 +40,8 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Inject
     int mLayoutId;
 
+    private static final int REQUEST_DETAIL = 0;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductCartListActivity.class);
         return intent;
@@ -108,7 +110,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.getAllProductCarts();
     }
 
     @Override
@@ -168,10 +169,10 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
-    public void showContent(ProductCartAdapter adapter, View view, int idProduct) {
+    public void showContent(ProductCartAdapter adapter, View view, int idProduct, int index) {
         Intent intent = ProductDetailActivity.getStartIntent(this, null);
         intent.putExtra("product_id", idProduct);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_DETAIL);
     }
 
     @Override
@@ -191,5 +192,12 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void onClick(DialogInterface dialog, int which) {
         emptyProductCarts();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_DETAIL) {
+            mViewModel.getAllProductCarts();
+        }
     }
 }

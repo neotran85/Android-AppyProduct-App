@@ -419,6 +419,24 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<ProductCart> getProductCart(String userId, int productId) {
+        try {
+            beginTransaction();
+            ProductCart productCart = getRealm().where(ProductCart.class)
+                    .equalTo("product_id", productId)
+                    .equalTo("user_id", userId)
+                    .equalTo("order_id", 0)
+                    .findFirst();
+            getRealm().commitTransaction();
+            return productCart.asFlowable();
+        } catch (Exception e) {
+            getRealm().cancelTransaction();
+            e.printStackTrace();
+            return new ProductCart().asFlowable();
+        }
+    }
+
+    @Override
     public Flowable<ProductCart> addProductToCart(String userId, int productId, int amountAdded) {
         return Flowable.fromCallable(() -> {
             try {

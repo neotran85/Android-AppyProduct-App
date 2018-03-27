@@ -605,4 +605,9 @@ public class AppDataManager implements DataManager {
     public Flowable<ProductCached> getProductCachedById(int idProduct) {
         return mDbHelper.getProductCachedById(idProduct);
     }
+
+    @Override
+    public Flowable<ProductCart> getProductCart(String userId, int productId) {
+        return mDbHelper.getProductCart(userId, productId);
+    }
 }
