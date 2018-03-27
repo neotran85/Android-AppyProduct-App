@@ -40,25 +40,8 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     private CompletedJobListener mListener;
 
-    public static ProductTopicFragment newInstance() {
-        Bundle args = new Bundle();
-        ProductTopicFragment fragment = new ProductTopicFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    public void setCompletedJobListener(CompletedJobListener listener) {
-        mListener = listener;
-    }
-
-    @Override
-    public void showTopics(RealmResults<ProductTopic> topics) {
-        mAdapter.addItems(topics, this);
-        mAdapter.notifyDataSetChanged();
-        if (mListener != null) {
-            mListener.onJobCompleted(null);
-        }
-    }
+    /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -66,26 +49,17 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         setUp();
     }
 
-    private void setUpRecyclerViewGrid(RecyclerView rv) {
-        rv.setLayoutManager(new GridLayoutManager(this.getActivity(),
-                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
-                false));
-        rv.setItemAnimator(new DefaultItemAnimator());
-    }
-
-    @Override
-    public void onItemClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof TopicItemViewModel) {
-            TopicItemViewModel viewModel = (TopicItemViewModel) tag;
-            openProductCategories(viewModel.getIdTopic());
-        }
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    /************************* SETUP  ************************/
 
     private void setUp() {
         mViewModel.setNavigator(this);
@@ -96,11 +70,24 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         mViewModel.getAllProductTopics();
     }
 
-    @Override
-    public void openProductCategories(int idTopic) {
-        Intent intent = CategoryActivity.getStartIntent(this.getContext());
-        intent.putExtra("id_topic", idTopic);
-        startActivity(intent);
+    public void setCompletedJobListener(CompletedJobListener listener) {
+        mListener = listener;
+    }
+
+    private void setUpRecyclerViewGrid(RecyclerView rv) {
+        rv.setLayoutManager(new GridLayoutManager(this.getActivity(),
+                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    /************************* GET METHODS ************************/
+
+    public static ProductTopicFragment newInstance() {
+        Bundle args = new Bundle();
+        ProductTopicFragment fragment = new ProductTopicFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -118,9 +105,33 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         return mLayoutId;
     }
 
+    /************************* USER INTERACTION METHODS ************************/
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onItemClick(View view) {
+        Object tag = view.getTag();
+        if (tag instanceof TopicItemViewModel) {
+            TopicItemViewModel viewModel = (TopicItemViewModel) tag;
+            openProductCategories(viewModel.getIdTopic());
+        }
+    }
+
+    /************************* NAVIGATOR METHODS ************************/
+
+    @Override
+    public void showTopics(RealmResults<ProductTopic> topics) {
+        mAdapter.addItems(topics, this);
+        mAdapter.notifyDataSetChanged();
+        if (mListener != null) {
+            mListener.onJobCompleted(null);
+        }
+    }
+
+    @Override
+    public void openProductCategories(int idTopic) {
+        Intent intent = CategoryActivity.getStartIntent(this.getContext());
+        intent.putExtra("id_topic", idTopic);
+        startActivity(intent);
     }
 
 }
