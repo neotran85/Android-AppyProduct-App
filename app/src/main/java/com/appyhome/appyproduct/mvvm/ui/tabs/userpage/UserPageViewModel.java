@@ -1,55 +1,73 @@
 package com.appyhome.appyproduct.mvvm.ui.tabs.userpage;
 
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.others.QuestionCardData;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
+import com.crashlytics.android.Crashlytics;
+
+import org.json.JSONObject;
+
+import io.reactivex.functions.Consumer;
 
 public class
 
 UserPageViewModel extends BaseViewModel<UserPageNavigator> {
 
-    public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
-
-    private final ObservableField<String> appVersion = new ObservableField<>();
-    private final ObservableField<String> userName = new ObservableField<>();
-    private final ObservableField<String> userEmail = new ObservableField<>();
-    private final ObservableField<String> userProfilePicUrl = new ObservableField<>();
-    private final ObservableArrayList<QuestionCardData> questionDataList = new ObservableArrayList<>();
-
-    private int action = NO_ACTION;
+    public ObservableField<String> fullName = new ObservableField<>("");
 
     public UserPageViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-    }
 
-    public ObservableField<String> getAppVersion() {
-        return appVersion;
-    }
-
-    public ObservableField<String> getUserName() {
-        return userName;
-    }
-
-    public ObservableField<String> getUserEmail() {
-        return userEmail;
-    }
-
-    public ObservableArrayList<QuestionCardData> getQuestionDataList() {
-        return questionDataList;
-    }
-
-    public int getAction() {
-        return action;
     }
 
     public void logout() {
         getDataManager().logout();
         if (getNavigator() != null)
             getNavigator().backToHomeScreen();
+    }
+
+
+    public void fetchUserProfile() {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager().getUserProfile()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(userGetResponse -> {
+                    if (userGetResponse != null) {
+                        if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
+                            try {
+                                if (userGetResponse.has(ApiMessage.KEY_CODE)) {
+                                    JSONObject message = userGetResponse.getJSONObject(ApiMessage.KEY_CODE);
+                                    if (message != null) {
+                                        String lastNameStr = message.getString("last_name");
+                                        getDataManager().setUserLastName(lastNameStr);
+
+                                        String firstNameStr = message.getString("first_name");
+                                        getDataManager().setUserFirstName(firstNameStr);
+
+                                        String emailStr = message.getString("email");
+                                        getDataManager().setCurrentUserEmail(emailStr);
+
+                                        String phoneNumberStr = message.getString("phone_number");
+                                        getDataManager().setCurrentPhoneNumber(phoneNumberStr);
+
+                                        String fullNameStr = firstNameStr+ " " + lastNameStr;
+                                        fullName.set("Hi, " + fullNameStr);
+
+                                        return;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                Crashlytics.logException(e);
+                            }
+                        }
+                    }
+                }, throwable -> {}));
     }
 }

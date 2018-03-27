@@ -34,9 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginBottom="20dp"
-                android:layout_marginRight="36dp"
+                android:layout_marginEnd="36dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -63,7 +63,7 @@
                     android:layout_height="24dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/button_transparent_bg"
-                    android:text="LOG OUT"
+                    android:text="@string/log_out"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -74,8 +74,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:layout_alignParentBottom="true"
+                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:alpha="0.7"
+                android:background="@drawable/view_rounded_bg_orange"
+                android:gravity="end"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@{viewModel.fullName}"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -106,7 +125,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="Home"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -114,7 +133,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -141,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="My Profile"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -149,7 +168,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -176,7 +195,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="My Order"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -184,7 +203,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -211,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="My Wishlist"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -219,7 +238,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -246,7 +265,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="My Wallet"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -254,7 +273,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -281,7 +300,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="My Membership"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -289,7 +308,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -316,7 +335,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="Notification"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -324,7 +343,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
 
@@ -351,7 +370,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="Settings"
                         android:textColor="#868688" />
                 </LinearLayout>
@@ -359,7 +378,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@mipmap/user_page_forward" />
             </LinearLayout>
         </LinearLayout>

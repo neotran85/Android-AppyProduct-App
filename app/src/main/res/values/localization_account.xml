@@ -68,4 +68,5 @@
     <string name="see_your_profile">see your profile.</string>
     <string name="phone_activated">Your phone number is activated. You are logged in now. Thank you.</string>
     <string name="hint_your_email_address">Your email address</string>
+    <string name="log_out">LOG OUT</string>
 </resources>

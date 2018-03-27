@@ -9,6 +9,8 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
+import org.json.JSONObject;
+
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     private String mPhoneNumber = "";
     private String mPassword = "";
@@ -94,4 +96,5 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     public void setPhoneNumber(String phoneNumber) {
         getDataManager().setCurrentPhoneNumber(phoneNumber);
     }
+
 }
