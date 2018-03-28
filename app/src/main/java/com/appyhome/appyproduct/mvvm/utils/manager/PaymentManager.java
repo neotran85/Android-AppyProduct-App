@@ -62,6 +62,7 @@ public class PaymentManager {
 
             Intent intent = new Intent(currentActivity, MOLPayActivity.class);
             intent.putExtra(MOLPayActivity.MOLPayPaymentDetails, paymentDetails);
+            intent.putExtra("order_id", orderId);
             currentActivity.startActivityForResult(intent, MOLPayActivity.MOLPayXDK);
         }
     }

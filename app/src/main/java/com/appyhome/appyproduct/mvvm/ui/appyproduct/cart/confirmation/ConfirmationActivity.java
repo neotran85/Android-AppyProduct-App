@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartConfirmationBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.adapter.CartAdapter;
@@ -23,6 +24,8 @@ import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
 import com.molpay.molpayxdk.MOLPayActivity;
+
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -128,20 +131,21 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         mMainViewModel.addOrder();
     }
 
-    public void addOrderOk() {
+    public void addOrderOk(ProductOrder order) {
         if (mMainViewModel.isMolpay.get()) {
             PaymentManager.getInstance().startMolpayActivity(this,
-                    mMainViewModel.totalCost.get().toString(), mMainViewModel.getOrderId(),
+                    mMainViewModel.totalCost.get().toString(), order.id + "",
                     mMainViewModel.getPhoneNumberOfUser(),
                     mMainViewModel.getEmailOfUser(),
                     mMainViewModel.getNameOfUser());
         } else {
-            gotoOrderCompleted();
+            gotoOrderCompleted(order.id);
         }
     }
 
-    public void gotoOrderCompleted() {
+    public void gotoOrderCompleted(long idOrder) {
         Intent i = OrderCompleteActivity.getStartIntent(this);
+        i.putExtra("order_id", idOrder);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
@@ -152,7 +156,8 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
             AlertManager.getInstance(this).showLongToast("Payment success" + data);
-            gotoOrderCompleted();
+            long orderId = data.getLongExtra("order_id", 0);
+            gotoOrderCompleted(orderId);
         }
     }
 

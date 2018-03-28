@@ -8,6 +8,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -63,7 +64,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);
 
-    Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
+    Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
                                String paymentMethod, Address shippingAddress,
                                String customerId, String customerName,
                                float totalCost, float discount);
@@ -93,4 +94,6 @@ public interface DbHelper {
     Flowable<ProductCached> getProductCachedById(int idProduct);
 
     Flowable<ProductCart> getProductCart(String userId, int productId);
+
+    Flowable<ProductOrder> getOrderById(String userId, long orderId);
 }

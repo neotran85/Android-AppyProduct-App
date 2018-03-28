@@ -485,10 +485,10 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
-                                      String paymentMethod, Address shippingAddress,
-                                      String customerId, String customerName,
-                                      float totalCost, float discount) {
+    public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
+                                           String paymentMethod, Address shippingAddress,
+                                           String customerId, String customerName,
+                                           float totalCost, float discount) {
         try {
             beginTransaction();
             ProductOrder order = new ProductOrder();
@@ -507,10 +507,10 @@ public class AppDbHelper implements DbHelper {
             getRealm().copyToRealmOrUpdate(items);
             order = getRealm().copyToRealmOrUpdate(order);
             getRealm().commitTransaction();
-            return Flowable.just(order != null && order.isValid());
+            return order.asFlowable();
         } catch (Exception e) {
             getRealm().cancelTransaction();
-            return Flowable.just(false);
+            return new ProductOrder().asFlowable();
         }
     }
 
@@ -687,5 +687,16 @@ public class AppDbHelper implements DbHelper {
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return favorites;
+    }
+
+    @Override
+    public Flowable<ProductOrder> getOrderById(String userId, long orderId) {
+        beginTransaction();
+        Flowable<ProductOrder> order = getRealm().where(ProductOrder.class)
+                .equalTo("customer_id", userId)
+                .equalTo("id", orderId)
+                .findFirst().asFlowable();
+        getRealm().commitTransaction();
+        return order;
     }
 }

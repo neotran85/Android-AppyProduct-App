@@ -10,6 +10,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
@@ -529,7 +530,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addOrder(RealmResults<ProductCart> items,
+    public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
                                       String paymentMethod, Address shippingAddress,
                                       String customerId, String customerName,
                                       float totalCost, float discount) {
@@ -608,5 +609,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<ProductCart> getProductCart(String userId, int productId) {
         return mDbHelper.getProductCart(userId, productId);
+    }
+
+    @Override
+    public Flowable<ProductOrder> getOrderById(String userId, long orderId) {
+        return mDbHelper.getOrderById(userId, orderId);
     }
 }

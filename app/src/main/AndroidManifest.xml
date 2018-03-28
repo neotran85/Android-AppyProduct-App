@@ -111,6 +111,7 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".ui.appyproduct.cart.shipping.newaddress.NewAddressActivity"
             android:screenOrientation="portrait" />
 

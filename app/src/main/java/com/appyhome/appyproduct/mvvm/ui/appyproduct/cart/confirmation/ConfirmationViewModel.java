@@ -55,11 +55,11 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 mShippingAddress, getUserId(), "Nam Tran", mTotalCost, 0)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(success -> {
+                .subscribe(order -> {
                     // GET SUCCEEDED
-                    if (success) {
+                    if (order != null && order.isValid()) {
                         getNavigator().showAlert("Order added");
-                        getNavigator().addOrderOk();
+                        getNavigator().addOrderOk(order);
                     } else {
                         getNavigator().handleErrors(null);
                     }
@@ -86,10 +86,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                         totalCost.set(mTotalCost + "");
                     }
                 }, Crashlytics::logException));
-    }
-
-    public String getOrderId() {
-        return System.currentTimeMillis() + "";
     }
 
     public String getNameOfUser() {
