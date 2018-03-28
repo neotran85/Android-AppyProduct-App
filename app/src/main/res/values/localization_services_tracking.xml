@@ -16,4 +16,6 @@
     <string name="title_service_request_tracking">Service Requests Tracking</string>
     <string name="title_request_refund">Request A Refund</string>
     <string name="title_comfirm_completed">Confirm Completed</string>
+    <string name="your_list_of_closed_items_is_empty">Your list of closed items is empty.</string>
+    <string name="your_list_of_orders_is_empty">Your list of orders is empty.</string>
 </resources>

@@ -23,8 +23,8 @@ public class RequestAdapter extends RecyclerView.Adapter<BaseViewHolder> impleme
 
     private OnItemClickListener onItemClickListener;
 
-    private int[] idEmptyLayout = {R.layout.view_item_request_empty, R.layout.view_item_order_empty,
-            R.layout.view_item_closed_empty};
+    private int[] idEmptyLayout = {R.layout.view_item_request_empty, R.layout.view_item_service_order_empty,
+            R.layout.view_item_service_closed_empty};
 
     public RequestAdapter(ArrayList<RequestItemViewModel> arrayList, int type) {
         this.mRequestList = arrayList;

@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Your list of closed items is empty."
+                    android:text="@string/your_list_of_orders_is_empty"
                     android:textColor="@color/dark_gray"
                     android:textSize="15sp"
                     tools:ignore="MissingPrefix" />
