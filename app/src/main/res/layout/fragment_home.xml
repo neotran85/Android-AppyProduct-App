@@ -42,7 +42,7 @@
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         style="@style/Toolbar"
-                        android:layout_marginStart="-14dp"></android.support.v7.widget.Toolbar>
+                        android:layout_marginStart="-14dp"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                                 android:textColor="@color/colorAccent"
                                 android:textSize="12sp" />
 
-                            <com.appyhome.appyproduct.mvvm.ui.tabs.home.BannerListView
+                            <com.appyhome.appyproduct.mvvm.u2i.tabs.home.BannerListView
                                 adapter="@{viewModel.bannersAdapter}"
                                 android:id="@+id/lvBanners"
                                 android:orientation="vertical"
