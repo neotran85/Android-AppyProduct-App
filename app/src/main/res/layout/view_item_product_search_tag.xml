@@ -1,0 +1,15 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tvTag"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/rectangle_round_gray_curve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History tag"
+        android:textColor="@color/dark_gray"
+        android:textSize="13sp" />
+</layout>

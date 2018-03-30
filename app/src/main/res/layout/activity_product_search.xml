@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.common.sample.activity.SampleActivity">
 
@@ -93,11 +94,14 @@
                     android:src="@mipmap/icon_trash" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvHistorySearch"
+            <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout
+                android:id="@+id/flHistorySearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" />
+                app:flChildSpacingForLastRow="align"
+                app:flChildSpacing="6dp"
+                app:flRowSpacing="4dp"/>
+
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
