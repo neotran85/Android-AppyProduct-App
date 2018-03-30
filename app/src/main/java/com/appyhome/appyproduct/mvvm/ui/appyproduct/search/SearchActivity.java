@@ -27,6 +27,11 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
+    public void goBack() {
+        finish();
+    }
+
+    @Override
     public int getLayoutId() {
         return mLayoutId;
     }

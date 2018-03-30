@@ -2,17 +2,19 @@ package com.appyhome.appyproduct.mvvm.ui.common.component.cart;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ViewToolbarBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
-public class SearchToolbarViewHolder extends BaseViewHolder {
+public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnClickListener{
 
     private ViewToolbarBinding mBinding;
 
@@ -29,8 +31,16 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
         mBinding.setViewModel(viewModel);
         viewModel.isFullMode.set(isFullMode);
         viewModel.isBackButtonShowed.set(isBackShowed);
+        mBinding.llSearchKeywords.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent = SearchActivity.getStartIntent(mActivity);
+        intent.putExtra("keyword", mBinding.tvKeywords.getText().toString());
+        mActivity.startActivity(intent);
+
+    }
     public void back() {
         if (mActivity != null) {
             mActivity.finish();

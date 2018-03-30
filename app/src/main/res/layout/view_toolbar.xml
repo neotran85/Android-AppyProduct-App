@@ -34,6 +34,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llSearchKeywords"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/actionbar_icon_size"
             android:layout_weight="1"
@@ -60,6 +61,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvKeywords"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"

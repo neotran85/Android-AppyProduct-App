@@ -19,4 +19,9 @@ public class SearchItem extends RealmObject {
     @SerializedName("content")
     @ColumnInfo(name = "content")
     public String content;
+
+    @Expose
+    @SerializedName("cached")
+    @ColumnInfo(name = "cached")
+    public boolean cached;
 }
