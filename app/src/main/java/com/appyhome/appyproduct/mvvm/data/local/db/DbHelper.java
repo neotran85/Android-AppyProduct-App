@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
 import java.util.ArrayList;
@@ -96,4 +97,12 @@ public interface DbHelper {
     Flowable<ProductCart> getProductCart(String userId, int productId);
 
     Flowable<ProductOrder> getOrderById(String userId, long orderId);
+
+    Flowable<RealmResults<SearchItem>> getSearchHistory(String userId);
+
+    Flowable<Boolean> addSearchItems(ArrayList<SearchItem> items);
+
+    Flowable<Boolean> addSearchItem(SearchItem item);
+
+    Flowable<Boolean> clearSearchHistory(String userId);
 }

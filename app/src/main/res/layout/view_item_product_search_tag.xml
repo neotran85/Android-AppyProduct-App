@@ -1,6 +1,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchNavigator" />
+
+    </data>
 
     <TextView
+        android:onClick="@{(view)->navigator.clickSearchHistoryItem(view)}"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
         android:id="@+id/tvTag"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"

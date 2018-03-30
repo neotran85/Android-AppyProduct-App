@@ -10,18 +10,18 @@ import io.realm.annotations.PrimaryKey;
 
 public class SearchItem extends RealmObject {
     @Expose
-    @SerializedName("id")
-    @ColumnInfo(name = "id")
-    @PrimaryKey
-    public long id;
-
-    @Expose
     @SerializedName("content")
     @ColumnInfo(name = "content")
+    @PrimaryKey
     public String content;
 
     @Expose
     @SerializedName("cached")
     @ColumnInfo(name = "cached")
     public boolean cached;
+
+    @Expose
+    @SerializedName("user_id")
+    @ColumnInfo(name = "user_id")
+    public String user_id;
 }

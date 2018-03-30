@@ -13,6 +13,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
@@ -614,5 +615,24 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<ProductOrder> getOrderById(String userId, long orderId) {
         return mDbHelper.getOrderById(userId, orderId);
+    }
+    @Override
+    public Flowable<RealmResults<SearchItem>> getSearchHistory(String userId) {
+        return mDbHelper.getSearchHistory(userId);
+    }
+
+    @Override
+    public Flowable<Boolean> addSearchItems(ArrayList<SearchItem> items) {
+        return mDbHelper.addSearchItems(items);
+    }
+
+    @Override
+    public Flowable<Boolean> clearSearchHistory(String userId) {
+        return mDbHelper.clearSearchHistory(userId);
+    }
+
+    @Override
+    public Flowable<Boolean> addSearchItem(SearchItem item) {
+        return mDbHelper.addSearchItem(item);
     }
 }

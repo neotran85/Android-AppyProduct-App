@@ -10,6 +10,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
 import java.util.ArrayList;
@@ -698,5 +699,66 @@ public class AppDbHelper implements DbHelper {
                 .findFirst().asFlowable();
         getRealm().commitTransaction();
         return order;
+    }
+
+    @Override
+    public Flowable<RealmResults<SearchItem>> getSearchHistory(String userId) {
+        beginTransaction();
+        Flowable<RealmResults<SearchItem>> result = getRealm().where(SearchItem.class)
+                .isNotNull("content")
+                .equalTo("user_id", userId)
+                .equalTo("cached", true)
+                .notEqualTo("content", "")
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return result;
+    }
+
+    @Override
+    public Flowable<Boolean> clearSearchHistory(String userId) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                boolean success = getRealm().where(SearchItem.class)
+                        .equalTo("user_id", userId)
+                        .equalTo("cached", true)
+                        .findAll().deleteAllFromRealm();
+                getRealm().commitTransaction();
+                return success;
+            } catch (Exception e) {
+                return false;
+            }
+        });
+    }
+
+
+    @Override
+    public Flowable<Boolean> addSearchItems(ArrayList<SearchItem> items) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                getRealm().copyToRealmOrUpdate(items);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public Flowable<Boolean> addSearchItem(SearchItem item) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                getRealm().copyToRealmOrUpdate(item);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
     }
 }

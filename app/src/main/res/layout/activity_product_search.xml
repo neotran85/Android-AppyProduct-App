@@ -52,6 +52,18 @@
                 android:textColorHint="@color/light_gray"
                 android:textSize="14sp" />
 
+            <ImageView
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:alpha="0.8"
+                android:onClick="@{(view) -> navigator.clearKeywords()}"
+                android:visibility="@{viewModel.isClearable, default=gone}"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/icon_clear_or_close" />
+
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -60,6 +72,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="SEARCH"
+                android:onClick="@{(view)->navigator.search()}"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -88,6 +101,9 @@
                     android:textSize="13sp" />
 
                 <ImageView
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:onClick="@{(view)->navigator.clearHistory()}"
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:padding="10dp"
