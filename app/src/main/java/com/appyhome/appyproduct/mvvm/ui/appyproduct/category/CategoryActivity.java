@@ -46,8 +46,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
-    private int mSubColumns = 0;
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
         return intent;
@@ -105,9 +103,9 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv, SampleAdapter adapter) {
-        mSubColumns = calculateSubColumns();
+        int subColumns = calculateSubColumns();
         rv.setLayoutManager(new GridLayoutManager(this,
-                mSubColumns, GridLayoutManager.VERTICAL,
+                subColumns, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
@@ -165,7 +163,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         int space = widthScreen - widthLeftMenu - 2 * padding;
         int widthItem = getResources().getDimensionPixelSize(R.dimen.menu_sub_categories_width) + 2 * padding;
         int value = Math.round(space / widthItem);
-        value = value > DEFAULT_SPAN_COUNT ? value : DEFAULT_SPAN_COUNT;
         return value;
     }
 }

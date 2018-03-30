@@ -26,8 +26,14 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         this.mItems = null;
     }
 
+    private boolean mUseSmallLayout = false;
+
     @Override
     public void onClick(View view) {
+    }
+
+    public void setUseSmallLayoutItem(boolean value) {
+        mUseSmallLayout = value;
     }
 
     public void addItems(Product[] results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
@@ -74,6 +80,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.setNavigator(navigator);
+        itemViewModel.isSmall.set(mUseSmallLayout);
         itemViewModel.inputValue(product, isAllFavorited);
         return itemViewModel;
     }

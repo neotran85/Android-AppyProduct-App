@@ -16,6 +16,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_product_in_list"
         android:onClick="@{(view) -> navigator.onItemClick(view)}">
 
         <LinearLayout
@@ -26,7 +27,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
+                android:layout_margin="@dimen/padding_product_in_list"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp">
 
@@ -38,10 +39,12 @@
                     android:paddingTop="8dp">
 
                     <ImageView
+                        android:layout_width="@dimen/width_thumbnail_product_in_list"
+                        android:layout_height="@dimen/width_thumbnail_product_in_list"
                         android:id="@+id/ivThumbnail"
                         imageUrl="@{viewModel.imageURL}"
-                        android:layout_width="@dimen/width_thumbnail_product_in_list"
-                        android:layout_height="@dimen/height_thumbnail_product_in_list"
+                        app:layout_height="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
+                        app:layout_width="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop" />
 
@@ -68,6 +71,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -75,7 +79,8 @@
                                 android:lineSpacingExtra="4dp"
                                 android:text="From "
                                 android:textColor="@color/gray_product_in_list"
-                                android:textSize="11sp"/>
+                                android:textSize="11sp" />
+
                             <TextView
                                 android:id="@+id/tvOriginalPrice"
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -167,13 +172,13 @@
         </LinearLayout>
 
         <ImageView
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:layout_marginTop="-4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/llItemView"
+            android:layout_marginTop="-4dp"
             android:background="@mipmap/icon_limit_offer"
-            android:visibility="@{viewModel.isDiscount, default=gone}"/>
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:visibility="@{viewModel.isDiscount, default=gone}" />
     </RelativeLayout>
 </layout>

@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -64,6 +65,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private SortFragment mSortFragment;
 
+    private boolean mIsUsingSmallItem = false;
+
     /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
@@ -115,8 +118,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
+        int columns = calculateSubColumns();
         rv.setLayoutManager(new GridLayoutManager(this,
-                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                columns, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
     }
@@ -268,6 +272,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public void showProducts(RealmResults<Product> result) {
         if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+            mProductAdapter.setUseSmallLayoutItem(mIsUsingSmallItem);
             mProductAdapter.addItems(result, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
             getViewModel().getCurrentFilter();
@@ -286,6 +291,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public void showProducts(Product[] list) {
         if (list != null && list.length > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+            mProductAdapter.setUseSmallLayoutItem(mIsUsingSmallItem);
             mProductAdapter.addItems(list, this, mFavoritesId);
             mProductAdapter.notifyDataSetChanged();
             getViewModel().getCurrentFilter();
@@ -305,6 +311,20 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void removeFragment(String tag) {
         closeFragment(tag);
+    }
+
+    private int calculateSubColumns() {
+        int widthScreen = AppConstants.SCREEN_WIDTH;
+        int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
+        int space = widthScreen - 2 * padding;
+        int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
+        int value = Math.round(space / widthItem);
+        if (value < DEFAULT_SPAN_COUNT) {
+            widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
+            value = Math.round(space / widthItem);
+            mIsUsingSmallItem = true;
+        }
+        return value;
     }
 
 }

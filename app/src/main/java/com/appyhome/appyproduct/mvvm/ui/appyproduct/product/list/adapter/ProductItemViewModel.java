@@ -36,6 +36,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> favoriteCount = new ObservableField<>("");
     public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
+    public ObservableField<Boolean> isSmall = new ObservableField<>(false);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
     public ObservableField<String> amountAdded = new ObservableField<>("1");
     private int idProduct;
