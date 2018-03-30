@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -42,7 +43,10 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     ActivityProductCategoryBinding mBinder;
     @Inject
     int mLayoutId;
+
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
+
+    private int mSubColumns = 0;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
@@ -101,8 +105,9 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv, SampleAdapter adapter) {
+        mSubColumns = calculateSubColumns();
         rv.setLayoutManager(new GridLayoutManager(this,
-                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                mSubColumns, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
@@ -153,4 +158,14 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mSearchToolbarViewHolder.onBind(0);
     }
 
+    private int calculateSubColumns() {
+        int widthScreen = AppConstants.SCREEN_WIDTH;
+        int widthLeftMenu = getResources().getDimensionPixelSize(R.dimen.category_left_menu);
+        int padding = getResources().getDimensionPixelSize(R.dimen.sub_padding);
+        int space = widthScreen - widthLeftMenu - 2 * padding;
+        int widthItem = getResources().getDimensionPixelSize(R.dimen.menu_sub_categories_width) + 2 * padding;
+        int value = Math.round(space / widthItem);
+        value = value > DEFAULT_SPAN_COUNT ? value : DEFAULT_SPAN_COUNT;
+        return value;
+    }
 }
