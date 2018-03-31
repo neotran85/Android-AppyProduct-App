@@ -296,7 +296,7 @@ public class AppDbHelper implements DbHelper {
         Flowable<RealmResults<ProductCart>> carts = getRealm().where(ProductCart.class)
                 .equalTo("user_id", userId)
                 .equalTo("order_id", 0)
-                .sort("seller_name")
+                .sort("time_added", Sort.DESCENDING)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return carts;
@@ -488,9 +488,22 @@ public class AppDbHelper implements DbHelper {
                     if (variant != null)
                         productCart = createNewProductCart(product.convertToProduct(), userId, variant.model_id, variant.variant_name);
                 }
-                if(productCart != null) {
+                if (productCart != null) {
+                    productCart.time_added = System.currentTimeMillis();
                     productCart.amount = productCart.amount + amountAdded;
                     productCart = getRealm().copyToRealmOrUpdate(productCart);
+                    // Update time for all seller items
+                    RealmResults<ProductCart> productCarts = getRealm().where(ProductCart.class)
+                            .equalTo("seller_name", productCart.seller_name)
+                            .equalTo("user_id", userId)
+                            .equalTo("order_id", 0)
+                            .findAll();
+                    if (productCart != null) {
+                        for (ProductCart cart : productCarts) {
+                            cart.time_added = productCart.time_added;
+                        }
+                        getRealm().copyToRealmOrUpdate(productCarts);
+                    }
                 } else productCart = new ProductCart();
                 getRealm().commitTransaction();
                 return productCart;

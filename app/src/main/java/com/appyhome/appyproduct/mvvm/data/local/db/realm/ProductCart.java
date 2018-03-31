@@ -79,4 +79,9 @@ public class ProductCart extends RealmObject {
     @SerializedName("variant_name")
     @ColumnInfo(name = "variant_name")
     public String variant_name;
+
+    @Expose
+    @SerializedName("time_added")
+    @ColumnInfo(name = "time_added")
+    public long time_added;
 }
