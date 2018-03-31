@@ -75,9 +75,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     private void setUpRecyclerViewList(RecyclerView rv) {
-        rv.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        rv.setItemAnimator(new DefaultItemAnimator());
+        ViewUtils.setUpRecyclerViewList(rv, false);
         rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         rv.setNestedScrollingEnabled(false);
     }

@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductSearchBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchTagBinding;
@@ -19,6 +20,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -84,17 +86,10 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
     }
 
-    private void setUpRecyclerViewList(RecyclerView rv) {
-        rv.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-    }
-
     @Override
     public void showSuggestions(RealmResults<SearchItem> items) {
         getViewModel().isHistoryVisible.set(false);
-        setUpRecyclerViewList(mBinder.rvSuggestions);
+        ViewUtils.setUpRecyclerViewList(mBinder.rvSuggestions, true);
         mSuggestionsAdapter.addItems(items, this);
         mSuggestionsAdapter.notifyDataSetChanged();
     }

@@ -24,6 +24,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActi
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -112,9 +113,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     private void setUpRecyclerViewList(RecyclerView rv, SampleAdapter adapter) {
-        rv.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        rv.setItemAnimator(new DefaultItemAnimator());
+        ViewUtils.setUpRecyclerViewList(rv, false);
         rv.setAdapter(adapter);
     }
 

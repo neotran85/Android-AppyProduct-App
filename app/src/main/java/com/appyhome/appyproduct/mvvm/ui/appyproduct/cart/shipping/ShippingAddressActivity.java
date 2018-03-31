@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.Addres
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -64,7 +65,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mBinder.setNavigator(this);
 
         mMainViewModel.setNavigator(this);
-        setUpRecyclerViewList(mBinder.rvAddressList);
+        ViewUtils.setUpRecyclerViewList(mBinder.rvAddressList, true);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
         mMainViewModel.isEditMode.set(isEditMode);
     }
@@ -98,13 +99,6 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         isEmptyAddress = addresses.size() <= 0;
         mAdapter.addItems(addresses, this);
         mBinder.rvAddressList.setAdapter(mAdapter);
-    }
-
-    private void setUpRecyclerViewList(RecyclerView rv) {
-        rv.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
     @Override

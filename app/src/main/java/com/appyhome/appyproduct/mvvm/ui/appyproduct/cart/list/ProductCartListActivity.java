@@ -131,14 +131,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         rv.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void setUpRecyclerViewList(RecyclerView rv) {
-        rv.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        rv.setItemAnimator(new DefaultItemAnimator());
-        if (rv.getItemDecorationCount() <= 0)
-            rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-    }
-
     @Override
     public void handleErrorService(Throwable throwable) {
         AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
@@ -178,7 +170,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void showCarts(RealmResults<ProductCart> result) {
         if (result != null && result.size() > 0) {
-            setUpRecyclerViewList(mBinder.cartRecyclerView);
+            ViewUtils.setUpRecyclerViewList(mBinder.cartRecyclerView, true);
         }
         mProductCartAdapter.addItems(result, this);
         mProductCartAdapter.notifyDataSetChanged();

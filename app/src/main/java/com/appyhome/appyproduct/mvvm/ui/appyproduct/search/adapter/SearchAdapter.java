@@ -21,7 +21,7 @@ public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator
 
     @Override
     protected int getEmptyItemLayout() {
-        return R.layout.view_item_product_cart_empty;
+        return R.layout.view_item_product_search_empty;
     }
 
     private SearchItemViewModel createViewModel(SearchItem item, SearchItemNavigator navigator) {

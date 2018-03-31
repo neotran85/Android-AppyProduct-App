@@ -14,26 +14,38 @@
 
     <LinearLayout
         android:id="@+id/llItemView"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:gravity="center_vertical"
         android:onClick="@{(view) -> navigator.onItemSuggestionClick(view)}"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
             android:gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="18dp"
-            android:layout_weight="1"
-            android:text="@{viewModel.keyword}"
-            android:textColor="@color/medium_dark_gray"
-            android:textSize="14sp" />
-        <ImageView
-            android:adjustViewBounds="true"
-            android:src="@mipmap/arrow_suggestion"
-            android:layout_width="12dp"
-            android:layout_marginEnd="14dp"
-            android:layout_height="match_parent" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="18dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.keyword}"
+                android:textColor="@color/medium_dark_gray"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="14dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/arrow_suggestion" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/light_gray"></View>
     </LinearLayout>
 </layout>

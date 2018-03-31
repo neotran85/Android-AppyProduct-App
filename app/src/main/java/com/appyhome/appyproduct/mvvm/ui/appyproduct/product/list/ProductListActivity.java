@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -30,6 +29,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        setUpRecyclerViewList(mBinder.productsRecyclerView);
+        ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
         mViewModel.getAllFavorites();
@@ -109,12 +109,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private void fetchProducts() {
         mViewModel.fetchProductsByIdCategory(getIdSubCategory());
-    }
-
-    private void setUpRecyclerViewList(RecyclerView rv) {
-        rv.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        rv.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
@@ -282,7 +276,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void showEmptyProducts() {
-        setUpRecyclerViewList(mBinder.productsRecyclerView);
+        ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mProductAdapter.addItems(new Product[]{}, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
         getViewModel().getCurrentFilter();

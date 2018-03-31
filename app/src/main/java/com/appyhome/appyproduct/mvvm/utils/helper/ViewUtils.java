@@ -6,6 +6,10 @@ import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,6 +139,19 @@ public final class ViewUtils {
     public static void requestFocus(EditText editText) {
         if (editText != null && editText.getParent() != null) {
             editText.getParent().requestChildFocus(editText, editText);
+        }
+    }
+
+    public static void setUpRecyclerViewList(RecyclerView rv, boolean dividerVisible) {
+        Context context = rv.getContext();
+        rv.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        if (dividerVisible) {
+            if (rv.getItemDecorationCount() == 0) {
+                DividerItemDecoration line = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
+                rv.addItemDecoration(line);
+            }
         }
     }
 
