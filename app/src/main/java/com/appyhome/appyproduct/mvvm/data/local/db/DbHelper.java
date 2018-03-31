@@ -47,7 +47,7 @@ public interface DbHelper {
 
     Flowable<Product> getProductById(int idProduct);
 
-    Flowable<ProductCart> addProductToCart(String userId, int productId, int amountAdded);
+    Flowable<ProductCart> addProductToCart(String userId, int productId, String variantModelId, int amountAdded);
 
     Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId);
 

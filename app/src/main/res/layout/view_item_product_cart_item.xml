@@ -177,7 +177,7 @@
                         android:layout_marginStart="10dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Variation 1"
+                        android:text="@{viewModel.variationName}"
                         android:textColor="@color/semi_gray"
                         android:textSize="13sp"
                         android:visibility="@{!viewModel.isEditMode}" />

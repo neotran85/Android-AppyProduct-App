@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
@@ -48,6 +49,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
     public ObservableField<String> amountAdded = new ObservableField<>("1");
     private int idProduct;
+
+    private RealmResults<ProductVariant> mVariants;
 
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -84,7 +87,14 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     }
 
     public void addProductToCart() {
-        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, getIntegerAmountAdded())
+        String variantModelId = "";
+        if(mVariants != null && mVariants.size() > 0)
+            variantModelId = mVariants.get(0).model_id;
+        else {
+            getNavigator().showAlert("Please select one of product's variants");
+            return;
+        }
+        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantModelId, getIntegerAmountAdded())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {
@@ -134,7 +144,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(results -> {
-                    Log.v("", results.size() + "");
+                    mVariants = results;
                 }, Crashlytics::logException));
     }
 

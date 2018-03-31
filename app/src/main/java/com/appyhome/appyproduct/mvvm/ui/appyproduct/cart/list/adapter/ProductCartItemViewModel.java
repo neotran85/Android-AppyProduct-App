@@ -23,7 +23,12 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<Boolean> isEditMode = new ObservableField<>(false);
 
     private int productId;
+    private String variantModelId;
     private long productCartId;
+
+    public void setVariantModelId(String id) {
+        variantModelId = id;
+    }
 
     public ProductCartItemViewModel() {
         super();

@@ -56,16 +56,6 @@ public class ProductCart extends RealmObject {
     public int amount;
 
     @Expose
-    @SerializedName("variation_id")
-    @ColumnInfo(name = "variation_id")
-    public int variation_id;
-
-    @Expose
-    @SerializedName("variation_name")
-    @ColumnInfo(name = "variation_name")
-    public String variation_name;
-
-    @Expose
     @SerializedName("checked")
     @ColumnInfo(name = "checked")
     public boolean checked;
@@ -79,4 +69,14 @@ public class ProductCart extends RealmObject {
     @SerializedName("order_id")
     @ColumnInfo(name = "order_id")
     public long order_id;
+
+    @Expose
+    @SerializedName("variant_model_id")
+    @ColumnInfo(name = "variant_model_id")
+    public String variant_model_id;
+
+    @Expose
+    @SerializedName("variant_name")
+    @ColumnInfo(name = "variant_name")
+    public String variant_name;
 }

@@ -430,7 +430,7 @@ public class AppDbHelper implements DbHelper {
         });
     }
 
-    private ProductCart createNewProductCart(Product product, String userId) {
+    private ProductCart createNewProductCart(Product product, String userId, String variantId, String variantName) {
         ProductCart cartItem = new ProductCart();
         cartItem.id = System.currentTimeMillis();
         cartItem.price = product.lowest_price;
@@ -443,6 +443,8 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_avatar = product.avatar_name;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
+        cartItem.variant_model_id = variantId;
+        cartItem.variant_name = variantName;
         return cartItem;
     }
 
@@ -465,23 +467,31 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCart> addProductToCart(String userId, int productId, int amountAdded) {
+    public Flowable<ProductCart> addProductToCart(String userId, int productId, String variantModelId, int amountAdded) {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
                 ProductCart productCart = getRealm().where(ProductCart.class)
                         .equalTo("product_id", productId)
+                        .equalTo("variant_model_id", variantModelId)
                         .equalTo("user_id", userId)
                         .equalTo("order_id", 0)
                         .findFirst();
+
                 if (productCart == null || !productCart.isValid()) {
                     ProductCached product = getRealm().where(ProductCached.class)
                             .equalTo("id", productId)
                             .findFirst();
-                    productCart = createNewProductCart(product.convertToProduct(), userId);
+                    ProductVariant variant = getRealm().where(ProductVariant.class)
+                            .equalTo("model_id", variantModelId)
+                            .findFirst();
+                    if (variant != null)
+                        productCart = createNewProductCart(product.convertToProduct(), userId, variant.model_id, variant.variant_name);
                 }
-                productCart.amount = productCart.amount + amountAdded;
-                productCart = getRealm().copyToRealmOrUpdate(productCart);
+                if(productCart != null) {
+                    productCart.amount = productCart.amount + amountAdded;
+                    productCart = getRealm().copyToRealmOrUpdate(productCart);
+                } else productCart = new ProductCart();
                 getRealm().commitTransaction();
                 return productCart;
             } catch (Exception e) {

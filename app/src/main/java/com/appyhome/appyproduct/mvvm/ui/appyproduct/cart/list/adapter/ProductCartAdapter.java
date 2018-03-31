@@ -93,6 +93,8 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         itemViewModel.price.set(productCart.price + "");
         itemViewModel.setNavigator(navigator);
         itemViewModel.checked.set(productCart.checked);
+        itemViewModel.variationName.set(productCart.variant_name);
+        itemViewModel.setVariantModelId(productCart.variant_model_id);
         return itemViewModel;
     }
 
