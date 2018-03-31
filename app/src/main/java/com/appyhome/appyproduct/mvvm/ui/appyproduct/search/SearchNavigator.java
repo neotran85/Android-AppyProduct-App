@@ -15,5 +15,5 @@ public interface SearchNavigator {
     void clearKeywords();
     void clearHistory();
     void search();
-
+    void showSuggestions(RealmResults<SearchItem> items);
 }

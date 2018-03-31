@@ -24,8 +24,8 @@ public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator
         return R.layout.view_item_product_cart_empty;
     }
 
-    private SearchItemViewModel createViewModel(SearchItem product, SearchItemNavigator navigator) {
-        return new SearchItemViewModel(navigator);
+    private SearchItemViewModel createViewModel(SearchItem item, SearchItemNavigator navigator) {
+        return new SearchItemViewModel(item.content, navigator);
     }
 
     public void addItems(RealmResults<SearchItem> results, SearchItemNavigator navigator) {

@@ -3,6 +3,10 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,7 +15,9 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductSearchBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchTagBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -23,9 +29,15 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Inject
     public SearchViewModel mMainViewModel;
-    ActivityProductSearchBinding mBinder;
+
+    @Inject
+    public SearchAdapter mSuggestionsAdapter;
+
     @Inject
     int mLayoutId;
+
+    ActivityProductSearchBinding mBinder;
+
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -57,28 +69,51 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                boolean isNotEmpty = getKeywords().length() >= 3;
+                if (isNotEmpty)
+                    getViewModel().getSearchSuggestions();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                getViewModel().isClearable.set(mBinder.etKeyword.getText().toString().length() > 0);
+                boolean isNotEmpty = getKeywords().length() > 0;
+                getViewModel().isClearable.set(isNotEmpty);
             }
         });
         getViewModel().getSearchHisTory();
+        mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
+    }
+
+    private void setUpRecyclerViewList(RecyclerView rv) {
+        rv.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+    }
+
+    @Override
+    public void showSuggestions(RealmResults<SearchItem> items) {
+        getViewModel().isHistoryVisible.set(false);
+        setUpRecyclerViewList(mBinder.rvSuggestions);
+        mSuggestionsAdapter.addItems(items, this);
+        mSuggestionsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void search() {
         String keywords = getKeywords();
         if (keywords != null && keywords.length() > 0) {
-            SearchItem item = new SearchItem();
-            item.content = getKeywords();
-            item.cached = true;
-            item.user_id = getViewModel().getUserId();
-            getViewModel().addSearchItems(new SearchItem[]{item});
+            getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
             setKeywords("");
         }
+    }
+
+    private SearchItem createKeywordCached(String keyword) {
+        SearchItem item = new SearchItem();
+        item.content = keyword;
+        item.cached = true;
+        item.user_id = getViewModel().getUserId();
+        return item;
     }
 
     @Override
@@ -92,7 +127,10 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void onItemClick(View view) {
+    public void onItemSuggestionClick(View view) {
+        SearchItemViewModel viewModel = (SearchItemViewModel) view.getTag();
+        setKeywords(viewModel.keyword.get());
+        getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
     }
 
 

@@ -96,6 +96,8 @@ public interface DbHelper {
 
     Flowable<ProductCart> getProductCart(String userId, int productId);
 
+    Flowable<RealmResults<SearchItem>> getSearchSuggestions();
+
     Flowable<ProductOrder> getOrderById(String userId, long orderId);
 
     Flowable<RealmResults<SearchItem>> getSearchHistory(String userId);

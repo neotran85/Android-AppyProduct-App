@@ -18,7 +18,7 @@ public class SearchItem extends RealmObject {
     @Expose
     @SerializedName("cached")
     @ColumnInfo(name = "cached")
-    public boolean cached;
+    public boolean cached = false;
 
     @Expose
     @SerializedName("user_id")

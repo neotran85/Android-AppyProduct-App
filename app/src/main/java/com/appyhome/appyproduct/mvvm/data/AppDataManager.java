@@ -635,4 +635,9 @@ public class AppDataManager implements DataManager {
     public Flowable<Boolean> addSearchItem(SearchItem item) {
         return mDbHelper.addSearchItem(item);
     }
+
+    @Override
+    public Flowable<RealmResults<SearchItem>> getSearchSuggestions() {
+        return mDbHelper.getSearchSuggestions();
+    }
 }

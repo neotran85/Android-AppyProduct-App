@@ -715,6 +715,18 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<RealmResults<SearchItem>> getSearchSuggestions() {
+        beginTransaction();
+        Flowable<RealmResults<SearchItem>> result = getRealm().where(SearchItem.class)
+                .isNotNull("content")
+                .equalTo("cached", true)
+                .notEqualTo("content", "")
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return result;
+    }
+
+    @Override
     public Flowable<Boolean> clearSearchHistory(String userId) {
         return Flowable.fromCallable(() -> {
             try {

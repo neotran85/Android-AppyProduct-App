@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
@@ -14,6 +15,11 @@ public class SearchActivityModule {
     SearchViewModel provideSearchViewModel(DataManager dataManager,
                                            SchedulerProvider schedulerProvider) {
         return new SearchViewModel(dataManager, schedulerProvider);
+    }
+
+    @Provides
+    SearchAdapter provideSearchAdapter() {
+        return new SearchAdapter();
     }
 
     @Provides
