@@ -164,6 +164,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     public void onItemClick(View view) {
         ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
+        intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
     }
 

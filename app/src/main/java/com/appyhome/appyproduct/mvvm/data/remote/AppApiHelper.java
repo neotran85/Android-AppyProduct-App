@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
@@ -10,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -223,5 +225,14 @@ public class AppApiHelper implements ApiHelper {
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .build()
                 .getObjectSingle(BannersResponse.class);
+    }
+
+    @Override
+    public Single<ProductVariantResponse> fetchProductVariant(int productId) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_VARIANT_GET)
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                .addBodyParameter("product_id", productId + "")
+                .build()
+                .getObjectSingle(ProductVariantResponse.class);
     }
 }

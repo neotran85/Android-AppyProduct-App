@@ -73,6 +73,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         int productId = getIntent().getIntExtra("product_id", 0);
         if(productId != 0) {
             getViewModel().getProductCachedById(productId);
+            getViewModel().fetchProductVariant(productId);
         }
     }
 

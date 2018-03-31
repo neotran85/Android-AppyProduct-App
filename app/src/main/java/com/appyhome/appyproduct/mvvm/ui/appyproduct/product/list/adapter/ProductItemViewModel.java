@@ -5,9 +5,14 @@ import android.databinding.ObservableField;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,10 +80,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                         getNavigator().updateCartCount();
                         getNavigator().addedToCartCompleted();
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
     }
 
     public void inputValue(Product product, boolean isAllFavorited) {
@@ -102,9 +104,25 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct(), false);
                     }
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                }, Crashlytics::logException));
+    }
+
+    private void addProductVariant(ProductVariant[] productVariant) {
+        
+    }
+
+    public int getProductId() {
+        return idProduct;
+    }
+
+    public void fetchProductVariant(int idProduct) {
+        getCompositeDisposable().add(getDataManager()
+                .fetchProductVariant(idProduct)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    if(result != null && result.code.equals(ApiCode.OK_200))
+                        addProductVariant(result.message);
+                }, Crashlytics::logException));
     }
 }

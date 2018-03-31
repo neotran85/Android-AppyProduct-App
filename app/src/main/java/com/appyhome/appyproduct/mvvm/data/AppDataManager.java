@@ -25,7 +25,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -532,9 +532,9 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                      String paymentMethod, Address shippingAddress,
-                                      String customerId, String customerName,
-                                      float totalCost, float discount) {
+                                           String paymentMethod, Address shippingAddress,
+                                           String customerId, String customerName,
+                                           float totalCost, float discount) {
         return mDbHelper.addOrder(items, paymentMethod, shippingAddress, customerId, customerName, totalCost, discount);
     }
 
@@ -602,6 +602,7 @@ public class AppDataManager implements DataManager {
     public Flowable<Boolean> addProductsCached(ProductCached[] list) {
         return mDbHelper.addProductsCached(list);
     }
+
     @Override
     public Flowable<ProductCached> getProductCachedById(int idProduct) {
         return mDbHelper.getProductCachedById(idProduct);
@@ -616,6 +617,7 @@ public class AppDataManager implements DataManager {
     public Flowable<ProductOrder> getOrderById(String userId, long orderId) {
         return mDbHelper.getOrderById(userId, orderId);
     }
+
     @Override
     public Flowable<RealmResults<SearchItem>> getSearchHistory(String userId) {
         return mDbHelper.getSearchHistory(userId);
@@ -639,5 +641,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<RealmResults<SearchItem>> getSearchSuggestions() {
         return mDbHelper.getSearchSuggestions();
+    }
+
+    @Override
+    public Single<ProductVariantResponse> fetchProductVariant(int productId) {
+        return mApiHelper.fetchProductVariant(productId);
     }
 }
