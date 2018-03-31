@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -16,6 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import io.realm.RealmList;
 
 public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
@@ -49,6 +52,14 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+    }
+
+    public int getProductId() {
+        return idProduct;
+    }
+
+    public void setProductId(int id) {
+        idProduct = id;
     }
 
     public void updateProductFavorite(int position) {
@@ -96,8 +107,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         favoriteCount.set(product.favorite_count + "");
     }
 
-    public void getProductCachedById(int productId) {
-        getCompositeDisposable().add(getDataManager().getProductCachedById(productId)
+    public void getProductCachedById() {
+        getCompositeDisposable().add(getDataManager().getProductCachedById(idProduct)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCached -> {
@@ -107,22 +118,34 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    private void addProductVariant(ProductVariant[] productVariant) {
-        
+    /************ PRODUCT VARIANTS ***************/
+
+    private void addProductVariants(RealmList<ProductVariant> productVariants) {
+        getCompositeDisposable().add(getDataManager().addProductVariants(productVariants)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    getProductVariants();
+                }, Crashlytics::logException));
     }
 
-    public int getProductId() {
-        return idProduct;
+    private void getProductVariants() {
+        getCompositeDisposable().add(getDataManager().getProductVariants(idProduct)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(results -> {
+                    Log.v("", results.size() + "");
+                }, Crashlytics::logException));
     }
 
-    public void fetchProductVariant(int idProduct) {
+    public void fetchProductVariant() {
         getCompositeDisposable().add(getDataManager()
                 .fetchProductVariant(idProduct)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
                     if(result != null && result.code.equals(ApiCode.OK_200))
-                        addProductVariant(result.message);
+                        addProductVariants(result.message);
                 }, Crashlytics::logException));
     }
 }

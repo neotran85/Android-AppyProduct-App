@@ -10,6 +10,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
@@ -106,6 +107,32 @@ public class AppDbHelper implements DbHelper {
             }
         });
     }
+
+    @Override
+    public Flowable<RealmResults<ProductVariant>> getProductVariants(int productId) {
+        beginTransaction();
+        Flowable<RealmResults<ProductVariant>> variants = getRealm().where(ProductVariant.class)
+                .equalTo("product_id", productId)
+                .findAll().asFlowable();
+        getRealm().commitTransaction();
+        return variants;
+    }
+
+    @Override
+    public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                getRealm().copyToRealmOrUpdate(variants);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
+    }
+
 
     @Override
     public void closeDatabase() {

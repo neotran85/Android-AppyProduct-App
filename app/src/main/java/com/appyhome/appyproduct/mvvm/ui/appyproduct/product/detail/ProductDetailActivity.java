@@ -67,13 +67,14 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         loadImages();
         getCartPosition();
         getProductIdByIntent();
+        getViewModel().getProductCachedById();
+        getViewModel().fetchProductVariant();
     }
 
     private void getProductIdByIntent() {
         int productId = getIntent().getIntExtra("product_id", 0);
         if(productId != 0) {
-            getViewModel().getProductCachedById(productId);
-            getViewModel().fetchProductVariant(productId);
+            getViewModel().setProductId(productId);
         }
     }
 

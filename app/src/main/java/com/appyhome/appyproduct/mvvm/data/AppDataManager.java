@@ -13,6 +13,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
@@ -59,6 +60,7 @@ import javax.inject.Singleton;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 @Singleton
@@ -646,5 +648,15 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<ProductVariantResponse> fetchProductVariant(int productId) {
         return mApiHelper.fetchProductVariant(productId);
+    }
+
+    @Override
+    public Flowable<RealmResults<ProductVariant>> getProductVariants(int productId) {
+        return mDbHelper.getProductVariants(productId);
+    }
+
+    @Override
+    public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
+        return mDbHelper.addProductVariants(variants);
     }
 }

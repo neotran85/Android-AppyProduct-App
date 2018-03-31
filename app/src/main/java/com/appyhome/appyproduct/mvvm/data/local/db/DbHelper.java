@@ -11,12 +11,14 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 
 import java.util.ArrayList;
 
 import io.reactivex.Flowable;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 
@@ -107,4 +109,8 @@ public interface DbHelper {
     Flowable<Boolean> addSearchItem(SearchItem item);
 
     Flowable<Boolean> clearSearchHistory(String userId);
+
+    Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants);
+
+    Flowable<RealmResults<ProductVariant>> getProductVariants(int productId);
 }
