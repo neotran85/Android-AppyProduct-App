@@ -129,6 +129,7 @@ dependencies {
     implementation "com.wdullaer:materialdatetimepicker:$rootProject.materialdatetimepickerVersion"
 
     // Payments
+    implementation "com.braintreepayments.api:braintree:$rootProject.braintreepaymentVerison"
     implementation "com.molpay:molpay-mobile-xdk-android:$rootProject.molpaymobilexdkVersion"
 
     // Map & Location

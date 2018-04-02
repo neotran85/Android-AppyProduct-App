@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.appyhome.appyproduct.mvvm.BuildConfig;
+import com.braintreepayments.api.BraintreeFragment;
+import com.braintreepayments.api.exceptions.InvalidArgumentException;
+import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
 import com.molpay.molpayxdk.MOLPayActivity;
 
 import java.util.HashMap;
@@ -20,7 +23,8 @@ public class PaymentManager {
     private static final String CURRENCY = "MYR";
     private static final String COUNTRY = "MY";
     private static PaymentManager mInstance;
-
+    private BraintreeFragment mBraintreeFragment;
+    private String mAuthorization;
     private PaymentManager() {
 
     }
@@ -30,6 +34,18 @@ public class PaymentManager {
             mInstance = new PaymentManager();
         }
         return mInstance;
+    }
+
+    public boolean setUpBraintreePayment(Activity currentActivity, String authorizationString, PaymentMethodNonceCreatedListener listener) {
+        try {
+            mAuthorization = authorizationString;
+            mBraintreeFragment = BraintreeFragment.newInstance(currentActivity, mAuthorization);
+            mBraintreeFragment.addListener(listener);
+            return true;
+        } catch (InvalidArgumentException e) {
+            // There was an issue with your authorization string.
+        }
+        return false;
     }
 
     public void startMolpayActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email, String name) {
