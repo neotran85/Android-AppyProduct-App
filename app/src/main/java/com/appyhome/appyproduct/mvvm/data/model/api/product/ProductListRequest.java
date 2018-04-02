@@ -18,12 +18,12 @@ public class ProductListRequest {
     public String type;
 
     @Expose
-    @SerializedName("keyword")
-    public String keyword;
+    @SerializedName("name")
+    public String name;
 
     public ProductListRequest(String kw, int pageNumber, String t) {
         page = pageNumber;
-        keyword = kw;
+        name = kw;
         type = t;
     }
 

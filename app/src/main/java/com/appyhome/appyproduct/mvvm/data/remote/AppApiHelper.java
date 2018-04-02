@@ -224,12 +224,12 @@ public class AppApiHelper implements ApiHelper {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("page", request.page);
-            jsonObject.put("keyword", request.keyword);
+            jsonObject.put("name", request.name);
             jsonObject.put("type", request.type);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SEARCH)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addJSONObjectBody(jsonObject)
                 .build()

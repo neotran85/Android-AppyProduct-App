@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductSearchBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchTagBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemViewModel;
@@ -99,7 +100,9 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         String keywords = getKeywords();
         if (keywords != null && keywords.length() > 0) {
             getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
-            setKeywords("");
+            Intent intent = ProductListActivity.getStartIntent(this);
+            intent.putExtra("keyword", keywords);
+            startActivity(intent);
         }
     }
 

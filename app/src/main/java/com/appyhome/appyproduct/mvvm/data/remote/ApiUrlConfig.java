@@ -56,6 +56,9 @@ public class ApiUrlConfig {
     public static final String API_BANNERS_GET = BuildConfig.BASE_URL
             + "api/get/banners";
 
+    public static final String API_PRODUCT_SEARCH = BuildConfig.BASE_URL
+            + "api/appyproduct/get/product/pername";
+
     public static final String API_PRODUCT_VARIANT_GET = BuildConfig.BASE_URL
             + "api/appyproduct/get/variants/perproduct";
 
