@@ -70,6 +70,8 @@ public interface ApiHelper {
 
     Single<JSONObject> fetchProductsByIdCategory(ProductListRequest request);
 
+    Single<JSONObject> fetchProductsByKeyword(ProductListRequest request);
+
     Single<BannersResponse> fetchBanners();
 
     Single<ProductVariantResponse> fetchProductVariant(int productId);

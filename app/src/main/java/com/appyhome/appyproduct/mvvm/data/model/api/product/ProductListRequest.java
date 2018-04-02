@@ -17,6 +17,16 @@ public class ProductListRequest {
     @SerializedName("type")
     public String type;
 
+    @Expose
+    @SerializedName("keyword")
+    public String keyword;
+
+    public ProductListRequest(String kw, int pageNumber, String t) {
+        page = pageNumber;
+        keyword = kw;
+        type = t;
+    }
+
     public ProductListRequest(int id, int pageNumber, String t) {
         page = pageNumber;
         categoryId = id;

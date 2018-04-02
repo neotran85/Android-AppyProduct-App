@@ -458,6 +458,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Single<JSONObject> fetchProductsByKeyword(ProductListRequest request) {
+        return mApiHelper.fetchProductsByKeyword(request);
+    }
+
+    @Override
     public Flowable<Boolean> addProducts(Product[] list) {
         return mDbHelper.addProducts(list);
     }

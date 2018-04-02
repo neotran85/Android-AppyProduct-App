@@ -15,7 +15,7 @@ public interface ProductListNavigator {
 
     void showProducts(Product[] list);
 
-    void updateFavorites(ArrayList<Integer> listId);
+    void getAllFavorites_Done(ArrayList<Integer> listId);
 
     void showEmptyProducts();
 

@@ -42,7 +42,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
 public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
-    public static final int ID_DEFAULT_SUB = 138;
+    public static final int ID_SUB_EMPTY = -1;
     public static final int DEFAULT_SPAN_COUNT = 2;
 
     @Inject
@@ -105,10 +105,18 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         return fragmentDispatchingAndroidInjector;
     }
 
-    /************************* SETUP  ************************/
+    /************************* PRODUCTS SETUP  ************************/
 
     private void fetchProducts() {
-        mViewModel.fetchProductsByIdCategory(getIdSubCategory());
+        int categoryId = getIdSubCategory();
+        if (categoryId != ID_SUB_EMPTY) {
+            getViewModel().fetchProductsByIdCategory(categoryId);
+        } else {
+            String keyword = getKeywordString();
+            if (keyword != null && keyword.length() > 0) {
+                getViewModel().fetchProductsByKeyword(keyword);
+            }
+        }
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
@@ -127,8 +135,12 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     private int getIdSubCategory() {
-        int idSubCategory = getIntent().getIntExtra("id_sub", ID_DEFAULT_SUB);
+        int idSubCategory = getIntent().getIntExtra("id_sub", ID_SUB_EMPTY);
         return idSubCategory;
+    }
+
+    private String getKeywordString() {
+        return getIntent().getStringExtra("keyword");
     }
 
     public static Intent getStartIntent(Context context) {
@@ -253,7 +265,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void updateFavorites(ArrayList<Integer> listId) {
+    public void getAllFavorites_Done(ArrayList<Integer> listId) {
         mFavoritesId = listId;
         fetchProducts();
     }

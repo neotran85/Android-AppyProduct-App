@@ -220,6 +220,23 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Single<JSONObject> fetchProductsByKeyword(ProductListRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("page", request.page);
+            jsonObject.put("keyword", request.keyword);
+            jsonObject.put("type", request.type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET)
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                .addJSONObjectBody(jsonObject)
+                .build()
+                .getJSONObjectSingle();
+    }
+
+    @Override
     public Single<BannersResponse> fetchBanners() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_BANNERS_GET)
                 .addHeaders(mApiHeader.getPublicApiHeader())

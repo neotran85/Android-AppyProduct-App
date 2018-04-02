@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.realm.RealmResults;
@@ -35,7 +36,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public ObservableField<String> currentSortLabel = new ObservableField<>("Sort");
     public ObservableField<String> filterNumber = new ObservableField<>("");
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
-    private int mIdSub = ProductListActivity.ID_DEFAULT_SUB;
+    private int mIdSub = ProductListActivity.ID_SUB_EMPTY;
+    private String mKeyword = "";
     private String mSortType = "";
     private ProductListCachedResponse cachedResponse;
 
@@ -95,34 +97,69 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    fetchProductsByIdCategory();
+                    fetchProductsByCommand();
                 }, Crashlytics::logException));
     }
 
-    private void fetchProductsByIdCategory() {
-        if (isOnline()) {
-            Disposable disposable = Observable.create((ObservableEmitter<ProductListResponse> subscriber) -> {
-                fetchProducts().subscribe(jsonResult -> {
-                    // 200 OK
-                    if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
-                        Gson gson = new Gson();
-                        ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
-                        cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
-                        if (response.message != null && response.message.length > 0) {
-                            addProductsToDatabase(response.message);
-                            return;
-                        }
+    private ObservableOnSubscribe<ProductListResponse> fetchProductsByIdCategory() {
+        return (ObservableEmitter<ProductListResponse> subscriber) -> {
+            fetchProducts(mIdSub).subscribe(jsonResult -> {
+                // 200 OK
+                if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+                    Gson gson = new Gson();
+                    ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
+                    cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
+                    if (response.message != null && response.message.length > 0) {
+                        addProductsToDatabase(response.message);
+                        return;
                     }
-                    // NOT OK
-                    getNavigator().showEmptyProducts();
-                }, throwable -> {
-                    getNavigator().showEmptyProducts();
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                });
-            }).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
-                    .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
-            getCompositeDisposable().add(disposable);
+                }
+                // NOT OK
+                getNavigator().showEmptyProducts();
+            }, throwable -> {
+                getNavigator().showEmptyProducts();
+                throwable.printStackTrace();
+                Crashlytics.logException(throwable);
+            });
+        };
+    }
+    private ObservableOnSubscribe<ProductListResponse> fetchProductsByKeyword() {
+        return (ObservableEmitter<ProductListResponse> subscriber) -> {
+            fetchProducts(mKeyword).subscribe(jsonResult -> {
+                // 200 OK
+                if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+                    Gson gson = new Gson();
+                    ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
+                    cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
+                    if (response.message != null && response.message.length > 0) {
+                        addProductsToDatabase(response.message);
+                        return;
+                    }
+                }
+                // NOT OK
+                getNavigator().showEmptyProducts();
+            }, throwable -> {
+                getNavigator().showEmptyProducts();
+                throwable.printStackTrace();
+                Crashlytics.logException(throwable);
+            });
+        };
+    }
+
+
+    private void fetchProductsByCommand() {
+        if (isOnline()) {
+            ObservableOnSubscribe<ProductListResponse> resultProcessing = null;
+            if (mIdSub > 0) {
+                resultProcessing = fetchProductsByIdCategory();
+            } else if (mKeyword != null && mKeyword.length() > 0) {
+                resultProcessing = fetchProductsByKeyword();
+            }
+            if (resultProcessing != null) {
+                Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
+                        .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
+                getCompositeDisposable().add(disposable);
+            }
         } else {
             getAllProductsWithFilter();
         }
@@ -137,9 +174,25 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         clearProductsLoaded();
     }
 
-    private Single<JSONObject> fetchProducts() {
+    public void fetchProductsByKeyword(String keyword) {
+        mKeyword = keyword;
+        String json = getDataManager().getProductsSortCurrent(getUserId());
+        SortOption.UNKNOWN.fromJson(json);
+        mSortType = SortOption.UNKNOWN.getValue();
+        // Clear Product Loaded Before First, then fetchProductsByIdCategory();
+        clearProductsLoaded();
+    }
+
+    private Single<JSONObject> fetchProducts(String keyword) {
         return getDataManager()
-                .fetchProductsByIdCategory(new ProductListRequest(mIdSub, 0, mSortType))
+                .fetchProductsByKeyword(new ProductListRequest(keyword, 0, mSortType))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui());
+    }
+
+    private Single<JSONObject> fetchProducts(int idSub) {
+        return getDataManager()
+                .fetchProductsByIdCategory(new ProductListRequest(idSub, 0, mSortType))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui());
     }
@@ -189,7 +242,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                             arrayId.add(item.product_id);
                         }
                     }
-                    getNavigator().updateFavorites(arrayId);
+                    getNavigator().getAllFavorites_Done(arrayId);
                 }, Crashlytics::logException));
     }
 
