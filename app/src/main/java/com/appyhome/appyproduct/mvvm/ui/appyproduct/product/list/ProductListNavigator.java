@@ -37,4 +37,8 @@ public interface ProductListNavigator {
 
     void restartFetching();
 
+    void showLoading();
+
+    void closeLoading();
+
 }

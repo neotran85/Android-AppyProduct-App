@@ -224,6 +224,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void applyFilter() {
+        showLoading();
         restartFetching();
     }
 
@@ -240,6 +241,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void resetFilter() {
+        showLoading();
         getViewModel().resetFilter();
     }
 
@@ -269,6 +271,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void onSortItemClick(View view) {
         if (mSortFragment != null) {
+            showLoading();
             SortOption option = (SortOption) view.getTag();
             getViewModel().saveSortCurrent(option);
             toggleSortOptions();
@@ -328,13 +331,14 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             if (getViewModel().isFirstLoaded()) {
                 mProductAdapter.addItems(result, this, mFavoritesId);
                 mProductAdapter.notifyDataSetChanged();
-            } else {
+            } else { // LOAD MORE
                 int rangeStart = mProductAdapter.getItemCount();
                 int itemCount = result.size() - rangeStart;
                 mProductAdapter.addItems(result, this, mFavoritesId);
                 mProductAdapter.notifyItemRangeInserted(rangeStart, itemCount);
             }
         }
+        closeLoading();
     }
 
     @Override
@@ -342,6 +346,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mProductAdapter.addItems(null, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
+        closeLoading();
     }
 
     @Override
@@ -371,6 +376,16 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             mIsUsingSmallItem = true;
         }
         return value;
+    }
+
+    @Override
+    public void showLoading() {
+        AlertManager.getInstance(this).showLoading();
+    }
+
+    @Override
+    public void closeLoading() {
+        AlertManager.getInstance(this).closeLoading();
     }
 
 }

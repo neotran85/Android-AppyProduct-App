@@ -66,6 +66,7 @@ public class AlertManager {
             mProgressDialog.cancel();
         mProgressDialog = ProgressDialog.show(mContext, "",
                 mContext.getString(R.string.message_loading), true);
+        mProgressDialog.setCanceledOnTouchOutside(true);
     }
 
     public void showQuickToast(String text) {

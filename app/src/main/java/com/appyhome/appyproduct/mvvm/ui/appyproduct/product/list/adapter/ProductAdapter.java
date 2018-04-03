@@ -14,7 +14,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmResults;
@@ -55,6 +54,10 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         ProductItemEmptyViewModel viewModelEmpty = new ProductItemEmptyViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         viewModelEmpty.setNavigator(navigator);
         return viewModelEmpty;
+    }
+
+    public int getItemsSize() {
+        return mItems != null ? mItems.size() : 0;
     }
 
     private boolean checkIfFavorite(int id, ArrayList<Integer> listId) {

@@ -486,7 +486,9 @@ public class AppDbHelper implements DbHelper {
                         productCart = createNewProductCart(product.convertToProduct(), userId, variant.model_id, variant.variant_name);
                 }
                 if (productCart != null) {
-                    productCart.time_added = System.currentTimeMillis();
+                    long timeAdded = System.currentTimeMillis();
+                    productCart.time_added = timeAdded;
+                    timeAdded--;
                     productCart.amount = productCart.amount + amountAdded;
                     productCart = getRealm().copyToRealmOrUpdate(productCart);
                     // Update time for all seller items
@@ -494,10 +496,12 @@ public class AppDbHelper implements DbHelper {
                             .equalTo("seller_name", productCart.seller_name)
                             .equalTo("user_id", userId)
                             .equalTo("order_id", 0)
+                            .sort("time_added", Sort.DESCENDING)
                             .findAll();
                     if (productCart != null) {
                         for (ProductCart cart : productCarts) {
-                            cart.time_added = productCart.time_added;
+                            cart.time_added = timeAdded;
+                            timeAdded--;
                         }
                         getRealm().copyToRealmOrUpdate(productCarts);
                     }
