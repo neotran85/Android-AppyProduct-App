@@ -71,7 +71,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     /******************************  PRODUCTS METHODS *************** ***************/
 
     public void getAllProductsWithFilter() {
-        getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId(), mIdSub)
+        getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {

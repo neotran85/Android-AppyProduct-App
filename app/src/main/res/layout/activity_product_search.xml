@@ -100,14 +100,15 @@
                     android:textColor="@color/dark_gray"
                     android:textSize="13sp" />
 
-                <ImageView
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
+                <Button
+                    android:textSize="13sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/view_rounded_bg_orange"
                     android:onClick="@{(view)->navigator.clearHistory()}"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:padding="10dp"
-                    android:src="@mipmap/icon_trash" />
+                    android:layout_width="46dp"
+                    android:layout_height="28dp"
+                    android:text="Clear"/>
+
             </LinearLayout>
 
             <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout

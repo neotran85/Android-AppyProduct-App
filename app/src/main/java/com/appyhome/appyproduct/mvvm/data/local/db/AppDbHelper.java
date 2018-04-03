@@ -685,13 +685,12 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<RealmResults<Product>> getAllProductsFilter(String userId, int idSubCategory) {
+    public Flowable<RealmResults<Product>> getAllProductsFilter(String userId) {
         beginTransaction();
         ProductFilter filter = getRealm().where(ProductFilter.class)
                 .equalTo("user_id", userId)
                 .findFirst();
-        RealmQuery query = getRealm().where(Product.class)
-                .equalTo("category_id", idSubCategory);
+        RealmQuery query = getRealm().where(Product.class);
         if (filter != null) {
             if (filter.shipping_from != null && filter.shipping_from.length() > 0) {
                 if (filter.shipping_from.equals("Local"))
