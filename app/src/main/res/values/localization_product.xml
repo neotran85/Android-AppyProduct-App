@@ -12,6 +12,6 @@
     <string name="toast_your_cart_is_empty">Your cart is empty.</string>
     <string name="button_back_to_home_screen">BACK TO HOME SCREEN</string>
     <string name="please_add_address">Please add a shipping address.</string>
-    <string name="items_added_to_your_card"> item(s) added to your cart</string>
+    <string name="items_added_to_your_card">item(s) added to your cart</string>
     <string name="sub_loading">Loading...</string>
 </resources>

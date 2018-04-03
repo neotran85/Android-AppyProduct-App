@@ -2,7 +2,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -21,7 +20,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
@@ -73,7 +71,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private void getProductIdByIntent() {
         int productId = getIntent().getIntExtra("product_id", 0);
-        if(productId != 0) {
+        if (productId != 0) {
             getViewModel().setProductId(productId);
         }
     }
@@ -106,7 +104,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (isBuyNow) {
             startActivity(ProductCartListActivity.getStartIntent(this));
         } else {
-            showAlert(mMainViewModel.amountAdded.get() + getString(R.string.items_added_to_your_card));
+            showAlert(mMainViewModel.amountAdded.get() + " " + getString(R.string.items_added_to_your_card));
         }
         isBuyNow = false;
     }
