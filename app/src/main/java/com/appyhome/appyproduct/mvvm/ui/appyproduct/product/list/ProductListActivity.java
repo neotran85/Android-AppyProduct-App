@@ -67,6 +67,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private boolean mIsUsingSmallItem = false;
 
+    private int mColumns = 0;
+
     /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
@@ -76,10 +78,23 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
+        mColumns = calculateSubColumns();
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
-        mViewModel.getAllFavorites();
+        fetchProductsNew();
+    }
+
+    private void fetchProductsNew() {
+        // CLEARED PRODUCTS LOADED BEFORE
+        getViewModel().resetPageNumber();
+        getViewModel().setIsAbleToLoadMore(false);
+        getViewModel().clearProductsLoaded();
+    }
+
+    @Override
+    public void clearProductsLoaded_Done() {
+        getViewModel().getAllFavorites();
     }
 
     @Override
@@ -87,6 +102,13 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         super.onDestroy();
         ProductDetailActivityModule.clickedViewModel = null;
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getViewModel().emptyProductsLoaded();
+    }
+
 
     @Override
     public void onFragmentClosed() {
@@ -105,28 +127,50 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         return fragmentDispatchingAndroidInjector;
     }
 
+    @Override
+    public void restartFetching() {
+        getViewModel().resetPageNumber();
+        getViewModel().setIsAbleToLoadMore(false);
+        fetchProducts();
+    }
+
     /************************* PRODUCTS SETUP  ************************/
 
     private void fetchProducts() {
         int categoryId = getIdSubCategory();
         if (categoryId != ID_SUB_EMPTY) {
-            getViewModel().fetchProductsByIdCategory(categoryId);
+            getViewModel().fetchProductsByCommand(new Integer(categoryId));
         } else {
             String keyword = getKeywordString();
             if (keyword != null && keyword.length() > 0) {
-                getViewModel().fetchProductsByKeyword(keyword);
+                getViewModel().fetchProductsByCommand(keyword);
             }
         }
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
-        int columns = calculateSubColumns();
-        GridLayoutManager layoutManager = new GridLayoutManager(this,
-                columns, GridLayoutManager.VERTICAL,
-                false);
-        rv.setLayoutManager(layoutManager);
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.clearOnScrollListeners();
+        if (getViewModel().isFirstLoaded()) {
+            GridLayoutManager layoutManager = new GridLayoutManager(this,
+                    mColumns, GridLayoutManager.VERTICAL,
+                    false);
+            rv.setLayoutManager(layoutManager);
+            rv.setItemAnimator(new DefaultItemAnimator());
+            rv.clearOnScrollListeners();
+            rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (getViewModel().isIsAbleToLoadMore()) {
+                        int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
+                        int childCount = mProductAdapter.getItemCount();
+                        if (lastVisiblePosition == childCount - 1) {
+                            getViewModel().setIsAbleToLoadMore(false);
+                            getViewModel().increasePageNumber();
+                            fetchProducts();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /************************* GET METHODS ************************/
@@ -180,8 +224,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     @Override
     public void applyFilter() {
-        getViewModel().getAllProductsWithFilter();
-        getViewModel().getCurrentFilter();
+        restartFetching();
     }
 
     @Override
@@ -229,7 +272,7 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             SortOption option = (SortOption) view.getTag();
             getViewModel().saveSortCurrent(option);
             toggleSortOptions();
-            getViewModel().fetchProductsByIdCategory(getIdSubCategory());
+            fetchProductsNew();
         }
     }
 
@@ -287,11 +330,10 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
                 mProductAdapter.notifyDataSetChanged();
             } else {
                 int rangeStart = mProductAdapter.getItemCount();
-                mProductAdapter.addMoreItems(result, mFavoritesId);
-                int rangeEnd = mProductAdapter.getItemCount();
-                mProductAdapter.notifyItemRangeInserted(rangeStart, rangeEnd);
+                int itemCount = result.size() - rangeStart;
+                mProductAdapter.addItems(result, this, mFavoritesId);
+                mProductAdapter.notifyItemRangeInserted(rangeStart, itemCount);
             }
-            getViewModel().getCurrentFilter();
         }
     }
 
@@ -300,7 +342,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mProductAdapter.addItems(null, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
-        getViewModel().getCurrentFilter();
     }
 
     @Override

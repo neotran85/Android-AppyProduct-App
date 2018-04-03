@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -43,12 +43,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
 
-    private int mIdSub = ProductListActivity.ID_SUB_EMPTY;
-
-    private String mKeyword = "";
-
-    private String mSortType = "";
-
     private static final int PRODUCTS_PER_PAGE = 100;
 
     private ProductListCachedResponse cachedResponse;
@@ -63,6 +57,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         updateSortCurrentLabel();
+    }
+
+    public void resetPageNumber() {
+        mPageNumber = 1;
     }
 
     public void increasePageNumber() {
@@ -102,7 +100,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     /******************************  PRODUCTS METHODS *************** ***************/
 
-    public void getAllProductsWithFilter() {
+    private void getAllProductsWithFilter() {
         getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -114,7 +112,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void addProductsCachedToDatabase() {
-        if (cachedResponse != null && cachedResponse.message != null && cachedResponse.message.length > 0) {
+        if (cachedResponse != null && cachedResponse.message != null && cachedResponse.message.size() > 0) {
+            mIsAbleToLoadMore = cachedResponse.message.size() == PRODUCTS_PER_PAGE;
             getCompositeDisposable().add(getDataManager().addProductsCached(cachedResponse.message)
                     .take(1)
                     .observeOn(getSchedulerProvider().ui())
@@ -123,19 +122,32 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     }, Crashlytics::logException));
         }
     }
-
-    private void clearProductsLoaded() {
+    public void emptyProductsLoaded() {
         getCompositeDisposable().add(getDataManager().clearProductsLoaded()
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    fetchProductsByCommand();
+                    // DO NOTHING
                 }, Crashlytics::logException));
+    }
+    public void clearProductsLoaded() {
+        getCompositeDisposable().add(getDataManager().clearProductsLoaded()
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    getNavigator().clearProductsLoaded_Done();
+                }, Crashlytics::logException));
+    }
+
+    private void showEmptyProducts() {
+        if (isFirstLoaded()) {
+            getNavigator().showEmptyProducts();
+        }
     }
 
     private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(Object data) {
         return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            getDataManager().fetchProducts(new ProductListRequest(data, mPageNumber, mSortType))
+            getDataManager().fetchProducts(new ProductListRequest(data, mPageNumber, getCurrentSortType()))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(jsonResult -> {
@@ -150,23 +162,29 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                             }
                         }
                         // NOT OK
-                        getNavigator().showEmptyProducts();
+                        showEmptyProducts();
                     }, throwable -> {
-                        getNavigator().showEmptyProducts();
+                        showEmptyProducts();
                         throwable.printStackTrace();
                         Crashlytics.logException(throwable);
                     });
         };
     }
 
-    private void fetchProductsByCommand() {
+    private String getCurrentSortType() {
+        try {
+            String json = getDataManager().getProductsSortCurrent(getUserId());
+            return new JSONObject(json).getString("value");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public void fetchProductsByCommand(Object data) {
         if (isOnline()) {
             ObservableOnSubscribe<ProductListResponse> resultProcessing = null;
-            if (mIdSub > 0) {
-                resultProcessing = fetchProductsByObject(new Integer(mIdSub));
-            } else if (mKeyword != null && mKeyword.length() > 0) {
-                resultProcessing = fetchProductsByObject(mKeyword);
-            }
+            resultProcessing = fetchProductsByObject(data);
             if (resultProcessing != null) {
                 Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
                         .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
@@ -175,24 +193,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         } else {
             getAllProductsWithFilter();
         }
-    }
-
-    public void fetchProductsByIdCategory(int idSub) {
-        mIdSub = idSub;
-        String json = getDataManager().getProductsSortCurrent(getUserId());
-        SortOption.UNKNOWN.fromJson(json);
-        mSortType = SortOption.UNKNOWN.getValue();
-        // Clear Product Loaded Before First, then fetchProductsByIdCategory();
-        clearProductsLoaded();
-    }
-
-    public void fetchProductsByKeyword(String keyword) {
-        mKeyword = keyword;
-        String json = getDataManager().getProductsSortCurrent(getUserId());
-        SortOption.UNKNOWN.fromJson(json);
-        mSortType = SortOption.UNKNOWN.getValue();
-        // Clear Product Loaded Before First, then fetchProductsByIdCategory();
-        clearProductsLoaded();
     }
 
     private void addProductsToDatabase(RealmList<Product> list) {
@@ -215,15 +215,17 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void showProductList(RealmResults<Product> products) {
+        updateCurrentFilter();
         if (products != null && products.size() > 0) {
             getNavigator().showProducts(products);
-        } else getNavigator().showEmptyProducts();
+        } else showEmptyProducts();
     }
 
     private void showCachedList(RealmList<Product> list) {
+        updateCurrentFilter();
         if (showCachedList && list != null && list.size() > 0)
             getNavigator().showProducts(list);
-        else getNavigator().showEmptyProducts();
+        else showEmptyProducts();
     }
 
     /******************************  FAVORITE METHODS *************** ***************/
@@ -252,7 +254,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
-                    getAllProductsWithFilter();
+                    getNavigator().restartFetching();
                 }, Crashlytics::logException));
     }
 
@@ -278,7 +280,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         getNavigator().updatedFilterCount();
     }
 
-    public void getCurrentFilter() {
+    private void updateCurrentFilter() {
         getCompositeDisposable().add(getDataManager().getCurrentFilter(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())

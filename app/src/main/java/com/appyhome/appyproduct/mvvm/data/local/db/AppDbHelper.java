@@ -227,7 +227,6 @@ public class AppDbHelper implements DbHelper {
             beginTransaction();
             for (Product product : list) {
                 int randomNum = new Random().nextInt(storeName.length);
-                product.seller_name = storeName[randomNum];
                 product.rate = rates[randomNum];
                 product.discount = discountList[randomNum];
                 product.rate_count = numberRates[randomNum];
@@ -243,7 +242,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addProductsCached(ProductCached[] list) {
+    public Flowable<Boolean> addProductsCached(RealmList<ProductCached> list) {
         try {
             beginTransaction();
             for (ProductCached product : list) {

@@ -601,7 +601,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addProductsCached(ProductCached[] list) {
+    public Flowable<Boolean> addProductsCached(RealmList<ProductCached> list) {
         return mDbHelper.addProductsCached(list);
     }
 

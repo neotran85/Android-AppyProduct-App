@@ -92,7 +92,7 @@ public interface DbHelper {
 
     Flowable<Boolean> clearProductsLoaded();
 
-    Flowable<Boolean> addProductsCached(ProductCached[] list);
+    Flowable<Boolean> addProductsCached(RealmList<ProductCached> list);
 
     Flowable<ProductCached> getProductCachedById(int idProduct);
 

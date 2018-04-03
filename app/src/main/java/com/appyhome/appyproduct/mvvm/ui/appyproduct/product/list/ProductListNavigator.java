@@ -29,8 +29,12 @@ public interface ProductListNavigator {
 
     void updatedFilterCount();
 
+    void clearProductsLoaded_Done();
+
     void clearFragment();
 
     void onFragmentClosed();
+
+    void restartFetching();
 
 }
