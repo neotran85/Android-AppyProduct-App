@@ -85,17 +85,6 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         fetchProductsNew();
     }
 
-    private void fetchProductsNew() {
-        // CLEARED PRODUCTS LOADED BEFORE
-        getViewModel().resetPageNumber();
-        getViewModel().setIsAbleToLoadMore(false);
-        getViewModel().clearProductsLoaded();
-    }
-
-    @Override
-    public void clearProductsLoaded_Done() {
-        getViewModel().getAllFavorites();
-    }
 
     @Override
     public void onDestroy() {
@@ -127,6 +116,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         return fragmentDispatchingAndroidInjector;
     }
 
+
+    /************************* PRODUCTS SETUP  ************************/
+
     @Override
     public void restartFetching() {
         getViewModel().resetPageNumber();
@@ -134,7 +126,17 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
         fetchProducts();
     }
 
-    /************************* PRODUCTS SETUP  ************************/
+    private void fetchProductsNew() {
+        // CLEARED PRODUCTS LOADED BEFORE
+        getViewModel().resetPageNumber();
+        getViewModel().setIsAbleToLoadMore(false);
+        getViewModel().clearProductsLoaded();
+    }
+
+    @Override
+    public void clearProductsLoaded_Done() {
+        getViewModel().getAllFavorites();
+    }
 
     private void fetchProducts() {
         int categoryId = getIdSubCategory();
@@ -147,6 +149,8 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
             }
         }
     }
+
+    /************************* RECYCLER VIEW SETUP  ************************/
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
         if (getViewModel().isFirstLoaded()) {
