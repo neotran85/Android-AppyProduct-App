@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class ProductListRequest {
     @Expose
     @SerializedName("category_id")
-    public int categoryId;
+    public int categoryId = 0;
 
     @Expose
     @SerializedName("page")
@@ -21,15 +21,12 @@ public class ProductListRequest {
     @SerializedName("name")
     public String name;
 
-    public ProductListRequest(String kw, int pageNumber, String t) {
+    public ProductListRequest(Object data, int pageNumber, String t) {
         page = pageNumber;
-        name = kw;
-        type = t;
-    }
-
-    public ProductListRequest(int id, int pageNumber, String t) {
-        page = pageNumber;
-        categoryId = id;
+        if (data instanceof String)
+            name = (String) data;
+        else if (data instanceof Integer)
+            categoryId = (Integer) data;
         type = t;
     }
 }

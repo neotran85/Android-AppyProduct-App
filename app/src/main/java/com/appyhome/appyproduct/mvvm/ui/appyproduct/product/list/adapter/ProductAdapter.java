@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.RealmResults;
 
 public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator> {
@@ -36,7 +37,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         mUseSmallLayout = value;
     }
 
-    public void addItems(Product[] results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
+    public void addItems(OrderedRealmCollection<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         mViewModelEmpty = createEmptyViewModel(navigator);
@@ -44,6 +45,15 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
             for (Product item : results) {
                 boolean isFavorite = checkIfFavorite(item.id, favoritesId);
                 mItems.add(createViewModel(item, navigator, isFavorite));
+            }
+        }
+    }
+
+    public void addMoreItems(OrderedRealmCollection<Product> results, ArrayList<Integer> favoritesId) {
+        if (results != null) {
+            for (Product item : results) {
+                boolean isFavorite = checkIfFavorite(item.id, favoritesId);
+                mItems.add(createViewModel(item, mNavigator, isFavorite));
             }
         }
     }

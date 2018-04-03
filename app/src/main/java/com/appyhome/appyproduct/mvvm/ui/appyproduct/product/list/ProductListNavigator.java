@@ -4,6 +4,8 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 
 import java.util.ArrayList;
 
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public interface ProductListNavigator {
@@ -11,9 +13,7 @@ public interface ProductListNavigator {
 
     void showAlert(String message);
 
-    void showProducts(RealmResults<Product> result);
-
-    void showProducts(Product[] list);
+    void showProducts(OrderedRealmCollection<Product> result);
 
     void getAllFavorites_Done(ArrayList<Integer> listId);
 

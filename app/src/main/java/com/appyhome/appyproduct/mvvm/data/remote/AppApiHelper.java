@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
@@ -10,7 +9,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
@@ -203,33 +201,20 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> fetchProductsByIdCategory(ProductListRequest request) {
+    public Single<JSONObject> fetchProducts(ProductListRequest request) {
         JSONObject jsonObject = new JSONObject();
+        boolean isFetchByCategory = request.name == null || request.name.length() <= 0;
+        String url = isFetchByCategory ? ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET : ApiUrlConfig.API_PRODUCT_SEARCH;
         try {
             jsonObject.put("page", request.page);
-            jsonObject.put("category_id", request.categoryId);
+            if (isFetchByCategory)
+                jsonObject.put("category_id", request.categoryId);
             jsonObject.put("type", request.type);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET)
-                .addHeaders(mApiHeader.getPublicApiHeader())
-                .addJSONObjectBody(jsonObject)
-                .build()
-                .getJSONObjectSingle();
-    }
-
-    @Override
-    public Single<JSONObject> fetchProductsByKeyword(ProductListRequest request) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("page", request.page);
             jsonObject.put("name", request.name);
-            jsonObject.put("type", request.type);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SEARCH)
+        return Rx2AndroidNetworking.post(url)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addJSONObjectBody(jsonObject)
                 .build()

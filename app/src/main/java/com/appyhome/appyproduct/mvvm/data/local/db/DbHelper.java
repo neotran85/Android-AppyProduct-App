@@ -41,7 +41,7 @@ public interface DbHelper {
 
     Flowable<ProductTopic> getProductTopicById(int idTopic);
 
-    Flowable<Boolean> addProducts(Product[] list);
+    Flowable<Boolean> addProducts(RealmList<Product> list);
 
     Flowable<RealmResults<Product>> getProductsBySubCategory(int idSub);
 

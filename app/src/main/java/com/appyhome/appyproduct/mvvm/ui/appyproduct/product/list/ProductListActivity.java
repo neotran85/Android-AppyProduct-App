@@ -39,7 +39,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import io.realm.RealmResults;
+import io.realm.OrderedRealmCollection;
 
 public class ProductListActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
     public static final int ID_SUB_EMPTY = -1;
@@ -121,10 +121,12 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
         int columns = calculateSubColumns();
-        rv.setLayoutManager(new GridLayoutManager(this,
+        GridLayoutManager layoutManager = new GridLayoutManager(this,
                 columns, GridLayoutManager.VERTICAL,
-                false));
+                false);
+        rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
+        rv.clearOnScrollListeners();
     }
 
     /************************* GET METHODS ************************/
@@ -276,12 +278,19 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     }
 
     @Override
-    public void showProducts(RealmResults<Product> result) {
+    public void showProducts(OrderedRealmCollection<Product> result) {
         if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
             mProductAdapter.setUseSmallLayoutItem(mIsUsingSmallItem);
-            mProductAdapter.addItems(result, this, mFavoritesId);
-            mProductAdapter.notifyDataSetChanged();
+            if (getViewModel().isFirstLoaded()) {
+                mProductAdapter.addItems(result, this, mFavoritesId);
+                mProductAdapter.notifyDataSetChanged();
+            } else {
+                int rangeStart = mProductAdapter.getItemCount();
+                mProductAdapter.addMoreItems(result, mFavoritesId);
+                int rangeEnd = mProductAdapter.getItemCount();
+                mProductAdapter.notifyItemRangeInserted(rangeStart, rangeEnd);
+            }
             getViewModel().getCurrentFilter();
         }
     }
@@ -289,20 +298,9 @@ public class ProductListActivity extends BaseActivity<ActivityProductListBinding
     @Override
     public void showEmptyProducts() {
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
-        mProductAdapter.addItems(new Product[]{}, this, mFavoritesId);
+        mProductAdapter.addItems(null, this, mFavoritesId);
         mProductAdapter.notifyDataSetChanged();
         getViewModel().getCurrentFilter();
-    }
-
-    @Override
-    public void showProducts(Product[] list) {
-        if (list != null && list.length > 0) {
-            setUpRecyclerViewGrid(mBinder.productsRecyclerView);
-            mProductAdapter.setUseSmallLayoutItem(mIsUsingSmallItem);
-            mProductAdapter.addItems(list, this, mFavoritesId);
-            mProductAdapter.notifyDataSetChanged();
-            getViewModel().getCurrentFilter();
-        }
     }
 
     @Override

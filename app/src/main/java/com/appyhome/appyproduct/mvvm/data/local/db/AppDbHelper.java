@@ -222,7 +222,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addProducts(Product[] list) {
+    public Flowable<Boolean> addProducts(RealmList<Product> list) {
         try {
             beginTransaction();
             for (Product product : list) {

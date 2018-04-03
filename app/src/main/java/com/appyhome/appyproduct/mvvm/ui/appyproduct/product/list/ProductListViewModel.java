@@ -26,27 +26,59 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private final int RETRY_MAX_COUNT = 5;
+
     private final int RETRY_TIME = 5;
+
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
+
     public ObservableField<String> currentSortLabel = new ObservableField<>("Sort");
+
     public ObservableField<String> filterNumber = new ObservableField<>("");
+
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
+
     private int mIdSub = ProductListActivity.ID_SUB_EMPTY;
+
     private String mKeyword = "";
+
     private String mSortType = "";
+
+    private static final int PRODUCTS_PER_PAGE = 100;
+
     private ProductListCachedResponse cachedResponse;
 
     private boolean showCachedList = true;
+
+    private int mPageNumber = 1;
+
+    private boolean mIsAbleToLoadMore = false;
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         updateSortCurrentLabel();
+    }
+
+    public void increasePageNumber() {
+        mPageNumber++;
+    }
+
+    public int getPageNumber() {
+        return mPageNumber;
+    }
+
+    public boolean isFirstLoaded() {
+        return mPageNumber == 1;
+    }
+
+    public int getMaxProducts() {
+        return mPageNumber * PRODUCTS_PER_PAGE;
     }
 
     /******************************  SORT CURRENT METHODS *************** ***************/
@@ -101,59 +133,39 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, Crashlytics::logException));
     }
 
-    private ObservableOnSubscribe<ProductListResponse> fetchProductsByIdCategory() {
+    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(Object data) {
         return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            fetchProducts(mIdSub).subscribe(jsonResult -> {
-                // 200 OK
-                if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
-                    Gson gson = new Gson();
-                    ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
-                    cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
-                    if (response.message != null && response.message.length > 0) {
-                        addProductsToDatabase(response.message);
-                        return;
-                    }
-                }
-                // NOT OK
-                getNavigator().showEmptyProducts();
-            }, throwable -> {
-                getNavigator().showEmptyProducts();
-                throwable.printStackTrace();
-                Crashlytics.logException(throwable);
-            });
+            getDataManager().fetchProducts(new ProductListRequest(data, mPageNumber, mSortType))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(jsonResult -> {
+                        // 200 OK
+                        if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+                            Gson gson = new Gson();
+                            ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
+                            cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
+                            if (response.message != null && response.message.size() > 0) {
+                                addProductsToDatabase(response.message);
+                                return;
+                            }
+                        }
+                        // NOT OK
+                        getNavigator().showEmptyProducts();
+                    }, throwable -> {
+                        getNavigator().showEmptyProducts();
+                        throwable.printStackTrace();
+                        Crashlytics.logException(throwable);
+                    });
         };
     }
-    private ObservableOnSubscribe<ProductListResponse> fetchProductsByKeyword() {
-        return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            fetchProducts(mKeyword).subscribe(jsonResult -> {
-                // 200 OK
-                if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
-                    Gson gson = new Gson();
-                    ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
-                    cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
-                    if (response.message != null && response.message.length > 0) {
-                        addProductsToDatabase(response.message);
-                        return;
-                    }
-                }
-                // NOT OK
-                getNavigator().showEmptyProducts();
-            }, throwable -> {
-                getNavigator().showEmptyProducts();
-                throwable.printStackTrace();
-                Crashlytics.logException(throwable);
-            });
-        };
-    }
-
 
     private void fetchProductsByCommand() {
         if (isOnline()) {
             ObservableOnSubscribe<ProductListResponse> resultProcessing = null;
             if (mIdSub > 0) {
-                resultProcessing = fetchProductsByIdCategory();
+                resultProcessing = fetchProductsByObject(new Integer(mIdSub));
             } else if (mKeyword != null && mKeyword.length() > 0) {
-                resultProcessing = fetchProductsByKeyword();
+                resultProcessing = fetchProductsByObject(mKeyword);
             }
             if (resultProcessing != null) {
                 Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
@@ -183,21 +195,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         clearProductsLoaded();
     }
 
-    private Single<JSONObject> fetchProducts(String keyword) {
-        return getDataManager()
-                .fetchProductsByKeyword(new ProductListRequest(keyword, 0, mSortType))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui());
-    }
-
-    private Single<JSONObject> fetchProducts(int idSub) {
-        return getDataManager()
-                .fetchProductsByIdCategory(new ProductListRequest(idSub, 0, mSortType))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui());
-    }
-
-    private void addProductsToDatabase(Product[] list) {
+    private void addProductsToDatabase(RealmList<Product> list) {
         getCompositeDisposable().add(getDataManager().addProducts(list)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -222,8 +220,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         } else getNavigator().showEmptyProducts();
     }
 
-    private void showCachedList(Product[] list) {
-        if (showCachedList && list != null && list.length > 0)
+    private void showCachedList(RealmList<Product> list) {
+        if (showCachedList && list != null && list.size() > 0)
             getNavigator().showProducts(list);
         else getNavigator().showEmptyProducts();
     }
@@ -289,5 +287,13 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                         if (getUserId().equals(filter.user_id))
                             updateCountFilter(filter);
                 }, Crashlytics::logException));
+    }
+
+    public boolean isIsAbleToLoadMore() {
+        return mIsAbleToLoadMore;
+    }
+
+    public void setIsAbleToLoadMore(boolean isAbleToLoadMore) {
+        this.mIsAbleToLoadMore = isAbleToLoadMore;
     }
 }

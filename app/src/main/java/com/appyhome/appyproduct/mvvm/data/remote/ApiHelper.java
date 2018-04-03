@@ -68,9 +68,7 @@ public interface ApiHelper {
 
     Single<JSONObject> verifyTrue(String code);
 
-    Single<JSONObject> fetchProductsByIdCategory(ProductListRequest request);
-
-    Single<JSONObject> fetchProductsByKeyword(ProductListRequest request);
+    Single<JSONObject> fetchProducts(ProductListRequest request);
 
     Single<BannersResponse> fetchBanners();
 
