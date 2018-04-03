@@ -129,6 +129,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         SearchItemViewModel viewModel = (SearchItemViewModel) view.getTag();
         setKeywords(viewModel.keyword.get());
         getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
+        search();
     }
 
 
@@ -167,6 +168,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     public void clickSearchHistoryItem(View view) {
         SearchItem item = (SearchItem) view.getTag();
         setKeywords(item.content);
+        search();
     }
 
     private String getKeywords() {
