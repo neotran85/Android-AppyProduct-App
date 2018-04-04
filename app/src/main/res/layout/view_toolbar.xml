@@ -73,7 +73,7 @@
                     android:text="@{viewModel.keywords}"
                     android:textAlignment="textStart"
                     android:textColor="@color/medium_dark_gray"
-                    android:textSize="14dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:visibility="@{!viewModel.hasKeywords}"
@@ -85,7 +85,7 @@
                     android:text="Search"
                     android:textAlignment="textEnd"
                     android:textColor="@color/text_hint"
-                    android:textSize="14dp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
