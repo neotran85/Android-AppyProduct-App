@@ -18,4 +18,12 @@
     <string name="title_comfirm_completed">Confirm Completed</string>
     <string name="your_list_of_closed_items_is_empty">Your list of closed items is empty.</string>
     <string name="your_list_of_orders_is_empty">Your list of orders is empty.</string>
+    <string name="incl_gst_and_additional_services">incl. GST and additional services</string>
+    <string name="request_total">TOTAL</string>
+    <string name="request_additional_services">Additional Services</string>
+    <string name="request_scheduled_for">Scheduled for</string>
+    <string name="request_your_address">Your Address</string>
+    <string name="request_additional_detail">Additional Detail</string>
+    <string name="request_add_services">+ Add services</string>
+    <string name="request_confirm_completed">Confirm Completed</string>
 </resources>

@@ -11,373 +11,370 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/view_header" />
+
+        <include layout="@layout/view_service_step4" />
+
+        <ScrollView
+            android:id="@+id/svMainView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            i
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="#F1F1F1">
 
-            <include layout="@layout/view_header"></include>
-
-            <include layout="@layout/view_service_step4"></include>
-
-            <ScrollView
-                android:id="@+id/svMainView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:background="#F1F1F1">
+                android:orientation="vertical"
+                android:padding="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="vertical"
-                        android:paddingBottom="20dp"
-                        android:paddingTop="20dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="@string/summary_of"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text="@{viewModel.getNameService()}"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <com.appyhome.appyproduct.mvvm.ui.common.custom.NonScrollListView
-                            android:id="@+id/lvServices"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"></com.appyhome.appyproduct.mvvm.ui.common.custom.NonScrollListView>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:visibility="@{viewModel.isNumberOfAirConsVisible}"
-                            android:paddingBottom="10dp"
-                            android:paddingRight="16dp">
-                                <TextView
-                                    android:layout_weight="0.5"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:text="@string/number_of_air_cons"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@{viewModel.numberOfAirCons}"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="@color/light_gray"></View>
-
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:background="@null"
-                            android:gravity="center_vertical|left"
-                            android:text="@string/add_promo_code_coming_soon"
-                            android:textColor="@color/light_green"
-                            android:textSize="14sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="@color/light_gray"></View>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingRight="16dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:text="@string/total"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                                <TextView
-                                    android:layout_marginTop="4dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:text="@string/incl_gst"
-                                    android:textColor="@color/semi_gray"
-                                    android:textSize="11sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="90dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.5"
-                                android:gravity="center_vertical|right"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/rm"
-                                    android:textColor="@color/dark_gray"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:text="@{viewModel.getTotalCost()}"
-                                    android:textColor="@color/black"
-                                    android:textSize="20sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/light_gray"></View>
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/additional_services"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/summary_of"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="@{viewModel.isAdditionalServiceViewVisible()}" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:visibility="@{viewModel.isAdditionalServiceViewVisible()}"
-                            android:text="@{viewModel.getAdditionalServices()}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/scheduled_for"
+                            android:layout_marginStart="4dp"
+                            android:text="@{viewModel.getNameService()}"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getTimeSlot1()}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getTimeSlot2()}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getTimeSlot3()}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/your_address"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getAddressString()}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/additional_detail"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="@{viewModel.isAdditionalDetailViewVisible()}" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:text="@{viewModel.getAdditionalDetail()}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp" />
-
+                            android:textSize="16sp" />
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/rlVisaPayment"
+                    <com.appyhome.appyproduct.mvvm.ui.common.custom.NonScrollListView
+                        android:id="@+id/lvServices"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/white"
-                        android:clickable="true"
+                        android:layout_marginTop="6dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:paddingBottom="10dp"
+                        android:paddingEnd="16dp"
+                        android:visibility="@{viewModel.isNumberOfAirConsVisible, default=gone}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_weight="0.5"
+                            android:text="@string/number_of_air_cons"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="6dp"
-                            android:paddingRight="6dp"
-                            android:text="@string/pay_credit_debit_card"
+                            android:text="@{viewModel.numberOfAirCons}"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="6dp"
-                            android:layout_toLeftOf="@+id/visaNext"
-                            android:src="@mipmap/icon_visa_master_card" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/light_gray"></View>
 
-                        <ImageView
-                            android:id="@+id/visaNext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/icon_next" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rlBankPayment"
+                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/white"
-                        android:clickable="true"
+                        android:layout_marginStart="20dp"
+                        android:background="@null"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/add_promo_code_coming_soon"
+                        android:textColor="@color/light_green"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/light_gray"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:paddingEnd="16dp">
 
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="6dp"
-                            android:paddingRight="6dp"
-                            android:text="@string/pay_by_bank"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:text="@string/total"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/incl_gst"
+                                android:textColor="@color/semi_gray"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="6dp"
-                            android:layout_toLeftOf="@+id/ivBankNext"
-                            android:src="@mipmap/molpay_logo" />
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical|right"
+                            android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/ivBankNext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/icon_next" />
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/rm"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="12sp" />
 
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@{viewModel.getTotalCost()}"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/light_gray"></View>
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/additional_services"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.isAdditionalServiceViewVisible()}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="6dp"
+                        android:text="@{viewModel.getAdditionalServices()}"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp"
+                        android:visibility="@{viewModel.isAdditionalServiceViewVisible()}" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/scheduled_for"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="6dp"
+                        android:text="@{viewModel.getTimeSlot1()}"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="6dp"
+                        android:text="@{viewModel.getTimeSlot2()}"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="6dp"
+                        android:text="@{viewModel.getTimeSlot3()}"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/your_address"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="6dp"
+                        android:text="@{viewModel.getAddressString()}"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/additional_detail"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.isAdditionalDetailViewVisible()}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="6dp"
+                        android:text="@{viewModel.getAdditionalDetail()}"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
-            </ScrollView>
 
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorAccent"
-                android:foreground="?attr/selectableItemBackground"
-                android:text="@string/finish"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlVisaPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingStart="6dp"
+                        android:text="@string/pay_credit_debit_card"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toLeftOf="@+id/visaNext"
+                        android:src="@mipmap/icon_visa_master_card" />
+
+                    <ImageView
+                        android:id="@+id/visaNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_next" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlBankPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingStart="6dp"
+                        android:text="@string/pay_by_bank"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toLeftOf="@+id/ivBankNext"
+                        android:src="@mipmap/molpay_logo" />
+
+                    <ImageView
+                        android:id="@+id/ivBankNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_next" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorAccent"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/finish"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
 </layout>

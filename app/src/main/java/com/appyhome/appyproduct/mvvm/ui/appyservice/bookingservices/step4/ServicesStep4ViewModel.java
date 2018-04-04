@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator> {
 
     public final ObservableField<String> numberOfAirCons = new ObservableField<>("1");
-    public final ObservableField<Integer> isNumberOfAirConsVisible = new ObservableField<>(View.GONE);
+    public final ObservableField<Boolean> isNumberOfAirConsVisible = new ObservableField<>(false);
     private final ObservableField<String> fieldAddress = new ObservableField<>("");
     private final ObservableField<String> timeSlot1 = new ObservableField<>("");
     private final ObservableField<String> timeSlot2 = new ObservableField<>("");
@@ -55,11 +55,7 @@ public class ServicesStep4ViewModel extends BaseViewModel<ServicesStep4Navigator
 
     public void setServiceType(int type) {
         mServiceType = type;
-        if (mServiceType == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING) {
-            isNumberOfAirConsVisible.set(View.VISIBLE);
-        } else {
-            isNumberOfAirConsVisible.set(View.GONE);
-        }
+        isNumberOfAirConsVisible.set(mServiceType == ServiceOrderUserInput.SERVICE_AIR_CON_CLEANING);
     }
 
     public ObservableField<String> getAddress() {
