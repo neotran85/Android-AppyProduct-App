@@ -40,7 +40,6 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 .subscribe(searchItems -> {
                     isHistoryVisible.set(searchItems != null && searchItems.size() > 0);
                     getNavigator().updateUISearchHistory(searchItems);
-                    getAllProductTopics();
                 }, Crashlytics::logException));
     }
 
@@ -63,7 +62,7 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 }, Crashlytics::logException));
     }
 
-    private void getAllProductTopics() {
+    public void getAllProductTopics() {
         getCompositeDisposable().add(getDataManager().getAllProductTopics()
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())

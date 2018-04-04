@@ -24,4 +24,10 @@ public class SearchItem extends RealmObject {
     @SerializedName("user_id")
     @ColumnInfo(name = "user_id")
     public String user_id;
+
+    @Expose
+    @SerializedName("time_added")
+    @ColumnInfo(name = "time_added")
+    public long time_added;
+
 }

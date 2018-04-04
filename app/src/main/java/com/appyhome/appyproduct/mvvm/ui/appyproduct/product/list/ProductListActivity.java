@@ -6,28 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter.FilterFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
 
@@ -35,7 +24,6 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import io.realm.OrderedRealmCollection;
 
 public class ProductListActivity extends ProductListNavigatorActivity {
 
@@ -73,7 +61,7 @@ public class ProductListActivity extends ProductListNavigatorActivity {
         mViewModel.setNavigator(this);
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getKeywordString());
         fetchProductsNew();
     }
 
@@ -132,7 +120,7 @@ public class ProductListActivity extends ProductListNavigatorActivity {
 
     private String getCategoryIdsForSearch() {
         Intent intent = getIntent();
-        if(intent.hasExtra("categoryIds")) {
+        if (intent.hasExtra("categoryIds")) {
             return intent.getStringExtra("categoryIds");
         }
         return "";
@@ -196,7 +184,9 @@ public class ProductListActivity extends ProductListNavigatorActivity {
     }
 
     private String getKeywordString() {
-        return getIntent().getStringExtra("keyword");
+        if (getIntent().hasExtra("keyword"))
+            return getIntent().getStringExtra("keyword");
+        return "";
     }
 
     public static Intent getStartIntent(Context context) {

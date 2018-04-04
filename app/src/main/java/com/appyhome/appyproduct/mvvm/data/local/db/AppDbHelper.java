@@ -778,6 +778,7 @@ public class AppDbHelper implements DbHelper {
                 .equalTo("user_id", userId)
                 .equalTo("cached", true)
                 .notEqualTo("content", "")
+                .sort("time_added", Sort.DESCENDING)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return result;

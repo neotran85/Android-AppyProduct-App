@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             activity.getSupportActionBar().setDisplayUseLogoEnabled(false);
             activity.getSupportActionBar().setTitle("");
         }
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), vToolbar, true, false);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), vToolbar, true, false, "");
         mSearchToolbarViewHolder.onBind(0);
     }
 

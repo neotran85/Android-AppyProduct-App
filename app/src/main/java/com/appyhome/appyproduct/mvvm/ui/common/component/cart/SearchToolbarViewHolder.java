@@ -20,26 +20,33 @@ public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnCl
 
     private BaseActivity mActivity;
 
-    public SearchToolbarViewHolder(BaseActivity activity, ViewGroup parent, boolean isFullMode, boolean isBackShowed) {
+    private SearchToolbarViewModel mViewModel;
+
+    public SearchToolbarViewHolder(BaseActivity activity, ViewGroup parent, boolean isFullMode, boolean isBackShowed, String keyword) {
         super(parent);
         mBinding = ViewToolbarBinding
                 .inflate(LayoutInflater.from(activity), parent, true);
         mActivity = activity;
         mBinding.setNavigator(this);
         BaseViewModel baseViewModel = mActivity.getViewModel();
-        SearchToolbarViewModel viewModel = new SearchToolbarViewModel(baseViewModel.getDataManager(), baseViewModel.getSchedulerProvider());
-        mBinding.setViewModel(viewModel);
-        viewModel.isFullMode.set(isFullMode);
-        viewModel.isBackButtonShowed.set(isBackShowed);
+        mViewModel = new SearchToolbarViewModel(baseViewModel.getDataManager(), baseViewModel.getSchedulerProvider());
+        mBinding.setViewModel(mViewModel);
+        mViewModel.isFullMode.set(isFullMode);
+        mViewModel.isBackButtonShowed.set(isBackShowed);
+        mViewModel.keywords.set(keyword);
+        mViewModel.hasKeywords.set(keyword != null && keyword.length() > 0);
         mBinding.llSearchKeywords.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = SearchActivity.getStartIntent(mActivity);
-        intent.putExtra("keyword", mBinding.tvKeywords.getText().toString());
-        mActivity.startActivity(intent);
-
+        if(mViewModel.hasKeywords.get()) {
+            mActivity.finish();
+        } else {
+            Intent intent = SearchActivity.getStartIntent(mActivity);
+            intent.putExtra("keyword", mBinding.tvKeywords.getText().toString());
+            mActivity.startActivity(intent);
+        }
     }
     public void back() {
         if (mActivity != null) {

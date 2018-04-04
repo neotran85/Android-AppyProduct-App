@@ -49,6 +49,7 @@
 
 
             <ImageView
+                android:visibility="@{!viewModel.hasKeywords, default=gone}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -61,7 +62,21 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:visibility="@{viewModel.hasKeywords}"
                     android:id="@+id/tvKeywords"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="start"
+                    android:paddingRight="6dp"
+                    android:text="@{viewModel.keywords}"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/medium_dark_gray"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:visibility="@{!viewModel.hasKeywords}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"

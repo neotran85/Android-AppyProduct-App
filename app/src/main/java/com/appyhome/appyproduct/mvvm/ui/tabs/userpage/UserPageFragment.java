@@ -62,7 +62,7 @@ public class UserPageFragment extends BaseFragment<FragmentUserPageBinding, User
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mUserPageViewModel);
         mBinder.setNavigator(this);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mBinder.llCartIcon, false, false);
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) this.getActivity(), mBinder.llCartIcon, false, false, "");
         mSearchToolbarViewHolder.onBind(0);
         getViewModel().updateAccountInfo();
     }

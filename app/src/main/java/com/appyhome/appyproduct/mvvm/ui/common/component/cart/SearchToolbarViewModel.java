@@ -12,6 +12,8 @@ public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
     public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
     public ObservableField<Boolean> isFullMode = new ObservableField<>(true);
     public ObservableField<Boolean> isBackButtonShowed = new ObservableField<>(false);
+    public ObservableField<String> keywords = new ObservableField<>("");
+    public ObservableField<Boolean> hasKeywords = new ObservableField<>(false);
 
     public SearchToolbarViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {

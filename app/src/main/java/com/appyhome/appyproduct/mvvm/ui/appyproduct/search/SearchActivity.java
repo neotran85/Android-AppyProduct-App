@@ -91,6 +91,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             }
         });
         getViewModel().getSearchHisTory();
+        getViewModel().getAllProductTopics();
+
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
         mCategoryIds = new HashMap<>();
 
@@ -135,6 +137,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     private SearchItem createKeywordCached(String keyword) {
         SearchItem item = new SearchItem();
+        item.time_added = System.currentTimeMillis();
         item.content = keyword;
         item.cached = true;
         item.user_id = getViewModel().getUserId();
