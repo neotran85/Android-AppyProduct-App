@@ -8,11 +8,11 @@
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchNavigator" />
         <variable
             name="data"
-            type="com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem" />
+            type="com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic" />
     </data>
 
     <TextView
-        android:onClick="@{(view)->navigator.clickSearchHistoryItem(view)}"
+        android:onClick="@{(view)->navigator.clickSearchCategoryItem(view)}"
         android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
         android:id="@+id/tvTag"
@@ -20,10 +20,10 @@
         android:paddingBottom="6dp"
         android:paddingStart="14dp"
         android:paddingEnd="14dp"
-        android:background="@drawable/view_rounded_bg_orange_border"
+        android:background="@drawable/view_rounded_bg_gray_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@{data.content}"
-        android:textColor="@color/colorAccent"
+        android:text="@{data.name}"
+        android:textColor="@color/semi_gray"
         android:textSize="13sp" />
 </layout>

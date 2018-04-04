@@ -14,6 +14,7 @@ public class ProductTopicViewModel extends BaseViewModel<ProductTopicNavigator> 
 
     public void getAllProductTopics() {
         getCompositeDisposable().add(getDataManager().getAllProductTopics()
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(topics -> {
                     // DONE GET

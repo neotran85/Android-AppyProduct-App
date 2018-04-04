@@ -203,17 +203,19 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<JSONObject> fetchProducts(ProductListRequest request) {
         JSONObject jsonObject = new JSONObject();
-        boolean isFetchByCategory = request.name == null || request.name.length() <= 0;
-        String url = isFetchByCategory ? ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET : ApiUrlConfig.API_PRODUCT_SEARCH;
+
+        String url = (request.terms == null || request.terms.length() <= 0) ?
+                ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET : ApiUrlConfig.API_PRODUCT_SEARCH;
         try {
             jsonObject.put("page", request.page);
-            if (isFetchByCategory)
-                jsonObject.put("category_id", request.categoryId);
+            jsonObject.put("category_id", request.categoryId);
             jsonObject.put("type", request.type);
-            jsonObject.put("name", request.name);
+            jsonObject.put("sortBy", request.type);
+            jsonObject.put("terms", request.terms);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return Rx2AndroidNetworking.post(url)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addJSONObjectBody(jsonObject)

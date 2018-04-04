@@ -3,18 +3,19 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductSearchBinding;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchCategoryBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchTagBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
@@ -23,6 +24,9 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemVie
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -57,6 +61,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         return mLayoutId;
     }
 
+    private HashMap<Integer, String> mCategoryIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +78,9 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                boolean isNotEmpty = getKeywords().length() >= 3;
-                if (isNotEmpty)
-                    getViewModel().getSearchSuggestions();
+                //boolean isNotEmpty = getKeywords().length() >= 3;
+                //if (isNotEmpty)
+                //getViewModel().getSearchSuggestions();
             }
 
             @Override
@@ -85,11 +91,11 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         });
         getViewModel().getSearchHisTory();
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
+        mCategoryIds = new HashMap<>();
     }
 
     @Override
     public void showSuggestions(RealmResults<SearchItem> items) {
-        getViewModel().isHistoryVisible.set(false);
         ViewUtils.setUpRecyclerViewList(mBinder.rvSuggestions, true);
         mSuggestionsAdapter.addItems(items, this);
         mSuggestionsAdapter.notifyDataSetChanged();
@@ -102,8 +108,19 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
             Intent intent = ProductListActivity.getStartIntent(this);
             intent.putExtra("keyword", keywords);
+            intent.putExtra("categoryIds", getAllCategoriesForSearch());
             startActivity(intent);
         }
+    }
+
+    private String getAllCategoriesForSearch() {
+        String result = "";
+        if (mCategoryIds.keySet() != null && mCategoryIds.keySet().size() > 0) {
+            for (Integer id : mCategoryIds.keySet()) {
+                result = result + mCategoryIds.get(id) + ",";
+            }
+        }
+        return result;
     }
 
     private SearchItem createKeywordCached(String keyword) {
@@ -157,11 +174,18 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
                 mBinder.flHistorySearch.addView(createTag(item));
             }
         }
+        getViewModel().getAllProductTopics();
     }
 
     @Override
     public void clearHistory() {
         getViewModel().clearSearchHistory();
+    }
+
+    @Override
+    public void addProductCategoryIdsByTopic(int idTopic, ArrayList<Integer> ids) {
+        if (ids.size() > 0)
+            mCategoryIds.put(idTopic, TextUtils.join(",", ids));
     }
 
     @Override
@@ -180,13 +204,53 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
+    public void updateUISearchCategory(RealmResults<ProductTopic> items) {
+        getViewModel().isHistoryVisible.set(items != null && items.size() > 0);
+        if (items != null) {
+            mBinder.flCategories.removeAllViews();
+            for (ProductTopic item : items) {
+                mBinder.flCategories.addView(createCategory(item));
+            }
+        }
+    }
+
+    @Override
+    public void clickSearchCategoryItem(View view) {
+        if (view instanceof TextView) {
+            ProductTopic topic = (ProductTopic) view.getTag();
+            TextView textView = (TextView) view;
+            int whiteColor = ContextCompat.getColor(this, R.color.white);
+            boolean selected = textView.getCurrentTextColor() == whiteColor;
+            if (selected) {
+                // Unselected it
+                textView.setTextColor(ContextCompat.getColor(this, R.color.semi_gray));
+                textView.setBackgroundResource(R.drawable.view_rounded_bg_gray_border);
+                mCategoryIds.remove(topic.id);
+            } else {
+                // Selected it
+                textView.setTextColor(whiteColor);
+                textView.setBackgroundResource(R.drawable.view_rounded_bg_orange_large_radius);
+                getViewModel().getProductCategoryIdsByTopic(topic.id);
+            }
+        }
+    }
+
+    @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
     }
 
+    private View createCategory(ProductTopic item) {
+        ViewItemProductSearchCategoryBinding binding = ViewItemProductSearchCategoryBinding.inflate(getLayoutInflater(), null, false);
+        binding.setData(item);
+        binding.getRoot().setTag(item);
+        binding.setNavigator(this);
+        return binding.getRoot();
+    }
+
     private View createTag(SearchItem item) {
         ViewItemProductSearchTagBinding binding = ViewItemProductSearchTagBinding.inflate(getLayoutInflater(), null, false);
-        binding.tvTag.setText(item.content);
+        binding.setData(item);
         binding.getRoot().setTag(item);
         binding.setNavigator(this);
         return binding.getRoot();

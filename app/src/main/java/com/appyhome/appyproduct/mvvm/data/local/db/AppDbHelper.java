@@ -48,7 +48,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         User result = getRealm().where(User.class)
                 .equalTo("phoneNumber", phoneNumber)
-                .findFirstAsync();
+                .findFirst();
         if (result == null || !result.isValid()) {
             User person = getRealm().createObject(User.class, phoneNumber);
             person.phoneNumber = phoneNumber;
@@ -69,7 +69,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<RealmResults<ProductSub>> subs = getRealm().where(ProductSub.class)
                 .equalTo("id_category", idCategory)
-                .findAllAsync().asFlowable();
+                .findAll().asFlowable();
         getRealm().commitTransaction();
         return subs;
     }
@@ -79,17 +79,42 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<RealmResults<ProductCategory>> categories = getRealm().where(ProductCategory.class)
                 .equalTo("id_topic", idTopic)
-                .findAllAsync().asFlowable();
+                .findAll().asFlowable();
         getRealm().commitTransaction();
         return categories;
     }
 
     @Override
+    public Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic) {
+        beginTransaction();
+        RealmResults<ProductCategory> categories = getRealm().where(ProductCategory.class)
+                .equalTo("id_topic", idTopic)
+                .findAll();
+
+        RealmQuery<ProductSub> query = getRealm().where(ProductSub.class);
+        if (categories.size() > 0) {
+            int index = 0;
+            for (ProductCategory item : categories) {
+                if(index++ > 0) {
+                    query = query.or();
+                }
+                query = query.equalTo("id_category", item.id);
+            }
+        }
+
+        Flowable<RealmResults<ProductSub>> result = query.findAll().asFlowable();
+
+        getRealm().commitTransaction();
+        return result;
+    }
+
+
+    @Override
     public Flowable<RealmResults<ProductTopic>> getAllProductTopics() {
         beginTransaction();
-        Flowable<RealmResults<ProductTopic>> topcis = getRealm().where(ProductTopic.class).findAllAsync().asFlowable();
+        Flowable<RealmResults<ProductTopic>> topics = getRealm().where(ProductTopic.class).findAll().asFlowable();
         getRealm().commitTransaction();
-        return topcis;
+        return topics;
     }
 
     @Override
@@ -185,7 +210,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<ProductTopic> topic = getRealm().where(ProductTopic.class)
                 .equalTo("id", idTopic)
-                .findFirstAsync().asFlowable();
+                .findFirst().asFlowable();
         getRealm().commitTransaction();
         return topic;
     }
@@ -195,7 +220,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<ProductCached> product = getRealm().where(ProductCached.class)
                 .equalTo("id", idProduct)
-                .findFirstAsync().asFlowable();
+                .findFirst().asFlowable();
         getRealm().commitTransaction();
         return product;
     }
@@ -205,7 +230,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<Product> topic = getRealm().where(Product.class)
                 .equalTo("id", idProduct)
-                .findFirstAsync().asFlowable();
+                .findFirst().asFlowable();
         getRealm().commitTransaction();
         return topic;
     }
@@ -215,7 +240,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<RealmResults<Product>> topic = getRealm().where(Product.class)
                 .equalTo("category_id", idSub)
-                .findAllAsync().asFlowable();
+                .findAll().asFlowable();
         getRealm().commitTransaction();
         return topic;
     }
@@ -269,7 +294,7 @@ public class AppDbHelper implements DbHelper {
         Flowable<Address> address = getRealm().where(Address.class)
                 .equalTo("customer_id", userId)
                 .equalTo("is_default", true)
-                .findFirstAsync().asFlowable();
+                .findFirst().asFlowable();
         getRealm().commitTransaction();
         return address;
     }

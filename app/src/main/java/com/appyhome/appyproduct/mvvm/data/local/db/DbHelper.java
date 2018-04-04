@@ -113,4 +113,6 @@ public interface DbHelper {
     Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants);
 
     Flowable<RealmResults<ProductVariant>> getProductVariants(int productId);
+
+    Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic);
 }

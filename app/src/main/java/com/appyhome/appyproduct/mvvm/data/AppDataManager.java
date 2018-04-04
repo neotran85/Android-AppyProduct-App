@@ -656,6 +656,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic) {
+        return mDbHelper.getProductCategoryIdsByTopic(idTopic);
+    }
+
+    @Override
     public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
         return mDbHelper.addProductVariants(variants);
     }

@@ -26,17 +26,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@color/colorAccent"
+            android:layout_height="48dp"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:padding="14dp"
-                android:onClick="@{(view) -> navigator.goBack()}"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@mipmap/icon_back_white" />
+                android:onClick="@{(view) -> navigator.goBack()}"
+                android:padding="14dp"
+                android:src="@mipmap/icon_back" />
 
             <EditText
                 android:id="@+id/etKeyword"
@@ -48,85 +48,138 @@
                 android:gravity="center_vertical"
                 android:hint="Enter your keywords..."
                 android:inputType="text"
-                android:textColor="@color/white"
-                android:textColorHint="@color/light_gray"
+                android:textColor="@color/medium_dark_gray"
+                android:textColorHint="@color/semi_gray"
                 android:textSize="14sp" />
 
             <ImageView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:alpha="0.8"
-                android:onClick="@{(view) -> navigator.clearKeywords()}"
-                android:visibility="@{viewModel.isClearable, default=gone}"
-                android:adjustViewBounds="true"
-                android:padding="10dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@mipmap/icon_clear_or_close" />
+                android:adjustViewBounds="true"
+                android:alpha="0.8"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{(view) -> navigator.clearKeywords()}"
+                android:padding="10dp"
+                android:src="@mipmap/icon_clear_or_close"
+                android:visibility="@{viewModel.isClearable, default=gone}" />
 
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
+                android:background="@color/colorAccent"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
-                android:text="SEARCH"
                 android:onClick="@{(view)->navigator.search()}"
+                android:text="SEARCH"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray" />
+
         <LinearLayout
-            android:visibility="@{viewModel.isHistoryVisible, default=visible}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="6dp"
-            android:orientation="vertical">
+            android:layout_marginTop="18dp"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isHistoryVisible, default=visible}">
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:background="@mipmap/icon_point" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:layout_weight="1"
                     android:text="Search History"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/semi_gray"
                     android:textSize="13sp" />
 
                 <Button
-                    android:textSize="13sp"
-                    android:textColor="@color/white"
-                    android:background="@drawable/view_rounded_bg_orange"
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/view_rounded_bg_orange_small_radius"
                     android:onClick="@{(view)->navigator.clearHistory()}"
-                    android:layout_width="46dp"
-                    android:layout_height="28dp"
-                    android:text="Clear"/>
+                    android:text="Clear"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
             <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout
+                android:layout_marginTop="10dp"
                 android:id="@+id/flHistorySearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:flChildSpacingForLastRow="align"
                 app:flChildSpacing="6dp"
-                app:flRowSpacing="4dp"/>
+                app:flChildSpacingForLastRow="align"
+                app:flRowSpacing="4dp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:background="@mipmap/icon_point" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:text="Search In Category"
+                    android:textColor="@color/semi_gray"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/flCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flChildSpacing="6dp"
+                app:flChildSpacingForLastRow="align"
+                app:flRowSpacing="4dp" />
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:visibility="@{!viewModel.isHistoryVisible, default=gone}"
             android:id="@+id/rvSuggestions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
-
 </layout>

@@ -108,7 +108,7 @@ public class ProductListActivity extends ProductListNavigatorActivity {
         return fragmentDispatchingAndroidInjector;
     }
 
-    /************************* PRODUCTS SETUP  ************************/
+    /************************* PRODUCTS METHODS SETUP  ************************/
 
     @Override
     public void restartFetching() {
@@ -130,15 +130,23 @@ public class ProductListActivity extends ProductListNavigatorActivity {
         getViewModel().getAllFavorites();
     }
 
+    private String getCategoryIdsForSearch() {
+        Intent intent = getIntent();
+        if(intent.hasExtra("categoryIds")) {
+            return intent.getStringExtra("categoryIds");
+        }
+        return "";
+    }
+
     @Override
     public void fetchProducts() {
         int categoryId = getIdSubCategory();
         if (categoryId != ID_SUB_EMPTY) {
-            getViewModel().fetchProductsByCommand(new Integer(categoryId));
+            getViewModel().fetchProductsByCommand(categoryId + "", "");
         } else {
             String keyword = getKeywordString();
             if (keyword != null && keyword.length() > 0) {
-                getViewModel().fetchProductsByCommand(keyword);
+                getViewModel().fetchProductsByCommand(getCategoryIdsForSearch(), keyword);
             }
         }
     }
