@@ -24,7 +24,6 @@ import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragment;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -32,6 +31,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.fabric.sdk.android.Fabric;
+import io.realm.Realm;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
 
@@ -82,6 +82,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeRealmDatabase();
     }
 
     public void onFragmentDetached(String tag) {

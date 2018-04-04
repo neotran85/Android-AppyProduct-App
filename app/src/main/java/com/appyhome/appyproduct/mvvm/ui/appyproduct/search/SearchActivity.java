@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -92,6 +93,15 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         getViewModel().getSearchHisTory();
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
         mCategoryIds = new HashMap<>();
+
+        mBinder.etKeyword.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN
+                    && keyCode == KeyEvent.KEYCODE_ENTER) {
+                search();
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override
@@ -167,14 +177,14 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void updateUISearchHistory(RealmResults<SearchItem> items) {
-        getViewModel().isHistoryVisible.set(items != null && items.size() > 0);
         if (items != null) {
             mBinder.flHistorySearch.removeAllViews();
             for (SearchItem item : items) {
                 mBinder.flHistorySearch.addView(createTag(item));
             }
+        } else {
+            mBinder.flHistorySearch.removeAllViews();
         }
-        getViewModel().getAllProductTopics();
     }
 
     @Override
@@ -205,11 +215,12 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void updateUISearchCategory(RealmResults<ProductTopic> items) {
-        getViewModel().isHistoryVisible.set(items != null && items.size() > 0);
         if (items != null) {
-            mBinder.flCategories.removeAllViews();
-            for (ProductTopic item : items) {
-                mBinder.flCategories.addView(createCategory(item));
+            if (mBinder.flCategories.getChildCount() == 0) {
+                mBinder.flCategories.removeAllViews();
+                for (ProductTopic item : items) {
+                    mBinder.flCategories.addView(createCategory(item));
+                }
             }
         }
     }

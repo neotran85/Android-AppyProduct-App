@@ -348,11 +348,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void closeDatabase() {
-        mDbHelper.closeDatabase();
-    }
-
-    @Override
     public Single<JSONObject> verifyTrue(String code) {
         return mApiHelper.verifyTrue(code);
     }

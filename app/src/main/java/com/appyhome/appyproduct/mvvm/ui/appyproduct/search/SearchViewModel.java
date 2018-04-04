@@ -9,13 +9,13 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SearchViewModel extends BaseViewModel<SearchNavigator> {
     public ObservableField<Boolean> isHistoryVisible = new ObservableField<>(true);
     public ObservableField<Boolean> isClearable = new ObservableField<>(false);
+
     public SearchViewModel(DataManager dataManager,
                            SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -26,7 +26,10 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    getNavigator().updateUISearchHistory(null);
+                    if (success) {
+                        isHistoryVisible.set(false);
+                        getNavigator().updateUISearchHistory(null);
+                    }
                 }, Crashlytics::logException));
     }
 
@@ -35,7 +38,9 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(searchItems -> {
+                    isHistoryVisible.set(searchItems != null && searchItems.size() > 0);
                     getNavigator().updateUISearchHistory(searchItems);
+                    getAllProductTopics();
                 }, Crashlytics::logException));
     }
 
@@ -58,7 +63,7 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public void getAllProductTopics() {
+    private void getAllProductTopics() {
         getCompositeDisposable().add(getDataManager().getAllProductTopics()
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -76,7 +81,7 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(subs -> {
                     ArrayList<Integer> ids = new ArrayList<>();
-                    for(ProductSub item: subs) {
+                    for (ProductSub item : subs) {
                         ids.add(item.id);
                     }
                     getNavigator().addProductCategoryIdsByTopic(idTopic, ids);

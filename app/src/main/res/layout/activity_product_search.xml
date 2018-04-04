@@ -38,44 +38,43 @@
                 android:padding="14dp"
                 android:src="@mipmap/icon_back" />
 
-            <EditText
-                android:id="@+id/etKeyword"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="Enter your keywords..."
-                android:inputType="text"
-                android:textColor="@color/medium_dark_gray"
-                android:textColorHint="@color/semi_gray"
-                android:textSize="14sp" />
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/rectangle_round_gray"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:adjustViewBounds="true"
-                android:alpha="0.8"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:onClick="@{(view) -> navigator.clearKeywords()}"
-                android:padding="10dp"
-                android:src="@mipmap/icon_clear_or_close"
-                android:visibility="@{viewModel.isClearable, default=gone}" />
+                <EditText
+                    android:id="@+id/etKeyword"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:lines="1"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_your_keywords"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:paddingStart="14dp"
+                    android:textColor="@color/medium_dark_gray"
+                    android:textColorHint="@color/semi_gray"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:background="@color/colorAccent"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:onClick="@{(view)->navigator.search()}"
-                android:text="SEARCH"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
+                <ImageView
+                    android:layout_marginEnd="4dp"
+                    android:padding="6dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{(view) -> navigator.clearKeywords()}"
+                    android:src="@mipmap/icon_clear_or_close"
+                    android:visibility="@{viewModel.isClearable, default=visible}" />
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -90,7 +89,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="18dp"
             android:orientation="vertical"
-            android:visibility="@{viewModel.isHistoryVisible, default=visible}">
+            android:visibility="@{viewModel.isHistoryVisible, default=gone}">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,10 +123,10 @@
             </LinearLayout>
 
             <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/flHistorySearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:flChildSpacing="6dp"
                 app:flChildSpacingForLastRow="align"
                 app:flRowSpacing="4dp" />
@@ -167,10 +166,10 @@
             </LinearLayout>
 
             <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/flCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:flChildSpacing="6dp"
                 app:flChildSpacingForLastRow="align"
                 app:flRowSpacing="4dp" />

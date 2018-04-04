@@ -82,8 +82,6 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductCached>> getAllProductsFavorited(ArrayList<Integer> ids);
 
-    void closeDatabase();
-
     Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
 
     Flowable<ProductFilter> getCurrentFilter(String userId);

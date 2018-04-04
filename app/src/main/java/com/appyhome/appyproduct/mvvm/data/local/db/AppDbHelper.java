@@ -157,12 +157,6 @@ public class AppDbHelper implements DbHelper {
         });
     }
 
-
-    @Override
-    public void closeDatabase() {
-        if (mRealm != null) mRealm.close();
-    }
-
     private Realm getRealm() {
         if (mRealm == null || mRealm.isClosed())
             mRealm = Realm.getDefaultInstance();

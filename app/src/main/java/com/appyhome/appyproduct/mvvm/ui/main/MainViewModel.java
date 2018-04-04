@@ -9,5 +9,4 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
                          SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
 }
