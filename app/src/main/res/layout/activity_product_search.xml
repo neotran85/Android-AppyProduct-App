@@ -167,7 +167,7 @@
             </LinearLayout>
 
             <com.appyhome.appyproduct.mvvm.ui.common.component.FlowLayout
-                android:id="@+id/flCategories"
+                android:id="@+id/flTopics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

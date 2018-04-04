@@ -21,7 +21,6 @@ import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchTagBinding
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -48,6 +47,11 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     private ArrayList<String> mTopicNames;
 
+    private ArrayList<Integer> mTopicIds;
+
+    private HashMap<Integer, String> mCategoryIds;
+
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
         return intent;
@@ -62,8 +66,6 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     public int getLayoutId() {
         return mLayoutId;
     }
-
-    private HashMap<Integer, String> mCategoryIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
         mCategoryIds = new HashMap<>();
         mTopicNames = new ArrayList<>();
+        mTopicIds = new ArrayList<>();
 
         mBinder.etKeyword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN
@@ -119,14 +122,19 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     public void search() {
         String keywords = getKeywords();
         if (keywords != null && keywords.length() > 0) {
-            getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
-            Intent intent = ProductListActivity.getStartIntent(this);
-            intent.putExtra("keyword", keywords);
-            intent.putExtra("categoryIds", getAllCategoriesForSearch());
-            if (mTopicNames.size() > 0)
-                intent.putExtra("topics", TextUtils.join(", ", mTopicNames));
-            startActivity(intent);
+            SearchItem item = createKeywordCached(getKeywords(), TextUtils.join(",", mTopicIds),
+                    getAllCategoriesForSearch(), TextUtils.join(", ", mTopicNames));
+            search(item);
         }
+    }
+
+    private void search(SearchItem item) {
+        getViewModel().addSearchItems(new SearchItem[]{item});
+        Intent intent = ProductListActivity.getStartIntent(this);
+        intent.putExtra("keyword", item.content);
+        intent.putExtra("categoryIds", item.categories);
+        intent.putExtra("topics", item.topic_names);
+        startActivity(intent);
     }
 
     private String getAllCategoriesForSearch() {
@@ -139,12 +147,15 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         return result;
     }
 
-    private SearchItem createKeywordCached(String keyword) {
+    private SearchItem createKeywordCached(String keyword, String topicIds, String categories, String names) {
         SearchItem item = new SearchItem();
         item.time_added = System.currentTimeMillis();
         item.content = keyword;
         item.cached = true;
         item.user_id = getViewModel().getUserId();
+        item.topics = topicIds;
+        item.categories = categories;
+        item.topic_names = names;
         return item;
     }
 
@@ -160,10 +171,10 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void onItemSuggestionClick(View view) {
-        SearchItemViewModel viewModel = (SearchItemViewModel) view.getTag();
-        setKeywords(viewModel.keyword.get());
-        getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords())});
-        search();
+        //SearchItemViewModel viewModel = (SearchItemViewModel) view.getTag();
+        //setKeywords(viewModel.keyword.get());
+        //getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords(), mTopicIds)});
+        //search();
     }
 
 
@@ -209,7 +220,17 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     public void clickSearchHistoryItem(View view) {
         SearchItem item = (SearchItem) view.getTag();
         setKeywords(item.content);
-        search();
+        ArrayList<Integer> ids = new ArrayList<>();
+        if (item.topics.length() > 0) {
+            String[] array = TextUtils.split(item.topics, ",");
+            if (array != null && array.length > 0) {
+                for (int i = 0; i < array.length; i++) {
+                    ids.add(Integer.valueOf(array[i]));
+                }
+            }
+        }
+        setSelectedTopics(ids);
+        search(item);
     }
 
     private String getKeywords() {
@@ -223,34 +244,82 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     @Override
     public void updateUISearchCategory(RealmResults<ProductTopic> items) {
         if (items != null) {
-            if (mBinder.flCategories.getChildCount() == 0) {
-                mBinder.flCategories.removeAllViews();
+            if (mBinder.flTopics.getChildCount() == 0) {
+                mBinder.flTopics.removeAllViews();
                 for (ProductTopic item : items) {
-                    mBinder.flCategories.addView(createCategory(item));
+                    mBinder.flTopics.addView(createCategory(item));
                 }
             }
         }
     }
 
+    private boolean containsTopicId(ArrayList<Integer> ids, int id) {
+        if (ids == null || ids.size() == 0) return false;
+        for (Integer integer : ids) {
+            if (integer == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void setSelectedTopics(ArrayList<Integer> idTopic) {
+        int count = mBinder.flTopics.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View view = mBinder.flTopics.getChildAt(i);
+            if (view instanceof TextView) {
+                if (view.getTag() instanceof ProductTopic) {
+                    ProductTopic item = (ProductTopic) view.getTag();
+                    if (containsTopicId(idTopic, item.id)) {
+                        setTopicSelected((TextView) view);
+                    } else setTopicUnselected((TextView) view);
+                }
+            }
+        }
+    }
+
+    private void setTopicUnselected(TextView textView) {
+        ProductTopic topic = (ProductTopic) textView.getTag();
+        textView.setTextColor(ContextCompat.getColor(this, R.color.semi_gray));
+        textView.setBackgroundResource(R.drawable.view_rounded_bg_gray_border);
+        mCategoryIds.remove(topic.id);
+        int index = indexOfTopicNames(topic.name);
+        if (index >= 0) {
+            mTopicNames.remove(index);
+            mTopicIds.remove(index);
+        }
+    }
+
+    private int indexOfTopicNames(String name) {
+        for (int i = 0; i < mTopicNames.size(); i++) {
+            if (mTopicNames.get(i).equals(name))
+                return i;
+        }
+        return -1;
+    }
+
+    private void setTopicSelected(TextView textView) {
+        ProductTopic topic = (ProductTopic) textView.getTag();
+        int whiteColor = ContextCompat.getColor(this, R.color.white);
+        textView.setTextColor(whiteColor);
+        textView.setBackgroundResource(R.drawable.view_rounded_bg_orange_large_radius);
+        getViewModel().getProductCategoryIdsByTopic(topic.id);
+        mTopicNames.add(topic.name);
+        mTopicIds.add(topic.id);
+    }
+
     @Override
     public void clickSearchCategoryItem(View view) {
         if (view instanceof TextView) {
-            ProductTopic topic = (ProductTopic) view.getTag();
-            TextView textView = (TextView) view;
             int whiteColor = ContextCompat.getColor(this, R.color.white);
+            TextView textView = (TextView) view;
             boolean selected = textView.getCurrentTextColor() == whiteColor;
             if (selected) {
                 // Unselected it
-                textView.setTextColor(ContextCompat.getColor(this, R.color.semi_gray));
-                textView.setBackgroundResource(R.drawable.view_rounded_bg_gray_border);
-                mCategoryIds.remove(topic.id);
-                mTopicNames.remove(topic.name);
+                setTopicUnselected(textView);
             } else {
                 // Selected it
-                textView.setTextColor(whiteColor);
-                textView.setBackgroundResource(R.drawable.view_rounded_bg_orange_large_radius);
-                getViewModel().getProductCategoryIdsByTopic(topic.id);
-                mTopicNames.add(topic.name);
+                setTopicSelected(textView);
             }
         }
     }
