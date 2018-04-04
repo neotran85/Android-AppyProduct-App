@@ -122,6 +122,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     }, Crashlytics::logException));
         }
     }
+
     public void emptyProductsLoaded() {
         getCompositeDisposable().add(getDataManager().clearProductsLoaded()
                 .take(1)
@@ -130,6 +131,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     // DO NOTHING
                 }, Crashlytics::logException));
     }
+
     public void clearProductsLoaded() {
         getCompositeDisposable().add(getDataManager().clearProductsLoaded()
                 .take(1)
@@ -141,6 +143,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private void showEmptyProducts() {
         if (isFirstLoaded()) {
+            updateCurrentFilter();
             getNavigator().showEmptyProducts();
         }
     }
@@ -215,17 +218,17 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void showProductList(RealmResults<Product> products) {
-        updateCurrentFilter();
         if (products != null && products.size() > 0) {
+            updateCurrentFilter();
             getNavigator().showProducts(products);
         } else showEmptyProducts();
     }
 
     private void showCachedList(RealmList<Product> list) {
-        updateCurrentFilter();
-        if (showCachedList && list != null && list.size() > 0)
+        if (showCachedList && list != null && list.size() > 0) {
+            updateCurrentFilter();
             getNavigator().showProducts(list);
-        else showEmptyProducts();
+        } else showEmptyProducts();
     }
 
     /******************************  FAVORITE METHODS *************** ***************/

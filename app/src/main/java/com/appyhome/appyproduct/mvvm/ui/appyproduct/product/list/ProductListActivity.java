@@ -61,10 +61,18 @@ public class ProductListActivity extends ProductListNavigatorActivity {
         mViewModel.setNavigator(this);
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getKeywordString());
+
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
         fetchProductsNew();
     }
 
+    private String getTitleSearch() {
+        String result = getKeywordString();
+        if (getSearchTopics().length() > 0) {
+            result = '"' + result + '"' + " in " + getSearchTopics();
+        }
+        return result;
+    }
 
     @Override
     public void onDestroy() {
@@ -181,6 +189,12 @@ public class ProductListActivity extends ProductListNavigatorActivity {
     private int getIdSubCategory() {
         int idSubCategory = getIntent().getIntExtra("id_sub", ID_SUB_EMPTY);
         return idSubCategory;
+    }
+
+    private String getSearchTopics() {
+        if (getIntent().hasExtra("topics"))
+            return getIntent().getStringExtra("topics");
+        return "";
     }
 
     private String getKeywordString() {

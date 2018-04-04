@@ -15,4 +15,7 @@
     <string name="items_added_to_your_card">item(s) added to your cart</string>
     <string name="sub_loading">Loading...</string>
     <string name="enter_your_keywords">Enter keywords and press OK to search</string>
+    <string name="search_in_categories">Search In Categories</string>
+    <string name="clear_history">Clear</string>
+    <string name="search_history">Search History</string>
 </resources>

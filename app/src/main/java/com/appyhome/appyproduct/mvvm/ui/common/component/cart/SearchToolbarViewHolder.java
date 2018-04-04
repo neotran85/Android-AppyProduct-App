@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.common.component.cart;
 
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
-public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnClickListener{
+public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnClickListener {
 
     private ViewToolbarBinding mBinding;
 
@@ -35,12 +36,15 @@ public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnCl
         mViewModel.isBackButtonShowed.set(isBackShowed);
         mViewModel.keywords.set(keyword);
         mViewModel.hasKeywords.set(keyword != null && keyword.length() > 0);
+        boolean manyWords = keyword != null && keyword.length() > 32;
+        mBinding.tvKeywords.setTextSize(TypedValue.COMPLEX_UNIT_PX, mActivity.getResources().
+                getDimension(manyWords ? R.dimen.text_size_small : R.dimen.text_size_normal));
         mBinding.llSearchKeywords.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if(mViewModel.hasKeywords.get()) {
+        if (mViewModel.hasKeywords.get()) {
             mActivity.finish();
         } else {
             Intent intent = SearchActivity.getStartIntent(mActivity);
@@ -48,6 +52,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnCl
             mActivity.startActivity(intent);
         }
     }
+
     public void back() {
         if (mActivity != null) {
             mActivity.finish();

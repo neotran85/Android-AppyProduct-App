@@ -20,10 +20,10 @@
         android:paddingStart="14dp">
 
         <LinearLayout
-            android:onClick="@{(view)-> navigator.back()}"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:onClick="@{(view)-> navigator.back()}"
             android:paddingEnd="10dp"
             android:visibility="@{viewModel.isBackButtonShowed, default=visible}">
 
@@ -42,96 +42,91 @@
             android:gravity="center|start"
             android:orientation="horizontal"
             android:paddingBottom="2dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="16dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="12dp"
             android:paddingTop="2dp"
             android:visibility="@{viewModel.isFullMode, default=visible}">
 
 
             <ImageView
-                android:visibility="@{!viewModel.hasKeywords, default=gone}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@mipmap/search_logo" />
+                android:src="@mipmap/search_logo"
+                android:visibility="@{!viewModel.hasKeywords, default=gone}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right|center"
+                android:gravity="center|end"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:visibility="@{viewModel.hasKeywords}"
                     android:id="@+id/tvKeywords"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@null"
+                    android:lines="1"
+                    android:singleLine="true"
                     android:gravity="start"
-                    android:paddingRight="6dp"
+                    android:paddingEnd="6dp"
+                    android:ellipsize="end"
                     android:text="@{viewModel.keywords}"
                     android:textAlignment="textStart"
-                    android:textColor="@color/medium_dark_gray"
-                    android:textSize="15sp" />
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp"
+                    android:visibility="@{viewModel.hasKeywords}" />
 
                 <TextView
-                    android:visibility="@{!viewModel.hasKeywords}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:gravity="end"
-                    android:paddingRight="6dp"
+                    android:paddingEnd="6dp"
                     android:text="Search"
                     android:textAlignment="textEnd"
                     android:textColor="@color/text_hint"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="@{!viewModel.hasKeywords}" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:adjustViewBounds="true"
                     android:src="@mipmap/search_icon" />
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:gravity="left|center_vertical"
-            android:onClick="@{(view) -> navigator.openProductCart()}"
-            android:orientation="horizontal">
+            android:gravity="center_vertical|start"
+            android:onClick="@{(view) -> navigator.openProductCart()}">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivCart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/icon_toolbar_cart" />
 
-                <ImageView
-                    android:id="@+id/ivCart"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="12dp"
-                    android:adjustViewBounds="true"
-                    android:src="@mipmap/icon_toolbar_cart" />
-
-                <TextView
-                    totalCart="@{viewModel.totalItemsCount}"
-                    android:layout_width="24dp"
-                    android:layout_height="18dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="34dp"
-                    android:background="@mipmap/bg_count_carts"
-                    android:gravity="center"
-                    android:paddingBottom="1dp"
-                    android:text="11"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:visibility="visible" />
-            </RelativeLayout>
-        </LinearLayout>
+            <TextView
+                totalCart="@{viewModel.totalItemsCount}"
+                android:layout_width="24dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="34dp"
+                android:background="@mipmap/bg_count_carts"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="visible" />
+        </RelativeLayout>
     </LinearLayout>
 </layout>

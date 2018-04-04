@@ -46,6 +46,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     ActivityProductSearchBinding mBinder;
 
+    private ArrayList<String> mTopicNames;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -95,6 +96,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
         mCategoryIds = new HashMap<>();
+        mTopicNames = new ArrayList<>();
 
         mBinder.etKeyword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN
@@ -121,6 +123,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             Intent intent = ProductListActivity.getStartIntent(this);
             intent.putExtra("keyword", keywords);
             intent.putExtra("categoryIds", getAllCategoriesForSearch());
+            if (mTopicNames.size() > 0)
+                intent.putExtra("topics", TextUtils.join(", ", mTopicNames));
             startActivity(intent);
         }
     }
@@ -240,11 +244,13 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
                 textView.setTextColor(ContextCompat.getColor(this, R.color.semi_gray));
                 textView.setBackgroundResource(R.drawable.view_rounded_bg_gray_border);
                 mCategoryIds.remove(topic.id);
+                mTopicNames.remove(topic.name);
             } else {
                 // Selected it
                 textView.setTextColor(whiteColor);
                 textView.setBackgroundResource(R.drawable.view_rounded_bg_orange_large_radius);
                 getViewModel().getProductCategoryIdsByTopic(topic.id);
+                mTopicNames.add(topic.name);
             }
         }
     }
