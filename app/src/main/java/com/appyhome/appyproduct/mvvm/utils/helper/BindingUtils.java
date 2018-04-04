@@ -52,14 +52,14 @@ public final class BindingUtils {
         view.setAdapter(data);
     }
 
-    @BindingAdapter("app:layout_height")
+    @BindingAdapter("layout_height")
     public static void setLayoutHeight(ImageView view, float height) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = Math.round(height);
         view.setLayoutParams(layoutParams);
     }
 
-    @BindingAdapter("app:layout_width")
+    @BindingAdapter("layout_width")
     public static void setLayoutWidth(ImageView view, float width) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = Math.round(width);

@@ -43,8 +43,8 @@
                         android:layout_height="@dimen/width_thumbnail_product_in_list"
                         android:id="@+id/ivThumbnail"
                         imageUrl="@{viewModel.imageURL}"
-                        app:layout_height="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
-                        app:layout_width="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
+                        layout_height="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
+                        layout_width="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop" />
 

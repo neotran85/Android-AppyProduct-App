@@ -73,7 +73,7 @@
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="20dp"
-                        android:visibility="@{viewModel.isHomeCleaningVisible}">
+                        android:visibility="@{!viewModel.isAirConCleaningVisible, default=gone}">
 
                         <include layout="@layout/view_services_home_cleaning_extra"></include>
                     </LinearLayout>
@@ -86,7 +86,7 @@
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="20dp"
-                        android:visibility="@{viewModel.isAirConCleaningVisible}">
+                        android:visibility="@{viewModel.isAirConCleaningVisible, default=gone}">
 
                         <include layout="@layout/view_services_air_cond_cleaning_extra"></include>
                     </LinearLayout>
