@@ -5,6 +5,7 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 
 public interface ProductItemNavigator {
+
     BaseViewModel getMainViewModel();
 
     void updateCartCount();
