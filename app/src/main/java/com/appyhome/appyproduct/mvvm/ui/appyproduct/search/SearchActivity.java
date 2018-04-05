@@ -249,7 +249,10 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     private void setKeywords(String keywords) {
-        mBinder.etKeyword.setText(keywords);
+        if (keywords != null) {
+            mBinder.etKeyword.setText(keywords);
+            mBinder.etKeyword.setSelection(keywords.length());
+        }
     }
 
     @Override
