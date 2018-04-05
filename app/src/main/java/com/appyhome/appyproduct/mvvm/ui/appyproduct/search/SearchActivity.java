@@ -45,12 +45,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     ActivityProductSearchBinding mBinder;
 
-    private ArrayList<String> mTopicNames;
-
-    private ArrayList<Integer> mTopicIds;
-
-    private HashMap<Integer, String> mCategoryIds;
-
+    private HashMap<ProductTopic, String> mTopics;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -95,11 +90,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         });
         getViewModel().getSearchHisTory();
         getViewModel().getAllProductTopics();
-
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
-        mCategoryIds = new HashMap<>();
-        mTopicNames = new ArrayList<>();
-        mTopicIds = new ArrayList<>();
 
         mBinder.etKeyword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN
@@ -122,40 +113,66 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     public void search() {
         String keywords = getKeywords();
         if (keywords != null && keywords.length() > 0) {
-            SearchItem item = createKeywordCached(getKeywords(), TextUtils.join(",", mTopicIds),
-                    getAllCategoriesForSearch(), TextUtils.join(", ", mTopicNames));
-            search(item);
+            ArrayList<ProductTopic> selectedTopics = getSelectedTopics();
+            ArrayList<Integer> topicsIds = new ArrayList<>();
+            ArrayList<String> topicsNames = new ArrayList<>();
+            for (ProductTopic topic : selectedTopics) {
+                topicsIds.add(topic.id);
+                topicsNames.add(topic.name);
+            }
+            String getSelectedTopicIds = TextUtils.join(",", topicsIds);
+            String getSelectedTopicNames = TextUtils.join(", ", topicsNames);
+
+            SearchItem item = createKeywordCached(getKeywords(), getSelectedTopicIds);
+
+            getViewModel().addSearchItems(new SearchItem[]{item});
+            Intent intent = ProductListActivity.getStartIntent(this);
+            intent.putExtra("keyword", getKeywords());
+            intent.putExtra("categoryIds", getAllCategoriesForSearch(selectedTopics));
+            intent.putExtra("topics", getSelectedTopicNames);
+            startActivity(intent);
         }
     }
 
-    private void search(SearchItem item) {
-        getViewModel().addSearchItems(new SearchItem[]{item});
-        Intent intent = ProductListActivity.getStartIntent(this);
-        intent.putExtra("keyword", item.content);
-        intent.putExtra("categoryIds", item.categories);
-        intent.putExtra("topics", item.topic_names);
-        startActivity(intent);
+    private ArrayList<ProductTopic> getSelectedTopics() {
+        ArrayList<ProductTopic> topics = new ArrayList<>();
+        int count = mBinder.flTopics.getChildCount();
+        int whiteColor = ContextCompat.getColor(this, R.color.white);
+        for (int i = 0; i < count; i++) {
+            View view = mBinder.flTopics.getChildAt(i);
+            if (view instanceof TextView) {
+                TextView textView = (TextView) view;
+                if (textView.getCurrentTextColor() == whiteColor) {
+                    if (view.getTag() instanceof ProductTopic) {
+                        ProductTopic item = (ProductTopic) view.getTag();
+                        topics.add(item);
+                    }
+                }
+            }
+        }
+        return topics;
     }
 
-    private String getAllCategoriesForSearch() {
+    private String getAllCategoriesForSearch(ArrayList<ProductTopic> selectedTopics) {
         String result = "";
-        if (mCategoryIds.keySet() != null && mCategoryIds.keySet().size() > 0) {
-            for (Integer id : mCategoryIds.keySet()) {
-                result = result + mCategoryIds.get(id) + ",";
+        if (selectedTopics != null) {
+            for (ProductTopic topic : mTopics.keySet()) {
+                if (selectedTopics.contains(topic)) {
+                    String category = mTopics.get(topic);
+                    result = result + category + ",";
+                }
             }
         }
         return result;
     }
 
-    private SearchItem createKeywordCached(String keyword, String topicIds, String categories, String names) {
+    private SearchItem createKeywordCached(String keyword, String topicIds) {
         SearchItem item = new SearchItem();
         item.time_added = System.currentTimeMillis();
         item.content = keyword;
         item.cached = true;
         item.user_id = getViewModel().getUserId();
         item.topics = topicIds;
-        item.categories = categories;
-        item.topic_names = names;
         return item;
     }
 
@@ -211,12 +228,6 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void addProductCategoryIdsByTopic(int idTopic, ArrayList<Integer> ids) {
-        if (ids.size() > 0)
-            mCategoryIds.put(idTopic, TextUtils.join(",", ids));
-    }
-
-    @Override
     public void clickSearchHistoryItem(View view) {
         SearchItem item = (SearchItem) view.getTag();
         setKeywords(item.content);
@@ -230,7 +241,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             }
         }
         setSelectedTopics(ids);
-        search(item);
+        search();
     }
 
     private String getKeywords() {
@@ -242,11 +253,12 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void updateUISearchCategory(RealmResults<ProductTopic> items) {
+    public void updateUISearchCategory(HashMap<ProductTopic, String> items) {
+        mTopics = items;
         if (items != null) {
             if (mBinder.flTopics.getChildCount() == 0) {
                 mBinder.flTopics.removeAllViews();
-                for (ProductTopic item : items) {
+                for (ProductTopic item : items.keySet()) {
                     mBinder.flTopics.addView(createCategory(item));
                 }
             }
@@ -282,20 +294,6 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         ProductTopic topic = (ProductTopic) textView.getTag();
         textView.setTextColor(ContextCompat.getColor(this, R.color.semi_gray));
         textView.setBackgroundResource(R.drawable.view_rounded_bg_gray_border);
-        mCategoryIds.remove(topic.id);
-        int index = indexOfTopicNames(topic.name);
-        if (index >= 0) {
-            mTopicNames.remove(index);
-            mTopicIds.remove(index);
-        }
-    }
-
-    private int indexOfTopicNames(String name) {
-        for (int i = 0; i < mTopicNames.size(); i++) {
-            if (mTopicNames.get(i).equals(name))
-                return i;
-        }
-        return -1;
     }
 
     private void setTopicSelected(TextView textView) {
@@ -303,9 +301,6 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         int whiteColor = ContextCompat.getColor(this, R.color.white);
         textView.setTextColor(whiteColor);
         textView.setBackgroundResource(R.drawable.view_rounded_bg_orange_large_radius);
-        getViewModel().getProductCategoryIdsByTopic(topic.id);
-        mTopicNames.add(topic.name);
-        mTopicIds.add(topic.id);
     }
 
     @Override

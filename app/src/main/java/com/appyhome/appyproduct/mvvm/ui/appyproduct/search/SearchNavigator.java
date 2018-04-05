@@ -6,6 +6,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.realm.RealmResults;
 
@@ -16,7 +17,7 @@ public interface SearchNavigator {
 
     void updateUISearchHistory(RealmResults<SearchItem> items);
 
-    void updateUISearchCategory(RealmResults<ProductTopic> items);
+    void updateUISearchCategory(HashMap<ProductTopic, String> items);
 
     void doAfterSearchItemsAdded();
 
@@ -31,6 +32,4 @@ public interface SearchNavigator {
     void showSuggestions(RealmResults<SearchItem> items);
 
     void clickSearchCategoryItem(View view);
-
-    void addProductCategoryIdsByTopic(int idTopic, ArrayList<Integer> ids);
 }
