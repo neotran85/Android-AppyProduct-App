@@ -1,6 +1,4 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -69,6 +67,7 @@
 
                 <TextView
                     android:id="@+id/tvEdit"
+                    editModeText="@{viewModel.isEditMode}"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
@@ -77,7 +76,6 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    editModeText="@{viewModel.isEditMode}"
                     android:textColor="@color/dark_gray"
                     android:textSize="13sp" />
             </RelativeLayout>
@@ -141,11 +139,11 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:foreground="?attr/selectableItemBackground"
-                            android:clickable="true"
                             android:id="@+id/btnDecrease"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:src="@mipmap/icon_decrease" />
 
                         <EditText
@@ -163,24 +161,37 @@
                             android:textSize="12sp" />
 
                         <ImageView
-                            android:foreground="?attr/selectableItemBackground"
-                            android:clickable="true"
                             android:id="@+id/btnIncrease"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:src="@mipmap/icon_increase" />
                     </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{viewModel.variationName}"
-                        android:textColor="@color/semi_gray"
-                        android:textSize="13sp"
-                        android:visibility="@{!viewModel.isEditMode}" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{viewModel.variationName}"
+                            android:textColor="@color/semi_gray"
+                            android:textSize="13sp"
+                            android:visibility="@{!viewModel.isEditMode}" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:maxLines="1"
+                            android:text="@{viewModel.variantStock}"
+                            android:textColor="@color/semi_gray"
+                            android:textSize="13sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -195,12 +206,12 @@
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
                         android:lineSpacingExtra="4dp"
                         android:text="RM 546.4"
-                        android:visibility="gone"
-                        android:layout_marginRight="8dp"
                         android:textColor="@color/gray_product_in_list"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
 
                     <TextView
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -210,6 +221,7 @@
                         android:text="RM"
                         android:textColor="@color/red_price"
                         android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/tvPrice"
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -230,11 +242,11 @@
                     android:visibility="@{viewModel.isEditMode, default=gone}">
 
                     <TextView
-                        android:maxWidth="144dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:maxWidth="144dp"
                         android:text="Variation 1 Variation 1 Variation 1"
                         android:textColor="@color/dark_gray"
                         android:textSize="14sp" />

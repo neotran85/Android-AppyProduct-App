@@ -73,8 +73,10 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                     break;
                 case R.id.btnIncrease:
                     amount = Integer.valueOf(viewModel.amount.get()) + 1;
-                    viewModel.amount.set(amount + "");
-                    mAdapter.updateTotalCost();
+                    if(amount <= viewModel.getVariantStockNumber()) {
+                        viewModel.amount.set(amount + "");
+                        mAdapter.updateTotalCost();
+                    }
                     break;
                 case R.id.cbCheckAll:
                     boolean isChecked = mBinding.cbCheckAll.isChecked();

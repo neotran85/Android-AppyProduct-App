@@ -14,6 +14,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<String> amount = new ObservableField<>("");
     public ObservableField<String> price = new ObservableField<>("");
     public ObservableField<String> variationName = new ObservableField<>("");
+    public ObservableField<String> variantStock = new ObservableField<>("");
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(false);
     public ObservableField<Boolean> checkedAll = new ObservableField<>(false);
@@ -22,9 +23,18 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public ObservableField<Boolean> isEditMode = new ObservableField<>(false);
 
+    private int variantStockNumber = 0;
     private int productId;
     private String variantModelId;
     private long productCartId;
+
+    public int getVariantStockNumber() {
+        return variantStockNumber;
+    }
+
+    public void setVariantStockNumber(int stockNumber) {
+        variantStockNumber = stockNumber;
+    }
 
     public void setVariantModelId(String id) {
         variantModelId = id;
