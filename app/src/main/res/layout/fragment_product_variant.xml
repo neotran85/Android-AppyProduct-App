@@ -37,7 +37,7 @@
                 android:layout_marginStart="6dp"
                 android:text="@{viewModel.selectedVariantName}"
                 android:textColor="@color/medium_dark_gray"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <RelativeLayout

@@ -53,6 +53,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private Point mCartPosition = new Point();
     private Point mAddToCartPosition = new Point();
 
+    private int mTotalStock = 0;
+
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
         Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -81,14 +83,13 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getCartPosition();
         int productId = getProductIdByIntent();
 
-        getViewModel().getProductCachedById();
-
         mProductVariantFragment = new ProductVariantFragment();
         mProductVariantFragment.setDetailNavigator(this);
 
         if (productId > 0) {
             mProductVariantFragment.setProductId(productId);
             getViewModel().setProductId(productId);
+            getViewModel().getProductCachedById();
         }
         showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
     }
@@ -122,14 +123,17 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void showedVariants() {
-        getViewModel().stockCount.set(mProductVariantFragment.getTotalStock() + "");
+        mTotalStock = mProductVariantFragment.getTotalStock();
+        getViewModel().stockCount.set(mTotalStock + "");
     }
 
     @Override
     public void selectedVariant(ProductVariant variant) {
         getViewModel().price.set("RM " + variant.price);
         getViewModel().isVariantSelected.set(true);
-        getViewModel().stockCount.set(variant.quantity + "");
+        mTotalStock = variant.quantity;
+        getViewModel().stockCount.set(mTotalStock + "");
+        getViewModel().amountAdded.set("1");
     }
 
     @Override
@@ -239,7 +243,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        AlertManager.getInstance(this).showQuickToast(message);
     }
 
     @Override
@@ -257,7 +261,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Override
     public void increaseAmount() {
         int amount = mMainViewModel.getIntegerAmountAdded() + 1;
-        mMainViewModel.setIntegerAmountAdded(amount);
+        if (amount <= mTotalStock)
+            mMainViewModel.setIntegerAmountAdded(amount);
+        else {
+            showAlert("Unable to add more than " + mTotalStock + " items.");
+        }
     }
 
     @Override

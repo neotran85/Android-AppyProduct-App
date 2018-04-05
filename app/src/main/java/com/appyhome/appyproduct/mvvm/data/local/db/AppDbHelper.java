@@ -462,6 +462,7 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_avatar = product.avatar_name;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
+        cartItem.variant_stock = variant.quantity;
         cartItem.variant_model_id = variant.model_id;
         cartItem.variant_name = variant.variant_name;
         return cartItem;
