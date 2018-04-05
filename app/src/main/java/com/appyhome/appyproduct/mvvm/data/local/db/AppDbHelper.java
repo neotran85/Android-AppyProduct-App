@@ -449,10 +449,10 @@ public class AppDbHelper implements DbHelper {
         });
     }
 
-    private ProductCart createNewProductCart(Product product, String userId, String variantId, String variantName) {
+    private ProductCart createNewProductCart(Product product, String userId, ProductVariant variant) {
         ProductCart cartItem = new ProductCart();
         cartItem.id = System.currentTimeMillis();
-        cartItem.price = product.lowest_price;
+        cartItem.price = variant.price;
         cartItem.product_id = product.id;
         cartItem.seller_id = product.seller_id;
         cartItem.seller_name = product.seller_name;
@@ -462,8 +462,8 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_avatar = product.avatar_name;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
-        cartItem.variant_model_id = variantId;
-        cartItem.variant_name = variantName;
+        cartItem.variant_model_id = variant.model_id;
+        cartItem.variant_name = variant.variant_name;
         return cartItem;
     }
 
@@ -505,7 +505,7 @@ public class AppDbHelper implements DbHelper {
                             .equalTo("model_id", variantModelId)
                             .findFirst();
                     if (variant != null)
-                        productCart = createNewProductCart(product.convertToProduct(), userId, variant.model_id, variant.variant_name);
+                        productCart = createNewProductCart(product.convertToProduct(), userId, variant);
                 }
                 if (productCart != null) {
                     long timeAdded = System.currentTimeMillis();

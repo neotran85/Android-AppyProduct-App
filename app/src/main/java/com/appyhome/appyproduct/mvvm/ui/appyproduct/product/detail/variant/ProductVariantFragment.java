@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductVariantBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductVariantBinding;
@@ -73,7 +72,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
                 mTotalStock = mTotalStock + variant.quantity;
             }
         }
-        if(mDetailNavigator != null) {
+        if (mDetailNavigator != null) {
             mDetailNavigator.showedVariants();
         }
     }
@@ -94,16 +93,17 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     @Override
     public void selectVariant(View view) {
-        if (mSelectedVariantView == view) return;
-        if (mSelectedVariantView != null)
-            mSelectedVariantView.findViewById(R.id.tvVariantName).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.dark_gray));
-        view.findViewById(R.id.tvVariantName).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        mSelectedVariantView = view;
-        if (mSelectedVariantView.getTag() instanceof ProductVariant) {
-            ProductVariant variant = (ProductVariant) mSelectedVariantView.getTag();
-            getViewModel().selectedVariantName.set(variant.variant_name);
-            if(mDetailNavigator != null)
-                mDetailNavigator.selectedVariant(variant);
+        if (mSelectedVariantView != view) {
+            if (mSelectedVariantView != null)
+                mSelectedVariantView.findViewById(R.id.tvVariantName).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.dark_gray));
+            view.findViewById(R.id.tvVariantName).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+            mSelectedVariantView = view;
+            if (mSelectedVariantView.getTag() instanceof ProductVariant) {
+                ProductVariant variant = (ProductVariant) mSelectedVariantView.getTag();
+                getViewModel().selectedVariantName.set(variant.variant_name);
+                if (mDetailNavigator != null)
+                    mDetailNavigator.selectedVariant(variant);
+            }
         }
     }
 
