@@ -47,11 +47,11 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private ProductListCachedResponse cachedResponse;
 
-    private boolean showCachedList = true;
-
     private int mPageNumber = 1;
 
     private boolean mIsAbleToLoadMore = false;
+
+    private boolean mIsFirstLoaded = true;
 
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -60,6 +60,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     public void resetPageNumber() {
+        mIsFirstLoaded = true;
         mPageNumber = 1;
     }
 
@@ -72,11 +73,11 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     public boolean isFirstLoaded() {
-        return mPageNumber == 1;
+        return mIsFirstLoaded;
     }
 
-    public int getMaxProducts() {
-        return mPageNumber * PRODUCTS_PER_PAGE;
+    public void setIsFirstLoaded(boolean value) {
+        mIsFirstLoaded = value;
     }
 
     /******************************  SORT CURRENT METHODS *************** ***************/
@@ -105,19 +106,19 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(products -> {
-                    showProductList(products);
-                    // CACHED ALL PRODUCTS LOADED
                     addProductsCachedToDatabase();
+                    showProductList(products);
                 }, Crashlytics::logException));
     }
 
     private void addProductsCachedToDatabase() {
         if (cachedResponse != null && cachedResponse.message != null && cachedResponse.message.size() > 0) {
-            mIsAbleToLoadMore = cachedResponse.message.size() == PRODUCTS_PER_PAGE;
+            setIsAbleToLoadMore(cachedResponse.message.size() == PRODUCTS_PER_PAGE);
             getCompositeDisposable().add(getDataManager().addProductsCached(cachedResponse.message)
                     .take(1)
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(success -> {
+                        cachedResponse.message.clear();
                         cachedResponse = null;
                     }, Crashlytics::logException));
         }
@@ -142,7 +143,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void showEmptyProducts() {
-        if (isFirstLoaded()) {
+        if (isFirstLoaded() && !isIsAbleToLoadMore()) {
             updateCurrentFilter();
             getNavigator().showEmptyProducts();
         }
@@ -150,7 +151,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword) {
         return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, mPageNumber, getCurrentSortType()))
+            getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), getCurrentSortType()))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(jsonResult -> {
@@ -218,17 +219,13 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void showProductList(RealmResults<Product> products) {
-        if (products != null && products.size() > 0) {
-            updateCurrentFilter();
-            getNavigator().showProducts(products);
-        } else showEmptyProducts();
+        getNavigator().showProducts(products);
+        updateCurrentFilter();
     }
 
     private void showCachedList(RealmList<Product> list) {
-        if (showCachedList && list != null && list.size() > 0) {
-            updateCurrentFilter();
-            getNavigator().showProducts(list);
-        } else showEmptyProducts();
+        getNavigator().showProducts(list);
+        updateCurrentFilter();
     }
 
     /******************************  FAVORITE METHODS *************** ***************/

@@ -178,16 +178,22 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
             setUpRecyclerViewGrid(getViewDataBinding().productsRecyclerView);
             getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
             if (getViewModel().isFirstLoaded()) {
+                getViewModel().setIsFirstLoaded(false);
                 getProductAdapter().addItems(result, this, getFavoriteIds());
                 getProductAdapter().notifyDataSetChanged();
+                closeLoading();
             } else { // LOAD MORE
                 int rangeStart = getProductAdapter().getItemCount();
                 int itemCount = result.size() - rangeStart;
                 getProductAdapter().addItems(result, this, getFavoriteIds());
                 getProductAdapter().notifyItemRangeInserted(rangeStart, itemCount);
+                closeLoading();
             }
+        } else {
+            if (getViewModel().isIsAbleToLoadMore()) {
+                fetchMore();
+            } else showEmptyProducts();
         }
-        closeLoading();
     }
 
     @Override
@@ -227,7 +233,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
-        if (getViewModel().isFirstLoaded()) {
+        if (!(rv.getLayoutManager() instanceof GridLayoutManager)) {
             GridLayoutManager layoutManager = new GridLayoutManager(this,
                     mColumns, GridLayoutManager.VERTICAL,
                     false);
@@ -241,9 +247,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
                         int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
                         int childCount = getProductAdapter().getItemCount();
                         if (lastVisiblePosition == childCount - 1) {
-                            getViewModel().setIsAbleToLoadMore(false);
-                            getViewModel().increasePageNumber();
-                            fetchProducts();
+                            fetchMore();
                         }
                     }
                 }

@@ -135,6 +135,13 @@ public class ProductListActivity extends ProductListNavigatorActivity {
     }
 
     @Override
+    public void fetchMore() {
+        getViewModel().setIsAbleToLoadMore(false);
+        getViewModel().increasePageNumber();
+        fetchProducts();
+    }
+
+    @Override
     public void fetchProducts() {
         int categoryId = getIdSubCategory();
         if (categoryId != ID_SUB_EMPTY) {

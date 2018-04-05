@@ -47,5 +47,7 @@ public interface ProductListNavigator {
 
     void fetchProducts();
 
+    void fetchMore();
+
     void setUpRecyclerViewGrid(RecyclerView view);
 }
