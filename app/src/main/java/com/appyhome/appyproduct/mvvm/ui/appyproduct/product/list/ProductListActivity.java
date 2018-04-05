@@ -61,17 +61,8 @@ public class ProductListActivity extends ProductListNavigatorActivity {
         mViewModel.setNavigator(this);
         ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
-
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
         fetchProductsNew();
-    }
-
-    private String getTitleSearch() {
-        String result = getKeywordString();
-        if (getSearchTopics().length() > 0) {
-            result = '"' + result + '"' + " in " + getSearchTopics();
-        }
-        return result;
     }
 
     @Override
@@ -230,5 +221,14 @@ public class ProductListActivity extends ProductListNavigatorActivity {
     public int getLayoutId() {
         return R.layout.activity_product_list;
     }
+
+    private String getTitleSearch() {
+        String result = getKeywordString();
+        if (getSearchTopics().length() > 0) {
+            result = '"' + result + '"' + " in " + getSearchTopics();
+        }
+        return result;
+    }
+
 
 }

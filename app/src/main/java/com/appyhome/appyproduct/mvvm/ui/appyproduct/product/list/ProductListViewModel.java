@@ -43,7 +43,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
 
-    private static final int PRODUCTS_PER_PAGE = 100;
+    public static final int PRODUCTS_PER_PAGE = 100;
 
     private ProductListCachedResponse cachedResponse;
 

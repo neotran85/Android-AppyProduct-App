@@ -11,6 +11,7 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public interface ProductListNavigator {
+
     void handleErrorService(Throwable throwable);
 
     void showAlert(String message);
@@ -50,4 +51,5 @@ public interface ProductListNavigator {
     void fetchMore();
 
     void setUpRecyclerViewGrid(RecyclerView view);
+
 }

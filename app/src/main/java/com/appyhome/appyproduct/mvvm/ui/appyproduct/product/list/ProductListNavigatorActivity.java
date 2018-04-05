@@ -55,6 +55,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mColumns = calculateSubColumns();
+        getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
     }
 
     private int calculateSubColumns() {
@@ -175,9 +176,9 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void showProducts(OrderedRealmCollection<Product> result) {
         if (result != null && result.size() > 0) {
-            setUpRecyclerViewGrid(getViewDataBinding().productsRecyclerView);
-            getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
-            if (getViewModel().isFirstLoaded()) {
+            boolean isFirstShowed = getViewModel().isFirstLoaded();
+            if (isFirstShowed) {
+                setUpRecyclerViewGrid(getViewDataBinding().productsRecyclerView);
                 getViewModel().setIsFirstLoaded(false);
                 getProductAdapter().addItems(result, this, getFavoriteIds());
                 getProductAdapter().notifyDataSetChanged();
@@ -233,26 +234,24 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
-        if (!(rv.getLayoutManager() instanceof GridLayoutManager)) {
-            GridLayoutManager layoutManager = new GridLayoutManager(this,
-                    mColumns, GridLayoutManager.VERTICAL,
-                    false);
-            rv.setLayoutManager(layoutManager);
-            rv.setItemAnimator(new DefaultItemAnimator());
-            rv.clearOnScrollListeners();
-            rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    if (getViewModel().isIsAbleToLoadMore()) {
-                        int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
-                        int childCount = getProductAdapter().getItemCount();
-                        if (lastVisiblePosition == childCount - 1) {
-                            fetchMore();
-                        }
+        GridLayoutManager layoutManager = new GridLayoutManager(this,
+                mColumns, GridLayoutManager.VERTICAL,
+                false);
+        rv.setLayoutManager(layoutManager);
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.clearOnScrollListeners();
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (getViewModel().isIsAbleToLoadMore()) {
+                    int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
+                    int childCount = getProductAdapter().getItemCount();
+                    if (lastVisiblePosition == childCount - 1) {
+                        fetchMore();
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
 
