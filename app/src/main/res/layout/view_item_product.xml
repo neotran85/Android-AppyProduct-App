@@ -175,10 +175,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/llItemView"
-            android:layout_marginTop="-4dp"
+            android:layout_marginTop="-6dp"
+            android:adjustViewBounds="true"
             android:background="@mipmap/icon_limit_offer"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:visibility="@{viewModel.isDiscount, default=gone}" />
+            android:visibility="@{viewModel.isDiscount, default=visible}" />
     </RelativeLayout>
 </layout>
