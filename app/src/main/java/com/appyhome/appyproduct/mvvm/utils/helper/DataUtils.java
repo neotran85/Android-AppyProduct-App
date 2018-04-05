@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public final class DataUtils {
@@ -77,5 +78,15 @@ public final class DataUtils {
         is.close();
 
         return new String(buffer, "UTF-8");
+    }
+
+    public static boolean contains(ArrayList<Integer> ids, int id) {
+        if (ids == null || ids.size() == 0) return false;
+        for (Integer integer : ids) {
+            if (integer == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

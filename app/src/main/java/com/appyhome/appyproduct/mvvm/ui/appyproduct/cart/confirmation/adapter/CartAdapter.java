@@ -46,6 +46,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         itemViewModel.amount.set(productCart.amount + "");
         itemViewModel.price.set(productCart.price + "");
         itemViewModel.checked.set(productCart.checked);
+        itemViewModel.variationName.set(productCart.variant_name);
         return itemViewModel;
     }
 

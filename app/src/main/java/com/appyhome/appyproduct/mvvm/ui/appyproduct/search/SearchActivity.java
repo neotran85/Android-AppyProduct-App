@@ -22,6 +22,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActi
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -268,16 +269,6 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         }
     }
 
-    private boolean containsTopicId(ArrayList<Integer> ids, int id) {
-        if (ids == null || ids.size() == 0) return false;
-        for (Integer integer : ids) {
-            if (integer == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void setSelectedTopics(ArrayList<Integer> idTopic) {
         int count = mBinder.flTopics.getChildCount();
         for (int i = 0; i < count; i++) {
@@ -285,25 +276,17 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             if (view instanceof TextView) {
                 if (view.getTag() instanceof ProductTopic) {
                     ProductTopic item = (ProductTopic) view.getTag();
-                    if (containsTopicId(idTopic, item.id)) {
-                        setTopicSelected((TextView) view);
-                    } else setTopicUnselected((TextView) view);
+                    setTopicSelected((TextView) view, DataUtils.contains(idTopic, item.id));
                 }
             }
         }
     }
 
-    private void setTopicUnselected(TextView textView) {
-        ProductTopic topic = (ProductTopic) textView.getTag();
-        textView.setTextColor(ContextCompat.getColor(this, R.color.semi_gray));
-        textView.setBackgroundResource(R.drawable.view_rounded_bg_gray_border);
-    }
-
-    private void setTopicSelected(TextView textView) {
-        ProductTopic topic = (ProductTopic) textView.getTag();
-        int whiteColor = ContextCompat.getColor(this, R.color.white);
-        textView.setTextColor(whiteColor);
-        textView.setBackgroundResource(R.drawable.view_rounded_bg_orange_large_radius);
+    private void setTopicSelected(TextView textView, boolean isSelected) {
+        textView.setTextColor(ContextCompat.getColor(this, isSelected ? R.color.white
+                : R.color.semi_gray));
+        textView.setBackgroundResource(isSelected ? R.drawable.view_rounded_bg_orange_large_radius
+                : R.drawable.view_rounded_bg_gray_border);
     }
 
     @Override
@@ -311,14 +294,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         if (view instanceof TextView) {
             int whiteColor = ContextCompat.getColor(this, R.color.white);
             TextView textView = (TextView) view;
-            boolean selected = textView.getCurrentTextColor() == whiteColor;
-            if (selected) {
-                // Unselected it
-                setTopicUnselected(textView);
-            } else {
-                // Selected it
-                setTopicSelected(textView);
-            }
+            setTopicSelected(textView, !(textView.getCurrentTextColor() == whiteColor));
         }
     }
 

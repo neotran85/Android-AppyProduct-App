@@ -138,8 +138,10 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                mMainViewModel.addProductToCart();
-                mBinder.ivProductBox.setVisibility(View.GONE);
+                if (getViewModel() != null) {
+                    getViewModel().addProductToCart();
+                    mBinder.ivProductBox.setVisibility(View.GONE);
+                }
             }
         });
     }
