@@ -24,8 +24,9 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
-public class ProductListActivity extends ProductListNavigatorActivity {
+public class ProductListActivity extends ProductListNavigatorActivity implements HasSupportFragmentInjector{
 
     public static final int ID_SUB_EMPTY = -1;
 

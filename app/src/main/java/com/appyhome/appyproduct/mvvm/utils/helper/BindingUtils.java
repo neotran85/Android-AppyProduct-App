@@ -47,6 +47,23 @@ public final class BindingUtils {
         }
     }
 
+    @BindingAdapter("imageUrlForVariant")
+    public static void setImageUrlForVariant(ImageView imageView, String url) {
+        if (url != null && url.length() > 0) {
+            Context context = imageView.getContext();
+            GlideApp.with(context)
+                    .load(url)
+                    .placeholder(R.mipmap.variant_no_thumb)
+                    .error(R.mipmap.variant_no_thumb)
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageView);
+        } else {
+            imageView.setBackgroundResource(R.mipmap.variant_no_thumb);
+        }
+    }
+
+
     @BindingAdapter("adapter")
     public static void setAdapter(LinearListView view, ArrayList data) {
         view.setAdapter(data);

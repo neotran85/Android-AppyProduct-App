@@ -135,4 +135,8 @@ public class ProductVariant extends RealmObject {
     @Expose
     @SerializedName("images")
     public RealmList<ProductVariantImage> images;
+
+    @Expose
+    @SerializedName("avatar")
+    public String avatar;
 }

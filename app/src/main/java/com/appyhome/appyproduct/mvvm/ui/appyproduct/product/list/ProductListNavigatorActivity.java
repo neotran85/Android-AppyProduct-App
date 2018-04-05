@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.OrderedRealmCollection;
 
-public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements HasSupportFragmentInjector, ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
+public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 
     public static final int DEFAULT_SPAN_COUNT = 2;
 

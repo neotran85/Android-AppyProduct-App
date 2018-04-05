@@ -47,7 +47,11 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isSmall = new ObservableField<>(false);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
+    public ObservableField<Boolean> isVariantSelected = new ObservableField<>(false);
     public ObservableField<String> amountAdded = new ObservableField<>("1");
+    public ObservableField<String> stockCount = new ObservableField<>("0");
+
+
     private int idProduct;
 
     private RealmResults<ProductVariant> mVariants;
@@ -86,15 +90,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         amountAdded.set(amount + "");
     }
 
-    public void addProductToCart() {
-        String variantModelId = "";
-        if(mVariants != null && mVariants.size() > 0)
-            variantModelId = mVariants.get(0).model_id;
-        else {
-            getNavigator().showAlert("Please select one of product's variants");
-            return;
-        }
-        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantModelId, getIntegerAmountAdded())
+    public void addProductToCart(String variantId) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantId, getIntegerAmountAdded())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {
@@ -125,37 +122,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct(), false);
                     }
-                }, Crashlytics::logException));
-    }
-
-    /************ PRODUCT VARIANTS ***************/
-
-    private void addProductVariants(RealmList<ProductVariant> productVariants) {
-        getCompositeDisposable().add(getDataManager().addProductVariants(productVariants)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(success -> {
-                    getProductVariants();
-                }, Crashlytics::logException));
-    }
-
-    private void getProductVariants() {
-        getCompositeDisposable().add(getDataManager().getProductVariants(idProduct)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(results -> {
-                    mVariants = results;
-                }, Crashlytics::logException));
-    }
-
-    public void fetchProductVariant() {
-        getCompositeDisposable().add(getDataManager()
-                .fetchProductVariant(idProduct)
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(result -> {
-                    if(result != null && result.code.equals(ApiCode.OK_200))
-                        addProductVariants(result.message);
                 }, Crashlytics::logException));
     }
 }

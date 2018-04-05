@@ -95,7 +95,7 @@ public class AppDbHelper implements DbHelper {
         if (categories.size() > 0) {
             int index = 0;
             for (ProductCategory item : categories) {
-                if(index++ > 0) {
+                if (index++ > 0) {
                     query = query.or();
                 }
                 query = query.equalTo("id_category", item.id);
@@ -147,6 +147,9 @@ public class AppDbHelper implements DbHelper {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
+                for (ProductVariant variant : variants) {
+                    variant.avatar = (variant.images != null && variant.images.size() > 0) ? variant.images.get(0).URL : "";
+                }
                 getRealm().copyToRealmOrUpdate(variants);
                 getRealm().commitTransaction();
                 return true;

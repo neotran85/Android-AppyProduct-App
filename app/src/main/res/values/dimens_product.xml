@@ -19,4 +19,6 @@
     <dimen name="sub_padding">6dp</dimen>
     <dimen name="tag_padding">4dp</dimen>
     <dimen name="category_left_menu">100dp</dimen>
+    <dimen name="variant_width">84dp</dimen>
+    <dimen name="variant_height">114dp</dimen>
 </resources>

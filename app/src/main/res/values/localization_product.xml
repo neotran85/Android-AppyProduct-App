@@ -18,4 +18,5 @@
     <string name="search_in_categories">Search In Categories</string>
     <string name="clear_history">Clear</string>
     <string name="search_history">Search History</string>
+    <string name="please_choose_variant">Please choose a variant / color / size.</string>
 </resources>

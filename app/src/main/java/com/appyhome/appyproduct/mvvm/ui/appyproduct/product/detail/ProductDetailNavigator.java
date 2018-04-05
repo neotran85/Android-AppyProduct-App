@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail;
 
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 
 public interface ProductDetailNavigator extends ProductItemNavigator {
@@ -20,4 +21,8 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
     void showGallery(int position);
 
     void share();
+
+    void selectedVariant(ProductVariant variant);
+
+    void showedVariants();
 }

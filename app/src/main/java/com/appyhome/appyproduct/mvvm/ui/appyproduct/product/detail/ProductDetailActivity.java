@@ -6,14 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -26,17 +29,24 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import javax.inject.Inject;
 
-public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel> implements ProductDetailNavigator, BaseSliderView.OnSliderClickListener {
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel> implements HasSupportFragmentInjector, ProductDetailNavigator, BaseSliderView.OnSliderClickListener {
 
     @Inject
     public ProductItemViewModel mMainViewModel;
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
+
     ActivityProductDetailBinding mBinder;
 
-    @Inject
-    int mLayoutId;
-
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
+
+    private ProductVariantFragment mProductVariantFragment;
 
     private boolean isBuyNow = false;
 
@@ -50,8 +60,13 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
     public int getLayoutId() {
-        return mLayoutId;
+        return R.layout.activity_product_detail;
     }
 
     @Override
@@ -64,9 +79,18 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getKeywordString());
         loadImages();
         getCartPosition();
-        getProductIdByIntent();
+        int productId = getProductIdByIntent();
+
         getViewModel().getProductCachedById();
-        getViewModel().fetchProductVariant();
+
+        mProductVariantFragment = new ProductVariantFragment();
+        mProductVariantFragment.setDetailNavigator(this);
+
+        if (productId > 0) {
+            mProductVariantFragment.setProductId(productId);
+            getViewModel().setProductId(productId);
+        }
+        showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
     }
 
     private String getKeywordString() {
@@ -75,11 +99,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         return "";
     }
 
-    private void getProductIdByIntent() {
-        int productId = getIntent().getIntExtra("product_id", 0);
-        if (productId != 0) {
-            getViewModel().setProductId(productId);
-        }
+    private int getProductIdByIntent() {
+        return getIntent().getIntExtra("product_id", 0);
     }
 
     private void getCartPosition() {
@@ -100,9 +121,26 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
+    public void showedVariants() {
+        getViewModel().stockCount.set(mProductVariantFragment.getTotalStock() + "");
+    }
+
+    @Override
+    public void selectedVariant(ProductVariant variant) {
+        getViewModel().price.set("RM " + variant.price);
+        getViewModel().isVariantSelected.set(true);
+        getViewModel().stockCount.set(variant.quantity + "");
+    }
+
+    @Override
     public void gotoCart() {
-        isBuyNow = true;
-        mMainViewModel.addProductToCart();
+        ProductVariant variant = mProductVariantFragment.getSelectedVariant();
+        if (variant == null) {
+            showAlert(getString(R.string.please_choose_variant));
+        } else {
+            isBuyNow = true;
+            getViewModel().addProductToCart(variant.model_id);
+        }
     }
 
     @Override
@@ -110,7 +148,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (isBuyNow) {
             startActivity(ProductCartListActivity.getStartIntent(this));
         } else {
-            showAlert(mMainViewModel.amountAdded.get() + " " + getString(R.string.items_added_to_your_card));
+            showAlert(getViewModel().amountAdded.get() + " " + getString(R.string.items_added_to_your_card));
         }
         isBuyNow = false;
     }
@@ -128,7 +166,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void addToCart() {
-        animateProductToCart();
+        ProductVariant variant = mProductVariantFragment.getSelectedVariant();
+        if (variant == null) {
+            showAlert(getString(R.string.please_choose_variant));
+        } else
+            animateProductToCart();
     }
 
     private void animateProductToCart() {
@@ -139,8 +181,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 if (getViewModel() != null) {
-                    getViewModel().addProductToCart();
-                    mBinder.ivProductBox.setVisibility(View.GONE);
+                    ProductVariant variant = mProductVariantFragment.getSelectedVariant();
+                    if (variant != null) {
+                        getViewModel().addProductToCart(variant.model_id);
+                        mBinder.ivProductBox.setVisibility(View.GONE);
+                    }
                 }
             }
         });
