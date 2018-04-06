@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -26,22 +27,30 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
 public class ProductCartListActivity extends BaseActivity<ActivityProductCartListBinding, ProductCartListViewModel>
-        implements ProductCartListNavigator, ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
+        implements HasSupportFragmentInjector, ProductCartListNavigator, ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
+
     @Inject
     ProductCartListViewModel mViewModel;
+
     @Inject
     ProductCartAdapter mProductCartAdapter;
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
     ActivityProductCartListBinding mBinder;
+
     boolean isEditMode = false;
 
-    @Inject
-    int mLayoutId;
-
     private static final int REQUEST_DETAIL = 0;
+
+    private EditVariantFragment mEditVariantFragment;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductCartListActivity.class);
@@ -50,7 +59,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public int getLayoutId() {
-        return mLayoutId;
+        return R.layout.activity_product_cart_list;
     }
 
     @Override
@@ -143,6 +152,14 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
+    public void editVariant(ProductCartItemViewModel viewModel) {
+        if(mEditVariantFragment == null) {
+            mEditVariantFragment = EditVariantFragment.newInstance(viewModel);
+        }
+        showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditVariantContainer, true);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         if (mProductCartAdapter != null) {
@@ -199,5 +216,10 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         if (requestCode == REQUEST_DETAIL) {
             mViewModel.getAllProductCarts();
         }
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
 }

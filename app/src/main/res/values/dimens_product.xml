@@ -21,4 +21,5 @@
     <dimen name="category_left_menu">100dp</dimen>
     <dimen name="variant_width">84dp</dimen>
     <dimen name="variant_height">114dp</dimen>
+    <dimen name="variant_height_with_padding">126dp</dimen>
 </resources>

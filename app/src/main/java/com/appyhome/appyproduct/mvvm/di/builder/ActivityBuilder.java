@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.Confirmati
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
@@ -27,6 +28,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetail
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivityModule;
@@ -125,7 +127,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {ProductListActivityModule.class, SortFragmentProvider.class, FilterFragmentProvider.class})
     abstract ProductListActivity bindProductListActivity();
 
-    @ContributesAndroidInjector(modules = ProductCartListActivityModule.class)
+    @ContributesAndroidInjector(modules = {ProductCartListActivityModule.class, EditVariantFragmentProvider.class, ProductVariantFragmentProvider.class})
     abstract ProductCartListActivity bindProductCartListActivity();
 
     @ContributesAndroidInjector(modules = ShippingAddressActivityModule.class)

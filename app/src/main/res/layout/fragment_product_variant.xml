@@ -42,7 +42,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/variant_height_with_padding"
             android:layout_marginTop="14dp"
             android:orientation="horizontal">
 
@@ -54,18 +54,15 @@
                 android:src="@mipmap/icon_variant_previous" />
 
             <HorizontalScrollView
+                android:layout_height="@dimen/variant_height"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:layout_marginEnd="28dp"
                 android:layout_marginStart="28dp">
-
                 <LinearLayout
                     android:id="@+id/llContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
+                    android:orientation="horizontal"/>
             </HorizontalScrollView>
 
             <ImageView

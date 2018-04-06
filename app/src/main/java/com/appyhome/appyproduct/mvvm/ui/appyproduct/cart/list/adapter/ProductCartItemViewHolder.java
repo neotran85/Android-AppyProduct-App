@@ -31,19 +31,22 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
     }
 
     private void removeCartItem(ProductCartItemViewModel viewModel) {
-        mAdapter.removeCartItem(viewModel);
+        if (mAdapter != null)
+            mAdapter.removeCartItem(viewModel);
+    }
+
+    public void setViewModel(ProductCartItemViewModel viewModel) {
+        mBinding.setViewModel(viewModel);
+        OnClickItemListener handler = new OnClickItemListener(viewModel);
+        ViewUtils.setOnClickListener(handler, mBinding.btnDecrease,
+                mBinding.btnIncrease, mBinding.cbWillBuy,
+                mBinding.cbCheckAll, mBinding.tvEdit, mBinding.llRemoveItemCart);
     }
 
     @Override
     public void onBind(int position) {
-        ProductCartItemViewModel viewModel = (ProductCartItemViewModel) mAdapter.getItems().get(position);
-        if (mBinding != null) {
-            mBinding.setViewModel(viewModel);
-            OnClickItemListener handler = new OnClickItemListener(viewModel);
-            ViewUtils.setOnClickListener(handler, mBinding.btnDecrease,
-                    mBinding.btnIncrease, mBinding.cbWillBuy,
-                    mBinding.cbCheckAll, mBinding.tvEdit, mBinding.llRemoveItemCart);
-        }
+        if (mAdapter != null)
+            setViewModel((ProductCartItemViewModel) mAdapter.getItems().get(position));
     }
 
     public class OnClickItemListener implements View.OnClickListener {
@@ -60,31 +63,35 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                 case R.id.btnDecrease:
                     amount = Integer.valueOf(viewModel.amount.get());
                     amount = amount - 1;
-                    viewModel.amount.set(amount + "");
+                    viewModel.amount.set((amount > 1 ? amount : (mAdapter != null ? amount : 1)) + "");
+                    if (mAdapter != null)
+                        mAdapter.updateTotalCost();
                     if (amount <= 0) {
                         removeCartItem(viewModel);
                     }
-                    mAdapter.updateTotalCost();
                     break;
                 case R.id.cbWillBuy:
-                    mAdapter.updateCheckAllBySellerName(getSellerName());
+                    if (mAdapter != null) mAdapter.updateCheckAllBySellerName(getSellerName());
                     break;
                 case R.id.btnIncrease:
                     amount = Integer.valueOf(viewModel.amount.get()) + 1;
-                    if(amount <= viewModel.getVariantStockNumber()) {
+                    if (amount <= viewModel.getVariantStockNumber()) {
                         viewModel.amount.set(amount + "");
-                        mAdapter.updateTotalCost();
+                        if (mAdapter != null)
+                            mAdapter.updateTotalCost();
                     } else {
                         mBinding.getNavigator().showAlert("Unable to add more than " + viewModel.getVariantStockNumber() + " items.");
                     }
                     break;
                 case R.id.cbCheckAll:
                     boolean isChecked = mBinding.cbCheckAll.isChecked();
-                    mAdapter.pressCheckAllBySellerName(isChecked, getSellerName());
+                    if (mAdapter != null)
+                        mAdapter.pressCheckAllBySellerName(isChecked, getSellerName());
                     break;
                 case R.id.tvEdit:
                     boolean current = viewModel.isEditMode.get();
-                    mAdapter.updateEditModeBySellerName(!current, getSellerName());
+                    if (mAdapter != null)
+                        mAdapter.updateEditModeBySellerName(!current, getSellerName());
                     break;
                 case R.id.llRemoveItemCart:
                     removeCartItem(viewModel);

@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
@@ -34,7 +33,9 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel> implements HasSupportFragmentInjector, ProductDetailNavigator, BaseSliderView.OnSliderClickListener {
+public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel>
+        implements HasSupportFragmentInjector, ProductDetailNavigator,
+        BaseSliderView.OnSliderClickListener, ProductDetailVariantNavigator {
 
     @Inject
     public ProductItemViewModel mMainViewModel;
@@ -83,16 +84,14 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         loadImages();
         getCartPosition();
         int productId = getProductIdByIntent();
-
-        mProductVariantFragment = new ProductVariantFragment();
-        mProductVariantFragment.setDetailNavigator(this);
-
         if (productId > 0) {
+            mProductVariantFragment = ProductVariantFragment.newInstance(productId);
+            mProductVariantFragment.setDetailNavigator(this);
             mProductVariantFragment.setProductId(productId);
             getViewModel().setProductId(productId);
             getViewModel().getProductCachedById();
+            showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
         }
-        showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
     }
 
     private String getKeywordString() {

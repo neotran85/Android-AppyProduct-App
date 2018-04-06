@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductVariantBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductVariantBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
@@ -33,11 +34,11 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     private View mSelectedVariantView;
 
-    private ProductDetailNavigator mDetailNavigator;
+    private ProductDetailVariantNavigator mDetailNavigator;
 
     private int mTotalStock = 0;
 
-    public void setDetailNavigator(ProductDetailNavigator navigator) {
+    public void setDetailNavigator(ProductDetailVariantNavigator navigator) {
         mDetailNavigator = navigator;
     }
 
@@ -45,10 +46,11 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
         return mTotalStock;
     }
 
-    public static ProductVariantFragment newInstance() {
+    public static ProductVariantFragment newInstance(int productId) {
         Bundle args = new Bundle();
         ProductVariantFragment fragment = new ProductVariantFragment();
         fragment.setArguments(args);
+        fragment.setProductId(productId);
         return fragment;
     }
 
@@ -89,6 +91,19 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         getViewModel().fetchProductVariant(mProductId);
+    }
+
+    public void selectVariant(String variantModelId) {
+        int count = mBinder.llContainer.getChildCount();
+        for(int i = 0; i < count; i++) {
+            View view = mBinder.llContainer.getChildAt(i);
+            if (view.getTag() instanceof ProductVariant) {
+                ProductVariant variant = (ProductVariant) view.getTag();
+                if (variant.model_id.equals(variantModelId)) {
+                    selectVariant(view);
+                }
+            }
+        }
     }
 
     @Override

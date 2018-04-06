@@ -78,7 +78,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="102dp"
-                    android:visibility="@{!viewModel.isCartEmpty, default=gone}"></LinearLayout>
+                    android:visibility="@{!viewModel.isCartEmpty, default=gone}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -92,15 +92,15 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/light_gray"></View>
+                    android:background="@color/light_gray"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="14dp">
+                    android:paddingStart="8dp"
+                    android:paddingEnd="14dp">
 
                     <CheckBox
                         android:id="@+id/cbCheckAll"
@@ -117,8 +117,7 @@
                         fontPath="fonts/TitilliumWeb-Light.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Select All"
+                        android:text="@string/cart_select_all"
                         android:textColor="@color/dark_gray"
                         android:textSize="13sp" />
 
@@ -136,9 +135,9 @@
                         android:descendantFocusability="beforeDescendants"
                         android:focusableInTouchMode="true"
                         android:gravity="center_vertical"
-                        android:hint="Enter a promotion code"
+                        android:hint="@string/enter_a_promotion_code"
                         android:inputType="text"
-                        android:paddingLeft="12dp"
+                        android:paddingStart="12dp"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -146,7 +145,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/light_gray"></View>
+                    android:background="@color/light_gray"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -159,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="14dp"
-                        android:text="Total:"
+                        android:text="@string/cart_total"
                         android:textColor="@color/dark_gray"
                         android:textSize="13sp" />
 
@@ -175,7 +174,7 @@
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="RM"
+                            android:text="@string/rm"
                             android:textColor="@color/red_price"
                             android:textSize="15sp" />
 
@@ -196,15 +195,21 @@
                         android:layout_height="36dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="14dp"
+                        android:layout_marginEnd="14dp"
                         android:background="@mipmap/bg_checkout"
                         android:foreground="?attr/selectableItemBackground"
-                        android:text="Check out"
+                        android:text="@string/cart_check_out"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
                 </RelativeLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llEditVariantContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
-
 </layout>

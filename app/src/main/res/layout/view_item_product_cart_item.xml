@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="#DEDEDE"
-            android:visibility="@{viewModel.isFirstProductOfStore}"></View>
+            android:visibility="@{viewModel.isFirstProductOfStore}"/>
 
         <LinearLayout
             android:id="@+id/llStoreTitle"

@@ -19,4 +19,8 @@
     <string name="clear_history">Clear</string>
     <string name="search_history">Search History</string>
     <string name="please_choose_variant">Please choose a variant / color / size.</string>
+    <string name="enter_a_promotion_code">Enter a promotion code</string>
+    <string name="cart_select_all">Select All</string>
+    <string name="cart_total">Total:</string>
+    <string name="edit_variant_confirm">Confirm</string>
 </resources>
