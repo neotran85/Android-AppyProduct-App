@@ -39,9 +39,7 @@ public class SortOptionsAdapter extends BaseAdapter {
         SortOption data = mListItem[position];
         ViewItemProductSortBinding binding = ViewItemProductSortBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
         binding.setViewModel(data);
-        View view = binding.getRoot();
-        view.setTag(data);
         binding.setNavigator(mNavigator);
-        return view;
+        return binding.getRoot();
     }
 }

@@ -15,6 +15,8 @@ import io.realm.RealmResults;
 
 public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator> {
 
+    private SearchItemNavigator mNavigator;
+
     public SearchAdapter() {
         this.mItems = null;
     }
@@ -29,6 +31,7 @@ public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator
     }
 
     public void addItems(RealmResults<SearchItem> results, SearchItemNavigator navigator) {
+        mNavigator = navigator;
         mItems = new ArrayList<>();
         if (results != null) {
             for (SearchItem item : results) {
@@ -54,6 +57,6 @@ public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator
     protected SearchItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductSearchItemBinding itemViewBinding = ViewItemProductSearchItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new SearchItemViewHolder(itemViewBinding, this);
+        return new SearchItemViewHolder(itemViewBinding, this, mNavigator);
     }
 }

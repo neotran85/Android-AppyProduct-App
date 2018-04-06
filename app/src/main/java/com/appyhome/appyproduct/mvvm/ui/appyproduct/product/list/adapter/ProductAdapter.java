@@ -166,6 +166,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         private ProductItemViewHolder(ViewItemProductBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.setNavigator(mNavigator);
             mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
@@ -173,29 +174,10 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
             return mBinding;
         }
 
-        private View.OnClickListener getListener() {
-            return v -> {
-                switch (v.getId()) {
-                    case R.id.ibAddFavorite:
-                        ProductItemViewModel vm = (ProductItemViewModel) v.getTag();
-                        vm.updateProductFavorite(mItems.indexOf(vm));
-                        break;
-                }
-            };
-        }
-
         @Override
         public void onBind(int position) {
             ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
-            if (mBinding != null) {
-                mBinding.setViewModel(viewModel);
-                mBinding.getRoot().setTag(viewModel);
-                viewModel.setNavigator(mNavigator);
-                mBinding.setNavigator(mNavigator);
-                View.OnClickListener listener = getListener();
-                mBinding.ibAddFavorite.setTag(viewModel);
-                mBinding.ibAddFavorite.setOnClickListener(listener);
-            }
+            mBinding.setViewModel(viewModel);
         }
     }
 }

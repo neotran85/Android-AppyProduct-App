@@ -14,7 +14,9 @@ public interface ProductItemNavigator {
 
     void notifyFavoriteChanged(int position, boolean isFavorite);
 
-    void onItemClick(View view);
+    void onItemClick(ProductItemViewModel viewModel);
+
+    void onFavoriteClick(ProductItemViewModel viewModel);
 
     void addedToCartCompleted();
 }

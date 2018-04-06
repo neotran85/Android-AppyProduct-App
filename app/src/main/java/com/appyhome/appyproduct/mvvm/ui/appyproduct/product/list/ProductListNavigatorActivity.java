@@ -28,7 +28,6 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import java.util.ArrayList;
 
-import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.OrderedRealmCollection;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
@@ -119,14 +118,11 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
-    public void onSortItemClick(View view) {
-        if (getSortFragment() != null) {
-            showLoading();
-            SortOption option = (SortOption) view.getTag();
-            getViewModel().saveSortCurrent(option);
-            toggleSortOptions();
-            fetchProductsNew();
-        }
+    public void onSortItemClick(SortOption option) {
+        showLoading();
+        getViewModel().saveSortCurrent(option);
+        toggleSortOptions();
+        fetchProductsNew();
     }
 
     @Override
@@ -254,10 +250,13 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
         });
     }
 
+    @Override
+    public void onFavoriteClick(ProductItemViewModel vm) {
+        vm.updateProductFavorite(getProductAdapter().indexOf(vm));
+    }
 
     @Override
-    public void onItemClick(View view) {
-        ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
+    public void onItemClick(ProductItemViewModel viewModel) {
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);

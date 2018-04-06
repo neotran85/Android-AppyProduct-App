@@ -16,6 +16,8 @@ import io.realm.RealmResults;
 
 public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator> {
 
+    private TopicItemNavigator mNavigator;
+
     public TopicAdapter() {
         this.mItems = null;
     }
@@ -34,6 +36,7 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
     @Override
     public void addItems(RealmResults<ProductTopic> results, TopicItemNavigator navigator) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (results != null) {
             for (ProductTopic item : results) {
                 TopicItemViewModel itemViewModel = new TopicItemViewModel();
@@ -69,13 +72,13 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
         private TopicItemViewHolder(ViewItemProductTopicBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.setNavigator(mNavigator);
         }
 
         @Override
         public void onBind(int position) {
             TopicItemViewModel viewModel = (TopicItemViewModel) mItems.get(position);
             mBinding.setViewModel(viewModel);
-            mBinding.setNavigator(viewModel.getNavigator());
         }
     }
 }

@@ -109,10 +109,14 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void onItemClick(View view) {
-        ProductItemViewModel viewModel = (ProductItemViewModel) view.getTag();
+    public void onItemClick(ProductItemViewModel viewModel) {
         Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel);
         startActivity(intent);
+    }
+
+    @Override
+    public void onFavoriteClick(ProductItemViewModel vm) {
+        vm.updateProductFavorite(mFavoriteAdapter.indexOf(vm));
     }
 
     @Override

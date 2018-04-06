@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
@@ -227,11 +228,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
-    public void addToFavorite() {
-        mMainViewModel.updateProductFavorite(0);
-    }
-
-    @Override
     public ProductItemViewModel getViewModel() {
         return mMainViewModel;
     }
@@ -288,8 +284,13 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
-    public void onItemClick(View view) {
+    public void onItemClick(ProductItemViewModel viewModel) {
         // DO NOTHING HERE
+    }
+
+    @Override
+    public void onFavoriteClick(ProductItemViewModel vm) {
+        vm.updateProductFavorite(0);
     }
 
     @Override

@@ -151,7 +151,7 @@
                                         android:layout_width="22dp"
                                         android:layout_height="18dp"
                                         android:clickable="true"
-                                        android:onClick="@{(view) -> navigator.addToFavorite()}"
+                                        android:onClick="@{(view) -> navigator.onFavoriteClick(viewModel)}"
                                         android:padding="4dp" />
 
                                     <ImageView

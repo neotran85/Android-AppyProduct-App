@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 
 public interface ProductDetailNavigator extends ProductItemNavigator {
     void showAlert(String message);
@@ -11,8 +12,6 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
     void addToCart();
 
     void updateCartCount();
-
-    void addToFavorite();
 
     void increaseAmount();
 
@@ -25,4 +24,6 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
     void selectedVariant(ProductVariant variant);
 
     void showedVariants();
+
+    void onFavoriteClick(ProductItemViewModel viewModel);
 }

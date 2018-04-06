@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding_product_in_list"
-        android:onClick="@{(view) -> navigator.onItemClick(view)}">
+        android:onClick="@{(view) -> navigator.onItemClick(viewModel)}">
 
         <LinearLayout
             android:id="@+id/llItemView"
@@ -39,12 +39,12 @@
                     android:paddingTop="8dp">
 
                     <ImageView
-                        android:layout_width="@dimen/width_thumbnail_product_in_list"
-                        android:layout_height="@dimen/width_thumbnail_product_in_list"
                         android:id="@+id/ivThumbnail"
                         imageUrl="@{viewModel.imageURL}"
                         layout_height="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
                         layout_width="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
+                        android:layout_width="@dimen/width_thumbnail_product_in_list"
+                        android:layout_height="@dimen/width_thumbnail_product_in_list"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop" />
 
@@ -115,6 +115,7 @@
                                 android:layout_height="32dp"
                                 android:clickable="true"
                                 android:gravity="center"
+                                android:onClick="@{(view)->navigator.onFavoriteClick(viewModel)}"
                                 android:orientation="horizontal">
 
                                 <ImageButton

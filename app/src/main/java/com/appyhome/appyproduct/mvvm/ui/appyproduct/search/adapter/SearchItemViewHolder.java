@@ -8,9 +8,10 @@ public class SearchItemViewHolder extends BaseViewHolder {
     protected ViewItemProductSearchItemBinding mBinding;
     protected SearchAdapter mAdapter;
 
-    protected SearchItemViewHolder(ViewItemProductSearchItemBinding binding, SearchAdapter adapter) {
+    protected SearchItemViewHolder(ViewItemProductSearchItemBinding binding, SearchAdapter adapter, SearchItemNavigator navigator) {
         super(binding.getRoot());
         mBinding = binding;
+        mBinding.setNavigator(navigator);
         mAdapter = adapter;
     }
 
@@ -18,6 +19,5 @@ public class SearchItemViewHolder extends BaseViewHolder {
     public void onBind(int position) {
         SearchItemViewModel viewModel = (SearchItemViewModel) mAdapter.getItem(position);
         mBinding.setViewModel(viewModel);
-        mBinding.setNavigator(viewModel.getNavigator());
     }
 }
