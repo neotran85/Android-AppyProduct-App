@@ -9,4 +9,8 @@ public interface ProductCartItemNavigator {
     void askBeforeRemoved(DialogInterface.OnClickListener listener);
 
     void backToHomeScreen();
+
+    void showProductDetail(ProductCartItemViewModel viewModel);
+
+    void showAlert(String message);
 }

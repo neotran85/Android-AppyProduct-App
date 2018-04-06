@@ -74,6 +74,7 @@
                     android:background="@color/transparent" />
 
                 <LinearLayout
+                    android:onClick="@{(view) -> navigator.setDefaultPaymentMethod(view)}"
                     android:id="@+id/llVisa"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -116,6 +117,7 @@
                     android:background="@color/transparent" />
 
                 <LinearLayout
+                    android:onClick="@{(view) -> navigator.setDefaultPaymentMethod(view)}"
                     android:id="@+id/llMolpay"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

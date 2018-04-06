@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -158,6 +159,13 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public ProductCartListViewModel getViewModel() {
         return mViewModel;
+    }
+
+    @Override
+    public void showProductDetail(ProductCartItemViewModel viewModel) {
+        Intent intent = ProductDetailActivity.getStartIntent(this, null);
+        intent.putExtra("product_id", viewModel.getProductId());
+        startActivityForResult(intent, REQUEST_DETAIL);
     }
 
     @Override

@@ -51,13 +51,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     }
 
     @Override
-    public void onClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof ProductCartItemViewModel) {
-            ProductCartItemViewModel viewModel = (ProductCartItemViewModel) tag;
-            viewModel.getNavigator().showContent(this, view, viewModel.getProductId(), getIndexOfItem(viewModel));
-        }
-    }
+    public void onClick(View view) {}
 
     private int getIndexOfItem(ProductCartItemViewModel item) {
         if (mItems != null && mItems.size() > 0) {
@@ -171,7 +165,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     protected ProductCartItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductCartItemBinding itemViewBinding = ViewItemProductCartItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ProductCartItemViewHolder(itemViewBinding, this);
+        return new ProductCartItemViewHolder(itemViewBinding, this, mNavigator);
     }
 
     public void checkAllItems(boolean isChecked) {

@@ -8,6 +8,9 @@
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel" />
 
+        <variable
+            name="navigator"
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator" />
     </data>
 
     <LinearLayout
@@ -103,7 +106,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="2dp" />
+                android:layout_marginStart="2dp"
+                android:onClick="@{(view) -> navigator.showProductDetail(viewModel)}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,6 +125,7 @@
                     android:layout_marginEnd="8dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:onClick="@{(view) -> navigator.showProductDetail(viewModel)}"
                     android:text="@{viewModel.title}"
                     android:textColor="@color/black"
                     android:textSize="13sp"
@@ -169,35 +174,25 @@
                             android:src="@mipmap/icon_increase" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="@{viewModel.variationName}"
-                            android:textColor="@color/semi_gray"
-                            android:textSize="13sp"
-                            android:visibility="@{!viewModel.isEditMode}" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:maxLines="1"
-                            android:text="@{viewModel.variantStock}"
-                            android:textColor="@color/semi_gray"
-                            android:textSize="13sp" />
-                    </LinearLayout>
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:onClick="@{(view) -> navigator.showProductDetail(viewModel)}"
+                        android:text="@{viewModel.variationName}"
+                        android:textColor="@color/medium_dark_gray"
+                        android:textSize="13sp"
+                        android:visibility="@{!viewModel.isEditMode}" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:onClick="@{(view) -> navigator.showProductDetail(viewModel)}"
                     android:orientation="horizontal"
                     android:visibility="@{!viewModel.isEditMode, default=visible}">
 
@@ -206,9 +201,8 @@
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:lineSpacingExtra="4dp"
-                        android:text="RM 546.4"
                         android:textColor="@color/gray_product_in_list"
                         android:textSize="12sp"
                         android:visibility="gone" />
@@ -218,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="4dp"
-                        android:text="RM"
+                        android:text="@string/rm"
                         android:textColor="@color/red_price"
                         android:textSize="14sp" />
 
@@ -231,32 +225,51 @@
                         android:text="@{viewModel.price}"
                         android:textColor="@color/red_price"
                         android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:visibility="@{viewModel.isEditMode, default=gone}">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:maxLines="1"
+                        android:text="@{viewModel.variantStock}"
+                        android:textColor="@color/semi_gray"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:maxLines="1"
+                    android:text="@{viewModel.variantStock}"
+                    android:textColor="@color/semi_gray"
+                    android:textSize="13sp"
+                    android:visibility="@{viewModel.isEditMode, default=gone}" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="@{viewModel.isEditMode, default=gone}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:maxWidth="144dp"
-                        android:text="Variation 1 Variation 1 Variation 1"
+                        android:text="@{viewModel.variationName}"
                         android:textColor="@color/dark_gray"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="4dp"
                         android:src="@mipmap/icon_edit_variation" />
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
 
             <RelativeLayout

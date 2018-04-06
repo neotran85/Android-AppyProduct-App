@@ -10,17 +10,19 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartPaymentBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBinding, PaymentViewModel> implements PaymentNavigator, View.OnClickListener {
+public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBinding, PaymentViewModel> implements PaymentNavigator {
 
     @Inject
-    public PaymentViewModel mMainViewModel;
+    public PaymentViewModel mViewModel;
+
     ActivityProductCartPaymentBinding mBinder;
+
     boolean isEditMode = false;
+
     @Inject
     int mLayoutId;
 
@@ -43,13 +45,12 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
-        mBinder.setViewModel(mMainViewModel);
+        mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
-        mMainViewModel.setNavigator(this);
-        mMainViewModel.fetchPaymentMethods();
-        ViewUtils.setOnClickListener(this, mBinder.llMolpay, mBinder.llVisa);
+        mViewModel.setNavigator(this);
+        mViewModel.fetchPaymentMethods();
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
-        mMainViewModel.isEditMode.set(isEditMode);
+        mViewModel.isEditMode.set(isEditMode);
     }
 
     @Override
@@ -60,13 +61,13 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     }
 
     @Override
-    public void onClick(View view) {
+    public void setDefaultPaymentMethod(View view) {
         switch (view.getId()) {
             case R.id.llVisa:
-                mMainViewModel.setDefaultPaymentMethod(PaymentViewModel.PAYMENT_VISA);
+                getViewModel().setDefaultPaymentMethod(PaymentViewModel.PAYMENT_VISA);
                 break;
             case R.id.llMolpay:
-                mMainViewModel.setDefaultPaymentMethod(PaymentViewModel.PAYMENT_MOLPAY);
+                getViewModel().setDefaultPaymentMethod(PaymentViewModel.PAYMENT_MOLPAY);
                 break;
         }
     }
@@ -78,7 +79,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
 
     @Override
     public PaymentViewModel getViewModel() {
-        return mMainViewModel;
+        return mViewModel;
     }
 
     @Override

@@ -14,12 +14,12 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
     private ViewItemProductCartItemBinding mBinding;
     private ProductCartAdapter mAdapter;
 
-    public ProductCartItemViewHolder(ViewItemProductCartItemBinding binding, ProductCartAdapter adapter) {
+    public ProductCartItemViewHolder(ViewItemProductCartItemBinding binding, ProductCartAdapter adapter, ProductCartItemNavigator navigator) {
         super(binding.getRoot());
         mBinding = binding;
         mAdapter = adapter;
+        mBinding.setNavigator(navigator);
         mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
     }
 
     public ViewItemProductCartItemBinding getBinding() {
@@ -39,8 +39,6 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
         ProductCartItemViewModel viewModel = (ProductCartItemViewModel) mAdapter.getItems().get(position);
         if (mBinding != null) {
             mBinding.setViewModel(viewModel);
-            mBinding.llItemView.setTag(mBinding.getViewModel());
-            mBinding.llItemView.setOnClickListener(mAdapter);
             OnClickItemListener handler = new OnClickItemListener(viewModel);
             ViewUtils.setOnClickListener(handler, mBinding.btnDecrease,
                     mBinding.btnIncrease, mBinding.cbWillBuy,
@@ -76,6 +74,8 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                     if(amount <= viewModel.getVariantStockNumber()) {
                         viewModel.amount.set(amount + "");
                         mAdapter.updateTotalCost();
+                    } else {
+                        mBinding.getNavigator().showAlert("Unable to add more than " + viewModel.getVariantStockNumber() + " items.");
                     }
                     break;
                 case R.id.cbCheckAll:
