@@ -18,6 +18,7 @@ import io.realm.RealmResults;
 public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItemNavigator> {
 
     private CategoryItemViewModel mCurrentClickedViewModel = null;
+    private CategoryItemNavigator mNavigator;
 
     public CategoryAdapter() {
         this.mItems = null;
@@ -65,6 +66,7 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
 
     @Override
     public void addItems(RealmResults<ProductCategory> items, CategoryItemNavigator navigator) {
+        mNavigator = navigator;
         mItems = new ArrayList<>();
         if (items != null) {
             for (ProductCategory item : items) {
@@ -81,7 +83,7 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
     public class ProductCategoryItemViewHolder extends CategoryItemViewHolder {
 
         protected ProductCategoryItemViewHolder(ViewItemProductCategoryBinding binding, SampleAdapter adapter) {
-            super(binding, adapter);
+            super(binding, adapter, mNavigator);
         }
 
         private void createCategoryView() {
@@ -98,10 +100,8 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
 
         @Override
         public void setViewModel(CategoryItemViewModel viewModel) {
-            if (mBinding != null) {
-                mBinding.setViewModel(viewModel);
-                createCategoryView();
-            }
+            mBinding.setViewModel(viewModel);
+            createCategoryView();
         }
     }
 }

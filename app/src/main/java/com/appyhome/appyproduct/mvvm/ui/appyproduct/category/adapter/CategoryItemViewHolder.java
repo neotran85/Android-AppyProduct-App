@@ -9,9 +9,10 @@ public class CategoryItemViewHolder extends BaseViewHolder {
     protected ViewItemProductCategoryBinding mBinding;
     protected SampleAdapter mAdapter;
 
-    protected CategoryItemViewHolder(ViewItemProductCategoryBinding binding, SampleAdapter adapter) {
+    protected CategoryItemViewHolder(ViewItemProductCategoryBinding binding, SampleAdapter adapter, CategoryItemNavigator navigator) {
         super(binding.getRoot());
         mBinding = binding;
+        mBinding.setNavigator(navigator);
         mAdapter = adapter;
     }
 
@@ -29,7 +30,5 @@ public class CategoryItemViewHolder extends BaseViewHolder {
     public void onBind(int position) {
         CategoryItemViewModel viewModel = (CategoryItemViewModel) mAdapter.getItem(position);
         setViewModel(viewModel);
-        mBinding.getRoot().setTag(viewModel);
-        mBinding.setNavigator(viewModel.getNavigator());
     }
 }

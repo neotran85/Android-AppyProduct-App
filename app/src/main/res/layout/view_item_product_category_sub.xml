@@ -23,7 +23,7 @@
         android:clickable="true"
         card_view:cardElevation="4dp"
         android:foreground="?attr/selectableItemBackground"
-        android:onClick="@{(view) -> navigator.onItemClick(view)}"
+        android:onClick="@{(view) -> navigator.onItemClick(viewModel)}"
         android:paddingBottom="10dp">
 
         <LinearLayout

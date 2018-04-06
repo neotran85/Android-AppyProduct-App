@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
@@ -64,24 +62,20 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     @Override
-    public void onItemClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof CategoryItemViewModel) {
-            CategoryItemViewModel viewModel = (CategoryItemViewModel) tag;
-            if (viewModel.isSub) {
-                mSubCategoryAdapter.clickViewModel(viewModel);
-                Intent intent = ProductListActivity.getStartIntent(this);
-                intent.putExtra("id_sub", viewModel.getIdCategory());
-                startActivity(intent);
-            } else {
-                showFirstCategory(viewModel);
-            }
+    public void onItemClick(CategoryItemViewModel viewModel) {
+        if (viewModel.isSub) {
+            mSubCategoryAdapter.clickViewModel(viewModel);
+            Intent intent = ProductListActivity.getStartIntent(this);
+            intent.putExtra("id_sub", viewModel.getIdCategory());
+            startActivity(intent);
+        } else {
+            showSelectedCategory(viewModel);
         }
     }
 
-    private void showFirstCategory(CategoryItemViewModel viewModel) {
+    private void showSelectedCategory(CategoryItemViewModel viewModel) {
         mCategoryAdapter.clickViewModel(viewModel);
-        mCategoryViewModel.getProductSubCategoryByCategory(viewModel.getIdCategory());
+        getViewModel().getProductSubCategoryByCategory(viewModel.getIdCategory());
     }
 
     @Override
@@ -145,7 +139,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         mCategoryAdapter.addItems(result, this);
         mCategoryAdapter.notifyDataSetChanged();
         if (result != null && result.size() > 0) {
-            showFirstCategory((CategoryItemViewModel) mCategoryAdapter.getItem(0));
+            showSelectedCategory((CategoryItemViewModel) mCategoryAdapter.getItem(0));
         }
     }
 

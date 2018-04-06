@@ -18,6 +18,8 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
 
     private CategoryItemViewModel mCurrentClickedViewModel = null;
 
+    private CategoryItemNavigator mNavigator;
+
     public SubCategoryAdapter() {
         this.mItems = null;
     }
@@ -64,11 +66,12 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     protected SubCategoryItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductCategorySubBinding itemViewBinding = ViewItemProductCategorySubBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new SubCategoryItemViewHolder(itemViewBinding, this);
+        return new SubCategoryItemViewHolder(itemViewBinding, this, mNavigator);
     }
 
     @Override
     public void addItems(RealmResults<ProductSub> items, CategoryItemNavigator navigator) {
+        mNavigator = navigator;
         mItems = new ArrayList<>();
         if (items != null) {
             for (ProductSub item : items) {
