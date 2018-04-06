@@ -79,7 +79,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     private ProductCartItemViewModel createViewModel(ProductCart productCart, ProductCartItemNavigator navigator) {
         ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(mProductCartListViewModel.getDataManager(),
                 mProductCartListViewModel.getSchedulerProvider());
-        itemViewModel.updateProductCart(productCart, navigator);
+        itemViewModel.update(productCart, navigator);
         return itemViewModel;
     }
 
@@ -109,7 +109,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
                 if (cartItem.getProductCartId() == productCart.id) {
                     int index = indexOf(cartItem);
-                    cartItem.updateProductCart(productCart, mNavigator);
+                    cartItem.update(productCart, mNavigator);
                     updateTotalCost();
                     notifyItemChanged(index);
                     return;

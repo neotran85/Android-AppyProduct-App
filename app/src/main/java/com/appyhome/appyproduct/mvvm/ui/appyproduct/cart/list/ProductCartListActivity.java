@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -156,9 +155,11 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void editVariant(ProductCartItemViewModel viewModel) {
-        if (mEditVariantFragment == null) {
-            mEditVariantFragment = EditVariantFragment.newInstance(viewModel, this);
+        if (mEditVariantFragment != null) {
+            closeEditVariantFragment();
+            mEditVariantFragment = null;
         }
+        mEditVariantFragment = EditVariantFragment.newInstance(viewModel, this);
         showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditVariantContainer, true);
     }
 
@@ -229,6 +230,7 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public void saveProductCartItem_Done(ProductCart productCart) {
         mProductCartAdapter.updateProductCartItem(productCart);
+        closeFragment(EditVariantFragment.TAG);
     }
 
     @Override

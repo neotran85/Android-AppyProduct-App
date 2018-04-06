@@ -2,18 +2,15 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant;
 
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductVariantEditBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailVariantNavigator;
@@ -35,6 +32,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     @Inject
     int mLayoutId;
 
+
     private ProductCartItemViewModel mProductCartItemViewModel;
 
     private ProductVariantFragment mProductVariantFragment;
@@ -55,7 +53,8 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     }
 
     public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
-        mProductCartItemViewModel = viewModel.cl);
+        mProductCartItemViewModel = viewModel.duplicate();
+        mProductCartItemViewModel.isFirstProductOfStore.set(true);
     }
 
     @Override
@@ -98,6 +97,12 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mProductCartItemViewModel = null;
+    }
+
+    @Override
     public EditVariantViewModel getViewModel() {
         return mViewModel;
     }
@@ -114,11 +119,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     @Override
     public void selectedVariant(ProductVariant variant) {
-        mProductCartItemViewModel.price.set("RM " + variant.price);
-        mProductCartItemViewModel.variationName.set(variant.variant_name);
-        mProductCartItemViewModel.setVariantModelId(variant.model_id);
-        mProductCartItemViewModel.variantStock.set("(Stock: " + variant.quantity + ")");
-        mProductCartItemViewModel.setVariantStockNumber(variant.quantity);
+        mProductCartItemViewModel.update(variant);
     }
 
     @Override
