@@ -8,6 +8,7 @@ import android.location.Geocoder;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -36,8 +37,9 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     }
 
     public void saveShippingAddress() {
-        String addressStr = unit.get() + ", " + street.get() + ", " + area1.get() + ", " + area2.get() + ", "
-                + city.get() + ", (Post Code: " + postCode.get() + ")";
+        String postCodeStr = (postCode.get().length() > 0) ? ", (Post Code: " + postCode.get() + ")" : "";
+        String addressStr = DataUtils.joinStrings(", ",
+                unit.get(), street.get(), area1.get(), area2.get(), city.get(), postCodeStr);
         getCompositeDisposable().add(getDataManager().addShippingAddress(getUserId(), placeId,
                 name.get(), getPhoneNumber(), addressStr, checked.get())
                 .take(1)

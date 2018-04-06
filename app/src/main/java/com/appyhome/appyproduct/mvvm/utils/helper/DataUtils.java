@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.utils.helper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -78,6 +79,15 @@ public final class DataUtils {
         is.close();
 
         return new String(buffer, "UTF-8");
+    }
+
+    public static String joinStrings(CharSequence separator, String... params) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (String item : params) {
+            if(item != null && item.length() > 0)
+                arrayList.add(item);
+        }
+        return TextUtils.join(separator, arrayList);
     }
 
     public static boolean contains(ArrayList<Integer> ids, int id) {
