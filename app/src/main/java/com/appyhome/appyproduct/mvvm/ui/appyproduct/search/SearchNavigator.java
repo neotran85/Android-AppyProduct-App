@@ -1,9 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +24,7 @@ public interface SearchNavigator {
 
     void doAfterSearchItemsAdded();
 
-    void clickSearchHistoryItem(View view);
+    void onSearchHistoryClick(SearchItem data);
 
     void clearKeywords();
 
@@ -31,5 +34,5 @@ public interface SearchNavigator {
 
     void showSuggestions(RealmResults<SearchItem> items);
 
-    void clickSearchCategoryItem(View view);
+    void onProductTopicClick(View view, ProductTopic topic);
 }

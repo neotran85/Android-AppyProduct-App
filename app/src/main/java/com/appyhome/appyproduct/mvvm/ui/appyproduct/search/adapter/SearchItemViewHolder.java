@@ -18,7 +18,6 @@ public class SearchItemViewHolder extends BaseViewHolder {
     public void onBind(int position) {
         SearchItemViewModel viewModel = (SearchItemViewModel) mAdapter.getItem(position);
         mBinding.setViewModel(viewModel);
-        mBinding.getRoot().setTag(viewModel);
         mBinding.setNavigator(viewModel.getNavigator());
     }
 }

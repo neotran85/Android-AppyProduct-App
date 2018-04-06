@@ -117,7 +117,7 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     @Override
     public void getAllProductTopics_Done(RealmResults<ProductTopic> topics) {
-        if (topics != null && topics.size() > 0) {
+        if (topics != null) {
             mAdapter.addItems(topics, this);
             mAdapter.notifyDataSetChanged();
             if (mListener != null) {

@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:id="@+id/llItemView"
-        android:onClick="@{(view) -> navigator.onItemSuggestionClick(view)}"
+        android:onClick="@{(view) -> navigator.onItemSuggestionClick(viewModel)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

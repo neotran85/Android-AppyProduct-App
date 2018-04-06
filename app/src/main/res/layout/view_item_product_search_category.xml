@@ -1,7 +1,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
 
-        <import type="android.view.View" />
+        <import type="android.widget.TextView" />
 
         <variable
             name="navigator"
@@ -12,7 +12,7 @@
     </data>
 
     <TextView
-        android:onClick="@{(view)->navigator.clickSearchCategoryItem(view)}"
+        android:onClick="@{(view)->navigator.onProductTopicClick(view, data)}"
         android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
         android:id="@+id/tvTag"

@@ -21,6 +21,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductSearchTagBinding
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.adapter.SearchItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -188,13 +189,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void onItemSuggestionClick(View view) {
-        //SearchItemViewModel viewModel = (SearchItemViewModel) view.getTag();
-        //setKeywords(viewModel.keyword.get());
-        //getViewModel().addSearchItems(new SearchItem[]{createKeywordCached(getKeywords(), mTopicIds)});
-        //search();
+    public void onItemSuggestionClick(SearchItemViewModel viewModel) {
     }
-
 
     @Override
     protected void onResume() {
@@ -229,8 +225,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void clickSearchHistoryItem(View view) {
-        SearchItem item = (SearchItem) view.getTag();
+    public void onSearchHistoryClick(SearchItem item) {
         setKeywords(item.content);
         ArrayList<Integer> ids = new ArrayList<>();
         if (item.topics.length() > 0) {
@@ -263,7 +258,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             if (mBinder.flTopics.getChildCount() == 0) {
                 mBinder.flTopics.removeAllViews();
                 for (ProductTopic item : items.keySet()) {
-                    mBinder.flTopics.addView(createCategory(item));
+                    mBinder.flTopics.addView(createProductTopics(item));
                 }
             }
         }
@@ -290,10 +285,10 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
     }
 
     @Override
-    public void clickSearchCategoryItem(View view) {
+    public void onProductTopicClick(View view, ProductTopic topics) {
         if (view instanceof TextView) {
-            int whiteColor = ContextCompat.getColor(this, R.color.white);
             TextView textView = (TextView) view;
+            int whiteColor = ContextCompat.getColor(this, R.color.white);
             setTopicSelected(textView, !(textView.getCurrentTextColor() == whiteColor));
         }
     }
@@ -303,18 +298,17 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         AlertManager.getInstance(this).showLongToast(message);
     }
 
-    private View createCategory(ProductTopic item) {
+    private View createProductTopics(ProductTopic item) {
         ViewItemProductSearchCategoryBinding binding = ViewItemProductSearchCategoryBinding.inflate(getLayoutInflater(), null, false);
         binding.setData(item);
-        binding.getRoot().setTag(item);
         binding.setNavigator(this);
+        binding.getRoot().setTag(item);
         return binding.getRoot();
     }
 
     private View createTag(SearchItem item) {
         ViewItemProductSearchTagBinding binding = ViewItemProductSearchTagBinding.inflate(getLayoutInflater(), null, false);
         binding.setData(item);
-        binding.getRoot().setTag(item);
         binding.setNavigator(this);
         return binding.getRoot();
     }
