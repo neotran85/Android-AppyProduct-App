@@ -431,23 +431,31 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> updateProductCartItem(long idProductCart, boolean checked, int amount) {
-        return Flowable.fromCallable(() -> {
-            try {
-                beginTransaction();
-                ProductCart productCart = getRealm().where(ProductCart.class)
-                        .equalTo("id", idProductCart)
-                        .findFirst();
-                productCart.checked = checked;
-                productCart.amount = amount;
-                productCart = getRealm().copyToRealmOrUpdate(productCart);
-                getRealm().commitTransaction();
-                return productCart != null && productCart.isValid();
-            } catch (Exception e) {
-                getRealm().cancelTransaction();
-                return false;
+    public Flowable<ProductCart> updateProductCartItem(long idProductCart, boolean checked, int amount, String variantModelId) {
+        try {
+            beginTransaction();
+            ProductCart productCart = getRealm().where(ProductCart.class)
+                    .equalTo("id", idProductCart)
+                    .findFirst();
+            productCart.checked = checked;
+            productCart.amount = amount;
+            if (variantModelId.length() > 0) {
+                ProductVariant variant = getRealm().where(ProductVariant.class)
+                        .equalTo("model_id", variantModelId).findFirst();
+                if (variant != null && variant.isValid()) {
+                    productCart.variant_name = variant.variant_name;
+                    productCart.variant_model_id = variant.model_id;
+                    productCart.variant_stock = variant.quantity;
+                    productCart.price = variant.price;
+                }
             }
-        });
+            productCart = getRealm().copyToRealmOrUpdate(productCart);
+            getRealm().commitTransaction();
+            return productCart.asFlowable();
+        } catch (Exception e) {
+            getRealm().cancelTransaction();
+            return new ProductCart().asFlowable();
+        }
     }
 
     private ProductCart createNewProductCart(Product product, String userId, ProductVariant variant) {

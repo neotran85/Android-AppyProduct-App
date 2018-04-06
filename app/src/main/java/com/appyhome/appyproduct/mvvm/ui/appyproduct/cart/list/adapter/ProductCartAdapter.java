@@ -51,7 +51,8 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     }
 
     @Override
-    public void onClick(View view) {}
+    public void onClick(View view) {
+    }
 
     private int getIndexOfItem(ProductCartItemViewModel item) {
         if (mItems != null && mItems.size() > 0) {
@@ -78,19 +79,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     private ProductCartItemViewModel createViewModel(ProductCart productCart, ProductCartItemNavigator navigator) {
         ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(mProductCartListViewModel.getDataManager(),
                 mProductCartListViewModel.getSchedulerProvider());
-        itemViewModel.title.set(productCart.product_name);
-        itemViewModel.imageURL.set(productCart.product_avatar);
-        itemViewModel.setProductCartId(productCart.id);
-        itemViewModel.setProductId(productCart.product_id);
-        itemViewModel.sellerName.set(productCart.seller_name);
-        itemViewModel.amount.set(productCart.amount + "");
-        itemViewModel.price.set(productCart.price + "");
-        itemViewModel.setNavigator(navigator);
-        itemViewModel.checked.set(productCart.checked);
-        itemViewModel.variationName.set(productCart.variant_name);
-        itemViewModel.setVariantModelId(productCart.variant_model_id);
-        itemViewModel.variantStock.set("(Stock: " + productCart.variant_stock + ")");
-        itemViewModel.setVariantStockNumber(productCart.variant_stock);
+        itemViewModel.updateProductCart(productCart, navigator);
         return itemViewModel;
     }
 
@@ -114,6 +103,20 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         }
     }
 
+    public void updateProductCartItem(ProductCart productCart) {
+        if (mItems != null && mItems.size() > 0) {
+            for (BaseViewModel item : mItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                if (cartItem.getProductCartId() == productCart.id) {
+                    int index = indexOf(cartItem);
+                    cartItem.updateProductCart(productCart, mNavigator);
+                    updateTotalCost();
+                    notifyItemChanged(index);
+                    return;
+                }
+            }
+        }
+    }
 
     private void addProductCartToStoreBySellerName(ProductCartItemViewModel cartItem) {
         String sellerName = cartItem.sellerName.get();

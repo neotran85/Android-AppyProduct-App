@@ -20,6 +20,12 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
     }
 
     public void saveProductCartItem() {
-
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(mProductCartItemViewModel.getProductCartId(), mProductCartItemViewModel.checked.get(),
+                Integer.valueOf(mProductCartItemViewModel.amount.get()), mProductCartItemViewModel.getVariantModelId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCart -> {
+                    getNavigator().saveProductCartItem_Done(productCart);
+                }, Crashlytics::logException));
     }
 }

@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -68,7 +69,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     }
 
     public void updateProductCartItem() {
-        getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()))
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()), "")
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
@@ -90,5 +91,41 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public void setProductCartId(long productCartId) {
         this.productCartId = productCartId;
+    }
+
+    public void updateProductCart(ProductCart productCart, ProductCartItemNavigator navigator) {
+        title.set(productCart.product_name);
+        imageURL.set(productCart.product_avatar);
+        setProductCartId(productCart.id);
+        setProductId(productCart.product_id);
+        sellerName.set(productCart.seller_name);
+        amount.set(productCart.amount + "");
+        price.set(productCart.price + "");
+        setNavigator(navigator);
+        checked.set(productCart.checked);
+        variationName.set(productCart.variant_name);
+        setVariantModelId(productCart.variant_model_id);
+        variantStock.set("(Stock: " + productCart.variant_stock + ")");
+        setVariantStockNumber(productCart.variant_stock);
+    }
+
+    public ProductCartItemViewModel clone() {
+        ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(getDataManager(), getSchedulerProvider());
+        itemViewModel.title.set(productCart.title.get());
+        itemViewModel.isFirstProductOfStore.set(true);
+        itemViewModel.imageURL.set(productCart.imageURL.get());
+        itemViewModel.setProductCartId(productCart.getProductCartId());
+        itemViewModel.setProductId(productCart.getProductId());
+        itemViewModel.sellerName.set(productCart.sellerName.get());
+        itemViewModel.amount.set(productCart.amount.get());
+        itemViewModel.price.set(productCart.price.get());
+        itemViewModel.setNavigator(productCart.getNavigator());
+        itemViewModel.checked.set(productCart.checked.get());
+        //Variant Display
+        itemViewModel.variationName.set(productCart.variationName.get());
+        itemViewModel.setVariantModelId(productCart.getVariantModelId());
+        itemViewModel.variantStock.set(productCart.variantStock.get());
+        itemViewModel.setVariantStockNumber(productCart.getVariantStockNumber());
+        return itemViewModel;
     }
 }

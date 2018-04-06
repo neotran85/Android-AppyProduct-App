@@ -51,7 +51,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductCart>> getAllProductCarts(String userId);
 
-    Flowable<Boolean> updateProductCartItem(long idProductCart, boolean checked, int amount);
+    Flowable<ProductCart> updateProductCartItem(long idProductCart, boolean checked, int amount, String variantModelId);
 
     Flowable<Boolean> removeProductCartItem(long idProductCart);
 

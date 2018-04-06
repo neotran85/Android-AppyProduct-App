@@ -2,12 +2,14 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant;
 
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductVariantEditBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartItemBinding;
@@ -21,7 +23,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import javax.inject.Inject;
 
 
-public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements EditVariantNavigator, ProductDetailVariantNavigator {
+public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements ProductDetailVariantNavigator, View.OnClickListener {
 
     public static final String TAG = "EditVariantFragment";
 
@@ -37,16 +39,23 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     private ProductVariantFragment mProductVariantFragment;
 
-    public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel) {
+    private EditVariantNavigator mNavigator;
+
+    public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel, EditVariantNavigator navigator) {
         Bundle args = new Bundle();
         EditVariantFragment fragment = new EditVariantFragment();
+        fragment.setNavigator(navigator);
         fragment.setArguments(args);
         fragment.setProductCartItemViewModel(viewModel);
         return fragment;
     }
 
+    public void setNavigator(EditVariantNavigator navigator) {
+        mNavigator = navigator;
+    }
+
     public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
-        mProductCartItemViewModel = cloneViewModel(viewModel, viewModel.getNavigator());
+        mProductCartItemViewModel = viewModel.cl);
     }
 
     @Override
@@ -61,13 +70,14 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     }
 
     private void setUp() {
-        mViewModel.setNavigator(this);
+        mViewModel.setNavigator(mNavigator);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
-        mBinder.setNavigator(this);
+        mBinder.setNavigator(mNavigator);
         mViewModel.setProductCartItemViewModel(mProductCartItemViewModel);
         showProductVariantFragment();
         showProductCartItem();
+        mBinder.btConfirm.setOnClickListener(this);
     }
 
     private void showProductVariantFragment() {
@@ -102,26 +112,6 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         super.onDestroyView();
     }
 
-    private ProductCartItemViewModel cloneViewModel(ProductCartItemViewModel productCart, ProductCartItemNavigator navigator) {
-        ProductCartItemViewModel itemViewModel = new ProductCartItemViewModel(productCart.getDataManager(), productCart.getSchedulerProvider());
-        itemViewModel.title.set(productCart.title.get());
-        itemViewModel.isFirstProductOfStore.set(true);
-        itemViewModel.imageURL.set(productCart.imageURL.get());
-        itemViewModel.setProductCartId(productCart.getProductCartId());
-        itemViewModel.setProductId(productCart.getProductId());
-        itemViewModel.sellerName.set(productCart.sellerName.get());
-        itemViewModel.amount.set(productCart.amount.get());
-        itemViewModel.price.set(productCart.price.get());
-        itemViewModel.setNavigator(navigator);
-        itemViewModel.checked.set(productCart.checked.get());
-        //Variant Display
-        itemViewModel.variationName.set(productCart.variationName.get());
-        itemViewModel.setVariantModelId(productCart.getVariantModelId());
-        itemViewModel.variantStock.set(productCart.variantStock.get());
-        itemViewModel.setVariantStockNumber(productCart.getVariantStockNumber());
-        return itemViewModel;
-    }
-
     @Override
     public void selectedVariant(ProductVariant variant) {
         mProductCartItemViewModel.price.set("RM " + variant.price);
@@ -132,7 +122,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     }
 
     @Override
-    public void confirmVariantChanges() {
+    public void onClick(View view) {
         getViewModel().saveProductCartItem();
     }
 

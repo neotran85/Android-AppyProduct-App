@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCar
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -33,7 +35,8 @@ import dagger.android.support.HasSupportFragmentInjector;
 import io.realm.RealmResults;
 
 public class ProductCartListActivity extends BaseActivity<ActivityProductCartListBinding, ProductCartListViewModel>
-        implements HasSupportFragmentInjector, ProductCartListNavigator, ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
+        implements HasSupportFragmentInjector, ProductCartListNavigator, EditVariantNavigator,
+        ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
 
     @Inject
     ProductCartListViewModel mViewModel;
@@ -153,8 +156,8 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
 
     @Override
     public void editVariant(ProductCartItemViewModel viewModel) {
-        if(mEditVariantFragment == null) {
-            mEditVariantFragment = EditVariantFragment.newInstance(viewModel);
+        if (mEditVariantFragment == null) {
+            mEditVariantFragment = EditVariantFragment.newInstance(viewModel, this);
         }
         showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditVariantContainer, true);
     }
@@ -221,5 +224,15 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
+    public void saveProductCartItem_Done(ProductCart productCart) {
+        mProductCartAdapter.updateProductCartItem(productCart);
+    }
+
+    @Override
+    public void closeEditVariantFragment() {
+        closeFragment(EditVariantFragment.TAG);
     }
 }

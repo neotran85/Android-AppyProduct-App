@@ -478,8 +478,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> updateProductCartItem(long idProductCart, boolean checked, int amount) {
-        return mDbHelper.updateProductCartItem(idProductCart, checked, amount);
+    public Flowable<ProductCart> updateProductCartItem(long idProductCart, boolean checked, int amount, String variantModelId){
+        return mDbHelper.updateProductCartItem(idProductCart, checked, amount, variantModelId);
     }
 
     @Override
