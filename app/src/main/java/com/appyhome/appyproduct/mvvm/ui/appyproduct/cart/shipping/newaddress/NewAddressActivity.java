@@ -14,10 +14,10 @@ import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
 
 import javax.inject.Inject;
 
-public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewBinding, NewAddressViewModel> implements NewAddressNavigator, View.OnClickListener {
+public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewBinding, NewAddressViewModel> implements NewAddressNavigator {
 
     @Inject
-    public NewAddressViewModel mMainViewModel;
+    public NewAddressViewModel mViewModel;
     ActivityProductShippingNewBinding mBinder;
     @Inject
     int mLayoutId;
@@ -33,27 +33,8 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.llSearchLocation:
-                MapManager.openMapForPlaceSelection(this);
-                break;
-            case R.id.btSave:
-                if (!mMainViewModel.checkIfContactInputted()) {
-                    showAlert(getString(R.string.please_input_contact));
-                    return;
-                }
-                if (!mMainViewModel.isPhoneNumberValid()) {
-                    showAlert(getString(R.string.please_input_valid_phone));
-                    return;
-                }
-                if (!mMainViewModel.checkIfLocationInputted()) {
-                    showAlert(getString(R.string.please_input_shipping_address));
-                    return;
-                }
-                mMainViewModel.saveShippingAddress();
-                break;
-        }
+    public void openMapForPlaceSelection() {
+        MapManager.openMapForPlaceSelection(this);
     }
 
     @Override
@@ -62,10 +43,27 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MapManager.PLACE_PICKER_REQUEST:
-                    mMainViewModel.updateAddressFromGooglePlaceData(this, data);
+                    getViewModel().updateAddressFromGooglePlaceData(this, data);
                     break;
             }
         }
+    }
+
+    @Override
+    public void saveAddress() {
+        if (!getViewModel().checkIfContactInputted()) {
+            showAlert(getString(R.string.please_input_contact));
+            return;
+        }
+        if (!getViewModel().isPhoneNumberValid()) {
+            showAlert(getString(R.string.please_input_valid_phone));
+            return;
+        }
+        if (!getViewModel().checkIfLocationInputted()) {
+            showAlert(getString(R.string.please_input_shipping_address));
+            return;
+        }
+        getViewModel().saveShippingAddress();
     }
 
     @Override
@@ -73,10 +71,8 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
-        mBinder.setViewModel(mMainViewModel);
-        mMainViewModel.setNavigator(this);
-        mBinder.btSave.setOnClickListener(this);
-        mBinder.llSearchLocation.setOnClickListener(this);
+        mBinder.setViewModel(mViewModel);
+        mViewModel.setNavigator(this);
     }
 
     @Override
@@ -91,7 +87,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
 
     @Override
     public NewAddressViewModel getViewModel() {
-        return mMainViewModel;
+        return mViewModel;
     }
 
     @Override
