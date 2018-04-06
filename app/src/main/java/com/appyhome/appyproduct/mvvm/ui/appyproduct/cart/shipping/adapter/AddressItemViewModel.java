@@ -26,8 +26,7 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // UPDATE DEFAULT ADDRESS SUCCEEDED
-                    getNavigator().updateDatabaseCompleted(this);
+                    getNavigator().updateDatabaseCompleted();
                 }, Crashlytics::logException));
     }
 

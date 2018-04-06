@@ -21,6 +21,16 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
     private AddressItemViewModel mSelected;
     private DataManager mDataManager;
     private SchedulerProvider mSchedulerProvider;
+    private AddressItemNavigator mNavigator;
+
+    public void selectAddress(AddressItemViewModel viewModel) {
+        if (mSelected != null) {
+            mSelected.checked.set(false);
+        }
+        viewModel.checked.set(true);
+        viewModel.updateDefaultToDatabase();
+        mSelected = viewModel;
+    }
 
     public AddressAdapter(DataManager dataManager, SchedulerProvider schedulerProvider) {
         mSelected = null;
@@ -61,6 +71,7 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
     @Override
     public void addItems(RealmResults<Address> results, AddressItemNavigator navigator) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (results != null) {
             for (Address item : results) {
                 mItems.add(createViewModel(item, navigator));
@@ -72,35 +83,20 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
     protected AddressItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductShippingAddressBinding itemViewBinding = ViewItemProductShippingAddressBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new AddressItemViewHolder(itemViewBinding);
+        return new AddressItemViewHolder(itemViewBinding, mNavigator);
     }
 
     public class AddressItemViewHolder extends BaseViewHolder {
-
         private ViewItemProductShippingAddressBinding mBinding;
-
-        private AddressItemViewHolder(ViewItemProductShippingAddressBinding binding) {
+        private AddressItemViewHolder(ViewItemProductShippingAddressBinding binding, AddressItemNavigator navigator) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.setNavigator(navigator);
         }
-
-        public ViewItemProductShippingAddressBinding getBinding() {
-            return mBinding;
-        }
-
         @Override
         public void onBind(int position) {
             AddressItemViewModel viewModel = (AddressItemViewModel) mItems.get(position);
-            if (mBinding != null) {
-                mBinding.setViewModel(viewModel);
-                mBinding.llItemView.setOnClickListener(v -> {
-                    if (mSelected != null)
-                        mSelected.checked.set(false);
-                    viewModel.checked.set(true);
-                    viewModel.updateDefaultToDatabase();
-                    mSelected = viewModel;
-                });
-            }
+            mBinding.setViewModel(viewModel);
         }
     }
 }

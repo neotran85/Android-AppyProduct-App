@@ -117,7 +117,10 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     }
 
     @Override
-    public void updateDatabaseCompleted(AddressItemViewModel viewModel) {
+    public void updateDatabaseCompleted() {}
 
+    @Override
+    public void onItemChecked(AddressItemViewModel item) {
+        mAdapter.selectAddress(item);
     }
 }

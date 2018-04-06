@@ -391,14 +391,15 @@ public class AppDbHelper implements DbHelper {
             Address address = getRealm().where(Address.class)
                     .equalTo("id", id)
                     .findFirst();
+
             RealmResults<Address> addressList = getRealm().where(Address.class)
                     .equalTo("customer_id", userId)
                     .findAll();
-            if (addressList != null && addressList.size() > 0) {
+            if (addressList != null && addressList.isValid()) {
                 for (Address address1 : addressList) {
                     address1.is_default = false;
-                    getRealm().copyToRealmOrUpdate(address1);
                 }
+                getRealm().copyToRealmOrUpdate(addressList);
             }
             if (address != null && address.isValid()) {
                 address.is_default = true;
