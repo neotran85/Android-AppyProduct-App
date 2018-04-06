@@ -13,4 +13,6 @@ public interface ProductCartItemNavigator {
     void showProductDetail(ProductCartItemViewModel viewModel);
 
     void showAlert(String message);
+
+    void editVariant(ProductCartItemViewModel viewModel);
 }
