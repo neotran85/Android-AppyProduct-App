@@ -66,7 +66,7 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
         mBinder.setViewModel(mViewModel);
         mBinder.topicsRecyclerView.setAdapter(mAdapter);
         setUpRecyclerViewGrid(mBinder.topicsRecyclerView);
-        mViewModel.getAllProductTopics();
+        getViewModel().getAllProductTopics();
     }
 
     public void setCompletedJobListener(CompletedJobListener listener) {
@@ -107,30 +107,22 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
     /************************* USER INTERACTION METHODS ************************/
 
     @Override
-    public void onItemClick(View view) {
-        Object tag = view.getTag();
-        if (tag instanceof TopicItemViewModel) {
-            TopicItemViewModel viewModel = (TopicItemViewModel) tag;
-            openProductCategories(viewModel.getIdTopic());
-        }
+    public void onItemClick(TopicItemViewModel viewModel) {
+        Intent intent = CategoryActivity.getStartIntent(this.getContext());
+        intent.putExtra("id_topic", viewModel.getIdTopic());
+        startActivity(intent);
     }
 
     /************************* NAVIGATOR METHODS ************************/
 
     @Override
-    public void showTopics(RealmResults<ProductTopic> topics) {
-        mAdapter.addItems(topics, this);
-        mAdapter.notifyDataSetChanged();
-        if (mListener != null) {
-            mListener.onJobCompleted(null);
+    public void getAllProductTopics_Done(RealmResults<ProductTopic> topics) {
+        if (topics != null && topics.size() > 0) {
+            mAdapter.addItems(topics, this);
+            mAdapter.notifyDataSetChanged();
+            if (mListener != null) {
+                mListener.onJobCompleted(null);
+            }
         }
     }
-
-    @Override
-    public void openProductCategories(int idTopic) {
-        Intent intent = CategoryActivity.getStartIntent(this.getContext());
-        intent.putExtra("id_topic", idTopic);
-        startActivity(intent);
-    }
-
 }

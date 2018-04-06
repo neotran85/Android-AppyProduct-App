@@ -7,7 +7,9 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 public class TopicItemViewModel extends BaseViewModel<TopicItemNavigator> {
+
     public ObservableField<String> imageURL = new ObservableField<>("");
+
     private int idTopic;
 
     public TopicItemViewModel(DataManager dataManager,

@@ -71,17 +71,10 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
             mBinding = binding;
         }
 
-        public void setViewModel(TopicItemViewModel viewModel) {
-            if (mBinding != null) {
-                mBinding.setViewModel(viewModel);
-            }
-        }
-
         @Override
         public void onBind(int position) {
             TopicItemViewModel viewModel = (TopicItemViewModel) mItems.get(position);
-            this.setViewModel(viewModel);
-            mBinding.getRoot().setTag(viewModel);
+            mBinding.setViewModel(viewModel);
             mBinding.setNavigator(viewModel.getNavigator());
         }
     }

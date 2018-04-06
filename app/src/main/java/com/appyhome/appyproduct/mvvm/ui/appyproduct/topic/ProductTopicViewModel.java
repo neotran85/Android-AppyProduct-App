@@ -18,9 +18,7 @@ public class ProductTopicViewModel extends BaseViewModel<ProductTopicNavigator> 
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(topics -> {
                     // DONE GET
-                    if (topics != null && topics.size() > 0) {
-                        getNavigator().showTopics(topics);
-                    }
+                    getNavigator().getAllProductTopics_Done(topics);
                 }, Crashlytics::logException));
     }
 }
