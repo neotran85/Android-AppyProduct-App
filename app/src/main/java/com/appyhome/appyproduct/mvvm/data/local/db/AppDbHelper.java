@@ -449,6 +449,22 @@ public class AppDbHelper implements DbHelper {
                     productCart.price = variant.price;
                 }
             }
+            RealmResults<ProductCart> productCarts = getRealm().where(ProductCart.class)
+                    .equalTo("user_id", productCart.user_id)
+                    .notEqualTo("id", productCart.id)
+                    .equalTo("product_id", productCart.product_id)
+                    .equalTo("variant_model_id", productCart.variant_model_id)
+                    .findAll();
+            if (productCarts != null && productCarts.size() > 0) {
+                // SUM
+                int totalAmount = 0;
+                for (ProductCart item : productCarts) {
+                    totalAmount = totalAmount + item.amount;
+                }
+                productCart.amount = productCart.amount + totalAmount;
+                productCarts.deleteAllFromRealm();
+            }
+
             productCart = getRealm().copyToRealmOrUpdate(productCart);
             getRealm().commitTransaction();
             return productCart.asFlowable();

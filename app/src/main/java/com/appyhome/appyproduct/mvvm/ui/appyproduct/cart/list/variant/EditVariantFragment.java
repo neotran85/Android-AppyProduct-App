@@ -55,6 +55,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
         mProductCartItemViewModel = viewModel.duplicate();
         mProductCartItemViewModel.isFirstProductOfStore.set(true);
+        mProductCartItemViewModel.checked.set(true);
     }
 
     @Override

@@ -105,16 +105,30 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
 
     public void updateProductCartItem(ProductCart productCart) {
         if (mItems != null && mItems.size() > 0) {
+            ArrayList<ProductCartItemViewModel> arrayList = new ArrayList<>();
+            ProductCartItemViewModel target = null;
             for (BaseViewModel item : mItems) {
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                if (cartItem.getVariantModelId().equals(productCart.variant_model_id)) {
+                    arrayList.add(cartItem);
+                }
                 if (cartItem.getProductCartId() == productCart.id) {
-                    int index = indexOf(cartItem);
-                    cartItem.update(productCart, mNavigator);
-                    updateTotalCost();
-                    notifyItemChanged(index);
-                    return;
+                    target = cartItem;
                 }
             }
+            if (target != null) {
+                int index = indexOf(target);
+                target.update(productCart, mNavigator);
+                notifyItemChanged(index);
+            }
+            if (arrayList.size() > 0) {
+                for (ProductCartItemViewModel cartItem : arrayList) {
+                    if (cartItem != target)
+                        removeCartItem(cartItem);
+                }
+            }
+            updateTotalCost();
+            updateIfCheckedAll();
         }
     }
 
