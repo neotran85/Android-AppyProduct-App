@@ -28,7 +28,7 @@ import io.realm.RealmResults;
 public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator, AddressItemNavigator {
 
     @Inject
-    ShippingAddressViewModel mMainViewModel;
+    ShippingAddressViewModel mViewModel;
 
     @Inject
     AddressAdapter mAdapter;
@@ -36,8 +36,6 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     ActivityProductShippingBinding mBinder;
 
     boolean isEditMode = false;
-
-    boolean isEmptyAddress = true;
 
     @Inject
     int mLayoutId;
@@ -61,13 +59,14 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
-        mBinder.setViewModel(mMainViewModel);
+        mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
 
-        mMainViewModel.setNavigator(this);
+        mViewModel.setNavigator(this);
         ViewUtils.setUpRecyclerViewList(mBinder.rvAddressList, true);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
-        mMainViewModel.isEditMode.set(isEditMode);
+        mViewModel.isEditMode.set(isEditMode);
+        mBinder.rvAddressList.setAdapter(mAdapter);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void gotoNextStep() {
-        if (isEmptyAddress) {
+        if (getViewModel().isNoAddress.get()) {
             showAlert(getString(R.string.please_add_address));
             return;
         }
@@ -91,19 +90,20 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     protected void onResume() {
         super.onResume();
-        mMainViewModel.getAllShippingAddress();
+        mViewModel.getAllShippingAddress();
     }
 
     @Override
     public void showAddressList(RealmResults<Address> addresses) {
-        isEmptyAddress = addresses.size() <= 0;
-        mAdapter.addItems(addresses, this);
-        mBinder.rvAddressList.setAdapter(mAdapter);
+        if(addresses != null) {
+            mAdapter.addItems(addresses, this);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public ShippingAddressViewModel getViewModel() {
-        return mMainViewModel;
+        return mViewModel;
     }
 
     @Override

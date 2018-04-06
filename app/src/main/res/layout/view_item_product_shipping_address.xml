@@ -7,31 +7,29 @@
         <variable
             name="viewModel"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressItemViewModel" />
+
         <variable
             name="navigator"
             type="com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressItemNavigator" />
     </data>
 
     <LinearLayout
-        android:onClick="@{(view)->navigator.onItemChecked(viewModel)}"
         android:id="@+id/llItemView"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{(view)->navigator.onItemChecked(viewModel)}"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp"
-        android:paddingTop="8dp">
+        android:padding="14dp">
 
         <RadioButton
-            android:clickable="false"
             android:id="@+id/rbDefault"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:checked="@={viewModel.checked}"
+            android:clickable="false"
             android:scaleX="0.8"
             android:scaleY="0.8" />
 
@@ -51,10 +49,11 @@
                 android:textSize="14sp" />
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp">
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical">
+
                 <TextView
                     fontPath="fonts/TitilliumWeb-Light.ttf"
                     android:layout_width="wrap_content"
@@ -64,10 +63,10 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:layout_marginStart="4dp"
                     fontPath="fonts/TitilliumWeb-Light.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:text="@{viewModel.phoneNumber}"
                     android:textColor="@color/black"
                     android:textSize="14sp" />

@@ -8,14 +8,11 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-import io.reactivex.disposables.Disposable;
 import io.realm.RealmResults;
 
 public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavigator> {
     public ObservableField<Boolean> isNoAddress = new ObservableField<>(true);
     public ObservableField<Boolean> isEditMode = new ObservableField<Boolean>(false);
-
-    private Disposable mGetAllShippingAddress = null;
 
     public ShippingAddressViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
@@ -23,19 +20,13 @@ public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavig
     }
 
     public void getAllShippingAddress() {
-        mGetAllShippingAddress = getDataManager().getAllShippingAddress(getUserId())
+        getCompositeDisposable().add(getDataManager().getAllShippingAddress(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe((RealmResults<Address> addresses) -> {
-                    if (mGetAllShippingAddress != null && !mGetAllShippingAddress.isDisposed())
-                        mGetAllShippingAddress.dispose();
-                    boolean isValid = addresses != null && addresses.isValid();
-                    if (isValid) {
-                        getNavigator().showAddressList(addresses);
-                    }
-                    isNoAddress.set(isValid && addresses.size() > 0 ? false : true);
-                }, Crashlytics::logException);
-        getCompositeDisposable().add(mGetAllShippingAddress);
+                    isNoAddress.set(addresses == null || !addresses.isValid() || addresses.size() <= 0);
+                    getNavigator().showAddressList(addresses);
+                }, Crashlytics::logException));
     }
 
 }
