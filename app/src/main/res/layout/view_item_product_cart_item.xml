@@ -134,7 +134,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center_vertical">
 
                     <LinearLayout
@@ -192,7 +192,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:onClick="@{(view) -> navigator.showProductDetail(viewModel)}"
                     android:orientation="horizontal"
                     android:visibility="@{!viewModel.isEditMode, default=visible}">
@@ -237,7 +237,7 @@
                         android:textSize="13sp" />
                 </LinearLayout>
                 <LinearLayout
-                    textVisible="@{viewModel.alertText}"
+                    android:visibility="@{!viewModel.isEditMode}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -245,10 +245,12 @@
                     android:alpha="0.6"
                     android:orientation="horizontal">
                     <ImageView
+                        textVisible="@{viewModel.alertText }"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:src="@mipmap/icon_warning" />
                     <TextView
+                        textVisible="@{viewModel.alertText }"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"

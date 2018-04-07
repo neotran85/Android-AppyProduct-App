@@ -254,7 +254,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (amount <= mTotalStock)
             mViewModel.setIntegerAmountAdded(amount);
         else {
-            showAlert("Unable to add more than " + mTotalStock + " items.");
+            showAlert(getString(R.string.unable_to_add_more_than) + " " + mTotalStock);
         }
     }
 

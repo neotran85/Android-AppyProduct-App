@@ -23,4 +23,5 @@
     <string name="cart_select_all">Select All</string>
     <string name="cart_total">Total:</string>
     <string name="edit_variant_confirm">Confirm</string>
+    <string name="unable_to_add_more_than">Unable to add more than</string>
 </resources>

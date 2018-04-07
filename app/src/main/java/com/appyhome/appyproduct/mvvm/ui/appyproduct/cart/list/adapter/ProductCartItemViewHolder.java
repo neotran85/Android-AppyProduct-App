@@ -81,7 +81,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                         if (mAdapter != null)
                             mAdapter.updateTotalCost();
                     } else {
-                        mBinding.getNavigator().showAlert("Unable to add more than " + viewModel.getVariantStockNumber() + " items.");
+                        mBinding.getNavigator().showAlert("Sorry, unable to add more than " + viewModel.getVariantStockNumber());
                     }
                     break;
                 case R.id.cbCheckAll:

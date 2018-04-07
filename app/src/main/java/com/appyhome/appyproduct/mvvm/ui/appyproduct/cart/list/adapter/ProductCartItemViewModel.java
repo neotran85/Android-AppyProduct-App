@@ -106,7 +106,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setVariantStockNumber(productCart.variant_stock);
 
         if (productCart.amount > productCart.variant_stock) {
-            alertText.set("Sorry, unable to add more than " + productCart.variant_stock + " items");
+            alertText.set("Sorry, unable to add more than" + " " + productCart.variant_stock);
             amount.set(productCart.variant_stock + "");
             updateProductCartItemAmount(productCart.variant_stock);
         } else
