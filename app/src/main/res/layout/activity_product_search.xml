@@ -47,6 +47,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:afterTextChanged="@{(s) -> navigator.onAfterTextChanged(s)}"
                     android:id="@+id/etKeyword"
                     android:layout_width="0dp"
                     android:layout_weight="1"

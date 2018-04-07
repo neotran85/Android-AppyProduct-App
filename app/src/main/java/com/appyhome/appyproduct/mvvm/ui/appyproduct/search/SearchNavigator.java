@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 
+import android.text.Editable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,4 +36,6 @@ public interface SearchNavigator {
     void showSuggestions(RealmResults<SearchItem> items);
 
     void onProductTopicClick(View view, ProductTopic topic);
+
+    void onAfterTextChanged(Editable s);
 }

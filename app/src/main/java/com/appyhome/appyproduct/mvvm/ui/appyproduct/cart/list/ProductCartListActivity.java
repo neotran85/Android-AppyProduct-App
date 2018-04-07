@@ -35,7 +35,7 @@ import io.realm.RealmResults;
 
 public class ProductCartListActivity extends BaseActivity<ActivityProductCartListBinding, ProductCartListViewModel>
         implements HasSupportFragmentInjector, ProductCartListNavigator, EditVariantNavigator,
-        ProductCartItemNavigator, View.OnClickListener, DialogInterface.OnClickListener {
+        ProductCartItemNavigator, DialogInterface.OnClickListener {
 
     @Inject
     ProductCartListViewModel mViewModel;
@@ -75,7 +75,6 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         mViewModel.getAllProductCarts();
-        ViewUtils.setOnClickListener(this, mBinder.cbCheckAll, mBinder.ivTrash);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
     }
 
@@ -120,21 +119,19 @@ public class ProductCartListActivity extends BaseActivity<ActivityProductCartLis
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void clearCarts() {
+        AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ivTrash:
-                AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
-                break;
-            case R.id.cbCheckAll:
-                if (mProductCartAdapter != null)
-                    mProductCartAdapter.checkAllItems(mBinder.cbCheckAll.isChecked());
-                break;
-        }
+    public void selectAllCarts() {
+        if (mProductCartAdapter != null)
+            mProductCartAdapter.checkAllItems(mBinder.cbCheckAll.isChecked());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void setUpEmptyRecyclerViewList(RecyclerView rv) {

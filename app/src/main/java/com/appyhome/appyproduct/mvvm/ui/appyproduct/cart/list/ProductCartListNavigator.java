@@ -14,4 +14,8 @@ public interface ProductCartListNavigator {
     void gotoNextStep();
 
     void goBack();
+
+    void clearCarts();
+
+    void selectAllCarts();
 }

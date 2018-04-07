@@ -51,6 +51,7 @@
                     android:src="@mipmap/icon_back" />
 
                 <ImageView
+                    android:onClick="@{(view) -> navigator.clearCarts()}"
                     android:id="@+id/ivTrash"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -105,6 +106,7 @@
                         android:paddingStart="8dp">
 
                         <CheckBox
+                            android:onClick="@{(view) -> navigator.selectAllCarts()}"
                             android:id="@+id/cbCheckAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -49,6 +48,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     private HashMap<ProductTopic, String> mTopics;
 
+    private static final int HISTORY_ITEMS_MAX = 8;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
         return intent;
@@ -71,29 +72,9 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        mBinder.etKeyword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //boolean isNotEmpty = getKeywords().length() >= 3;
-                //if (isNotEmpty)
-                //getViewModel().getSearchSuggestions();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                boolean isNotEmpty = getKeywords().length() > 0;
-                getViewModel().isClearable.set(isNotEmpty);
-            }
-        });
         getViewModel().getSearchHisTory();
         getViewModel().getAllProductTopics();
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
-
         mBinder.etKeyword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN
                     && keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -102,6 +83,12 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             }
             return false;
         });
+    }
+
+    @Override
+    public void onAfterTextChanged(Editable s) {
+        boolean isNotEmpty = getKeywords().length() > 0;
+        getViewModel().isClearable.set(isNotEmpty);
     }
 
     @Override
@@ -209,13 +196,12 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void updateUISearchHistory(RealmResults<SearchItem> items) {
+        mBinder.flHistorySearch.removeAllViews();
         if (items != null) {
-            mBinder.flHistorySearch.removeAllViews();
-            for (SearchItem item : items) {
-                mBinder.flHistorySearch.addView(createTag(item));
+            int count = items.size() > HISTORY_ITEMS_MAX ? HISTORY_ITEMS_MAX : items.size();
+            for (int i = 0; i < count; i++) {
+                mBinder.flHistorySearch.addView(createTag(items.get(i)));
             }
-        } else {
-            mBinder.flHistorySearch.removeAllViews();
         }
     }
 
