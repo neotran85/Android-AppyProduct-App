@@ -91,7 +91,7 @@
                                 android:maxLines="2"
                                 android:text="@{viewModel.title}"
                                 android:textColor="@color/medium_dark_gray"
-                                android:textSize="14sp" />
+                                android:textSize="15sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@{viewModel.price}"
                                         android:textColor="@color/red_price"
-                                        android:textSize="16sp" />
+                                        android:textSize="15sp" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
