@@ -29,10 +29,6 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
 
     private boolean mUseSmallLayout = false;
 
-    @Override
-    public void onClick(View view) {
-    }
-
     public void setUseSmallLayoutItem(boolean value) {
         mUseSmallLayout = value;
     }

@@ -40,11 +40,6 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
     }
 
     @Override
-    public void onClick(View view) {
-        // DO NOTHING
-    }
-
-    @Override
     public void recycle() {
         mItems.clear();
         mItems = null;

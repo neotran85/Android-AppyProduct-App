@@ -32,12 +32,6 @@ public class SampleItemAdapter extends SampleAdapter<RealmObject, SampleItemNavi
         }
     }
 
-
-    @Override
-    public void onClick(View view) {
-        // DO NOTHING
-    }
-
     @Override
     protected SampleItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductSampleBinding itemViewBinding = ViewItemProductSampleBinding

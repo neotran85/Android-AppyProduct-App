@@ -38,11 +38,6 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
         return R.layout.view_item_sub_category_loading;
     }
 
-    @Override
-    public void onClick(View view) {
-        // DO NOTHING
-    }
-
     public void clickViewModel(CategoryItemViewModel viewModel) {
         if (mCurrentClickedViewModel != viewModel) {
             viewModel.isHighLight = true;

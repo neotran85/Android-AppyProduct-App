@@ -49,11 +49,6 @@ public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator
     }
 
     @Override
-    public void onClick(View view) {
-        // DO NOTHING
-    }
-
-    @Override
     protected SearchItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductSearchItemBinding itemViewBinding = ViewItemProductSearchItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);

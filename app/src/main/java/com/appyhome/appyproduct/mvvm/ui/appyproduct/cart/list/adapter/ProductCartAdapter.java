@@ -50,10 +50,6 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         mItems = null;
     }
 
-    @Override
-    public void onClick(View view) {
-    }
-
     private int getIndexOfItem(ProductCartItemViewModel item) {
         if (mItems != null && mItems.size() > 0) {
             return mItems.indexOf(item);

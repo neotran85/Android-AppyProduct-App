@@ -14,16 +14,14 @@ import java.util.ArrayList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
-public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerView.Adapter<BaseViewHolder> implements View.OnClickListener {
+public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final int VIEW_TYPE_NORMAL = 1;
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_LOADING = -1;
 
     protected ArrayList<BaseViewModel> mItems;
-
-    public abstract void onClick(View view);
-
+    
     protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
 
     protected abstract void addItems(RealmResults<T> items, L navigator);

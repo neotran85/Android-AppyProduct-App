@@ -33,11 +33,6 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
         mCurrentClickedViewModel = null;
     }
 
-    @Override
-    public void onClick(View view) {
-        // DO NOTHING
-    }
-
     public void clickViewModel(CategoryItemViewModel viewModel) {
         if (mCurrentClickedViewModel != viewModel) {
             viewModel.isHighLight = true;

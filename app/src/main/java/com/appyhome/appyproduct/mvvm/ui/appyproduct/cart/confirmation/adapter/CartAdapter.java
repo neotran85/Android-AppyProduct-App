@@ -109,11 +109,6 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
     }
 
     @Override
-    public void onClick(View view) {
-        // DO NOTHING
-    }
-
-    @Override
     protected CartItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductCartItemConfirmationBinding itemViewBinding = ViewItemProductCartItemConfirmationBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
