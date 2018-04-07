@@ -11,4 +11,6 @@ import io.realm.RealmResults;
 public interface ProductVariantNavigator {
     void showProductVariants(RealmResults<ProductVariant> result);
     void selectVariant(View view);
+    void nextVariantView();
+    void previousVariantView();
 }

@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
 import com.appyhome.appyproduct.mvvm.utils.config.GlideApp;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public final class BindingUtils {
@@ -153,6 +154,12 @@ public final class BindingUtils {
     @BindingAdapter("android:visibility")
     public static void setVisibility(View view, Boolean value) {
         view.setVisibility(value ? View.VISIBLE : View.GONE);
+    }
+
+    @BindingAdapter("price")
+    public static void setPrice(TextView view, Double amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        view.setText(formatter.format(amount));
     }
 
     @BindingAdapter("textVisible")

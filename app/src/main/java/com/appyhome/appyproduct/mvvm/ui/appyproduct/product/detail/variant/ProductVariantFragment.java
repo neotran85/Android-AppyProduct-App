@@ -10,7 +10,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductVariantBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductVariantBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
@@ -38,6 +37,12 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     private int mTotalStock = 0;
 
+    private int widthVariantItem = 0;
+
+    private int mVariantCount = 0;
+
+    private int mMaxScroll = 0;
+
     public void setDetailNavigator(ProductDetailVariantNavigator navigator) {
         mDetailNavigator = navigator;
     }
@@ -61,21 +66,25 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     @Override
     public void showProductVariants(RealmResults<ProductVariant> result) {
-        if (result != null && result.size() == 1) {
-            ProductVariant variant = result.first();
-            View view = createVariantView(variant);
-            mBinder.llContainer.addView(view);
-            mTotalStock = variant.quantity;
-            selectVariant(view);
-        } else {
-            for (ProductVariant variant : result) {
+        if (result != null) {
+            mVariantCount = result.size();
+            mMaxScroll= (mVariantCount * widthVariantItem);
+            if (mVariantCount == 1) {
+                ProductVariant variant = result.first();
                 View view = createVariantView(variant);
                 mBinder.llContainer.addView(view);
-                mTotalStock = mTotalStock + variant.quantity;
+                mTotalStock = variant.quantity;
+                selectVariant(view);
+            } else {
+                for (ProductVariant variant : result) {
+                    View view = createVariantView(variant);
+                    mBinder.llContainer.addView(view);
+                    mTotalStock = mTotalStock + variant.quantity;
+                }
             }
-        }
-        if (mDetailNavigator != null) {
-            mDetailNavigator.showedVariants();
+            if (mDetailNavigator != null) {
+                mDetailNavigator.showedVariants();
+            }
         }
     }
 
@@ -86,6 +95,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
     }
 
     private void setUp() {
+        widthVariantItem = getResources().getDimensionPixelSize(R.dimen.variant_width_with_padding);
         mViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
@@ -95,7 +105,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     public void selectVariant(String variantModelId) {
         int count = mBinder.llContainer.getChildCount();
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             View view = mBinder.llContainer.getChildAt(i);
             if (view.getTag() instanceof ProductVariant) {
                 ProductVariant variant = (ProductVariant) view.getTag();
@@ -127,6 +137,24 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
             return (ProductVariant) mSelectedVariantView.getTag();
         }
         return null;
+    }
+
+    @Override
+    public void nextVariantView() {
+        float currentPos = mBinder.scrollView.getScrollX();
+        int currentIndex = Math.round(currentPos / widthVariantItem);
+        int pos = (currentIndex + 1) * widthVariantItem;
+        pos = pos > mMaxScroll ? mMaxScroll : pos;
+        mBinder.scrollView.scrollTo(pos, 0);
+    }
+
+    @Override
+    public void previousVariantView() {
+        float currentPos = mBinder.scrollView.getScrollX();
+        int currentIndex = Math.round(currentPos / widthVariantItem);
+        int pos = (currentIndex - 1) * widthVariantItem;
+        pos = pos > 0 ? pos : 0;
+        mBinder.scrollView.scrollTo(pos,0);
     }
 
     @Override

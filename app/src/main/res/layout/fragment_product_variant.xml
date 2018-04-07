@@ -47,6 +47,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:onClick="@{(view) -> navigator.previousVariantView()}"
                 android:layout_centerVertical="true"
                 android:layout_width="28dp"
                 android:layout_height="match_parent"
@@ -54,6 +55,7 @@
                 android:src="@mipmap/icon_variant_previous" />
 
             <HorizontalScrollView
+                android:id="@+id/scrollView"
                 android:layout_height="@dimen/variant_height"
                 android:layout_width="match_parent"
                 android:layout_marginEnd="28dp"
@@ -66,6 +68,7 @@
             </HorizontalScrollView>
 
             <ImageView
+                android:onClick="@{(view) -> navigator.nextVariantView()}"
                 android:layout_centerVertical="true"
                 android:layout_width="28dp"
                 android:layout_height="match_parent"
