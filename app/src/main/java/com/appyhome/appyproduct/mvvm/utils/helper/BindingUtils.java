@@ -2,13 +2,10 @@ package com.appyhome.appyproduct.mvvm.utils.helper;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -19,9 +16,7 @@ import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
 import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
 import com.appyhome.appyproduct.mvvm.utils.config.GlideApp;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -158,5 +153,10 @@ public final class BindingUtils {
     @BindingAdapter("android:visibility")
     public static void setVisibility(View view, Boolean value) {
         view.setVisibility(value ? View.VISIBLE : View.GONE);
+    }
+
+    @BindingAdapter("textVisible")
+    public static void setVisibility(View view, String text) {
+        view.setVisibility(text != null && text.length() > 0 ? View.VISIBLE : View.GONE);
     }
 }

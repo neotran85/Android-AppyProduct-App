@@ -22,6 +22,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<Boolean> checkedAll = new ObservableField<>(false);
     public ObservableField<Boolean> isFirstProductOfStore = new ObservableField<>(false);
     public ObservableField<Boolean> isEditMode = new ObservableField<>(false);
+    public ObservableField<String> alertText = new ObservableField<>("");
 
     private int variantStockNumber = 0;
 
@@ -96,7 +97,6 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setProductCartId(productCart.id);
         setProductId(productCart.product_id);
         sellerName.set(productCart.seller_name);
-        amount.set(productCart.amount + "");
         price.set(productCart.price + "");
         setNavigator(navigator);
         checked.set(productCart.checked);
@@ -104,6 +104,23 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setVariantModelId(productCart.variant_model_id);
         variantStock.set("(Stock: " + productCart.variant_stock + ")");
         setVariantStockNumber(productCart.variant_stock);
+
+        if (productCart.amount > productCart.variant_stock) {
+            alertText.set("Sorry, unable to add more than " + productCart.variant_stock + " items");
+            amount.set(productCart.variant_stock + "");
+            updateProductCartItemAmount(productCart.variant_stock);
+        } else
+            amount.set(productCart.amount + "");
+    }
+
+    private void updateProductCartItemAmount(int amountForced) {
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(getProductCartId(), checked.get(),
+                amountForced, getVariantModelId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCart -> {
+                    // DO NOTHING
+                }, Crashlytics::logException));
     }
 
     public ProductCartItemViewModel duplicate() {
@@ -127,7 +144,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     }
 
     public void update(ProductVariant variant) {
-        price.set(variant.price +"");
+        price.set(variant.price + "");
         variationName.set(variant.variant_name);
         setVariantModelId(variant.model_id);
         variantStock.set("(Stock: " + variant.quantity + ")");

@@ -59,6 +59,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
 
         public void onClick(View view) {
             int amount = 0;
+            viewModel.alertText.set("");
             switch (view.getId()) {
                 case R.id.btnDecrease:
                     amount = Integer.valueOf(viewModel.amount.get());
