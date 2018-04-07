@@ -127,7 +127,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     }
 
     public void update(ProductVariant variant) {
-        price.set("RM " + variant.price);
+        price.set(variant.price +"");
         variationName.set(variant.variant_name);
         setVariantModelId(variant.model_id);
         variantStock.set("(Stock: " + variant.quantity + ")");

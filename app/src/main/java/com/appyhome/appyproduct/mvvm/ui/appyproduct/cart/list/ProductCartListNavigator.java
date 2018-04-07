@@ -18,4 +18,7 @@ public interface ProductCartListNavigator {
     void clearCarts();
 
     void selectAllCarts();
+
+    void emptyProductCarts();
+
 }
