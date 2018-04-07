@@ -1,24 +1,17 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 
 import android.databinding.ObservableField;
-import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
@@ -90,28 +83,41 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         amountAdded.set(amount + "");
     }
 
-    public void addProductToCart(String variantId) {
+    public void addProductToCart(String variantId, boolean isBuyNow) {
         getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantId, getIntegerAmountAdded())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {
                         getNavigator().updateCartCount();
-                        getNavigator().addedToCartCompleted();
+                        getNavigator().addedToCartCompleted(isBuyNow);
                     }
                 }, Crashlytics::logException));
     }
 
     public void inputValue(Product product, boolean isAllFavorited) {
+        inputValue(product);
+        isFavorite.set(isAllFavorited);
+    }
+
+    private void inputValue(Product product) {
         title.set(product.product_name);
         imageURL.set(product.avatar_name);
         idProduct = product.id;
         price.set("RM " + product.lowest_price);
-        isFavorite.set(isAllFavorited);
         rate.set(product.rate);
         rateCount.set(product.rate_count + "");
         discount.set(product.discount + "%");
         isDiscount.set(product.discount > 0);
         favoriteCount.set(product.favorite_count + "");
+    }
+
+    private void checkIfFavorite(String userId, int productId) {
+        getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(isLiked -> {
+                    isFavorite.set(isLiked);
+                }, Crashlytics::logException));
     }
 
     public void getProductCachedById() {
@@ -120,7 +126,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCached -> {
                     if (productCached != null && productCached.isValid()) {
-                        inputValue(productCached.convertToProduct(), false);
+                        inputValue(productCached.convertToProduct());
+                        checkIfFavorite(getUserId(), idProduct);
                     }
                 }, Crashlytics::logException));
     }

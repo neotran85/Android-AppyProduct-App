@@ -656,6 +656,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<Boolean> isProductFavorite(String userId, int idProduct) {
+        return mDbHelper.isProductFavorite(userId, idProduct);
+    }
+
+    @Override
     public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
         return mDbHelper.addProductVariants(variants);
     }

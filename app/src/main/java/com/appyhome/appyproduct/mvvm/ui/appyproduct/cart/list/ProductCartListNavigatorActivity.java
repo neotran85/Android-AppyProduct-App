@@ -25,7 +25,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
         implements ProductCartListNavigator, EditVariantNavigator,
         ProductCartItemNavigator, DialogInterface.OnClickListener {
 
-    protected static final int REQUEST_DETAIL = 111121;
+    protected static final int REQUEST_DETAIL = 11;
 
     public abstract ProductCartAdapter getAdapter();
 

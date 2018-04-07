@@ -120,9 +120,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void addedToCartCompleted() {
-        // DO NOTHING HERE
-    }
+    public void addedToCartCompleted(boolean isBuyNow) {}
 
     @Override
     public BaseViewModel getMainViewModel() {

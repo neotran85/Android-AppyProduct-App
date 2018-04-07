@@ -113,4 +113,6 @@ public interface DbHelper {
     Flowable<RealmResults<ProductVariant>> getProductVariants(int productId);
 
     Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic);
+
+    Flowable<Boolean> isProductFavorite(String userId, int idProduct);
 }

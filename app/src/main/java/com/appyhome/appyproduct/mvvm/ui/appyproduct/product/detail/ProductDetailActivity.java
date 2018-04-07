@@ -38,11 +38,10 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         BaseSliderView.OnSliderClickListener, ProductDetailVariantNavigator {
 
     @Inject
-    public ProductItemViewModel mMainViewModel;
+    public ProductItemViewModel mViewModel;
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-
 
     ActivityProductDetailBinding mBinder;
 
@@ -50,9 +49,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private ProductVariantFragment mProductVariantFragment;
 
-    private boolean isBuyNow = false;
-
     private Point mCartPosition = new Point();
+
     private Point mAddToCartPosition = new Point();
 
     private int mTotalStock = 0;
@@ -78,18 +76,17 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
-        mBinder.setViewModel(mMainViewModel);
-        mMainViewModel.setNavigator(this);
+        mBinder.setViewModel(mViewModel);
+        mViewModel.setNavigator(this);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getKeywordString());
         loadImages();
         getCartPosition();
         int productId = getProductIdByIntent();
         if (productId > 0) {
-            mProductVariantFragment = ProductVariantFragment.newInstance(productId);
-            mProductVariantFragment.setDetailNavigator(this);
-            mProductVariantFragment.setProductId(productId);
             getViewModel().setProductId(productId);
             getViewModel().getProductCachedById();
+            mProductVariantFragment = ProductVariantFragment.newInstance(productId);
+            mProductVariantFragment.setDetailNavigator(this);
             showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
         }
     }
@@ -142,24 +139,22 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (variant == null) {
             showAlert(getString(R.string.please_choose_variant));
         } else {
-            isBuyNow = true;
-            getViewModel().addProductToCart(variant.model_id);
+            getViewModel().addProductToCart(variant.model_id, true);
         }
     }
 
     @Override
-    public void addedToCartCompleted() {
+    public void addedToCartCompleted(boolean isBuyNow) {
         if (isBuyNow) {
             startActivity(ProductCartListActivity.getStartIntent(this));
         } else {
             showAlert(getViewModel().amountAdded.get() + " " + getString(R.string.items_added_to_your_card));
         }
-        isBuyNow = false;
     }
 
     @Override
     public BaseViewModel getMainViewModel() {
-        return mMainViewModel;
+        return mViewModel;
     }
 
     @Override
@@ -187,7 +182,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
                 if (getViewModel() != null) {
                     ProductVariant variant = mProductVariantFragment.getSelectedVariant();
                     if (variant != null) {
-                        getViewModel().addProductToCart(variant.model_id);
+                        getViewModel().addProductToCart(variant.model_id, false);
                         mBinder.ivProductBox.setVisibility(View.GONE);
                     }
                 }
@@ -199,7 +194,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     public void share() {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mMainViewModel.title.get());
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mViewModel.title.get());
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
@@ -228,7 +223,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public ProductItemViewModel getViewModel() {
-        return mMainViewModel;
+        return mViewModel;
     }
 
     @Override
@@ -255,9 +250,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void increaseAmount() {
-        int amount = mMainViewModel.getIntegerAmountAdded() + 1;
+        int amount = mViewModel.getIntegerAmountAdded() + 1;
         if (amount <= mTotalStock)
-            mMainViewModel.setIntegerAmountAdded(amount);
+            mViewModel.setIntegerAmountAdded(amount);
         else {
             showAlert("Unable to add more than " + mTotalStock + " items.");
         }
@@ -271,15 +266,15 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMainViewModel = null;
+        mViewModel = null;
         ProductDetailActivityModule.clickedViewModel = null;
     }
 
     @Override
     public void decreaseAmount() {
-        int amount = mMainViewModel.getIntegerAmountAdded() - 1;
+        int amount = mViewModel.getIntegerAmountAdded() - 1;
         if (amount >= 1)
-            mMainViewModel.setIntegerAmountAdded(amount);
+            mViewModel.setIntegerAmountAdded(amount);
     }
 
     @Override

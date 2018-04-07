@@ -95,9 +95,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
-    public void addedToCartCompleted() {
-
-    }
+    public void addedToCartCompleted(boolean isBuyNow) {}
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
@@ -225,8 +223,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     public void closeLoading() {
         AlertManager.getInstance(this).closeLoading();
     }
-
-    /************************* RECYCLER VIEW SETUP  ************************/
 
     @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
