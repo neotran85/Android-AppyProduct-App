@@ -9,7 +9,10 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -247,6 +250,32 @@ public class AppApiHelper implements ApiHelper {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_ADD)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> deleteProductToCart(DeleteCartRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_DELETE)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> editProductToCart(EditCartRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_EDIT)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> fetchCartsServer() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(ApiResponse.class);
     }

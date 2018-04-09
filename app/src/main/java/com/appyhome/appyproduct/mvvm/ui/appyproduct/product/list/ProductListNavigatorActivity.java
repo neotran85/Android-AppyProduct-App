@@ -215,16 +215,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
-    public void showLoading() {
-        AlertManager.getInstance(this).showLoading();
-    }
-
-    @Override
-    public void closeLoading() {
-        AlertManager.getInstance(this).closeLoading();
-    }
-
-    @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
         GridLayoutManager layoutManager = new GridLayoutManager(this,
                 mColumns, GridLayoutManager.VERTICAL,

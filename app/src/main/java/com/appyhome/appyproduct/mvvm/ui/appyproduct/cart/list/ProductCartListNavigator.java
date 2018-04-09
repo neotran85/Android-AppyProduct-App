@@ -21,4 +21,7 @@ public interface ProductCartListNavigator {
 
     void emptyProductCarts();
 
+    void showLoading();
+
+    void closeLoading();
 }

@@ -132,11 +132,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void showLoading() {
-        hideLoading();
+        closeLoading();
         AlertManager.getInstance(this).showLoading();
     }
 
-    public void hideLoading() {
+    public void closeLoading() {
         AlertManager.getInstance(this).closeLoading();
     }
 

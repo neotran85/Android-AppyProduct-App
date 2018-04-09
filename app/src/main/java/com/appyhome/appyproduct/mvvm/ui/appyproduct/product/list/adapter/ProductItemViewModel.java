@@ -1,14 +1,14 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -94,6 +94,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {
                         getNavigator().updateCartCount();
                         getNavigator().addedToCartCompleted(isBuyNow);
+                        addProductCartServer(productCart);
                     }
                 }, Crashlytics::logException));
     }
@@ -132,6 +133,30 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct());
                         checkIfFavorite(getUserId(), idProduct);
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void editProductCartServer(ProductCart cart) {
+        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(cart.product_id, cart.variant_id, cart.amount))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        Log.v("editProductCartServer", "UPDATED SUCCESSFUL");
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void addProductCartServer(ProductCart cart) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(cart.product_id, cart.variant_id, cart.amount))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        Log.v("addProductCartServer", "UPDATED SUCCESSFUL");
+                    } else {
+                        editProductCartServer(cart);
                     }
                 }, Crashlytics::logException));
     }

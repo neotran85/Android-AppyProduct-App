@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.text.TextUtils;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,10 +85,22 @@ public final class DataUtils {
     public static String joinStrings(CharSequence separator, String... params) {
         ArrayList<String> arrayList = new ArrayList<>();
         for (String item : params) {
-            if(item != null && item.length() > 0)
+            if (item != null && item.length() > 0)
                 arrayList.add(item);
         }
         return TextUtils.join(separator, arrayList);
+    }
+
+    public static JSONObject convertToJsonObject(LinkedTreeMap<String, String> object) {
+        JSONObject result = new JSONObject();
+        try {
+            for (String key : object.keySet()) {
+                result.put(key, object.get(key));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static boolean contains(ArrayList<Integer> ids, int id) {

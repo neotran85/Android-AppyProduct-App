@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 
 import java.util.ArrayList;
 
@@ -115,4 +116,6 @@ public interface DbHelper {
     Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic);
 
     Flowable<Boolean> isProductFavorite(String userId, int idProduct);
+
+    Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
 }

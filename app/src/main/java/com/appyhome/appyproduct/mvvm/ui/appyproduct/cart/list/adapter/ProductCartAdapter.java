@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -42,9 +41,12 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     public void recycle() {
         mProductCartListViewModel = null;
         mNavigator = null;
-        viewModelManager.clear();
-        mDeletedItems.clear();
-        mItems.clear();
+        if (viewModelManager != null)
+            viewModelManager.clear();
+        if (mDeletedItems != null)
+            mDeletedItems.clear();
+        if (mItems != null)
+            mItems.clear();
         viewModelManager = null;
         mDeletedItems = null;
         mItems = null;

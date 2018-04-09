@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
-import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
@@ -58,7 +56,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
         mProductCartAdapter.setMainViewModel(mViewModel);
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
-        mViewModel.getAllProductCarts();
+        getViewModel().getAllProductCarts();
     }
 
     @Override
@@ -115,7 +113,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_DETAIL) {
-            mViewModel.getAllProductCarts();
+            getViewModel().getAllProductCarts();
         }
     }
 

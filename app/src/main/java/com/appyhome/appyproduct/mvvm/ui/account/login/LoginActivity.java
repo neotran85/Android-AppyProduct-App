@@ -126,7 +126,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void doAfterFetchProfile() {
+    public void doAfterFetchUserInfoCompleted() {
         Intent intent = getIntent();
         setResult(RESULT_OK, intent);
         finish();
@@ -171,7 +171,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             return;
         }
         hideKeyboard();
-        mLoginViewModel.login(phoneNumber, password);
+        getViewModel().login(phoneNumber, password);
     }
 
     private void showTextInputError(TextInputEditText edt) {

@@ -3,13 +3,19 @@ package com.appyhome.appyproduct.mvvm.ui.account.login;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     private String mPhoneNumber = "";
@@ -26,19 +32,18 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void login(String phone, String password) {
-        setIsLoading(true);
         mPhoneNumber = phone;
         mPassword = password;
         mTryCounter = 0;
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doUserLogin(new LoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
-                    setIsLoading(false);
                     handleLoginResponse(response);
                 }, throwable -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().handleErrorService(throwable);
                 }));
     }
@@ -73,18 +78,17 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 } else {
                     // Account is exist
                     if (message != null) {
-                        if (message.equals(ApiMessage.INVALID_PHONE_NUMBER))
+                        if (message.equals(ApiMessage.INVALID_PHONE_NUMBER)) {
                             // Account is not exist
                             getNavigator().showSignUpDialog();
-                        else
-                            // Phone number is invalid
-                            getNavigator().showErrorOthers();
+                            return;
+                        }
                     }
                 }
                 mTryCounter++;
-                return;
             }
         }
+        getNavigator().closeLoading();
         // Unknown Error
         getNavigator().showErrorServer();
     }
@@ -98,7 +102,6 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void fetchUserProfile() {
-        setIsLoading(true);
         getCompositeDisposable().add(getDataManager().getUserProfile()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
@@ -126,7 +129,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
                                         getDataManager().setCurrentUsername(phoneNumberStr);
 
-                                        getNavigator().doAfterFetchProfile();
+                                        fetchCartsServer();
 
                                         return;
                                     }
@@ -136,6 +139,51 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                             }
                         }
                     }
-                }, throwable -> {}));
+                    getNavigator().closeLoading();
+                }, throwable -> {
+                }));
+    }
+
+
+    private void updateAllProductCarts(ArrayList<ProductCartResponse> arrayList) {
+        getCompositeDisposable().add(getDataManager().updateAllProductCarts(getUserId(), arrayList)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // UPDATE CART SUCCESSFUL
+                    getNavigator().closeLoading();
+                    getNavigator().doAfterFetchUserInfoCompleted();
+                }, Crashlytics::logException));
+    }
+
+
+    private void fetchCartsServer() {
+        getCompositeDisposable().add(getDataManager().fetchCartsServer()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        ArrayList<ProductCartResponse> arrayList = new ArrayList<>();
+                        try {
+                            LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
+                            Gson gson = new Gson();
+                            for (String key : linkedTreeMap.keySet()) {
+                                ArrayList array = linkedTreeMap.get(key);
+                                for (int i = 0; i < array.size(); i++) {
+                                    JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                                    ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
+                                    arrayList.add(item);
+                                }
+                            }
+                            if (arrayList.size() > 0) {
+                                updateAllProductCarts(arrayList);
+                                return;
+                            }
+                        } catch (Exception e) {
+                            Crashlytics.logException(e);
+                        }
+                    }
+                    getNavigator().closeLoading();
+                }, Crashlytics::logException));
     }
 }

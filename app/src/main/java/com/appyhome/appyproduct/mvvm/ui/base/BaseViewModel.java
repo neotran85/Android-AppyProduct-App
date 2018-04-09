@@ -10,8 +10,6 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -91,41 +89,5 @@ public abstract class BaseViewModel<N> extends ViewModel {
         if (activity != null)
             return NetworkUtils.isNetworkConnected(activity);
         return false;
-    }
-
-    public void updateServerCarts() {
-        // EMPTY PRODUCT CARTS FIRST
-        getCompositeDisposable().add(getDataManager().emptyUserCarts()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null) {
-                        if (data.code.equals(ApiCode.OK_200)) {
-                            // ADD PRODUCT CART TO SERVER
-                            getCompositeDisposable().add(getDataManager().getAllProductCarts(getUserId())
-                                    .observeOn(getSchedulerProvider().ui())
-                                    .subscribe(results -> {
-                                        if (results != null) {
-                                            for (ProductCart cart : results) {
-                                                addProductToCartServer(cart.product_id, cart.variant_id, cart.amount);
-                                            }
-                                        }
-                                    }, Crashlytics::logException));
-                        }
-                    }
-                }, Crashlytics::logException));
-    }
-
-    private void addProductToCartServer(int productId, int variantId, int amount) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(productId, variantId, amount))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null) {
-                        if (data.code.equals(ApiCode.OK_200)) {
-                            // UPDATED SUCCESSFUL
-                        }
-                    }
-                }, Crashlytics::logException));
     }
 }

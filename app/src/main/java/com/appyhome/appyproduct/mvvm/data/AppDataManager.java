@@ -26,7 +26,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -669,10 +673,29 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Single<ApiResponse> fetchCartsServer() {
+        return mApiHelper.fetchCartsServer();
+    }
+
+    @Override
     public Single<ApiResponse> emptyUserCarts() {
         return mApiHelper.emptyUserCarts();
     }
 
+    @Override
+    public Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
+        return mDbHelper.updateAllProductCarts(userId, array);
+    }
+
+    @Override
+    public Single<ApiResponse> deleteProductToCart(DeleteCartRequest request) {
+        return mApiHelper.deleteProductToCart(request);
+    }
+
+    @Override
+    public Single<ApiResponse> editProductToCart(EditCartRequest request) {
+        return mApiHelper.editProductToCart(request);
+    }
     @Override
     public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
         return mDbHelper.addProductVariants(variants);

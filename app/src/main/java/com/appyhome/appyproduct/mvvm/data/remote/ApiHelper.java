@@ -9,7 +9,10 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -77,4 +80,10 @@ public interface ApiHelper {
     Single<ApiResponse> addProductToCart(AddToCartRequest request);
 
     Single<ApiResponse> emptyUserCarts();
+
+    Single<ApiResponse> fetchCartsServer();
+
+    Single<ApiResponse> deleteProductToCart(DeleteCartRequest request);
+
+    Single<ApiResponse> editProductToCart(EditCartRequest request);
 }
