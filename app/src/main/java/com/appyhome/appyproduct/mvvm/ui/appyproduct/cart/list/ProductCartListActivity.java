@@ -88,10 +88,6 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     @Override
     public void onPause() {
         super.onPause();
-        if (mProductCartAdapter != null) {
-            mProductCartAdapter.onUpdateDatabase();
-            getViewModel().updateServerCarts();
-        }
     }
 
     @Override

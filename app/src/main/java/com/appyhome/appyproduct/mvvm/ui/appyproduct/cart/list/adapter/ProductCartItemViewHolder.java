@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 
 import android.graphics.Paint;
+import android.os.Handler;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -13,6 +14,9 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
 
     private ViewItemProductCartItemBinding mBinding;
     private ProductCartAdapter mAdapter;
+    private Runnable mUpdateRunnable;
+    private boolean enableToStartRunnable = true;
+    private Handler mHandler;
 
     public ProductCartItemViewHolder(ViewItemProductCartItemBinding binding, ProductCartAdapter adapter, ProductCartItemNavigator navigator) {
         super(binding.getRoot());
@@ -31,6 +35,10 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
     }
 
     private void removeCartItem(ProductCartItemViewModel viewModel) {
+        if(mHandler != null) {
+            mHandler.removeCallbacks(mUpdateRunnable);
+            mHandler = null;
+        }
         if (mAdapter != null)
             mAdapter.removeCartItem(viewModel);
     }
@@ -45,8 +53,31 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
 
     @Override
     public void onBind(int position) {
-        if (mAdapter != null)
-            setViewModel((ProductCartItemViewModel) mAdapter.getItems().get(position));
+        if (mAdapter != null) {
+            ProductCartItemViewModel itemViewModel = (ProductCartItemViewModel) mAdapter.getItems().get(position);
+            setViewModel(itemViewModel);
+            mUpdateRunnable = () -> {
+                enableToStartRunnable = true;
+                if (itemViewModel != null)
+                    itemViewModel.updateProductCartItem();
+                if(mHandler != null) {
+                    mHandler.removeCallbacks(mUpdateRunnable);
+                    mHandler = null;
+                }
+            };
+        }
+    }
+
+    private void timingForUpdate() {
+        if (enableToStartRunnable) {
+            enableToStartRunnable = false;
+            if (mHandler != null) {
+                mHandler.removeCallbacks(mUpdateRunnable);
+                mHandler = null;
+            }
+            mHandler = new Handler();
+            mHandler.postDelayed(mUpdateRunnable, 1000);
+        }
     }
 
     public class OnClickItemListener implements View.OnClickListener {
@@ -69,6 +100,8 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                         mAdapter.updateTotalCost();
                     if (amount <= 0) {
                         removeCartItem(viewModel);
+                    } else {
+                        timingForUpdate();
                     }
                     break;
                 case R.id.cbWillBuy:
@@ -78,8 +111,10 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                     amount = Integer.valueOf(viewModel.amount.get()) + 1;
                     if (amount <= viewModel.getVariantStockNumber()) {
                         viewModel.amount.set(amount + "");
-                        if (mAdapter != null)
+                        timingForUpdate();
+                        if (mAdapter != null) {
                             mAdapter.updateTotalCost();
+                        }
                     } else {
                         mBinding.getNavigator().showAlert("Sorry, unable to add more than " + viewModel.getVariantStockNumber());
                     }

@@ -13,6 +13,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -86,4 +87,6 @@ public interface ApiHelper {
     Single<ApiResponse> deleteProductToCart(DeleteCartRequest request);
 
     Single<ApiResponse> editProductToCart(EditCartRequest request);
+
+    Single<ApiResponse> editProductCartVariant(EditCartVariantRequest request);
 }

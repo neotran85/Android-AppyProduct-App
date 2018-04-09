@@ -228,21 +228,25 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<ProductCached> getProductCachedById(int idProduct) {
         beginTransaction();
-        Flowable<ProductCached> product = getRealm().where(ProductCached.class)
+        ProductCached product = getRealm().where(ProductCached.class)
                 .equalTo("id", idProduct)
-                .findFirst().asFlowable();
+                .findFirst();
+        if (product == null)
+             product = new ProductCached();
         getRealm().commitTransaction();
-        return product;
+        return product.asFlowable();
     }
 
     @Override
     public Flowable<Product> getProductById(int idProduct) {
         beginTransaction();
-        Flowable<Product> topic = getRealm().where(Product.class)
+        Product product = getRealm().where(Product.class)
                 .equalTo("id", idProduct)
-                .findFirst().asFlowable();
+                .findFirst();
+        if (product == null)
+            product = new Product();
         getRealm().commitTransaction();
-        return topic;
+        return product.asFlowable();
     }
 
     @Override
@@ -362,6 +366,7 @@ public class AppDbHelper implements DbHelper {
                     if (cartItem == null) {
                         cartItem = new ProductCart();
                         cartItem.id = newId;
+                        cartItem.product_avatar = response.product_avatar;
                         cartItem.checked = true;
                     }
                     cartItem = inputProductCart(userId, cartItem, response);
@@ -375,6 +380,7 @@ public class AppDbHelper implements DbHelper {
                     ProductCart cartItem = new ProductCart();
                     cartItem.id = newId;
                     cartItem.checked = true;
+                    cartItem.product_avatar = response.product_avatar;
                     cartItem = inputProductCart(userId, cartItem, response);
                     arrayList.add(cartItem);
                 }
@@ -392,7 +398,6 @@ public class AppDbHelper implements DbHelper {
         cartItem.seller_name = item.seller_name;
         cartItem.product_name = item.product_name;
         cartItem.amount = item.quantity;
-        cartItem.product_avatar = item.product_avatar;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
         cartItem.variant_model_id = item.product_id + "_" + item.variant_id;

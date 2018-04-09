@@ -118,6 +118,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     @Override
     public void saveProductCartItem_Done(ProductCart productCart) {
         getAdapter().updateProductCartItem(productCart);
+        getViewModel().saveProductVariantToServer(productCart);
         closeFragment(EditVariantFragment.TAG);
     }
 

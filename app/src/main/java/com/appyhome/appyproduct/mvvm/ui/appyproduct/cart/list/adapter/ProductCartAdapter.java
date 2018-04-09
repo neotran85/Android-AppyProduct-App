@@ -21,10 +21,10 @@ import io.realm.RealmResults;
 public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartItemNavigator> {
 
     public HashMap<String, ArrayList<ProductCartItemViewModel>> viewModelManager;
-    private ProductCartListViewModel mProductCartListViewModel;
-    private ProductCartItemNavigator mNavigator;
 
-    private ArrayList<ProductCartItemViewModel> mDeletedItems = null;
+    private ProductCartListViewModel mProductCartListViewModel;
+
+    private ProductCartItemNavigator mNavigator;
 
     public ProductCartAdapter() {
         this.mItems = null;
@@ -43,12 +43,9 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         mNavigator = null;
         if (viewModelManager != null)
             viewModelManager.clear();
-        if (mDeletedItems != null)
-            mDeletedItems.clear();
         if (mItems != null)
             mItems.clear();
         viewModelManager = null;
-        mDeletedItems = null;
         mItems = null;
     }
 
@@ -57,21 +54,6 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
             return mItems.indexOf(item);
         }
         return -1;
-    }
-
-    public void onUpdateDatabase() {
-        if (mItems != null && mItems.size() > 0) {
-            for (BaseViewModel item : mItems) {
-                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                cartItem.updateProductCartItem();
-            }
-        }
-        if (mDeletedItems != null && mDeletedItems.size() > 0) {
-            for (BaseViewModel item : mDeletedItems) {
-                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                cartItem.removeProductCartItem();
-            }
-        }
     }
 
     private ProductCartItemViewModel createViewModel(ProductCart productCart, ProductCartItemNavigator navigator) {
@@ -121,8 +103,9 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
             }
             if (arrayList.size() > 0) {
                 for (ProductCartItemViewModel cartItem : arrayList) {
-                    if (cartItem != target)
+                    if (cartItem != target) {
                         removeCartItem(cartItem);
+                    }
                 }
             }
             updateTotalCost();
@@ -149,7 +132,6 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
 
     public void addItems(RealmResults<ProductCart> results, ProductCartItemNavigator navigator) {
         mItems = new ArrayList<>();
-        mDeletedItems = new ArrayList<>();
         mNavigator = navigator;
         if (viewModelManager != null) {
             viewModelManager.clear();
@@ -219,9 +201,9 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
 
     public void removeCartItem(ProductCartItemViewModel itemViewModel) {
         if (!isCartEmpty()) {
+            itemViewModel.removeProductCartItem(); // REMOVE FROM  DB AND SERVER
             String sellerName = itemViewModel.sellerName.get();
             ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
-            mDeletedItems.add(itemViewModel);
             int pos = getItems().indexOf(itemViewModel);
             getItems().remove(itemViewModel);
             array.remove(itemViewModel);

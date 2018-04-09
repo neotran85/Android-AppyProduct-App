@@ -7,17 +7,9 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavigator> {
 
@@ -52,6 +44,27 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 }, Crashlytics::logException));
     }
 
+    public void saveProductVariantToServer(ProductCart productCart) {
+        // SAVE VARIANT TO SERVER
+        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(productCart.product_id,
+                productCart.variant_id, productCart.amount))
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        Log.v("saveProductVariant", "UPDATED VARIANT SUCCESSFULLY");
+                    } else {
+                        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(productCart.product_id,
+                                productCart.variant_id, productCart.amount))
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(results -> {
+                                    if (results != null && results.isValid()) {
+                                        Log.v("saveProductVariant", "UNABLE TO UPDATE, THEN ADDED VARIANT SUCCESSFULLY");
+                                    }
+                                }, Crashlytics::logException));
+                    }
+                }, Crashlytics::logException));
+    }
+
     public void getAllProductCarts() {
         getCompositeDisposable().add(getDataManager().getAllProductCarts(getUserId())
                 .take(1)
@@ -62,40 +75,5 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 }, Crashlytics::logException));
     }
 
-    public void updateServerCarts() {
-        getCompositeDisposable().add(getDataManager().getAllProductCarts(getUserId())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(results -> {
-                    if (results != null) {
-                        for (ProductCart cart : results) {
-                            editProductCartServer(cart);
-                        }
-                    }
-                }, Crashlytics::logException));
-    }
 
-    private void editProductCartServer(ProductCart cart) {
-        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(cart.product_id, cart.variant_id, cart.amount))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                        if (data != null && data.isValid()) {
-                        Log.v("editProductCartServer", "UPDATED SUCCESSFUL");
-                    } else {
-                        // IF NOT SUCCESS, THEN ADD A NEW ONE
-                        addProductCartServer(cart);
-                    }
-                }, Crashlytics::logException));
-    }
-
-    private void addProductCartServer(ProductCart cart) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(cart.product_id, cart.variant_id, cart.amount))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null && data.isValid()) {
-                        Log.v("addProductCartServer", "UPDATED SUCCESSFUL");
-                    }
-                }, Crashlytics::logException));
-    }
 }

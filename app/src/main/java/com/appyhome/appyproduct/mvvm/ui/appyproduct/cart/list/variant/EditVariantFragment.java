@@ -39,6 +39,8 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     private EditVariantNavigator mNavigator;
 
+    private int mOldVariantId = -1;
+
     public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel, EditVariantNavigator navigator) {
         Bundle args = new Bundle();
         EditVariantFragment fragment = new EditVariantFragment();
@@ -56,6 +58,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         mProductCartItemViewModel = viewModel.duplicate();
         mProductCartItemViewModel.isFirstProductOfStore.set(true);
         mProductCartItemViewModel.checked.set(true);
+        mOldVariantId = mProductCartItemViewModel.getVariantId();
     }
 
     @Override
@@ -125,7 +128,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     @Override
     public void onClick(View view) {
-        getViewModel().saveProductCartItem();
+        getViewModel().saveProductCartItem(mOldVariantId);
     }
 
     @Override

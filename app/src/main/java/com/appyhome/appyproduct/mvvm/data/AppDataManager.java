@@ -30,6 +30,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
@@ -696,6 +697,12 @@ public class AppDataManager implements DataManager {
     public Single<ApiResponse> editProductToCart(EditCartRequest request) {
         return mApiHelper.editProductToCart(request);
     }
+
+    @Override
+    public Single<ApiResponse> editProductCartVariant(EditCartVariantRequest request) {
+        return mApiHelper.editProductCartVariant(request);
+    }
+
     @Override
     public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
         return mDbHelper.addProductVariants(variants);

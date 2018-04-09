@@ -1,10 +1,14 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -32,6 +36,8 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     private long productCartId;
 
+    private int variantId;
+
     public int getVariantStockNumber() {
         return variantStockNumber;
     }
@@ -58,16 +64,48 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     }
 
     public void removeProductCartItem() {
-        getCompositeDisposable().add(getDataManager().removeProductCartItem(productCartId)
+        getCompositeDisposable().add(getDataManager().removeProductCartItem(getProductCartId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // REMOVED ADDED
+                    // REMOVE FROM LOCAL DB SUCCESSFULLY
+                    Log.v("removeProductCartItem", "REMOVED FROM DB SUCCESSFULLY");
+                }, Crashlytics::logException));
+        // REMOVED FROM SERVER
+        getCompositeDisposable().add(getDataManager().deleteProductToCart(new DeleteCartRequest(getProductId(), getVariantId()))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(results -> {
+                    if (results != null && results.isValid()) {
+                        Log.v("deleteProductToCart", "DELETED FROM SERVER SUCCESSFULLY");
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void editProductCartServer() {
+        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(getProductId(), getVariantId(), Integer.valueOf(amount.get())))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        Log.v("editProductCartServer", "CART UPDATED SUCCESSFUL");
+                    } else {
+                        // IF NOT SUCCESS, THEN ADD A NEW ONE TO CART
+                        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(getProductId(), getVariantId(), Integer.valueOf(amount.get())))
+                                .subscribeOn(getSchedulerProvider().io())
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(result -> {
+                                    if (result != null && result.isValid()) {
+                                        Log.v("addProductCartServer", "CART UPDATED SUCCESSFUL");
+                                    }
+                                }, Crashlytics::logException));
+                    }
                 }, Crashlytics::logException));
     }
 
     public void updateProductCartItem() {
-        getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()), "")
+        editProductCartServer(); // EDIT CART SERVER
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()), getVariantModelId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
@@ -104,13 +142,14 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setVariantModelId(productCart.variant_model_id);
         variantStock.set("(Stock: " + productCart.variant_stock + ")");
         setVariantStockNumber(productCart.variant_stock);
-
+        setVariantId(productCart.variant_id);
         if (productCart.amount > productCart.variant_stock) {
             alertText.set("Sorry, unable to add more than" + " " + productCart.variant_stock);
             amount.set(productCart.variant_stock + "");
             updateProductCartItemAmount(productCart.variant_stock);
         } else
             amount.set(productCart.amount + "");
+        updateProductCartItem(); // UPDATE DB & SERVER DB
     }
 
     private void updateProductCartItemAmount(int amountForced) {
@@ -140,6 +179,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         itemViewModel.setVariantModelId(getVariantModelId());
         itemViewModel.variantStock.set(variantStock.get());
         itemViewModel.setVariantStockNumber(getVariantStockNumber());
+        itemViewModel.setVariantId(getVariantId());
         return itemViewModel;
     }
 
@@ -149,5 +189,14 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setVariantModelId(variant.model_id);
         variantStock.set("(Stock: " + variant.quantity + ")");
         setVariantStockNumber(variant.quantity);
+        setVariantId(variant.id);
+    }
+
+    public int getVariantId() {
+        return variantId;
+    }
+
+    public void setVariantId(int variantId) {
+        this.variantId = variantId;
     }
 }
