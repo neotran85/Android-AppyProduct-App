@@ -5,6 +5,9 @@ import android.databinding.ObservableField;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -83,13 +86,24 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         amountAdded.set(amount + "");
     }
 
-    public void addProductToCart(String variantId, boolean isBuyNow) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantId, getIntegerAmountAdded())
+    public void addProductToCart(int variantId, String variantModelId, boolean isBuyNow) {
+        // ADD TO SERVER FIRST
+        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(idProduct, variantId, getIntegerAmountAdded()))
+                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(productCart -> {
-                    if (productCart != null && getUserId().equals(productCart.user_id)) {
-                        getNavigator().updateCartCount();
-                        getNavigator().addedToCartCompleted(isBuyNow);
+                .subscribe(data -> {
+                    if (data != null) {
+                        if (data.code.equals(ApiCode.OK_200) && data.message.equals(ApiMessage.PRODUCT_ADDED)) {
+                            // THEN ADD TO DATABASE
+                            getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantModelId, getIntegerAmountAdded())
+                                    .observeOn(getSchedulerProvider().ui())
+                                    .subscribe(productCart -> {
+                                        if (productCart != null && getUserId().equals(productCart.user_id)) {
+                                            getNavigator().updateCartCount();
+                                            getNavigator().addedToCartCompleted(isBuyNow);
+                                        }
+                                    }, Crashlytics::logException));
+                        }
                     }
                 }, Crashlytics::logException));
     }

@@ -62,6 +62,24 @@ public class ApiUrlConfig {
     public static final String API_PRODUCT_VARIANT_GET = BuildConfig.BASE_URL
             + "api/appyproduct/get/variants/perproduct";
 
+    public static final String API_PRODUCT_CART_ADD = BuildConfig.BASE_URL
+            + "api/appyproduct/cart/add";
+
+    public static final String API_PRODUCT_CART_GET = BuildConfig.BASE_URL
+            + "api/appyproduct/cart/get";
+
+    public static final String API_PRODUCT_CART_EDIT = BuildConfig.BASE_URL
+            + "api/appyproduct/cart/editquantity";
+
+    public static final String API_PRODUCT_CART_VARIANT_EDIT = BuildConfig.BASE_URL
+            + "api/appyproduct/cart/editvariant";
+
+    public static final String API_PRODUCT_CART_DELETE = BuildConfig.BASE_URL
+            + "api/appyproduct/cart/delete";
+
+    public static final String API_PRODUCT_CART_EMPTY = BuildConfig.BASE_URL
+            + "api/appyproduct/cart/empty";
+
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";
     public static final String URL_AIR_CON_TYPE_INFO = "file:///android_asset/html/air_con_type_info.html";

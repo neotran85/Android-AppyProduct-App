@@ -19,7 +19,6 @@ import javax.inject.Inject;
 
 public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingStep3Binding, ServicesStep3ViewModel> implements ServicesStep3Navigator, View.OnClickListener {
 
-    public final static int REQUEST_LOGIN_FOR_BOOKING = 1113;
     @Inject
     ServicesStep3ViewModel mViewModel;
     ActivityServicesBookingStep3Binding mBinder;
@@ -74,7 +73,7 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
                 case MapManager.PLACE_PICKER_REQUEST:
                     mViewModel.updateAddressFromGooglePlaceData(this, data);
                     break;
-                case REQUEST_LOGIN_FOR_BOOKING:
+                case REQUEST_LOGIN:
                     goToStep4();
                     break;
             }
@@ -97,20 +96,12 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
     }
 
     @Override
-    public void openLoginActivity(String message, int requestCode) {
-        Intent intent = LoginActivity.getStartIntent(this);
-        intent.putExtra("message", message);
-        startActivityForResult(intent, requestCode);
-    }
-
-    @Override
     public void goToStep4() {
         if (getViewModel().isUserLoggedIn()) {
             startActivity(ServicesStep4Activity.getStartIntent(this));
         } else {
-            openLoginActivity(getString(R.string.login_required_message)
-                            + " " + getString(R.string.login_to_book_service),
-                    REQUEST_LOGIN_FOR_BOOKING);
+            askForLogin(getString(R.string.login_required_message)
+                    + " " + getString(R.string.login_to_book_service));
         }
     }
 }

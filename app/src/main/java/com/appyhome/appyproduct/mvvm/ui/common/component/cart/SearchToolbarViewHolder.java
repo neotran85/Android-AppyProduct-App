@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.common.component.cart;
 import android.content.Intent;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -15,7 +14,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
-public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnClickListener {
+public class SearchToolbarViewHolder extends BaseViewHolder {
 
     private ViewToolbarBinding mBinding;
 
@@ -39,11 +38,9 @@ public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnCl
         boolean manyWords = keyword != null && keyword.length() > 32;
         mBinding.tvKeywords.setTextSize(TypedValue.COMPLEX_UNIT_PX, mActivity.getResources().
                 getDimension(manyWords ? R.dimen.text_size_small : R.dimen.text_size_normal));
-        mBinding.llSearchKeywords.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
+    public void openSearchActivity() {
         if (mViewModel.hasKeywords.get()) {
             mActivity.finish();
         } else {
@@ -60,11 +57,15 @@ public class SearchToolbarViewHolder extends BaseViewHolder implements View.OnCl
     }
 
     public void openProductCart() {
-        if (mBinding.getViewModel().totalItemsCount.get() > 0) {
-            Intent intent = ProductCartListActivity.getStartIntent(mActivity);
-            mActivity.startActivity(intent);
+        if (mViewModel.isUserLoggedIn()) {
+            if (mBinding.getViewModel().totalItemsCount.get() > 0) {
+                Intent intent = ProductCartListActivity.getStartIntent(mActivity);
+                mActivity.startActivity(intent);
+            } else {
+                AlertManager.getInstance(mActivity).showLongToast(mActivity.getString(R.string.toast_your_cart_is_empty));
+            }
         } else {
-            AlertManager.getInstance(mActivity).showLongToast(mActivity.getString(R.string.toast_your_cart_is_empty));
+            mActivity.askForLogin("Please login to view your cart.");
         }
     }
 

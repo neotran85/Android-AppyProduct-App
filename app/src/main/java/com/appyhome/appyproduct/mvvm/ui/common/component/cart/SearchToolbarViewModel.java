@@ -27,7 +27,7 @@ public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
                 .subscribeOn(getSchedulerProvider().newThread())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(total -> {
-                    if (total >= 0)
+                    if (total >= 0 && isUserLoggedIn())
                         totalItemsCount.set(total);
                 }, Crashlytics::logException));
     }

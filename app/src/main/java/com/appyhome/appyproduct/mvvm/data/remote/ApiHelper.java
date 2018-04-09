@@ -9,6 +9,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
@@ -73,4 +75,6 @@ public interface ApiHelper {
     Single<BannersResponse> fetchBanners();
 
     Single<ProductVariantResponse> fetchProductVariant(int productId);
+
+    Single<AddToCartResponse> addProductToCart(AddToCartRequest request);
 }

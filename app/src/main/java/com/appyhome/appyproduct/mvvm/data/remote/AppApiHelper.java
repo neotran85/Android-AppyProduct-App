@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -238,5 +240,14 @@ public class AppApiHelper implements ApiHelper {
                 .addBodyParameter("product_id", productId + "")
                 .build()
                 .getObjectSingle(ProductVariantResponse.class);
+    }
+
+    @Override
+    public Single<AddToCartResponse> addProductToCart(AddToCartRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_ADD)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(AddToCartResponse.class);
     }
 }

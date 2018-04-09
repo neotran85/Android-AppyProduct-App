@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -27,6 +28,8 @@ import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity implements BaseFragment.Callback {
+
+    protected final static int REQUEST_LOGIN = 1113;
 
     private T mViewDataBinding;
     private V mViewModel;
@@ -211,6 +214,12 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public void closeRealmDatabase() {
         if (!Realm.getDefaultInstance().isClosed())
             Realm.getDefaultInstance().close();
+    }
+
+    public void askForLogin(String message) {
+        Intent intent = LoginActivity.getStartIntent(this);
+        intent.putExtra("message", message);
+        startActivityForResult(intent, REQUEST_LOGIN);
     }
 }
 
