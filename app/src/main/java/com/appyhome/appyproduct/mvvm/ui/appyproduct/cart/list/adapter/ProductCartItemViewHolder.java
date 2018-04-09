@@ -40,7 +40,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
             mHandler = null;
         }
         if (mAdapter != null)
-            mAdapter.removeCartItem(viewModel);
+            mAdapter.removeCartItem(viewModel, true);
     }
 
     public void setViewModel(ProductCartItemViewModel viewModel) {
@@ -59,7 +59,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
             mUpdateRunnable = () -> {
                 enableToStartRunnable = true;
                 if (itemViewModel != null)
-                    itemViewModel.updateProductCartItem();
+                    itemViewModel.updateProductCartItemAfterPlusAndMinus();
                 if(mHandler != null) {
                     mHandler.removeCallbacks(mUpdateRunnable);
                     mHandler = null;

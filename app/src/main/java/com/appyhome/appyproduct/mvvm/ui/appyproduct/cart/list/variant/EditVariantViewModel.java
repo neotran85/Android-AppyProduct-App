@@ -3,7 +3,9 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant;
 import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -22,23 +24,71 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
         super(dataManager, schedulerProvider);
     }
 
+    public int getAmount() {
+        return Integer.valueOf(mProductCartItemViewModel.amount.get());
+    }
+
+    public int getVariantId() {
+        return mProductCartItemViewModel.getVariantId();
+    }
+
+    public String getVariantModelId() {
+        return mProductCartItemViewModel.getVariantModelId();
+    }
+
+    public long getProductCartId() {
+        return mProductCartItemViewModel.getProductCartId();
+    }
+
+    public int getProductId() {
+        return mProductCartItemViewModel.getProductId();
+    }
+
+    public boolean isChecked() {
+        return mProductCartItemViewModel.checked.get();
+    }
+
     public void saveProductCartItem(int oldVariantId) {
         // SAVE VARIANT TO LOCAL DB
-        getCompositeDisposable().add(getDataManager().updateProductCartItem(mProductCartItemViewModel.getProductCartId(), mProductCartItemViewModel.checked.get(),
-                Integer.valueOf(mProductCartItemViewModel.amount.get()), mProductCartItemViewModel.getVariantModelId())
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(getProductCartId(), isChecked(),
+                getAmount(), getVariantModelId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     getNavigator().saveProductCartItem_Done(productCart);
                 }, Crashlytics::logException));
         // THEN SAVE VARIANT TO SERVER
-        getCompositeDisposable().add(getDataManager().editProductCartVariant(new EditCartVariantRequest(mProductCartItemViewModel.getProductId(),
-                oldVariantId, mProductCartItemViewModel.getVariantId()))
+        getCompositeDisposable().add(getDataManager().deleteProductToCart(new DeleteCartRequest(getProductId(),
+                oldVariantId))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(results -> {
                     if (results != null && results.isValid()) {
-                        Log.v("editProductCartVariant", "VARIANT EDITED SUCCESSFULLY");
+                        Log.v("saveProductCartItem", "DELETED THE OLD ONE");
+                        // THEN ADD NEW VARIANT TO SERVER
+                        addOrUpdateProductVariant();
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void addOrUpdateProductVariant() {
+        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(getProductId(),
+                getVariantId(), getAmount()))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        Log.v("addOrUpdateVariant", "ADDED VARIANT SUCCESSFULLY");
+                    } else {
+                        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(getProductId(),
+                                getVariantId(), getAmount()))
+                                .subscribeOn(getSchedulerProvider().io())
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(data1 -> {
+                                    if (data1 != null && data1.isValid()) {
+                                        Log.v("addOrUpdateVariant", "CANNOT ADDED, THEN UPDATED");
+                                    }
+                                }, Crashlytics::logException));
                     }
                 }, Crashlytics::logException));
     }

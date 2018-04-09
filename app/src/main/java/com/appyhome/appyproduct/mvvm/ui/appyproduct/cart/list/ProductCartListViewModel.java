@@ -44,27 +44,6 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                 }, Crashlytics::logException));
     }
 
-    public void saveProductVariantToServer(ProductCart productCart) {
-        // SAVE VARIANT TO SERVER
-        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(productCart.product_id,
-                productCart.variant_id, productCart.amount))
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null && data.isValid()) {
-                        Log.v("saveProductVariant", "UPDATED VARIANT SUCCESSFULLY");
-                    } else {
-                        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(productCart.product_id,
-                                productCart.variant_id, productCart.amount))
-                                .observeOn(getSchedulerProvider().ui())
-                                .subscribe(results -> {
-                                    if (results != null && results.isValid()) {
-                                        Log.v("saveProductVariant", "UNABLE TO UPDATE, THEN ADDED VARIANT SUCCESSFULLY");
-                                    }
-                                }, Crashlytics::logException));
-                    }
-                }, Crashlytics::logException));
-    }
-
     public void getAllProductCarts() {
         getCompositeDisposable().add(getDataManager().getAllProductCarts(getUserId())
                 .take(1)

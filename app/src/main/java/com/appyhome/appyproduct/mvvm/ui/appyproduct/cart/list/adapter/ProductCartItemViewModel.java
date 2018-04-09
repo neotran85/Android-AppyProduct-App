@@ -96,20 +96,21 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
                                 .observeOn(getSchedulerProvider().ui())
                                 .subscribe(result -> {
                                     if (result != null && result.isValid()) {
-                                        Log.v("addProductCartServer", "CART UPDATED SUCCESSFUL");
+                                        Log.v("addProductCartServer", "CART ADDED SUCCESSFUL");
                                     }
                                 }, Crashlytics::logException));
                     }
                 }, Crashlytics::logException));
     }
 
-    public void updateProductCartItem() {
+    public void updateProductCartItemAfterPlusAndMinus() {
         editProductCartServer(); // EDIT CART SERVER
         getCompositeDisposable().add(getDataManager().updateProductCartItem(productCartId, checked.get(), Integer.valueOf(amount.get()), getVariantModelId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE ADDED
+                    Log.v("updateProductCartItem", "SUCCESS updateProductCartItemAfterPlusAndMinus");
                 }, Crashlytics::logException));
     }
 
@@ -149,7 +150,6 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
             updateProductCartItemAmount(productCart.variant_stock);
         } else
             amount.set(productCart.amount + "");
-        updateProductCartItem(); // UPDATE DB & SERVER DB
     }
 
     private void updateProductCartItemAmount(int amountForced) {

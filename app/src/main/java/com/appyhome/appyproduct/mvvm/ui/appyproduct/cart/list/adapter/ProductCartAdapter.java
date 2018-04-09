@@ -104,7 +104,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
             if (arrayList.size() > 0) {
                 for (ProductCartItemViewModel cartItem : arrayList) {
                     if (cartItem != target) {
-                        removeCartItem(cartItem);
+                        removeCartItem(cartItem, false);
                     }
                 }
             }
@@ -199,9 +199,10 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         return false;
     }
 
-    public void removeCartItem(ProductCartItemViewModel itemViewModel) {
+    public void removeCartItem(ProductCartItemViewModel itemViewModel, boolean isRemovedFromServer) {
         if (!isCartEmpty()) {
-            itemViewModel.removeProductCartItem(); // REMOVE FROM  DB AND SERVER
+            if (isRemovedFromServer)
+                itemViewModel.removeProductCartItem(); // REMOVE FROM  DB AND SERVER
             String sellerName = itemViewModel.sellerName.get();
             ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
             int pos = getItems().indexOf(itemViewModel);
