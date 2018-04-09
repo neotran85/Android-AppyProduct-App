@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant;
 import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
@@ -56,24 +57,27 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     getNavigator().saveProductCartItem_Done(productCart);
+                    deleteOldOneAndAddedNewOne(oldVariantId, productCart);
                 }, Crashlytics::logException));
+    }
+
+    private void deleteOldOneAndAddedNewOne(int oldVariantId, ProductCart cart) {
         // THEN SAVE VARIANT TO SERVER
-        getCompositeDisposable().add(getDataManager().deleteProductToCart(new DeleteCartRequest(getProductId(),
-                oldVariantId))
+        getCompositeDisposable().add(getDataManager().deleteProductToCart(new DeleteCartRequest(cart.product_id, oldVariantId))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(results -> {
                     if (results != null && results.isValid()) {
                         Log.v("saveProductCartItem", "DELETED THE OLD ONE");
                         // THEN ADD NEW VARIANT TO SERVER
-                        addOrUpdateProductVariant();
+                        addOrUpdateProductVariant(cart);
                     }
                 }, Crashlytics::logException));
     }
 
-    private void addOrUpdateProductVariant() {
-        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(getProductId(),
-                getVariantId(), getAmount()))
+    private void addOrUpdateProductVariant(ProductCart cart) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(cart.product_id,
+                cart.variant_id, cart.amount))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
