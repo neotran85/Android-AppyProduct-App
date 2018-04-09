@@ -139,7 +139,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (variant == null) {
             showAlert(getString(R.string.please_choose_variant));
         } else {
-            getViewModel().addProductToCart(variant.id, variant.model_id, true);
+            getViewModel().addProductToCart(variant.model_id, true);
         }
     }
 
@@ -186,7 +186,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
                 if (getViewModel() != null) {
                     ProductVariant variant = mProductVariantFragment.getSelectedVariant();
                     if (variant != null) {
-                        getViewModel().addProductToCart(variant.id, variant.model_id, false);
+                        getViewModel().addProductToCart(variant.model_id, false);
                         mBinder.ivProductBox.setVisibility(View.GONE);
                     }
                 }

@@ -71,6 +71,11 @@ public class ProductCart extends RealmObject {
     public long order_id;
 
     @Expose
+    @SerializedName("variant_id")
+    @ColumnInfo(name = "variant_id")
+    public int variant_id;
+
+    @Expose
     @SerializedName("variant_model_id")
     @ColumnInfo(name = "variant_model_id")
     public String variant_model_id;

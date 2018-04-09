@@ -9,7 +9,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -243,11 +243,19 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<AddToCartResponse> addProductToCart(AddToCartRequest request) {
+    public Single<ApiResponse> addProductToCart(AddToCartRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_ADD)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
                 .build()
-                .getObjectSingle(AddToCartResponse.class);
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> emptyUserCarts() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_EMPTY)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getObjectSingle(ApiResponse.class);
     }
 }

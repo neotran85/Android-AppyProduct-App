@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
@@ -10,9 +9,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
@@ -76,5 +74,7 @@ public interface ApiHelper {
 
     Single<ProductVariantResponse> fetchProductVariant(int productId);
 
-    Single<AddToCartResponse> addProductToCart(AddToCartRequest request);
+    Single<ApiResponse> addProductToCart(AddToCartRequest request);
+
+    Single<ApiResponse> emptyUserCarts();
 }

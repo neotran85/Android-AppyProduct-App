@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class AddToCartResponse {
+public class ApiResponse {
     @Expose
     @SerializedName("code")
     public String  code;

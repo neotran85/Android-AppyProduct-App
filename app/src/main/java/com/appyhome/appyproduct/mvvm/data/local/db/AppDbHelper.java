@@ -456,6 +456,7 @@ public class AppDbHelper implements DbHelper {
                         .equalTo("model_id", variantModelId).findFirst();
                 if (variant != null && variant.isValid()) {
                     productCart.variant_name = variant.variant_name;
+                    productCart.variant_id = variant.id;
                     productCart.variant_model_id = variant.model_id;
                     productCart.variant_stock = variant.quantity;
                     productCart.price = variant.price;
@@ -499,6 +500,7 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_avatar = product.avatar_name;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
+        cartItem.variant_id = variant.id;
         cartItem.variant_stock = variant.quantity;
         cartItem.variant_model_id = variant.model_id;
         cartItem.variant_name = variant.variant_name;

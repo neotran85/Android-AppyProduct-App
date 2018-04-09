@@ -92,6 +92,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
         super.onPause();
         if (mProductCartAdapter != null) {
             mProductCartAdapter.onUpdateDatabase();
+            getViewModel().updateServerCarts();
         }
     }
 

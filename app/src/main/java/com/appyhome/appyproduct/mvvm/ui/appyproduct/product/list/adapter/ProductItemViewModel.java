@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -86,24 +87,13 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         amountAdded.set(amount + "");
     }
 
-    public void addProductToCart(int variantId, String variantModelId, boolean isBuyNow) {
-        // ADD TO SERVER FIRST
-        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(idProduct, variantId, getIntegerAmountAdded()))
-                .subscribeOn(getSchedulerProvider().io())
+    public void addProductToCart(String variantModelId, boolean isBuyNow) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantModelId, getIntegerAmountAdded())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null) {
-                        if (data.code.equals(ApiCode.OK_200) && data.message.equals(ApiMessage.PRODUCT_ADDED)) {
-                            // THEN ADD TO DATABASE
-                            getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantModelId, getIntegerAmountAdded())
-                                    .observeOn(getSchedulerProvider().ui())
-                                    .subscribe(productCart -> {
-                                        if (productCart != null && getUserId().equals(productCart.user_id)) {
-                                            getNavigator().updateCartCount();
-                                            getNavigator().addedToCartCompleted(isBuyNow);
-                                        }
-                                    }, Crashlytics::logException));
-                        }
+                .subscribe(productCart -> {
+                    if (productCart != null && getUserId().equals(productCart.user_id)) {
+                        getNavigator().updateCartCount();
+                        getNavigator().addedToCartCompleted(isBuyNow);
                     }
                 }, Crashlytics::logException));
     }

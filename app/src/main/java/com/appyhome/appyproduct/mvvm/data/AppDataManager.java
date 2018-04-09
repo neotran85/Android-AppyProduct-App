@@ -26,7 +26,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -47,6 +47,7 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -663,8 +664,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<AddToCartResponse> addProductToCart(AddToCartRequest request) {
+    public Single<ApiResponse> addProductToCart(AddToCartRequest request) {
         return mApiHelper.addProductToCart(request);
+    }
+
+    @Override
+    public Single<ApiResponse> emptyUserCarts() {
+        return mApiHelper.emptyUserCarts();
     }
 
     @Override
