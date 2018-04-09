@@ -10,4 +10,8 @@ public interface MyProfileNavigator {
     void onFieldClick(View view);
 
     void backToHomeScreen();
+
+    void showLoading();
+
+    void closeLoading();
 }

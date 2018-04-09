@@ -33,13 +33,12 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
     }
 
     public void fetchUserProfile() {
-        setIsLoading(true);
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager().getUserProfile()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(userGetResponse -> {
-                    setIsLoading(false);
-                    AppLogger.d(userGetResponse.toString());
+                    getNavigator().closeLoading();
                     if (userGetResponse != null) {
                         if (userGetResponse.getString(ApiCode.KEY_CODE).equals(ApiCode.OK_200)) {
                             try {
@@ -74,7 +73,7 @@ public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
+                        getNavigator().closeLoading();
                         if (getNavigator() != null)
                             getNavigator().handleErrorService(null);
                     }

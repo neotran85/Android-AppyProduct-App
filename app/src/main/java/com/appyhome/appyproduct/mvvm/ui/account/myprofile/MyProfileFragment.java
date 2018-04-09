@@ -177,4 +177,12 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     public void onCancelHandler() {
 
     }
+
+    public void showLoading() {
+        AlertManager.getInstance(getActivity()).showLoading();
+    }
+
+    public void closeLoading() {
+        AlertManager.getInstance(getActivity()).closeLoading();
+    }
 }

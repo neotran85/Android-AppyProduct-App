@@ -39,16 +39,16 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
     public void register(String firstName, String lastName, String email, String phoneNumber, String password) {
         mEmail = email;
         mPhoneNumber = phoneNumber;
-        setIsLoading(true);
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doUserSignUp(new SignUpRequest(firstName, lastName, email, phoneNumber, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     handleSignUpResponse(response);
                 }, throwable -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().handleErrorService(throwable);
                 }));
     }
@@ -59,10 +59,10 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     handleVerifyUser(response);
                 }, throwable -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().handleErrorService(throwable);
                 }));
     }
@@ -72,16 +72,16 @@ public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
     }
 
     public void doUserLogin(String phone, String password) {
-        setIsLoading(true);
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doUserLogin(new LoginRequest(phone, password))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     handleLoginResponse(response);
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                 }, throwable -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().handleErrorService(throwable);
                 }));
     }

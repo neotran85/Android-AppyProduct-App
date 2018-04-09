@@ -20,32 +20,32 @@ public class VerifyViewModel extends BaseViewModel<VerifyNavigator> {
     }
 
     public void verifyTrue(String code) {
-        setIsLoading(true);
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .verifyTrue(code)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     handleVerifyResponse(response);
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                 }, throwable -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().handleErrorService(throwable);
                 }));
     }
 
     public void doVerifyUser() {
-        setIsLoading(true);
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .verifyUser()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().showCodeSentMessage();
                     // Show message to user.
                 }, throwable -> {
-                    setIsLoading(false);
+                    getNavigator().closeLoading();
                     getNavigator().handleErrorService(throwable);
                 }));
     }

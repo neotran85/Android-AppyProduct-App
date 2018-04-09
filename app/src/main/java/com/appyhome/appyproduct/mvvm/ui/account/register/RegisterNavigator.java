@@ -22,4 +22,8 @@ public interface RegisterNavigator {
 
     void openPhoneNumberVerification();
 
+    void showLoading();
+
+    void closeLoading();
+
 }

@@ -18,4 +18,8 @@ public interface VerifyNavigator {
 
     void sendVerifyingCode();
 
+    void showLoading();
+
+    void closeLoading();
+
 }
