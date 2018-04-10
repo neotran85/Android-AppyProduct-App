@@ -54,6 +54,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mColumns = calculateSubColumns();
+        mColumns = mColumns > 1 ? mColumns : DEFAULT_SPAN_COUNT;
         getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
     }
 

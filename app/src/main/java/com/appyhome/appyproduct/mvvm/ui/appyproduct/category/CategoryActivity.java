@@ -99,6 +99,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     private void setUpRecyclerViewGrid(RecyclerView rv, SampleAdapter adapter) {
         int subColumns = calculateSubColumns();
+        subColumns = subColumns > 0 ? subColumns : DEFAULT_SPAN_COUNT;
         rv.setLayoutManager(new GridLayoutManager(this,
                 subColumns, GridLayoutManager.VERTICAL,
                 false));
