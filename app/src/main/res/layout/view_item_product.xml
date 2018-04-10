@@ -179,6 +179,6 @@
             android:layout_marginTop="-6dp"
             android:adjustViewBounds="true"
             android:background="@mipmap/icon_limit_offer"
-            android:visibility="@{viewModel.isDiscount, default=visible}" />
+            android:visibility="@{viewModel.isDiscount, default=gone}" />
     </RelativeLayout>
 </layout>

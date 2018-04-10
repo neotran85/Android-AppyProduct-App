@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
@@ -49,7 +50,12 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
         mFavoriteAdapter.removedFavorite(position, isFavorite);
-        mViewModel.updateFavoriteCount(mFavoriteAdapter.getFavoriteCount());
+        int count = mFavoriteAdapter.getFavoriteCount();
+        getViewModel().updateFavoriteCount(count);
+        getViewModel().isFavoriteEmpty.set(count == 0);
+        if (count == 0) {
+            ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
+        }
     }
 
     @Override
@@ -67,6 +73,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     private void setUp() {
         mViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
+        mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
         mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
         mViewModel.getAllFavorites();
@@ -101,7 +108,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void showProducts(Product[] result) {
-        setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+        if (result != null && result.length > 0) {
+            setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+        } else {
+            ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
+        }
         mFavoriteAdapter.addItems(result, this, true);
         mFavoriteAdapter.notifyDataSetChanged();
     }

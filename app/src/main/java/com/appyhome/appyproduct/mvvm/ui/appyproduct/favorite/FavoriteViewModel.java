@@ -65,6 +65,8 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
 
     public void emptyUserWishList() {
         // EMPTY FROM LOCAL DB
+        isFavoriteEmpty.set(true);
+        updateFavoriteCount(0);
         getCompositeDisposable().add(getDataManager().emptyFavorites(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())

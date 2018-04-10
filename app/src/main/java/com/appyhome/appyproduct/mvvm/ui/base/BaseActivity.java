@@ -216,10 +216,20 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public boolean askForLogin(String message) {
-        if(!getViewModel().isUserLoggedIn()) {
+        if (!getViewModel().isUserLoggedIn()) {
             Intent intent = LoginActivity.getStartIntent(this);
             intent.putExtra("message", message);
             startActivityForResult(intent, REQUEST_LOGIN);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean askForLogin(String message, int requestCode) {
+        if (!getViewModel().isUserLoggedIn()) {
+            Intent intent = LoginActivity.getStartIntent(this);
+            intent.putExtra("message", message);
+            startActivityForResult(intent, requestCode);
             return true;
         }
         return false;

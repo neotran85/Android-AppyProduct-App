@@ -57,13 +57,13 @@
 
                 <ImageView
                     android:onClick="@{(view) -> navigator.emptyFavorites()}"
-                    android:visibility="@{!viewModel.isFavoriteEmpty, default=gone}"
+                    android:visibility="@{!viewModel.isFavoriteEmpty, default=visible}"
                     android:id="@+id/ivTrash"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="48dp"
+                    android:padding="18dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="14dp"
                     android:src="@mipmap/icon_trash" />
 
             </RelativeLayout>

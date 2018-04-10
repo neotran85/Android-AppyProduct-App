@@ -31,7 +31,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.fabric.sdk.android.Fabric;
-import io.realm.Realm;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
 
@@ -44,6 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     public final static int REQUEST_LOGIN_FOR_REQUEST_TRACKING = 1111;
     public final static int REQUEST_LOGIN_FOR_MY_PROFILE = 1112;
+    public final static int REQUEST_LOGIN_FOR_MY_WISH_LIST = 1113;
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
@@ -145,6 +145,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     onClick(mBinder.rlRequest);
                 }
                 break;
+            case REQUEST_LOGIN_FOR_MY_WISH_LIST:
+                if (resultCode == RESULT_OK) {
+                    onClick(mBinder.rlWishList);
+                }
+                break;
         }
     }
 
@@ -160,25 +165,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
                 break;
             case R.id.rlRequest:
-                if (mMainViewModel.isUserLoggedIn()) {
+                if (!askForLogin(getString(R.string.please_login_to_view_service_request),
+                        REQUEST_LOGIN_FOR_REQUEST_TRACKING)) {
                     switchTabSelection(view);
                     showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
-                } else {
-                    openLoginActivity(getString(R.string.login_required_message) + " see your service requests.",
-                            REQUEST_LOGIN_FOR_REQUEST_TRACKING);
                 }
                 break;
             case R.id.rlWishList:
-                switchTabSelection(view);
-                showFragment(FavoriteFragment.newInstance(), FavoriteFragment.TAG);
+                if (!askForLogin(getString(R.string.please_login_view_wishlist), REQUEST_LOGIN_FOR_MY_WISH_LIST)) {
+                    switchTabSelection(view);
+                    showFragment(FavoriteFragment.newInstance(), FavoriteFragment.TAG);
+                }
                 break;
             case R.id.rlMyProfile:
-                if (mMainViewModel.isUserLoggedIn()) {
+                if (!askForLogin(getString(R.string.please_login_see_your_profile), REQUEST_LOGIN_FOR_MY_PROFILE)) {
                     switchTabSelection(view);
                     showFragment(UserPageFragment.newInstance(), UserPageFragment.TAG);
-                } else {
-                    openLoginActivity(getString(R.string.login_required_message) + getString(R.string.see_your_profile),
-                            REQUEST_LOGIN_FOR_MY_PROFILE);
                 }
                 break;
         }

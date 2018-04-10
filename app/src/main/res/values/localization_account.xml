@@ -65,7 +65,7 @@
     <string name="register_privacy_policy">Privacy Policy</string>
     <string name="register_terms"><![CDATA[Terms & Conditions]]></string>
     <string name="pls_enter_the_code">Please enter the code.</string>
-    <string name="see_your_profile">see your profile.</string>
+    <string name="please_login_see_your_profile">Please login to view your profile.</string>
     <string name="phone_activated">Your phone number is activated. You are logged in now. Thank you.</string>
     <string name="hint_your_email_address">Your email address</string>
     <string name="log_out">LOG OUT</string>

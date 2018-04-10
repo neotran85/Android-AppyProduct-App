@@ -727,7 +727,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<Boolean> emptyFavorites(String userId) {
-        return emptyFavorites(userId);
+        return mDbHelper.emptyFavorites(userId);
     }
 
     @Override
