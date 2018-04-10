@@ -11,6 +11,7 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
@@ -22,6 +23,8 @@ import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
+
+import io.realm.RealmResults;
 
 public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, FavoriteViewModel> implements FavoriteNavigator, ProductItemNavigator {
 
@@ -107,13 +110,13 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void showProducts(Product[] result) {
-        if (result != null && result.length > 0) {
+    public void showProducts(RealmResults<ProductFavorite> result) {
+        if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
         } else {
             ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
         }
-        mFavoriteAdapter.addItems(result, this, true);
+        mFavoriteAdapter.addItems(this, result);
         mFavoriteAdapter.notifyDataSetChanged();
     }
 

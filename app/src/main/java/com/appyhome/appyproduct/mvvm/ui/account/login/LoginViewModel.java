@@ -230,7 +230,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     private void updateWishList(ArrayList<ProductFavoriteResponse> arrayList) {
-        getCompositeDisposable().add(getDataManager().updateAllProductFavorite(getUserId(), arrayList)
+        getCompositeDisposable().add(getDataManager().syncAllProductFavorite(getUserId(), arrayList)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {

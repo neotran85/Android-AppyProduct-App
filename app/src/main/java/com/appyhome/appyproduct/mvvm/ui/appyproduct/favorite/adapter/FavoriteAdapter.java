@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCartEmptyBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteEmptyBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemEmptyViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
@@ -34,6 +36,17 @@ public class FavoriteAdapter extends ProductAdapter {
 
     public int getFavoriteCount() {
         return mItems.size();
+    }
+
+    public void addItems(ProductItemNavigator navigator, RealmResults<ProductFavorite> results) {
+        mItems = new ArrayList<>();
+        mNavigator = navigator;
+        mViewModelEmpty = createEmptyViewModel(navigator);
+        if (results != null) {
+            for (ProductFavorite item : results) {
+                mItems.add(createViewModel(item.toProduct(), navigator, true));
+            }
+        }
     }
 
     @Override

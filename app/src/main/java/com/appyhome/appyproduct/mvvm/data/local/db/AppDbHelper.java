@@ -403,7 +403,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> updateAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
+    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
         return Flowable.fromCallable(() -> {
             beginTransaction();
             RealmResults<ProductFavorite> favorites = getRealm().where(ProductFavorite.class)
@@ -842,17 +842,21 @@ public class AppDbHelper implements DbHelper {
             try {
                 Boolean value = false;
                 beginTransaction();
+                ProductCached product = getRealm().where(ProductCached.class)
+                        .equalTo("id", productId)
+                        .findFirst();
+
                 ProductFavorite favorite = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
                         .equalTo("product_id", productId)
                         .findFirst();
+
                 if (favorite == null || !favorite.isValid()) {
-                    favorite = new ProductFavorite();
+                    favorite = new ProductFavorite(product);
                     favorite.variant_id = variantId;
                     favorite.id = System.currentTimeMillis();
                     favorite.user_id = userId;
-                    favorite.product_id = productId;
-                    favorite = getRealm().copyToRealmOrUpdate(favorite);
+                    getRealm().copyToRealmOrUpdate(favorite);
                     value = true;
                 } else {
                     favorite.deleteFromRealm();
@@ -932,56 +936,6 @@ public class AppDbHelper implements DbHelper {
         Flowable<RealmResults<Product>> result = query.findAll().asFlowable();
         getRealm().commitTransaction();
         return result;
-    }
-
-    private RealmResults<ProductCached> getProductsFavoriteCached(ArrayList<Integer> ids) {
-        RealmQuery<ProductCached> query = getRealm().where(ProductCached.class);
-        if (ids.size() > 0) {
-            int i = 0;
-            for (int id : ids) {
-                if (i++ > 0) {
-                    query = query.or();
-                }
-                query = query.equalTo("id", id);
-            }
-        } else {
-            query = query.equalTo("id", 0);
-        }
-        // CHECKED FROM CACHED
-        return query.findAll().sort("time_db_added", Sort.DESCENDING);
-    }
-
-    @Override
-    public Flowable<RealmList<Product>> getAllProductsFavorited(String userId, ArrayList<Integer> ids) {
-        return Flowable.fromCallable(() -> {
-            beginTransaction();
-            RealmList<Product> dataResult = new RealmList<>();
-            // CHECKED FROM CACHED
-            RealmResults<ProductCached> cachedItems = getProductsFavoriteCached(ids);
-            if (cachedItems == null || cachedItems.size() <= 0) {
-                // NO CACHED, THEN CREATE NEW ONES
-                if (ids.size() > 0) {
-                    RealmResults<ProductFavorite> favorites = getRealm().where(ProductFavorite.class)
-                            .equalTo("user_id", userId).findAll();
-                    if (favorites != null && favorites.size() > 0) {
-                        ArrayList<Product> cachedProduct = new ArrayList<>();
-                        for (ProductFavorite item : favorites) {
-                            dataResult.add(item.convertToProduct());
-                            cachedProduct.add(item.convertToProduct());
-                        }
-                        // CACHED PRODUCTS
-                        getRealm().copyToRealmOrUpdate(cachedProduct);
-                    }
-                }
-            } else {
-                //LOAD CACHED
-                for (ProductCached cached : cachedItems) {
-                    dataResult.add(cached.convertToProduct());
-                }
-            }
-            getRealm().commitTransaction();
-            return dataResult;
-        });
     }
 
     @Override

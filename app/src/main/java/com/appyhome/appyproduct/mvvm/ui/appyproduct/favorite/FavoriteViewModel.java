@@ -35,32 +35,9 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(favorites -> {
-                    // DONE GET
-                    ArrayList<Integer> arrayId = new ArrayList<>();
-                    for (ProductFavorite item : favorites) {
-                        arrayId.add(item.product_id);
-                    }
-                    getAllProductsFavorited(arrayId, favorites);
-                }, Crashlytics::logException));
-    }
-
-    private void getAllProductsFavorited(ArrayList<Integer> ids, RealmResults<ProductFavorite> favorites) {
-        getCompositeDisposable().add(getDataManager().getAllProductsFavorited(getUserId(), ids)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(products -> {
-                    Product[] items = new Product[0];
-                    if (products != null) {
-                        items = new Product[products.size()];
-                        int index = 0;
-                        for (Product item : products) {
-                            items[index] = item;
-                            index++;
-                        }
-                    }
-                    getNavigator().showProducts(items);
-                    isFavoriteEmpty.set(items.length <= 0);
-                    updateFavoriteCount(items.length);
+                    getNavigator().showProducts(favorites);
+                    isFavoriteEmpty.set(favorites == null || favorites.size() == 0);
+                    updateFavoriteCount(favorites != null ? favorites.size() : 0);
                 }, Crashlytics::logException));
     }
 

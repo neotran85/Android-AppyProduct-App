@@ -20,8 +20,8 @@ import io.realm.RealmResults;
 
 public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator> {
 
-    private ProductItemNavigator mNavigator;
-    private ProductItemEmptyViewModel mViewModelEmpty;
+    protected ProductItemNavigator mNavigator;
+    protected ProductItemEmptyViewModel mViewModelEmpty;
 
     public ProductAdapter() {
         this.mItems = null;
@@ -45,7 +45,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         }
     }
 
-    private ProductItemEmptyViewModel createEmptyViewModel(ProductItemNavigator navigator) {
+    protected ProductItemEmptyViewModel createEmptyViewModel(ProductItemNavigator navigator) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemEmptyViewModel viewModelEmpty = new ProductItemEmptyViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         viewModelEmpty.setNavigator(navigator);
@@ -77,7 +77,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         return R.layout.view_item_sample_empty;
     }
 
-    private ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isAllFavorited) {
+    protected ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isAllFavorited) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.setNavigator(navigator);

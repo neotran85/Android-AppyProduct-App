@@ -84,8 +84,6 @@ public interface DbHelper {
 
     Flowable<Boolean> isFavorite(int productId, String userId);
 
-    Flowable<RealmList<Product>> getAllProductsFavorited(String userId, ArrayList<Integer> ids);
-
     Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
 
     Flowable<ProductFilter> getCurrentFilter(String userId);
@@ -122,5 +120,5 @@ public interface DbHelper {
 
     Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
 
-    Flowable<Boolean> updateAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
+    Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
 }

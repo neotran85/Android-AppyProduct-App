@@ -565,11 +565,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmList<Product>> getAllProductsFavorited(String userId, ArrayList<Integer> ids) {
-        return mDbHelper.getAllProductsFavorited(userId, ids);
-    }
-
-    @Override
     public Single<BannersResponse> fetchBanners() {
         return mApiHelper.fetchBanners();
     }
@@ -690,6 +685,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
+        return mDbHelper.syncAllProductFavorite(userId, array);
+    }
+
+    @Override
     public Single<ApiResponse> deleteProductToCart(DeleteCartRequest request) {
         return mApiHelper.deleteProductToCart(request);
     }
@@ -727,11 +727,6 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Boolean> emptyFavorites(String userId) {
         return mDbHelper.emptyFavorites(userId);
-    }
-
-    @Override
-    public Flowable<Boolean> updateAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
-        return mDbHelper.updateAllProductFavorite(userId, array);
     }
 
     @Override
