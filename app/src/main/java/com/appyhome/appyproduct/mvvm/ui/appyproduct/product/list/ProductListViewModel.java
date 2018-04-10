@@ -124,15 +124,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    public void emptyProductsLoaded() {
-        getCompositeDisposable().add(getDataManager().clearProductsLoaded()
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(success -> {
-                    // DO NOTHING
-                }, Crashlytics::logException));
-    }
-
     public void clearProductsLoaded() {
         getCompositeDisposable().add(getDataManager().clearProductsLoaded()
                 .take(1)

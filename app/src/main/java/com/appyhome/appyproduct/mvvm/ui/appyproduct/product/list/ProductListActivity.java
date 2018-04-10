@@ -75,7 +75,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Override
     public void onStop() {
         super.onStop();
-        getViewModel().emptyProductsLoaded();
     }
 
 
