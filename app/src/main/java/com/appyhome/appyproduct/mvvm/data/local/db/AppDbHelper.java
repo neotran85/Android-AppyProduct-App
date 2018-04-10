@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -232,7 +233,7 @@ public class AppDbHelper implements DbHelper {
                 .equalTo("id", idProduct)
                 .findFirst();
         if (product == null)
-             product = new ProductCached();
+            product = new ProductCached();
         getRealm().commitTransaction();
         return product.asFlowable();
     }
@@ -348,6 +349,16 @@ public class AppDbHelper implements DbHelper {
         return null;
     }
 
+    private ProductFavorite isContaining(RealmResults<ProductFavorite> results, ProductFavoriteResponse response) {
+        for (ProductFavorite item : results) {
+            if (response.product_id == item.product_id
+                    && response.variant_id == item.variant_id) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     @Override
     public Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
         return Flowable.fromCallable(() -> {
@@ -389,6 +400,57 @@ public class AppDbHelper implements DbHelper {
             getRealm().commitTransaction();
             return true;
         });
+    }
+
+    @Override
+    public Flowable<Boolean> updateAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
+        return Flowable.fromCallable(() -> {
+            beginTransaction();
+            RealmResults<ProductFavorite> favorites = getRealm().where(ProductFavorite.class)
+                    .equalTo("user_id", userId)
+                    .findAll();
+            long newId = System.currentTimeMillis();
+            ArrayList<ProductFavorite> totalArray;
+            if (favorites != null && favorites.isValid() && favorites.size() > 0) {
+                totalArray = new ArrayList<>();
+                for (ProductFavoriteResponse response : array) {
+                    newId++;
+                    ProductFavorite favItem = isContaining(favorites, response);
+                    if (favItem == null) {
+                        favItem = new ProductFavorite();
+                        favItem.id = newId;
+                        favItem.product_avatar = response.product_avatar;
+                    }
+                    favItem = inputProductFavorite(userId, favItem, response);
+                    totalArray.add(favItem);
+                }
+            } else {
+                totalArray = new ArrayList<>();
+                for (ProductFavoriteResponse response : array) {
+                    newId++;
+                    ProductFavorite favItem = new ProductFavorite();
+                    favItem.id = newId;
+                    favItem.product_avatar = response.product_avatar;
+                    favItem = inputProductFavorite(userId, favItem, response);
+                    totalArray.add(favItem);
+                }
+            }
+            getRealm().copyToRealmOrUpdate(totalArray);
+            getRealm().commitTransaction();
+            return true;
+        });
+    }
+
+    private ProductFavorite inputProductFavorite(String userId, ProductFavorite favItem, ProductFavoriteResponse item) {
+        favItem.variant_price = item.variant_price;
+        favItem.product_id = item.product_id;
+        favItem.product_name = item.product_name;
+        favItem.variant_stock_left = item.variant_stock_left;
+        favItem.user_id = userId;
+        favItem.variant_model_id = item.product_id + "_" + item.variant_id;
+        favItem.variant_id = item.variant_id;
+        favItem.variant_name = item.variant_name;
+        return favItem;
     }
 
     private ProductCart inputProductCart(String userId, ProductCart cartItem, ProductCartResponse item) {
@@ -872,9 +934,7 @@ public class AppDbHelper implements DbHelper {
         return result;
     }
 
-    @Override
-    public Flowable<RealmResults<ProductCached>> getAllProductsFavorited(ArrayList<Integer> ids) {
-        beginTransaction();
+    private RealmResults<ProductCached> getProductsFavoriteCached(ArrayList<Integer> ids) {
         RealmQuery<ProductCached> query = getRealm().where(ProductCached.class);
         if (ids.size() > 0) {
             int i = 0;
@@ -887,9 +947,41 @@ public class AppDbHelper implements DbHelper {
         } else {
             query = query.equalTo("id", 0);
         }
-        Flowable<RealmResults<ProductCached>> result = query.findAll().sort("time_db_added", Sort.DESCENDING).asFlowable();
-        getRealm().commitTransaction();
-        return result;
+        // CHECKED FROM CACHED
+        return query.findAll().sort("time_db_added", Sort.DESCENDING);
+    }
+
+    @Override
+    public Flowable<RealmList<Product>> getAllProductsFavorited(String userId, ArrayList<Integer> ids) {
+        return Flowable.fromCallable(() -> {
+            beginTransaction();
+            RealmList<Product> dataResult = new RealmList<>();
+            // CHECKED FROM CACHED
+            RealmResults<ProductCached> cachedItems = getProductsFavoriteCached(ids);
+            if (cachedItems == null || cachedItems.size() <= 0) {
+                // NO CACHED, THEN CREATE NEW ONES
+                if (ids.size() > 0) {
+                    RealmResults<ProductFavorite> favorites = getRealm().where(ProductFavorite.class)
+                            .equalTo("user_id", userId).findAll();
+                    if (favorites != null && favorites.size() > 0) {
+                        ArrayList<Product> cachedProduct = new ArrayList<>();
+                        for (ProductFavorite item : favorites) {
+                            dataResult.add(item.convertToProduct());
+                            cachedProduct.add(item.convertToProduct());
+                        }
+                        // CACHED PRODUCTS
+                        getRealm().copyToRealmOrUpdate(cachedProduct);
+                    }
+                }
+            } else {
+                //LOAD CACHED
+                for (ProductCached cached : cachedItems) {
+                    dataResult.add(cached.convertToProduct());
+                }
+            }
+            getRealm().commitTransaction();
+            return dataResult;
+        });
     }
 
     @Override

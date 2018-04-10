@@ -27,13 +27,13 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -54,7 +54,6 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiHeader;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiHelper;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiUrlConfig;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
-import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -566,8 +565,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<ProductCached>> getAllProductsFavorited(ArrayList<Integer> ids) {
-        return mDbHelper.getAllProductsFavorited(ids);
+    public Flowable<RealmList<Product>> getAllProductsFavorited(String userId, ArrayList<Integer> ids) {
+        return mDbHelper.getAllProductsFavorited(userId, ids);
     }
 
     @Override
@@ -731,7 +730,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<Boolean> updateAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
+        return mDbHelper.updateAllProductFavorite(userId, array);
+    }
+
+    @Override
     public Single<ApiResponse> getUserWishList() {
-        return getUserWishList();
+        return mApiHelper.getUserWishList();
     }
 }

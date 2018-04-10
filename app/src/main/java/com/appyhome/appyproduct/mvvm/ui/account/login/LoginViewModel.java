@@ -4,6 +4,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -54,7 +55,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(user -> {
                     //UPDATE SUCCESS
-                }, Crashlytics::logException));
+                }, this::moveOnWhenFinishOrEvenError));
     }
 
     private void handleLoginResponse(LoginResponse response) {
@@ -73,8 +74,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 }
             } else {
                 // Failed
-                if (mTryCounter == 0) {
+                if (mTryCounter <= 3) {
                     login("+" + mPhoneNumber, mPassword);
+                    mTryCounter++;
+                    return;
                 } else {
                     // Account is exist
                     if (message != null) {
@@ -85,11 +88,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         }
                     }
                 }
-                mTryCounter++;
             }
         }
-        getNavigator().closeLoading();
-        // Unknown Error
+        moveOnWhenFinishOrEvenError();
         getNavigator().showErrorServer();
     }
 
@@ -139,9 +140,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                             }
                         }
                     }
-                    getNavigator().closeLoading();
-                }, throwable -> {
-                }));
+                    moveOnWhenFinishOrEvenError();
+                }, this::moveOnWhenFinishOrEvenError));
+
     }
 
 
@@ -151,9 +152,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // UPDATE CART SUCCESSFUL
-                    getNavigator().closeLoading();
-                    getNavigator().doAfterFetchUserInfoCompleted();
-                }, Crashlytics::logException));
+                    // THEN FETCH WISH LIST
+                    fetchUserWishList();
+                }, this::moveOnWhenFinishOrEvenError));
     }
 
 
@@ -183,7 +184,59 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                             Crashlytics.logException(e);
                         }
                     }
-                    getNavigator().closeLoading();
-                }, Crashlytics::logException));
+                    // IF NOT SUCCESS, CONTINUE TO FETCH WISH LIST
+                    fetchUserWishList();
+                }, this::moveOnWhenFinishOrEvenError));
     }
+
+    public void fetchUserWishList() {
+        getCompositeDisposable().add(getDataManager().getUserWishList()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        ArrayList<ProductFavoriteResponse> arrayList = new ArrayList<>();
+                        try {
+                            LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
+                            Gson gson = new Gson();
+                            for (String key : linkedTreeMap.keySet()) {
+                                ArrayList array = linkedTreeMap.get(key);
+                                for (int i = 0; i < array.size(); i++) {
+                                    JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                                    ProductFavoriteResponse item = gson.fromJson(object.toString(), ProductFavoriteResponse.class);
+                                    arrayList.add(item);
+                                }
+                            }
+                            if (arrayList.size() > 0) {
+                                updateWishList(arrayList);
+                                return;
+                            }
+                        } catch (Exception e) {
+                            Crashlytics.logException(e);
+                        }
+                    }
+                    moveOnWhenFinishOrEvenError();
+                }, this::moveOnWhenFinishOrEvenError));
+    }
+
+    private void moveOnWhenFinishOrEvenError() {
+        moveOnWhenFinishOrEvenError(null);
+    }
+    private void moveOnWhenFinishOrEvenError(Throwable throwable) {
+        getNavigator().closeLoading();
+        getNavigator().doAfterFetchUserInfoCompleted();
+        if (throwable != null)
+            Crashlytics.logException(throwable);
+    }
+
+    private void updateWishList(ArrayList<ProductFavoriteResponse> arrayList) {
+        getCompositeDisposable().add(getDataManager().updateAllProductFavorite(getUserId(), arrayList)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // UPDATE WISH LIST SUCCESSFUL
+                    moveOnWhenFinishOrEvenError();
+                }, this::moveOnWhenFinishOrEvenError));
+    }
+
 }

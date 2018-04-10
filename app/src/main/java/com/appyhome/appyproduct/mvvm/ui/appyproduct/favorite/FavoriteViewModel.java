@@ -5,13 +5,14 @@ import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
+
+import io.realm.RealmResults;
 
 public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
@@ -39,27 +40,27 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
                     for (ProductFavorite item : favorites) {
                         arrayId.add(item.product_id);
                     }
-                    getAllProductsFavorited(arrayId);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Crashlytics.logException(throwable);
-                }));
+                    getAllProductsFavorited(arrayId, favorites);
+                }, Crashlytics::logException));
     }
 
-    private void getAllProductsFavorited(ArrayList<Integer> ids) {
-        getCompositeDisposable().add(getDataManager().getAllProductsFavorited(ids)
+    private void getAllProductsFavorited(ArrayList<Integer> ids, RealmResults<ProductFavorite> favorites) {
+        getCompositeDisposable().add(getDataManager().getAllProductsFavorited(getUserId(), ids)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(productsCached -> {
-                    Product[] products = new Product[productsCached.size()];
-                    int index = 0;
-                    for (ProductCached item : productsCached) {
-                        products[index] = item.convertToProduct();
-                        index++;
+                .subscribe(products -> {
+                    Product[] items = new Product[0];
+                    if (products != null) {
+                        items = new Product[products.size()];
+                        int index = 0;
+                        for (Product item : products) {
+                            items[index] = item;
+                            index++;
+                        }
                     }
-                    getNavigator().showProducts(products);
-                    isFavoriteEmpty.set(productsCached.size() <= 0);
-                    updateFavoriteCount(productsCached.size());
+                    getNavigator().showProducts(items);
+                    isFavoriteEmpty.set(items.length <= 0);
+                    updateFavoriteCount(items.length);
                 }, Crashlytics::logException));
     }
 
