@@ -41,6 +41,11 @@ public class ProductOrder extends RealmObject {
     @ColumnInfo(name = "payment_method")
     public String payment_method;
 
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
+
     public RealmList<ProductCart> cart;
 
     public Address shipping_address;

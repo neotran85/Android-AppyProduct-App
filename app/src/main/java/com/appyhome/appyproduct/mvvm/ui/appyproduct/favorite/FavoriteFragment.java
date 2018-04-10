@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
@@ -18,14 +18,14 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
-
-import io.realm.RealmResults;
 
 public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, FavoriteViewModel> implements FavoriteNavigator, ProductItemNavigator {
 
     public static final String TAG = "FavoriteFragment";
+
     public static final int DEFAULT_SPAN_COUNT = 2;
 
     @Inject
@@ -101,11 +101,9 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void showProducts(Product[] result) {
-        if (result != null) {
-            setUpRecyclerViewGrid(mBinder.productsRecyclerView);
-            mFavoriteAdapter.addItems(result, this, true);
-            mFavoriteAdapter.notifyDataSetChanged();
-        }
+        setUpRecyclerViewGrid(mBinder.productsRecyclerView);
+        mFavoriteAdapter.addItems(result, this, true);
+        mFavoriteAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -120,7 +118,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void addedToCartCompleted(boolean isBuyNow) {}
+    public void addedToCartCompleted(boolean isBuyNow) {
+    }
 
     @Override
     public BaseViewModel getMainViewModel() {
@@ -130,6 +129,13 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void updateCartCount() {
         // DO NOTHING
+    }
+
+    @Override
+    public void emptyFavorites() {
+        AlertManager.getInstance(getActivity()).showConfirmationDialog("", getString(R.string.sure_to_empty_wishlist), (dialog, which) -> {
+            getViewModel().emptyUserWishList();
+        });
     }
 
     @Override

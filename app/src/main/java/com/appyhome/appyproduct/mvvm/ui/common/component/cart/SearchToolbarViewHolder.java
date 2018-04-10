@@ -57,15 +57,13 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     }
 
     public void openProductCart() {
-        if (mViewModel.isUserLoggedIn()) {
+        if (!mActivity.askForLogin("Please login to view your cart.")) {
             if (mBinding.getViewModel().totalItemsCount.get() > 0) {
                 Intent intent = ProductCartListActivity.getStartIntent(mActivity);
                 mActivity.startActivity(intent);
             } else {
                 AlertManager.getInstance(mActivity).showLongToast(mActivity.getString(R.string.toast_your_cart_is_empty));
             }
-        } else {
-            mActivity.askForLogin("Please login to view your cart.");
         }
     }
 

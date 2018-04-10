@@ -126,6 +126,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void selectedVariant(ProductVariant variant) {
+        getViewModel().setVariantId(variant.id);
         getViewModel().price.set("RM " + variant.price);
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
@@ -165,21 +166,19 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void addToCart() {
-        if (getViewModel().isUserLoggedIn()) {
+        if (!askForLogin("Please login to add product to your cart.")) {
             ProductVariant variant = mProductVariantFragment.getSelectedVariant();
             if (variant == null) {
                 showAlert(getString(R.string.please_choose_variant));
             } else
                 animateProductToCart();
-        } else {
-            askForLogin("Please login to add product to your cart.");
         }
     }
 
     private void animateProductToCart() {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
-        AppAnimator.animateMoving(mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
+        AppAnimator.animateMoving(1000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
@@ -288,7 +287,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
-        vm.updateProductFavorite(0);
+        if (!askForLogin(getString(R.string.ask_login_to_add_wishlist))) {
+            vm.updateProductFavorite(0);
+        }
     }
 
     @Override

@@ -8,4 +8,5 @@ import io.realm.RealmResults;
 
 public interface FavoriteNavigator {
     void showProducts(Product[] result);
+    void emptyFavorites();
 }

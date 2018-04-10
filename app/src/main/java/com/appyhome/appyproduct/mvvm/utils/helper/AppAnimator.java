@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 public class AppAnimator {
-    public static void animateMoving(View view, int sizeInPixels, Point start, Point end, AnimatorListenerAdapter listenerAdapter) {
+    public static void animateMoving(int duration, View view, int sizeInPixels, Point start, Point end, AnimatorListenerAdapter listenerAdapter) {
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator posX = null;
         ObjectAnimator posY = null;
@@ -18,7 +18,7 @@ public class AppAnimator {
         posY = ObjectAnimator.ofFloat(view, "translationY", start.y, end.y - sizeInPixels / 2);
         scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1, 0.3f);
         scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1, 0.3f);
-        animatorSet.setDuration(1500);
+        animatorSet.setDuration(duration);
         animatorSet.playTogether(posX, posY, scaleX, scaleY);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.addListener(listenerAdapter);

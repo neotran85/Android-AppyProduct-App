@@ -1,54 +1,48 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
+import android.arch.persistence.room.ColumnInfo;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Supplier extends RealmObject {
+    @Expose
+    @SerializedName("id")
+    @ColumnInfo(name = "id")
     @PrimaryKey
-    private String id;
-    private String companyName;
-    private String contactTitle;
-    private String logoPath;
-    private Address address1;
-    private Address address2;
+    public String id;
 
-    public String getCompanyName() {
-        return companyName;
-    }
+    @Expose
+    @SerializedName("company_name")
+    @ColumnInfo(name = "company_name")
+    public String company_name;
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+    @Expose
+    @SerializedName("contact_title")
+    @ColumnInfo(name = "contact_title")
+    public String contact_title;
 
-    public String getContactTitle() {
-        return contactTitle;
-    }
+    @Expose
+    @SerializedName("logo_path")
+    @ColumnInfo(name = "logo_path")
+    public String logo_path;
 
-    public void setContactTitle(String contactTitle) {
-        this.contactTitle = contactTitle;
-    }
+    @Expose
+    @SerializedName("address1")
+    @ColumnInfo(name = "address1")
+    public Address address1;
 
-    public Address getAddress1() {
-        return address1;
-    }
+    @Expose
+    @SerializedName("address2")
+    @ColumnInfo(name = "address2")
+    public Address address2;
 
-    public void setAddress1(Address address1) {
-        this.address1 = address1;
-    }
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 
-    public Address getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(Address address2) {
-        this.address2 = address2;
-    }
-
-    public String getLogoPath() {
-        return logoPath;
-    }
-
-    public void setLogoPath(String logoPath) {
-        this.logoPath = logoPath;
-    }
 }

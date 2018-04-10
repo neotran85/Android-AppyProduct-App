@@ -55,4 +55,9 @@ public class ProductVariantImage extends RealmObject {
     @ColumnInfo(name = "updated_at")
     public String updated_at;
 
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
+
 }

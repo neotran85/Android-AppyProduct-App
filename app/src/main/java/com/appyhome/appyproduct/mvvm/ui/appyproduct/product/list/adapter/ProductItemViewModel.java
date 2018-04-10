@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -48,8 +50,9 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> amountAdded = new ObservableField<>("1");
     public ObservableField<String> stockCount = new ObservableField<>("0");
 
+    private int productId;
 
-    private int idProduct;
+    private int variantId = 1;
 
     private RealmResults<ProductVariant> mVariants;
 
@@ -59,18 +62,19 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     }
 
     public int getProductId() {
-        return idProduct;
+        return productId;
     }
 
     public void setProductId(int id) {
-        idProduct = id;
+        productId = id;
     }
 
     public void updateProductFavorite(int position) {
-        getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(idProduct, getUserId())
+        getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(getProductId(), getVariantId(), getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
+                    updateUserWishList(getProductId(), getVariantId(), value);
                     isFavorite.set(value);
                     int count = Integer.valueOf(favoriteCount.get());
                     count = value ? count + 1 : count - 1;
@@ -88,7 +92,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     }
 
     public void addProductToCart(String variantModelId, boolean isBuyNow) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), idProduct, variantModelId, getIntegerAmountAdded())
+        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), productId, variantModelId, getIntegerAmountAdded())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {
@@ -107,7 +111,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     private void inputValue(Product product) {
         title.set(product.product_name);
         imageURL.set(product.avatar_name);
-        idProduct = product.id;
+        productId = product.id;
         price.set("RM " + product.lowest_price);
         rate.set(product.rate);
         rateCount.set(product.rate_count + "");
@@ -126,13 +130,13 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     }
 
     public void getProductCachedById() {
-        getCompositeDisposable().add(getDataManager().getProductCachedById(idProduct)
+        getCompositeDisposable().add(getDataManager().getProductCachedById(productId)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCached -> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct());
-                        checkIfFavorite(getUserId(), idProduct);
+                        checkIfFavorite(getUserId(), productId);
                     }
                 }, Crashlytics::logException));
     }
@@ -159,5 +163,25 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                         editProductCartServer(cart);
                     }
                 }, Crashlytics::logException));
+    }
+
+    private void updateUserWishList(int pProductId, int pVariantId, boolean isFavorite) {
+        getCompositeDisposable().add((isFavorite ? getDataManager().addUserWishList(new AddWishListRequest(pProductId, pVariantId))
+                : getDataManager().deleteUserWishList(new DeleteWishListRequest(pProductId, pVariantId)))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        Log.v("addUserWishList", "ADDED WISH LIST SUCCESSFUL");
+                    }
+                }, Crashlytics::logException));
+    }
+
+    public int getVariantId() {
+        return variantId;
+    }
+
+    public void setVariantId(int id) {
+        this.variantId = id;
     }
 }

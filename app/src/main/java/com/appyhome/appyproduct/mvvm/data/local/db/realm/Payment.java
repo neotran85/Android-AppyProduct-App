@@ -25,4 +25,8 @@ public class Payment extends RealmObject {
     @ColumnInfo(name = "information")
     public String information;
 
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

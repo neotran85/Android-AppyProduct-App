@@ -26,9 +26,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
@@ -549,8 +551,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addOrRemoveFavorite(int productId, String userId) {
-        return mDbHelper.addOrRemoveFavorite(productId, userId);
+    public Flowable<Boolean> addOrRemoveFavorite(int productId, int variantId, String userId) {
+        return mDbHelper.addOrRemoveFavorite(productId, variantId, userId);
     }
 
     @Override
@@ -706,5 +708,30 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
         return mDbHelper.addProductVariants(variants);
+    }
+
+    @Override
+    public Single<ApiResponse> addUserWishList(AddWishListRequest request) {
+        return mApiHelper.addUserWishList(request);
+    }
+
+    @Override
+    public Single<ApiResponse> deleteUserWishList(DeleteWishListRequest request) {
+        return mApiHelper.deleteUserWishList(request);
+    }
+
+    @Override
+    public Single<ApiResponse> emptyUserWishList() {
+        return mApiHelper.emptyUserWishList();
+    }
+
+    @Override
+    public Flowable<Boolean> emptyFavorites(String userId) {
+        return emptyFavorites(userId);
+    }
+
+    @Override
+    public Single<ApiResponse> getUserWishList() {
+        return getUserWishList();
     }
 }

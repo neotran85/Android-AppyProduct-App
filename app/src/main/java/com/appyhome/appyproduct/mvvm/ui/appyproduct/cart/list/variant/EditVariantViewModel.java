@@ -84,8 +84,8 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
                     if (data != null && data.isValid()) {
                         Log.v("addOrUpdateVariant", "ADDED VARIANT SUCCESSFULLY");
                     } else {
-                        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(getProductId(),
-                                getVariantId(), getAmount()))
+                        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(cart.product_id,
+                                cart.variant_id, cart.amount))
                                 .subscribeOn(getSchedulerProvider().io())
                                 .observeOn(getSchedulerProvider().ui())
                                 .subscribe(data1 -> {

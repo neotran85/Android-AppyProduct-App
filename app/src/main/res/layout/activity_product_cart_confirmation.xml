@@ -130,10 +130,14 @@
                     <LinearLayout
                         android:id="@+id/llShippingAddress"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:padding="14dp">
+                        android:paddingTop="14dp"
+                        android:paddingBottom="20dp"
+                        android:paddingEnd="14dp"
+                        android:paddingStart="14dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -199,8 +203,6 @@
                                     android:textColor="#4E4E4E"
                                     android:textSize="14sp" />
                             </LinearLayout>
-
-
                             <TextView
                                 fontPath="fonts/TitilliumWeb-Light.ttf"
                                 android:layout_width="wrap_content"
@@ -245,7 +247,6 @@
                                 android:textSize="15sp" />
 
                             <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="@{(view) -> navigator.editPaymentMethod()}"
@@ -356,7 +357,6 @@
                                 android:textSize="15sp" />
 
                             <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="@{(view) -> navigator.editCart()}"

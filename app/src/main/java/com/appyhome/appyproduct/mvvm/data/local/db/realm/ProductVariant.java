@@ -139,4 +139,9 @@ public class ProductVariant extends RealmObject {
     @Expose
     @SerializedName("avatar")
     public String avatar;
+
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

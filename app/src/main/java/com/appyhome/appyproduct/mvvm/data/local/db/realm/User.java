@@ -42,6 +42,6 @@ public class User extends RealmObject {
     @ColumnInfo(name = "avatar_path")
     public String avatarPath;
 
-    @ColumnInfo(name = "others")
-    public String others;
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

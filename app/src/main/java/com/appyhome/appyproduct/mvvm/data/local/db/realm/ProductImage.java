@@ -24,4 +24,9 @@ public class ProductImage extends RealmObject {
     @SerializedName("product_id")
     @ColumnInfo(name = "product_id")
     public int product_id;
+
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

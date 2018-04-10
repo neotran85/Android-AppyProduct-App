@@ -33,6 +33,11 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
         mCurrentClickedViewModel = null;
     }
 
+    @Override
+    protected int getLoadingItemLayout() {
+        return R.layout.view_item_product_category_loading;
+    }
+
     public void clickViewModel(CategoryItemViewModel viewModel) {
         if (mCurrentClickedViewModel != viewModel) {
             viewModel.isHighLight = true;

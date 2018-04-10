@@ -133,6 +133,11 @@ public class ProductCached extends RealmObject {
     @ColumnInfo(name = "time_db_added")
     public long time_db_added;
 
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
+
     private String copyString(String value) {
         return value != null ? new String(value.toCharArray()) : null;
     }
@@ -161,6 +166,7 @@ public class ProductCached extends RealmObject {
         product.sort_order = sort_order;
         product.tax_class_id = tax_class_id;
         product.updated_at = copyString(updated_at);
+        product.more_info = more_info;
         return product;
     }
 }

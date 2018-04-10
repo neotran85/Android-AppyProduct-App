@@ -215,10 +215,14 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
             Realm.getDefaultInstance().close();
     }
 
-    public void askForLogin(String message) {
-        Intent intent = LoginActivity.getStartIntent(this);
-        intent.putExtra("message", message);
-        startActivityForResult(intent, REQUEST_LOGIN);
+    public boolean askForLogin(String message) {
+        if(!getViewModel().isUserLoggedIn()) {
+            Intent intent = LoginActivity.getStartIntent(this);
+            intent.putExtra("message", message);
+            startActivityForResult(intent, REQUEST_LOGIN);
+            return true;
+        }
+        return false;
     }
 }
 

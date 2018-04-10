@@ -750,7 +750,32 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addOrRemoveFavorite(int productId, String userId) {
+    public Flowable<Boolean> emptyFavorites(String userId) {
+        return Flowable.fromCallable(() -> {
+            try {
+                Boolean value;
+                beginTransaction();
+                RealmResults<ProductFavorite> favorites = getRealm().where(ProductFavorite.class)
+                        .equalTo("user_id", userId).findAll();
+
+                if (favorites == null || favorites.size() > 0) {
+                    favorites.deleteAllFromRealm();
+                    value = true;
+                } else {
+                    value = false;
+                }
+                getRealm().commitTransaction();
+                return value;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
+    }
+
+
+    @Override
+    public Flowable<Boolean> addOrRemoveFavorite(int productId, int variantId, String userId) {
         return Flowable.fromCallable(() -> {
             try {
                 Boolean value = false;
@@ -761,6 +786,7 @@ public class AppDbHelper implements DbHelper {
                         .findFirst();
                 if (favorite == null || !favorite.isValid()) {
                     favorite = new ProductFavorite();
+                    favorite.variant_id = variantId;
                     favorite.id = System.currentTimeMillis();
                     favorite.user_id = userId;
                     favorite.product_id = productId;

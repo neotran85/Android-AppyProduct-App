@@ -9,9 +9,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -89,4 +91,13 @@ public interface ApiHelper {
     Single<ApiResponse> editProductToCart(EditCartRequest request);
 
     Single<ApiResponse> editProductCartVariant(EditCartVariantRequest request);
+
+    Single<ApiResponse> addUserWishList(AddWishListRequest request);
+
+    Single<ApiResponse> deleteUserWishList(DeleteWishListRequest request);
+
+    Single<ApiResponse> emptyUserWishList();
+
+    Single<ApiResponse> getUserWishList();
+
 }

@@ -19,4 +19,9 @@ public class ProductTracking extends RealmObject {
     @SerializedName("order_id")
     @ColumnInfo(name = "order_id")
     public int order_id;
+
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

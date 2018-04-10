@@ -75,7 +75,9 @@ public interface DbHelper {
 
     Flowable<Integer> getTotalCountProductCarts(String userId);
 
-    Flowable<Boolean> addOrRemoveFavorite(int productId, String userId);
+    Flowable<Boolean> addOrRemoveFavorite(int productId, int variantId, String userId);
+
+    Flowable<Boolean> emptyFavorites(String userId);
 
     Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId);
 

@@ -97,11 +97,9 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void goToStep4() {
-        if (getViewModel().isUserLoggedIn()) {
+        if (!askForLogin(getString(R.string.login_required_message)
+                + " " + getString(R.string.login_to_book_service))) {
             startActivity(ServicesStep4Activity.getStartIntent(this));
-        } else {
-            askForLogin(getString(R.string.login_required_message)
-                    + " " + getString(R.string.login_to_book_service));
         }
     }
 }

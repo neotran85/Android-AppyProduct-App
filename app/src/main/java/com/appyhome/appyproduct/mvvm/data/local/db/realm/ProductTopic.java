@@ -29,4 +29,9 @@ public class ProductTopic extends RealmObject {
     @SerializedName("thumbnail")
     @ColumnInfo(name = "thumbnail")
     public String thumbnail;
+
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

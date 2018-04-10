@@ -9,9 +9,11 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -246,6 +248,8 @@ public class AppApiHelper implements ApiHelper {
                 .getObjectSingle(ProductVariantResponse.class);
     }
 
+    /********** PRODUCT CART API INTEGRATION **********/
+
     @Override
     public Single<ApiResponse> addProductToCart(AddToCartRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_ADD)
@@ -294,6 +298,42 @@ public class AppApiHelper implements ApiHelper {
     public Single<ApiResponse> emptyUserCarts() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_CART_EMPTY)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    /********** PRODUCT WISH LIST API INTEGRATION **********/
+
+    @Override
+    public Single<ApiResponse> emptyUserWishList() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_WISH_LIST_EMPTY)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> getUserWishList() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_WISH_LIST_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> deleteUserWishList(DeleteWishListRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_WISH_LIST_DELETE)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> addUserWishList(AddWishListRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_WISH_LIST_ADD)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
                 .build()
                 .getObjectSingle(ApiResponse.class);
     }

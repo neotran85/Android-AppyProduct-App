@@ -34,4 +34,9 @@ public class ProductCategory extends RealmObject {
     @SerializedName("id_topic")
     @ColumnInfo(name = "id_topic")
     public int id_topic;
+
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

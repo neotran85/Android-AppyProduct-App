@@ -37,4 +37,8 @@ public class SearchItem extends RealmObject {
     @ColumnInfo(name = "topics")
     public String topics;
 
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

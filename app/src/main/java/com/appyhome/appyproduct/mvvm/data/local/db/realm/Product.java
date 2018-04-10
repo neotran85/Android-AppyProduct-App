@@ -126,4 +126,9 @@ public class Product extends RealmObject {
     @SerializedName("like")
     @ColumnInfo(name = "like")
     public int like;
+
+    @Expose
+    @SerializedName("more_info")
+    @ColumnInfo(name = "more_info")
+    public String more_info;
 }

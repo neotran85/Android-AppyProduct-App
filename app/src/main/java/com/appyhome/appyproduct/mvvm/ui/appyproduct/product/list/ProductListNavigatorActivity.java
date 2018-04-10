@@ -95,7 +95,8 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
-    public void addedToCartCompleted(boolean isBuyNow) {}
+    public void addedToCartCompleted(boolean isBuyNow) {
+    }
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
@@ -238,7 +239,9 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
-        vm.updateProductFavorite(getProductAdapter().indexOf(vm));
+        if (!askForLogin(getString(R.string.ask_login_to_add_wishlist))) {
+            vm.updateProductFavorite(getProductAdapter().indexOf(vm));
+        }
     }
 
     @Override
