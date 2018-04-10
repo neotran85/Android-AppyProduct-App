@@ -943,6 +943,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<RealmResults<ProductFavorite>> favorites = getRealm().where(ProductFavorite.class)
                 .equalTo("user_id", userId)
+                .sort("id", Sort.DESCENDING)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return favorites;

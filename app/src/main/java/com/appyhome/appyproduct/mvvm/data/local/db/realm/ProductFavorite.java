@@ -88,7 +88,7 @@ public class ProductFavorite extends RealmObject {
         product_avatar = product.avatar_name;
         product_name = product.product_name;
         more_info = product.more_info;
-        favorite_count = product.like;
+        favorite_count = product.favorite_count;
         rating = product.rate;
         rating_count = product.rate_count;
     }
@@ -100,7 +100,7 @@ public class ProductFavorite extends RealmObject {
         product.avatar_name = product_avatar;
         product.product_name = product_name;
         product.more_info = more_info;
-        product.like = favorite_count;
+        product.favorite_count = favorite_count;
         product.rate = rating;
         product.rate_count = rating_count;
         return product;
