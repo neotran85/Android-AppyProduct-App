@@ -15,7 +15,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetail
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
 import java.util.ArrayList;

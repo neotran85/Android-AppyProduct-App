@@ -1,14 +1,15 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -19,12 +20,11 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator, View.OnClickListener {
+public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
     public static final int REQUEST_SIGN_UP = 2222;
 
@@ -35,6 +35,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Inject
     int mLayoutId;
+
+    private boolean mIsError = false;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -56,55 +58,43 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         super.onCreate(savedInstanceState);
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mLoginViewModel);
+        mBinder.setNavigator(this);
         mLoginViewModel.setNavigator(this);
-
-        ViewUtils.setOnClickListener(this, mBinder.btnForgetPassword,
-                mBinder.btnSignUp);
 
         TextInputEditText[] arrayTextInputs = {mBinder.etPhoneNumber, mBinder.etPassword};
         for (TextInputEditText edt : arrayTextInputs) {
             edt.addTextChangedListener(new LoginTextWatcher(edt));
         }
+        mBinder.etPassword.setOnEditorActionListener((v, actionId, event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                login();
+            }
+            return false;
+        });
         showError(DataUtils.getStringSafely(getIntent(), "message"));
     }
 
     private void clearTextInputError(TextInputEditText editText) {
-        if (editText != null) {
-            editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
-            editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
-        }
+        editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.medium_dark_gray));
+        editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
         showError("");
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnSignUp:
-                if (isNetworkConnected()) {
-                    openSignUpActivity();
-                }
-                break;
-            case R.id.btnForgetPassword:
-                if (isNetworkConnected()) {
-                    openForgetPassword();
-                }
-                break;
-            default:
-                // DO NOTHING
-                break;
+    public void openForgetPassword() {
+        if (isNetworkConnected()) {
+            AlertManager.getInstance(this).openInformationBrowser("Forget Password",
+                    ApiUrlConfig.URL_FORGET_PASSWORD);
         }
-    }
-
-    private void openForgetPassword() {
-        AlertManager.getInstance(this).openInformationBrowser("Forget Password",
-                ApiUrlConfig.URL_FORGET_PASSWORD);
     }
 
     @Override
     public void openSignUpActivity() {
-        Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
-        intent.putExtra("phone", mBinder.etPhoneNumber.getText().toString());
-        startActivityForResult(intent, REQUEST_SIGN_UP);
+        if (isNetworkConnected()) {
+            Intent intent = RegisterActivity.getStartIntent(LoginActivity.this);
+            intent.putExtra("phone", mBinder.etPhoneNumber.getText().toString());
+            startActivityForResult(intent, REQUEST_SIGN_UP);
+        }
     }
 
     @Override
@@ -113,23 +103,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         switch (requestCode) {
             case REQUEST_SIGN_UP:
                 if (resultCode == RESULT_OK) {
-                    doAfterLoginSucceeded();
+                    getViewModel().fetchUserData();
                 }
                 break;
         }
-    }
-
-
-    @Override
-    public void doAfterLoginSucceeded() {
-        getViewModel().fetchUserProfile();
-    }
-
-    @Override
-    public void doAfterFetchUserInfoCompleted() {
-        Intent intent = getIntent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     @Override
@@ -193,11 +170,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void showErrorOthers() {
+    public void showErrorLogin() {
         showError(getString(R.string.login_error));
     }
 
     private void showError(String text) {
+        mIsError = text != null && text.length() > 0;
         mBinder.txtError.setText(text);
         mBinder.txtError.setVisibility(text.length() > 0 ? View.VISIBLE : View.INVISIBLE);
     }
@@ -212,14 +190,23 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         return BR.viewModel;
     }
 
+    private void showSignUpDialog() {
+        AlertManager.getInstance(this).showConfirmationDialog(getString(R.string.title_login_error),
+                getString(R.string.suggestion_sign_up),
+                (dialog, which) -> openSignUpActivity());
+    }
+
     @Override
-    public void showSignUpDialog() {
-        AlertManager.getInstance(this).showConfirmationDialog(getString(R.string.title_login_error), getString(R.string.suggestion_sign_up), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                openSignUpActivity();
-            }
-        });
+    public void onFetchUserInfo_Done() {
+        closeLoading();
+        Intent intent = getIntent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+
     }
 
     private class LoginTextWatcher implements TextWatcher {
@@ -236,7 +223,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            clearTextInputError(editText);
+            if (mIsError)
+                clearTextInputError(editText);
         }
 
         @Override

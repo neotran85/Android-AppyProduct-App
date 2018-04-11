@@ -10,7 +10,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentUserPageBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;

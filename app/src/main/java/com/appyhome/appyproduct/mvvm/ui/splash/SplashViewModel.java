@@ -5,6 +5,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -123,7 +124,8 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // UPDATE CART SUCCESSFUL
+                    // UPDATE CART SUCCESSFUL, THEN FETCH USER WISH LIST
+                    fetchUserWishList();
                 }, Crashlytics::logException));
     }
 
@@ -157,4 +159,41 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 }, Crashlytics::logException));
     }
 
+    public void fetchUserWishList() {
+        getCompositeDisposable().add(getDataManager().getUserWishList()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        ArrayList<ProductFavoriteResponse> arrayList = new ArrayList<>();
+                        try {
+                            LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
+                            Gson gson = new Gson();
+                            for (String key : linkedTreeMap.keySet()) {
+                                ArrayList array = linkedTreeMap.get(key);
+                                for (int i = 0; i < array.size(); i++) {
+                                    JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                                    ProductFavoriteResponse item = gson.fromJson(object.toString(), ProductFavoriteResponse.class);
+                                    arrayList.add(item);
+                                }
+                            }
+                            if (arrayList.size() > 0) {
+                                updateWishList(arrayList);
+                                return;
+                            }
+                        } catch (Exception e) {
+                            Crashlytics.logException(e);
+                        }
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void updateWishList(ArrayList<ProductFavoriteResponse> arrayList) {
+        getCompositeDisposable().add(getDataManager().syncAllProductFavorite(getUserId(), arrayList)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // UPDATE WISH LIST SUCCESSFUL
+                }, Crashlytics::logException));
+    }
 }

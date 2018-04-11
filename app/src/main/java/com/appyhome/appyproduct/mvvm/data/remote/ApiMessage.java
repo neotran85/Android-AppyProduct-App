@@ -11,4 +11,5 @@ public class ApiMessage {
     public static final String PHONE_NUMBER_ALREADY_CONFIRMED = "phone_number_already_confirmed";
     public static final String PHONE_NUMBER_ACTIVATED = "phone_number_activated";
     public static final String PRODUCT_ADDED = "product_added";
+    public static final String WISHLIST_EMPTY = "wishlist_empty";
 }

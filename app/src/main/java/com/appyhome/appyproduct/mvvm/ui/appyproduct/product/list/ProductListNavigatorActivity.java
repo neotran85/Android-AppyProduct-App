@@ -22,7 +22,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortNaviga
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 

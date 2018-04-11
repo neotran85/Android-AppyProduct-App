@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.common.component.cart;
+package com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart;
 
 import android.content.Intent;
 import android.util.TypedValue;

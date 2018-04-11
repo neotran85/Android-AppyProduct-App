@@ -1,8 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
-public interface LoginNavigator {
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoNavigator;
 
-    void doAfterLoginSucceeded();
+public interface LoginNavigator extends FetchUserInfoNavigator{
 
     void handleErrorService(Throwable throwable);
 
@@ -10,19 +10,17 @@ public interface LoginNavigator {
 
     void openSignUpActivity();
 
+    void showErrorLogin();
+
     void showErrorServer();
-
-    void showErrorOthers();
-
-    void showSignUpDialog();
 
     void showSuccessLogin();
 
     void showAlert(String message);
 
-    void doAfterFetchUserInfoCompleted();
-
     void closeLoading();
 
     void showLoading();
+
+    void openForgetPassword();
 }

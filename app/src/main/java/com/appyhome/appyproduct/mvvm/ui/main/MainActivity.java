@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     public final static int REQUEST_LOGIN_FOR_REQUEST_TRACKING = 1111;
     public final static int REQUEST_LOGIN_FOR_MY_PROFILE = 1112;
-    public final static int REQUEST_LOGIN_FOR_MY_WISH_LIST = 1113;
+    public final static int REQUEST_LOGIN_FOR_MY_WISH_LIST = 1114;
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;

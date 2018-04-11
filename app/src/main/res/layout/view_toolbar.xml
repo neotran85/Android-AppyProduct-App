@@ -4,11 +4,11 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewHolder" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder" />
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.common.component.cart.SearchToolbarViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewModel" />
 
     </data>
 
