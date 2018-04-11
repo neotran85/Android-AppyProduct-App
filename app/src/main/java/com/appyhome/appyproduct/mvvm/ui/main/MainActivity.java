@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.ui.main.tab.AppyTabNavigator;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragment;
@@ -32,13 +33,13 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, View.OnClickListener {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector, AppyTabNavigator {
 
-    public final static int TAB_HOME = 0;
-    public final static int TAB_NOTIFICATION = 1;
-    public final static int TAB_REQUEST = 2;
-    public final static int TAB_WISH_LIST = 3;
-    public final static int TAB_MY_PROFILE = 4;
+    public final static String TAB_HOME = "tab_home";
+    public final static String TAB_NOTIFICATION = "tab_notification";
+    public final static String TAB_TRACKING = "tab_tracking";
+    public final static String TAB_WISH_LIST = "tab_wish_list";
+    public final static String TAB_MY_PROFILE = "tab_my_profile";
     public final static String TAB = "tab";
 
     public final static int REQUEST_LOGIN_FOR_REQUEST_TRACKING = 1111;
@@ -55,8 +56,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Inject
     MainViewModel mMainViewModel;
-
-    private View currentTab;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -104,30 +103,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void setUp() {
-        ViewUtils.setOnClickListener(this, mBinder.rlHome, mBinder.rlMyProfile,
-                mBinder.rlNotification, mBinder.rlRequest, mBinder.rlWishList);
-        currentTab = mBinder.rlHome;
-        showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+        mBinder.tabLayout.setUp(this, this);
         Intent intent = getIntent();
-        int tab = intent.getIntExtra(TAB, -1);
-        switch (tab) {
-            case TAB_HOME:
-                onClick(mBinder.rlHome);
-                break;
-            case TAB_NOTIFICATION:
-                onClick(mBinder.rlNotification);
-                break;
-            case TAB_REQUEST:
-                onClick(mBinder.rlRequest);
-                break;
-            case TAB_WISH_LIST:
-                onClick(mBinder.rlWishList);
-                break;
-            case TAB_MY_PROFILE:
-                onClick(mBinder.rlMyProfile);
-                break;
-            default:
-                onClick(mBinder.rlHome);
+        String tab = intent.getStringExtra(TAB);
+        if(tab != null && tab.length() > 0) {
+            clickTab(tab);
+        } else {
+            clickTab(TAB_HOME);
         }
     }
 
@@ -137,50 +119,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         switch (requestCode) {
             case REQUEST_LOGIN_FOR_MY_PROFILE:
                 if (resultCode == RESULT_OK) {
-                    onClick(mBinder.rlMyProfile);
+                    clickTab(TAB_MY_PROFILE);
                 }
                 break;
             case REQUEST_LOGIN_FOR_REQUEST_TRACKING:
                 if (resultCode == RESULT_OK) {
-                    onClick(mBinder.rlRequest);
+                    clickTab(TAB_TRACKING);
                 }
                 break;
             case REQUEST_LOGIN_FOR_MY_WISH_LIST:
                 if (resultCode == RESULT_OK) {
-                    onClick(mBinder.rlWishList);
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rlHome:
-                switchTabSelection(view);
-                showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
-                break;
-            case R.id.rlNotification:
-                switchTabSelection(view);
-                showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
-                break;
-            case R.id.rlRequest:
-                if (!askForLogin(getString(R.string.please_login_to_view_service_request),
-                        REQUEST_LOGIN_FOR_REQUEST_TRACKING)) {
-                    switchTabSelection(view);
-                    showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
-                }
-                break;
-            case R.id.rlWishList:
-                if (!askForLogin(getString(R.string.please_login_view_wishlist), REQUEST_LOGIN_FOR_MY_WISH_LIST)) {
-                    switchTabSelection(view);
-                    showFragment(FavoriteFragment.newInstance(), FavoriteFragment.TAG);
-                }
-                break;
-            case R.id.rlMyProfile:
-                if (!askForLogin(getString(R.string.please_login_see_your_profile), REQUEST_LOGIN_FOR_MY_PROFILE)) {
-                    switchTabSelection(view);
-                    showFragment(UserPageFragment.newInstance(), UserPageFragment.TAG);
+                    clickTab(TAB_WISH_LIST);
                 }
                 break;
         }
@@ -190,11 +139,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         Intent intent = LoginActivity.getStartIntent(this);
         intent.putExtra("message", message);
         startActivityForResult(intent, requestCode);
-    }
-
-    private void switchTabSelection(View view) {
-        highLightTab(currentTab, view);
-        currentTab = view;
     }
 
     @Override
@@ -217,19 +161,41 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         this.showFragment(fragment, tag, R.id.screenView);
     }
 
-    private void highLightTab(View oldView, View newView) {
-        if (oldView != null) {
-            View oldHighlightView = oldView.findViewWithTag("highlight");
-            oldHighlightView.setVisibility(View.GONE);
-        }
-        if (newView != null) {
-            View newHighLightView = newView.findViewWithTag("highlight");
-            newHighLightView.setVisibility(View.VISIBLE);
-        }
-    }
-
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    public void clickTab(String tagView) {
+        View view = mBinder.tabLayout.findViewWithTag(tagView);
+        mBinder.tabLayout.clickTab(view);
+    }
+
+    @Override
+    public void onClickTab(View view) {
+        switch (view.getId()) {
+            case R.id.rlHome:
+                showFragment(HomeFragment.newInstance(), HomeFragment.TAG);
+                break;
+            case R.id.rlNotification:
+                showFragment(NotificationFragment.newInstance(), NotificationFragment.TAG);
+                break;
+            case R.id.rlRequest:
+                if (!askForLogin(getString(R.string.please_login_to_view_service_request),
+                        REQUEST_LOGIN_FOR_REQUEST_TRACKING)) {
+                    showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
+                }
+                break;
+            case R.id.rlWishList:
+                if (!askForLogin(getString(R.string.please_login_view_wishlist), REQUEST_LOGIN_FOR_MY_WISH_LIST)) {
+                    showFragment(FavoriteFragment.newInstance(), FavoriteFragment.TAG);
+                }
+                break;
+            case R.id.rlMyProfile:
+                if (!askForLogin(getString(R.string.please_login_see_your_profile), REQUEST_LOGIN_FOR_MY_PROFILE)) {
+                    showFragment(UserPageFragment.newInstance(), UserPageFragment.TAG);
+                }
+                break;
+        }
     }
 }
