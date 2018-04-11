@@ -18,12 +18,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f1f1f1"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
             android:orientation="vertical">
 
             <ImageView
@@ -44,14 +44,26 @@
                 <ImageView
                     android:layout_width="82dp"
                     android:layout_height="82dp"
-                    android:layout_marginBottom="4dp"
                     android:adjustViewBounds="true"
                     android:background="@mipmap/user_page_header_avatar" />
-
+                <TextView
+                    fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:background="@color/white"
+                    android:text="@{viewModel.fullName}"
+                    android:visibility="gone"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
                 <Button
+                    android:layout_marginTop="10dp"
                     android:layout_width="62dp"
                     android:layout_height="22dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/button_transparent_bg"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.logout()}"
@@ -69,31 +81,12 @@
                 android:layout_marginTop="30dp"
                 android:orientation="vertical" />
 
-            <TextView
-                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="end"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="14dp"
-                android:alpha="0.7"
-                android:background="@drawable/view_rounded_bg_orange"
-                android:gravity="end"
-                android:paddingBottom="2dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:paddingTop="2dp"
-                android:text="@{viewModel.fullName}"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
         </RelativeLayout>
 
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
