@@ -3,15 +3,17 @@ package com.appyhome.appyproduct.mvvm.ui.splash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySplashBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
-public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
+public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements FetchUserInfoNavigator {
 
     @Inject
     SplashViewModel mSplashViewModel;
@@ -32,13 +34,14 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getViewDataBinding().setViewModel(mSplashViewModel);
         mSplashViewModel.setNavigator(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mSplashViewModel.setUp();
+        getViewModel().loadAppData();
     }
 
     public void openMainActivity() {
@@ -57,4 +60,13 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         return BR.viewModel;
     }
 
+    @Override
+    public void onFetchUserInfo_Done() {
+        openMainActivity();
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+        openMainActivity();
+    }
 }
