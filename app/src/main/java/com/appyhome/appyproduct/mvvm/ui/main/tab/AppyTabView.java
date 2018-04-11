@@ -40,24 +40,20 @@ public class AppyTabView extends LinearLayout {
         return mCurrentView;
     }
 
+    private void setSelected(View view, boolean isSelected) {
+        view.findViewWithTag("icon").setSelected(isSelected);
+        view.findViewWithTag("icon").refreshDrawableState();
+        view.findViewWithTag("title").setSelected(isSelected);
+        view.findViewWithTag("title").refreshDrawableState();
+    }
+
     public void clickTab(View view) {
         if (mNavigator != null)
             mNavigator.onClickTab(view);
         if (mCurrentView != null) {
-            mCurrentView.findViewWithTag("icon").setSelected(false);
-            View titleView = mCurrentView.findViewWithTag("title");
-            if (titleView instanceof TextView) {
-                TextView t = (TextView) titleView;
-                t.setTextColor(ContextCompat.getColor(getContext(), R.color.semi_gray));
-            }
+            setSelected(mCurrentView,false);
         }
         mCurrentView = view;
-        view.findViewWithTag("icon").setSelected(false);
-        View titleTab = view.findViewWithTag("title");
-        if (titleTab instanceof TextView) {
-            TextView t = (TextView) titleTab;
-            t.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        }
-
+       setSelected(view, true);
     }
 }

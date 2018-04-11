@@ -21,7 +21,7 @@
         android:id="@+id/llBottomBar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@drawable/rectangle_shadow"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="5">
@@ -51,7 +51,7 @@
                 android:layout_centerHorizontal="true"
                 android:paddingBottom="6dp"
                 android:text="@string/tab_home"
-                android:textColor="@color/semi_gray"
+                android:textColor="@drawable/appy_tab_text"
                 android:textSize="10sp" />
         </RelativeLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_centerHorizontal="true"
                 android:paddingBottom="6dp"
                 android:text="@string/tab_notification"
-                android:textColor="@color/semi_gray"
+                android:textColor="@drawable/appy_tab_text"
                 android:textSize="10sp" />
         </RelativeLayout>
 
@@ -110,7 +110,7 @@
                 android:layout_centerHorizontal="true"
                 android:paddingBottom="6dp"
                 android:text="@string/tracking"
-                android:textColor="@color/white"
+                android:textColor="@drawable/appy_tab_text_tracking"
                 android:textSize="10sp" />
         </RelativeLayout>
 
@@ -139,7 +139,7 @@
                 android:layout_centerHorizontal="true"
                 android:paddingBottom="6dp"
                 android:text="@string/tab_wish_list"
-                android:textColor="@color/semi_gray"
+                android:textColor="@drawable/appy_tab_text"
                 android:textSize="10sp" />
         </RelativeLayout>
 
@@ -158,7 +158,7 @@
                 android:layout_height="32dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="6dp"
-                android:background="@drawable/tab_profile" />
+                android:background="@drawable/appy_tab_profile" />
 
             <TextView
                 android:tag="title"
@@ -169,7 +169,7 @@
                 android:layout_centerHorizontal="true"
                 android:paddingBottom="6dp"
                 android:text="@string/tab_my_profile"
-                android:textColor="@color/semi_gray"
+                android:textColor="@drawable/appy_tab_text"
                 android:textSize="10sp" />
         </RelativeLayout>
     </LinearLayout>
