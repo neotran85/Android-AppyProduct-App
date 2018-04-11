@@ -14,8 +14,6 @@ public interface LoginNavigator extends FetchUserInfoNavigator{
 
     void showErrorServer();
 
-    void showSuccessLogin();
-
     void showAlert(String message);
 
     void closeLoading();

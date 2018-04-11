@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -160,11 +161,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void showSuccessLogin() {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.login_success));
-    }
-
-    @Override
     public void showErrorServer() {
         showError(getString(R.string.login_error_internal_server));
     }
@@ -196,17 +192,24 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 (dialog, which) -> openSignUpActivity());
     }
 
-    @Override
-    public void onFetchUserInfo_Done() {
+    private void finishActivityResult() {
         closeLoading();
         Intent intent = getIntent();
         setResult(RESULT_OK, intent);
+        AlertManager.getInstance(this).showLongToast(getString(R.string.login_success));
         finish();
     }
 
     @Override
-    public void onFetchUserInfo_Failed() {
+    public void onFetchUserInfo_Done() {
+        finishActivityResult();
+        Log.v("onFetchUserInfo_Done", "SUCCESS");
+    }
 
+    @Override
+    public void onFetchUserInfo_Failed() {
+        finishActivityResult();
+        Log.v("onFetchUserInfo_Failed", "FAILED");
     }
 
     private class LoginTextWatcher implements TextWatcher {

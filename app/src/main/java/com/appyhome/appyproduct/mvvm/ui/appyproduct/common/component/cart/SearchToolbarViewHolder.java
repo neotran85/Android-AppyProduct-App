@@ -22,6 +22,8 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
 
     private SearchToolbarViewModel mViewModel;
 
+    private boolean mLoginDelayed = false;
+
     public SearchToolbarViewHolder(BaseActivity activity, ViewGroup parent, boolean isFullMode, boolean isBackShowed, String keyword) {
         super(parent);
         mBinding = ViewToolbarBinding
@@ -31,6 +33,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
         BaseViewModel baseViewModel = mActivity.getViewModel();
         mViewModel = new SearchToolbarViewModel(baseViewModel.getDataManager(), baseViewModel.getSchedulerProvider());
         mBinding.setViewModel(mViewModel);
+        mViewModel.setNavigator(this);
         mViewModel.isFullMode.set(isFullMode);
         mViewModel.isBackButtonShowed.set(isBackShowed);
         mViewModel.keywords.set(keyword);
@@ -57,7 +60,8 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     }
 
     public void openProductCart() {
-        if (!mActivity.askForLogin("Please login to view your cart.")) {
+        mLoginDelayed = mActivity.askForLogin("Please login to view your cart.");
+        if (!mLoginDelayed) {
             if (mBinding.getViewModel().totalItemsCount.get() > 0) {
                 Intent intent = ProductCartListActivity.getStartIntent(mActivity);
                 mActivity.startActivity(intent);
@@ -70,5 +74,11 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     @Override
     public void onBind(int position) {
         mBinding.getViewModel().updateTotalCountProductCart();
+    }
+
+    public void openCartAfterLoggedIn() {
+        if(mLoginDelayed) {
+            openProductCart();
+        }
     }
 }

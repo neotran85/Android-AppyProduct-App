@@ -4,11 +4,10 @@ import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleItemNavigator;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
+public class SearchToolbarViewModel extends BaseViewModel<SearchToolbarViewHolder> {
     public ObservableField<Integer> totalItemsCount = new ObservableField<>(0);
     public ObservableField<Boolean> isFullMode = new ObservableField<>(true);
     public ObservableField<Boolean> isBackButtonShowed = new ObservableField<>(false);
@@ -29,6 +28,7 @@ public class SearchToolbarViewModel extends BaseViewModel<SampleItemNavigator> {
                 .subscribe(total -> {
                     if (total >= 0 && isUserLoggedIn())
                         totalItemsCount.set(total);
+                    getNavigator().openCartAfterLoggedIn();
                 }, Crashlytics::logException));
     }
 }

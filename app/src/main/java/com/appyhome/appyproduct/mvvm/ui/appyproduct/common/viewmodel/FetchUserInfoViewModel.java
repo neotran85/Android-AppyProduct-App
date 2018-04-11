@@ -122,11 +122,9 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
             Crashlytics.logException(throwable);
         }
         if (!mIsFetchProfileStarted) fetchUserProfile();
-        if (!mIsFetchCartsStarted) fetchCartsServer();
-        if (!mIsFetchWishListStarted) fetchUserWishList();
-        if (mIsFetchProfileStarted && mIsFetchWishListStarted && mIsFetchCartsStarted) {
-            getNavigator().onFetchUserInfo_Failed();
-        }
+        else if (!mIsFetchCartsStarted) fetchCartsServer();
+        else if (!mIsFetchWishListStarted) fetchUserWishList();
+        else getNavigator().onFetchUserInfo_Failed();
     }
 
     private void fetchUserProfile() {

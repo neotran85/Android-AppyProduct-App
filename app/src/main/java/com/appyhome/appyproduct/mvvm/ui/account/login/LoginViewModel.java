@@ -53,6 +53,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void fetchUserData() {
+        getNavigator().showLoading();
         mUserInfoViewModel.fetchUserData();
     }
 
@@ -65,7 +66,6 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     setAccessToken(message);
                     setPhoneNumber(mPhoneNumber);
                     getDataManager().updateApiHeader(message);
-                    getNavigator().showSuccessLogin();
                     updateUserInfo(mPhoneNumber, message);
                     fetchUserData();
                     return;
