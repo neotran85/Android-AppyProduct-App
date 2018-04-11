@@ -17,161 +17,169 @@
 
     </data>
 
-    <LinearLayout
-        android:id="@+id/llBottomBar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:weightSum="5">
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/llBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-        <RelativeLayout
-            android:onClick="@{(view) -> navigator.clickTab(view)}"
-            android:tag="tab_home"
-            android:id="@+id/rlHome"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageView
-                android:tag="icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/appy_tab_home" />
-
-            <TextView
-                android:tag="title"
-                fontPath="fonts/TitilliumWeb-Light.ttf"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rlHome"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="6dp"
-                android:text="@string/tab_home"
-                android:textColor="@drawable/appy_tab_text"
-                android:textSize="10sp" />
-        </RelativeLayout>
+                android:layout_weight="1"
+                android:onClick="@{(view) -> navigator.clickTab(view)}"
+                android:tag="tab_home">
 
-        <RelativeLayout
-            android:onClick="@{(view) -> navigator.clickTab(view)}"
-            android:tag="tab_notification"
-            android:id="@+id/rlNotification"
-            android:layout_width="72dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/appy_tab_home"
+                    android:tag="icon" />
 
-            <ImageView
-                android:tag="icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/appy_tab_notification" />
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="6dp"
+                    android:tag="title"
+                    android:text="@string/tab_home"
+                    android:textColor="@drawable/appy_tab_text"
+                    android:textSize="10sp" />
+            </RelativeLayout>
 
-            <TextView
-                android:tag="title"
-                fontPath="fonts/TitilliumWeb-Light.ttf"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rlNotification"
+                android:layout_width="76dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="6dp"
-                android:text="@string/tab_notification"
-                android:textColor="@drawable/appy_tab_text"
-                android:textSize="10sp" />
-        </RelativeLayout>
+                android:layout_weight="1"
+                android:onClick="@{(view) -> navigator.clickTab(view)}"
+                android:tag="tab_notification">
 
-        <RelativeLayout
-            android:onClick="@{(view) -> navigator.clickTab(view)}"
-            android:tag="tab_tracking"
-            android:id="@+id/rlRequest"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/appy_tab_notification"
+                    android:tag="icon" />
 
-            <ImageView
-                android:tag="icon"
-                android:layout_width="84dp"
-                android:layout_height="64dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/appy_tab_tracking" />
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="6dp"
+                    android:tag="title"
+                    android:text="@string/tab_notification"
+                    android:textColor="@drawable/appy_tab_text"
+                    android:textSize="10sp" />
+            </RelativeLayout>
 
-            <TextView
-                android:tag="title"
-                fontPath="fonts/TitilliumWeb-Light.ttf"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rlRequest"
+                android:layout_width="74dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="6dp"
-                android:text="@string/tracking"
-                android:textColor="@drawable/appy_tab_text_tracking"
-                android:textSize="10sp" />
-        </RelativeLayout>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(view) -> navigator.clickTab(view)}"
+                android:tag="tab_tracking">
 
-        <RelativeLayout
-            android:onClick="@{(view) -> navigator.clickTab(view)}"
-            android:tag="tab_wish_list"
-            android:id="@+id/rlWishList"
-            android:layout_width="58dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                <ImageView
+                    android:layout_width="84dp"
+                    android:layout_height="64dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/appy_tab_tracking"
+                    android:tag="icon" />
 
-            <ImageView
-                android:tag="icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/appy_tab_wish_list" />
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="6dp"
+                    android:tag="title"
+                    android:text="@string/tracking"
+                    android:textColor="@drawable/appy_tab_text_tracking"
+                    android:textSize="10sp" />
+            </RelativeLayout>
 
-            <TextView
-                android:tag="title"
-                fontPath="fonts/TitilliumWeb-Light.ttf"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rlWishList"
+                android:layout_width="58dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="6dp"
-                android:text="@string/tab_wish_list"
-                android:textColor="@drawable/appy_tab_text"
-                android:textSize="10sp" />
-        </RelativeLayout>
+                android:layout_weight="1"
+                android:onClick="@{(view) -> navigator.clickTab(view)}"
+                android:tag="tab_wish_list">
 
-        <RelativeLayout
-            android:onClick="@{(view) -> navigator.clickTab(view)}"
-            android:tag="tab_my_profile"
-            android:id="@+id/rlMyProfile"
-            android:layout_width="74dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/appy_tab_wish_list"
+                    android:tag="icon" />
 
-            <ImageView
-                android:padding="0dp"
-                android:tag="icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/appy_tab_profile" />
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="6dp"
+                    android:tag="title"
+                    android:text="@string/tab_wish_list"
+                    android:textColor="@drawable/appy_tab_text"
+                    android:textSize="10sp" />
+            </RelativeLayout>
 
-            <TextView
-                android:tag="title"
-                fontPath="fonts/TitilliumWeb-Light.ttf"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rlMyProfile"
+                android:layout_width="74dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="6dp"
-                android:text="@string/tab_my_profile"
-                android:textColor="@drawable/appy_tab_text"
-                android:textSize="10sp" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_weight="1"
+                android:onClick="@{(view) -> navigator.clickTab(view)}"
+                android:tag="tab_my_profile">
 
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/appy_tab_profile"
+                    android:padding="0dp"
+                    android:tag="icon" />
+
+                <TextView
+                    fontPath="fonts/TitilliumWeb-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="6dp"
+                    android:tag="title"
+                    android:text="@string/tab_my_profile"
+                    android:textColor="@drawable/appy_tab_text"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_alignParentTop="true"
+            android:background="@color/very_light_gray" />
+    </RelativeLayout>
 </layout>
