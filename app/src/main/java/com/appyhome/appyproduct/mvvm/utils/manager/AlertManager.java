@@ -18,7 +18,7 @@ public class AlertManager {
     private static AlertManager mInstance;
     private Toast mToast;
     private Context mContext;
-    private ProgressDialog mProgressDialog;
+    private ProgressDialog mLoadingDialog;
     private AlertDialog mAlertDialog;
 
     private AlertManager(Context context, int gravity) {
@@ -55,18 +55,18 @@ public class AlertManager {
     }
 
     public void closeLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-            mProgressDialog = null;
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.cancel();
         }
+        mLoadingDialog = null;
     }
 
     public void showLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing())
-            mProgressDialog.cancel();
-        mProgressDialog = ProgressDialog.show(mContext, "",
-                mContext.getString(R.string.message_loading), true);
-        mProgressDialog.setCanceledOnTouchOutside(true);
+        if (mLoadingDialog == null || !mLoadingDialog.isShowing()) {
+            mLoadingDialog = ProgressDialog.show(mContext, "",
+                    mContext.getString(R.string.message_loading), true);
+            mLoadingDialog.setCanceledOnTouchOutside(true);
+        }
     }
 
     public void showQuickToast(String text) {
