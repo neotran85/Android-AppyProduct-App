@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class HomeViewModel extends BaseViewModel<HomeNavigator> {
 
-    public ObservableField<ArrayList<BannerResponse>> bannersAdapter = new ObservableField<>(null);
+    public ObservableField<ArrayList<BannerResponse>> bannersAdapter = new ObservableField<>();
 
     public HomeViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {

@@ -38,6 +38,7 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
                 itemViewModel.imageURL.set(item.thumbnail);
                 itemViewModel.setIdTopic(item.id);
                 itemViewModel.setNavigator(navigator);
+                itemViewModel.setIdSubs(item.sub_ids);
                 mItems.add(itemViewModel);
             }
         }

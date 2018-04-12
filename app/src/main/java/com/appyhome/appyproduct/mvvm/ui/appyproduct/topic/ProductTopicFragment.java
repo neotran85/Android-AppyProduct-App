@@ -12,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductTopicBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemViewModel;
@@ -108,8 +109,8 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     @Override
     public void onItemClick(TopicItemViewModel viewModel) {
-        Intent intent = CategoryActivity.getStartIntent(this.getContext());
-        intent.putExtra("id_topic", viewModel.getIdTopic());
+        Intent intent = ProductListActivity.getStartIntent(this.getActivity());
+        intent.putExtra("id_subs", viewModel.getIdSubs());
         startActivity(intent);
     }
 

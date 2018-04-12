@@ -12,6 +12,8 @@ public class TopicItemViewModel extends BaseViewModel<TopicItemNavigator> {
 
     private int idTopic;
 
+    private String idSubs;
+
     public TopicItemViewModel(DataManager dataManager,
                               SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -27,5 +29,13 @@ public class TopicItemViewModel extends BaseViewModel<TopicItemNavigator> {
 
     public void setIdTopic(int idTopic) {
         this.idTopic = idTopic;
+    }
+
+    public String getIdSubs() {
+        return idSubs;
+    }
+
+    public void setIdSubs(String idSubs) {
+        this.idSubs = idSubs;
     }
 }

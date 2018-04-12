@@ -14,13 +14,15 @@ import io.realm.RealmResults;
 
 public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNavigator> {
 
-    private CategoryItemViewModel mCurrentClickedViewModel = null;
-
     private CategoryItemNavigator mNavigator;
 
     public SubCategoryAdapter() {
         this.mItems = null;
     }
+
+    private ArrayList<CategoryItemViewModel> mActiveItems;
+
+    private CategoryItemViewModel allItemViewModel;
 
     @Override
     public void recycle() {
@@ -28,7 +30,6 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
             mItems.clear();
             mItems = null;
         }
-        mCurrentClickedViewModel = null;
     }
 
     @Override
@@ -37,23 +38,41 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     }
 
     public void clickViewModel(CategoryItemViewModel viewModel) {
-        if (mCurrentClickedViewModel != viewModel) {
-            viewModel.isHighLight = true;
-            viewModel.isActive.set(true);
-            if (mCurrentClickedViewModel != null) {
-                mCurrentClickedViewModel.isHighLight = false;
-                mCurrentClickedViewModel.isActive.set(false);
+        viewModel.isHighLight = !viewModel.isHighLight;
+        viewModel.isActive.set(viewModel.isHighLight);
+        if (viewModel.getIdCategory() == 0) {
+            for (CategoryItemViewModel item : mActiveItems) {
+                item.isHighLight = false;
+                item.isActive.set(false);
             }
-            mCurrentClickedViewModel = viewModel;
+            mActiveItems.clear();
+            if (viewModel.isHighLight) {
+                mActiveItems.add(viewModel);
+            }
         } else {
-            mCurrentClickedViewModel = null;
-            viewModel.isHighLight = false;
-            viewModel.isActive.set(false);
+            if (viewModel.isHighLight) {
+                mActiveItems.add(viewModel);
+            } else {
+                mActiveItems.remove(viewModel);
+            }
+            if (allItemViewModel != null) {
+                allItemViewModel.isHighLight = false;
+                allItemViewModel.isActive.set(false);
+                mActiveItems.remove(allItemViewModel);
+            }
         }
     }
 
     public String getSelectedSubIds() {
-        return mCurrentClickedViewModel != null ? mCurrentClickedViewModel.getSubIds() : "";
+        if (mActiveItems.contains(allItemViewModel)) {
+            return allItemViewModel.getSubIds();
+        } else {
+            String ids = "";
+            for (CategoryItemViewModel item : mActiveItems) {
+                ids = ids + item.getIdCategory() + ",";
+            }
+            return ids;
+        }
     }
 
     @Override
@@ -72,8 +91,9 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     public void addItems(RealmResults<ProductSub> items, CategoryItemNavigator navigator) {
         mNavigator = navigator;
         mItems = new ArrayList<>();
+        mActiveItems = new ArrayList<>();
         if (items != null && items.size() > 0) {
-            CategoryItemViewModel allItemViewModel = new CategoryItemViewModel();
+            allItemViewModel = new CategoryItemViewModel();
             allItemViewModel.title.set("ALL PRODUCTS");
             allItemViewModel.imageURL.set("images/product/sub/all_sub.png");
             allItemViewModel.setIdCategory(0);
