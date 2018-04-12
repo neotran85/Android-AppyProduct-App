@@ -10,7 +10,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
@@ -211,15 +210,17 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<JSONObject> fetchProducts(ProductListRequest request) {
         JSONObject jsonObject = new JSONObject();
-
         String url = (request.terms == null || request.terms.length() <= 0) ?
                 ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET : ApiUrlConfig.API_PRODUCT_SEARCH;
+        url = (request.cat_id != null && request.cat_id.length() > 0) ?
+                ApiUrlConfig.API_PRODUCT_SUB_CATEGORY_GET : url;
         try {
             jsonObject.put("page", request.page);
             jsonObject.put("category_id", request.categoryId);
             jsonObject.put("type", request.type);
             jsonObject.put("sortBy", request.type);
             jsonObject.put("terms", request.terms);
+            jsonObject.put("cat_id", request.cat_id);
         } catch (Exception e) {
             e.printStackTrace();
         }

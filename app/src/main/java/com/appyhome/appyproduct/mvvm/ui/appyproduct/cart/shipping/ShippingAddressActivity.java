@@ -3,10 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -63,7 +59,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
         mBinder.setNavigator(this);
 
         mViewModel.setNavigator(this);
-        ViewUtils.setUpRecyclerViewList(mBinder.rvAddressList, true);
+        ViewUtils.setUpRecyclerViewListVertical(mBinder.rvAddressList, true);
         isEditMode = getIntent().getBooleanExtra("edit_mode", false);
         mViewModel.isEditMode.set(isEditMode);
         mBinder.rvAddressList.setAdapter(mAdapter);

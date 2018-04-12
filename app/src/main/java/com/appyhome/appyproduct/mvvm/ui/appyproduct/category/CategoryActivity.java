@@ -20,7 +20,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.CategoryIte
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter.SubCategoryAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -43,8 +42,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Inject
     int mLayoutId;
 
-    private SearchToolbarViewHolder mSearchToolbarViewHolder;
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
         return intent;
@@ -65,9 +62,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     public void onItemClick(CategoryItemViewModel viewModel) {
         if (viewModel.isSub) {
             mSubCategoryAdapter.clickViewModel(viewModel);
-            Intent intent = ProductListActivity.getStartIntent(this);
-            intent.putExtra("id_sub", viewModel.getIdCategory());
-            startActivity(intent);
         } else {
             showSelectedCategory(viewModel);
         }
@@ -94,7 +88,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
         mCategoryViewModel.getProductTopicById(idTopic);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, "");
     }
 
     private void setUpRecyclerViewGrid(RecyclerView rv, SampleAdapter adapter) {
@@ -108,7 +101,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     }
 
     private void setUpRecyclerViewList(RecyclerView rv, SampleAdapter adapter) {
-        ViewUtils.setUpRecyclerViewList(rv, false);
+        ViewUtils.setUpRecyclerViewListHorizontal(rv, false);
         rv.setAdapter(adapter);
     }
 
@@ -131,7 +124,6 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     public void showSubCategories(RealmResults<ProductSub> result) {
         mSubCategoryAdapter.addItems(result, this);
         mSubCategoryAdapter.notifyDataSetChanged();
-        mSearchToolbarViewHolder.onBind(0);
     }
 
 
@@ -147,16 +139,24 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Override
     public void onResume() {
         super.onResume();
-        mSearchToolbarViewHolder.onBind(0);
     }
 
     private int calculateSubColumns() {
         int widthScreen = AppConstants.SCREEN_WIDTH;
-        int widthLeftMenu = getResources().getDimensionPixelSize(R.dimen.category_left_menu);
-        int padding = getResources().getDimensionPixelSize(R.dimen.sub_padding);
-        int space = widthScreen - widthLeftMenu - 2 * padding;
-        int widthItem = getResources().getDimensionPixelSize(R.dimen.menu_sub_categories_width) + 2 * padding;
-        int value = Math.round(space / widthItem);
+        int itemSubSize = getResources().getDimensionPixelSize(R.dimen.item_sub_size);
+        int value = Math.round(widthScreen / itemSubSize);
         return value;
+    }
+
+    @Override
+    public void search() {
+        Intent intent = ProductListActivity.getStartIntent(this);
+        intent.putExtra("id_subs", mSubCategoryAdapter.getSelectedSubIds());
+        startActivity(intent);
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 }

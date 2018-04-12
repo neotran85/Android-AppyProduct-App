@@ -99,5 +99,4 @@ public interface ApiHelper {
     Single<ApiResponse> emptyUserWishList();
 
     Single<ApiResponse> getUserWishList();
-
 }

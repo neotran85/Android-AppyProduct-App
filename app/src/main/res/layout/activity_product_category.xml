@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.account.login.LoginActivity">
 
@@ -17,86 +16,79 @@
 
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:orientation="vertical">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/clRootView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/categoryRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false">
+            android:layout_height="156dp"
+            android:background="@color/black" />
 
-            <LinearLayout
-                android:id="@+id/activityMain"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/sub_padding"
+            android:paddingStart="@dimen/sub_padding"
+            android:paddingTop="16dp">
+
+            <TextView
+                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingEnd="14dp"
+                android:paddingStart="14dp"
+                android:text="@string/select_category"
+                android:textColor="@color/medium_dark_gray"
+                android:textSize="13sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/subCategoryRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/sub_padding"
+                android:paddingTop="@dimen/sub_padding" />
+        </LinearLayout>
 
-                <android.support.design.widget.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal">
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        style="@style/Toolbar"
-                        android:layout_marginStart="-14dp"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>
+            <Button
+                android:id="@+id/btAddToCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#BFBBBB"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{(view) -> navigator.close()}"
+                android:text="CANCEL"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_title_category_bar"
-                        android:background="@color/white"
-                        android:gravity="center">
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-SemiBold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.title}"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </android.support.design.widget.AppBarLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/categoryRecyclerView"
-                        android:layout_width="@dimen/category_left_menu"
-                        android:layout_height="match_parent"
-                        android:background="#F2F2F2" />
-
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:gravity="center_horizontal"
-                        android:paddingEnd="@dimen/sub_padding"
-                        android:paddingStart="@dimen/sub_padding">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:paddingTop="@dimen/sub_padding"
-                            android:paddingBottom="@dimen/sub_padding"
-                            android:id="@+id/subCategoryRecyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clipToPadding="false" />
-
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.design.widget.CoordinatorLayout>
-
-    </FrameLayout>
-
+            <Button
+                android:onClick="@{(view) -> navigator.search()}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@color/colorAccent"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="OK"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
 </layout>

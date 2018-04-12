@@ -89,13 +89,9 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
         private void createCategoryView() {
             View view = mBinding.llItemCategoryView;
             boolean isHighLight = mBinding.getViewModel().isHighLight;
-            view.setBackgroundResource(isHighLight ? R.color.colorAccent : R.color.transparent);
+            view.setBackgroundResource(isHighLight ? R.color.white : R.color.transparent);
             Context context = view.getContext();
-            mBinding.tvTitleProduct.setTextColor(ContextCompat.getColor(context, isHighLight ? R.color.white : R.color.semi_gray));
-            ViewGroup.LayoutParams params = mBinding.ivThumbnail.getLayoutParams();
-            params.width = Math.round(context.getResources().getDimension(R.dimen.size_category_image));
-            params.height = params.width;
-            mBinding.ivThumbnail.setLayoutParams(params);
+            mBinding.tvTitleProduct.setTextColor(ContextCompat.getColor(context, isHighLight ? R.color.colorAccent : R.color.white));
         }
 
         @Override

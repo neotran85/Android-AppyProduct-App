@@ -11,11 +11,11 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class ProductListActivity extends ProductListNavigatorActivity implements HasSupportFragmentInjector{
+public class ProductListActivity extends ProductListNavigatorActivity implements HasSupportFragmentInjector {
 
     public static final int ID_SUB_EMPTY = -1;
 
@@ -60,7 +60,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
+        ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
         fetchProductsNew();
@@ -117,14 +117,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         getViewModel().getAllFavorites();
     }
 
-    private String getCategoryIdsForSearch() {
-        Intent intent = getIntent();
-        if (intent.hasExtra("categoryIds")) {
-            return intent.getStringExtra("categoryIds");
-        }
-        return "";
-    }
-
     @Override
     public void fetchMore() {
         getViewModel().setIsAbleToLoadMore(false);
@@ -134,15 +126,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void fetchProducts() {
-        int categoryId = getIdSubCategory();
-        if (categoryId != ID_SUB_EMPTY) {
-            getViewModel().fetchProductsByCommand(categoryId + "", "");
-        } else {
-            String keyword = getKeywordString();
-            if (keyword != null && keyword.length() > 0) {
-                getViewModel().fetchProductsByCommand(getCategoryIdsForSearch(), keyword);
-            }
-        }
+        getViewModel().fetchProductsByCommand(getCategoryIds(), getSubIds(), getKeywordString());
     }
 
     /************************* ABSTRACT METHODS ************************/
@@ -184,11 +168,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         return mViewModel;
     }
 
-    private int getIdSubCategory() {
-        int idSubCategory = getIntent().getIntExtra("id_sub", ID_SUB_EMPTY);
-        return idSubCategory;
-    }
-
     private String getSearchTopics() {
         if (getIntent().hasExtra("topics"))
             return getIntent().getStringExtra("topics");
@@ -201,6 +180,12 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         return "";
     }
 
+    private String getSubIds() {
+        if (getIntent().hasExtra("id_subs"))
+            return getIntent().getStringExtra("id_subs");
+        return "";
+    }
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
@@ -210,6 +195,16 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     public ProductListViewModel getViewModel() {
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProductListViewModel.class);
         return mViewModel;
+    }
+
+    private String getCategoryIds() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("categoryIds")) {
+            return intent.getStringExtra("categoryIds");
+        } else {
+            int idSubCategory = getIntent().getIntExtra("id_sub", ID_SUB_EMPTY);
+            return idSubCategory == ID_SUB_EMPTY ? "" : idSubCategory + "";
+        }
     }
 
     @Override

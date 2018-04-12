@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
@@ -57,7 +56,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         getViewModel().updateFavoriteCount(count);
         getViewModel().isFavoriteEmpty.set(count == 0);
         if (count == 0) {
-            ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
+            ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         }
     }
 
@@ -114,7 +113,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
         } else {
-            ViewUtils.setUpRecyclerViewList(mBinder.productsRecyclerView, false);
+            ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         }
         mFavoriteAdapter.addItems(this, result);
         mFavoriteAdapter.notifyDataSetChanged();

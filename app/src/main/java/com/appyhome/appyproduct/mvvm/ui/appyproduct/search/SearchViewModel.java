@@ -39,7 +39,7 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public void getSearchHisTory() {
+    public void getSearchHistory() {
         getCompositeDisposable().add(getDataManager().getSearchHistory(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -76,25 +76,9 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                     // DONE GET
                     mCount = topics.size();
                     for (ProductTopic topic : topics) {
-                        getProductCategoryIdsByTopic(topic);
+                        mSearchTopic.put(topic, topic.sub_ids);
                     }
-                }, Crashlytics::logException));
-    }
-
-    private void getProductCategoryIdsByTopic(ProductTopic topic) {
-        getCompositeDisposable().add(getDataManager().getProductCategoryIdsByTopic(topic.id)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(subs -> {
-                    ArrayList<Integer> ids = new ArrayList<>();
-                    for (ProductSub item : subs) {
-                        ids.add(item.id);
-                    }
-                    mSearchTopic.put(topic, TextUtils.join(",", ids));
-                    mCounter++;
-                    if (mCounter == mCount) {
-                        getNavigator().updateUISearchCategory(mSearchTopic);
-                    }
+                    getNavigator().updateUISearchCategory(mSearchTopic);
                 }, Crashlytics::logException));
     }
 }

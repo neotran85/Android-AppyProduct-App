@@ -53,6 +53,9 @@ public class ApiUrlConfig {
     public static final String API_PRODUCT_PER_CATEGORY_GET = BuildConfig.BASE_URL
             + "api/appyproduct/get/product/percategory";
 
+    public static final String API_PRODUCT_SUB_CATEGORY_GET = BuildConfig.BASE_URL
+            + "api/appyproduct/get/subcategoryproducts";
+
     public static final String API_BANNERS_GET = BuildConfig.BASE_URL
             + "api/get/banners";
 

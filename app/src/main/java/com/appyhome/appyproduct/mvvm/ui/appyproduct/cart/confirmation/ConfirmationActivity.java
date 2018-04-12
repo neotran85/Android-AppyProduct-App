@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,8 +23,6 @@ import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
 import com.molpay.molpayxdk.MOLPayActivity;
-
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -75,7 +72,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     private void setUpRecyclerViewList(RecyclerView rv) {
-        ViewUtils.setUpRecyclerViewList(rv, false);
+        ViewUtils.setUpRecyclerViewListVertical(rv, false);
         rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         rv.setNestedScrollingEnabled(false);
     }

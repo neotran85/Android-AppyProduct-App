@@ -23,5 +23,6 @@
     <dimen name="variant_height">114dp</dimen>
     <dimen name="variant_height_with_padding">126dp</dimen>
     <dimen name="variant_width_with_padding">96dp</dimen>
+    <dimen name="item_sub_size">120dp</dimen>
     <string name="select_variants">Select variants:</string>
 </resources>

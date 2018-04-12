@@ -142,7 +142,20 @@ public final class ViewUtils {
         }
     }
 
-    public static void setUpRecyclerViewList(RecyclerView rv, boolean dividerVisible) {
+    public static void setUpRecyclerViewListHorizontal(RecyclerView rv, boolean dividerVisible) {
+        Context context = rv.getContext();
+        rv.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        if (dividerVisible) {
+            if (rv.getItemDecorationCount() == 0) {
+                DividerItemDecoration line = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
+                rv.addItemDecoration(line);
+            }
+        }
+    }
+
+    public static void setUpRecyclerViewListVertical(RecyclerView rv, boolean dividerVisible) {
         Context context = rv.getContext();
         rv.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false));

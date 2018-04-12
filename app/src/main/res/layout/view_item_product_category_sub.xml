@@ -14,7 +14,7 @@
 
     <RelativeLayout
         android:id="@+id/llItemCategoryView"
-        android:layout_width="120dp"
+        android:layout_width="@dimen/item_sub_size"
         android:layout_height="160dp"
         android:clickable="true"
         android:background="@color/white"
@@ -50,7 +50,7 @@
             android:layout_width="@dimen/size_sub_image"
             android:layout_height="40dp"
             android:padding="4dp"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:lines="2"
             android:text="@{viewModel.title}"
             android:textColor="@color/medium_dark_gray"

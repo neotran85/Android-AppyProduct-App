@@ -131,12 +131,13 @@ public class AppDbHelper implements DbHelper {
                     RealmResults<ProductSub> subs = getRealm().where(ProductSub.class)
                             .equalTo("id_category", cat.id)
                             .findAll();
-                    if (subs != null) {
+                    if (subs != null && subs.size() > 0) {
                         ArrayList<String> idSubs = new ArrayList<>();
                         for (ProductSub sub : subs) {
                             idSubs.add(sub.id + "");
                         }
                         idSubsString = TextUtils.join(",", idSubs);
+                        cat.thumbnail = subs.get(0).thumbnail;
                     }
                     cat.sub_ids = idSubsString;
                 }

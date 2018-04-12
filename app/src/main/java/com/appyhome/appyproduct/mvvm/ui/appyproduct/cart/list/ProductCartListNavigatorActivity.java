@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
@@ -104,7 +103,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     @Override
     public void showCarts(RealmResults<ProductCart> result) {
         if (result != null && result.size() > 0) {
-            ViewUtils.setUpRecyclerViewList(getViewDataBinding().cartRecyclerView, true);
+            ViewUtils.setUpRecyclerViewListVertical(getViewDataBinding().cartRecyclerView, true);
         }
         getAdapter().addItems(result, this);
         getAdapter().notifyDataSetChanged();

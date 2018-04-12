@@ -195,7 +195,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void showEmptyProducts() {
-        ViewUtils.setUpRecyclerViewList(getViewDataBinding().productsRecyclerView, false);
+        ViewUtils.setUpRecyclerViewListVertical(getViewDataBinding().productsRecyclerView, false);
         getProductAdapter().addItems(null, this, getFavoriteIds());
         getProductAdapter().notifyDataSetChanged();
         closeLoading();

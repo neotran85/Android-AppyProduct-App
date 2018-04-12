@@ -16,4 +16,8 @@ public interface CategoryNavigator {
 
     void openProductCart();
 
+    void close();
+
+    void search();
+
 }

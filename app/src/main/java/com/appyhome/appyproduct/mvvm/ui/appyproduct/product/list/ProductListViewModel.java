@@ -140,9 +140,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword) {
+    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword, String subIds) {
         return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), getCurrentSortType()))
+            getDataManager().fetchProducts(new ProductListRequest(categoryIds, subIds, keyword, getPageNumber(), getCurrentSortType()))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(jsonResult -> {
@@ -176,10 +176,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         return "";
     }
 
-    public void fetchProductsByCommand(String categoryIds, String keywords) {
+    public void fetchProductsByCommand(String categoryIds, String keywords, String subIds) {
         if (isOnline()) {
             ObservableOnSubscribe<ProductListResponse> resultProcessing = null;
-            resultProcessing = fetchProductsByObject(categoryIds, keywords);
+            resultProcessing = fetchProductsByObject(categoryIds, keywords, subIds);
             if (resultProcessing != null) {
                 Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
                         .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();

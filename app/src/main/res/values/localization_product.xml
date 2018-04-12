@@ -27,4 +27,5 @@
     <string name="sure_to_empty_wishlist">Are you sure to empty your wishlist?</string>
     <string name="ask_login_to_add_wishlist">Please login to add this product to your wishlist.</string>
     <string name="please_login_view_wishlist">Please login to view your wishlist</string>
+    <string name="select_category">Select Category</string>
 </resources>

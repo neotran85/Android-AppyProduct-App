@@ -1,13 +1,11 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
-import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -41,15 +39,21 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     public void clickViewModel(CategoryItemViewModel viewModel) {
         if (mCurrentClickedViewModel != viewModel) {
             viewModel.isHighLight = true;
+            viewModel.isActive.set(true);
             if (mCurrentClickedViewModel != null) {
                 mCurrentClickedViewModel.isHighLight = false;
-                int positionOld = mItems.indexOf(mCurrentClickedViewModel);
-                notifyItemChanged(positionOld);
+                mCurrentClickedViewModel.isActive.set(false);
             }
-            int positionNew = mItems.indexOf(viewModel);
-            notifyItemChanged(positionNew);
             mCurrentClickedViewModel = viewModel;
+        } else {
+            mCurrentClickedViewModel = null;
+            viewModel.isHighLight = false;
+            viewModel.isActive.set(false);
         }
+    }
+
+    public String getSelectedSubIds() {
+        return mCurrentClickedViewModel != null ? mCurrentClickedViewModel.getSubIds() : "";
     }
 
     @Override
@@ -68,7 +72,15 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     public void addItems(RealmResults<ProductSub> items, CategoryItemNavigator navigator) {
         mNavigator = navigator;
         mItems = new ArrayList<>();
-        if (items != null) {
+        if (items != null && items.size() > 0) {
+            CategoryItemViewModel allItemViewModel = new CategoryItemViewModel();
+            allItemViewModel.title.set("ALL PRODUCTS");
+            allItemViewModel.imageURL.set("images/product/sub/all_sub.png");
+            allItemViewModel.setIdCategory(0);
+            allItemViewModel.setNavigator(navigator);
+            allItemViewModel.isSub = true;
+            mItems.add(allItemViewModel);
+            String allSubIds = "";
             for (ProductSub item : items) {
                 CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
                 itemViewModel.title.set(item.name);
@@ -76,8 +88,11 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
                 itemViewModel.setIdCategory(item.id);
                 itemViewModel.setNavigator(navigator);
                 itemViewModel.isSub = true;
+                itemViewModel.setSubIds(item.sub_ids);
+                allSubIds = allSubIds + item.sub_ids + ",";
                 mItems.add(itemViewModel);
             }
+            allItemViewModel.setSubIds(allSubIds);
         }
     }
 }

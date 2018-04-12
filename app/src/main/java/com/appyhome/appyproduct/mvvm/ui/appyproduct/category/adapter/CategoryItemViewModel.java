@@ -17,6 +17,8 @@ public class CategoryItemViewModel extends BaseViewModel<CategoryItemNavigator> 
 
     private int idCategory;
 
+    private String subIds;
+
     public CategoryItemViewModel(DataManager dataManager,
                                  SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -34,4 +36,11 @@ public class CategoryItemViewModel extends BaseViewModel<CategoryItemNavigator> 
         this.idCategory = idCategory;
     }
 
+    public String getSubIds() {
+        return subIds;
+    }
+
+    public void setSubIds(String subIds) {
+        this.subIds = subIds;
+    }
 }

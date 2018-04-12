@@ -48,13 +48,4 @@ public class ProductSub extends RealmObject {
     @ColumnInfo(name = "sub_ids")
     public String sub_ids;
 
-    public ArrayList<Integer> getSubIds() {
-        ArrayList<Integer> ids = new ArrayList<>();
-        String[] result = TextUtils.split(sub_ids, ",");
-        for(String str: result) {
-            Integer id = Integer.valueOf(str);
-            ids.add(id);
-        }
-        return ids;
-    }
 }

@@ -72,7 +72,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        getViewModel().getSearchHisTory();
+        getViewModel().getSearchHistory();
         getViewModel().getAllProductTopics();
         mBinder.rvSuggestions.setAdapter(mSuggestionsAdapter);
         mBinder.etKeyword.setOnKeyListener((v, keyCode, event) -> {
@@ -93,7 +93,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void showSuggestions(RealmResults<SearchItem> items) {
-        ViewUtils.setUpRecyclerViewList(mBinder.rvSuggestions, true);
+        ViewUtils.setUpRecyclerViewListVertical(mBinder.rvSuggestions, true);
         mSuggestionsAdapter.addItems(items, this);
         mSuggestionsAdapter.notifyDataSetChanged();
     }
@@ -172,7 +172,7 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void doAfterSearchItemsAdded() {
-        getViewModel().getSearchHisTory();
+        getViewModel().getSearchHistory();
     }
 
     @Override
