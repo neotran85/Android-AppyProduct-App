@@ -17,7 +17,7 @@
 
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -167,7 +167,15 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
-
-    </FrameLayout>
+        <ImageButton
+            android:onClick="@{(view) -> navigator.openCategoriesSelection()}"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_cat_selection"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="14dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp" />
+    </RelativeLayout>
 
 </layout>

@@ -52,4 +52,5 @@ public interface ProductListNavigator {
 
     void setUpRecyclerViewGrid(RecyclerView view);
 
+    void openCategoriesSelection();
 }

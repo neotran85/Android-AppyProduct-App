@@ -111,6 +111,7 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
     public void onItemClick(TopicItemViewModel viewModel) {
         Intent intent = ProductListActivity.getStartIntent(this.getActivity());
         intent.putExtra("id_subs", viewModel.getIdSubs());
+        intent.putExtra("id_topic", viewModel.getIdTopic());
         startActivity(intent);
     }
 

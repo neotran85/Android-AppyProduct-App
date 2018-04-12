@@ -42,6 +42,8 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
     @Inject
     int mLayoutId;
 
+    private int mSelectedCategoryId = 0;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CategoryActivity.class);
         return intent;
@@ -87,6 +89,7 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
         setUpRecyclerViewList(mBinder.categoryRecyclerView, mCategoryAdapter);
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
+        mSelectedCategoryId = getIntent().getIntExtra("id_selected_cat", 0);
         mCategoryViewModel.getProductTopicById(idTopic);
     }
 
@@ -150,9 +153,11 @@ public class CategoryActivity extends BaseActivity<ActivityProductCategoryBindin
 
     @Override
     public void search() {
-        Intent intent = ProductListActivity.getStartIntent(this);
-        intent.putExtra("id_subs", mSubCategoryAdapter.getSelectedSubIds());
-        startActivity(intent);
+        getIntent().putExtra("id_subs", mSubCategoryAdapter.getSelectedSubIds());
+        getIntent().putExtra("id_selected_cat", mCategoryAdapter.getSelectedCategoryId());
+        getIntent().putExtra("id_selected_sub", mCategoryAdapter.getSelectedCategoryId());
+        setResult(RESULT_OK, getIntent());
+        finish();
     }
 
     @Override

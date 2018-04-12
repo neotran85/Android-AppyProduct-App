@@ -12,6 +12,8 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemFilterNavigator;
@@ -22,7 +24,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortNaviga
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -33,6 +34,8 @@ import io.realm.OrderedRealmCollection;
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 
     public static final int DEFAULT_SPAN_COUNT = 2;
+
+    public static final int REQUEST_CATEGORY_SELECTION = 0;
 
     protected boolean mIsUsingSmallItem = false;
 
@@ -246,9 +249,29 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
+    public void openCategoriesSelection() {
+        Intent intent = CategoryActivity.getStartIntent(this);
+        int idTopic = getIntent().getIntExtra("id_topic", 0);
+        intent.putExtra("id_topic", idTopic);
+        startActivityForResult(intent, REQUEST_CATEGORY_SELECTION);
+    }
+
+    @Override
     public void onItemClick(ProductItemViewModel viewModel) {
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CATEGORY_SELECTION) {
+            if (resultCode == RESULT_OK) {
+                showLoading();
+                getIntent().putExtra("id_subs", data.getStringExtra("id_subs"));
+                fetchProductsNew();
+            }
+        }
     }
 }
