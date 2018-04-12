@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 public class CategoryItemViewModel extends BaseViewModel<CategoryItemNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
+    public ObservableField<Boolean> isActive = new ObservableField<>(false);
 
     public boolean isHighLight = false;
 

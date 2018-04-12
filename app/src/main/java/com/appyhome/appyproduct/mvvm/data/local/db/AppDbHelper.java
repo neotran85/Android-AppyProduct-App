@@ -1,5 +1,7 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
+import android.text.TextUtils;
+
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
@@ -124,6 +126,20 @@ public class AppDbHelper implements DbHelper {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
+                for (ProductCategory cat : categories) {
+                    String idSubsString = "";
+                    RealmResults<ProductSub> subs = getRealm().where(ProductSub.class)
+                            .equalTo("id_category", cat.id)
+                            .findAll();
+                    if (subs != null) {
+                        ArrayList<String> idSubs = new ArrayList<>();
+                        for (ProductSub sub : subs) {
+                            idSubs.add(sub.id + "");
+                        }
+                        idSubsString = TextUtils.join(",", idSubs);
+                    }
+                    cat.sub_ids = idSubsString;
+                }
                 getRealm().copyToRealmOrUpdate(categories);
                 getRealm().commitTransaction();
                 return true;
@@ -194,8 +210,20 @@ public class AppDbHelper implements DbHelper {
         try {
             beginTransaction();
             for (ProductTopic topic : topics) {
-                getRealm().copyToRealmOrUpdate(topic);
+                String idSubsString = "";
+                RealmResults<ProductCategory> cats = getRealm().where(ProductCategory.class)
+                        .equalTo("id_topic", topic.id)
+                        .findAll();
+                if (cats != null) {
+                    ArrayList<String> idSubs = new ArrayList<>();
+                    for (ProductCategory cat : cats) {
+                        idSubs.add(cat.sub_ids);
+                    }
+                    idSubsString = TextUtils.join(",", idSubs);
+                }
+                topic.sub_ids = idSubsString;
             }
+            getRealm().copyToRealmOrUpdate(topics);
             getRealm().commitTransaction();
             return Flowable.just(true);
         } catch (Exception e) {

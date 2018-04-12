@@ -36,8 +36,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     public void loadAppData() {
         loadServicesCategories();
         loadServices();
-        loadProductCategory();
-        loadProductTopics();
+        // FETCH PRODUCTS DATA
         loadProductSubs();
         // FETCH USER DATA
         if (isUserLoggedIn())
@@ -87,7 +86,8 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // DONE
+                    // DONE THEN LOAD PRODUCT TOPICS
+                    loadProductTopics();
                 }, Crashlytics::logException));
     }
 
@@ -96,7 +96,8 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // DONE
+                    // DONE THEN LOAD PRODUCT CATEGORIES
+                    loadProductCategory();
                 }, throwable -> {
                     throwable.printStackTrace();
                     Crashlytics.logException(throwable);
@@ -108,11 +109,11 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // DONE
+                    // FINAL LOADING PRODUCTS DONE
                 }, Crashlytics::logException));
     }
 
-    private void loadProductSubs() {
+    private void loadProductTopics() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseProductTopics()
                 .take(1)
@@ -121,7 +122,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .subscribe(this::addProductTopics, Crashlytics::logException));
     }
 
-    private void loadProductTopics() {
+    private void loadProductSubs() {
         getCompositeDisposable().add(getDataManager()
                 .seedDatabaseProductSubs()
                 .take(1)
