@@ -88,8 +88,8 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
                 itemViewModel.setIdCategory(item.id);
                 itemViewModel.setNavigator(navigator);
                 itemViewModel.isSub = true;
-                itemViewModel.setSubIds(item.sub_ids);
-                allSubIds = allSubIds + item.sub_ids + ",";
+                itemViewModel.setSubIds(item.id + "");
+                allSubIds = allSubIds + item.id + ",";
                 mItems.add(itemViewModel);
             }
             allItemViewModel.setSubIds(allSubIds);

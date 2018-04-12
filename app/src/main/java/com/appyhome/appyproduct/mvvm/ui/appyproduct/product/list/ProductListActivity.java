@@ -126,7 +126,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void fetchProducts() {
-        getViewModel().fetchProductsByCommand(getCategoryIds(), getSubIds(), getKeywordString());
+        getViewModel().fetchProductsByCommand(getCategoryIds(), getKeywordString());
     }
 
     /************************* ABSTRACT METHODS ************************/
@@ -202,8 +202,8 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         if (intent.hasExtra("categoryIds")) {
             return intent.getStringExtra("categoryIds");
         } else {
-            int idSubCategory = getIntent().getIntExtra("id_sub", ID_SUB_EMPTY);
-            return idSubCategory == ID_SUB_EMPTY ? "" : idSubCategory + "";
+            getIntent().getStringExtra("id_subs");
+            return getIntent().getStringExtra("id_subs");
         }
     }
 

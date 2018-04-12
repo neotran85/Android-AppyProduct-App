@@ -211,16 +211,13 @@ public class AppApiHelper implements ApiHelper {
     public Single<JSONObject> fetchProducts(ProductListRequest request) {
         JSONObject jsonObject = new JSONObject();
         String url = (request.terms == null || request.terms.length() <= 0) ?
-                ApiUrlConfig.API_PRODUCT_PER_CATEGORY_GET : ApiUrlConfig.API_PRODUCT_SEARCH;
-        url = (request.cat_id != null && request.cat_id.length() > 0) ?
-                ApiUrlConfig.API_PRODUCT_SUB_CATEGORY_GET : url;
+                ApiUrlConfig.API_PRODUCT_SUB_CATEGORY_GET : ApiUrlConfig.API_PRODUCT_SEARCH;
         try {
             jsonObject.put("page", request.page);
             jsonObject.put("category_id", request.categoryId);
             jsonObject.put("type", request.type);
             jsonObject.put("sortBy", request.type);
             jsonObject.put("terms", request.terms);
-            jsonObject.put("cat_id", request.cat_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
