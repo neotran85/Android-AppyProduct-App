@@ -25,6 +25,7 @@
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/clRootView"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false">
@@ -176,6 +177,12 @@
             android:layout_marginBottom="14dp"
             android:layout_width="54dp"
             android:layout_height="54dp" />
+        <LinearLayout
+            android:visibility="@{viewModel.isCategoriesSelectionShowed, default=gone}"
+            android:orientation="vertical"
+            android:id="@+id/llCategoriesSelection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 
 </layout>

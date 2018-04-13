@@ -42,6 +42,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public ObservableField<String> filterNumber = new ObservableField<>("");
 
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
+    public ObservableField<Boolean> isCategoriesSelectionShowed = new ObservableField<>(false);
 
     public static final int PRODUCTS_PER_PAGE = 100;
 

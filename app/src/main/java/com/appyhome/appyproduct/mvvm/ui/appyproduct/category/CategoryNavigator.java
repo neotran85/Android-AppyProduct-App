@@ -14,8 +14,6 @@ public interface CategoryNavigator {
 
     void showSubCategories(RealmResults<ProductSub> result);
 
-    void openProductCart();
-
     void close();
 
     void search();

@@ -12,7 +12,7 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
@@ -35,8 +35,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     public static final int DEFAULT_SPAN_COUNT = 2;
 
-    public static final int REQUEST_CATEGORY_SELECTION = 0;
-
     protected boolean mIsUsingSmallItem = false;
 
     abstract ProductAdapter getProductAdapter();
@@ -52,6 +50,8 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     abstract ArrayList<Integer> getFavoriteIds();
 
     private int mColumns = 0;
+
+    private CategoryFragment mCategoryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,10 +250,23 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void openCategoriesSelection() {
-        Intent intent = CategoryActivity.getStartIntent(this);
-        int idTopic = getIntent().getIntExtra("id_topic", 0);
-        intent.putExtra("id_topic", idTopic);
-        startActivityForResult(intent, REQUEST_CATEGORY_SELECTION);
+        if (mCategoryFragment == null) {
+            int idTopic = getIntent().getIntExtra("id_topic", 0);
+            mCategoryFragment = CategoryFragment.newInstance(idTopic, this);
+            addFragment(mCategoryFragment, CategoryFragment.TAG, R.id.llCategoriesSelection);
+        }
+        toggleFragment(mCategoryFragment, true);
+        getViewModel().isCategoriesSelectionShowed.set(true);
+    }
+
+    @Override
+    public void applyCategoriesSelected(String subsId) {
+        getViewModel().isCategoriesSelectionShowed.set(false);
+        toggleFragment(mCategoryFragment, false);
+        if (subsId != null && subsId.length() > 0) {
+            showLoading();
+            fetchProductsNew();
+        }
     }
 
     @Override
@@ -261,17 +274,5 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CATEGORY_SELECTION) {
-            if (resultCode == RESULT_OK) {
-                showLoading();
-                getIntent().putExtra("id_subs", data.getStringExtra("id_subs"));
-                fetchProductsNew();
-            }
-        }
     }
 }

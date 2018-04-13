@@ -180,12 +180,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         return "";
     }
 
-    private String getSubIds() {
-        if (getIntent().hasExtra("id_subs"))
-            return getIntent().getStringExtra("id_subs");
-        return "";
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
@@ -225,5 +219,10 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         return result;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (!getViewModel().isCategoriesSelectionShowed.get()) {
+            super.onBackPressed();
+        }
+    }
 }
