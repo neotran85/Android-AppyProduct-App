@@ -242,9 +242,9 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void onBackPressed() {
-        if (!getViewModel().isCategoriesSelectionShowed.get()) {
-            super.onBackPressed();
-        }
+        if (getViewModel().isCategoriesSelectionShowed.get()) {
+            applyCategoriesSelected(null);
+        } else super.onBackPressed();
     }
 
     private void createCategoriesSelection() {
@@ -257,7 +257,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void openCategoriesSelection() {
-        if(mCategoryFragment != null){
+        if (mCategoryFragment != null) {
             toggleFragment(mCategoryFragment, true);
             getViewModel().isCategoriesSelectionShowed.set(true);
         }
