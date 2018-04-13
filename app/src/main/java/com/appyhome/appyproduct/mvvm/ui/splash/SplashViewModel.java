@@ -38,12 +38,6 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
         loadServices();
         // FETCH PRODUCTS DATA
         loadProductSubs();
-        // FETCH USER DATA
-        if (isUserLoggedIn())
-            mFetchUserInfoViewModel.fetchUserData();
-        else {
-            getNavigator().onFetchUserInfo_Done();
-        }
     }
 
     private void loadServices() {
@@ -104,12 +98,22 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 }));
     }
 
+    private void fetchUserData() {
+        // FETCH USER DATA
+        if (isUserLoggedIn())
+            mFetchUserInfoViewModel.fetchUserData();
+        else {
+            getNavigator().onFetchUserInfo_Done();
+        }
+    }
+
     private void addProductTopics(ArrayList<ProductTopic> topics) {
         getCompositeDisposable().add(getDataManager().addProductTopics(topics)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // FINAL LOADING PRODUCTS DONE
+                    // FINISHED ALL LOAD PRODUCT DATA, THEN FETCH USER DATA
+                    fetchUserData();
                 }, Crashlytics::logException));
     }
 

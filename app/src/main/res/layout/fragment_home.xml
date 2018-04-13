@@ -42,7 +42,7 @@
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         style="@style/Toolbar"
-                        android:layout_marginStart="-14dp"/>
+                        android:layout_marginStart="-14dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -73,21 +73,15 @@
                             <include layout="@layout/view_home_header" />
                         </LinearLayout>
 
-                        <LinearLayout
+                        <include
                             android:id="@+id/serviceView"
+                            layout="@layout/view_home_service" />
+
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:orientation="vertical">
-
-                            <include layout="@layout/view_home_service" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="4dp"
-                                android:layout_marginTop="14dp"
-                                android:background="@color/light_gray" />
-                        </LinearLayout>
+                            android:layout_height="4dp"
+                            android:layout_marginTop="14dp"
+                            android:background="@color/very_light_gray" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -95,7 +89,7 @@
                             android:background="@color/white"
                             android:orientation="vertical"
                             android:paddingBottom="20dp"
-                            android:paddingStart="12dp"
+                            android:paddingStart="14dp"
                             android:paddingTop="12dp">
 
                             <TextView
@@ -116,30 +110,36 @@
                                 android:orientation="vertical" />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="14dp"
+                            android:background="@color/very_light_gray" />
+
                         <LinearLayout
                             android:id="@+id/featureView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/light_gray"
+                            android:layout_marginTop="12dp"
+                            android:background="@color/white"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="14dp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="12dp"
+                                android:layout_marginStart="14dp"
                                 android:text="IPO Feature"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="12sp" />
 
                             <com.appyhome.appyproduct.mvvm.ui.tabs.home.BannerListView
-                                adapter="@{viewModel.bannersAdapter}"
                                 android:id="@+id/lvBanners"
-                                android:orientation="vertical"
+                                adapter="@{viewModel.bannersAdapter}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/white" />
+                                android:background="@color/white"
+                                android:orientation="vertical" />
                         </LinearLayout>
                     </LinearLayout>
                 </ScrollView>

@@ -170,6 +170,7 @@
         </android.support.design.widget.CoordinatorLayout>
         <ImageButton
             android:onClick="@{(view) -> navigator.openCategoriesSelection()}"
+            android:visibility="@{viewModel.isAbleToSelectCategories, default=gone}"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button_cat_selection"

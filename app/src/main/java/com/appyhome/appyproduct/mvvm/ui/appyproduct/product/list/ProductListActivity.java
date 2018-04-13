@@ -69,6 +69,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
+        getViewModel().isAbleToSelectCategories.set(getKeywordString() == null || getKeywordString().length() == 0);
         createCategoriesSelection();
         fetchProductsNew();
     }
