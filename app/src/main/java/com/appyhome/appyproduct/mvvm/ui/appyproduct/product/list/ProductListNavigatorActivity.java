@@ -1,14 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
@@ -49,31 +47,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     abstract ArrayList<Integer> getFavoriteIds();
 
-    private int mColumns = 0;
-
-    private CategoryFragment mCategoryFragment;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mColumns = calculateSubColumns();
-        mColumns = mColumns > 1 ? mColumns : DEFAULT_SPAN_COUNT;
-        getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
-    }
-
-    private int calculateSubColumns() {
-        int widthScreen = AppConstants.SCREEN_WIDTH;
-        int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
-        int space = widthScreen - 2 * padding;
-        int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
-        int value = Math.round(space / widthItem);
-        if (value < DEFAULT_SPAN_COUNT) {
-            widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
-            value = Math.round(space / widthItem);
-            mIsUsingSmallItem = true;
-        }
-        return value;
-    }
+    protected int mColumns = 0;
 
     @Override
     public void applyFilter() {
@@ -247,28 +221,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
             vm.updateProductFavorite(getProductAdapter().indexOf(vm));
         }
     }
-
-    @Override
-    public void openCategoriesSelection() {
-        if (mCategoryFragment == null) {
-            int idTopic = getIntent().getIntExtra("id_topic", 0);
-            mCategoryFragment = CategoryFragment.newInstance(idTopic, this);
-            addFragment(mCategoryFragment, CategoryFragment.TAG, R.id.llCategoriesSelection);
-        }
-        toggleFragment(mCategoryFragment, true);
-        getViewModel().isCategoriesSelectionShowed.set(true);
-    }
-
-    @Override
-    public void applyCategoriesSelected(String subsId) {
-        getViewModel().isCategoriesSelectionShowed.set(false);
-        toggleFragment(mCategoryFragment, false);
-        if (subsId != null && subsId.length() > 0) {
-            showLoading();
-            fetchProductsNew();
-        }
-    }
-
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);

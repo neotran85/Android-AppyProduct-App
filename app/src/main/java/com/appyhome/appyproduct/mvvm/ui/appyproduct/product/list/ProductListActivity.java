@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
@@ -50,20 +52,39 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     private SortFragment mSortFragment;
 
+    private CategoryFragment mCategoryFragment = null;
 
     /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mColumns = calculateSubColumns();
+        mColumns = mColumns > 1 ? mColumns : DEFAULT_SPAN_COUNT;
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
+        getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
+        createCategoriesSelection();
         fetchProductsNew();
+    }
+
+    private int calculateSubColumns() {
+        int widthScreen = AppConstants.SCREEN_WIDTH;
+        int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
+        int space = widthScreen - 2 * padding;
+        int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
+        int value = Math.round(space / widthItem);
+        if (value < DEFAULT_SPAN_COUNT) {
+            widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
+            value = Math.round(space / widthItem);
+            mIsUsingSmallItem = true;
+        }
+        return value;
     }
 
     @Override
@@ -225,4 +246,32 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
             super.onBackPressed();
         }
     }
+
+    private void createCategoriesSelection() {
+        if (mCategoryFragment == null) {
+            mCategoryFragment = CategoryFragment.newInstance(this);
+            addFragment(mCategoryFragment, CategoryFragment.TAG, R.id.llCategoriesSelection);
+            toggleFragment(mCategoryFragment, false);
+        }
+    }
+
+    @Override
+    public void openCategoriesSelection() {
+        if(mCategoryFragment != null){
+            toggleFragment(mCategoryFragment, true);
+            getViewModel().isCategoriesSelectionShowed.set(true);
+        }
+    }
+
+    @Override
+    public void applyCategoriesSelected(String subsId) {
+        getViewModel().isCategoriesSelectionShowed.set(false);
+        toggleFragment(mCategoryFragment, false);
+        if (subsId != null && subsId.length() > 0) {
+            showLoading();
+            getIntent().putExtra("id_subs", subsId);
+            fetchProductsNew();
+        }
+    }
+
 }

@@ -43,17 +43,12 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
 
     public static final String TAG = "CategoryFragment";
 
-    private int mSelectedCategoryId = 0;
-
-    private int mIdTopic = 0;
-
     private ProductListNavigator mNavigator;
 
-    public static CategoryFragment newInstance(int idTopic, ProductListNavigator navigator) {
+    public static CategoryFragment newInstance(ProductListNavigator navigator) {
         Bundle args = new Bundle();
         CategoryFragment fragment = new CategoryFragment();
         fragment.setArguments(args);
-        fragment.setIdTopic(idTopic);
         fragment.setNavigator(navigator);
         return fragment;
     }
@@ -66,7 +61,6 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
         setUpRecyclerViewList(mBinder.categoryRecyclerView, mCategoryAdapter);
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
-        mSelectedCategoryId = getIntent().getIntExtra("id_selected_cat", 0);
         mCategoryViewModel.getProductTopicById(idTopic);
     }
 
@@ -170,10 +164,6 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
     @Override
     public void close() {
         mNavigator.applyCategoriesSelected(null);
-    }
-
-    public void setIdTopic(int idTopic) {
-        this.mIdTopic = idTopic;
     }
 
     public void setNavigator(ProductListNavigator navigator) {

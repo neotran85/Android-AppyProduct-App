@@ -192,22 +192,24 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void toggleFragment(BaseFragment fragment, boolean isShowed) {
-        if (isShowed) {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .show(fragment)
-                    .commit();
-            if (fragment.getView() != null)
-                fragment.getView().setClickable(true);
-        } else {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .hide(fragment)
-                    .commit();
-            if (fragment.getView() != null)
-                fragment.getView().setClickable(false);
+        if (fragment != null) {
+            if (isShowed) {
+                this.getSupportFragmentManager()
+                        .beginTransaction()
+                        .disallowAddToBackStack()
+                        .show(fragment)
+                        .commit();
+                if (fragment.getView() != null)
+                    fragment.getView().setClickable(true);
+            } else {
+                this.getSupportFragmentManager()
+                        .beginTransaction()
+                        .disallowAddToBackStack()
+                        .hide(fragment)
+                        .commit();
+                if (fragment.getView() != null)
+                    fragment.getView().setClickable(false);
+            }
         }
     }
 
