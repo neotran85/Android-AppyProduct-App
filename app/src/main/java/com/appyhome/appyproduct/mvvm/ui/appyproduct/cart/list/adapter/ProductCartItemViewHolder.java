@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.view.View;
@@ -35,7 +36,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
     }
 
     private void removeCartItem(ProductCartItemViewModel viewModel) {
-        if(mHandler != null) {
+        if (mHandler != null) {
             mHandler.removeCallbacks(mUpdateRunnable);
             mHandler = null;
         }
@@ -51,6 +52,19 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                 mBinding.cbCheckAll, mBinding.tvEdit, mBinding.llRemoveItemCart);
     }
 
+    private String getString(int idString) {
+        if (mBinding != null) {
+            View root = mBinding.getRoot();
+            if (root != null) {
+                Context context = root.getContext();
+                if (context != null) {
+                    return context.getString(idString);
+                }
+            }
+        }
+        return "";
+    }
+
     @Override
     public void onBind(int position) {
         if (mAdapter != null) {
@@ -60,7 +74,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                 enableToStartRunnable = true;
                 if (itemViewModel != null)
                     itemViewModel.updateProductCartItemAfterPlusAndMinus();
-                if(mHandler != null) {
+                if (mHandler != null) {
                     mHandler.removeCallbacks(mUpdateRunnable);
                     mHandler = null;
                 }
@@ -116,7 +130,7 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                             mAdapter.updateTotalCost();
                         }
                     } else {
-                        mBinding.getNavigator().showAlert("Sorry, unable to add more than " + viewModel.getVariantStockNumber());
+                        mBinding.getNavigator().showAlert(getString(R.string.unable_to_add_than) + viewModel.getVariantStockNumber());
                     }
                     break;
                 case R.id.cbCheckAll:

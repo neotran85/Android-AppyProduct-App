@@ -10,7 +10,6 @@ public final class AppConstants {
     public static final String DB_NAME = "appy_database.realm";
     public static final long DB_VERSION = 0;
     public static final String PREF_NAME = "appyhome_pref";
-    public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
 

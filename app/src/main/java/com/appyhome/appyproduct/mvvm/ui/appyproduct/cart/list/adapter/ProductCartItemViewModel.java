@@ -1,7 +1,9 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
+import android.content.Context;
 import android.databinding.ObservableField;
 import android.util.Log;
+import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
