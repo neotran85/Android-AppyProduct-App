@@ -68,24 +68,19 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
     public void showProductVariants(RealmResults<ProductVariant> result) {
         if (result != null) {
             mVariantCount = result.size();
-            mMaxScroll= (mVariantCount * widthVariantItem);
-            if (mVariantCount == 1) {
-                ProductVariant variant = result.first();
+            mMaxScroll = (mVariantCount * widthVariantItem);
+            ProductVariant variant = result.first();
+            if (variant != null) {
                 View view = createVariantView(variant);
                 mBinder.llContainer.addView(view);
                 mTotalStock = variant.quantity;
                 selectVariant(view);
-            } else {
-                for (ProductVariant variant : result) {
-                    View view = createVariantView(variant);
-                    mBinder.llContainer.addView(view);
-                    mTotalStock = mTotalStock + variant.quantity;
-                }
             }
             if (mDetailNavigator != null) {
                 mDetailNavigator.showedVariants();
             }
         }
+
     }
 
     @Override
@@ -154,7 +149,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
         int currentIndex = Math.round(currentPos / widthVariantItem);
         int pos = (currentIndex - 1) * widthVariantItem;
         pos = pos > 0 ? pos : 0;
-        mBinder.scrollView.scrollTo(pos,0);
+        mBinder.scrollView.scrollTo(pos, 0);
     }
 
     @Override
