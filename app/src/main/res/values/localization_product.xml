@@ -28,4 +28,5 @@
     <string name="ask_login_to_add_wishlist">Please login to add this product to your wishlist.</string>
     <string name="please_login_view_wishlist">Please login to view your wishlist</string>
     <string name="select_category">Select Category</string>
+    <string name="pls_login_view_cart">Please login to view your cart.</string>
 </resources>

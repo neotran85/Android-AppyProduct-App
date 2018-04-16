@@ -60,7 +60,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     }
 
     public void openProductCart() {
-        mLoginDelayed = mActivity.askForLogin("Please login to view your cart.");
+        mLoginDelayed = mActivity.askForLogin(mActivity.getString(R.string.pls_login_view_cart));
         if (!mLoginDelayed) {
             if (mBinding.getViewModel().totalItemsCount.get() > 0) {
                 Intent intent = ProductCartListActivity.getStartIntent(mActivity);

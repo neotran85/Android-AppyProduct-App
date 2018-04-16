@@ -87,7 +87,7 @@
                     android:paddingEnd="6dp"
                     android:text="Search"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/semi_gray"
                     android:textSize="13sp"
                     android:visibility="@{!viewModel.hasKeywords}" />
 

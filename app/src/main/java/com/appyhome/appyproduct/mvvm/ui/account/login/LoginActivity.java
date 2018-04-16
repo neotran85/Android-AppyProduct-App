@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,6 +80,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.medium_dark_gray));
         editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
         showError("");
+    }
+
+    @Override
+    public void onBackPressed() {
+        //CANCELLED LOGIN ACTIVITY
+        setResult(Activity.RESULT_CANCELED);
+        super.onBackPressed();
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySplashBinding;
@@ -33,15 +35,16 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         getViewDataBinding().setViewModel(mSplashViewModel);
-        mSplashViewModel.setNavigator(this);
-    }
+        getViewModel().setNavigator(this);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getViewModel().loadAppData();
+        // WAITING FOR SHOW SPLASH SCREEN FIRST, THEN LOAD APP DATA AND FETCH USER DATA
+        new Handler().postDelayed(() -> {
+            getViewModel().loadAppData();
+        }, 100);
     }
 
     public void openMainActivity() {

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 
 public class AppPreferencesHelper implements PreferencesHelper {
+    private static final String PREF_KEY_LOCAL_DATABASE_UPDATED = "LOCAL_DATABASE_UPDATED_1";
     private static final String PREF_KEY_CURRENT_USER_FIRST_NAME = "PREF_KEY_CURRENT_USER_FIRST_NAME";
     private static final String PREF_KEY_CURRENT_USER_LAST_NAME = "PREF_KEY_CURRENT_USER_LAST_NAME";
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
@@ -114,6 +115,17 @@ public class AppPreferencesHelper implements PreferencesHelper {
     public boolean isUserLoggedIn() {
         String accessToken = getAccessToken();
         return accessToken != null && accessToken.length() > 0;
+    }
+
+    @Override
+    public boolean isLocalDatabaseUpdated() {
+        boolean value = mPrefs.getBoolean(PREF_KEY_LOCAL_DATABASE_UPDATED, false);
+        return value;
+    }
+
+    @Override
+    public void setLocalDatabaseUpdated(boolean isDone) {
+        mPrefs.edit().putBoolean(PREF_KEY_LOCAL_DATABASE_UPDATED, isDone).apply();
     }
 
     @Override

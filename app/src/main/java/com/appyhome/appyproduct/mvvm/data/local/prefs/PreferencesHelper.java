@@ -52,4 +52,8 @@ public interface PreferencesHelper {
     String getProductsSortCurrent(String userId);
 
     void setProductsSortCurrent(String userId, String sort);
+
+    boolean isLocalDatabaseUpdated();
+
+    void setLocalDatabaseUpdated(boolean isDone);
 }

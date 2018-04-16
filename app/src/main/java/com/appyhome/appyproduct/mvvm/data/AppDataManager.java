@@ -724,4 +724,14 @@ public class AppDataManager implements DataManager {
     public Single<ApiResponse> getUserWishList() {
         return mApiHelper.getUserWishList();
     }
+
+    @Override
+    public boolean isLocalDatabaseUpdated() {
+        return mPreferencesHelper.isLocalDatabaseUpdated();
+    }
+
+    @Override
+    public void setLocalDatabaseUpdated(boolean isDone) {
+        mPreferencesHelper.setLocalDatabaseUpdated(isDone);
+    }
 }

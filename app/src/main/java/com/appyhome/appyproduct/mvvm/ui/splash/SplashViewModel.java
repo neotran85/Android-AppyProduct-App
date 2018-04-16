@@ -1,20 +1,15 @@
 package com.appyhome.appyproduct.mvvm.ui.splash;
 
+import android.util.Log;
+
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -34,10 +29,17 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     }
 
     public void loadAppData() {
-        loadServicesCategories();
-        loadServices();
-        // FETCH PRODUCTS DATA
-        loadProductSubs();
+        boolean value = getDataManager().isLocalDatabaseUpdated();
+        Log.v("loadAppData", "Done = " + value);
+        if (value) {
+            // FINISHED ALL LOAD PRODUCT DATA, THEN FETCH USER DATA
+            fetchUserData();
+        } else {
+            loadServicesCategories();
+            loadServices();
+            // FETCH PRODUCTS DATA
+            loadProductSubs();
+        }
     }
 
     private void loadServices() {
@@ -113,6 +115,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // FINISHED ALL LOAD PRODUCT DATA, THEN FETCH USER DATA
+                    getDataManager().setLocalDatabaseUpdated(true);
                     fetchUserData();
                 }, Crashlytics::logException));
     }

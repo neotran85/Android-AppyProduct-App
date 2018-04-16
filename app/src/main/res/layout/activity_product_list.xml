@@ -157,6 +157,17 @@
                         android:clipToPadding="false"
                         android:paddingTop="4dp" />
 
+                    <ImageButton
+                        android:onClick="@{(view) -> navigator.openCategoriesSelection()}"
+                        android:visibility="@{viewModel.isAbleToSelectCategories, default=gone}"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/button_cat_selection"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp" />
+
                     <LinearLayout
                         android:clickable="true"
                         android:id="@+id/llSortFilterContainer"
@@ -168,16 +179,6 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
-        <ImageButton
-            android:onClick="@{(view) -> navigator.openCategoriesSelection()}"
-            android:visibility="@{viewModel.isAbleToSelectCategories, default=gone}"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/button_cat_selection"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="14dp"
-            android:layout_width="54dp"
-            android:layout_height="54dp" />
         <LinearLayout
             android:visibility="@{viewModel.isCategoriesSelectionShowed, default=gone}"
             android:orientation="vertical"

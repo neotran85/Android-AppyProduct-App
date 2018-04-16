@@ -13,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
-import com.appyhome.appyproduct.mvvm.ui.account.login.LoginActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -22,7 +21,6 @@ import com.appyhome.appyproduct.mvvm.ui.main.tab.AppyTabNavigator;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragment;
-import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
 
@@ -106,7 +104,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinder.tabLayout.setUp(this, this);
         Intent intent = getIntent();
         String tab = intent.getStringExtra(TAB);
-        if(tab != null && tab.length() > 0) {
+        if (tab != null && tab.length() > 0) {
             clickTab(tab);
         } else {
             clickTab(TAB_HOME);
@@ -116,22 +114,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_LOGIN_FOR_MY_PROFILE:
-                if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_LOGIN_FOR_MY_PROFILE:
                     clickTab(TAB_MY_PROFILE);
-                }
-                break;
-            case REQUEST_LOGIN_FOR_REQUEST_TRACKING:
-                if (resultCode == RESULT_OK) {
+                    break;
+                case REQUEST_LOGIN_FOR_REQUEST_TRACKING:
                     clickTab(TAB_TRACKING);
-                }
-                break;
-            case REQUEST_LOGIN_FOR_MY_WISH_LIST:
-                if (resultCode == RESULT_OK) {
+                    break;
+                case REQUEST_LOGIN_FOR_MY_WISH_LIST:
                     clickTab(TAB_WISH_LIST);
-                }
-                break;
+                    break;
+            }
+        } else {
+            clickTab(TAB_HOME);
         }
     }
 
