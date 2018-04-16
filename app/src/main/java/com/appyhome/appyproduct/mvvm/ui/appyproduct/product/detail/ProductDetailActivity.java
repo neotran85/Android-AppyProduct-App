@@ -65,6 +65,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private ProductItemNavigator mPreviousNavigator;
 
+    private String selectedVariantModelId = "";
+
 
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
@@ -117,7 +119,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         int scrollY = mBinder.scrollView.getScrollY();
         if (scrollY >= 200) {
             float value = ((float) scrollY - 200) / 400;
-            Log.v("alpha:", value + "");
             getViewModel().alphaTitle.set(value);
         } else {
             getViewModel().alphaTitle.set(0.0f);
@@ -167,6 +168,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void selectedVariant(ProductVariant variant) {
+        selectedVariantModelId = variant.model_id;
         getViewModel().setVariantId(variant.id);
         getViewModel().price.set("RM " + variant.price);
         getViewModel().isVariantSelected.set(true);
@@ -251,7 +253,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private void loadImages(ProductVariant productVariant) {
         mBinder.slider.removeAllSliders();
-
         if (productVariant != null) {
             for (ProductVariantImage image : productVariant.images) {
                 DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
@@ -266,8 +267,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
                     .setScaleType(BaseSliderView.ScaleType.FitCenterCrop);
             mBinder.slider.addSlider(vDefaultSliderView);
         }
-
-        mBinder.slider.setCurrentPosition(0);
+        mBinder.slider.setCurrentPosition(0, false);
     }
 
     @Override
@@ -289,6 +289,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     public void showGallery(int position) {
         Intent intent = ProductGalleryActivity.getStartIntent(this);
         intent.putExtra("position", position);
+        intent.putExtra("variant_model_id", selectedVariantModelId);
         startActivity(intent);
     }
 

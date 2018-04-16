@@ -121,4 +121,6 @@ public interface DbHelper {
     Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
 
     Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
+
+    Flowable<ProductVariant> getProductVariantById(String variantModelId);
 }

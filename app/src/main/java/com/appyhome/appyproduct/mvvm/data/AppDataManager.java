@@ -734,4 +734,9 @@ public class AppDataManager implements DataManager {
     public void setLocalDatabaseUpdated(boolean isDone) {
         mPreferencesHelper.setLocalDatabaseUpdated(isDone);
     }
+
+    @Override
+    public Flowable<ProductVariant> getProductVariantById(String variantModelId) {
+        return mDbHelper.getProductVariantById(variantModelId);
+    }
 }

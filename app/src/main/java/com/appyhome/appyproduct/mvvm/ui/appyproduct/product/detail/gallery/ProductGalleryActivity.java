@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariantImage;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductGalleryBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -14,10 +16,11 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import javax.inject.Inject;
 
-public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryBinding, ProductGalleryViewModel> implements ProductGalleryNavigator, BaseSliderView.OnSliderClickListener {
+public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryBinding, ProductGalleryViewModel> implements ProductGalleryNavigator {
 
     @Inject
     public ProductGalleryViewModel mMainViewModel;
+
     ActivityProductGalleryBinding mBinder;
     @Inject
     int mLayoutId;
@@ -44,24 +47,25 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
-        int position = getIntent().getIntExtra("position", 0);
-        loadImages(position);
+        String modelId = getIntent().getStringExtra("variant_model_id");
+        getViewModel().getProductVariantById(modelId);
     }
 
-    private void loadImages(int startPosition) {
-        for (String name : getViewModel().images) {
-            DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
-            // initialize a SliderLayout
-            vDefaultSliderView
-                    .image(name)
-                    .setScaleType(BaseSliderView.ScaleType.CenterInside);
-            mBinder.slider.addSlider(vDefaultSliderView);
-            vDefaultSliderView.setOnSliderClickListener(this);
-        }
+    @Override
+    public void showGallery(ProductVariant variant) {
         mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
         mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mBinder.slider.stopAutoCycle();
-        mBinder.slider.setCurrentPosition(startPosition);
+        for (ProductVariantImage image : variant.images) {
+            DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
+            // initialize a SliderLayout
+            vDefaultSliderView
+                    .image(image.URL)
+                    .setScaleType(BaseSliderView.ScaleType.CenterInside);
+            mBinder.slider.addSlider(vDefaultSliderView);
+        }
+        int startPosition = getIntent().getIntExtra("position", 0);
+        mBinder.slider.setCurrentPosition(startPosition, false);
     }
 
     @Override
@@ -84,8 +88,4 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
         AlertManager.getInstance(this).showLongToast(message);
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
-    }
 }

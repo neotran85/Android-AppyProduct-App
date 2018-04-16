@@ -162,6 +162,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<ProductVariant> getProductVariantById(String variantModelId) {
+        beginTransaction();
+        ProductVariant variant = getRealm().where(ProductVariant.class)
+                .equalTo("model_id", variantModelId)
+                .findFirst();
+        getRealm().commitTransaction();
+        return variant.asFlowable();
+    }
+
+    @Override
     public Flowable<Boolean> addProductVariants(RealmList<ProductVariant> variants) {
         return Flowable.fromCallable(() -> {
             try {
