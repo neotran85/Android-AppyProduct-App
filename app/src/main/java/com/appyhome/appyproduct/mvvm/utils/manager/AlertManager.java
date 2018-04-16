@@ -57,8 +57,20 @@ public class AlertManager {
         StyleableToast.makeText(mContext, text, Toast.LENGTH_SHORT, R.style.AppyToast).show();
     }
 
+    public void showQuickToast(String text, int idStyle) {
+        StyleableToast.makeText(mContext, text, Toast.LENGTH_SHORT, idStyle).show();
+    }
+
     public void showLongToast(String text) {
         StyleableToast.makeText(mContext, text, Toast.LENGTH_LONG, R.style.AppyToast).show();
+    }
+
+    public void showLongToast(String text, int idStyle) {
+        StyleableToast.makeText(mContext, text, Toast.LENGTH_LONG, idStyle).show();
+    }
+
+    public void showErrorToast(String text) {
+        StyleableToast.makeText(mContext, text, Toast.LENGTH_LONG, R.style.AppyToast_Error).show();
     }
 
     public void showComingSoonDialog() {

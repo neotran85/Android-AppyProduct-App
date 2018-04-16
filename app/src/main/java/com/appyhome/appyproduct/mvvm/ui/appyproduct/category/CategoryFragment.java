@@ -111,7 +111,7 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(getActivity()).showLongToast(getString(R.string.error_unknown));
+        AlertManager.getInstance(getActivity()).showErrorToast(getString(R.string.error_unknown));
     }
 
     @Override

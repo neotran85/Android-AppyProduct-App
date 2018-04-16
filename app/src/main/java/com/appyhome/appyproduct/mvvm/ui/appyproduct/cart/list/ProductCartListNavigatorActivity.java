@@ -75,7 +75,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_unknown));
+        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_unknown));
     }
 
     @Override

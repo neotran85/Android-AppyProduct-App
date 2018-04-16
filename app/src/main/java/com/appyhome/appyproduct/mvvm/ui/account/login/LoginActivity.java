@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
     }
 
     @Override
@@ -204,7 +204,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         closeLoading();
         Intent intent = getIntent();
         setResult(RESULT_OK, intent);
-        AlertManager.getInstance(this).showLongToast(getString(R.string.login_success));
+        AlertManager.getInstance(this).showLongToast(getString(R.string.login_success), R.style.AppyToast_Account);
         finish();
     }
 

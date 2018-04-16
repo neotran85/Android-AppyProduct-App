@@ -236,7 +236,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showQuickToast(message);
+        AlertManager.getInstance(this).showQuickToast(message, R.style.AppyToast_Cart);
     }
 
     @Override

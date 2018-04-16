@@ -92,8 +92,20 @@
         <item name="colorBackground">@color/colorAccent</item>
         <item name="gravity">center</item>
         <item name="radius">20dp</item>
+        <item name="solidBackground">true</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/white</item>
     </style>
     <style name="AppyToast_ErrorConnection" parent="AppyToast">
         <item name="iconStart">@drawable/ic_signal_wifi_off_white_24dp</item>
+    </style>
+    <style name="AppyToast_Account" parent="AppyToast">
+        <item name="iconStart">@drawable/ic_person_white_24dp</item>
+    </style>
+    <style name="AppyToast_Error" parent="AppyToast">
+        <item name="iconStart">@drawable/ic_error_outline_white_24dp</item>
+    </style>
+    <style name="AppyToast_Cart" parent="AppyToast">
+        <item name="iconStart">@drawable/ic_shopping_cart_white_24dp</item>
     </style>
 </resources>

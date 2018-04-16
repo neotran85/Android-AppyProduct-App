@@ -69,7 +69,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
     }
 
     @Override
