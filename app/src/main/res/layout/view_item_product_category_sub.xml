@@ -41,8 +41,8 @@
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:text="ACTIVE"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textColor="@color/colorAccent"
+                android:textSize="13sp" />
         </LinearLayout>
         <TextView
             android:layout_below="@+id/ivThumbnail"

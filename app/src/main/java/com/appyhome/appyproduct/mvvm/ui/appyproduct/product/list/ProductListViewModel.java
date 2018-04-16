@@ -102,7 +102,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         return SortOption.UNKNOWN;
     }
 
-
     /******************************  PRODUCTS METHODS *************** ***************/
 
     private void getAllProductsWithFilter() {
