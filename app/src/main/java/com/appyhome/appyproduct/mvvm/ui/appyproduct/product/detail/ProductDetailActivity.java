@@ -15,12 +15,13 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.SliderLayout;
@@ -55,6 +56,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private int mTotalStock = 0;
 
+    private ProductItemNavigator mPreviousNavigator;
+
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
         Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -77,6 +80,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
+        mPreviousNavigator = mViewModel.getNavigator();
         mViewModel.setNavigator(this);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getKeywordString());
         loadImages();
@@ -248,7 +252,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
-        // DO NOTHING HERE
+        AlertManager.getInstance(this).showQuickToast(isFavorite ?
+                getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
     }
 
     @Override
@@ -269,6 +274,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (getViewModel() != null && mPreviousNavigator != null) {
+            getViewModel().setNavigator(mPreviousNavigator);
+        }
         mViewModel = null;
         ProductDetailActivityModule.clickedViewModel = null;
     }

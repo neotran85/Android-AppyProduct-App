@@ -108,4 +108,7 @@
     <style name="AppyToast_Cart" parent="AppyToast">
         <item name="iconStart">@drawable/ic_shopping_cart_white_24dp</item>
     </style>
+    <style name="AppyToast_Favorite" parent="AppyToast">
+        <item name="iconStart">@drawable/ic_favorite_white_24dp</item>
+    </style>
 </resources>

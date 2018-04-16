@@ -78,6 +78,8 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
+        AlertManager.getInstance(this).showQuickToast(isFavorite ?
+                getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
         getProductAdapter().notifyItemChanged(position);
     }
 
