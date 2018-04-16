@@ -86,5 +86,14 @@
         <item name="android:textColor">@color/dark_gray</item>
         <item name="textAllCaps">true</item>
     </style>
-
+    <style name="AppyToast">
+        <item name="textColor">@color/white</item>
+        <item name="textSize">13sp</item>
+        <item name="colorBackground">@color/colorAccent</item>
+        <item name="gravity">center</item>
+        <item name="radius">20dp</item>
+    </style>
+    <style name="AppyToast_ErrorConnection" parent="AppyToast">
+        <item name="iconStart">@drawable/ic_signal_wifi_off_white_24dp</item>
+    </style>
 </resources>

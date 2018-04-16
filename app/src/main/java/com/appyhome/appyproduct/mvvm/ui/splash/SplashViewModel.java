@@ -29,14 +29,15 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     }
 
     public void loadAppData() {
+        loadServicesCategories();
+        loadServices();
+
         boolean value = getDataManager().isLocalDatabaseUpdated();
         Log.v("loadAppData", "Done = " + value);
         if (value) {
             // FINISHED ALL LOAD PRODUCT DATA, THEN FETCH USER DATA
             fetchUserData();
         } else {
-            loadServicesCategories();
-            loadServices();
             // FETCH PRODUCTS DATA
             loadProductSubs();
         }

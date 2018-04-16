@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 public final class NetworkUtils {
 
@@ -18,8 +19,10 @@ public final class NetworkUtils {
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         boolean value = netInfo != null && netInfo.isConnectedOrConnecting();
-        if (!value)
-            Toast.makeText(context, R.string.error_network_not_connected, Toast.LENGTH_LONG).show();
+        if (!value) {
+            StyleableToast.makeText(context, context.getString(R.string.error_network_not_connected),
+                    Toast.LENGTH_LONG, R.style.AppyToast_ErrorConnection).show();
+        }
         return value;
     }
 }

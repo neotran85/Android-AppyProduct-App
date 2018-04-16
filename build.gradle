@@ -70,4 +70,5 @@ ext {
     playservicesplacesVersion = '11.6.0'
     crashlyticsVersion = '2.8.0@aar'
     multidexVersion = '1.0.3'
+    toastyVersion = '2.1.2'
 }

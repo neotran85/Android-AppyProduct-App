@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,31 +12,16 @@ import android.widget.Toast;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserActivity;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 public class AlertManager {
     private static AlertManager mInstance;
-    private Toast mToast;
     private Context mContext;
     private ProgressDialog mLoadingDialog;
     private AlertDialog mAlertDialog;
 
-    private AlertManager(Context context, int gravity) {
-        mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
-        mToast.setGravity(gravity, 0, 0);
-        mContext = context;
-    }
-
     private AlertManager(Context context) {
-        mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
-        mToast.setGravity(Gravity.CENTER, 0, 0);
         mContext = context;
-    }
-
-    public static AlertManager getInstance(Context context, int gravity) {
-        if (mInstance == null || mInstance.mContext != context) {
-            mInstance = new AlertManager(context, gravity);
-        }
-        return mInstance;
     }
 
     public static AlertManager getInstance(Context context) {
@@ -70,15 +54,11 @@ public class AlertManager {
     }
 
     public void showQuickToast(String text) {
-        mToast.setText(text);
-        mToast.setDuration(Toast.LENGTH_SHORT);
-        mToast.show();
+        StyleableToast.makeText(mContext, text, Toast.LENGTH_SHORT, R.style.AppyToast).show();
     }
 
     public void showLongToast(String text) {
-        mToast.setText(text);
-        mToast.setDuration(Toast.LENGTH_LONG);
-        mToast.show();
+        StyleableToast.makeText(mContext, text, Toast.LENGTH_LONG, R.style.AppyToast).show();
     }
 
     public void showComingSoonDialog() {
