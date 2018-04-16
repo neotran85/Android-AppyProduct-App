@@ -30,8 +30,6 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class ProductListActivity extends ProductListNavigatorActivity implements HasSupportFragmentInjector {
 
-    public static final int ID_SUB_EMPTY = -1;
-
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 

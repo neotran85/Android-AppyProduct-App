@@ -87,8 +87,8 @@
                     android:paddingEnd="6dp"
                     android:text="Search"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/text_hint"
-                    android:textSize="15sp"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp"
                     android:visibility="@{!viewModel.hasKeywords}" />
 
                 <ImageView

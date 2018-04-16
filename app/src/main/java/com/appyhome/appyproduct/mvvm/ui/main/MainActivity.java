@@ -135,12 +135,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
     }
 
-    private void openLoginActivity(String message, int requestCode) {
-        Intent intent = LoginActivity.getStartIntent(this);
-        intent.putExtra("message", message);
-        startActivityForResult(intent, requestCode);
-    }
-
     @Override
     public MainViewModel getViewModel() {
         mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);

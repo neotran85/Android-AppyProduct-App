@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.appyhome.appyproduct.mvvm.ui.main.MainActivity">
 
@@ -25,12 +24,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical"/>
+            android:clipToPadding="false"
+            android:orientation="vertical" />
 
-        <com.appyhome.appyproduct.mvvm.ui.main.tab.AppyTabView
-            android:id="@+id/tabLayout"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:shadowRadius="4"
+            android:layout_height="wrap_content">
+            <com.appyhome.appyproduct.mvvm.ui.main.tab.AppyTabView
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.AppBarLayout>
 
     </LinearLayout>
 
