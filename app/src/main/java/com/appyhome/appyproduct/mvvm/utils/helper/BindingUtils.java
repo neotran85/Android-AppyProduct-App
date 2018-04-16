@@ -130,6 +130,15 @@ public final class BindingUtils {
         }
     }
 
+    @BindingAdapter("isDetailFavorite")
+    public static void setIsDetailFavorite(ImageView imageView, boolean isFavorite) {
+        if (isFavorite) {
+            imageView.setBackgroundResource(R.mipmap.detail_icon_favorite);
+        } else {
+            imageView.setBackgroundResource(R.mipmap.detail_icon_unfavorite);
+        }
+    }
+
 
     @BindingAdapter({"adapter"})
     public static void addOpenSourceItems(RecyclerView recyclerView,
@@ -165,5 +174,9 @@ public final class BindingUtils {
     @BindingAdapter("textVisible")
     public static void setVisibility(View view, String text) {
         view.setVisibility(text != null && text.length() > 0 ? View.VISIBLE : View.GONE);
+    }
+    @BindingAdapter("alpha")
+    public static void setVisibility(View view, float alpha) {
+        view.setAlpha(alpha);
     }
 }

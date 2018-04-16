@@ -225,7 +225,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
-        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
+        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel, getProductAdapter());
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
     }

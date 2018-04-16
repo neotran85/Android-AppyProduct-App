@@ -7,22 +7,26 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariantImage;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
+import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -36,13 +40,16 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel>
         implements HasSupportFragmentInjector, ProductDetailNavigator,
-        BaseSliderView.OnSliderClickListener, ProductDetailVariantNavigator {
+        BaseSliderView.OnSliderClickListener, ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener {
 
     @Inject
     public ProductItemViewModel mViewModel;
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
+    @Inject
+    ProductAdapter mRelatedProductAdapter;
 
     ActivityProductDetailBinding mBinder;
 
@@ -58,8 +65,10 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private ProductItemNavigator mPreviousNavigator;
 
-    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel) {
+
+    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
+        ProductDetailActivityModule.relatedProductAdapter = adapter;
         Intent intent = new Intent(context, ProductDetailActivity.class);
         return intent;
     }
@@ -82,8 +91,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder.setViewModel(mViewModel);
         mPreviousNavigator = mViewModel.getNavigator();
         mViewModel.setNavigator(this);
-        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getKeywordString());
-        loadImages();
+        setUpSlider();
+        mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, false, false, getKeywordString());
         getCartPosition();
         int productId = getProductIdByIntent();
         if (productId > 0) {
@@ -93,6 +102,34 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             mProductVariantFragment.setDetailNavigator(this);
             showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
         }
+        mBinder.scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
+
+        if (mRelatedProductAdapter != null) {
+            ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvRecommendSet, false);
+            ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvProductSet, false);
+            mBinder.rvRecommendSet.setAdapter(mRelatedProductAdapter);
+            mBinder.rvProductSet.setAdapter(mRelatedProductAdapter);
+        }
+    }
+
+    @Override
+    public void onScrollChanged() {
+        int scrollY = mBinder.scrollView.getScrollY();
+        if (scrollY >= 200) {
+            float value = ((float) scrollY - 200) / 400;
+            Log.v("alpha:", value + "");
+            getViewModel().alphaTitle.set(value);
+        } else {
+            getViewModel().alphaTitle.set(0.0f);
+        }
+    }
+
+    private void setUpSlider() {
+        mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
+        mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mBinder.slider.setCustomIndicator(mBinder.customIndicator);
+        mBinder.slider.stopAutoCycle();
+        loadImages(null);
     }
 
     private String getKeywordString() {
@@ -136,6 +173,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
         getViewModel().amountAdded.set("1");
+        loadImages(variant);
     }
 
     @Override
@@ -211,20 +249,24 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mSearchToolbarViewHolder.onBind(0);
     }
 
-    private void loadImages() {
-        for (String name : getViewModel().images) {
+    private void loadImages(ProductVariant productVariant) {
+        mBinder.slider.removeAllSliders();
+
+        if (productVariant != null) {
+            for (ProductVariantImage image : productVariant.images) {
+                DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
+                vDefaultSliderView.setOnSliderClickListener(this);
+                vDefaultSliderView.image(image.URL)
+                        .setScaleType(BaseSliderView.ScaleType.FitCenterCrop);
+                mBinder.slider.addSlider(vDefaultSliderView);
+            }
+        } else {
             DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
-            // initialize a SliderLayout
-            vDefaultSliderView
-                    .image(name)
+            vDefaultSliderView.image(getViewModel().imageURL.get())
                     .setScaleType(BaseSliderView.ScaleType.FitCenterCrop);
-            vDefaultSliderView.setOnSliderClickListener(this);
             mBinder.slider.addSlider(vDefaultSliderView);
         }
-        mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
-        mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mBinder.slider.setCustomIndicator(mBinder.customIndicator);
-        mBinder.slider.stopAutoCycle();
+
         mBinder.slider.setCurrentPosition(0);
     }
 
@@ -286,6 +328,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         int amount = mViewModel.getIntegerAmountAdded() - 1;
         if (amount >= 1)
             mViewModel.setIntegerAmountAdded(amount);
+    }
+
+    @Override
+    public void back() {
+        finish();
     }
 
     @Override

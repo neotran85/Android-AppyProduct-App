@@ -95,7 +95,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void showProductDetail(ProductCartItemViewModel viewModel) {
-        Intent intent = ProductDetailActivity.getStartIntent(this, null);
+        Intent intent = ProductDetailActivity.getStartIntent(this, null, null);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivityForResult(intent, REQUEST_DETAIL);
     }

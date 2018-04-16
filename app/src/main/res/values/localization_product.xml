@@ -31,4 +31,10 @@
     <string name="pls_login_view_cart">Please login to view your cart.</string>
     <string name="added_wishlist">Added to your wishlist.</string>
     <string name="removed_wishlist">Removed from your wishlist.</string>
+    <string name="button_add_to_cart">ADD TO CART</string>
+    <string name="button_buy_now">BUY NOW</string>
+    <string name="tab_overview">Overview</string>
+    <string name="tab_details">Details</string>
+    <string name="tab_review">Review</string>
+    <string name="button_explore_seller">Explore seller</string>
 </resources>

@@ -26,4 +26,6 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
     void showedVariants();
 
     void onFavoriteClick(ProductItemViewModel viewModel);
+
+    void back();
 }
