@@ -52,6 +52,7 @@ public class ProductGalleryActivity extends BaseActivity<ActivityProductGalleryB
     public void showGallery(ProductVariant variant) {
         mBinder.sliderPhotos.setAdapter(new VariantPhotosAdapter(variant));
         int startPosition = getIntent().getIntExtra("position", 0);
+        mBinder.sliderPhotos.setSelectedSlide(startPosition);
     }
 
     @Override

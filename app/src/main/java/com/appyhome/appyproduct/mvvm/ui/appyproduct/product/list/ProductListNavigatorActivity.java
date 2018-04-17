@@ -73,7 +73,8 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
-    public void addedToCartCompleted(boolean isBuyNow) {
+    public void addedToCartCompleted(int amount, boolean isBuyNow) {
+        // DO NOTHING HERE
     }
 
     @Override

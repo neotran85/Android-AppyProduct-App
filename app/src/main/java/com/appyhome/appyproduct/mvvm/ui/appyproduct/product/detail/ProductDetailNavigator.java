@@ -13,12 +13,6 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
 
     void updateCartCount();
 
-    void increaseAmount();
-
-    void decreaseAmount();
-
-    void showGallery(int position);
-
     void share();
 
     void selectedVariant(ProductVariant variant);

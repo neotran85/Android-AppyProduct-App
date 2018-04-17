@@ -70,22 +70,21 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
                     if (results != null && results.isValid()) {
                         Log.v("saveProductCartItem", "DELETED THE OLD ONE");
                         // THEN ADD NEW VARIANT TO SERVER
-                        addOrUpdateProductVariant(cart);
+                        addOrUpdateProductVariant(cart.product_id, cart.variant_id, cart.amount);
                     }
                 }, Crashlytics::logException));
     }
 
-    private void addOrUpdateProductVariant(ProductCart cart) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(cart.product_id,
-                cart.variant_id, cart.amount))
+    private void addOrUpdateProductVariant(int productId, int variantId, int amount) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(productId, variantId, amount))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
                     if (data != null && data.isValid()) {
                         Log.v("addOrUpdateVariant", "ADDED VARIANT SUCCESSFULLY");
                     } else {
-                        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(cart.product_id,
-                                cart.variant_id, cart.amount))
+                        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(productId,
+                                variantId, amount))
                                 .subscribeOn(getSchedulerProvider().io())
                                 .observeOn(getSchedulerProvider().ui())
                                 .subscribe(data1 -> {

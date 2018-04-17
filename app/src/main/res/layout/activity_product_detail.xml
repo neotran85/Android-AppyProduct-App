@@ -146,69 +146,12 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="18dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:gravity="center"
-                                android:text="Quantity"
-                                android:textColor="@color/medium_dark_gray"
-                                android:textSize="14sp"
-                                android:visibility="gone" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:clickable="true"
-                                android:foreground="?attr/selectableItemBackground"
-                                android:onClick="@{(view) -> navigator.decreaseAmount()}"
-                                android:padding="4dp"
-                                android:src="@mipmap/bg_minus"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:layout_width="24dp"
-
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@{viewModel.amountAdded}"
-                                android:textColor="@color/red_price"
-                                android:textSize="14sp"
-                                android:visibility="gone" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:visibility="gone">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:onClick="@{(view) -> navigator.increaseAmount()}"
-                                    android:padding="4dp"
-                                    android:src="@mipmap/bg_plus" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/llProductVariant"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="14dp"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="14dp"
                             android:orientation="horizontal" />
 
                         <LinearLayout
@@ -557,6 +500,20 @@
                         android:background="@color/gray" />
                 </LinearLayout>
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black_opacity_50"
+                android:visibility="@{viewModel.isEditVariantShowed, default=gone}">
+
+                <RelativeLayout
+                    android:id="@+id/llEditProductVariant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <ImageView

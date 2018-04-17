@@ -20,7 +20,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import javax.inject.Inject;
 
 
-public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements ProductDetailVariantNavigator, View.OnClickListener {
+public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements ProductDetailVariantNavigator{
 
     public static final String TAG = "EditVariantFragment";
 
@@ -80,7 +80,6 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         mViewModel.setProductCartItemViewModel(mProductCartItemViewModel);
         showProductVariantFragment();
         showProductCartItem();
-        mBinder.btConfirm.setOnClickListener(this);
     }
 
     private void showProductVariantFragment() {
@@ -126,13 +125,16 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         mProductCartItemViewModel.update(variant);
     }
 
-    @Override
-    public void onClick(View view) {
+    public void saveProductCartItem() {
         getViewModel().saveProductCartItem(mOldVariantId);
     }
 
     @Override
     public void showedVariants() {
         mProductVariantFragment.selectVariant(mProductCartItemViewModel.getVariantModelId());
+    }
+
+    public int getAmountAdded() {
+        return getViewModel().getAmount();
     }
 }

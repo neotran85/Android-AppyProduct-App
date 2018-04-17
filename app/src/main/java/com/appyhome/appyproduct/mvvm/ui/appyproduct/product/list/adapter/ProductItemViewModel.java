@@ -29,10 +29,10 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> favoriteCount = new ObservableField<>("");
     public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
+    public ObservableField<Boolean> isEditVariantShowed = new ObservableField<>(false);
     public ObservableField<Boolean> isSmall = new ObservableField<>(false);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
     public ObservableField<Boolean> isVariantSelected = new ObservableField<>(false);
-    public ObservableField<String> amountAdded = new ObservableField<>("1");
     public ObservableField<String> stockCount = new ObservableField<>("0");
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<Float> alphaTitle = new ObservableField<>(0.0f);
@@ -70,21 +70,13 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public int getIntegerAmountAdded() {
-        return Integer.valueOf(amountAdded.get());
-    }
-
-    public void setIntegerAmountAdded(int amount) {
-        amountAdded.set(amount + "");
-    }
-
-    public void addProductToCart(String variantModelId, boolean isBuyNow) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), productId, variantModelId, getIntegerAmountAdded())
+    public void addProductToCart(String variantModelId, int amount, boolean isBuyNow) {
+        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), productId, variantModelId, amount)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {
                         getNavigator().updateCartCount();
-                        getNavigator().addedToCartCompleted(isBuyNow);
+                        getNavigator().addedToCartCompleted(amount, isBuyNow);
                         addProductCartServer(productCart);
                     }
                 }, Crashlytics::logException));

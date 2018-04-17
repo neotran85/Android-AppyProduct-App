@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.Confirmati
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivityModule;
@@ -153,7 +154,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = SearchActivityModule.class)
     abstract SearchActivity bindSearchActivity();
 
-    @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductVariantFragmentProvider.class})
+    @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductVariantFragmentProvider.class, EditVariantFragmentProvider.class})
     abstract ProductDetailActivity bindProductDetailActivity();
 
     @ContributesAndroidInjector(modules = ProductTrackingActivityModule.class)

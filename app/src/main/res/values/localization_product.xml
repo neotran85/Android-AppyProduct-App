@@ -37,4 +37,5 @@
     <string name="tab_details">Details</string>
     <string name="tab_review">Review</string>
     <string name="button_explore_seller">Explore seller</string>
+    <string name="pls_login_add_to_cart">Please login to add product to your cart.</string>
 </resources>

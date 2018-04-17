@@ -86,6 +86,12 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     }
 
     @Override
+    public void onConfirmationChanged() {
+        if (mEditVariantFragment != null)
+            mEditVariantFragment.saveProductCartItem();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
     }

@@ -131,7 +131,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void addedToCartCompleted(boolean isBuyNow) {
+    public void addedToCartCompleted(int amount, boolean isBuyNow) {
+        // DO NOTHING
     }
 
     @Override

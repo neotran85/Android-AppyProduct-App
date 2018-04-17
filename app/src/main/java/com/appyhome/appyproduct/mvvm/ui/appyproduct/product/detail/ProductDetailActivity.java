@@ -10,11 +10,16 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
@@ -35,7 +40,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel>
         implements HasSupportFragmentInjector, ProductDetailNavigator,
-        ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener {
+        ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener, EditVariantNavigator {
 
     @Inject
     public ProductItemViewModel mViewModel;
@@ -50,7 +55,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
-    private ProductVariantFragment mProductVariantFragment;
+    private EditVariantFragment mEditVariantFragment;
 
     private Point mCartPosition = new Point();
 
@@ -60,8 +65,13 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private ProductItemNavigator mPreviousNavigator;
 
-    private String selectedVariantModelId = "";
+    private ProductVariant mSelectedVariant;
 
+    private ProductVariantFragment mProductVariantFragment;
+
+    private ProductCartItemViewModel mProductCartItemViewModel;
+
+    private boolean isBuyNow = false;
 
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
@@ -86,8 +96,12 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
-        mPreviousNavigator = mViewModel.getNavigator();
         mViewModel.setNavigator(this);
+        setUp();
+    }
+
+    private void setUp() {
+        mPreviousNavigator = mViewModel.getNavigator();
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, false, false, getKeywordString());
         getCartPosition();
         int productId = getProductIdByIntent();
@@ -99,7 +113,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
         }
         mBinder.scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
-
         if (mRelatedProductAdapter != null) {
             ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvRecommendSet, false);
             ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvProductSet, false);
@@ -132,16 +145,15 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private void getCartPosition() {
         mBinder.toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
+                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
                 mBinder.toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 View cartIcon = mBinder.toolbar.findViewById(R.id.ivCart);
                 int[] cartLocations = new int[2];
-                int[] addToCartLocations = new int[2];
                 cartIcon.getLocationOnScreen(cartLocations);
                 mCartPosition.x = cartLocations[0];
                 mCartPosition.y = cartLocations[1];
-                mBinder.btAddToCart.getLocationOnScreen(addToCartLocations);
-                mAddToCartPosition.x = addToCartLocations[0];
-                mAddToCartPosition.y = addToCartLocations[1];
+                mAddToCartPosition.y = AppConstants.SCREEN_HEIGHT;
+                mAddToCartPosition.x = AppConstants.SCREEN_WIDTH / 2 - sizeInPixels;
             }
         });
     }
@@ -154,33 +166,29 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void selectedVariant(ProductVariant variant) {
-        selectedVariantModelId = variant.model_id;
+        mSelectedVariant = variant;
         getViewModel().setVariantId(variant.id);
         getViewModel().price.set("RM " + variant.price);
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
-        getViewModel().amountAdded.set("1");
         loadImages(variant);
+        mBinder.scrollView.scrollBy(0, 0);
     }
 
     @Override
     public void gotoCart() {
-        ProductVariant variant = mProductVariantFragment.getSelectedVariant();
-        if (variant == null) {
-            showAlert(getString(R.string.please_choose_variant));
-        } else {
-            getViewModel().addProductToCart(variant.model_id, true);
-        }
+        isBuyNow = true;
+        showEditProductVariantFragment();
     }
 
     @Override
-    public void addedToCartCompleted(boolean isBuyNow) {
-        if (isBuyNow) {
+    public void addedToCartCompleted(int amount, boolean isBoughtNow) {
+        showAlert(amount + " " + getString(R.string.items_added_to_your_card));
+        if (isBoughtNow) {
             startActivity(ProductCartListActivity.getStartIntent(this));
-        } else {
-            showAlert(getViewModel().amountAdded.get() + " " + getString(R.string.items_added_to_your_card));
         }
+        isBuyNow = false;
     }
 
     @Override
@@ -196,16 +204,12 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void addToCart() {
-        if (!askForLogin("Please login to add product to your cart.")) {
-            ProductVariant variant = mProductVariantFragment.getSelectedVariant();
-            if (variant == null) {
-                showAlert(getString(R.string.please_choose_variant));
-            } else
-                animateProductToCart();
-        }
+        isBuyNow = false;
+        showEditProductVariantFragment();
     }
 
-    private void animateProductToCart() {
+
+    private void animateProductToCart(int amountAdded) {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
         AppAnimator.animateMoving(1000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
@@ -215,7 +219,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
                 if (getViewModel() != null) {
                     ProductVariant variant = mProductVariantFragment.getSelectedVariant();
                     if (variant != null) {
-                        getViewModel().addProductToCart(variant.model_id, false);
+                        getViewModel().addProductToCart(mSelectedVariant.model_id, amountAdded, isBuyNow);
                         mBinder.ivProductBox.setVisibility(View.GONE);
                     }
                 }
@@ -239,6 +243,12 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private void loadImages(ProductVariant productVariant) {
         mBinder.sliderPhotos.setAdapter(new VariantPhotosAdapter(productVariant));
+        mBinder.sliderPhotos.setOnSlideClickListener(position -> {
+            Intent intent = ProductGalleryActivity.getStartIntent(ProductDetailActivity.this);
+            intent.putExtra("position", position);
+            intent.putExtra("variant_model_id", mSelectedVariant.model_id);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -257,27 +267,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
-    public void showGallery(int position) {
-        Intent intent = ProductGalleryActivity.getStartIntent(this);
-        intent.putExtra("position", position);
-        intent.putExtra("variant_model_id", selectedVariantModelId);
-        startActivity(intent);
-    }
-
-    @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
         AlertManager.getInstance(this).showQuickToast(isFavorite ?
                 getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
-    }
-
-    @Override
-    public void increaseAmount() {
-        int amount = mViewModel.getIntegerAmountAdded() + 1;
-        if (amount <= mTotalStock)
-            mViewModel.setIntegerAmountAdded(amount);
-        else {
-            showAlert(getString(R.string.unable_to_add_more_than) + " " + mTotalStock);
-        }
     }
 
     @Override
@@ -296,13 +288,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
-    public void decreaseAmount() {
-        int amount = mViewModel.getIntegerAmountAdded() - 1;
-        if (amount >= 1)
-            mViewModel.setIntegerAmountAdded(amount);
-    }
-
-    @Override
     public void back() {
         finish();
     }
@@ -317,5 +302,62 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (!askForLogin(getString(R.string.ask_login_to_add_wishlist))) {
             vm.updateProductFavorite(0);
         }
+    }
+
+    private void showEditProductVariantFragment() {
+        if (!askForLogin(getString(R.string.pls_login_add_to_cart))) {
+            ProductVariant variant = mProductVariantFragment.getSelectedVariant();
+            if (variant != null) {
+                if (mEditVariantFragment == null) {
+                    mProductCartItemViewModel = new ProductCartItemViewModel(getViewModel());
+                    mProductCartItemViewModel.update(getViewModel(), mSelectedVariant);
+                    mEditVariantFragment = EditVariantFragment.newInstance(mProductCartItemViewModel, this);
+                    showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditProductVariant, true);
+                    getViewModel().isEditVariantShowed.set(true);
+                }
+            } else {
+                showAlert(getString(R.string.please_choose_variant));
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mEditVariantFragment != null) {
+            closeEditVariantFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onConfirmationChanged() {
+        if (mProductCartItemViewModel != null && mEditVariantFragment != null) {
+            int amount = mEditVariantFragment.getAmountAdded();
+            if (amount > mSelectedVariant.quantity) {
+                showAlert(getString(R.string.unable_to_add_more_than) + " " + mSelectedVariant.quantity);
+            } else {
+                if (isBuyNow) {
+                    getViewModel().addProductToCart(mSelectedVariant.model_id, amount, isBuyNow);
+                } else {
+                    animateProductToCart(amount);
+                }
+                closeEditVariantFragment();
+            }
+        }
+    }
+
+    @Override
+    public void closeEditVariantFragment() {
+        hideKeyboard();
+        closeFragment(EditVariantFragment.TAG);
+        getViewModel().isEditVariantShowed.set(false);
+        mEditVariantFragment = null;
+        mProductCartItemViewModel = null;
+    }
+
+    @Override
+    public void saveProductCartItem_Done(ProductCart productCart) {
+        closeEditVariantFragment();
     }
 }

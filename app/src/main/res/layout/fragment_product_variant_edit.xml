@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.8"
+            android:alpha="0.6"
             android:onClick="@{(view) -> navigator.closeEditVariantFragment()}"
             android:background="@color/black"
             android:clickable="true" />
@@ -66,7 +66,7 @@
                     android:background="@color/gray" />
 
                 <Button
-                    android:id="@+id/btConfirm"
+                    android:onClick="@{(view) -> navigator.onConfirmationChanged()}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"

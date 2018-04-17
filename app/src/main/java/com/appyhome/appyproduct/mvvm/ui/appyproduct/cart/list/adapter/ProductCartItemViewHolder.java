@@ -130,7 +130,8 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                             mAdapter.updateTotalCost();
                         }
                     } else {
-                        mBinding.getNavigator().showAlert(getString(R.string.unable_to_add_than) + viewModel.getVariantStockNumber());
+                        if (mBinding.getNavigator() != null)
+                            mBinding.getNavigator().showAlert(getString(R.string.unable_to_add_than) + viewModel.getVariantStockNumber());
                     }
                     break;
                 case R.id.cbCheckAll:

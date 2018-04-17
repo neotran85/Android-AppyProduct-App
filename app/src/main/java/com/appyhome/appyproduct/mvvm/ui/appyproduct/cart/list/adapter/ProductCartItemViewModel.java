@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -36,7 +38,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     private String variantModelId;
 
-    private long productCartId;
+    private long productCartId = -1;
 
     private int variantId;
 
@@ -63,6 +65,10 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ProductCartItemViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+    }
+
+    public ProductCartItemViewModel(BaseViewModel viewModel) {
+        super(viewModel.getDataManager(), viewModel.getSchedulerProvider());
     }
 
     public void removeProductCartItem() {
@@ -200,5 +206,16 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public void setVariantId(int variantId) {
         this.variantId = variantId;
+    }
+
+
+    public void update(ProductItemViewModel viewModel, ProductVariant variant) {
+        update(variant);
+        title.set(viewModel.title.get());
+        imageURL.set(viewModel.imageURL.get());
+        setProductId(viewModel.getProductId());
+        sellerName.set(viewModel.sellerName.get());
+        price.set(viewModel.price.get());
+        amount.set("1");
     }
 }
