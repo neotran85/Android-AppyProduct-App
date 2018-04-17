@@ -8,6 +8,7 @@ import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyMigration;
 import com.appyhome.appyproduct.mvvm.di.component.DaggerAppComponent;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
+import com.appyhome.appyproduct.mvvm.utils.helper.GlideImageLoadingService;
 import com.crashlytics.android.Crashlytics;
 
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ import dagger.android.HasActivityInjector;
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import ss.com.bannerslider.Slider;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class AppyProductApp extends Application implements HasActivityInjector {
@@ -40,6 +42,7 @@ public class AppyProductApp extends Application implements HasActivityInjector {
                 .inject(this);
 
         AppLogger.init();
+        Slider.init(new GlideImageLoadingService(this));
 
         AndroidNetworking.initialize(getApplicationContext());
         if (BuildConfig.DEBUG) {

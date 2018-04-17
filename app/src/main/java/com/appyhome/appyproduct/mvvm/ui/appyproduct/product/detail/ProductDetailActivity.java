@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariantImage;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
@@ -28,9 +26,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import javax.inject.Inject;
 
@@ -40,7 +35,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel>
         implements HasSupportFragmentInjector, ProductDetailNavigator,
-        BaseSliderView.OnSliderClickListener, ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener {
+        ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener {
 
     @Inject
     public ProductItemViewModel mViewModel;
@@ -93,7 +88,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder.setViewModel(mViewModel);
         mPreviousNavigator = mViewModel.getNavigator();
         mViewModel.setNavigator(this);
-        setUpSlider();
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, false, false, getKeywordString());
         getCartPosition();
         int productId = getProductIdByIntent();
@@ -123,14 +117,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         } else {
             getViewModel().alphaTitle.set(0.0f);
         }
-    }
-
-    private void setUpSlider() {
-        mBinder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
-        mBinder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mBinder.slider.setCustomIndicator(mBinder.customIndicator);
-        mBinder.slider.stopAutoCycle();
-        loadImages(null);
     }
 
     private String getKeywordString() {
@@ -252,22 +238,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     private void loadImages(ProductVariant productVariant) {
-        mBinder.slider.removeAllSliders();
-        if (productVariant != null) {
-            for (ProductVariantImage image : productVariant.images) {
-                DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
-                vDefaultSliderView.setOnSliderClickListener(this);
-                vDefaultSliderView.image(image.URL)
-                        .setScaleType(BaseSliderView.ScaleType.FitCenterCrop);
-                mBinder.slider.addSlider(vDefaultSliderView);
-            }
-        } else {
-            DefaultSliderView vDefaultSliderView = new DefaultSliderView(this);
-            vDefaultSliderView.image(getViewModel().imageURL.get())
-                    .setScaleType(BaseSliderView.ScaleType.FitCenterCrop);
-            mBinder.slider.addSlider(vDefaultSliderView);
-        }
-        mBinder.slider.setCurrentPosition(0, false);
+        mBinder.sliderPhotos.setAdapter(new VariantPhotosAdapter(productVariant));
     }
 
     @Override
@@ -346,10 +317,5 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (!askForLogin(getString(R.string.ask_login_to_add_wishlist))) {
             vm.updateProductFavorite(0);
         }
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-        showGallery(mBinder.slider.getCurrentPosition());
     }
 }

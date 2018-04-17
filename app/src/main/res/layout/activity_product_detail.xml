@@ -46,18 +46,15 @@
                         android:background="@color/white"
                         android:orientation="vertical">
 
-                        <com.daimajia.slider.library.SliderLayout
-                            android:id="@+id/slider"
+                        <ss.com.bannerslider.Slider
+                            android:id="@+id/sliderPhotos"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp" />
-
-                        <com.daimajia.slider.library.Indicators.PagerIndicator
-                            android:id="@+id/customIndicator"
-                            style="@style/AndroidImageSlider_Magnifier_Oval_Black"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp" />
+                            android:layout_height="320dp"
+                            app:slider_animateIndicators="true"
+                            app:slider_indicatorSize="6dp"
+                            app:slider_loopSlides="false"
+                            app:slider_selectedSlideIndicator="@drawable/indicator_circle_selected"
+                            app:slider_unselectedSlideIndicator="@drawable/indicator_circle_unselected" />
 
                         <TextView
                             android:layout_width="match_parent"

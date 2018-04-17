@@ -144,11 +144,10 @@ dependencies {
     // Loading Photo URL & Local
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "com.nineoldandroids:library:$rootProject.picassoVersion"
-    implementation "com.daimajia.slider:library:$rootProject.sliderVersion"
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
     implementation "com.muddzdev:styleabletoast:$rootProject.toastyVersion"
-
+    implementation "com.ss.bannerslider:bannerslider:$rootProject.bannerSliderVersion"
 
     // Multidex
     implementation "com.android.support:multidex:$rootProject.multidexVersion"
