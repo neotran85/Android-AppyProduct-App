@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemNavigator;
@@ -125,6 +126,11 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
         closeFragment(EditVariantFragment.TAG);
     }
 
+
+    @Override
+    public void onEditVariantSelected(ProductVariant variant) {
+        // DO NOTHING HERE
+    }
 
     @Override
     public void emptyProductCarts() {

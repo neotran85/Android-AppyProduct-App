@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
@@ -15,6 +16,8 @@ import com.crashlytics.android.Crashlytics;
 public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
 
     private ProductCartItemViewModel mProductCartItemViewModel;
+
+    private ProductVariant mSelectedVariant;
 
     public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
         mProductCartItemViewModel = viewModel;
@@ -94,5 +97,13 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
                                 }, Crashlytics::logException));
                     }
                 }, Crashlytics::logException));
+    }
+
+    public ProductVariant getSelectedVariant() {
+        return mSelectedVariant;
+    }
+
+    public void setSelectedVariant(ProductVariant selectedVariant) {
+        this.mSelectedVariant = selectedVariant;
     }
 }

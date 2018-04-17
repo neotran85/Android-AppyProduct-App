@@ -19,13 +19,14 @@ public class VariantPhotosAdapter extends SliderAdapter {
     }
 
     private String getVariantURL(int position) {
-        if(variant != null) {
-            if(variant.images != null && position < variant.images.size()) {
-                if(variant.images.get(position) != null) return variant.images.get(position).URL;
+        if (variant != null) {
+            if (variant.images != null && position < variant.images.size()) {
+                if (variant.images.get(position) != null) return variant.images.get(position).URL;
             }
         }
         return "";
     }
+
     @Override
     public void onBindImageSlide(int position, ImageSlideViewHolder imageSlideViewHolder) {
         if (variant != null && variant.images != null && position < variant.images.size())

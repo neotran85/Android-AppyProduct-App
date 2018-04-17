@@ -23,24 +23,24 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
-        <ss.com.bannerslider.Slider
-            android:layout_centerInParent="true"
+        <com.appyhome.appyproduct.mvvm.ui.common.component.AppySliderPhotos
             android:id="@+id/sliderPhotos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             app:slider_animateIndicators="true"
             app:slider_indicatorSize="10dp"
             app:slider_loopSlides="false"
-            app:slider_selectedSlideIndicator="@drawable/indicator_circle_selected"
-            app:slider_unselectedSlideIndicator="@drawable/indicator_circle_unselected" />
+            app:slider_selectedSlideIndicator="@drawable/indicator_gallery_selected"
+            app:slider_unselectedSlideIndicator="@drawable/indicator_gallery_unselected" />
 
         <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="10dp"
             android:onClick="@{(view) -> navigator.close()}"
             android:padding="14dp"
             android:src="@mipmap/icon_back" />

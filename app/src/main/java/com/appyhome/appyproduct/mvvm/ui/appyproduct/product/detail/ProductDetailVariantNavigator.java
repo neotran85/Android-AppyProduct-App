@@ -5,9 +5,5 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 
 public interface ProductDetailVariantNavigator {
-
     void selectedVariant(ProductVariant variant);
-
-    void showedVariants();
-
 }

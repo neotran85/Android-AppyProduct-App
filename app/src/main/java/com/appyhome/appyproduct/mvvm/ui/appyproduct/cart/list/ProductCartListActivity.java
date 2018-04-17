@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 
 import javax.inject.Inject;
 
@@ -86,7 +88,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     }
 
     @Override
-    public void onConfirmationChanged() {
+    public void onConfirmationChanged(EditVariantViewModel viewModel) {
         if (mEditVariantFragment != null)
             mEditVariantFragment.saveProductCartItem();
     }

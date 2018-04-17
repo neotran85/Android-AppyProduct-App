@@ -32,7 +32,6 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     @Inject
     int mLayoutId;
 
-
     private ProductCartItemViewModel mProductCartItemViewModel;
 
     private ProductVariantFragment mProductVariantFragment;
@@ -83,7 +82,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     }
 
     private void showProductVariantFragment() {
-        mProductVariantFragment = ProductVariantFragment.newInstance(mProductCartItemViewModel.getProductId());
+        mProductVariantFragment = ProductVariantFragment.newInstance(mProductCartItemViewModel.getProductId(), mProductCartItemViewModel.getVariantModelId());
         mProductVariantFragment.setDetailNavigator(this);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.llProductVariant, mProductVariantFragment).commit();
@@ -122,19 +121,15 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     @Override
     public void selectedVariant(ProductVariant variant) {
+        getViewModel().setSelectedVariant(variant);
         mProductCartItemViewModel.update(variant);
+        if(mNavigator != null) {
+            mNavigator.onEditVariantSelected(variant);
+        }
     }
 
     public void saveProductCartItem() {
         getViewModel().saveProductCartItem(mOldVariantId);
     }
 
-    @Override
-    public void showedVariants() {
-        mProductVariantFragment.selectVariant(mProductCartItemViewModel.getVariantModelId());
-    }
-
-    public int getAmountAdded() {
-        return getViewModel().getAmount();
-    }
 }

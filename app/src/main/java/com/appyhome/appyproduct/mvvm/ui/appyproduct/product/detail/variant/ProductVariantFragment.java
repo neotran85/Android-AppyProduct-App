@@ -29,13 +29,9 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
     @Inject
     int mLayoutId;
 
-    private int mProductId;
-
     private View mSelectedVariantView;
 
     private ProductDetailVariantNavigator mDetailNavigator;
-
-    private int mTotalStock = 0;
 
     private int widthVariantItem = 0;
 
@@ -47,16 +43,29 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
         mDetailNavigator = navigator;
     }
 
-    public int getTotalStock() {
-        return mTotalStock;
-    }
-
-    public static ProductVariantFragment newInstance(int productId) {
+    public static ProductVariantFragment newInstance(int productId, String selectedVariantModelId) {
         Bundle args = new Bundle();
         ProductVariantFragment fragment = new ProductVariantFragment();
         fragment.setArguments(args);
-        fragment.setProductId(productId);
+        args.putString("product_id", productId + "");
+        args.putString("sent_variant_id", selectedVariantModelId);
         return fragment;
+    }
+
+    private String getSentVariantModelId() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            return bundle.getString("sent_variant_id", "0");
+        }
+        return "";
+    }
+
+    private int getProductId() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            return Integer.valueOf(bundle.getString("product_id", "0"));
+        }
+        return 0;
     }
 
     @Override
@@ -66,18 +75,20 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     @Override
     public void showProductVariants(RealmResults<ProductVariant> result) {
-        if (result != null) {
+        mBinder.llContainer.removeAllViews();
+        if (result != null && result.size() > 0) {
             mVariantCount = result.size();
             mMaxScroll = (mVariantCount * widthVariantItem);
-            ProductVariant variant = result.first();
-            if (variant != null) {
+            for (int i = 0; i < result.size(); i++) {
+                ProductVariant variant = result.get(i);
                 View view = createVariantView(variant);
                 mBinder.llContainer.addView(view);
-                mTotalStock = variant.quantity;
-                selectVariant(view);
             }
-            if (mDetailNavigator != null) {
-                mDetailNavigator.showedVariants();
+            String sentVariant = getSentVariantModelId();
+            if (sentVariant.length() > 0) {
+                selectVariant(sentVariant);
+            } else {
+                selectVariant(result.first().model_id);
             }
         }
 
@@ -95,7 +106,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
-        getViewModel().fetchProductVariant(mProductId);
+        getViewModel().fetchProductVariant(getProductId());
     }
 
     public void selectVariant(String variantModelId) {
@@ -165,14 +176,6 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-    public int getProductId() {
-        return mProductId;
-    }
-
-    public void setProductId(int id) {
-        this.mProductId = id;
     }
 
     private View createVariantView(ProductVariant item) {

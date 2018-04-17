@@ -17,8 +17,6 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
 
     void selectedVariant(ProductVariant variant);
 
-    void showedVariants();
-
     void onFavoriteClick(ProductItemViewModel viewModel);
 
     void back();

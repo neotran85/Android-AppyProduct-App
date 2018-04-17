@@ -46,15 +46,20 @@
                         android:background="@color/white"
                         android:orientation="vertical">
 
-                        <ss.com.bannerslider.Slider
-                            android:id="@+id/sliderPhotos"
+                        <LinearLayout
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp"
-                            app:slider_animateIndicators="true"
-                            app:slider_indicatorSize="6dp"
-                            app:slider_loopSlides="false"
-                            app:slider_selectedSlideIndicator="@drawable/indicator_circle_selected"
-                            app:slider_unselectedSlideIndicator="@drawable/indicator_circle_unselected" />
+                            android:layout_height="320dp">
+                            <com.appyhome.appyproduct.mvvm.ui.common.component.AppySliderPhotos
+                                android:id="@+id/sliderPhotos"
+                                android:layout_width="match_parent"
+                                android:layout_height="320dp"
+                                app:slider_animateIndicators="true"
+                                app:slider_indicatorSize="6dp"
+                                app:slider_loopSlides="false"
+                                app:slider_selectedSlideIndicator="@drawable/indicator_gallery_selected"
+                                app:slider_unselectedSlideIndicator="@drawable/indicator_gallery_unselected" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
