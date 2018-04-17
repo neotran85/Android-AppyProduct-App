@@ -195,6 +195,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         price.set(variant.price + "");
         variationName.set(variant.variant_name);
         setVariantModelId(variant.model_id);
+        imageURL.set(variant.avatar);
         variantStock.set("(Stock: " + variant.quantity + ")");
         setVariantStockNumber(variant.quantity);
         setVariantId(variant.id);
@@ -212,7 +213,6 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public void update(ProductItemViewModel viewModel, ProductVariant variant) {
         update(variant);
         title.set(viewModel.title.get());
-        imageURL.set(viewModel.imageURL.get());
         setProductId(viewModel.getProductId());
         sellerName.set(viewModel.sellerName.get());
         price.set(viewModel.price.get());

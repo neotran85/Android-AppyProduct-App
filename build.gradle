@@ -61,7 +61,6 @@ ext {
 
     // Others
     glideVersion = '4.6.1'
-    picassoVersion = '2.4.0'
     findbugsVersion = '1.3.9'
     braintreepaymentVerison = '2.+'
     molpaymobilexdkVersion = '3.17.0'

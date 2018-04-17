@@ -635,6 +635,7 @@ public class AppDbHelper implements DbHelper {
                     productCart.variant_model_id = variant.model_id;
                     productCart.variant_stock = variant.quantity;
                     productCart.price = variant.price;
+                    productCart.product_avatar = variant.avatar;
                 }
             }
             RealmResults<ProductCart> productCarts = getRealm().where(ProductCart.class)
@@ -672,7 +673,7 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_name = product.product_name;
         cartItem.amount = 0;
         cartItem.checked = true;
-        cartItem.product_avatar = product.avatar_name;
+        cartItem.product_avatar = variant.avatar;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
         cartItem.variant_id = variant.id;

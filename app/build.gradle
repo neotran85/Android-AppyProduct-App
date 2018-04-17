@@ -142,8 +142,6 @@ dependencies {
         transitive = true;
     }
     // Loading Photo URL & Local
-    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
-    implementation "com.nineoldandroids:library:$rootProject.picassoVersion"
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
     implementation "com.muddzdev:styleabletoast:$rootProject.toastyVersion"

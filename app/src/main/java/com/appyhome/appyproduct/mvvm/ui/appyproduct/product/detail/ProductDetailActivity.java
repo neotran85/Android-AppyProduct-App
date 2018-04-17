@@ -168,7 +168,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
         loadImages(variant);
-        mBinder.scrollView.scrollBy(0, 0);
     }
 
     @Override

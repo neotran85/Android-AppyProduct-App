@@ -80,7 +80,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="4dp"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="4dp"
                             android:background="@color/very_light_gray" />
 
                         <LinearLayout
@@ -88,7 +88,6 @@
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:orientation="vertical"
-                            android:paddingBottom="10dp"
                             android:paddingStart="14dp"
                             android:paddingTop="12dp">
 
@@ -113,7 +112,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="4dp"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="4dp"
                             android:background="@color/very_light_gray" />
 
                         <LinearLayout

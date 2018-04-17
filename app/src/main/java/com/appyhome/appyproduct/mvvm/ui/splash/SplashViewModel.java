@@ -31,7 +31,6 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     public void loadAppData() {
         loadServicesCategories();
         loadServices();
-
         boolean value = getDataManager().isLocalDatabaseUpdated();
         Log.v("loadAppData", "Done = " + value);
         if (value) {
@@ -103,7 +102,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
 
     private void fetchUserData() {
         // FETCH USER DATA
-        if (isUserLoggedIn())
+        if (isOnline() && isUserLoggedIn())
             mFetchUserInfoViewModel.fetchUserData();
         else {
             getNavigator().onFetchUserInfo_Done();
