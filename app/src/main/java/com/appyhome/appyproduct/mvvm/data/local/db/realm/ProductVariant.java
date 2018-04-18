@@ -270,7 +270,10 @@ public class ProductVariant extends RealmObject {
             if (array != null && array.length > 0) {
                 for (String str : array) {
                     if (isContainsSimilarity(str, "delivery time", "days")) {
-                        return str.replace("Delivery time is ", "");
+                        String[] result = str.split("Delivery time is ");
+                        if (result != null && result.length == 2) {
+                            return result[1];
+                        } else return str;
                     }
                 }
             }

@@ -305,7 +305,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="4dp"
-                                    android:gravity="center"
+                                    android:gravity="center_vertical"
                                     android:text="Sold by:"
                                     android:textColor="@color/medium_dark_gray"
                                     android:textSize="12sp" />
@@ -315,7 +315,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="4dp"
-                                    android:gravity="center"
+                                    android:gravity="start|center_vertical"
                                     android:text="@{viewModel.sellerName}"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="14sp" />

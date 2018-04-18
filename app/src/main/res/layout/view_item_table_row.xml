@@ -38,7 +38,6 @@
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
-                    android:maxLines="2"
                     android:text="@{data.title}"
                     android:textColor="@color/medium_dark_gray"
                     android:textSize="12sp" />
@@ -55,7 +54,6 @@
 
                 <TextView
                     android:id="@+id/contentText"
-                    maxLines="@{data.line}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="4dp"
