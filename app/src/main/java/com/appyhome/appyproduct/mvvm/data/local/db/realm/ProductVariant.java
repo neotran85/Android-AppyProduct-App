@@ -1,9 +1,14 @@
 package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.text.TextUtils;
 
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -25,6 +30,11 @@ public class ProductVariant extends RealmObject {
     @SerializedName("product_id")
     @ColumnInfo(name = "product_id")
     public int product_id;
+
+    @Expose
+    @SerializedName("product_name")
+    @ColumnInfo(name = "product_name")
+    public String product_name;
 
     @Expose
     @SerializedName("variant_type")
@@ -79,7 +89,7 @@ public class ProductVariant extends RealmObject {
     @Expose
     @SerializedName("weight")
     @ColumnInfo(name = "weight")
-    public double weight;
+    public float weight;
 
     @Expose
     @SerializedName("length")
@@ -141,7 +151,130 @@ public class ProductVariant extends RealmObject {
     public String avatar;
 
     @Expose
+    @SerializedName("country_manu")
+    @ColumnInfo(name = "country_manu")
+    public String country_manu;
+
+    @Expose
+    @SerializedName("stock_location")
+    @ColumnInfo(name = "stock_location")
+    public String stock_location;
+
+    @Expose
+    @SerializedName("seller_name")
+    @ColumnInfo(name = "seller_name")
+    public String seller_name;
+
+    @Expose
+    @SerializedName("seller_id")
+    @ColumnInfo(name = "seller_id")
+    public int seller_id;
+
+    @Expose
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;
+
+    public String getManufacturer() {
+        return country_manu != null && country_manu.equals("MY")
+                ? "Local" : "Overseas";
+    }
+
+    public boolean isLocal() {
+        return stock_location != null && stock_location.equals("MY");
+    }
+
+    public String getShippingFrom() {
+        return stock_location != null && stock_location.equals("MY")
+                ? "Domestic / Local" : "International / Overseas";
+    }
+
+    public boolean isAvailable() {
+        return stock_status != null && stock_status.equals("AVB");
+    }
+
+    public String getAvailable() {
+        return isAvailable() ? "Available" : "Unavailable";
+    }
+
+    public String getSize() {
+        if (width > 0)
+            return "L" + DataUtils.roundNumber(length, 2) + " x "
+                    + "W" + DataUtils.roundNumber(width, 2) + " x " + "H" + DataUtils.roundNumber(height, 2);
+        return "";
+    }
+
+    public String getDescription() {
+        if (description != null && description.length() > 0) {
+            String text = description.replace("\n\n", "\n");
+            return text;
+        }
+        return "";
+    }
+
+    private boolean isContainsSimilarity(String text, String key1, String key2) {
+        if (text != null && key1 != null && text.length() > 0
+                && key1.length() > 0 && key2 != null && key2.length() > 0) {
+            String textStr = text.toLowerCase();
+            return textStr.contains(key1) && textStr.contains(key2);
+        }
+        return false;
+    }
+
+    public HashMap<String, String> parseDescription() {
+        if (description != null && description.length() > 0) {
+            String text = description.replace("\n\n", "\n");
+            String[] array = text.split("\n");
+            if (array != null && array.length > 0) {
+                HashMap<String, String> map = new HashMap<>();
+                for (String str : array) {
+                    if (str.contains(": ")) {
+                        String[] result = str.split(": ");
+                        if (result != null && result.length == 2) {
+                            map.put(result[0], result[1]);
+                        }
+                    }
+                }
+                return map;
+            }
+        }
+        return null;
+    }
+
+    public String getWarranty() {
+        if (description != null && description.length() > 0) {
+            String text = description.replace("\n\n", "\n");
+            String[] array = text.split("\n");
+            if (array != null && array.length > 0) {
+                ArrayList<String> result = new ArrayList<>();
+                for (String str : array) {
+                    if (isContainsSimilarity(str, "warranty", " ")) {
+                        result.add(str);
+                    }
+                }
+                if (result.size() > 0) {
+                    return TextUtils.join("\n", result);
+                }
+            }
+        }
+        return "";
+    }
+
+    public String getDeliveryEstimation() {
+        if (isLocal())
+            return "1-7 Business Days";
+        else if (description != null && description.length() > 0) {
+            // OVERSEAS
+            String text = description.replace("\n\n", "\n");
+            String[] array = text.split("\n");
+            if (array != null && array.length > 0) {
+                for (String str : array) {
+                    if (isContainsSimilarity(str, "delivery time", "days")) {
+                        return str.replace("Delivery time is ", "");
+                    }
+                }
+            }
+        }
+        return "";
+    }
 }

@@ -176,8 +176,21 @@ public class AppDbHelper implements DbHelper {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
+                Product product = null;
+                if (variants.get(0) != null) {
+                    product = getRealm().where(Product.class)
+                            .equalTo("id", variants.get(0).product_id)
+                            .findFirst();
+                }
                 for (ProductVariant variant : variants) {
-                    variant.avatar = (variant.images != null && variant.images.size() > 0) ? variant.images.get(0).URL : "";
+                    variant.avatar = (variant.images != null && variant.images.get(0) != null) ? variant.images.get(0).URL : "";
+                    if (product != null) {
+                        variant.product_name = product.product_name;
+                        variant.seller_name = product.seller_name;
+                        variant.seller_id = product.seller_id;
+                        variant.stock_location = product.stock_location;
+                        variant.country_manu = product.country_manu;
+                    }
                 }
                 getRealm().copyToRealmOrUpdate(variants);
                 getRealm().commitTransaction();

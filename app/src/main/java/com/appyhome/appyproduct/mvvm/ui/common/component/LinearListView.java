@@ -22,6 +22,10 @@ public abstract class LinearListView<T> extends LinearLayout {
         notifyAdapter();
     }
 
+    public int getItemCount() {
+        return mListItem != null ? mListItem.size() : 0;
+    }
+
     public void notifyAdapter() {
         if (mListItem != null && mListItem.size() > 0) {
             for (int i = 0; i < mListItem.size(); i++) {

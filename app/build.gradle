@@ -146,7 +146,6 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
     implementation "com.muddzdev:styleabletoast:$rootProject.toastyVersion"
     implementation "com.ss.bannerslider:bannerslider:$rootProject.bannerSliderVersion"
-
     // Multidex
     implementation "com.android.support:multidex:$rootProject.multidexVersion"
 }

@@ -47,9 +47,10 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp">
+                            android:layout_height="320dp"
+                            android:orientation="vertical">
+
                             <com.appyhome.appyproduct.mvvm.ui.common.component.AppySliderPhotos
                                 android:id="@+id/sliderPhotos"
                                 android:layout_width="match_parent"
@@ -156,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="14dp"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal" />
 
                         <LinearLayout
@@ -236,6 +237,46 @@
                             android:layout_height="1dp"
                             android:layout_marginEnd="18dp"
                             android:layout_marginStart="18dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@color/gray" />
+
+                        <com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.table.TableLayout
+                            android:id="@+id/tableDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginStart="18dp"
+                            android:orientation="vertical" />
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="14dp"
+                            android:text="WARRANTY"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15sp" />
+
+                        <com.appyhome.appyproduct.mvvm.ui.common.component.ReadMoreTextView
+                            android:id="@+id/tvWarranty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/medium_dark_gray"
+                            android:textSize="13sp"
+                            app:trimCollapsedText="@string/read_more"
+                            app:trimExpandedText="@string/read_less"
+                            app:trimLines="4" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginEnd="18dp"
+                            android:layout_marginStart="18dp"
                             android:layout_marginTop="18dp"
                             android:background="@color/gray" />
 
@@ -270,6 +311,7 @@
                                     android:textSize="12sp" />
 
                                 <TextView
+                                    fontPath="fonts/TitilliumWeb-SemiBold.ttf"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="4dp"
@@ -377,7 +419,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="18dp"
+                        android:layout_marginStart="14dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 

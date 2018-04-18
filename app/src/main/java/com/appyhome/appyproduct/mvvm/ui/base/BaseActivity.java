@@ -29,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity implements BaseFragment.Callback {
 
-    protected final static int REQUEST_LOGIN = -1000;
+    protected final static int REQUEST_LOGIN = -1;
 
     private T mViewDataBinding;
     private V mViewModel;

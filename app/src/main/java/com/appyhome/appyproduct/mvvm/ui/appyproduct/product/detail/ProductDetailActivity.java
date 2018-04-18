@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -23,6 +25,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVarian
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.table.TabletItem;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
@@ -30,8 +33,11 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -120,6 +126,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             mBinder.rvRecommendSet.setAdapter(mRelatedProductAdapter);
             mBinder.rvProductSet.setAdapter(mRelatedProductAdapter);
         }
+        Spanned spanned = Html.fromHtml(getString(R.string.warranty_text));
+        mBinder.tvWarranty.setText(spanned, true);
     }
 
     @Override
@@ -168,7 +176,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
         loadImages(variant);
+        mBinder.tableDescription.loadData(variant);
     }
+
 
     @Override
     public void gotoCart() {
@@ -347,7 +357,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void onEditVariantSelected(ProductVariant variant) {
-        if(mProductVariantFragment != null) {
+        if (mProductVariantFragment != null) {
             mProductVariantFragment.selectVariant(variant.model_id);
         }
     }

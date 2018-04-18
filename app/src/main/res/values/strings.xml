@@ -10,4 +10,6 @@
     <string name="request_safety_code">Safety Code:</string>
     <string name="cart_check_out">Check out</string>
     <string name="unable_to_add_than">Sorry, unable to add more than</string>
+    <string name="read_more">Read more</string>
+    <string name="read_less">Show less</string>
 </resources>

@@ -171,6 +171,10 @@ public final class BindingUtils {
         view.setText(formatter.format(amount));
     }
 
+    @BindingAdapter("maxLines")
+    public static void setMaxLines(TextView textView, int maxLines) {
+        textView.setMaxLines(maxLines);
+    }
     @BindingAdapter("textVisible")
     public static void setVisibility(View view, String text) {
         view.setVisibility(text != null && text.length() > 0 ? View.VISIBLE : View.GONE);
