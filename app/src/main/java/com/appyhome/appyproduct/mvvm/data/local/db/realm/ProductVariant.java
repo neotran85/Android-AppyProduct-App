@@ -228,10 +228,10 @@ public class ProductVariant extends RealmObject {
             if (array != null && array.length > 0) {
                 HashMap<String, String> map = new HashMap<>();
                 for (String str : array) {
-                    if (str.contains(": ")) {
-                        String[] result = str.split(": ");
+                    if (str.contains(":")) {
+                        String[] result = str.split(":");
                         if (result != null && result.length == 2) {
-                            map.put(result[0], result[1]);
+                            map.put(result[0].trim(), result[1].trim());
                         }
                     }
                 }
@@ -274,6 +274,21 @@ public class ProductVariant extends RealmObject {
                         if (result != null && result.length == 2) {
                             return result[1];
                         } else return str;
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public String getPriceNote() {
+        if (!isLocal() && description != null && description.length() > 0) {
+            String text = description.replace("\n\n", "\n");
+            String[] array = text.split("\n");
+            if (array != null && array.length > 0) {
+                for (String str : array) {
+                    if (isContainsSimilarity(str, "from overseas", "inclusive of")) {
+                        return str;
                     }
                 }
             }

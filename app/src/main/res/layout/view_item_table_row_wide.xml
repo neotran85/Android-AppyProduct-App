@@ -24,7 +24,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="130dp"
+                android:layout_width="@dimen/table_title_col_width"
                 android:paddingTop="10dp"
                 android:paddingBottom="6dp"
                 android:layout_height="wrap_content"

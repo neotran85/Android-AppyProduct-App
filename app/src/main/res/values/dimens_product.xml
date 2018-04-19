@@ -24,5 +24,6 @@
     <dimen name="variant_height_with_padding">126dp</dimen>
     <dimen name="variant_width_with_padding">96dp</dimen>
     <dimen name="item_sub_size">120dp</dimen>
+    <dimen name="table_title_col_width">130dp</dimen>
     <string name="select_variants">Select variants:</string>
 </resources>

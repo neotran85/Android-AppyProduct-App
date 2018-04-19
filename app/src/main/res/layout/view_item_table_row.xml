@@ -25,10 +25,10 @@
 
             <LinearLayout
                 android:layout_width="130dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
 
                 <TextView
                     android:id="@+id/titleText"
@@ -38,6 +38,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
+                    android:maxLines="2"
                     android:text="@{data.title}"
                     android:textColor="@color/medium_dark_gray"
                     android:textSize="12sp" />
@@ -47,10 +48,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
                 android:background="#fcfcfc"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp">
 
                 <TextView
                     android:id="@+id/contentText"
