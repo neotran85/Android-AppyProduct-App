@@ -111,7 +111,6 @@
     "id": 125,
     "id_category": 79,
     "description": "",
-    "thumbnail": "images/product/sub/125.png",
     "name": "SOFA BEDS"
   },
   {
@@ -610,7 +609,7 @@
     "id": 236,
     "id_category": 104,
     "description": "",
-    "name": "TOOTHPASTE/SOAP DISPENSERS"
+    "name": "TOOTHPASTE / SOAP DISPENSERS"
   },
   {
     "id": 234,
@@ -916,31 +915,31 @@
     "id": 239,
     "id_category": 322,
     "description": "",
-    "name": "FOOD PROCESSOR/BLENDER/JUICER"
+    "name": "FOOD PROCESSOR / BLENDER / JUICER"
   },
   {
     "id": 237,
     "id_category": 322,
     "description": "",
-    "name": "AIR FRYERS/OVENS/MICROWAVES"
+    "name": "AIR FRYERS / OVENS / MICROWAVES"
   },
   {
     "id": 235,
     "id_category": 322,
     "description": "",
-    "name": "TOASTER/BREADMAKER"
+    "name": "TOASTER / BREADMAKER"
   },
   {
     "id": 233,
     "id_category": 322,
     "description": "",
-    "name": "RICE COOKER/STEAMERS/SLOW COOKER"
+    "name": "RICE COOKER / STEAMERS / SLOW COOKER"
   },
   {
     "id": 221,
     "id_category": 322,
     "description": "",
-    "name": "HOTPLATE/ELECTRIC GRIDDLES"
+    "name": "HOTPLATE / ELECTRIC GRIDDLES"
   },
   {
     "id": 219,
@@ -970,7 +969,7 @@
     "id": 225,
     "id_category": 323,
     "description": "",
-    "name": "COOKTOPS/BUILT-IN-OVENS"
+    "name": "COOKTOPS / BUILT-IN-OVENS"
   },
   {
     "id": 223,
@@ -988,7 +987,7 @@
     "id": 184,
     "id_category": 323,
     "description": "",
-    "name": "WASHING  MACHINES/DRYERS"
+    "name": "WASHING  MACHINES / DRYERS"
   },
   {
     "id": 190,
@@ -1048,7 +1047,7 @@
     "id": 299,
     "id_category": 119,
     "description": "",
-    "name": "AIR PURIFIER/HUMIDIFIER/DEHUMIDIFIER"
+    "name": "AIR PURIFIER / HUMIDIFIER / DEHUMIDIFIER"
   },
   {
     "id": 382,
@@ -1234,7 +1233,7 @@
     "id": 349,
     "id_category": 330,
     "description": "",
-    "name": "VINYL/SKIRTING"
+    "name": "VINYL / SKIRTING"
   },
   {
     "id": 350,
@@ -1300,7 +1299,7 @@
     "id": 358,
     "id_category": 331,
     "description": "",
-    "name": "LADDERS/STEP STOOLS"
+    "name": "LADDERS / STEP STOOLS"
   },
   {
     "id": 359,
