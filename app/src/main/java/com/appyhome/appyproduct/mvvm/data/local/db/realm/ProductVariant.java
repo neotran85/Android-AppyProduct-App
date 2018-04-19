@@ -231,7 +231,10 @@ public class ProductVariant extends RealmObject {
                     if (str.contains(":")) {
                         String[] result = str.split(":");
                         if (result != null && result.length == 2) {
-                            map.put(result[0].trim(), result[1].trim());
+                            String title = DataUtils.getStringNotNull(result[0].trim());
+                            String content = DataUtils.getStringNotNull(result[1].trim());
+                            if (title.length() > 0 && content.length() > 0)
+                                map.put(result[0].trim(), result[1].trim());
                         }
                     }
                 }
