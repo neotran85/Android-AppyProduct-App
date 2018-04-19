@@ -56,6 +56,17 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
+    public void closeLoading() {
+        super.closeLoading();
+        getViewModel().isAbleToSelectCategories.set(true);
+    }
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        getViewModel().isAbleToSelectCategories.set(false);
+    }
+
+    @Override
     public void clearFragment() {
         closeFragment(FilterFragment.TAG);
         closeFragment(SortFragment.TAG);

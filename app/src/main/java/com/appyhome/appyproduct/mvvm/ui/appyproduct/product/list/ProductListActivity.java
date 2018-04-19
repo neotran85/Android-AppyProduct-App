@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
@@ -67,9 +69,20 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
-        getViewModel().isAbleToSelectCategories.set(getKeywordString() == null || getKeywordString().length() == 0);
+        checkIfSelectCategoriesEnabled();
         createCategoriesSelection();
         fetchProductsNew();
+    }
+
+    private void checkIfSelectCategoriesEnabled() {
+        if (getKeywordString().length() > 0) {
+            // NO IMAGE BUTTON TO SELECT CATEGORIES
+            ViewParent parent = mBinder.btnSelectCategories.getParent();
+            if (parent instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup) parent;
+                viewGroup.removeView(mBinder.btnSelectCategories);
+            }
+        }
     }
 
     private int calculateSubColumns() {
