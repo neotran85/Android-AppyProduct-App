@@ -20,4 +20,10 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
     void onFavoriteClick(ProductItemViewModel viewModel);
 
     void back();
+
+    void goToDetailSection();
+
+    void goToOverviewSection();
+
+    void goToReviewSection();
 }

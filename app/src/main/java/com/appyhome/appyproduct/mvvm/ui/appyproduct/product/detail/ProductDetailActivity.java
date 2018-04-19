@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
@@ -25,7 +26,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVarian
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.table.TabletItem;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
@@ -33,11 +33,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
-import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -80,6 +77,15 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     private boolean isBuyNow = false;
 
+    private int POSITION_START = 0;
+    private int POSITION_DETAIL = 0;
+    private View mCurrentTab = null;
+
+    private Runnable mTabRunnable = null;
+    private Handler mHandler = null;
+
+    private int mHeightTopBar = 0;
+
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
         ProductDetailActivityModule.relatedProductAdapter = adapter;
@@ -107,6 +113,17 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         setUp();
     }
 
+    private void setUpPositionTabsForScroll() {
+        if (POSITION_START == 0) {
+            POSITION_START = getResources().getDimensionPixelSize(R.dimen.detail_gallery_height);
+        }
+        if (POSITION_DETAIL == 0) {
+            Point childOffset = new Point();
+            ViewUtils.getDeepChildOffset(mBinder.scrollView, mBinder.tableDescription.getParent(), mBinder.tableDescription, childOffset);
+            POSITION_DETAIL = childOffset.y - mHeightTopBar;
+        }
+    }
+
     private void setUp() {
         mPreviousNavigator = mViewModel.getNavigator();
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, false, false, getKeywordString());
@@ -128,16 +145,40 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         }
         Spanned spanned = Html.fromHtml(getString(R.string.warranty_text));
         mBinder.tvWarranty.setText(spanned, true);
+        mHeightTopBar = getResources().getDimensionPixelSize(R.dimen.title_bar_height)
+                + getResources().getDimensionPixelSize(R.dimen.detail_tab_height);
+    }
+
+    private void selectTab(View tab) {
+        if (tab != mCurrentTab) {
+            if (mCurrentTab != null) {
+                View view = mCurrentTab.findViewWithTag("highlight");
+                if (view != null) {
+                    view.setVisibility(View.GONE);
+                }
+            }
+            mCurrentTab = tab;
+            View view = mCurrentTab.findViewWithTag("highlight");
+            if (view != null) {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
     public void onScrollChanged() {
         int scrollY = mBinder.scrollView.getScrollY();
-        if (scrollY >= 200) {
-            float value = ((float) scrollY - 200) / 400;
+        if (scrollY >= POSITION_START) {
+            float value = ((float) scrollY - POSITION_START) / 200;
             getViewModel().alphaTitle.set(value);
         } else {
             getViewModel().alphaTitle.set(0.0f);
+        }
+        if (scrollY <= POSITION_DETAIL) {
+            selectTab(mBinder.tabOverview);
+        }
+        if (scrollY >= POSITION_DETAIL) {
+            selectTab(mBinder.tabDetails);
         }
     }
 
@@ -177,6 +218,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getViewModel().stockCount.set(mTotalStock + "");
         loadImages(variant);
         mBinder.tableDescription.loadData(variant);
+        setUpPositionTabsForScroll();
     }
 
 
@@ -294,6 +336,39 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Override
     public void back() {
         finish();
+    }
+
+    @Override
+    public void goToDetailSection() {
+        if (getViewModel().alphaTitle.get() > 0.8f) {
+            mTabRunnable = () -> {
+                if (mHandler != null) mHandler.removeCallbacks(mTabRunnable);
+                ViewUtils.scrollToView(mBinder.scrollView, mBinder.tableDescription, mHeightTopBar);
+                mTabRunnable = null;
+                mHandler = null;
+            };
+            mHandler = new Handler();
+            mHandler.postDelayed(mTabRunnable, 300);
+        }
+    }
+
+    @Override
+    public void goToOverviewSection() {
+        if (getViewModel().alphaTitle.get() > 0.8f) {
+            mTabRunnable = () -> {
+                if (mHandler != null) mHandler.removeCallbacks(mTabRunnable);
+                mBinder.scrollView.smoothScrollTo(0, 0);
+                mTabRunnable = null;
+                mHandler = null;
+            };
+            mHandler = new Handler();
+            mHandler.postDelayed(mTabRunnable, 300);
+        }
+    }
+
+    @Override
+    public void goToReviewSection() {
+
     }
 
     @Override

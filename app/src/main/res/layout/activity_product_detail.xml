@@ -54,7 +54,7 @@
                             <com.appyhome.appyproduct.mvvm.ui.common.component.AppySliderPhotos
                                 android:id="@+id/sliderPhotos"
                                 android:layout_width="match_parent"
-                                android:layout_height="320dp"
+                                android:layout_height="@dimen/detail_gallery_height"
                                 app:slider_animateIndicators="true"
                                 app:slider_indicatorSize="6dp"
                                 app:slider_loopSlides="false"
@@ -493,14 +493,21 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="15sp" />
 
-                <ImageView
-                    android:id="@+id/ivBack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@mipmap/icon_circle_back"
-                    android:onClick="@{(view) -> navigator.back()}" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/title_bar_height"
+                    android:gravity="center_vertical"
+                    android:onClick="@{(view) -> navigator.back()}"
+                    android:orientation="horizontal"
+                    android:paddingEnd="14dp">
+
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="14dp"
+                        android:background="@mipmap/icon_circle_back" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/toolbar"
@@ -518,28 +525,87 @@
                     android:background="@color/white"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TabLayout
+                    <LinearLayout
+                        android:id="@+id/tabLayout"
                         style="@style/ProductDetailTabLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:tabPaddingEnd="-1dp"
-                        app:tabPaddingStart="-1dp">
+                        android:layout_height="@dimen/detail_tab_height"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tab_overview" />
+                        <RelativeLayout
+                            android:id="@+id/tabOverview"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{(view) -> navigator.goToOverviewSection()}">
 
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tab_details" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Overview"
+                                android:textColor="@color/medium_dark_gray"
+                                android:textSize="15sp" />
 
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tab_review" />
-                    </android.support.design.widget.TabLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@color/colorAccent"
+                                android:tag="highlight"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/tabDetails"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{(view) -> navigator.goToDetailSection()}">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Details"
+                                android:textColor="@color/medium_dark_gray"
+                                android:textSize="15sp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@color/colorAccent"
+                                android:tag="highlight"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/tabReview"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{(view) -> navigator.goToReviewSection()}">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Review"
+                                android:textColor="@color/medium_dark_gray"
+                                android:textSize="15sp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@color/colorAccent"
+                                android:tag="highlight"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
