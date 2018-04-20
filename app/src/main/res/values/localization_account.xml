@@ -69,4 +69,7 @@
     <string name="phone_activated">Your phone number is activated. You are logged in now. Thank you.</string>
     <string name="hint_your_email_address">Your email address</string>
     <string name="log_out">LOG OUT</string>
+    <string name="i_would_like_to_receive_exclusive_offers_and_promotions_by_email">I would like to receive exclusive offers and promotions by email</string>
+    <string name="register_first_name">First name</string>
+    <string name="i_have_read_and_understood_appyhomeplus_s">I have read and understood Appyhomeplus\'s</string>
 </resources>

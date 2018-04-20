@@ -161,8 +161,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
     }
 
     private void clearTextInputError(TextInputEditText edt) {
-        edt.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.white));
-        edt.setHintTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.hint_text));
+        edt.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.medium_dark_gray));
+        edt.setHintTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.dark_gray));
         showError("");
     }
 

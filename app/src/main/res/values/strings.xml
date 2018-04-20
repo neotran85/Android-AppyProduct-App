@@ -12,4 +12,5 @@
     <string name="unable_to_add_than">Sorry, unable to add more than</string>
     <string name="read_more">Read more</string>
     <string name="read_less">Show less</string>
+    <string name="register_last_name">Last name</string>
 </resources>

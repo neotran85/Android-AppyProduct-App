@@ -147,8 +147,8 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     }
 
     private void clearTextInputError(TextInputEditText edt) {
-        edt.setTextColor(ContextCompat.getColor(this, R.color.white));
-        edt.setHintTextColor(ContextCompat.getColor(this, R.color.hint_text));
+        edt.setTextColor(ContextCompat.getColor(this, R.color.medium_dark_gray));
+        edt.setHintTextColor(ContextCompat.getColor(this, R.color.dark_gray));
         showError("");
     }
 

@@ -37,7 +37,7 @@
         <activity
             android:name=".ui.account.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".ui.appyservice.servicerequest.edit.RequestEditActivity"
             android:screenOrientation="portrait"
@@ -68,7 +68,7 @@
         <activity
             android:name=".ui.account.register.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity
             android:name=".ui.appyservice.servicerequest.detail.RequestDetailActivity"
@@ -91,6 +91,7 @@
 
         <activity
             android:name=".ui.account.register.verify.VerifyActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait" />
 
         <activity
