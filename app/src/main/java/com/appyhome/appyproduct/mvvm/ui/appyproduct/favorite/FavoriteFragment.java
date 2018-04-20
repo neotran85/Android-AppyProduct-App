@@ -21,6 +21,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.crashlytics.android.Crashlytics;
 
 import javax.inject.Inject;
 
@@ -72,6 +73,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
+        showAlert(isFavorite ? getString(R.string.added_wishlist) : getString(R.string.removed_wishlist));
         mFavoriteAdapter.removedFavorite(position, isFavorite);
         int count = mFavoriteAdapter.getFavoriteCount();
         getViewModel().updateFavoriteCount(count);
@@ -84,7 +86,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.getAllFavorites();
+        getViewModel().fetchUserData();
     }
 
     @Override
@@ -177,6 +179,17 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void showAlert(String message) {
+        AlertManager.getInstance(getActivity()).showLongToast(message, R.style.AppyToast_Favorite);
+    }
 
+    @Override
+    public void onFetchUserInfo_Done() {
+        // GET ALL FAVORITE AGAIN.
+        getViewModel().getAllFavorites();
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+        Crashlytics.log("onFetchUserInfo_Failed");
     }
 }

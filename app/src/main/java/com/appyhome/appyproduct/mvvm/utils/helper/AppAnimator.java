@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.graphics.Point;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
 
 public class AppAnimator {
     public static void animateMoving(int duration, View view, int sizeInPixels, Point start, Point end, AnimatorListenerAdapter listenerAdapter) {
@@ -22,6 +23,18 @@ public class AppAnimator {
         animatorSet.playTogether(posX, posY, scaleX, scaleY);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.addListener(listenerAdapter);
+        animatorSet.start();
+    }
+
+    public static void doBounceAnimation(View targetView) {
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(targetView, "translationY", 0, 25, 0);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(targetView, "scaleX", 0.3f, 0.8f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(targetView, "scaleY", 0.3f, 0.8f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(translationY, scaleX, scaleY);
+        animatorSet.setInterpolator(new AppyBounceInterpolator(10f, 10f));
+        animatorSet.setStartDelay(500);
+        animatorSet.setDuration(2000);
         animatorSet.start();
     }
 
@@ -57,5 +70,20 @@ public class AppAnimator {
         animatorSet.playTogether(alpha, posY);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.start();
+    }
+
+    private static class AppyBounceInterpolator implements Interpolator {
+        double mAmplitude = 1;
+        double mFrequency = 10;
+
+        public AppyBounceInterpolator(double amplitude, double frequency) {
+            mAmplitude = amplitude;
+            mFrequency = frequency;
+        }
+
+        public float getInterpolation(float time) {
+            double amplitude = mAmplitude;
+            return (float) (-1 * Math.pow(Math.E, -time / mAmplitude) * Math.cos(mFrequency * time) + 1);
+        }
     }
 }

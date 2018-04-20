@@ -4,24 +4,35 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
-
-import java.util.ArrayList;
-
-import io.realm.RealmResults;
 
 public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> totalCount = new ObservableField<>("");
     public ObservableField<Boolean> isFavoriteEmpty = new ObservableField<>(true);
 
+    private FetchUserInfoViewModel mFetchUserInfoViewModel;
+
     public FavoriteViewModel(DataManager dataManager,
                              SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        mFetchUserInfoViewModel = new FetchUserInfoViewModel(dataManager, schedulerProvider);
+    }
+
+    public void setNavigator(FavoriteNavigator navigator) {
+        super.setNavigator(navigator);
+        mFetchUserInfoViewModel.setNavigator(navigator);
+    }
+
+    public void fetchUserData() {
+        if (isOnline() && isUserLoggedIn())
+            mFetchUserInfoViewModel.fetchUserData();
+        else {
+            getNavigator().onFetchUserInfo_Done();
+        }
     }
 
     public void updateFavoriteCount(int count) {

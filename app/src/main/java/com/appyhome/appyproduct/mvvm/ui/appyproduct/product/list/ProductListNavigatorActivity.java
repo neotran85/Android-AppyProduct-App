@@ -23,6 +23,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortNaviga
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortOption;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
@@ -82,6 +83,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     public void closeLoading() {
         super.closeLoading();
         getViewModel().isAbleToSelectCategories.set(true);
+        AppAnimator.doBounceAnimation(getViewDataBinding().btnSelectCategories);
     }
 
     @Override
