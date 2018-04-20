@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
@@ -95,7 +96,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
         if (items != null && items.size() > 0) {
             allItemViewModel = new CategoryItemViewModel();
             allItemViewModel.title.set("ALL PRODUCTS");
-            allItemViewModel.imageURL.set("images/product/sub/all_sub.png");
+            allItemViewModel.imageURL.set(AppConstants.RESOURCE_URL.PRODUCT_CATEGORY_ALL_SUB_URL);
             allItemViewModel.setIdCategory(0);
             allItemViewModel.setNavigator(navigator);
             allItemViewModel.isSub = true;

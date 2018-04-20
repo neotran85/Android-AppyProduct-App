@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 import android.databinding.ObservableField;
 import android.util.Log;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -36,6 +37,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isVariantSelected = new ObservableField<>(false);
     public ObservableField<String> stockCount = new ObservableField<>("0");
     public ObservableField<String> sellerName = new ObservableField<>("");
+    public ObservableField<String> promotionBannerURL = new ObservableField<>(AppConstants.RESOURCE_URL.PRODUCT_DETAIL_PROMOTION_URL);
     public ObservableField<Float> alphaTitle = new ObservableField<>(0.0f);
 
     private int productId;

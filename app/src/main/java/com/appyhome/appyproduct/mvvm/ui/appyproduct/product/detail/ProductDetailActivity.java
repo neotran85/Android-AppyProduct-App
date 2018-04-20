@@ -147,6 +147,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mBinder.tvWarranty.setText(spanned, true);
         mHeightTopBar = getResources().getDimensionPixelSize(R.dimen.title_bar_height)
                 + getResources().getDimensionPixelSize(R.dimen.detail_tab_height);
+        ViewUtils.loadImageAssetAsResource(this, mBinder.promotionBanners, getViewModel().promotionBannerURL.get());
     }
 
     private void selectTab(View tab) {

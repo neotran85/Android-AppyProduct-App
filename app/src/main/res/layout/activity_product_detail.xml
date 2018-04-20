@@ -398,9 +398,20 @@
                                 android:layout_marginTop="6dp" />
                         </LinearLayout>
 
+                        <ImageView
+                            android:id="@+id/promotionBanners"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="14dp"/>
+
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="60dp" />
+                            android:layout_height="60dp"/>
+
                     </LinearLayout>
                 </ScrollView>
 
