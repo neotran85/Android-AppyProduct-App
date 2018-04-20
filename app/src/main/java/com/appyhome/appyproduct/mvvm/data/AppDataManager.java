@@ -559,8 +559,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> isFavorite(int productId, String userId) {
-        return mDbHelper.isFavorite(productId, userId);
+    public Flowable<Boolean> isProductFavorite(String userId, int productId, int variantId) {
+        return mDbHelper.isProductFavorite(userId, productId, variantId);
     }
 
     @Override
@@ -656,11 +656,6 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic) {
         return mDbHelper.getProductCategoryIdsByTopic(idTopic);
-    }
-
-    @Override
-    public Flowable<Boolean> isProductFavorite(String userId, int idProduct) {
-        return mDbHelper.isProductFavorite(userId, idProduct);
     }
 
     @Override

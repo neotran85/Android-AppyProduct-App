@@ -267,18 +267,6 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> isProductFavorite(String userId, int idProduct) {
-        return Flowable.fromCallable(() -> {
-            ProductFavorite favorite = getRealm().where(ProductFavorite.class)
-                    .equalTo("user_id", userId)
-                    .equalTo("product_id", idProduct)
-                    .findFirst();
-            return (favorite != null && favorite.isValid());
-        });
-    }
-
-
-    @Override
     public Flowable<ProductCached> getProductCachedById(int idProduct) {
         beginTransaction();
         ProductCached product = getRealm().where(ProductCached.class)
@@ -895,20 +883,23 @@ public class AppDbHelper implements DbHelper {
             try {
                 Boolean value = false;
                 beginTransaction();
+
                 ProductCached product = getRealm().where(ProductCached.class)
                         .equalTo("id", productId)
+                        .findFirst();
+
+                ProductVariant variant = getRealm().where(ProductVariant.class)
+                        .equalTo("id", variantId)
+                        .equalTo("product_id", productId)
                         .findFirst();
 
                 ProductFavorite favorite = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
                         .equalTo("product_id", productId)
-                        .findFirst();
+                        .equalTo("variant_id", variantId).findFirst();
 
                 if (favorite == null || !favorite.isValid()) {
-                    favorite = new ProductFavorite(product);
-                    favorite.variant_id = variantId;
-                    favorite.id = System.currentTimeMillis();
-                    favorite.user_id = userId;
+                    favorite = new ProductFavorite(userId, product, variant);
                     getRealm().copyToRealmOrUpdate(favorite);
                     value = true;
                 } else {
@@ -932,14 +923,17 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> isFavorite(int productId, String userId) {
+    public Flowable<Boolean> isProductFavorite(String userId, int productId, int variantId) {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
-                ProductFavorite favorite = getRealm().where(ProductFavorite.class)
+                RealmQuery<ProductFavorite> query = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
-                        .equalTo("product_id", productId)
-                        .findFirst();
+                        .equalTo("product_id", productId);
+                if(variantId > -1) {
+                    query = query.equalTo("variant_id", variantId);
+                }
+                ProductFavorite favorite =        query.findFirst();
                 boolean isFavorite = (favorite != null && favorite.isValid());
                 getRealm().commitTransaction();
                 return isFavorite;

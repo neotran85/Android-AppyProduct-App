@@ -213,6 +213,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     public void selectedVariant(ProductVariant variant) {
         mSelectedVariant = variant;
         getViewModel().setVariantId(variant.id);
+        getViewModel().updateIfVariantFavorite();
         getViewModel().price.set("RM " + variant.price);
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
@@ -322,6 +323,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Override
     public void onStop() {
         super.onStop();
+        getViewModel().updateIfProductFavorite();
     }
 
     @Override

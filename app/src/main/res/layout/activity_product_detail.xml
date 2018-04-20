@@ -435,7 +435,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            isDetailFavorite="@{viewModel.isFavorite}"
+                            isDetailFavorite="@{viewModel.isVariantFavorite}"
                             android:layout_width="36dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/detail_icon_unfavorite"

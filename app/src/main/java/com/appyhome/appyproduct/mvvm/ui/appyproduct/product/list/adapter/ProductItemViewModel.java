@@ -16,9 +16,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import io.realm.RealmResults;
 
 public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
@@ -30,7 +27,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> rateCount = new ObservableField<>("");
     public ObservableField<String> favoriteCount = new ObservableField<>("");
     public ObservableField<String> discount = new ObservableField<>("");
-    public ObservableField<Boolean> isFavorite = new ObservableField<>(false);
+    public ObservableField<Boolean> isProductFavorite = new ObservableField<>(false);
+    public ObservableField<Boolean> isVariantFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isEditVariantShowed = new ObservableField<>(false);
     public ObservableField<Boolean> isSmall = new ObservableField<>(false);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
@@ -42,7 +40,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     private int productId;
 
-    private int variantId = 1;
+    private int variantId = -1;
 
     private RealmResults<ProductVariant> mVariants;
 
@@ -65,7 +63,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
                     updateUserWishList(getProductId(), getVariantId(), value);
-                    isFavorite.set(value);
+                    isVariantFavorite.set(value);
                     int count = Integer.valueOf(favoriteCount.get());
                     count = value ? count + 1 : count - 1;
                     favoriteCount.set(count + "");
@@ -87,7 +85,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void inputValue(Product product, boolean isAllFavorited) {
         inputValue(product);
-        isFavorite.set(isAllFavorited);
+        isProductFavorite.set(isAllFavorited);
     }
 
     private void inputValue(Product product) {
@@ -103,23 +101,31 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         favoriteCount.set(product.favorite_count + "");
     }
 
-    private void checkIfFavorite(String userId, int productId) {
-        getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId)
+    public void updateIfProductFavorite() {
+        checkIfFavorite(getUserId(), getProductId(), -1);
+    }
+    public void updateIfVariantFavorite() {
+        checkIfFavorite(getUserId(), getProductId(), getVariantId());
+    }
+
+    private void checkIfFavorite(String userId, int productId, int variantId) {
+        getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId, variantId)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(isLiked -> {
-                    isFavorite.set(isLiked);
+                    if(variantId == -1) isProductFavorite.set(isLiked);
+                    else isVariantFavorite.set(isLiked);
                 }, Crashlytics::logException));
     }
 
     public void getProductCachedById() {
-        getCompositeDisposable().add(getDataManager().getProductCachedById(productId)
+        getCompositeDisposable().add(getDataManager().getProductCachedById(getProductId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCached -> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct());
-                        checkIfFavorite(getUserId(), productId);
+                        checkIfFavorite(getUserId(), getProductId(), getVariantId());
                     }
                 }, Crashlytics::logException));
     }

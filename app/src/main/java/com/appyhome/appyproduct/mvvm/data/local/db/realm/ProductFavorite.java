@@ -80,17 +80,28 @@ public class ProductFavorite extends RealmObject {
     @ColumnInfo(name = "more_info")
     public String more_info;
 
-    public ProductFavorite() {}
+    public ProductFavorite() {
+    }
 
-    public ProductFavorite(ProductCached product) {
-        product_id = product.id;
-        variant_price = product.lowest_price;
-        product_avatar = product.avatar_name;
-        product_name = product.product_name;
-        more_info = product.more_info;
-        favorite_count = product.favorite_count;
-        rating = product.rate;
-        rating_count = product.rate_count;
+    public ProductFavorite(String userId, ProductCached product, ProductVariant variant) {
+        id = System.currentTimeMillis();
+        user_id = userId;
+        if (product != null) {
+            product_id = product.id;
+            product_name = product.product_name;
+            more_info = product.more_info;
+            favorite_count = product.favorite_count;
+            rating = product.rate;
+            rating_count = product.rate_count;
+        }
+        if (variant != null) {
+            variant_id = variant.id;
+            product_avatar = variant.avatar;
+            variant_price = variant.price;
+            variant_name = variant.variant_name;
+            variant_model_id = variant.model_id;
+            variant_stock_left = variant.quantity;
+        }
     }
 
     public Product toProduct() {

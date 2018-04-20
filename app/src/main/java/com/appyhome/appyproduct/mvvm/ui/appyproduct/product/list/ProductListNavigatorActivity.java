@@ -231,9 +231,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
-        if (!askForLogin(getString(R.string.ask_login_to_add_wishlist))) {
-            vm.updateProductFavorite(getProductAdapter().indexOf(vm));
-        }
+        // DO NOTHING, ONLY DO WHEN IT'S ON THE WISH LIST
     }
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
