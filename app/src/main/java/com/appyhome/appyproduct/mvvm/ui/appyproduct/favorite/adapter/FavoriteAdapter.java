@@ -44,7 +44,10 @@ public class FavoriteAdapter extends ProductAdapter {
         mViewModelEmpty = createEmptyViewModel(navigator);
         if (results != null) {
             for (ProductFavorite item : results) {
-                mItems.add(createViewModel(item.toProduct(), navigator, true));
+                ProductItemViewModel  itemViewModel = createViewModel(item.toProduct(), navigator, true);
+                itemViewModel.variantName.set(item.variant_name);
+                itemViewModel.setVariantId(item.variant_id);
+                mItems.add(itemViewModel);
             }
         }
     }
