@@ -15,8 +15,6 @@ import com.appyhome.appyproduct.mvvm.databinding.ViewItemTableRowWideBinding;
 import com.appyhome.appyproduct.mvvm.ui.common.component.LinearListView;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,13 +22,15 @@ import javax.annotation.Nullable;
 
 public class TableLayout extends LinearListView<TabletItem> {
 
+    private int col1Width = 0;
+
     public TableLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        col1Width = getContext().getResources().getDimensionPixelSize(R.dimen.table_title_col_width);
     }
 
     public boolean isEnterNewLine(TextView textView, String text) {
         if (textView != null) {
-            int col1Width = getContext().getResources().getDimensionPixelSize(R.dimen.table_title_col_width);
             Rect bounds = new Rect();
             Paint textPaint = textView.getPaint();
             textPaint.getTextBounds(text, 0, text.length(), bounds);
@@ -45,8 +45,8 @@ public class TableLayout extends LinearListView<TabletItem> {
             TabletItem data = getItem(position);
             ViewItemTableRowBinding binding = ViewItemTableRowBinding.inflate(LayoutInflater.from(getContext()), this, false);
             binding.setData(data);
-            if(data.title.length() > data.content.length()) {
-                if(isEnterNewLine(binding.titleText, data.title)) {
+            if (data.title.length() > data.content.length()) {
+                if (isEnterNewLine(binding.titleText, data.title)) {
                     binding.titleText.setLines(2);
                     binding.contentText.setLines(2);
                 }
@@ -65,7 +65,8 @@ public class TableLayout extends LinearListView<TabletItem> {
         ArrayList<TabletItem> tableAdapter = new ArrayList<>();
         tableAdapter.add(new TabletItem("Name", variant.product_name));
         tableAdapter.add(new TabletItem("Variant Name", variant.variant_name));
-        tableAdapter.add(new TabletItem("Price", "RM " + variant.price + ". " + variant.getPriceNote()));
+        String priceNote = variant.getPriceNote();
+        tableAdapter.add(new TabletItem("Price", "RM " + variant.price + (priceNote.length() > 0 ? ("\n" + priceNote) : "")));
         HashMap<String, String> parseDes = variant.parseDescription();
         if (parseDes != null) {
             for (String key : parseDes.keySet()) {

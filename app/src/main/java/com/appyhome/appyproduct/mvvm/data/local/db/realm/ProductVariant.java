@@ -285,13 +285,23 @@ public class ProductVariant extends RealmObject {
     }
 
     public String getPriceNote() {
-        if (!isLocal() && description != null && description.length() > 0) {
+        if (description != null && description.length() > 0) {
             String text = description.replace("\n\n", "\n");
             String[] array = text.split("\n");
             if (array != null && array.length > 0) {
-                for (String str : array) {
-                    if (isContainsSimilarity(str, "from overseas", "inclusive of")) {
-                        return str;
+                if (isLocal()) {
+                    ArrayList<String> result = new ArrayList<>();
+                    for (String str : array) {
+                        if (isContainsSimilarity(str, "price", " ")) {
+                            result.add(str);
+                        }
+                    }
+                    return result.size() > 0 ? TextUtils.join("\n", result) : "";
+                } else {
+                    for (String str : array) {
+                        if (isContainsSimilarity(str, "from overseas", "inclusive of")) {
+                            return str;
+                        }
                     }
                 }
             }
