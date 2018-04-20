@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -29,7 +30,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     public static final String TAG = "FavoriteFragment";
 
+    protected static boolean SMALL_ITEM_MODE = false;
+
     public static final int DEFAULT_SPAN_COUNT = 2;
+
+    public static int SPAN_COUNT = 0;
 
     @Inject
     FavoriteViewModel mViewModel;
@@ -41,6 +46,22 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     int mLayoutId;
 
     FragmentFavoriteBinding mBinder;
+
+    private void calculateSubColumns() {
+        if (SPAN_COUNT == 0) {
+            int widthScreen = AppConstants.SCREEN_WIDTH;
+            int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
+            int space = widthScreen - 2 * padding;
+            int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
+            int value = Math.round(space / widthItem);
+            if (value < DEFAULT_SPAN_COUNT) {
+                widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
+                SPAN_COUNT = Math.round(space / widthItem);
+                SMALL_ITEM_MODE = true;
+            }
+            SPAN_COUNT = value > DEFAULT_SPAN_COUNT ? value : DEFAULT_SPAN_COUNT;
+        }
+    }
 
     public static FavoriteFragment newInstance() {
         Bundle args = new Bundle();
@@ -73,12 +94,14 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     private void setUp() {
+        calculateSubColumns();
         mViewModel.setNavigator(this);
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
         mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
-        mViewModel.getAllFavorites();
+        getViewModel().getAllFavorites();
+        mFavoriteAdapter.setUseSmallLayoutItem(SMALL_ITEM_MODE);
     }
 
     @Override
@@ -103,7 +126,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     private void setUpRecyclerViewGrid(RecyclerView rv) {
         rv.setLayoutManager(new GridLayoutManager(this.getActivity(),
-                DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
     }

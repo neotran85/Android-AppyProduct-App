@@ -25,9 +25,9 @@
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/clRootView"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:clipChildren="false">
 
             <LinearLayout
@@ -47,14 +47,14 @@
                         android:id="@+id/toolbar"
                         style="@style/Toolbar"
                         android:layout_marginStart="-14dp"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
                     <LinearLayout
-                        android:baselineAligned="false"
                         android:id="@+id/tabLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_tab_top_bar"
                         android:background="@color/white"
+                        android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:paddingEnd="14dp"
                         android:paddingStart="14dp">
@@ -149,43 +149,43 @@
                     android:background="@color/white">
 
                     <android.support.v7.widget.RecyclerView
-                        android:layout_marginStart="@dimen/padding_product_in_list"
-                        android:layout_marginEnd="@dimen/padding_product_in_list"
                         android:id="@+id/productsRecyclerView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
                         android:clipToPadding="false"
                         android:paddingTop="4dp" />
 
                     <ImageButton
                         android:id="@+id/btnSelectCategories"
-                        android:onClick="@{(view) -> navigator.openCategoriesSelection()}"
-                        android:visibility="@{viewModel.isAbleToSelectCategories, default=gone}"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
-                        android:background="@drawable/button_cat_selection"
-                        android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:layout_width="54dp"
-                        android:layout_height="54dp" />
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/button_cat_selection"
+                        android:onClick="@{(view) -> navigator.openCategoriesSelection()}"
+                        android:visibility="@{viewModel.isAbleToSelectCategories, default=gone}" />
 
                     <LinearLayout
-                        android:clickable="true"
                         android:id="@+id/llSortFilterContainer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:clickable="true"
                         android:orientation="vertical"
                         android:visibility="gone" />
 
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
+
         <LinearLayout
-            android:visibility="@{viewModel.isCategoriesSelectionShowed, default=gone}"
-            android:orientation="vertical"
             android:id="@+id/llCategoriesSelection"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isCategoriesSelectionShowed, default=gone}" />
     </RelativeLayout>
 
 </layout>

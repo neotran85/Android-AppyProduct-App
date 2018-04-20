@@ -59,13 +59,11 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mColumns = calculateSubColumns();
-        mColumns = mColumns > 1 ? mColumns : DEFAULT_SPAN_COUNT;
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        getProductAdapter().setUseSmallLayoutItem(mIsUsingSmallItem);
+        getProductAdapter().setUseSmallLayoutItem(SMALL_ITEM_MODE);
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
@@ -83,20 +81,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
                 viewGroup.removeView(mBinder.btnSelectCategories);
             }
         }
-    }
-
-    private int calculateSubColumns() {
-        int widthScreen = AppConstants.SCREEN_WIDTH;
-        int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
-        int space = widthScreen - 2 * padding;
-        int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
-        int value = Math.round(space / widthItem);
-        if (value < DEFAULT_SPAN_COUNT) {
-            widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
-            value = Math.round(space / widthItem);
-            mIsUsingSmallItem = true;
-        }
-        return value;
     }
 
     @Override

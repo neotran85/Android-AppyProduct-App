@@ -1,16 +1,17 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
@@ -31,9 +32,11 @@ import io.realm.OrderedRealmCollection;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 
+    protected static boolean SMALL_ITEM_MODE = false;
+
     public static final int DEFAULT_SPAN_COUNT = 2;
 
-    protected boolean mIsUsingSmallItem = false;
+    public static int SPAN_COUNT = 0;
 
     abstract ProductAdapter getProductAdapter();
 
@@ -47,7 +50,27 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     abstract ArrayList<Integer> getFavoriteIds();
 
-    protected int mColumns = 0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        calculateSubColumns();
+    }
+
+    private void calculateSubColumns() {
+        if (SPAN_COUNT == 0) {
+            int widthScreen = AppConstants.SCREEN_WIDTH;
+            int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
+            int space = widthScreen - 2 * padding;
+            int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
+            int value = Math.round(space / widthItem);
+            if (value < DEFAULT_SPAN_COUNT) {
+                widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
+                SPAN_COUNT = Math.round(space / widthItem);
+                SMALL_ITEM_MODE = true;
+            }
+            SPAN_COUNT = value > DEFAULT_SPAN_COUNT ? value : DEFAULT_SPAN_COUNT;
+        }
+    }
 
     @Override
     public void applyFilter() {
@@ -60,6 +83,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
         super.closeLoading();
         getViewModel().isAbleToSelectCategories.set(true);
     }
+
     @Override
     public void showLoading() {
         super.showLoading();
@@ -210,7 +234,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
         GridLayoutManager layoutManager = new GridLayoutManager(this,
-                mColumns, GridLayoutManager.VERTICAL,
+                SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false);
         rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -233,6 +257,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     public void onFavoriteClick(ProductItemViewModel vm) {
         // DO NOTHING, ONLY DO WHEN IT'S ON THE WISH LIST
     }
+
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel, getProductAdapter());

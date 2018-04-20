@@ -7,6 +7,7 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
         if (items != null && items.size() > 0) {
             allItemViewModel = new CategoryItemViewModel();
             allItemViewModel.title.set("ALL PRODUCTS");
-            allItemViewModel.imageURL.set(AppConstants.RESOURCE_URL.PRODUCT_CATEGORY_ALL_SUB_URL);
+            allItemViewModel.imageURL.set(AppyProductConstants.RESOURCE_URL.PRODUCT_CATEGORY_ALL_SUB_URL);
             allItemViewModel.setIdCategory(0);
             allItemViewModel.setNavigator(navigator);
             allItemViewModel.isSub = true;

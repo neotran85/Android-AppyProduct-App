@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 import android.databinding.ObservableField;
 import android.util.Log;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -12,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -36,7 +36,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isVariantSelected = new ObservableField<>(false);
     public ObservableField<String> stockCount = new ObservableField<>("0");
     public ObservableField<String> sellerName = new ObservableField<>("");
-    public ObservableField<String> promotionBannerURL = new ObservableField<>(AppConstants.RESOURCE_URL.PRODUCT_DETAIL_PROMOTION_URL);
+    public ObservableField<String> promotionBannerURL = new ObservableField<>(AppyProductConstants.RESOURCE_URL.PRODUCT_DETAIL_PROMOTION_URL);
     public ObservableField<Float> alphaTitle = new ObservableField<>(0.0f);
 
     private int productId;
@@ -105,6 +105,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public void updateIfProductFavorite() {
         checkIfFavorite(getUserId(), getProductId(), -1);
     }
+
     public void updateIfVariantFavorite() {
         checkIfFavorite(getUserId(), getProductId(), getVariantId());
     }
@@ -114,7 +115,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(isLiked -> {
-                    if(variantId == -1) isProductFavorite.set(isLiked);
+                    if (variantId == -1) isProductFavorite.set(isLiked);
                     else isVariantFavorite.set(isLiked);
                 }, Crashlytics::logException));
     }
