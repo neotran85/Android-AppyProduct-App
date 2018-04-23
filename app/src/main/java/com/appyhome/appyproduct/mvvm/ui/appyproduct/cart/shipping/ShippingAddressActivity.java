@@ -24,17 +24,14 @@ import io.realm.RealmResults;
 public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator, AddressItemNavigator {
 
     @Inject
-    ShippingAddressViewModel mViewModel;
+    protected ShippingAddressViewModel mViewModel;
 
     @Inject
-    AddressAdapter mAdapter;
+    protected AddressAdapter mAdapter;
 
-    ActivityProductShippingBinding mBinder;
+    protected ActivityProductShippingBinding mBinder;
 
-    boolean isEditMode = false;
-
-    @Inject
-    int mLayoutId;
+    protected boolean isEditMode = false;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ShippingAddressActivity.class);
@@ -48,7 +45,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public int getLayoutId() {
-        return mLayoutId;
+        return R.layout.activity_product_shipping;
     }
 
     @Override

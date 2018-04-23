@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
@@ -39,7 +40,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<String> promotionBannerURL = new ObservableField<>(AppyProductConstants.RESOURCE_URL.PRODUCT_DETAIL_PROMOTION_URL);
     public ObservableField<Float> alphaTitle = new ObservableField<>(0.0f);
-    public ObservableField<Float> shippingFee = new ObservableField<>(0.0f);
+    public ObservableField<String> shippingFee = new ObservableField<>("");
+    public ObservableField<String> shippingLocation = new ObservableField<>("");
 
     private int productId;
 
@@ -178,16 +180,46 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         this.variantId = id;
     }
 
-    public void getShippingFree(ProductVariant variant) {
-        String custMode = variant.isLocal() ? "AIR" : "SEA";
-        String cusPostCode = "55904";
-        getCompositeDisposable().add(getDataManager().getShippingFee(new GetShippingRequest(variant.product_id, custMode, cusPostCode, variant.weight))
+
+    /***************** SHIPPING FREE *****************/
+
+
+    public void getDefaultShippingAddress(ProductVariant variant) {
+        if (isUserLoggedIn())
+            getCompositeDisposable().add(getDataManager().getDefaultShippingAddress(getUserId())
+                    .take(1)
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(addressResult -> {
+                        getShippingFee(addressResult, variant);
+                    }, Crashlytics::logException));
+        else {
+            getShippingFee(null, variant);
+        }
+    }
+
+    private void getShippingFee(Address addressResult, ProductVariant variant) {
+        String customMode = variant.isLocal() ? "AIR" : "SEA";
+        String locationName = "Kuala Lumpur";
+        String postCode = "55904";
+        shippingFee.set("");
+        if (addressResult != null) {
+            locationName = addressResult.avatar;
+            if (addressResult.post_code.length() > 0) {
+                postCode = addressResult.post_code;
+            } else {
+                shippingLocation.set(locationName);
+                shippingFee.set("Unknown");
+                return;
+            }
+        }
+        shippingLocation.set(locationName);
+        getCompositeDisposable().add(getDataManager().getShippingFee(new GetShippingRequest(variant.product_id, customMode, postCode, variant.weight))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
                     if (data != null && data.isValid()) {
-                        shippingFee.set(data.price);
-                    }
+                        shippingFee.set("RM " + data.price);
+                    } else shippingFee.set("Unknown");
                 }, Crashlytics::logException));
     }
 }

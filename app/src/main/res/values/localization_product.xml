@@ -40,5 +40,6 @@
     <string name="pls_login_add_to_cart">Please login to add product to your cart.</string>
     <string name="warranty_text"><![CDATA[<p><strong>Your Warranty Disclaimer</strong> could include information about the physical products you sell on your online e-commerce shop and another section with information about the digital products you might sell on that same online shop:</p><p>1. Example of a warranty period of any physical products your customers purchased can be 180 days since the day of purchase.</p><p>2. The warranty will cover any products that proved defective because of improper material or if the customer received the product broken.</p><p>But you can also include what type of conditions you can&rsquo;t cover under Warranty:</p><p>1. Damage resulting from improper maintenance to protect you from customers that may abuse the warranty coverage you have for the products you sell.</p><p>2. Damage resulting from natural disasters.</p><p>3. Theft of a product.</p><p>4. Loss of a product.</p><p>5. And so on.</p>]]></string>
     <string name="return_notice">Need to return the items to seller\'s address by using post office or other shipping service</string>
+    <string name="please_select_your_location_for_shipping_fee_estimation">Please select your location to estimate shipping cost.</string>
 
 </resources>

@@ -41,6 +41,16 @@ public class Address extends RealmObject {
     public String customer_id;
 
     @Expose
+    @SerializedName("avatar")
+    @ColumnInfo(name = "avatar")
+    public String avatar;
+
+    @Expose
+    @SerializedName("post_code")
+    @ColumnInfo(name = "post_code")
+    public String post_code;
+
+    @Expose
     @SerializedName("is_default")
     @ColumnInfo(name = "is_default")
     public boolean is_default;

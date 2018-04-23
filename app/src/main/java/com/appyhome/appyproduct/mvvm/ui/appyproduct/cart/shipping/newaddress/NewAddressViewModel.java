@@ -41,11 +41,21 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     }
 
     public void saveShippingAddress() {
-        String postCodeStr = (postCode.get().length() > 0) ? ", (Post Code: " + postCode.get() + ")" : "";
-        String addressStr = DataUtils.joinStrings(", ",
-                unit.get(), street.get(), area1.get(), area2.get(), city.get(), postCodeStr);
-        getCompositeDisposable().add(getDataManager().addShippingAddress(getUserId(), placeId,
-                name.get(), getPhoneNumber(), addressStr, longitude, latitude, checked.get())
+        com.appyhome.appyproduct.mvvm.data.local.db.realm.Address address = new com.appyhome.appyproduct.mvvm.data.local.db.realm.Address();
+        address.id = System.currentTimeMillis();
+        address.customer_name = name.get();
+        address.phone_number = getPhoneNumber();
+        address.post_code = (postCode.get().length() > 0) ? ", (Post Code: " + postCode.get() + ")" : "";
+        address.address = DataUtils.joinStrings(", ",
+                unit.get(), street.get(), area1.get(), area2.get(), city.get(), address.post_code);
+        address.customer_id = getUserId();
+        address.is_default = checked.get();
+        address.place_id = placeId;
+        address.longitude = longitude;
+        address.latitude = latitude;
+        address.avatar = city.get();
+
+        getCompositeDisposable().add(getDataManager().addShippingAddress(address)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {

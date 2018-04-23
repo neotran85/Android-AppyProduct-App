@@ -27,4 +27,6 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
 
     void goToReviewSection();
 
+    void selectShippingLocation();
+
 }

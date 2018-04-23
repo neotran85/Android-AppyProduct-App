@@ -26,6 +26,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVarian
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
@@ -78,13 +79,18 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private boolean isBuyNow = false;
 
     private int POSITION_START = 0;
+
     private int POSITION_DETAIL = 0;
+
     private View mCurrentTab = null;
 
     private Runnable mTabRunnable = null;
+
     private Handler mHandler = null;
 
     private int mHeightTopBar = 0;
+
+    private final int REQUEST_SELECT_LOCATION = 10;
 
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
@@ -218,7 +224,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
-        getViewModel().getShippingFree(variant);
+        getViewModel().getDefaultShippingAddress(variant);
         loadImages(variant);
         mBinder.tableDescription.loadData(variant);
         setUpPositionTabsForScroll();
@@ -448,6 +454,22 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getViewModel().isEditVariantShowed.set(false);
         mEditVariantFragment = null;
         mProductCartItemViewModel = null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SELECT_LOCATION && resultCode == RESULT_OK) {
+            getViewModel().getDefaultShippingAddress(mSelectedVariant);
+        }
+    }
+
+    @Override
+    public void selectShippingLocation() {
+        if (getViewModel().isUserLoggedIn()) {
+            Intent intent = ChooseShippingAddressActivity.getStartIntent(this);
+            startActivityForResult(intent, REQUEST_SELECT_LOCATION);
+        }
     }
 
     @Override

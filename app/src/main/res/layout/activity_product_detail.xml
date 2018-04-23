@@ -155,16 +155,15 @@
                             android:id="@+id/llProductVariant"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="14dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="14dp"
                             android:orientation="horizontal" />
 
                         <LinearLayout
+                            android:onClick="@{(view) -> navigator.selectShippingLocation()}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="18dp"
-                            android:layout_marginStart="24dp"
+                            android:layout_marginStart="18dp"
                             android:gravity="center_vertical"
                             android:orientation="vertical">
 
@@ -175,31 +174,30 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
                                     android:src="@mipmap/icon_car_shipping" />
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="10dp"
-                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:gravity="center_vertical"
                                     android:text="Shipping to : "
                                     android:textColor="@color/dark_gray"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                                 <TextView
-                                    fontPath="fonts/TitilliumWeb-SemiBold.ttf"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:gravity="center"
-                                    android:text="Kuala Lumpur, Selangor"
+                                    android:gravity="center_vertical"
+                                    android:text="@{viewModel.shippingLocation}"
                                     android:textColor="@color/medium_dark_gray"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                                 <ImageView
-                                    android:layout_width="14dp"
+                                    android:layout_width="13dp"
                                     android:layout_height="7dp"
                                     android:layout_marginStart="8dp"
                                     android:layout_marginTop="1dp"
@@ -213,22 +211,23 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="2dp"
-                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:gravity="center_vertical"
                                     android:text="Shipping fee : "
                                     android:textColor="@color/dark_gray"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                                 <TextView
-                                    price="@{viewModel.shippingFee}"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:gravity="center"
+                                    android:gravity="center_vertical"
+                                    android:text="@{viewModel.shippingFee}"
                                     android:textColor="@color/medium_dark_gray"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -237,7 +236,7 @@
                             android:layout_height="1dp"
                             android:layout_marginEnd="18dp"
                             android:layout_marginStart="18dp"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="18dp"
                             android:background="@color/gray" />
 
                         <com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.table.TableLayout

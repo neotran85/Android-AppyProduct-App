@@ -18,6 +18,10 @@
         <item name="color">@color/white</item>
     </style>
 
+    <style name="ActivityDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="Toolbar" parent="Base.Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
@@ -87,6 +91,7 @@
         <item name="android:textColor">@color/dark_gray</item>
         <item name="textAllCaps">true</item>
     </style>
+
     <style name="AppyToast">
         <item name="textColor">@color/white</item>
         <item name="textSize">13sp</item>
@@ -97,18 +102,23 @@
         <item name="strokeWidth">1dp</item>
         <item name="strokeColor">@color/white</item>
     </style>
+
     <style name="AppyToast_ErrorConnection" parent="AppyToast">
         <item name="iconStart">@drawable/ic_signal_wifi_off_white_24dp</item>
     </style>
+
     <style name="AppyToast_Account" parent="AppyToast">
         <item name="iconStart">@drawable/ic_person_white_24dp</item>
     </style>
+
     <style name="AppyToast_Error" parent="AppyToast">
         <item name="iconStart">@drawable/ic_error_outline_white_24dp</item>
     </style>
+
     <style name="AppyToast_Cart" parent="AppyToast">
         <item name="iconStart">@drawable/ic_shopping_cart_white_24dp</item>
     </style>
+
     <style name="AppyToast_Favorite" parent="AppyToast">
         <item name="iconStart">@drawable/ic_favorite_white_24dp</item>
     </style>

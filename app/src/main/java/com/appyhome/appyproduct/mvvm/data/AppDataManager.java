@@ -508,8 +508,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, double longitude, double latitude, boolean isDefault) {
-        return mDbHelper.addShippingAddress(userId, placeId, name, phoneNumber, addressStr, longitude, latitude, isDefault);
+    public Flowable<Boolean> addShippingAddress(Address address) {
+        return mDbHelper.addShippingAddress(address);
     }
 
     @Override
