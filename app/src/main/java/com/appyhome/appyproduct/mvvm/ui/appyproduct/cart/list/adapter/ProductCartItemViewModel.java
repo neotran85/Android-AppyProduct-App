@@ -140,7 +140,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public void update(ProductCart productCart, ProductCartItemNavigator navigator) {
         title.set(productCart.product_name);
-        imageURL.set(productCart.product_avatar);
+        imageURL.set(productCart.product_image);
         setProductCartId(productCart.id);
         setProductId(productCart.product_id);
         sellerName.set(productCart.seller_name);

@@ -39,7 +39,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
     private CartItemViewModel createViewModel(ProductCart productCart) {
         CartItemViewModel itemViewModel = new CartItemViewModel();
         itemViewModel.title.set(productCart.product_name);
-        itemViewModel.imageURL.set(productCart.product_avatar);
+        itemViewModel.imageURL.set(productCart.product_image);
         itemViewModel.setProductCartId(productCart.id);
         itemViewModel.setProductId(productCart.product_id);
         itemViewModel.sellerName.set(productCart.seller_name);

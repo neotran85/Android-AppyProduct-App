@@ -61,7 +61,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
     }
 
     private void updateAllProductCarts(ArrayList<ProductCartResponse> arrayList) {
-        getCompositeDisposable().add(getDataManager().updateAllProductCarts(getUserId(), arrayList)
+        getCompositeDisposable().add(getDataManager().syncAllProductCarts(getUserId(), arrayList)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {

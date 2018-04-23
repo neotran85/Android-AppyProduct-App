@@ -116,7 +116,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic);
 
-    Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
+    Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
 
     Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
 

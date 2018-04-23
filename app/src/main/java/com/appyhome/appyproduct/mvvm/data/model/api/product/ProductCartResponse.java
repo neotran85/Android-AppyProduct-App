@@ -29,8 +29,8 @@ public class ProductCartResponse {
     public String product_name;
 
     @Expose
-    @SerializedName("product_avatar")
-    public String product_avatar;
+    @SerializedName("product_image")
+    public String product_image;
 
     @Expose
     @SerializedName("variant_id")

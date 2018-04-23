@@ -400,7 +400,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
+    public Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
         return Flowable.fromCallable(() -> {
             beginTransaction();
             RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
@@ -417,7 +417,7 @@ public class AppDbHelper implements DbHelper {
                     if (cartItem == null) {
                         cartItem = new ProductCart();
                         cartItem.id = newId;
-                        cartItem.product_avatar = response.product_avatar;
+                        cartItem.product_image = response.product_image;
                         cartItem.checked = true;
                     }
                     cartItem = inputProductCart(userId, cartItem, response);
@@ -431,7 +431,7 @@ public class AppDbHelper implements DbHelper {
                     ProductCart cartItem = new ProductCart();
                     cartItem.id = newId;
                     cartItem.checked = true;
-                    cartItem.product_avatar = response.product_avatar;
+                    cartItem.product_image = response.product_image;
                     cartItem = inputProductCart(userId, cartItem, response);
                     arrayList.add(cartItem);
                 }
@@ -636,7 +636,7 @@ public class AppDbHelper implements DbHelper {
                     productCart.variant_model_id = variant.model_id;
                     productCart.variant_stock = variant.quantity;
                     productCart.price = variant.price;
-                    productCart.product_avatar = variant.avatar;
+                    productCart.product_image = variant.avatar;
                 }
             }
             RealmResults<ProductCart> productCarts = getRealm().where(ProductCart.class)
@@ -674,7 +674,7 @@ public class AppDbHelper implements DbHelper {
         cartItem.product_name = product.product_name;
         cartItem.amount = 0;
         cartItem.checked = true;
-        cartItem.product_avatar = variant.avatar;
+        cartItem.product_image = variant.avatar;
         cartItem.user_id = userId;
         cartItem.order_id = 0;
         cartItem.variant_id = variant.id;

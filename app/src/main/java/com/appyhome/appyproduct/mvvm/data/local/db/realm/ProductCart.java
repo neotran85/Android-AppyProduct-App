@@ -41,9 +41,9 @@ public class ProductCart extends RealmObject {
     public String product_name;
 
     @Expose
-    @SerializedName("product_avatar")
-    @ColumnInfo(name = "product_avatar")
-    public String product_avatar;
+    @SerializedName("product_image")
+    @ColumnInfo(name = "product_image")
+    public String product_image;
 
     @Expose
     @SerializedName("price")

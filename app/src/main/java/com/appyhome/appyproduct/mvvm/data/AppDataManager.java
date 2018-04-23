@@ -674,8 +674,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> updateAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
-        return mDbHelper.updateAllProductCarts(userId, array);
+    public Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
+        return mDbHelper.syncAllProductCarts(userId, array);
     }
 
     @Override
