@@ -28,8 +28,8 @@ public class AppAnimator {
 
     public static void doBounceAnimation(View targetView) {
         ObjectAnimator translationY = ObjectAnimator.ofFloat(targetView, "translationY", 0, 25, 0);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(targetView, "scaleX", 0.3f, 0.8f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(targetView, "scaleY", 0.3f, 0.8f);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(targetView, "scaleX", 0.3f, 0.7f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(targetView, "scaleY", 0.3f, 0.7f);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(translationY, scaleX, scaleY);
         animatorSet.setInterpolator(new AppyBounceInterpolator(10f, 10f));

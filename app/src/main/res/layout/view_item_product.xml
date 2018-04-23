@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_product_in_list"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
+                app:cardElevation="3dp"
                 app:cardUseCompatPadding="false">
 
                 <LinearLayout
@@ -43,8 +43,8 @@
                         imageUrl="@{viewModel.imageURL}"
                         layout_height="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
                         layout_width="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
-                        android:layout_width="@dimen/width_thumbnail_product_in_list"
-                        android:layout_height="@dimen/width_thumbnail_product_in_list"
+                        android:layout_width="@dimen/width_thumbnail_product_in_list_small"
+                        android:layout_height="@dimen/width_thumbnail_product_in_list_small"
                         android:adjustViewBounds="true"
                         android:background="@mipmap/no_image"
                         android:scaleType="centerCrop" />
@@ -138,10 +138,10 @@
 
 
                             <RelativeLayout
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true">
 
                                 <RatingBar
                                     android:id="@+id/ratingBar"
@@ -163,8 +163,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="-10dp"
                                     android:layout_toEndOf="@id/ratingBar"
-                                    android:paddingTop="2dp"
                                     android:gravity="end"
+                                    android:paddingTop="2dp"
                                     android:text="@{viewModel.rateCount}"
                                     android:textColor="@color/gray_product_in_list"
                                     android:textSize="9sp" />

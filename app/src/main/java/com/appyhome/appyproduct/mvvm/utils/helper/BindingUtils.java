@@ -66,14 +66,14 @@ public final class BindingUtils {
     }
 
     @BindingAdapter("layout_height")
-    public static void setLayoutHeight(ImageView view, float height) {
+    public static void setLayoutHeight(View view, float height) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = Math.round(height);
         view.setLayoutParams(layoutParams);
     }
 
     @BindingAdapter("layout_width")
-    public static void setLayoutWidth(ImageView view, float width) {
+    public static void setLayoutWidth(View view, float width) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = Math.round(width);
         view.setLayoutParams(layoutParams);
@@ -175,12 +175,15 @@ public final class BindingUtils {
     public static void setMaxLines(TextView textView, int maxLines) {
         textView.setMaxLines(maxLines);
     }
+
     @BindingAdapter("textVisible")
     public static void setVisibility(View view, String text) {
         view.setVisibility(text != null && text.length() > 0 ? View.VISIBLE : View.GONE);
     }
+
     @BindingAdapter("alpha")
     public static void setVisibility(View view, float alpha) {
         view.setAlpha(alpha);
     }
+
 }

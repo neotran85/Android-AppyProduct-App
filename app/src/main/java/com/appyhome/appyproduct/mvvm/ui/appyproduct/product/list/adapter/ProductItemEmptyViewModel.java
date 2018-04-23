@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 
 import android.databinding.ObservableField;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -11,6 +12,7 @@ import com.crashlytics.android.Crashlytics;
 public class ProductItemEmptyViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
+    public ObservableField<Float> widthScreen = new ObservableField<>((float) AppConstants.SCREEN_WIDTH);
 
     public ProductItemEmptyViewModel(DataManager dataManager,
                                      SchedulerProvider schedulerProvider) {
