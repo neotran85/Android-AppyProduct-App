@@ -540,7 +540,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault) {
+    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, double longitude, double latitude, boolean isDefault) {
         try {
             beginTransaction();
             Address address = new Address();
@@ -551,6 +551,8 @@ public class AppDbHelper implements DbHelper {
             address.customer_id = userId;
             address.is_default = isDefault;
             address.place_id = placeId;
+            address.longitude = longitude;
+            address.latitude = latitude;
             if (isDefault) {
                 RealmResults<Address> addressList = getRealm().where(Address.class)
                         .equalTo("customer_id", userId)

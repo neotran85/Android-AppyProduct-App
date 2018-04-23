@@ -62,6 +62,13 @@ public class ApiUrlConfig {
     public static final String API_PRODUCT_SEARCH = BuildConfig.BASE_URL
             + "api/appyproduct/get/product/pername";
 
+    public static final String API_PRODUCT_SHIPPING_GET = BuildConfig.BASE_URL
+            + "api/appyproduct/get/shipping";
+
+    public static final String API_PRODUCT_SELLER_GET = BuildConfig.BASE_URL
+            + "api/appyproduct/get/seller";
+
+
     public static final String API_PRODUCT_VARIANT_GET = BuildConfig.BASE_URL
             + "api/appyproduct/get/variants/perproduct";
 

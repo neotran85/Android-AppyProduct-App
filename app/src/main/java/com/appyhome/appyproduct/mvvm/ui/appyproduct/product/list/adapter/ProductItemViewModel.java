@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -38,6 +39,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> sellerName = new ObservableField<>("");
     public ObservableField<String> promotionBannerURL = new ObservableField<>(AppyProductConstants.RESOURCE_URL.PRODUCT_DETAIL_PROMOTION_URL);
     public ObservableField<Float> alphaTitle = new ObservableField<>(0.0f);
+    public ObservableField<Float> shippingFee = new ObservableField<>(0.0f);
 
     private int productId;
 
@@ -174,5 +176,18 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void setVariantId(int id) {
         this.variantId = id;
+    }
+
+    public void getShippingFree(ProductVariant variant) {
+        String custMode = variant.isLocal() ? "AIR" : "SEA";
+        String cusPostCode = "55904";
+        getCompositeDisposable().add(getDataManager().getShippingFee(new GetShippingRequest(variant.product_id, custMode, cusPostCode, variant.weight))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        shippingFee.set(data.price);
+                    }
+                }, Crashlytics::logException));
     }
 }

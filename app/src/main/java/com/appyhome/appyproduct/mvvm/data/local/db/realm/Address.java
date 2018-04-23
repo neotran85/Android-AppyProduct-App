@@ -46,6 +46,16 @@ public class Address extends RealmObject {
     public boolean is_default;
 
     @Expose
+    @SerializedName("longitude")
+    @ColumnInfo(name = "longitude")
+    public double longitude;
+
+    @Expose
+    @SerializedName("latitude")
+    @ColumnInfo(name = "latitude")
+    public double latitude;
+
+    @Expose
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;

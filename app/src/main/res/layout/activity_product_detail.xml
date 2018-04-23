@@ -222,11 +222,11 @@
                                     android:textSize="12sp" />
 
                                 <TextView
+                                    price="@{viewModel.shippingFee}"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="4dp"
                                     android:gravity="center"
-                                    android:text="RM 5.30"
                                     android:textColor="@color/medium_dark_gray"
                                     android:textSize="12sp" />
                             </LinearLayout>
@@ -403,14 +403,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="18dp"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY"
                             android:layout_marginStart="18dp"
-                            android:layout_marginTop="14dp"/>
+                            android:layout_marginTop="14dp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY" />
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"/>
+                            android:layout_height="60dp" />
 
                     </LinearLayout>
                 </ScrollView>
@@ -493,16 +493,15 @@
                 <TextView
                     alpha="@{viewModel.alphaTitle}"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/title_bar_height"
                     android:layout_marginEnd="64dp"
                     android:layout_marginStart="54dp"
-                    android:layout_marginTop="16dp"
                     android:ellipsize="end"
-                    android:gravity="start"
-                    android:singleLine="true"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="2"
                     android:text="@{viewModel.title}"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="15sp" />
+                    android:textColor="@color/medium_dark_gray"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

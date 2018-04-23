@@ -26,4 +26,5 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
     void goToOverviewSection();
 
     void goToReviewSection();
+
 }

@@ -41,9 +41,8 @@
                     <ImageView
                         android:id="@+id/ivThumbnail"
                         imageUrl="@{viewModel.imageURL}"
-                        layout_height="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
                         layout_width="@{viewModel.isSmall ? @dimen/width_thumbnail_product_in_list_small :  @dimen/width_thumbnail_product_in_list}"
-                        android:layout_width="@dimen/width_thumbnail_product_in_list_small"
+                        android:layout_width="@dimen/width_thumbnail_product_in_list"
                         android:layout_height="@dimen/width_thumbnail_product_in_list_small"
                         android:adjustViewBounds="true"
                         android:background="@mipmap/no_image"

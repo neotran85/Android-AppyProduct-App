@@ -29,6 +29,10 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> postCode = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(true);
 
+    private double longitude = 0;
+
+    private double latitude = 0;
+
     private String placeId = "";
 
     public NewAddressViewModel(DataManager dataManager,
@@ -41,7 +45,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         String addressStr = DataUtils.joinStrings(", ",
                 unit.get(), street.get(), area1.get(), area2.get(), city.get(), postCodeStr);
         getCompositeDisposable().add(getDataManager().addShippingAddress(getUserId(), placeId,
-                name.get(), getPhoneNumber(), addressStr, checked.get())
+                name.get(), getPhoneNumber(), addressStr, longitude, latitude, checked.get())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
@@ -85,21 +89,43 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                 geocoder = new Geocoder(context, Locale.getDefault());
                 try {
                     placeId = place.getId();
-                    addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
-                    String stateStr = addresses.get(0).getAdminArea();
-                    String countryStr = addresses.get(0).getCountryName();
-                    String cityStr = addresses.get(0).getLocality();
-                    setValueNotNull(city, stateStr + ", " + countryStr);
-                    setValueNotNull(postCode, addresses.get(0).getPostalCode());
-                    setValueNotNull(unit, place.getName().toString());
-                    setValueNotNull(street, place.getAddress().toString());
-                    setValueNotNull(area1, cityStr);
+                    longitude = place.getLatLng().longitude;
+                    latitude = place.getLatLng().latitude;
+                    addresses = geocoder.getFromLocation(latitude, longitude, 10);
+                    if (addresses != null && addresses.size() > 0) {
+                        String stateStr = addresses.get(0).getAdminArea();
+                        String countryStr = addresses.get(0).getCountryName();
+                        String cityStr = getLocalCity(addresses);
+                        setValueNotNull(city, stateStr + ", " + countryStr);
+                        setValueNotNull(postCode, getPostCode(addresses));
+                        setValueNotNull(unit, place.getName().toString());
+                        setValueNotNull(street, place.getAddress().toString());
+                        setValueNotNull(area1, cityStr);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Crashlytics.logException(e);
                 }
             }
         }
+    }
+
+    private String getPostCode(List<Address> addresses) {
+        for (Address address : addresses) {
+            if (address.getPostalCode() != null) {
+                return address.getPostalCode();
+            }
+        }
+        return "";
+    }
+
+    private String getLocalCity(List<Address> addresses) {
+        for (Address address : addresses) {
+            if (address.getLocality() != null) {
+                return address.getLocality();
+            }
+        }
+        return "";
     }
 
 }

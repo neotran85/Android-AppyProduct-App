@@ -15,6 +15,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
@@ -334,4 +336,14 @@ public class AppApiHelper implements ApiHelper {
                 .build()
                 .getObjectSingle(ApiResponse.class);
     }
+
+    @Override
+    public Single<GetShippingResponse> getShippingFee(GetShippingRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SHIPPING_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(GetShippingResponse.class);
+    }
+
 }

@@ -181,6 +181,14 @@ public final class BindingUtils {
         view.setVisibility(text != null && text.length() > 0 ? View.VISIBLE : View.GONE);
     }
 
+    @BindingAdapter("price")
+    public static void setPrice(TextView view, float price) {
+        if (price < 0) view.setVisibility(View.GONE);
+        else {
+            view.setText("RM " + DataUtils.roundNumber(price, 2));
+        }
+    }
+
     @BindingAdapter("alpha")
     public static void setVisibility(View view, float alpha) {
         view.setAlpha(alpha);

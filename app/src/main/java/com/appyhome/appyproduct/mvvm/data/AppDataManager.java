@@ -32,6 +32,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -506,8 +508,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, boolean isDefault) {
-        return mDbHelper.addShippingAddress(userId, placeId, name, phoneNumber, addressStr, isDefault);
+    public Flowable<Boolean> addShippingAddress(String userId, String placeId, String name, String phoneNumber, String addressStr, double longitude, double latitude, boolean isDefault) {
+        return mDbHelper.addShippingAddress(userId, placeId, name, phoneNumber, addressStr, longitude, latitude, isDefault);
     }
 
     @Override
@@ -741,5 +743,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<ProductVariant> getProductVariantById(String variantModelId) {
         return mDbHelper.getProductVariantById(variantModelId);
+    }
+
+    @Override
+    public Single<GetShippingResponse> getShippingFee(GetShippingRequest request) {
+        return mApiHelper.getShippingFee(request);
     }
 }

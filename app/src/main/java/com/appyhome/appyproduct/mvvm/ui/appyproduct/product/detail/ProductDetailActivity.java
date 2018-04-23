@@ -218,6 +218,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
+        getViewModel().getShippingFree(variant);
         loadImages(variant);
         mBinder.tableDescription.loadData(variant);
         setUpPositionTabsForScroll();
