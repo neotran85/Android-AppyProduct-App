@@ -126,7 +126,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (mRelatedProductAdapter != null) {
             ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvRecommendSet, false);
             ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvProductSet, false);
-            mBinder.rvRecommendSet.setAdapter(mRelatedProductAdapter);
             mBinder.rvProductSet.setAdapter(mRelatedProductAdapter);
         }
         Spanned spanned = Html.fromHtml(getString(R.string.warranty_text));
@@ -134,6 +133,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mHeightTopBar = getResources().getDimensionPixelSize(R.dimen.title_bar_height)
                 + getResources().getDimensionPixelSize(R.dimen.detail_tab_height);
         ViewUtils.loadImageAssetAsResource(this, mBinder.promotionBanners, getViewModel().promotionBannerURL.get());
+        getViewModel().relatedAdapter.set(mRelatedProductAdapter);
     }
 
     private void selectTab(View tab) {

@@ -15,10 +15,15 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
 
 import io.realm.RealmResults;
 
@@ -46,6 +51,9 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> shippingFee = new ObservableField<>("");
     public ObservableField<String> shippingLocation = new ObservableField<>("");
     public ObservableField<String> sellerAvatar = new ObservableField<>("");
+    public ObservableField<ProductAdapter> relatedAdapter = new ObservableField<>(new ProductAdapter());
+    public ObservableField<Boolean> isRelatedProductsShowed = new ObservableField<>(true);
+
 
     private int productId;
 
@@ -235,9 +243,11 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (data != null && data.isValid()) {
                         sellerAvatar.set(data.seller.avatar);
                         addSeller(data.seller);
+                        fetchRelatedProducts(data.seller.categories);
                     }
                 }, Crashlytics::logException));
     }
+
     private void addSeller(Seller seller) {
         getCompositeDisposable().add(getDataManager().addSeller(seller)
                 .take(1)
@@ -245,5 +255,28 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .subscribe(success -> {
                     // UPDATE SELLER INFORMATION
                 }, Crashlytics::logException));
+    }
+
+    private void fetchRelatedProducts(String keywords) {
+        if (keywords != null && keywords.length() > 0) {
+            String[] keyword = keywords.split(",");
+            if (keyword != null && keyword.length > 0)
+                getCompositeDisposable().add(getDataManager().fetchProducts(new ProductListRequest("", keyword[0], 0, ""))
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(jsonResult -> {
+                            // 200 OK
+                            if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+                                Gson gson = new Gson();
+                                ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
+                                if (response.message != null && response.message.size() > 0) {
+                                    ProductAdapter adapter = new ProductAdapter();
+                                    adapter.addItems(response.message, getNavigator(), null);
+                                    relatedAdapter.set(adapter);
+                                    return;
+                                }
+                            }
+                        }, Crashlytics::logException));
+        }
     }
 }

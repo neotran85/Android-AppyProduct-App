@@ -373,6 +373,7 @@
                             android:background="@color/gray" />
 
                         <LinearLayout
+                            android:visibility="@{viewModel.isRelatedProductsShowed}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
@@ -390,6 +391,7 @@
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvRecommendSet"
+                                adapter="@{viewModel.relatedAdapter}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="6dp"
