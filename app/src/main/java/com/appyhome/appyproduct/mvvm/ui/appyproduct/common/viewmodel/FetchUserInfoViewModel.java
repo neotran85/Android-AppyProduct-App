@@ -73,7 +73,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
 
     private void fetchUserWishList() {
         mIsFetchWishListStarted = true;
-        getCompositeDisposable().add(getDataManager().getUserWishList()
+        getCompositeDisposable().add(getDataManager().fetchUserWishList()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
@@ -129,7 +129,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
 
     private void fetchUserProfile() {
         mIsFetchProfileStarted = true;
-        getCompositeDisposable().add(getDataManager().getUserProfile()
+        getCompositeDisposable().add(getDataManager().fetchUserProfile()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(userGetResponse -> {

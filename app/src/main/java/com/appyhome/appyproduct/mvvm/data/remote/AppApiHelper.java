@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -106,7 +107,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getAppointment(AppointmentGetRequest request) {
+    public Single<JSONObject> fetchAppointment(AppointmentGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
@@ -115,7 +116,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getAppointmentAll() {
+    public Single<JSONObject> fetchAppointmentAll() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
@@ -132,7 +133,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getOrder(OrderGetRequest request) {
+    public Single<JSONObject> fetchOrder(OrderGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_ORDER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
@@ -141,7 +142,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getOrderAll() {
+    public Single<JSONObject> fetchOrderAll() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_ORDER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
@@ -149,7 +150,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getReceiptAll() {
+    public Single<JSONObject> fetchReceiptAll() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_RECEIPT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
@@ -166,7 +167,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getUserProfile() {
+    public Single<JSONObject> fetchUserProfile() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_USER_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
@@ -174,7 +175,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
+    public Single<JSONObject> fetchReceipt(ReceiptGetRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_RECEIPT_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
@@ -312,7 +313,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<ApiResponse> getUserWishList() {
+    public Single<ApiResponse> fetchUserWishList() {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_WISH_LIST_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
@@ -338,12 +339,21 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<GetShippingResponse> getShippingFee(GetShippingRequest request) {
+    public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SHIPPING_GET)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .addBodyParameter(request)
                 .build()
                 .getObjectSingle(GetShippingResponse.class);
+    }
+
+    @Override
+    public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SELLER_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter("seller_id", sellerId + "")
+                .build()
+                .getObjectSingle(GetSellerResponse.class);
     }
 
 }

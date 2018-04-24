@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -52,25 +53,25 @@ public interface ApiHelper {
 
     Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 
-    Single<JSONObject> getAppointment(AppointmentGetRequest request);
+    Single<JSONObject> fetchAppointment(AppointmentGetRequest request);
 
-    Single<JSONObject> getOrder(OrderGetRequest request);
+    Single<JSONObject> fetchOrder(OrderGetRequest request);
 
-    Single<JSONObject> getReceipt(ReceiptGetRequest request);
+    Single<JSONObject> fetchReceipt(ReceiptGetRequest request);
 
-    Single<JSONObject> getOrderAll();
+    Single<JSONObject> fetchOrderAll();
 
     Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request);
 
-    Single<JSONObject> getReceiptAll();
+    Single<JSONObject> fetchReceiptAll();
 
     Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
 
-    Single<JSONObject> getAppointmentAll();
+    Single<JSONObject> fetchAppointmentAll();
 
     Single<JSONObject> editOrder(OrderEditRequest request);
 
-    Single<JSONObject> getUserProfile();
+    Single<JSONObject> fetchUserProfile();
 
     Single<JSONObject> verifyUser();
 
@@ -100,7 +101,9 @@ public interface ApiHelper {
 
     Single<ApiResponse> emptyUserWishList();
 
-    Single<ApiResponse> getUserWishList();
+    Single<ApiResponse> fetchUserWishList();
 
-    Single<GetShippingResponse> getShippingFee(GetShippingRequest request);
+    Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request);
+
+    Single<GetSellerResponse> fetchSellerInformation(int sellerId);
 }

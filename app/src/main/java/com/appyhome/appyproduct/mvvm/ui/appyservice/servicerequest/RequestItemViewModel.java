@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
 
 public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
 
@@ -53,7 +52,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     private TypeRequestData[] mArrayTypeRequest = {
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.getAppointment(new AppointmentGetRequest(id));
+                    return manager.fetchAppointment(new AppointmentGetRequest(id));
                 }
 
                 public String getDateLabel() {
@@ -62,7 +61,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             },
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.getOrder(new OrderGetRequest(id));
+                    return manager.fetchOrder(new OrderGetRequest(id));
                 }
 
                 public String getDateLabel() {
@@ -71,7 +70,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             },
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.getReceipt(new ReceiptGetRequest(id));
+                    return manager.fetchReceipt(new ReceiptGetRequest(id));
                 }
 
                 public String getDateLabel() {

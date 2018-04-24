@@ -215,7 +215,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
             }
         }
         shippingLocation.set(locationName);
-        getCompositeDisposable().add(getDataManager().getShippingFee(new GetShippingRequest(variant.product_id, customMode, postCode, variant.weight))
+        getCompositeDisposable().add(getDataManager().fetchShippingFee(new GetShippingRequest(variant.product_id, customMode, postCode, variant.weight))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {

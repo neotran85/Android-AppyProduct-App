@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
 
 public class RequestViewModel extends BaseViewModel<RequestNavigator> {
 
@@ -26,9 +25,9 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
 
     public void fetchAllData() {
         setIsLoading(true);
-        fetchDataByType(getDataManager().getAppointmentAll(), RequestType.TYPE_REQUEST);
-        fetchDataByType(getDataManager().getOrderAll(), RequestType.TYPE_ORDER);
-        fetchDataByType(getDataManager().getReceiptAll(), RequestType.TYPE_CLOSED);
+        fetchDataByType(getDataManager().fetchAppointmentAll(), RequestType.TYPE_REQUEST);
+        fetchDataByType(getDataManager().fetchOrderAll(), RequestType.TYPE_ORDER);
+        fetchDataByType(getDataManager().fetchReceiptAll(), RequestType.TYPE_CLOSED);
     }
 
     private void fetchDataByType(Single<JSONObject> object, final int type) {

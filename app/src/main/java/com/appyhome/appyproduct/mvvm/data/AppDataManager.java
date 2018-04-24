@@ -32,6 +32,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
@@ -241,13 +242,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<JSONObject> getAppointmentAll() {
-        return mApiHelper.getAppointmentAll();
+    public Single<JSONObject> fetchAppointmentAll() {
+        return mApiHelper.fetchAppointmentAll();
     }
 
     @Override
-    public Single<JSONObject> getAppointment(AppointmentGetRequest request) {
-        return mApiHelper.getAppointment(request);
+    public Single<JSONObject> fetchAppointment(AppointmentGetRequest request) {
+        return mApiHelper.fetchAppointment(request);
     }
 
     @Override
@@ -256,23 +257,23 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<JSONObject> getOrder(OrderGetRequest request) {
-        return mApiHelper.getOrder(request);
+    public Single<JSONObject> fetchOrder(OrderGetRequest request) {
+        return mApiHelper.fetchOrder(request);
     }
 
     @Override
-    public Single<JSONObject> getOrderAll() {
-        return mApiHelper.getOrderAll();
+    public Single<JSONObject> fetchOrderAll() {
+        return mApiHelper.fetchOrderAll();
     }
 
     @Override
-    public Single<JSONObject> getReceipt(ReceiptGetRequest request) {
-        return mApiHelper.getReceipt(request);
+    public Single<JSONObject> fetchReceipt(ReceiptGetRequest request) {
+        return mApiHelper.fetchReceipt(request);
     }
 
     @Override
-    public Single<JSONObject> getReceiptAll() {
-        return mApiHelper.getReceiptAll();
+    public Single<JSONObject> fetchReceiptAll() {
+        return mApiHelper.fetchReceiptAll();
     }
 
     @Override
@@ -281,8 +282,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<JSONObject> getUserProfile() {
-        return mApiHelper.getUserProfile();
+    public Single<JSONObject> fetchUserProfile() {
+        return mApiHelper.fetchUserProfile();
     }
 
     @Override
@@ -726,8 +727,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<ApiResponse> getUserWishList() {
-        return mApiHelper.getUserWishList();
+    public Single<ApiResponse> fetchUserWishList() {
+        return mApiHelper.fetchUserWishList();
     }
 
     @Override
@@ -746,7 +747,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<GetShippingResponse> getShippingFee(GetShippingRequest request) {
-        return mApiHelper.getShippingFee(request);
+    public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
+        return mApiHelper.fetchSellerInformation(sellerId);
+    }
+    @Override
+    public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
+        return mApiHelper.fetchShippingFee(request);
     }
 }
