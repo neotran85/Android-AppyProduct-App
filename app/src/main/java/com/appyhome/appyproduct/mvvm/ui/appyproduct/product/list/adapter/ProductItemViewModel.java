@@ -52,6 +52,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> shippingLocation = new ObservableField<>("");
     public ObservableField<String> sellerAvatar = new ObservableField<>("");
     public ObservableField<ProductAdapter> relatedAdapter = new ObservableField<>(new ProductAdapter());
+    public ObservableField<ProductAdapter> productsAdapter = new ObservableField<>(new ProductAdapter());
     public ObservableField<Boolean> isRelatedProductsShowed = new ObservableField<>(true);
 
 

@@ -123,17 +123,17 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             showFragment(mProductVariantFragment, ProductVariantFragment.TAG, R.id.llProductVariant, false);
         }
         mBinder.scrollView.getViewTreeObserver().addOnScrollChangedListener(this);
-        if (mRelatedProductAdapter != null) {
-            ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvRecommendSet, false);
-            ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvProductSet, false);
-            mBinder.rvProductSet.setAdapter(mRelatedProductAdapter);
-        }
+
+        ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvRecommendSet, false);
+        ViewUtils.setUpRecyclerViewListHorizontal(mBinder.rvProductSet, false);
+
         Spanned spanned = Html.fromHtml(getString(R.string.warranty_text));
         mBinder.tvWarranty.setText(spanned, true);
         mHeightTopBar = getResources().getDimensionPixelSize(R.dimen.title_bar_height)
                 + getResources().getDimensionPixelSize(R.dimen.detail_tab_height);
         ViewUtils.loadImageAssetAsResource(this, mBinder.promotionBanners, getViewModel().promotionBannerURL.get());
         getViewModel().relatedAdapter.set(mRelatedProductAdapter);
+        getViewModel().productsAdapter.set(mRelatedProductAdapter);
     }
 
     private void selectTab(View tab) {
