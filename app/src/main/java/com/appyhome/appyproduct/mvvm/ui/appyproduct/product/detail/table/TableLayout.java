@@ -87,6 +87,7 @@ public class TableLayout extends LinearListView<TabletItem> {
         tableAdapter.add(new TabletItem("After Sales Service", "Please contact seller"));
         tableAdapter.add(new TabletItem("Return / Exchange", getContext().getString(R.string.return_notice)));
         tableAdapter.add(new TabletItem("Available Date", "Since " + variant.date_available));
+        tableAdapter.add(new TabletItem("Created Date", variant.created_at));
         tableAdapter.add(new TabletItem("Updated Date", variant.updated_at));
         tableAdapter.add(new TabletItem("Description", variant.getDescription()));
         setAdapter(tableAdapter);

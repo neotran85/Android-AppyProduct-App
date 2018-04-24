@@ -19,7 +19,11 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -143,6 +147,13 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
+    private class PriceComparator implements Comparator<Product> {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return Math.round((o1.lowest_price - o2.lowest_price) * 100);
+        }
+    }
+
     private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword) {
         return (ObservableEmitter<ProductListResponse> subscriber) -> {
             getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), getCurrentSortType()))
@@ -155,6 +166,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                             ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
                             cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
                             if (response.message != null && response.message.size() > 0) {
+                                sortResults(response.message);
                                 addProductsToDatabase(response.message);
                                 return;
                             }
@@ -292,4 +304,40 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public void setIsAbleToLoadMore(boolean isAbleToLoadMore) {
         this.mIsAbleToLoadMore = isAbleToLoadMore;
     }
+
+
+    private void sortResults(RealmList<Product> result) {
+        SortOption sort = getCurrentSortOption();
+        if (sort.equals(SortOption.PRICE_HIGHEST)) {
+            Collections.sort(result, (o1, o2) -> Math.round((o2.lowest_price - o1.lowest_price) * 100));
+            return;
+        }
+        if (sort.equals(SortOption.PRICE_LOWEST)) {
+            Collections.sort(result, (o1, o2) -> Math.round((o1.lowest_price - o2.lowest_price) * 100));
+            return;
+        }
+        if (sort.equals(SortOption.RATING)) {
+            Collections.sort(result, (o1, o2) -> Math.round((o1.rate - o2.rate) * 10));
+            return;
+        }
+        if (sort.equals(SortOption.LATEST)) {
+            Collections.sort(result, (o1, o2) -> {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date o1Date = sdf.parse(o1.updated_at);
+                    Date o2Date = sdf.parse(o2.updated_at);
+                    return o2Date.compareTo(o1Date);
+                } catch (Exception e) {
+                    Crashlytics.logException(e);
+                }
+                return 0;
+            });
+            return;
+        }
+        if (sort.equals(SortOption.POPULAR)) {
+            Collections.sort(result, (o1, o2) -> o1.like - o2.like);
+            return;
+        }
+    }
+
 }
