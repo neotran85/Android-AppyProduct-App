@@ -52,15 +52,10 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         if (SPAN_COUNT == 0) {
             int widthScreen = AppConstants.SCREEN_WIDTH;
             int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
-            int space = widthScreen - 2 * padding;
-            int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 4 * padding;
-            int value = Math.round(space / widthItem);
-            if (value < DEFAULT_SPAN_COUNT) {
-                widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 4 * padding;
-                SPAN_COUNT = Math.round(space / widthItem);
-                SMALL_ITEM_MODE = true;
-            }
-            SPAN_COUNT = value > DEFAULT_SPAN_COUNT ? value : DEFAULT_SPAN_COUNT;
+            int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 2 * padding;
+            int value = widthScreen / widthItem;
+            SMALL_ITEM_MODE = (value <= DEFAULT_SPAN_COUNT);
+            SPAN_COUNT = SMALL_ITEM_MODE ? DEFAULT_SPAN_COUNT : value;
         }
     }
 

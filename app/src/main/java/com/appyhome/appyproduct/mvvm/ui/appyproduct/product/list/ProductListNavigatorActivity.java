@@ -12,6 +12,7 @@ import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
@@ -33,12 +34,6 @@ import io.realm.OrderedRealmCollection;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 
-    protected static boolean SMALL_ITEM_MODE = false;
-
-    public static final int DEFAULT_SPAN_COUNT = 2;
-
-    public static int SPAN_COUNT = 0;
-
     abstract ProductAdapter getProductAdapter();
 
     abstract SortFragment getSortFragment();
@@ -54,22 +49,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        calculateSubColumns();
-    }
-
-    private void calculateSubColumns() {
-        if (SPAN_COUNT == 0) {
-            int widthScreen = AppConstants.SCREEN_WIDTH;
-            int padding = getResources().getDimensionPixelSize(R.dimen.padding_product_in_list);
-            int widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list) + 2 * padding;
-            int value = widthScreen / widthItem;
-            if (value < DEFAULT_SPAN_COUNT) {
-                widthItem = getResources().getDimensionPixelSize(R.dimen.width_thumbnail_product_in_list_small) + 2 * padding;
-                SPAN_COUNT = widthScreen / widthItem;
-                SMALL_ITEM_MODE = true;
-            }
-            SPAN_COUNT = value > DEFAULT_SPAN_COUNT ? value : DEFAULT_SPAN_COUNT;
-        }
     }
 
     @Override
@@ -235,7 +214,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
         GridLayoutManager layoutManager = new GridLayoutManager(this,
-                SPAN_COUNT, GridLayoutManager.VERTICAL,
+                AppyProductConstants.LAYOUT_SIZE.PRODUCT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false);
         rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());

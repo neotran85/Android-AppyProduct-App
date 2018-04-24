@@ -263,5 +263,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         }
         return false;
     }
+
+    public boolean isOnline() {
+        return NetworkUtils.isNetworkConnected(this);
+    }
 }
 

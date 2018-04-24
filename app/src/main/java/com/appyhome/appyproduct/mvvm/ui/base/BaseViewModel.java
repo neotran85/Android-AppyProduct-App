@@ -8,11 +8,8 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.utils.helper.NetworkUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
-import com.crashlytics.android.Crashlytics;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -89,5 +86,12 @@ public abstract class BaseViewModel<N> extends ViewModel {
         if (activity != null)
             return NetworkUtils.isNetworkConnected(activity);
         return false;
+    }
+
+    protected String getString(int idStr) {
+        Activity activity = AppConstants.getFirstActivity();
+        if (activity != null)
+            return activity.getString(idStr);
+        return "";
     }
 }

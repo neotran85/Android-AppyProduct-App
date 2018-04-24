@@ -6,10 +6,12 @@ import android.os.Build;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
+
 public final class AppConstants {
     public static final String DB_NAME = "appy_database.realm";
-    public static final long DB_VERSION = 0;
     public static final String PREF_NAME = "appyhome_pref";
+    public static final long DB_VERSION = 0;
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
 
@@ -34,6 +36,7 @@ public final class AppConstants {
             SCREEN_WIDTH = d.getWidth();
             SCREEN_HEIGHT = d.getHeight();
         }
+        AppyProductConstants.initiate(firstActivity);
     }
 
     public static Activity getFirstActivity() {

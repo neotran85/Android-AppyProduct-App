@@ -3,6 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 import android.databinding.ObservableField;
 import android.util.Log;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -34,6 +36,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isVariantFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isEditVariantShowed = new ObservableField<>(false);
     public ObservableField<Boolean> isSmall = new ObservableField<>(false);
+    public ObservableField<Float> smallestSize = new ObservableField<>(0.0f);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
     public ObservableField<Boolean> isVariantSelected = new ObservableField<>(false);
     public ObservableField<String> stockCount = new ObservableField<>("0");
@@ -52,6 +55,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        smallestSize.set(AppyProductConstants.LAYOUT_SIZE.PRODUCT_SMALLEST_SIZE);
     }
 
     public int getProductId() {
@@ -218,8 +222,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
                     if (data != null && data.isValid()) {
-                        shippingFee.set("RM " + data.price);
-                    } else shippingFee.set("Unknown");
+                        shippingFee.set(getString(R.string.rm) + " " + data.price);
+                    } else shippingFee.set(getString(R.string.fee_unknown));
                 }, Crashlytics::logException));
     }
 }
