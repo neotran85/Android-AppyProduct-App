@@ -64,7 +64,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        getProductAdapter().setUseSmallLayoutItem(AppyProductConstants.LAYOUT_SIZE.PRODUCT_SMALL_ITEM_MODE);
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());

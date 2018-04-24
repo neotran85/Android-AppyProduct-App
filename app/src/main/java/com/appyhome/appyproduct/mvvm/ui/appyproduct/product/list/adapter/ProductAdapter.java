@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductListEmptyBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
@@ -25,12 +26,6 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
 
     public ProductAdapter() {
         this.mItems = null;
-    }
-
-    private boolean mUseSmallLayout = false;
-
-    public void setUseSmallLayoutItem(boolean value) {
-        mUseSmallLayout = value;
     }
 
     public void addItems(OrderedRealmCollection<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
@@ -81,7 +76,6 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.setNavigator(navigator);
-        itemViewModel.isSmall.set(mUseSmallLayout);
         itemViewModel.inputValue(product, isAllFavorited);
         return itemViewModel;
     }

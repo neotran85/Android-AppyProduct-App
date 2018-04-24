@@ -5,7 +5,7 @@
 
         <variable
             name="config"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants.PRODUCT_CONFIG" />
 
         <variable
             name="navigator"
@@ -45,7 +45,7 @@
                     <ImageView
                         android:id="@+id/ivThumbnail"
                         imageUrl="@{viewModel.imageURL}"
-                        layout_width="@{viewModel.isSmall ? AppyProductConstants. :  @dimen/width_thumbnail_product_in_list}"
+                        layout_width="@{config.PRODUCT_SIZE}"
                         android:layout_width="@dimen/width_thumbnail_product_in_list"
                         android:layout_height="@dimen/height_thumbnail_product_in_list"
                         android:adjustViewBounds="true"

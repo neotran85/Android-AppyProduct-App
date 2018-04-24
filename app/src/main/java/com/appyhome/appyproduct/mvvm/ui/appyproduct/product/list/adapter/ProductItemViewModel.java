@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 import android.databinding.ObservableField;
 import android.util.Log;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
@@ -55,7 +54,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-        smallestSize.set(AppyProductConstants.LAYOUT_SIZE.PRODUCT_SMALLEST_SIZE);
     }
 
     public int getProductId() {

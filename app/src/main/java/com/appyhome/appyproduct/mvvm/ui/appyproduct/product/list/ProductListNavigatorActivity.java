@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
@@ -214,7 +213,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void setUpRecyclerViewGrid(RecyclerView rv) {
         GridLayoutManager layoutManager = new GridLayoutManager(this,
-                AppyProductConstants.LAYOUT_SIZE.PRODUCT_SPAN_COUNT, GridLayoutManager.VERTICAL,
+                AppyProductConstants.PRODUCT_CONFIG.PRODUCT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false);
         rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
