@@ -14,7 +14,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.Confirmati
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.ConfirmationActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivityModule;
@@ -22,9 +21,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddres
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
@@ -33,7 +30,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.Produ
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivityModule;
@@ -125,9 +121,6 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = VerifyActivityModule.class)
     abstract VerifyActivity bindVerifyActivity();
-
-    @ContributesAndroidInjector(modules = CategoryActivityModule.class)
-    abstract CategoryActivity bindCategoryActivity();
 
     @ContributesAndroidInjector(modules = {ProductListActivityModule.class, SortFragmentProvider.class, FilterFragmentProvider.class, CategoryFragmentProvider.class})
     abstract ProductListActivity bindProductListActivity();

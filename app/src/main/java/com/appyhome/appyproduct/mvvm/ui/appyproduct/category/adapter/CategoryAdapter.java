@@ -53,10 +53,6 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
         }
     }
 
-    public int getSelectedCategoryId() {
-        return mCurrentClickedViewModel != null ? mCurrentClickedViewModel.getIdCategory() : 0;
-    }
-
     @Override
     protected int getEmptyItemLayout() {
         return R.layout.view_item_sample_empty;

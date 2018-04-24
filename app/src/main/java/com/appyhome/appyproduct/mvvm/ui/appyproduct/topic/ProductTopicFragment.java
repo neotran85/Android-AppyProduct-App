@@ -11,7 +11,6 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentProductTopicBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.adapter.TopicItemNavigator;

@@ -115,6 +115,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
                 mItems.add(itemViewModel);
             }
             allItemViewModel.setSubIds(allSubIds);
+            clickViewModel(allItemViewModel);
         }
     }
 }
