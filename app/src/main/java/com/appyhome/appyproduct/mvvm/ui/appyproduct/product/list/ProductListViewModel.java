@@ -35,24 +35,15 @@ import io.realm.RealmResults;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
-    private final int RETRY_MAX_COUNT = 5;
-
-    private final int RETRY_TIME = 5;
-
-    public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
-
-    public ObservableField<String> currentSortLabel = new ObservableField<>("Sort");
-
-    public ObservableField<String> filterNumber = new ObservableField<>("");
-
-    public ObservableField<Boolean> isFilter = new ObservableField<>(false);
-
-    public ObservableField<Boolean> isCategoriesSelectionShowed = new ObservableField<>(false);
-
-    public ObservableField<Boolean> isAbleToSelectCategories = new ObservableField<>(false);
-
     public static final int PRODUCTS_PER_PAGE = 100;
-
+    private final int RETRY_MAX_COUNT = 5;
+    private final int RETRY_TIME = 5;
+    public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
+    public ObservableField<String> currentSortLabel = new ObservableField<>("Sort");
+    public ObservableField<String> filterNumber = new ObservableField<>("");
+    public ObservableField<Boolean> isFilter = new ObservableField<>(false);
+    public ObservableField<Boolean> isCategoriesSelectionShowed = new ObservableField<>(false);
+    public ObservableField<Boolean> isAbleToSelectCategories = new ObservableField<>(false);
     private ProductListCachedResponse cachedResponse;
 
     private int mPageNumber = 1;
@@ -144,13 +135,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         if (isFirstLoaded() && !isIsAbleToLoadMore()) {
             updateCurrentFilter();
             getNavigator().showEmptyProducts();
-        }
-    }
-
-    private class PriceComparator implements Comparator<Product> {
-        @Override
-        public int compare(Product o1, Product o2) {
-            return Math.round((o1.lowest_price - o2.lowest_price) * 100);
         }
     }
 
@@ -305,7 +289,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         this.mIsAbleToLoadMore = isAbleToLoadMore;
     }
 
-
     private void sortResults(RealmList<Product> result) {
         SortOption sort = getCurrentSortOption();
         if (sort.equals(SortOption.PRICE_HIGHEST)) {
@@ -337,6 +320,13 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         if (sort.equals(SortOption.POPULAR)) {
             Collections.sort(result, (o1, o2) -> o1.like - o2.like);
             return;
+        }
+    }
+
+    private class PriceComparator implements Comparator<Product> {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return Math.round((o1.lowest_price - o2.lowest_price) * 100);
         }
     }
 

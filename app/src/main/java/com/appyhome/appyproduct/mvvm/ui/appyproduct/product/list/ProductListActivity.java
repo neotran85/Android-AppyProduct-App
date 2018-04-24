@@ -10,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
@@ -55,6 +53,11 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     private CategoryFragment mCategoryFragment = null;
 
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, ProductListActivity.class);
+        return intent;
+    }
+
     /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
@@ -93,7 +96,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     public void onStop() {
         super.onStop();
     }
-
 
     @Override
     public void onFragmentClosed() {
@@ -169,13 +171,13 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     }
 
     @Override
-    void setFavoriteIds(ArrayList<Integer> listId) {
-        mFavoritesId = listId;
+    ArrayList<Integer> getFavoriteIds() {
+        return mFavoritesId;
     }
 
     @Override
-    ArrayList<Integer> getFavoriteIds() {
-        return mFavoritesId;
+    void setFavoriteIds(ArrayList<Integer> listId) {
+        mFavoritesId = listId;
     }
 
     /************************* GET METHODS ************************/
@@ -195,11 +197,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         if (getIntent().hasExtra("keyword"))
             return getIntent().getStringExtra("keyword");
         return "";
-    }
-
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, ProductListActivity.class);
-        return intent;
     }
 
     @Override

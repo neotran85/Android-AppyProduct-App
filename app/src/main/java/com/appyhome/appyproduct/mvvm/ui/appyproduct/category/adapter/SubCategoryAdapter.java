@@ -3,7 +3,6 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.category.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategorySubBinding;
@@ -17,14 +16,12 @@ import io.realm.RealmResults;
 public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNavigator> {
 
     private CategoryItemNavigator mNavigator;
+    private ArrayList<CategoryItemViewModel> mActiveItems;
+    private CategoryItemViewModel allItemViewModel;
 
     public SubCategoryAdapter() {
         this.mItems = null;
     }
-
-    private ArrayList<CategoryItemViewModel> mActiveItems;
-
-    private CategoryItemViewModel allItemViewModel;
 
     @Override
     public void recycle() {

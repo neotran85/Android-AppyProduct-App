@@ -15,7 +15,7 @@ public class EditVariantFragmentModule {
 
     @Provides
     EditVariantViewModel provideEditVariantViewModel(DataManager dataManager,
-                                                SchedulerProvider schedulerProvider) {
+                                                     SchedulerProvider schedulerProvider) {
         return new EditVariantViewModel(dataManager, schedulerProvider);
     }
 

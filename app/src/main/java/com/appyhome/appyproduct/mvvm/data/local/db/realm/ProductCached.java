@@ -2,11 +2,8 @@ package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
 import android.arch.persistence.room.ColumnInfo;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -141,6 +138,7 @@ public class ProductCached extends RealmObject {
     private String copyString(String value) {
         return value != null ? new String(value.toCharArray()) : null;
     }
+
     public Product convertToProduct() {
         Product product = new Product();
         product.id = id;
@@ -149,7 +147,7 @@ public class ProductCached extends RealmObject {
         product.avatar_name = copyString(avatar_name);
         product.category_id = category_id;
         product.country_manu = copyString(country_manu);
-        product.created_at =  copyString(created_at);
+        product.created_at = copyString(created_at);
         product.description = copyString(description);
         product.discount = discount;
         product.enabled = enabled;

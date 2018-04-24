@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -23,6 +22,13 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
     private SchedulerProvider mSchedulerProvider;
     private AddressItemNavigator mNavigator;
 
+    public AddressAdapter(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        mSelected = null;
+        mItems = null;
+        mDataManager = dataManager;
+        mSchedulerProvider = schedulerProvider;
+    }
+
     public void selectAddress(AddressItemViewModel viewModel) {
         if (mSelected != null) {
             mSelected.checked.set(false);
@@ -30,13 +36,6 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
         viewModel.checked.set(true);
         viewModel.updateDefaultToDatabase();
         mSelected = viewModel;
-    }
-
-    public AddressAdapter(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        mSelected = null;
-        mItems = null;
-        mDataManager = dataManager;
-        mSchedulerProvider = schedulerProvider;
     }
 
     @Override
@@ -83,11 +82,13 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
 
     public class AddressItemViewHolder extends BaseViewHolder {
         private ViewItemProductShippingAddressBinding mBinding;
+
         private AddressItemViewHolder(ViewItemProductShippingAddressBinding binding, AddressItemNavigator navigator) {
             super(binding.getRoot());
             mBinding = binding;
             mBinding.setNavigator(navigator);
         }
+
         @Override
         public void onBind(int position) {
             AddressItemViewModel viewModel = (AddressItemViewModel) mItems.get(position);

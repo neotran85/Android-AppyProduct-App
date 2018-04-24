@@ -36,14 +36,14 @@ public class ChooseShippingAddressActivity extends BaseActivity<ActivityProductS
     @Inject
     protected AddressAdapter mAdapter;
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_product_shipping_choose;
-    }
-
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ChooseShippingAddressActivity.class);
         return intent;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_product_shipping_choose;
     }
 
     @Override

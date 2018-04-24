@@ -1,10 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 
 import android.databinding.ObservableField;
-import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;

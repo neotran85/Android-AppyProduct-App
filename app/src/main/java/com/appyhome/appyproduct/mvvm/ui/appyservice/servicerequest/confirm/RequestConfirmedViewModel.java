@@ -2,12 +2,9 @@ package com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
-
-import io.reactivex.functions.Consumer;
 
 public class RequestConfirmedViewModel extends RequestItemViewModel {
 

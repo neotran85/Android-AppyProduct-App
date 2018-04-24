@@ -25,6 +25,7 @@ public class PaymentManager {
     private static PaymentManager mInstance;
     private BraintreeFragment mBraintreeFragment;
     private String mAuthorization;
+
     private PaymentManager() {
 
     }

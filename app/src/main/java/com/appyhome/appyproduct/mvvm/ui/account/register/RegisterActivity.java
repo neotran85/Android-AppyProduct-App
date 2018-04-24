@@ -226,6 +226,20 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         startActivityForResult(intent, LoginActivity.REQUEST_SIGN_UP);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case LoginActivity.REQUEST_SIGN_UP:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = getIntent();
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                break;
+        }
+    }
+
     private class InputTextWatcher implements TextWatcher {
         private TextInputEditText edt;
 
@@ -246,20 +260,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
         @Override
         public void afterTextChanged(Editable s) {
 
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case LoginActivity.REQUEST_SIGN_UP:
-                if (resultCode == RESULT_OK) {
-                    Intent intent = getIntent();
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                break;
         }
     }
 

@@ -1,22 +1,14 @@
 <resources>
-    <dimen name="menu_sub_categories_width">110dp</dimen>
-    <dimen name="menu_sub_categories_height">146dp</dimen>
-    <dimen name="size_category_image">48dp</dimen>
     <dimen name="size_sub_image">100dp</dimen>
-    <dimen name="size_cat_image">140dp</dimen>
     <dimen name="width_topic_image">67dp</dimen>
     <dimen name="height_topic_image">74dp</dimen>
-    <dimen name="padding_left_product_in_list">18dp</dimen>
     <dimen name="width_thumbnail_product_in_list">192dp</dimen>
     <dimen name="height_thumbnail_product_in_list">156dp</dimen>
     <dimen name="padding_product_in_list">4dp</dimen>
     <dimen name="height_tab_top_bar">48dp</dimen>
-    <dimen name="height_title_category_bar">48dp</dimen>
     <dimen name="size_box_animation">80dp</dimen>
     <dimen name="height_sort_option_item">40dp</dimen>
     <dimen name="sub_padding">6dp</dimen>
-    <dimen name="tag_padding">4dp</dimen>
-    <dimen name="category_left_menu">100dp</dimen>
     <dimen name="variant_width">84dp</dimen>
     <dimen name="variant_height">114dp</dimen>
     <dimen name="variant_height_with_padding">126dp</dimen>

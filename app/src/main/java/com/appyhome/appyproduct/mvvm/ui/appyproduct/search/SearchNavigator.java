@@ -2,14 +2,10 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.search;
 
 import android.text.Editable;
 import android.view.View;
-import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.realm.RealmResults;

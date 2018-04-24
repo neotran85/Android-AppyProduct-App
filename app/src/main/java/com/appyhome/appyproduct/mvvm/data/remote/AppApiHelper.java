@@ -82,22 +82,6 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<BlogResponse> getBlogApiCall() {
-        return Rx2AndroidNetworking.get(ApiUrlConfig.API_ENDPOINT_BLOG)
-                .addHeaders(mApiHeader.getProtectedApiHeader())
-                .build()
-                .getObjectSingle(BlogResponse.class);
-    }
-
-    @Override
-    public Single<OpenSourceResponse> getOpenSourceApiCall() {
-        return Rx2AndroidNetworking.get(ApiUrlConfig.API_ENDPOINT_OPEN_SOURCE)
-                .addHeaders(mApiHeader.getProtectedApiHeader())
-                .build()
-                .getObjectSingle(OpenSourceResponse.class);
-    }
-
-    @Override
     public Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_APPOINTMENT_CREATE)
                 .addHeaders(mApiHeader.getProtectedApiHeader())

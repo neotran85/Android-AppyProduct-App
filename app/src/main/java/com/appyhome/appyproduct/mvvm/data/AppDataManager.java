@@ -207,16 +207,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<BlogResponse> getBlogApiCall() {
-        return mApiHelper.getBlogApiCall();
-    }
-
-    @Override
-    public Single<OpenSourceResponse> getOpenSourceApiCall() {
-        return mApiHelper.getOpenSourceApiCall();
-    }
-
-    @Override
     public String getAccessToken() {
         return mPreferencesHelper.getAccessToken();
     }
@@ -750,6 +740,7 @@ public class AppDataManager implements DataManager {
     public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
         return mApiHelper.fetchSellerInformation(sellerId);
     }
+
     @Override
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return mApiHelper.fetchShippingFee(request);

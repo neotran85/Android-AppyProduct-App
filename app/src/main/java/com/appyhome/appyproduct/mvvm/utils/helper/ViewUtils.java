@@ -143,6 +143,7 @@ public final class ViewUtils {
             return;
         }
     }
+
     public static void loadImageAsset(Context context, ImageView imageView, String imagePath) {
         AssetManager assetManager = context.getAssets();
         try {
@@ -190,7 +191,7 @@ public final class ViewUtils {
      * Used to scroll to the given view.
      *
      * @param scrollViewParent Parent ScrollView
-     * @param view View to which we need to scroll.
+     * @param view             View to which we need to scroll.
      */
     public static void scrollToView(final ScrollView scrollViewParent, final View view, int distance) {
         // Get deepChild Offset

@@ -11,8 +11,8 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import java.util.ArrayList;
 
 public class ServicesStep1ViewModel extends BaseViewModel<ServicesStep1Navigator> {
-    private int mTypeServices = 0;
     public final ObservableField<Boolean> isAirConCleaningVisible = new ObservableField<>(false);
+    private int mTypeServices = 0;
 
     public ServicesStep1ViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {

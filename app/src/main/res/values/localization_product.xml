@@ -2,7 +2,6 @@
 <resources>
     <string name="your_cart_is_empty">Your cart is empty.\n Please add items to buy.</string>
     <string name="warning_empty_cart">Are you sure to empty your cart?</string>
-    <string name="warning_remove_item">Do you want to remove this item from your cart?</string>
     <string name="please_input_contact">Please input contact name and phone number.</string>
     <string name="please_input_shipping_address">Please input a shipping address</string>
     <string name="please_input_valid_phone">Please input a valid phone number</string>
@@ -33,9 +32,6 @@
     <string name="removed_wishlist">Removed from your wishlist.</string>
     <string name="button_add_to_cart">ADD TO CART</string>
     <string name="button_buy_now">BUY NOW</string>
-    <string name="tab_overview">Overview</string>
-    <string name="tab_details">Details</string>
-    <string name="tab_review">Review</string>
     <string name="button_explore_seller">Explore seller</string>
     <string name="pls_login_add_to_cart">Please login to add product to your cart.</string>
     <string name="warranty_text"><![CDATA[<p><strong>Your Warranty Disclaimer</strong> could include information about the physical products you sell on your online e-commerce shop and another section with information about the digital products you might sell on that same online shop:</p><p>1. Example of a warranty period of any physical products your customers purchased can be 180 days since the day of purchase.</p><p>2. The warranty will cover any products that proved defective because of improper material or if the customer received the product broken.</p><p>But you can also include what type of conditions you can&rsquo;t cover under Warranty:</p><p>1. Damage resulting from improper maintenance to protect you from customers that may abuse the warranty coverage you have for the products you sell.</p><p>2. Damage resulting from natural disasters.</p><p>3. Theft of a product.</p><p>4. Loss of a product.</p><p>5. And so on.</p>]]></string>

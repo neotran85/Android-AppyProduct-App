@@ -30,19 +30,16 @@ import io.realm.RealmResults;
 public class CategoryFragment extends BaseFragment<ActivityProductCategoryBinding, CategoryViewModel> implements CategoryNavigator, CategoryItemNavigator {
     public static final int ID_DEFAULT_TOPIC = 73;
     public static final int DEFAULT_SPAN_COUNT = 2;
+    public static final String TAG = "CategoryFragment";
     @Inject
     CategoryViewModel mCategoryViewModel;
     @Inject
     CategoryAdapter mCategoryAdapter;
     @Inject
     SubCategoryAdapter mSubCategoryAdapter;
-
     ActivityProductCategoryBinding mBinder;
     @Inject
     int mLayoutId;
-
-    public static final String TAG = "CategoryFragment";
-
     private ProductListNavigator mNavigator;
 
     public static CategoryFragment newInstance(ProductListNavigator navigator) {

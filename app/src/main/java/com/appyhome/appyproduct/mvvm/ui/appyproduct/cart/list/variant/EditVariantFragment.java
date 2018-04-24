@@ -20,7 +20,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import javax.inject.Inject;
 
 
-public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements ProductDetailVariantNavigator{
+public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements ProductDetailVariantNavigator {
 
     public static final String TAG = "EditVariantFragment";
 
@@ -123,7 +123,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     public void selectedVariant(ProductVariant variant) {
         getViewModel().setSelectedVariant(variant);
         mProductCartItemViewModel.update(variant);
-        if(mNavigator != null) {
+        if (mNavigator != null) {
             mNavigator.onEditVariantSelected(variant);
         }
     }

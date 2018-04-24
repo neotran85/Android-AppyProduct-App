@@ -1,12 +1,9 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter;
 
-import android.content.Context;
 import android.databinding.ObservableField;
 import android.util.Log;
-import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
@@ -42,6 +39,19 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     private int variantId;
 
+    public ProductCartItemViewModel() {
+        super();
+    }
+
+    public ProductCartItemViewModel(DataManager dataManager,
+                                    SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
+    }
+
+    public ProductCartItemViewModel(BaseViewModel viewModel) {
+        super(viewModel.getDataManager(), viewModel.getSchedulerProvider());
+    }
+
     public int getVariantStockNumber() {
         return variantStockNumber;
     }
@@ -56,19 +66,6 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     public void setVariantModelId(String id) {
         variantModelId = id;
-    }
-
-    public ProductCartItemViewModel() {
-        super();
-    }
-
-    public ProductCartItemViewModel(DataManager dataManager,
-                                    SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-    }
-
-    public ProductCartItemViewModel(BaseViewModel viewModel) {
-        super(viewModel.getDataManager(), viewModel.getSchedulerProvider());
     }
 
     public void removeProductCartItem() {

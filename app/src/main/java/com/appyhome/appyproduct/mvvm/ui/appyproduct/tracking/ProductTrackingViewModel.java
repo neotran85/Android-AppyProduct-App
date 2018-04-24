@@ -10,6 +10,7 @@ import com.crashlytics.android.Crashlytics;
 public class ProductTrackingViewModel extends BaseViewModel<ProductTrackingNavigator> {
     public ObservableField<String> fieldOrderId = new ObservableField<>("");
     public ObservableField<String> fieldPaymentMethod = new ObservableField<>("");
+
     public ProductTrackingViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);

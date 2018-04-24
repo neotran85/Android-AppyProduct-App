@@ -5,12 +5,9 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
-
-import io.reactivex.functions.Consumer;
 
 public class ServicesStep5ViewModel extends BaseViewModel<ServicesStep5Navigator> {
     private final ObservableField<String> orderId = new ObservableField<>("");

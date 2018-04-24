@@ -40,6 +40,15 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
 
     private CompletedJobListener mListener;
 
+    /************************* GET METHODS ************************/
+
+    public static ProductTopicFragment newInstance() {
+        Bundle args = new Bundle();
+        ProductTopicFragment fragment = new ProductTopicFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     /************************* LIFE RECYCLE METHODS ************************/
 
     @Override
@@ -78,15 +87,6 @@ public class ProductTopicFragment extends BaseFragment<FragmentProductTopicBindi
                 DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL,
                 false));
         rv.setItemAnimator(new DefaultItemAnimator());
-    }
-
-    /************************* GET METHODS ************************/
-
-    public static ProductTopicFragment newInstance() {
-        Bundle args = new Bundle();
-        ProductTopicFragment fragment = new ProductTopicFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

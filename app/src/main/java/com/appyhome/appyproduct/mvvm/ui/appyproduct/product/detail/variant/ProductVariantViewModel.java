@@ -13,8 +13,8 @@ import io.realm.RealmList;
 
 public class ProductVariantViewModel extends BaseViewModel<ProductVariantNavigator> {
 
-    private int mProductId;
     public ObservableField<String> selectedVariantName = new ObservableField<>("");
+    private int mProductId;
 
     public ProductVariantViewModel(DataManager dataManager,
                                    SchedulerProvider schedulerProvider) {
@@ -46,7 +46,7 @@ public class ProductVariantViewModel extends BaseViewModel<ProductVariantNavigat
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
-                    if(result != null && result.code.equals(ApiCode.OK_200))
+                    if (result != null && result.code.equals(ApiCode.OK_200))
                         addProductVariants(result.message);
                 }, Crashlytics::logException));
     }

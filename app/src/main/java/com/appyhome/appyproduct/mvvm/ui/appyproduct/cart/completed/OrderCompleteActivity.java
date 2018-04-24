@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTracking;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartCompletedBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;

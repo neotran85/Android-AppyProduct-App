@@ -2,7 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.account.login;
 
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoNavigator;
 
-public interface LoginNavigator extends FetchUserInfoNavigator{
+public interface LoginNavigator extends FetchUserInfoNavigator {
 
     void handleErrorService(Throwable throwable);
 

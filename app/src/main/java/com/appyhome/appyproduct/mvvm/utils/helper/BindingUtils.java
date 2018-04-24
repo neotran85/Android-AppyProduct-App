@@ -12,9 +12,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
 import com.appyhome.appyproduct.mvvm.ui.common.component.LinearListView;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
-import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogAdapter;
-import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceAdapter;
-import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
 import com.appyhome.appyproduct.mvvm.utils.config.GlideApp;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
@@ -136,27 +133,6 @@ public final class BindingUtils {
             imageView.setBackgroundResource(R.mipmap.detail_icon_favorite);
         } else {
             imageView.setBackgroundResource(R.mipmap.detail_icon_unfavorite);
-        }
-    }
-
-
-    @BindingAdapter({"adapter"})
-    public static void addOpenSourceItems(RecyclerView recyclerView,
-                                          ArrayList<OpenSourceItemViewModel> openSourceItems) {
-        OpenSourceAdapter adapter = (OpenSourceAdapter) recyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.clearItems();
-            adapter.addItems(openSourceItems);
-        }
-    }
-
-    @BindingAdapter({"adapter"})
-    public static void addBlogItems(RecyclerView recyclerView,
-                                    ArrayList<BlogResponse.Blog> blogs) {
-        BlogAdapter adapter = (BlogAdapter) recyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.clearItems();
-            adapter.addItems(blogs);
         }
     }
 

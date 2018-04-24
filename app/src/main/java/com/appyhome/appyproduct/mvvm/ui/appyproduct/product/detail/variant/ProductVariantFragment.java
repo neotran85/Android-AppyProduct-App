@@ -39,10 +39,6 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     private int mMaxScroll = 0;
 
-    public void setDetailNavigator(ProductDetailVariantNavigator navigator) {
-        mDetailNavigator = navigator;
-    }
-
     public static ProductVariantFragment newInstance(int productId, String selectedVariantModelId) {
         Bundle args = new Bundle();
         ProductVariantFragment fragment = new ProductVariantFragment();
@@ -50,6 +46,10 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
         args.putString("product_id", productId + "");
         args.putString("sent_variant_id", selectedVariantModelId);
         return fragment;
+    }
+
+    public void setDetailNavigator(ProductDetailVariantNavigator navigator) {
+        mDetailNavigator = navigator;
     }
 
     private String getSentVariantModelId() {

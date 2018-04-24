@@ -88,7 +88,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void showAddressList(RealmResults<Address> addresses) {
-        if(addresses != null) {
+        if (addresses != null) {
             mAdapter.addItems(addresses, this);
             mAdapter.notifyDataSetChanged();
         }
@@ -110,7 +110,8 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     }
 
     @Override
-    public void updateDatabaseCompleted() {}
+    public void updateDatabaseCompleted() {
+    }
 
     @Override
     public void onItemChecked(AddressItemViewModel item) {

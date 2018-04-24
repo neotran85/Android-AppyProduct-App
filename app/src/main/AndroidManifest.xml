@@ -148,18 +148,6 @@
             android:theme="@style/ActivityDialog" />
 
         <activity
-            android:name="com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".ui.main.MainActivity"
-            android:screenOrientation="portrait">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.main.MainActivity" />
-        </activity>
-
-
-        <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
             <intent-filter>

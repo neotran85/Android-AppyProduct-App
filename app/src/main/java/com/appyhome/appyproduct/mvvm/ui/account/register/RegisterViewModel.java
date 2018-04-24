@@ -12,8 +12,6 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import org.json.JSONObject;
 
-import io.reactivex.functions.Consumer;
-
 public class RegisterViewModel extends BaseViewModel<RegisterNavigator> {
 
     private String mEmail = "";

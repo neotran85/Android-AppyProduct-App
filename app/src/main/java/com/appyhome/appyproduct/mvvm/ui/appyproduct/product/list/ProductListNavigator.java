@@ -7,8 +7,6 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import java.util.ArrayList;
 
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
-import io.realm.RealmResults;
 
 public interface ProductListNavigator {
 

@@ -46,7 +46,7 @@ public class ProductTopic extends RealmObject {
     public ArrayList<Integer> getSubIds() {
         ArrayList<Integer> ids = new ArrayList<>();
         String[] result = TextUtils.split(sub_ids, ",");
-        for(String str: result) {
+        for (String str : result) {
             Integer id = Integer.valueOf(str);
             ids.add(id);
         }

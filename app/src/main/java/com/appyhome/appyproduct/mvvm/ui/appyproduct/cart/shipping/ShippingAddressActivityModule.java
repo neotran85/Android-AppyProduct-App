@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;

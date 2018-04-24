@@ -19,13 +19,13 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> {
 
     private ProductVariant mSelectedVariant;
 
-    public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
-        mProductCartItemViewModel = viewModel;
-    }
-
     public EditVariantViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+    }
+
+    public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
+        mProductCartItemViewModel = viewModel;
     }
 
     public int getAmount() {

@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.common.sample.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;

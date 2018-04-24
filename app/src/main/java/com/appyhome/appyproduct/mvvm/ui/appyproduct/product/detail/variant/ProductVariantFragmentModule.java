@@ -15,7 +15,7 @@ public class ProductVariantFragmentModule {
 
     @Provides
     ProductVariantViewModel provideProductVariantViewModel(DataManager dataManager,
-                                                   SchedulerProvider schedulerProvider) {
+                                                           SchedulerProvider schedulerProvider) {
         return new ProductVariantViewModel(dataManager, schedulerProvider);
     }
 

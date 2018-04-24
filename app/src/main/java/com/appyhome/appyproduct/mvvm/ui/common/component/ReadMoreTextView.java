@@ -187,19 +187,6 @@ public class ReadMoreTextView extends TextView {
         this.trimLines = trimLines;
     }
 
-    private class ReadMoreClickableSpan extends ClickableSpan {
-        @Override
-        public void onClick(View widget) {
-            readMore = !readMore;
-            setText();
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            ds.setColor(colorClickableText);
-        }
-    }
-
     private void onGlobalLayoutLineEndIndex() {
         if (trimMode == TRIM_MODE_LINES) {
             getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -229,6 +216,19 @@ public class ReadMoreTextView extends TextView {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private class ReadMoreClickableSpan extends ClickableSpan {
+        @Override
+        public void onClick(View widget) {
+            readMore = !readMore;
+            setText();
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setColor(colorClickableText);
         }
     }
 }

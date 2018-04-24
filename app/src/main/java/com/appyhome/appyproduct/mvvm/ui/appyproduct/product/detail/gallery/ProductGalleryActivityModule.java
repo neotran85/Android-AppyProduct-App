@@ -9,7 +9,7 @@ import dagger.Provides;
 
 @Module
 public class ProductGalleryActivityModule {
-    
+
     @Provides
     ProductGalleryViewModel provideProductGalleryViewModel(DataManager dataManager,
                                                            SchedulerProvider schedulerProvider) {

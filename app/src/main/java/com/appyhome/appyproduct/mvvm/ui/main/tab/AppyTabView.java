@@ -1,14 +1,11 @@
 package com.appyhome.appyproduct.mvvm.ui.main.tab;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ViewTabLayoutBinding;
 
 import javax.annotation.Nullable;
@@ -51,9 +48,9 @@ public class AppyTabView extends LinearLayout {
         if (mNavigator != null)
             mNavigator.onClickTab(view);
         if (mCurrentView != null) {
-            setSelected(mCurrentView,false);
+            setSelected(mCurrentView, false);
         }
         mCurrentView = view;
-       setSelected(view, true);
+        setSelected(view, true);
     }
 }

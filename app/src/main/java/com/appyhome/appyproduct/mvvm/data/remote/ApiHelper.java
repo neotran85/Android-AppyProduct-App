@@ -1,8 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
@@ -10,7 +8,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiJSONResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
@@ -46,10 +43,6 @@ public interface ApiHelper {
     Single<SignUpResponse> doUserSignUp(SignUpRequest request);
 
     Single<LogoutResponse> doUserLogout();
-
-    Single<BlogResponse> getBlogApiCall();
-
-    Single<OpenSourceResponse> getOpenSourceApiCall();
 
     Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 

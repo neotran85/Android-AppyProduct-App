@@ -35,15 +35,6 @@ public class BarcodeGraphicTracker extends Tracker<Barcode> {
 
     private BarcodeUpdateListener mBarcodeUpdateListener;
 
-    /**
-     * Consume the item instance detected from an Activity or Fragment level by implementing the
-     * BarcodeUpdateListener interface method onBarcodeDetected.
-     */
-    public interface BarcodeUpdateListener {
-        @UiThread
-        void onBarcodeDetected(Barcode barcode);
-    }
-
     BarcodeGraphicTracker(GraphicOverlay<BarcodeGraphic> mOverlay, BarcodeGraphic mGraphic,
                           Context context) {
         this.mOverlay = mOverlay;
@@ -90,5 +81,14 @@ public class BarcodeGraphicTracker extends Tracker<Barcode> {
     @Override
     public void onDone() {
         mOverlay.remove(mGraphic);
+    }
+
+    /**
+     * Consume the item instance detected from an Activity or Fragment level by implementing the
+     * BarcodeUpdateListener interface method onBarcodeDetected.
+     */
+    public interface BarcodeUpdateListener {
+        @UiThread
+        void onBarcodeDetected(Barcode barcode);
     }
 }

@@ -5,8 +5,6 @@ import android.databinding.ObservableField;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import io.realm.Sort;
-
 public enum SortOption {
     UNKNOWN("", "Sort"),
     PRICE_HIGHEST("PRICEHTL", "Price High To Low"),
@@ -47,6 +45,7 @@ public enum SortOption {
     public boolean equals(SortOption option) {
         return value.equals(option.getValue());
     }
+
     public void fromJson(String json) {
         try {
             JSONObject object = new JSONObject(json);

@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlowLayout extends ViewGroup {
-    private static final String LOG_TAG = FlowLayout.class.getSimpleName();
-
     /**
      * Special value for the child view spacing.
      * SPACING_AUTO means that the actual spacing is calculated according to the size of the
@@ -23,7 +21,6 @@ public class FlowLayout extends ViewGroup {
      * the container.
      */
     public static final int SPACING_AUTO = -65536;
-
     /**
      * Special value for the horizontal spacing of the child views in the last row
      * SPACING_ALIGN means that the horizontal spacing of the child views in the last row keeps
@@ -31,7 +28,7 @@ public class FlowLayout extends ViewGroup {
      * ignored and the spacing will be calculated according to childSpacing.
      */
     public static final int SPACING_ALIGN = -65537;
-
+    private static final String LOG_TAG = FlowLayout.class.getSimpleName();
     private static final int SPACING_UNDEFINED = -65538;
 
     private static final int UNSPECIFIED_GRAVITY = -1;

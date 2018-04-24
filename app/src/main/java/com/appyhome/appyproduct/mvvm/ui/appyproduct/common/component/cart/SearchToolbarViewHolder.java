@@ -78,7 +78,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     }
 
     public void openCartAfterLoggedIn() {
-        if(mLoginDelayed) {
+        if (mLoginDelayed) {
             openProductCart();
         }
     }

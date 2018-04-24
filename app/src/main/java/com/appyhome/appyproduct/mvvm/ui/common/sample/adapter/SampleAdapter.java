@@ -21,7 +21,7 @@ public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerVi
     private static final int VIEW_TYPE_LOADING = -1;
 
     protected ArrayList<BaseViewModel> mItems;
-    
+
     protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
 
     protected abstract void addItems(RealmResults<T> items, L navigator);

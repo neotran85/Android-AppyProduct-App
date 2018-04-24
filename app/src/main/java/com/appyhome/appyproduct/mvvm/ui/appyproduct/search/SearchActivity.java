@@ -35,20 +35,15 @@ import io.realm.RealmResults;
 
 public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, SearchViewModel> implements SearchNavigator, SearchItemNavigator {
 
+    private static final int HISTORY_ITEMS_MAX = 8;
     @Inject
     public SearchViewModel mMainViewModel;
-
     @Inject
     public SearchAdapter mSuggestionsAdapter;
-
     @Inject
     int mLayoutId;
-
     ActivityProductSearchBinding mBinder;
-
     private HashMap<ProductTopic, String> mTopics;
-
-    private static final int HISTORY_ITEMS_MAX = 8;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -140,6 +135,19 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
             }
         }
         return topics;
+    }
+
+    private void setSelectedTopics(ArrayList<Integer> idTopic) {
+        int count = mBinder.flTopics.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View view = mBinder.flTopics.getChildAt(i);
+            if (view instanceof TextView) {
+                if (view.getTag() instanceof ProductTopic) {
+                    ProductTopic item = (ProductTopic) view.getTag();
+                    setTopicSelected((TextView) view, DataUtils.contains(idTopic, item.id));
+                }
+            }
+        }
     }
 
     private String getAllCategoriesForSearch(ArrayList<ProductTopic> selectedTopics) {
@@ -245,19 +253,6 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
                 mBinder.flTopics.removeAllViews();
                 for (ProductTopic item : items.keySet()) {
                     mBinder.flTopics.addView(createProductTopics(item));
-                }
-            }
-        }
-    }
-
-    private void setSelectedTopics(ArrayList<Integer> idTopic) {
-        int count = mBinder.flTopics.getChildCount();
-        for (int i = 0; i < count; i++) {
-            View view = mBinder.flTopics.getChildAt(i);
-            if (view instanceof TextView) {
-                if (view.getTag() instanceof ProductTopic) {
-                    ProductTopic item = (ProductTopic) view.getTag();
-                    setTopicSelected((TextView) view, DataUtils.contains(idTopic, item.id));
                 }
             }
         }

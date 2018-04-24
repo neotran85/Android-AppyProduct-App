@@ -47,50 +47,30 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         implements HasSupportFragmentInjector, ProductDetailNavigator,
         ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener, EditVariantNavigator {
 
+    private final int REQUEST_SELECT_LOCATION = 10;
     @Inject
     public ProductItemViewModel mViewModel;
-
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-
     @Inject
     ProductAdapter mRelatedProductAdapter;
-
     ActivityProductDetailBinding mBinder;
-
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
-
     private EditVariantFragment mEditVariantFragment;
-
     private Point mCartPosition = new Point();
-
     private Point mAddToCartPosition = new Point();
-
     private int mTotalStock = 0;
-
     private ProductItemNavigator mPreviousNavigator;
-
     private ProductVariant mSelectedVariant;
-
     private ProductVariantFragment mProductVariantFragment;
-
     private ProductCartItemViewModel mProductCartItemViewModel;
-
     private boolean isBuyNow = false;
-
     private int POSITION_START = 0;
-
     private int POSITION_DETAIL = 0;
-
     private View mCurrentTab = null;
-
     private Runnable mTabRunnable = null;
-
     private Handler mHandler = null;
-
     private int mHeightTopBar = 0;
-
-    private final int REQUEST_SELECT_LOCATION = 10;
 
     public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;

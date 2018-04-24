@@ -922,10 +922,10 @@ public class AppDbHelper implements DbHelper {
                 RealmQuery<ProductFavorite> query = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
                         .equalTo("product_id", productId);
-                if(variantId > -1) {
+                if (variantId > -1) {
                     query = query.equalTo("variant_id", variantId);
                 }
-                ProductFavorite favorite =        query.findFirst();
+                ProductFavorite favorite = query.findFirst();
                 boolean isFavorite = (favorite != null && favorite.isValid());
                 getRealm().commitTransaction();
                 return isFavorite;

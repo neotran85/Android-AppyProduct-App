@@ -1,7 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.splash;
 
-import android.util.Log;
-
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;

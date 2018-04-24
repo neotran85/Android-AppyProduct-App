@@ -1,12 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
 import android.databinding.ObservableField;
-import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;

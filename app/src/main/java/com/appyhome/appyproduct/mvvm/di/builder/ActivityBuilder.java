@@ -21,7 +21,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddres
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
@@ -61,10 +60,6 @@ import com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserActivity;
 import com.appyhome.appyproduct.mvvm.ui.common.browser.BrowserActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.common.custom.detail.TextDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.common.custom.detail.TextDetailActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivity;
-import com.appyhome.appyproduct.mvvm.ui.feed.FeedActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.feed.blogs.BlogFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.feed.opensource.OpenSourceFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
@@ -162,9 +157,4 @@ public abstract class ActivityBuilder {
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
             NotificationFragmentProvider.class, RequestFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class})
     abstract MainActivity bindMainActivity();
-
-    @ContributesAndroidInjector(modules = {FeedActivityModule.class,
-            BlogFragmentProvider.class, OpenSourceFragmentProvider.class})
-    abstract FeedActivity bindFeedActivity();
-
 }

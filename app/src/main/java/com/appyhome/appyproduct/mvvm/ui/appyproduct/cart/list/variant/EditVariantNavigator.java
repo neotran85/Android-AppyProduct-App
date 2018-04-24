@@ -6,7 +6,10 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 
 public interface EditVariantNavigator {
     void closeEditVariantFragment();
+
     void saveProductCartItem_Done(ProductCart productCart);
+
     void onConfirmationChanged(EditVariantViewModel viewModel);
+
     void onEditVariantSelected(ProductVariant variant);
 }
