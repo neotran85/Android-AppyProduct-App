@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
@@ -193,6 +194,21 @@ public class AppDbHelper implements DbHelper {
                     }
                 }
                 getRealm().copyToRealmOrUpdate(variants);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public Flowable<Boolean> addSeller(Seller seller) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                getRealm().copyToRealmOrUpdate(seller);
                 getRealm().commitTransaction();
                 return true;
             } catch (Exception e) {

@@ -7,5 +7,7 @@ public interface NewAddressNavigator {
 
     void openMapForPlaceSelection();
 
+    void onAddressSaved();
+
     void close();
 }

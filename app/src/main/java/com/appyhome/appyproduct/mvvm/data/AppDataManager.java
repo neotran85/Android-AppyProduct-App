@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductTopic;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
@@ -739,6 +740,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
         return mApiHelper.fetchSellerInformation(sellerId);
+    }
+
+    @Override
+    public Flowable<Boolean> addSeller(Seller seller) {
+        return mDbHelper.addSeller(seller);
     }
 
     @Override

@@ -325,7 +325,7 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SHIPPING_GET)
-                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter(request)
                 .build()
                 .getObjectSingle(GetShippingResponse.class);
@@ -334,7 +334,7 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SELLER_GET)
-                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter("seller_id", sellerId + "")
                 .build()
                 .getObjectSingle(GetSellerResponse.class);

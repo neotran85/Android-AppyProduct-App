@@ -28,6 +28,8 @@ import io.realm.RealmResults;
 
 public class ChooseShippingAddressActivity extends BaseActivity<ActivityProductShippingChooseBinding, ShippingAddressViewModel> implements ShippingAddressNavigator, AddressItemNavigator {
 
+    public static final int REQUEST_NEW_ADDRESS = 12;
+
     protected ActivityProductShippingChooseBinding mBinder;
 
     @Inject
@@ -110,7 +112,7 @@ public class ChooseShippingAddressActivity extends BaseActivity<ActivityProductS
     @Override
     public void openNewShippingAddress() {
         Intent intent = NewAddressActivity.getStartIntent(this);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_NEW_ADDRESS);
     }
 
     @Override
@@ -122,5 +124,14 @@ public class ChooseShippingAddressActivity extends BaseActivity<ActivityProductS
     protected void onResume() {
         super.onResume();
         mViewModel.getAllShippingAddress();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_NEW_ADDRESS && resultCode == RESULT_OK) {
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 }

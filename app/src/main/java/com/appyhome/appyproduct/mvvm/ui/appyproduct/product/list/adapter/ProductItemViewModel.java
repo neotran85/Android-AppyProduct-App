@@ -9,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
@@ -44,6 +45,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Float> alphaTitle = new ObservableField<>(0.0f);
     public ObservableField<String> shippingFee = new ObservableField<>("");
     public ObservableField<String> shippingLocation = new ObservableField<>("");
+    public ObservableField<String> sellerAvatar = new ObservableField<>("");
 
     private int productId;
 
@@ -186,7 +188,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     /***************** SHIPPING FREE *****************/
 
 
-    public void getDefaultShippingAddress(ProductVariant variant) {
+    public void fetchDefaultShippingAddress(ProductVariant variant) {
         if (isUserLoggedIn())
             getCompositeDisposable().add(getDataManager().getDefaultShippingAddress(getUserId())
                     .take(1)
@@ -222,6 +224,26 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (data != null && data.isValid()) {
                         shippingFee.set(getString(R.string.rm) + " " + data.price);
                     } else shippingFee.set(getString(R.string.fee_unknown));
+                }, Crashlytics::logException));
+    }
+
+    public void fetchSellerInformation(int sellerId) {
+        getCompositeDisposable().add(getDataManager().fetchSellerInformation(sellerId)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        sellerAvatar.set(data.seller.avatar);
+                        addSeller(data.seller);
+                    }
+                }, Crashlytics::logException));
+    }
+    private void addSeller(Seller seller) {
+        getCompositeDisposable().add(getDataManager().addSeller(seller)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // UPDATE SELLER INFORMATION
                 }, Crashlytics::logException));
     }
 }

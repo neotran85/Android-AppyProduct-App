@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -75,7 +76,8 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     }
 
     @Override
-    public void close() {
+    public void onAddressSaved() {
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
@@ -92,6 +94,11 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 
     @Override

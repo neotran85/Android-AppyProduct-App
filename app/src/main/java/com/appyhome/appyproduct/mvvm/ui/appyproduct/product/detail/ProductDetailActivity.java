@@ -204,7 +204,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
-        getViewModel().getDefaultShippingAddress(variant);
+        getViewModel().fetchDefaultShippingAddress(variant);
+        getViewModel().fetchSellerInformation(variant.seller_id);
         loadImages(variant);
         mBinder.tableDescription.loadData(variant);
         setUpPositionTabsForScroll();
@@ -440,7 +441,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SELECT_LOCATION && resultCode == RESULT_OK) {
-            getViewModel().getDefaultShippingAddress(mSelectedVariant);
+            getViewModel().fetchDefaultShippingAddress(mSelectedVariant);
         }
     }
 
