@@ -15,6 +15,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartConfirmationBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.completed.OrderCompleteActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.adapter.CartAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.visa.VisaPaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
@@ -32,6 +33,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     final int HEIGHT_CART_ITEM = 124;
     final int HEIGHT_TITLE_CART_ITEM = 40;
+    public static final int REQUEST_VISA_PAYMENT = 10;
     @Inject
     public CartAdapter mAdapter;
     @Inject
@@ -122,6 +124,12 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     @Override
+    public void openVisaPayment() {
+        Intent intent = VisaPaymentActivity.getStartIntent(this);
+        startActivityForResult(intent, REQUEST_VISA_PAYMENT);
+    }
+
+    @Override
     public void gotoNextStep() {
         mMainViewModel.addOrder();
     }
@@ -134,7 +142,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
                     mMainViewModel.getEmailOfUser(),
                     mMainViewModel.getNameOfUser(), getString(R.string.appy_home_product_payment));
         } else {
-            gotoOrderCompleted(order.id);
+            openVisaPayment();
         }
     }
 
@@ -151,8 +159,11 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
             AlertManager.getInstance(this).showLongToast("Payment success" + data);
-            long orderId = data.getLongExtra("order_id", 0);
+            long orderId = data.getLongExtra("order_id", 111);
             gotoOrderCompleted(orderId);
+        }
+        if (requestCode == REQUEST_VISA_PAYMENT && resultCode == RESULT_OK) {
+            gotoOrderCompleted(111);
         }
     }
 

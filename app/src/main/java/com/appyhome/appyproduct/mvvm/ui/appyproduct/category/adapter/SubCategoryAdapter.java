@@ -19,6 +19,8 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     private ArrayList<CategoryItemViewModel> mActiveItems;
     private CategoryItemViewModel allItemViewModel;
 
+    private String allIds;
+
     public SubCategoryAdapter() {
         this.mItems = null;
     }
@@ -91,15 +93,17 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
         mNavigator = navigator;
         mItems = new ArrayList<>();
         mActiveItems = new ArrayList<>();
+        allItemViewModel = new CategoryItemViewModel();
+        allItemViewModel.title.set("ALL CATEGORIES & ALL PRODUCTS");
+        allItemViewModel.imageURL.set(AppyProductConstants.RESOURCE_URL.PRODUCT_CATEGORY_ALL_SUB_URL);
+        allItemViewModel.setIdCategory(0);
+        allItemViewModel.setNavigator(navigator);
+        allItemViewModel.isSub = true;
+        allItemViewModel.setSubIds(allIds);
+        mItems.add(allItemViewModel);
         if (items != null && items.size() > 0) {
-            allItemViewModel = new CategoryItemViewModel();
-            allItemViewModel.title.set("ALL PRODUCTS");
-            allItemViewModel.imageURL.set(AppyProductConstants.RESOURCE_URL.PRODUCT_CATEGORY_ALL_SUB_URL);
-            allItemViewModel.setIdCategory(0);
-            allItemViewModel.setNavigator(navigator);
-            allItemViewModel.isSub = true;
-            mItems.add(allItemViewModel);
             String allSubIds = "";
+            allItemViewModel.title.set("ALL PRODUCTS");
             for (ProductSub item : items) {
                 CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
                 itemViewModel.title.set(item.name);
@@ -112,7 +116,15 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
                 mItems.add(itemViewModel);
             }
             allItemViewModel.setSubIds(allSubIds);
-            clickViewModel(allItemViewModel);
         }
+        clickViewModel((CategoryItemViewModel) mItems.get(0));
+    }
+
+    public String getAllIds() {
+        return allIds;
+    }
+
+    public void setAllIds(String allIds) {
+        this.allIds = allIds;
     }
 }

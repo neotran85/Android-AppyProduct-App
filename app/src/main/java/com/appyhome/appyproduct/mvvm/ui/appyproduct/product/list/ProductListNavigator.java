@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -53,4 +54,6 @@ public interface ProductListNavigator {
     void openCategoriesSelection();
 
     void applyCategoriesSelected(String subsId);
+
+    Bundle getBundle();
 }

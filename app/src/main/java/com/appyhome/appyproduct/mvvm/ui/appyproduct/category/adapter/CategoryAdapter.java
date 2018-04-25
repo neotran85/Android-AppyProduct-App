@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductCategoryBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
@@ -68,7 +69,13 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
     public void addItems(RealmResults<ProductCategory> items, CategoryItemNavigator navigator) {
         mNavigator = navigator;
         mItems = new ArrayList<>();
-        if (items != null) {
+        CategoryItemViewModel allItemViewModel = new CategoryItemViewModel();
+        allItemViewModel.title.set("ALL CATEGORIES");
+        allItemViewModel.imageURL.set(AppyProductConstants.RESOURCE_URL.PRODUCT_CATEGORY_ALL_SUB_URL);
+        allItemViewModel.setIdCategory(0);
+        allItemViewModel.setNavigator(navigator);
+        mItems.add(allItemViewModel);
+        if (items != null && items.size() > 0) {
             for (ProductCategory item : items) {
                 CategoryItemViewModel itemViewModel = new CategoryItemViewModel();
                 itemViewModel.title.set(item.name);

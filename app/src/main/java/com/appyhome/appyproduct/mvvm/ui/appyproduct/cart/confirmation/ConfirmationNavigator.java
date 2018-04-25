@@ -24,4 +24,6 @@ public interface ConfirmationNavigator {
 
     void close();
 
+    void openVisaPayment();
+
 }

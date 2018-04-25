@@ -207,11 +207,11 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     private String getCategoryIds() {
         Intent intent = getIntent();
-        if (intent.hasExtra("categoryIds")) {
-            return intent.getStringExtra("categoryIds");
+        Bundle bundle = intent.getExtras();
+        if (bundle.containsKey("categoryIds")) {
+            return bundle.getString("categoryIds");
         } else {
-            getIntent().getStringExtra("id_subs");
-            return getIntent().getStringExtra("id_subs");
+            return bundle.getString("id_subs");
         }
     }
 
@@ -265,6 +265,11 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
             getIntent().putExtra("id_subs", subsId);
             fetchProductsNew();
         }
+    }
+
+    @Override
+    public Bundle getBundle() {
+        return getIntent().getExtras();
     }
 
 }

@@ -58,7 +58,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(order -> {
                     // GET SUCCEEDED
                     if (order != null && order.isValid()) {
-                        getNavigator().showAlert("Order added");
+                        //getNavigator().showAlert("Order added");
                         getNavigator().addOrderOk(order);
                     } else {
                         getNavigator().handleErrors(null);

@@ -39,6 +39,12 @@
             android:name=".ui.account.login.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <activity
+            android:name=".ui.appyproduct.cart.confirmation.visa.VisaPaymentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
         <activity
             android:name=".ui.appyservice.servicerequest.edit.RequestEditActivity"
             android:screenOrientation="portrait"

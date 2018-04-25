@@ -40,12 +40,12 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
     ActivityProductCategoryBinding mBinder;
     @Inject
     int mLayoutId;
+
     private ProductListNavigator mNavigator;
 
     public static CategoryFragment newInstance(ProductListNavigator navigator) {
-        Bundle args = new Bundle();
         CategoryFragment fragment = new CategoryFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(navigator.getBundle());
         fragment.setNavigator(navigator);
         return fragment;
     }
@@ -55,10 +55,15 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
         mBinder.setViewModel(mCategoryViewModel);
         mBinder.setNavigator(this);
         mCategoryViewModel.setNavigator(this);
+        mSubCategoryAdapter.setAllIds(getCategoryIds());
         setUpRecyclerViewList(mBinder.categoryRecyclerView, mCategoryAdapter);
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
         mCategoryViewModel.getProductTopicById(idTopic);
+    }
+
+    private String getCategoryIds() {
+        return getArguments().getString("id_subs", "");
     }
 
     @Override
@@ -126,7 +131,6 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
         mSubCategoryAdapter.addItems(result, this);
         mSubCategoryAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void showCategories(RealmResults<ProductCategory> result) {
