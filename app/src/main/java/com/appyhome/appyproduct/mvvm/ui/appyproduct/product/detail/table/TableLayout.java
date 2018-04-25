@@ -26,7 +26,8 @@ public class TableLayout extends LinearListView<TabletItem> {
 
     public TableLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        col1Width = getContext().getResources().getDimensionPixelSize(R.dimen.table_title_col_width);
+        col1Width = getContext().getResources().getDimensionPixelSize(R.dimen.table_title_col_width) -
+                getContext().getResources().getDimensionPixelSize(R.dimen.table_title_col_padding);
     }
 
     public boolean isEnterNewLine(TextView textView, String text) {
@@ -61,7 +62,6 @@ public class TableLayout extends LinearListView<TabletItem> {
 
     public void loadData(ProductVariant variant) {
         removeAllViews();
-
         ArrayList<TabletItem> tableAdapter = new ArrayList<>();
         tableAdapter.add(new TabletItem("Name", variant.product_name));
         tableAdapter.add(new TabletItem("Variant Name", variant.variant_name));
