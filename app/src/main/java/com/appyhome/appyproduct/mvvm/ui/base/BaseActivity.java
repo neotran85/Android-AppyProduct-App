@@ -15,7 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -59,15 +59,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public void activeBackButton() {
         View mainView = getMainView();
         if (mainView != null) {
-            ImageButton button = (ImageButton) mainView.findViewById(R.id.btBack);
+            ImageView button = mainView.findViewById(R.id.btBack);
             if (button != null) {
                 button.setVisibility(View.VISIBLE);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                });
+                button.setOnClickListener(v -> onBackPressed());
             }
         }
     }

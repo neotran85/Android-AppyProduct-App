@@ -2,7 +2,10 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.filter;
 
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -17,7 +20,7 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import javax.inject.Inject;
 
-public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, FilterViewModel> implements FilterNavigator {
+public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, FilterViewModel> implements FilterNavigator, TextView.OnEditorActionListener {
 
     public static final String TAG = "FilterFragment";
 
@@ -123,6 +126,8 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
                 getResources().getColor(R.color.white), getResources().getColor(R.color.semi_gray),
                 mBinder.btnBulkPurchase, mBinder.btnPromotional, mBinder.btnPremium);
         getViewModel().getCurrentFilter();
+        mBinder.etPriceMin.setOnEditorActionListener(this);
+        mBinder.etPriceMax.setOnEditorActionListener(this);
     }
 
     @Override
@@ -142,5 +147,14 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
 
     public void setNavigator(ProductListNavigator navigator) {
         this.mNavigator = navigator;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || actionId == EditorInfo.IME_ACTION_DONE) {
+            applyFilter();
+            return true;
+        }
+        return false;
     }
 }

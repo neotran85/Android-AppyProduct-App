@@ -39,5 +39,18 @@
     <string name="please_select_your_location_for_shipping_fee_estimation">Please select your location to estimate shipping cost.</string>
     <string name="fee_unknown">Unknown</string>
     <string name="appy_home_product_payment">AppyHome Product Payment</string>
+    <string name="filter_price_max">Max</string>
+    <string name="filter_price_min">Min</string>
+    <string name="price_range_rm">Price Range (RM)</string>
+    <string name="filter_premium">Premium</string>
+    <string name="filter_promotional">Promotional</string>
+    <string name="filter_bulk_purchase">Bulk Purchase</string>
+    <string name="filter_product_discount">Product Discount</string>
+    <string name="filter_oversea">Oversea</string>
+    <string name="filter_local">Local</string>
+    <string name="filter_shipping_from">Shipping From</string>
+    <string name="filter_reset">RESET</string>
+    <string name="filter_apply">APPLY</string>
+    <string name="filter_rating">Rating</string>
 
 </resources>

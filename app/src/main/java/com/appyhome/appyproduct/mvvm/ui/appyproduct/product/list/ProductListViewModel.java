@@ -22,7 +22,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -150,7 +149,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                             ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
                             cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
                             if (response.message != null && response.message.size() > 0) {
-                                sortResults(response.message);
+                                // ONLY SORT IF NO KEYWORDS
+                                if (keyword == null || keyword.length() == 0)
+                                    sortResults(response.message);
                                 addProductsToDatabase(response.message);
                                 return;
                             }
@@ -322,12 +323,4 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
             return;
         }
     }
-
-    private class PriceComparator implements Comparator<Product> {
-        @Override
-        public int compare(Product o1, Product o2) {
-            return Math.round((o1.lowest_price - o2.lowest_price) * 100);
-        }
-    }
-
 }

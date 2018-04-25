@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -30,7 +31,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -45,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Shipping From"
+                        android:text="@string/filter_shipping_from"
                         android:textColor="@color/semi_gray"
                         android:textSize="14sp" />
 
@@ -60,17 +61,19 @@
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
-                            android:text="Local"
+                            android:text="@string/filter_local"
                             android:textColor="@color/semi_gray"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:ignore="ButtonStyle" />
 
                         <Button
+                            tools:ignore="ButtonStyle"
                             android:id="@+id/btnOversea"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="16dp"
                             android:background="@mipmap/bg_radius_button_gray"
-                            android:text="Oversea"
+                            android:text="@string/filter_oversea"
                             android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -87,7 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Product Discount"
+                        android:text="@string/filter_product_discount"
                         android:textColor="@color/semi_gray"
                         android:textSize="14sp" />
 
@@ -98,21 +101,23 @@
                         android:orientation="horizontal">
 
                         <Button
+                            tools:ignore="ButtonStyle"
                             android:id="@+id/btnBulkPurchase"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
-                            android:text="Bulk Purchase"
+                            android:text="@string/filter_bulk_purchase"
                             android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
 
                         <Button
+                            tools:ignore="ButtonStyle"
                             android:id="@+id/btnPromotional"
                             android:layout_width="124dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="16dp"
                             android:background="@mipmap/bg_radius_button_gray"
-                            android:text="Promotional"
+                            android:text="@string/filter_promotional"
                             android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -123,7 +128,7 @@
                         android:layout_height="32dp"
                         android:layout_marginTop="16dp"
                         android:background="@mipmap/bg_radius_button_gray"
-                        android:text="Premium"
+                        android:text="@string/filter_premium"
                         android:textColor="@color/semi_gray"
                         android:textSize="13sp" />
                 </LinearLayout>
@@ -139,7 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Price Range (RM)"
+                        android:text="@string/price_range_rm"
                         android:textColor="@color/semi_gray"
                         android:textSize="14sp" />
 
@@ -151,12 +156,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:imeActionLabel="Apply"
                             android:id="@+id/etPriceMin"
                             android:layout_width="114dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
                             android:gravity="center"
-                            android:hint="Min"
+                            android:hint="@string/filter_price_min"
                             android:inputType="number"
                             android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
@@ -167,12 +173,13 @@
                             android:background="@color/gray" />
 
                         <EditText
+                            android:imeActionLabel="Apply"
                             android:id="@+id/etPriceMax"
                             android:layout_width="114dp"
                             android:layout_height="32dp"
                             android:background="@mipmap/bg_radius_button_gray"
                             android:gravity="center"
-                            android:hint="Max"
+                            android:hint="@string/filter_price_max"
                             android:inputType="number"
                             android:textColor="@color/semi_gray"
                             android:textSize="13sp" />
@@ -190,7 +197,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Rating"
+                        android:text="@string/filter_rating"
                         android:textColor="@color/semi_gray"
                         android:textSize="14sp" />
 
@@ -222,9 +229,10 @@
                     android:clickable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.resetFilter()}"
-                    android:text="RESET"
+                    android:text="@string/filter_reset"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:layout_width="0dp"
@@ -234,9 +242,10 @@
                     android:clickable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.applyFilter()}"
-                    android:text="APPLY"
+                    android:text="@string/filter_apply"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    tools:ignore="ButtonStyle" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
