@@ -123,7 +123,7 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
                 getViewModel().getTotalCost(), mAppointmentId,
                 getViewModel().getPhoneNumberOfUser(),
                 getViewModel().getEmailOfUser(),
-                getViewModel().getNameOfUser());
+                getViewModel().getNameOfUser(), getString(R.string.bill_description));
     }
 
     @Override

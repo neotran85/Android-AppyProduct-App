@@ -38,5 +38,6 @@
     <string name="return_notice">Need to return the items to seller\'s address by using post office or other shipping service</string>
     <string name="please_select_your_location_for_shipping_fee_estimation">Please select your location to estimate shipping cost.</string>
     <string name="fee_unknown">Unknown</string>
+    <string name="appy_home_product_payment">AppyHome Product Payment</string>
 
 </resources>

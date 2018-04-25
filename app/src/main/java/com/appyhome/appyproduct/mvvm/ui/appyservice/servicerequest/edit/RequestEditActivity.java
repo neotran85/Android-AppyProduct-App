@@ -103,7 +103,7 @@ public class RequestEditActivity extends BaseActivity<ActivityRequestEditBinding
                 mPrice.toString(), mRequestEditViewModel.getIdNumber(),
                 mRequestEditViewModel.getPhoneNumberOfUser(),
                 mRequestEditViewModel.getEmailOfUser(),
-                mRequestEditViewModel.getNameOfUser());
+                mRequestEditViewModel.getNameOfUser(), getString(R.string.bill_description));
     }
 
     @Override

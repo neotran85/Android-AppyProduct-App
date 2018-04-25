@@ -132,7 +132,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
                     mMainViewModel.totalCost.get().toString(), order.id + "",
                     mMainViewModel.getPhoneNumberOfUser(),
                     mMainViewModel.getEmailOfUser(),
-                    mMainViewModel.getNameOfUser());
+                    mMainViewModel.getNameOfUser(), getString(R.string.appy_home_product_payment));
         } else {
             gotoOrderCompleted(order.id);
         }

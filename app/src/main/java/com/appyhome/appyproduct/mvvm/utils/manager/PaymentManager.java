@@ -13,7 +13,6 @@ import com.molpay.molpayxdk.MOLPayActivity;
 import java.util.HashMap;
 
 public class PaymentManager {
-    private static final String BILL_DESCRIPTION = "Appyhome Service Payment";
     private static final String MERCHANT_ID = "appyhomeplus";
     private static final String USERNAME = "api_appyhomeplus";
     private static final String PASSWORD = "api_appy017home#";
@@ -49,7 +48,7 @@ public class PaymentManager {
         return false;
     }
 
-    public void startMolpayActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email, String name) {
+    public void startMolpayActivity(Activity currentActivity, String amountOfPayment, String orderId, String phoneNumber, String email, String name, String billDescription) {
         if (currentActivity != null) {
             HashMap<String, Object> paymentDetails = new HashMap<>();
             // Mandatory String. A value not less than '1.00'
@@ -69,7 +68,7 @@ public class PaymentManager {
             paymentDetails.put(MOLPayActivity.mp_country, COUNTRY);
             paymentDetails.put(MOLPayActivity.mp_bill_mobile, phoneNumber);
             paymentDetails.put(MOLPayActivity.mp_bill_email, email);
-            paymentDetails.put(MOLPayActivity.mp_bill_description, BILL_DESCRIPTION);
+            paymentDetails.put(MOLPayActivity.mp_bill_description, billDescription);
             paymentDetails.put(MOLPayActivity.mp_channel, MULTIPLE);
 
             if (BuildConfig.DEBUG) {
