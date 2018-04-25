@@ -49,7 +49,7 @@
     <string name="filter_oversea">Oversea</string>
     <string name="filter_local">Local</string>
     <string name="filter_shipping_from">Shipping From</string>
-    <string name="filter_reset">RESET</string>
+    <string name="filter_reset">CLEAR FORM</string>
     <string name="filter_apply">APPLY</string>
     <string name="filter_rating">Rating</string>
 

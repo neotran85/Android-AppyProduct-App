@@ -32,6 +32,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> variantName = new ObservableField<>("");
     public ObservableField<String> warranty = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
+    public ObservableField<String> lowestPrice = new ObservableField<>("0");
     public ObservableField<String> price = new ObservableField<>("0");
     public ObservableField<Float> rate = new ObservableField<>(0f);
     public ObservableField<String> rateCount = new ObservableField<>("");
@@ -111,7 +112,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         sellerName.set(product.seller_name);
         imageURL.set(product.avatar_name);
         productId = product.id;
-        price.set("RM " + product.lowest_price);
+        lowestPrice.set("RM " + product.lowest_price);
         rate.set(product.rate);
         rateCount.set(product.rate_count + "");
         discount.set(product.discount + "%");

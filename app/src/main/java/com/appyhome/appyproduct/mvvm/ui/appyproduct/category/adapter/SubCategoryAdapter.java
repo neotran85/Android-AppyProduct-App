@@ -19,7 +19,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     private ArrayList<CategoryItemViewModel> mActiveItems;
     private CategoryItemViewModel allItemViewModel;
 
-    private String allIds;
+    private String allIdsOfTopic;
 
     public SubCategoryAdapter() {
         this.mItems = null;
@@ -99,7 +99,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
         allItemViewModel.setIdCategory(0);
         allItemViewModel.setNavigator(navigator);
         allItemViewModel.isSub = true;
-        allItemViewModel.setSubIds(allIds);
+        allItemViewModel.setSubIds(allIdsOfTopic);
         mItems.add(allItemViewModel);
         if (items != null && items.size() > 0) {
             String allSubIds = "";
@@ -120,11 +120,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
         clickViewModel((CategoryItemViewModel) mItems.get(0));
     }
 
-    public String getAllIds() {
-        return allIds;
-    }
-
-    public void setAllIds(String allIds) {
-        this.allIds = allIds;
+    public void setAllIdsOfTopic(String allIdsOfTopic) {
+        this.allIdsOfTopic = allIdsOfTopic;
     }
 }

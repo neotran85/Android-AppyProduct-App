@@ -102,7 +102,7 @@
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.price}"
+                                android:text="@{viewModel.lowestPrice}"
                                 android:textColor="@color/red_price"
                                 android:textSize="11sp" />
                         </LinearLayout>

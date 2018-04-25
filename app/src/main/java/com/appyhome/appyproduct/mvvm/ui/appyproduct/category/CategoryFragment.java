@@ -55,7 +55,7 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
         mBinder.setViewModel(mCategoryViewModel);
         mBinder.setNavigator(this);
         mCategoryViewModel.setNavigator(this);
-        mSubCategoryAdapter.setAllIds(getCategoryIds());
+        mSubCategoryAdapter.setAllIdsOfTopic(getCategoryIds());
         setUpRecyclerViewList(mBinder.categoryRecyclerView, mCategoryAdapter);
         setUpRecyclerViewGrid(mBinder.subCategoryRecyclerView, mSubCategoryAdapter);
         int idTopic = getIntent().getIntExtra("id_topic", ID_DEFAULT_TOPIC);
