@@ -53,5 +53,8 @@
     <string name="filter_apply">APPLY</string>
     <string name="filter_rating">Rating</string>
     <string name="successfully_charged">Thank you. Successfully Charged!</string>
+    <string name="visa_fill_all_pls">Please fill all the information.</string>
+    <string name="visa_3_digits_on_the_back_of_your_card">3 digits on the back of your card</string>
+    <string name="visa_cvv_code">CVV Code</string>
 
 </resources>

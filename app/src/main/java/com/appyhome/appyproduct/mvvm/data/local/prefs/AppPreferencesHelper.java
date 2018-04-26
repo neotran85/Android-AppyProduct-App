@@ -24,13 +24,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
 
     private static final String PREF_KEY_SERVICE_ADDRESS = "PREF_KEY_SERVICE_ADDRESS";
+    private static final String PREF_KEY_CACHED_RESPONSE = "PREF_KEY_CACHED_RESPONSE";
 
     private final SharedPreferences mPrefs;
+    private final SharedPreferences mCachedResponse;
 
     @Inject
     public AppPreferencesHelper(Context context,
                                 @PreferenceInfo String prefFileName) {
         mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
+        mCachedResponse = context.getSharedPreferences(prefFileName + "_response_cached", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -159,6 +162,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
+    public void setCachedResponse(String command, String key, String response) {
+        mCachedResponse.edit().putString(PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key, response).apply();
+    }
+
+    @Override
+    public String getCachedResponse(String command, String key) {
+        return mCachedResponse.getString(PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key, "");
+    }
+
+    @Override
     public String getProductsSortCurrent(String userId) {
         return mPrefs.getString(PREF_PRODUCT_SORT_CURRENT + ":" + userId, "");
     }
@@ -166,5 +179,10 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public String getDefaultPaymentMethod(String userId) {
         return mPrefs.getString(PREF_KEY_PAYMENT_METHOD + ":" + userId, "");
+    }
+
+    @Override
+    public void clearCachedResponse() {
+        mCachedResponse.edit().clear().apply();
     }
 }

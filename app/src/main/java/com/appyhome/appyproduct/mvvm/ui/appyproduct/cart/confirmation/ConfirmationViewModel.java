@@ -25,6 +25,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     private RealmResults<ProductCart> mCarts;
     private String mPaymentMethod = "";
     private Address mShippingAddress;
+    private String customerName = "";
 
     public ConfirmationViewModel(DataManager dataManager,
                                  SchedulerProvider schedulerProvider) {
@@ -38,9 +39,10 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
                     mShippingAddress = addressResult;
-                    name.set(addressResult.customer_name);
-                    phoneNumber.set(addressResult.phone_number);
-                    address.set(addressResult.address);
+                    name.set(addressResult.recipient_name);
+                    phoneNumber.set(addressResult.recipient_phonenumber);
+                    address.set(addressResult.address_content);
+                    customerName = addressResult.recipient_name;
                 }, Crashlytics::logException));
     }
 
@@ -52,7 +54,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
 
     public void addOrder(long orderId) {
         getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
-                mShippingAddress, getUserId(), "Nam Tran", mTotalCost, 0, orderId)
+                mShippingAddress, getUserId(), customerName, mTotalCost, 0, orderId)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(order -> {

@@ -732,6 +732,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public void setCachedResponse(String command, String key, String response) {
+        mPreferencesHelper.setCachedResponse(command, key, response);
+    }
+
+    @Override
+    public String getCachedResponse(String command, String key) {
+        return mPreferencesHelper.getCachedResponse(command, key);
+    }
+
+    @Override
     public Flowable<ProductVariant> getProductVariantById(String variantModelId) {
         return mDbHelper.getProductVariantById(variantModelId);
     }
@@ -746,6 +756,10 @@ public class AppDataManager implements DataManager {
         return mDbHelper.addSeller(seller);
     }
 
+    @Override
+    public void clearCachedResponse() {
+        mPreferencesHelper.clearCachedResponse();
+    }
     @Override
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return mApiHelper.fetchShippingFee(request);

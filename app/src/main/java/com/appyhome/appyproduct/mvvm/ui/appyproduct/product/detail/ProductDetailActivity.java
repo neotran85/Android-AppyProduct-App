@@ -248,7 +248,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private void animateProductToCart(String modelId, int amountAdded) {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
-        AppAnimator.animateMoving(1000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
+        AppAnimator.animateMoving(2000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);

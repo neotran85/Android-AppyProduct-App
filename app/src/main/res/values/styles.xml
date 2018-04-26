@@ -95,4 +95,8 @@
     <style name="AppyToast_Favorite" parent="AppyToast">
         <item name="iconStart">@drawable/ic_favorite_white_24dp</item>
     </style>
+
+    <style name="AppyToast_VisaCard" parent="AppyToast">
+        <item name="iconStart">@drawable/ic_credit_card_white_24dp</item>
+    </style>
 </resources>

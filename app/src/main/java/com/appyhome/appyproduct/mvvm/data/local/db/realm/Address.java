@@ -21,29 +21,64 @@ public class Address extends RealmObject {
     public String place_id;
 
     @Expose
-    @SerializedName("address")
-    @ColumnInfo(name = "address")
-    public String address;
+    @SerializedName("user_id")
+    @ColumnInfo(name = "user_id")
+    public String user_id;
 
     @Expose
-    @SerializedName("phone_number")
-    @ColumnInfo(name = "phone_number")
-    public String phone_number;
+    @SerializedName("west_my")
+    @ColumnInfo(name = "west_my")
+    public String west_my;
 
     @Expose
-    @SerializedName("customer_name")
-    @ColumnInfo(name = "customer_name")
-    public String customer_name;
+    @SerializedName("address_content")
+    @ColumnInfo(name = "address_content")
+    public String address_content;
 
     @Expose
-    @SerializedName("customer_id")
-    @ColumnInfo(name = "customer_id")
-    public String customer_id;
+    @SerializedName("address_name")
+    @ColumnInfo(name = "address_name")
+    public String address_name;
+
+    @Expose
+    @SerializedName("recipient_phonenumber")
+    @ColumnInfo(name = "recipient_phonenumber")
+    public String recipient_phonenumber;
+
+    @Expose
+    @SerializedName("company_name")
+    @ColumnInfo(name = "company_name")
+    public String company_name;
+
+    @Expose
+    @SerializedName("recipient_name")
+    @ColumnInfo(name = "recipient_name")
+    public String recipient_name;
 
     @Expose
     @SerializedName("avatar")
     @ColumnInfo(name = "avatar")
     public String avatar;
+
+    @Expose
+    @SerializedName("unit")
+    @ColumnInfo(name = "unit")
+    public String unit;
+
+    @Expose
+    @SerializedName("city")
+    @ColumnInfo(name = "city")
+    public String city;
+
+    @Expose
+    @SerializedName("state")
+    @ColumnInfo(name = "state")
+    public String state;
+
+    @Expose
+    @SerializedName("street")
+    @ColumnInfo(name = "street")
+    public String street;
 
     @Expose
     @SerializedName("post_code")

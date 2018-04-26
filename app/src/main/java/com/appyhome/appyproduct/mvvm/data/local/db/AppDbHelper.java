@@ -561,7 +561,7 @@ public class AppDbHelper implements DbHelper {
             beginTransaction();
             if (address.is_default) {
                 RealmResults<Address> addressList = getRealm().where(Address.class)
-                        .equalTo("customer_id", address.customer_id)
+                        .equalTo("user_id", address.user_id)
                         .equalTo("is_default", true)
                         .findAll();
                 if (addressList != null && addressList.isValid() && addressList.size() > 0) {

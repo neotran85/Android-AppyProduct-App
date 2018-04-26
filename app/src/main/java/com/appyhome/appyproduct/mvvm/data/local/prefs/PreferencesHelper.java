@@ -56,4 +56,10 @@ public interface PreferencesHelper {
     boolean isLocalDatabaseUpdated();
 
     void setLocalDatabaseUpdated(boolean isDone);
+
+    void setCachedResponse(String command, String key, String response);
+
+    String getCachedResponse(String command, String key);
+
+    void clearCachedResponse();
 }

@@ -51,9 +51,9 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
 
     private AddressItemViewModel createViewModel(Address address, AddressItemNavigator itemNavigator) {
         AddressItemViewModel itemViewModel = new AddressItemViewModel(mDataManager, mSchedulerProvider);
-        itemViewModel.name.set(address.customer_name);
-        itemViewModel.phoneNumber.set(address.phone_number);
-        itemViewModel.address.set(address.address);
+        itemViewModel.name.set(address.recipient_name);
+        itemViewModel.phoneNumber.set(address.recipient_phonenumber);
+        itemViewModel.address.set(address.address_content);
         itemViewModel.checked.set(address.is_default);
         itemViewModel.setIdAddress(address.id);
         itemViewModel.setNavigator(itemNavigator);

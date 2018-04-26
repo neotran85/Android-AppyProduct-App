@@ -137,27 +137,45 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
+    private void processResultOfFetchProductsByObject(JSONObject jsonResult, String categoryIds, String keyword) {
+        getDataManager().setCachedResponse("fetchProductsByObject", categoryIds + ":" + keyword, jsonResult.toString());
+        try {
+            if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+                Gson gson = new Gson();
+                ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
+                cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
+                if (response.message != null && response.message.size() > 0) {
+                    // ONLY SORT IF NO KEYWORDS
+                    if (keyword == null || keyword.length() == 0)
+                        sortResults(response.message);
+                    addProductsToDatabase(response.message);
+                    return;
+                }
+            }
+            // NOT OK
+            showEmptyProducts();
+        } catch (Exception e) {
+
+        }
+    }
+
     private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword) {
-        return (ObservableEmitter<ProductListResponse> subscriber) -> {
+        String cachedResult = getDataManager().getCachedResponse("fetchProductsByObject", categoryIds + ":" + keyword);
+        if (cachedResult != null && cachedResult.length() > 0) {
+            try {
+                JSONObject jsonResult = new JSONObject(cachedResult);
+                processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else return (ObservableEmitter<ProductListResponse> subscriber) -> {
             getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), getCurrentSortType()))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(jsonResult -> {
                         // 200 OK
-                        if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
-                            Gson gson = new Gson();
-                            ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
-                            cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
-                            if (response.message != null && response.message.size() > 0) {
-                                // ONLY SORT IF NO KEYWORDS
-                                if (keyword == null || keyword.length() == 0)
-                                    sortResults(response.message);
-                                addProductsToDatabase(response.message);
-                                return;
-                            }
-                        }
-                        // NOT OK
-                        showEmptyProducts();
+                        processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword);
                     }, throwable -> {
                         showEmptyProducts();
                         throwable.printStackTrace();

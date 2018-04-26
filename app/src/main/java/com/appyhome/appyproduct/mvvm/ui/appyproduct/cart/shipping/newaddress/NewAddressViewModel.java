@@ -43,13 +43,14 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public void saveShippingAddress() {
         com.appyhome.appyproduct.mvvm.data.local.db.realm.Address address = new com.appyhome.appyproduct.mvvm.data.local.db.realm.Address();
         address.id = System.currentTimeMillis();
-        address.customer_name = name.get();
-        address.phone_number = getPhoneNumber();
+        address.recipient_name = name.get();
+        address.recipient_phonenumber = getPhoneNumber();
         address.post_code = (postCode.get().length() > 0) ? ", (Post Code: " + postCode.get() + ")" : "";
         String add = DataUtils.joinStrings(", ",
                 unit.get(), street.get(), area1.get(), area2.get(), city.get(), address.post_code);
-        address.address = add.replace(" ," , " ");
-        address.customer_id = getUserId();
+        address.address_content = add.replace(" ," , " ");
+
+        address.user_id = getUserId();
         address.is_default = checked.get();
         address.place_id = placeId;
         address.longitude = longitude;
