@@ -50,9 +50,9 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         isMolpay.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_MOLPAY));
     }
 
-    public void addOrder() {
+    public void addOrder(long orderId) {
         getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
-                mShippingAddress, getUserId(), "Nam Tran", mTotalCost, 0)
+                mShippingAddress, getUserId(), "Nam Tran", mTotalCost, 0, orderId)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(order -> {

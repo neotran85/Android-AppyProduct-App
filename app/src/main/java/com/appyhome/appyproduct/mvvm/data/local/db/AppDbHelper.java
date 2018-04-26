@@ -786,11 +786,11 @@ public class AppDbHelper implements DbHelper {
     public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
                                            String paymentMethod, Address shippingAddress,
                                            String customerId, String customerName,
-                                           float totalCost, float discount) {
+                                           float totalCost, float discount, long orderId) {
         try {
             beginTransaction();
             ProductOrder order = new ProductOrder();
-            order.id = System.currentTimeMillis();
+            order.id = orderId == 0 ? System.currentTimeMillis() : orderId;
             order.customer_name = customerName;
             order.discount = discount;
             order.customer_id = customerId;

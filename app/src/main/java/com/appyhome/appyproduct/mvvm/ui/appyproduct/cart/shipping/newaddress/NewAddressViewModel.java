@@ -46,8 +46,9 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         address.customer_name = name.get();
         address.phone_number = getPhoneNumber();
         address.post_code = (postCode.get().length() > 0) ? ", (Post Code: " + postCode.get() + ")" : "";
-        address.address = DataUtils.joinStrings(", ",
+        String add = DataUtils.joinStrings(", ",
                 unit.get(), street.get(), area1.get(), area2.get(), city.get(), address.post_code);
+        address.address = add.replace(" ," , " ");
         address.customer_id = getUserId();
         address.is_default = checked.get();
         address.place_id = placeId;

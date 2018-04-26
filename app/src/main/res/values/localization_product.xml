@@ -52,5 +52,6 @@
     <string name="filter_reset">CLEAR FORM</string>
     <string name="filter_apply">APPLY</string>
     <string name="filter_rating">Rating</string>
+    <string name="successfully_charged">Thank you. Successfully Charged!</string>
 
 </resources>

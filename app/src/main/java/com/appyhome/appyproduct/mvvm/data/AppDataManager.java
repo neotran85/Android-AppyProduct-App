@@ -19,8 +19,6 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.local.prefs.PreferencesHelper;
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
@@ -533,8 +531,9 @@ public class AppDataManager implements DataManager {
     public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
                                            String paymentMethod, Address shippingAddress,
                                            String customerId, String customerName,
-                                           float totalCost, float discount) {
-        return mDbHelper.addOrder(items, paymentMethod, shippingAddress, customerId, customerName, totalCost, discount);
+                                           float totalCost, float discount, long orderId) {
+        return mDbHelper.addOrder(items, paymentMethod, shippingAddress, customerId,
+                customerName, totalCost, discount, orderId);
     }
 
     @Override

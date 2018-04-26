@@ -42,6 +42,8 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Inject
     int mLayoutId;
 
+    private long generatedOrderId = 0;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ConfirmationActivity.class);
         return intent;
@@ -103,9 +105,9 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Override
     public void onResume() {
         super.onResume();
-        mMainViewModel.getAllCheckedProductCarts();
-        mMainViewModel.fetchPaymentMethods();
-        mMainViewModel.getDefaultShippingAddress();
+        getViewModel().getAllCheckedProductCarts();
+        getViewModel().fetchPaymentMethods();
+        getViewModel().getDefaultShippingAddress();
     }
 
     @Override
@@ -131,19 +133,20 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     @Override
     public void gotoNextStep() {
-        mMainViewModel.addOrder();
-    }
-
-    public void addOrderOk(ProductOrder order) {
         if (mMainViewModel.isMolpay.get()) {
+            generatedOrderId = System.currentTimeMillis();
             PaymentManager.getInstance().startMolpayActivity(this,
-                    mMainViewModel.totalCost.get().toString(), order.id + "",
-                    mMainViewModel.getPhoneNumberOfUser(),
-                    mMainViewModel.getEmailOfUser(),
-                    mMainViewModel.getNameOfUser(), getString(R.string.appy_home_product_payment));
+                    getViewModel().totalCost.get().toString(), generatedOrderId + "",
+                    getViewModel().getPhoneNumberOfUser(),
+                    getViewModel().getEmailOfUser(),
+                    getViewModel().getNameOfUser(), getString(R.string.appy_home_product_payment));
         } else {
             openVisaPayment();
         }
+    }
+
+    public void addOrderOk(ProductOrder order) {
+        gotoOrderCompleted(order.id);
     }
 
     public void gotoOrderCompleted(long idOrder) {
@@ -157,13 +160,17 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
-            AlertManager.getInstance(this).showLongToast("Payment success" + data);
-            long orderId = data.getLongExtra("order_id", 111);
-            gotoOrderCompleted(orderId);
-        }
-        if (requestCode == REQUEST_VISA_PAYMENT && resultCode == RESULT_OK) {
-            gotoOrderCompleted(111);
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case MOLPayActivity.MOLPayXDK:
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.successfully_charged));
+                    getViewModel().addOrder(generatedOrderId);
+                    break;
+                case REQUEST_VISA_PAYMENT:
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.successfully_charged));
+                    getViewModel().addOrder(0);
+                    break;
+            }
         }
     }
 

@@ -73,7 +73,7 @@ public interface DbHelper {
     Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
                                     String paymentMethod, Address shippingAddress,
                                     String customerId, String customerName,
-                                    float totalCost, float discount);
+                                    float totalCost, float discount, long orderId);
 
     Flowable<Integer> getTotalCountProductCarts(String userId);
 
