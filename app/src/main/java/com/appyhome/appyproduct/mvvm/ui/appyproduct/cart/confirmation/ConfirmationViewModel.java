@@ -40,8 +40,8 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     // GET SUCCEEDED
                     mShippingAddress = addressResult;
                     name.set(addressResult.recipient_name);
-                    phoneNumber.set(addressResult.recipient_phonenumber);
-                    address.set(addressResult.address_content);
+                    phoneNumber.set(addressResult.recipient_phone_number);
+                    address.set(addressResult.getAddressText());
                     customerName = addressResult.recipient_name;
                 }, Crashlytics::logException));
     }

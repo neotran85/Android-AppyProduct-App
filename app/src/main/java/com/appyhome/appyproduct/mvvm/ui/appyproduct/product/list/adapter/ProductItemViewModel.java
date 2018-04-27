@@ -19,7 +19,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -217,7 +216,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         String postCode = "55904";
         shippingFee.set("");
         if (addressResult != null) {
-            locationName = addressResult.avatar;
+            locationName = addressResult.city + ", " + addressResult.state;
             if (addressResult.post_code.length() > 0) {
                 postCode = addressResult.post_code;
             } else {
