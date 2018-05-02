@@ -193,7 +193,7 @@
                                 <ImageView
                                     android:layout_width="13dp"
                                     android:layout_height="8dp"
-                                    android:layout_marginStart="8dp"
+                                    android:layout_marginStart="4dp"
                                     android:layout_marginTop="1dp"
                                     android:background="@mipmap/detail_icon_dropdown" />
                             </LinearLayout>

@@ -205,8 +205,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         String customMode = variant.isLocal() ? "AIR" : "SEA";
         String locationName = "Kuala Lumpur";
         String postCode = "55904";
-        
-        shippingFee.set("Calculating...");
+
+        shippingFee.set("");
 
         if (area != null && area.length() > 0) {
             locationName = area;
