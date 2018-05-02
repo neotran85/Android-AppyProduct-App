@@ -126,7 +126,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray"/>
+                        android:background="@color/gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -174,7 +174,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Unit / House Number:"
+                            android:text="Company Name:"
                             android:textColor="@color/dark_gray"
                             android:textSize="14sp" />
 
@@ -183,6 +183,40 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
+                            android:singleLine="true"
+                            android:text="@={viewModel.companyName}"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Unit:"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:background="@null"
+                            android:hint="house number, floor, block, building name..."
                             android:singleLine="true"
                             android:text="@={viewModel.unit}"
                             android:textColor="@color/dark_gray"
@@ -207,7 +241,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Street:"
+                            android:text="Address:"
                             android:textColor="@color/dark_gray"
                             android:textSize="14sp" />
 
@@ -216,76 +250,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@null"
+                            android:hint="Ex: Jalan Kenari 5, IO! Boulevard, Bandar Puchong Jaya"
                             android:singleLine="true"
                             android:text="@={viewModel.street}"
                             android:textColor="@color/dark_gray"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="14dp"
-                        android:paddingRight="14dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Area Line 1:"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="@={viewModel.area1}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="14dp"
-                        android:paddingRight="14dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Area Line 2:"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="@={viewModel.area2}"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
@@ -317,6 +286,39 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@={viewModel.city}"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="State:"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:background="@null"
+                            android:singleLine="true"
+                            android:text="@={viewModel.state}"
                             android:textColor="@color/dark_gray"
                             android:textSize="14sp" />
 
@@ -393,6 +395,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/gray" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
                 </LinearLayout>
             </ScrollView>
 

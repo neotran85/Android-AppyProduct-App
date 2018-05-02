@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
 import android.arch.persistence.room.ColumnInfo;
 
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,14 +27,19 @@ public class Address extends RealmObject {
     public String user_id;
 
     @Expose
-    @SerializedName("west_my")
-    @ColumnInfo(name = "west_my")
-    public String west_my;
+    @SerializedName("is_west_my")
+    @ColumnInfo(name = "is_west_my")
+    public String is_west_my;
 
     @Expose
-    @SerializedName("address_content")
-    @ColumnInfo(name = "address_content")
-    public String address_content;
+    @SerializedName("indoor_address")
+    @ColumnInfo(name = "indoor_address")
+    public String indoor_address;
+
+    @Expose
+    @SerializedName("outdoor_address")
+    @ColumnInfo(name = "outdoor_address")
+    public String outdoor_address;
 
     @Expose
     @SerializedName("address_name")
@@ -41,9 +47,9 @@ public class Address extends RealmObject {
     public String address_name;
 
     @Expose
-    @SerializedName("recipient_phonenumber")
-    @ColumnInfo(name = "recipient_phonenumber")
-    public String recipient_phonenumber;
+    @SerializedName("recipient_phone_number")
+    @ColumnInfo(name = "recipient_phone_number")
+    public String recipient_phone_number;
 
     @Expose
     @SerializedName("company_name")
@@ -56,29 +62,19 @@ public class Address extends RealmObject {
     public String recipient_name;
 
     @Expose
-    @SerializedName("avatar")
-    @ColumnInfo(name = "avatar")
-    public String avatar;
-
-    @Expose
-    @SerializedName("unit")
-    @ColumnInfo(name = "unit")
-    public String unit;
-
-    @Expose
     @SerializedName("city")
     @ColumnInfo(name = "city")
     public String city;
 
     @Expose
+    @SerializedName("country")
+    @ColumnInfo(name = "country")
+    public String country;
+
+    @Expose
     @SerializedName("state")
     @ColumnInfo(name = "state")
     public String state;
-
-    @Expose
-    @SerializedName("street")
-    @ColumnInfo(name = "street")
-    public String street;
 
     @Expose
     @SerializedName("post_code")
@@ -104,4 +100,12 @@ public class Address extends RealmObject {
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;
+
+    public String getAddressText() {
+        String postCode = (post_code.length() > 0) ? ", (Post Code: " + post_code + ")" : "";
+        String add = DataUtils.joinStrings(", ",
+                indoor_address, outdoor_address, city, state, postCode);
+        add = add.replace(" ,", " ");
+        return add;
+    }
 }

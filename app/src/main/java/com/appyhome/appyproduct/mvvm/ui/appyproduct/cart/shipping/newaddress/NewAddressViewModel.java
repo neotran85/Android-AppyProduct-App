@@ -23,10 +23,10 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> street = new ObservableField<>("");
     public ObservableField<String> unit = new ObservableField<>("");
-    public ObservableField<String> area1 = new ObservableField<>("");
-    public ObservableField<String> area2 = new ObservableField<>("");
     public ObservableField<String> city = new ObservableField<>("");
+    public ObservableField<String> state = new ObservableField<>("");
     public ObservableField<String> postCode = new ObservableField<>("");
+    public ObservableField<String> companyName = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(true);
 
     private double longitude = 0;
@@ -44,18 +44,18 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         com.appyhome.appyproduct.mvvm.data.local.db.realm.Address address = new com.appyhome.appyproduct.mvvm.data.local.db.realm.Address();
         address.id = System.currentTimeMillis();
         address.recipient_name = name.get();
-        address.recipient_phonenumber = getPhoneNumber();
-        address.post_code = (postCode.get().length() > 0) ? ", (Post Code: " + postCode.get() + ")" : "";
-        String add = DataUtils.joinStrings(", ",
-                unit.get(), street.get(), area1.get(), area2.get(), city.get(), address.post_code);
-        address.address_content = add.replace(" ," , " ");
-
+        address.recipient_phone_number = getPhoneNumber();
+        address.post_code = postCode.get();
+        address.city = city.get();
+        address.state = state.get();
+        address.indoor_address = unit.get();
+        address.outdoor_address = street.get();
+        address.country = "Malaysia";
         address.user_id = getUserId();
         address.is_default = checked.get();
         address.place_id = placeId;
         address.longitude = longitude;
         address.latitude = latitude;
-        address.avatar = city.get();
 
         getCompositeDisposable().add(getDataManager().addShippingAddress(address)
                 .take(1)
@@ -85,9 +85,10 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
 
     public boolean checkIfLocationInputted() {
         return unit.get().length() > 0 ||
+                companyName.get().length() > 0 ||
                 street.get().length() > 0 ||
-                area1.get().length() > 0 ||
-                area2.get().length() > 0 ||
+                city.get().length() > 0 ||
+                state.get().length() > 0 ||
                 city.get().length() > 0 ||
                 postCode.get().length() > 0;
     }
@@ -108,11 +109,11 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                         String stateStr = addresses.get(0).getAdminArea();
                         String countryStr = addresses.get(0).getCountryName();
                         String cityStr = getLocalCity(addresses);
-                        setValueNotNull(city, stateStr + ", " + countryStr);
+                        setValueNotNull(city, cityStr);
                         setValueNotNull(postCode, getPostCode(addresses));
                         setValueNotNull(unit, place.getName().toString());
                         setValueNotNull(street, place.getAddress().toString());
-                        setValueNotNull(area1, cityStr);
+                        setValueNotNull(state, stateStr);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
