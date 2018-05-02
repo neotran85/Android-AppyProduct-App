@@ -5,11 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -26,7 +29,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVarian
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
@@ -36,6 +38,13 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+import com.appyhome.appyproduct.mvvm.utils.manager.MapManager;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -204,7 +213,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");
-        getViewModel().fetchDefaultShippingAddress(variant);
+        calculateShippingFee(variant);
         getViewModel().fetchSellerInformation(variant.seller_id);
         loadImages(variant);
         mBinder.tableDescription.loadData(variant);
@@ -437,20 +446,71 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mProductCartItemViewModel = null;
     }
 
+    private String getLocalCity(List<Address> addresses) {
+        for (Address address : addresses) {
+            if (address.getLocality() != null) {
+                return address.getLocality();
+            }
+        }
+        return "";
+    }
+
+    private String getPostCode(List<Address> addresses) {
+        for (Address address : addresses) {
+            if (address.getPostalCode() != null) {
+                return address.getPostalCode();
+            }
+        }
+        return "";
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_SELECT_LOCATION && resultCode == RESULT_OK) {
-            getViewModel().fetchDefaultShippingAddress(mSelectedVariant);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case MapManager.PLACE_PICKER_REQUEST:
+                    calculateShippingFee(data);
+                    break;
+            }
+        }
+    }
+
+    private void calculateShippingFee(ProductVariant variant) {
+        getViewModel().calculateShippingFee(variant);
+    }
+
+    private void calculateShippingFee(Intent data) {
+        if (data != null) {
+            Place place = PlacePicker.getPlace(this, data);
+            if (place != null) {
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(this, Locale.getDefault());
+                try {
+                    double longitude = place.getLatLng().longitude;
+                    double latitude = place.getLatLng().latitude;
+                    addresses = geocoder.getFromLocation(latitude, longitude, 10);
+                    if (addresses != null && addresses.size() > 0) {
+                        String stateStr = addresses.get(0).getAdminArea();
+                        String countryStr = addresses.get(0).getCountryName();
+                        String cityStr = getLocalCity(addresses);
+                        String addressArea = TextUtils.join(", ", new String[]{cityStr, stateStr, countryStr});
+                        getViewModel().calculateShippingFee(addressArea, getPostCode(addresses), mSelectedVariant);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Crashlytics.logException(e);
+                }
+            }
+        } else {
+            getViewModel().calculateShippingFee("", "", mSelectedVariant);
         }
     }
 
     @Override
     public void selectShippingLocation() {
-        if (getViewModel().isUserLoggedIn()) {
-            Intent intent = ChooseShippingAddressActivity.getStartIntent(this);
-            startActivityForResult(intent, REQUEST_SELECT_LOCATION);
-        }
+        MapManager.openMapForPlaceSelection(this);
     }
 
     @Override

@@ -62,4 +62,12 @@ public interface PreferencesHelper {
     String getCachedResponse(String command, String key);
 
     void clearCachedResponse();
+
+    void setDefaultShippingLocation(String location);
+
+    void setDefaultShippingPostCode(String postCode);
+
+    String getDefaultShippingPostCode();
+
+    String getDefaultShippingLocation();
 }

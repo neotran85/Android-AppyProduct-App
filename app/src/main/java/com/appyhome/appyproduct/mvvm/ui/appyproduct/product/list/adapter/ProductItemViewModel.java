@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
@@ -19,7 +18,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -197,44 +195,38 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     /***************** SHIPPING FREE *****************/
 
-
-    public void fetchDefaultShippingAddress(ProductVariant variant) {
-        if (isUserLoggedIn())
-            getCompositeDisposable().add(getDataManager().getDefaultShippingAddress(getUserId())
-                    .take(1)
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(addressResult -> {
-                        getShippingFee(addressResult, variant);
-                    }, Crashlytics::logException));
-        else {
-            getShippingFee(null, variant);
-        }
+    public void calculateShippingFee(ProductVariant variant) {
+        String postCode = getDataManager().getDefaultShippingPostCode();
+        String location = getDataManager().getDefaultShippingLocation();
+        calculateShippingFee(location, postCode, variant);
     }
 
-    private void getShippingFee(Address addressResult, ProductVariant variant) {
+    public void calculateShippingFee(String area, String post_code, ProductVariant variant) {
         String customMode = variant.isLocal() ? "AIR" : "SEA";
         String locationName = "Kuala Lumpur";
         String postCode = "55904";
-        shippingFee.set("");
-        if (addressResult != null) {
-            locationName = addressResult.avatar;
-            if (addressResult.post_code.length() > 0) {
-                postCode = addressResult.post_code;
-            } else {
-                shippingLocation.set(locationName);
-                shippingFee.set("Unknown");
-                return;
-            }
+        shippingFee.set("Calculating...");
+
+        if (area != null && area.length() > 0) {
+            locationName = area;
+            postCode = post_code;
         }
-        shippingLocation.set(locationName);
-        getCompositeDisposable().add(getDataManager().fetchShippingFee(new GetShippingRequest(variant.product_id, customMode, postCode, variant.weight))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null && data.isValid()) {
-                        shippingFee.set(getString(R.string.rm) + " " + data.price);
-                    } else shippingFee.set(getString(R.string.fee_unknown));
-                }, Crashlytics::logException));
+        
+        shippingLocation.set("Shipping to: " + locationName);
+        getDataManager().setDefaultShippingLocation(locationName);
+        getDataManager().setDefaultShippingPostCode(postCode);
+
+        if (post_code.length() <= 0) {
+            shippingFee.set("Unknown");
+        } else
+            getCompositeDisposable().add(getDataManager().fetchShippingFee(new GetShippingRequest(variant.product_id, customMode, postCode, variant.weight))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(data -> {
+                        if (data != null && data.isValid()) {
+                            shippingFee.set(getString(R.string.rm) + " " + data.price);
+                        } else shippingFee.set(getString(R.string.fee_unknown));
+                    }, Crashlytics::logException));
     }
 
     public void fetchSellerInformation(int sellerId) {

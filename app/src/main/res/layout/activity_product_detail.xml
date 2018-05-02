@@ -160,6 +160,7 @@
 
                         <LinearLayout
                             android:onClick="@{(view) -> navigator.selectShippingLocation()}"
+                            android:clickable="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="18dp"
@@ -179,26 +180,19 @@
                                     android:src="@mipmap/icon_car_shipping" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:foreground="?attr/selectableItemBackground"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:gravity="center_vertical"
-                                    android:text="Shipping to : "
-                                    android:textColor="@color/dark_gray"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
+                                    android:maxLines="3"
                                     android:gravity="center_vertical"
                                     android:text="@{viewModel.shippingLocation}"
                                     android:textColor="@color/medium_dark_gray"
-                                    android:textSize="13sp" />
-
+                                    android:textSize="12sp" />
                                 <ImageView
                                     android:layout_width="13dp"
-                                    android:layout_height="7dp"
+                                    android:layout_height="8dp"
                                     android:layout_marginStart="8dp"
                                     android:layout_marginTop="1dp"
                                     android:background="@mipmap/detail_icon_dropdown" />
@@ -207,6 +201,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:layout_marginStart="32dp"
                                 android:orientation="horizontal">
 
@@ -215,9 +210,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
                                     android:gravity="center_vertical"
-                                    android:text="Shipping fee : "
+                                    android:text="Shipping fee: "
                                     android:textColor="@color/dark_gray"
-                                    android:textSize="13sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     fontPath="fonts/TitilliumWeb-SemiBold.ttf"
@@ -227,7 +222,7 @@
                                     android:gravity="center_vertical"
                                     android:text="@{viewModel.shippingFee}"
                                     android:textColor="@color/medium_dark_gray"
-                                    android:textSize="13sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
 

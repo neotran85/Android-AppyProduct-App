@@ -25,6 +25,8 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_SERVICE_ADDRESS = "PREF_KEY_SERVICE_ADDRESS";
     private static final String PREF_KEY_CACHED_RESPONSE = "PREF_KEY_CACHED_RESPONSE";
+    private static final String PREF_KEY_SHIPPING_LOCATION = "PREF_KEY_SHIPPING_LOCATION";
+    private static final String PREF_KEY_SHIPPING_POST_CODE = "PREF_KEY_SHIPPING_POST_CODE";
 
     private final SharedPreferences mPrefs;
     private final SharedPreferences mCachedResponse;
@@ -157,6 +159,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
+    public void setDefaultShippingLocation(String location) {
+        mPrefs.edit().putString(PREF_KEY_SHIPPING_LOCATION, location).apply();
+    }
+
+    @Override
+    public void setDefaultShippingPostCode(String postCode) {
+        mPrefs.edit().putString(PREF_KEY_SHIPPING_POST_CODE, postCode).apply();
+    }
+
+    @Override
     public void setProductsSortCurrent(String userId, String sort) {
         mPrefs.edit().putString(PREF_PRODUCT_SORT_CURRENT + ":" + userId, sort).apply();
     }
@@ -169,6 +181,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public String getCachedResponse(String command, String key) {
         return mCachedResponse.getString(PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key, "");
+    }
+
+    @Override
+    public String getDefaultShippingPostCode() {
+        return mPrefs.getString(PREF_KEY_SHIPPING_POST_CODE, "");
+    }
+
+    @Override
+    public String getDefaultShippingLocation() {
+        return mPrefs.getString(PREF_KEY_SHIPPING_LOCATION, "");
     }
 
     @Override

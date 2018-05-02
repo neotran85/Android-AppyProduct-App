@@ -760,6 +760,27 @@ public class AppDataManager implements DataManager {
     public void clearCachedResponse() {
         mPreferencesHelper.clearCachedResponse();
     }
+
+    @Override
+    public void setDefaultShippingLocation(String location) {
+        mPreferencesHelper.setDefaultShippingLocation(location);
+    }
+
+    @Override
+    public void setDefaultShippingPostCode(String postCode) {
+        mPreferencesHelper.setDefaultShippingPostCode(postCode);
+    }
+
+    @Override
+    public String getDefaultShippingPostCode() {
+        return mPreferencesHelper.getDefaultShippingPostCode();
+    }
+
+    @Override
+    public String getDefaultShippingLocation() {
+        return mPreferencesHelper.getDefaultShippingLocation();
+    }
+
     @Override
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return mApiHelper.fetchShippingFee(request);

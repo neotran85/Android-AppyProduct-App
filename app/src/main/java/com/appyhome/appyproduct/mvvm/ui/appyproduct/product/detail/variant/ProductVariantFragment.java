@@ -131,7 +131,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
             mSelectedVariantView = view;
             if (mSelectedVariantView.getTag() instanceof ProductVariant) {
                 ProductVariant variant = (ProductVariant) mSelectedVariantView.getTag();
-                getViewModel().selectedVariantName.set(variant.variant_name);
+                getViewModel().selectedVariantName.set("Selected Variant: " + variant.variant_name);
                 if (mDetailNavigator != null)
                     mDetailNavigator.selectedVariant(variant);
             }
