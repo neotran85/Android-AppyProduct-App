@@ -594,6 +594,18 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Boolean> removeShippingAddress(String userId, long id) {
+        beginTransaction();
+        AppyAddress address = getRealm().where(AppyAddress.class)
+                .equalTo("id", id)
+                .equalTo("user_id", userId)
+                .findFirst();
+        if (address != null && address.isValid()) address.deleteFromRealm();
+        getRealm().commitTransaction();
+        return Flowable.just(address != null && address.isValid());
+    }
+
+    @Override
     public Flowable<Boolean> setDefaultShippingAddress(String userId, long id) {
         try {
             beginTransaction();
@@ -602,7 +614,7 @@ public class AppDbHelper implements DbHelper {
                     .findFirst();
 
             RealmResults<AppyAddress> addressList = getRealm().where(AppyAddress.class)
-                    .equalTo("customer_id", userId)
+                    .equalTo("user_id", userId)
                     .findAll();
             if (addressList != null && addressList.isValid()) {
                 for (AppyAddress address1 : addressList) {

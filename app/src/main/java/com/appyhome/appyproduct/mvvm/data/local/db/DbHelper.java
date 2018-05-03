@@ -66,6 +66,8 @@ public interface DbHelper {
 
     Flowable<Boolean> setDefaultShippingAddress(String userId, long id);
 
+    Flowable<Boolean> removeShippingAddress(String userId, long id);
+
     Flowable<AppyAddress> getDefaultShippingAddress(String userId);
 
     Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);

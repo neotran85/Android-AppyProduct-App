@@ -64,7 +64,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
 
                 }, this::onFetchFailed));
     }
-    private void fetchShippingAddresses() {
+    public void fetchShippingAddresses() {
         mIsFetchShippingAddresses = true;
         getCompositeDisposable().add(getDataManager().fetchUserShippingAddress()
                 .subscribeOn(getSchedulerProvider().io())

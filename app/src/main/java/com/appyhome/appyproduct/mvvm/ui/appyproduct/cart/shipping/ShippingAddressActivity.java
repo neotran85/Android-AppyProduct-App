@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator, AddressItemNavigator {
+public class ShippingAddressActivity extends BaseActivity<ActivityProductShippingBinding, ShippingAddressViewModel> implements ShippingAddressNavigator {
 
     @Inject
     protected ShippingAddressViewModel mViewModel;
@@ -89,7 +89,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     public void showAddressList(RealmResults<AppyAddress> addresses) {
         if (addresses != null) {
-            mAdapter.addItems(addresses, this);
+            mAdapter.addItems(addresses, mAdapter);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -107,14 +107,5 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
-    }
-
-    @Override
-    public void updateDatabaseCompleted() {
-    }
-
-    @Override
-    public void onItemChecked(AddressItemViewModel item) {
-        mAdapter.selectAddress(item);
     }
 }

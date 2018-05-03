@@ -511,6 +511,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<Boolean> removeShippingAddress(String userId, long id) {
+        return mDbHelper.removeShippingAddress(userId, id);
+    }
+
+    @Override
     public Flowable<AppyAddress> getDefaultShippingAddress(String userId) {
         return mDbHelper.getDefaultShippingAddress(userId);
     }
@@ -804,6 +809,10 @@ public class AppDataManager implements DataManager {
         return mApiHelper.setUserDefaultShippingAddress(idAddress);
     }
 
+    @Override
+    public Single<ApiResponse> removeUserShippingAddress(int idAddress) {
+        return mApiHelper.removeUserShippingAddress(idAddress);
+    }
     @Override
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return mApiHelper.fetchShippingFee(request);

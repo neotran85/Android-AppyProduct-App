@@ -29,8 +29,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetail
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivityModule;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.ProductListActivityModule;
@@ -148,9 +146,6 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = SearchActivityModule.class)
     abstract SearchActivity bindSearchActivity();
-
-    @ContributesAndroidInjector(modules = ChooseShippingAddressActivityModule.class)
-    abstract ChooseShippingAddressActivity bindChooseShippingAddressActivity();
 
     @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductVariantFragmentProvider.class, EditVariantFragmentProvider.class})
     abstract ProductDetailActivity bindProductDetailActivity();

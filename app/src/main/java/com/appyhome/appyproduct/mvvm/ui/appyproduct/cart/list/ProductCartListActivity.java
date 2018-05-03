@@ -57,6 +57,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
         mProductCartAdapter.setMainViewModel(mViewModel);
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
+        getViewModel().fetchShippingAddresses();
         getViewModel().getAllProductCarts();
     }
 

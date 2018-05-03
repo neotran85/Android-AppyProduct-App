@@ -29,14 +29,9 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
     public void loadAppData() {
         loadServicesCategories();
         loadServices();
-        boolean value = getDataManager().isLocalDatabaseUpdated();
-        if (value) {
-            // FINISHED ALL LOAD PRODUCT DATA, THEN FETCH USER DATA
+        if (getDataManager().isLocalDatabaseUpdated()) {
             fetchUserData();
-        } else {
-            // FETCH PRODUCTS DATA
-            loadProductSubs();
-        }
+        } else loadProductSubs();
     }
 
     private void loadServices() {
@@ -99,7 +94,7 @@ public class SplashViewModel extends BaseViewModel<SplashActivity> {
 
     private void fetchUserData() {
         // FETCH USER DATA
-        if (isOnline() && isUserLoggedIn())
+        if (isUserLoggedIn())
             mFetchUserInfoViewModel.fetchUserData();
         else {
             getNavigator().onFetchUserInfo_Done();

@@ -118,7 +118,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@={viewModel.name}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -152,7 +152,7 @@
                             android:inputType="phone"
                             android:singleLine="true"
                             android:text="@={viewModel.phoneNumber}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -185,7 +185,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@={viewModel.companyName}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -219,7 +219,7 @@
                             android:hint="house number, floor, block, building name..."
                             android:singleLine="true"
                             android:text="@={viewModel.unit}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -253,7 +253,7 @@
                             android:hint="Ex: Jalan Kenari 5, IO! Boulevard, Bandar Puchong Jaya"
                             android:singleLine="true"
                             android:text="@={viewModel.street}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="13sp" />
 
                     </LinearLayout>
@@ -286,7 +286,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@={viewModel.city}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -319,7 +319,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@={viewModel.state}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -353,7 +353,7 @@
                             android:inputType="number"
                             android:singleLine="true"
                             android:text="@={viewModel.postCode}"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
 
                     </LinearLayout>

@@ -148,12 +148,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.appyproduct.product.detail.shipping.ChooseShippingAddressActivity"
-            android:screenOrientation="portrait"
-            android:excludeFromRecents="true"
-            android:theme="@style/ActivityDialog" />
-
-        <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
             <intent-filter>

@@ -5,6 +5,7 @@
     <string name="please_input_contact">Please input contact name and phone number.</string>
     <string name="please_input_shipping_address">Please input a shipping address</string>
     <string name="please_input_valid_phone">Please input a valid phone number</string>
+    <string name="please_input_valid_post_code">Please input a valid post code</string>
     <string name="visa_credit_debit">Visa Credit / Debit</string>
     <string name="via_molpay">Molpay</string>
     <string name="thank_you_your_order_is_completed">Thank you.\n Your order is completed.</string>

@@ -19,8 +19,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{(view)->navigator.onItemChecked(viewModel)}"
         android:orientation="horizontal"
-        android:paddingBottom="18dp"
-        android:paddingEnd="14dp"
+        android:paddingBottom="4dp"
         android:paddingStart="14dp"
         android:paddingTop="14dp">
 
@@ -37,7 +36,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
             android:layout_marginStart="14dp"
             android:orientation="vertical">
 
@@ -46,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.name}"
-                android:textColor="@color/black"
+                android:textColor="@color/medium_dark_gray"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -60,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phone:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/medium_dark_gray"
                     android:textSize="14sp" />
 
                 <TextView
@@ -69,20 +67,98 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@{viewModel.phoneNumber}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/medium_dark_gray"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
                 fontPath="fonts/TitilliumWeb-Light.ttf"
+                textVisible="@{viewModel.companyName}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:text="@{viewModel.companyName}"
+                android:textColor="@color/medium_dark_gray"
+                android:textSize="14sp" />
+
+            <TextView
+                fontPath="fonts/TitilliumWeb-Light.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@{viewModel.address}"
-                android:textColor="@color/black"
+                android:textColor="@color/medium_dark_gray"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="4dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:onClick="@{(view) -> navigator.editAddress(viewModel)}"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:alpha="0.3"
+                        android:background="@drawable/ic_edit_black_24dp" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Light.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Edit"
+                        android:textColor="@color/medium_dark_gray"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:onClick="@{(view) -> navigator.removeAddress(viewModel)}"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:alpha="0.3"
+                        android:background="@drawable/ic_delete_forever_black_24dp" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Light.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Remove"
+                        android:textColor="@color/medium_dark_gray"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </layout>

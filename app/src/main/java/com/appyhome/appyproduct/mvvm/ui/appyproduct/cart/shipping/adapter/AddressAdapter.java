@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,12 +16,13 @@ import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNavigator> {
+public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNavigator> implements AddressItemNavigator {
 
     private AddressItemViewModel mSelected;
     private DataManager mDataManager;
     private SchedulerProvider mSchedulerProvider;
     private AddressItemNavigator mNavigator;
+    private Context mContext;
 
     public AddressAdapter(DataManager dataManager, SchedulerProvider schedulerProvider) {
         mSelected = null;
@@ -29,13 +31,41 @@ public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNaviga
         mSchedulerProvider = schedulerProvider;
     }
 
-    public void selectAddress(AddressItemViewModel viewModel) {
-        if (mSelected != null) {
-            mSelected.checked.set(false);
+    @Override
+    public void updateDatabaseCompleted() {
+
+    }
+
+    @Override
+    public void onItemChecked(AddressItemViewModel viewModel) {
+        if (viewModel != null) {
+            if (mSelected != null) {
+                mSelected.checked.set(false);
+            }
+            viewModel.checked.set(true);
+            viewModel.updateDefaultToDatabase();
+            mSelected = viewModel;
         }
-        viewModel.checked.set(true);
-        viewModel.updateDefaultToDatabase();
-        mSelected = viewModel;
+    }
+
+    @Override
+    public void removeAddress(AddressItemViewModel viewModel) {
+        if (viewModel != null) {
+            viewModel.removeAddress();
+            int index = indexOf(viewModel);
+            mItems.remove(viewModel);
+            notifyItemRemoved(index);
+            if (mItems.size() > 0 && viewModel.checked.get()) {
+                onItemChecked((AddressItemViewModel) mItems.get(0));
+            }
+        }
+    }
+
+    @Override
+    public void editAddress(AddressItemViewModel item) {
+        if (mContext != null) {
+
+        }
     }
 
     @Override
@@ -55,6 +85,8 @@ public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNaviga
         itemViewModel.phoneNumber.set(address.recipient_phone_number);
         itemViewModel.address.set(address.getAddressText());
         itemViewModel.checked.set(address.is_default == 1);
+        if (address.company_name != null && address.company_name.length() > 0)
+            itemViewModel.companyName.set("Company: " + address.company_name);
         itemViewModel.setIdAddress(address.id);
         itemViewModel.setNavigator(itemNavigator);
         if (address.is_default == 1)
@@ -75,8 +107,9 @@ public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNaviga
 
     @Override
     protected AddressItemViewHolder getContentHolder(ViewGroup parent) {
+        mContext = parent.getContext();
         ViewItemProductShippingAddressBinding itemViewBinding = ViewItemProductShippingAddressBinding
-                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+                .inflate(LayoutInflater.from(mContext), parent, false);
         return new AddressItemViewHolder(itemViewBinding, mNavigator);
     }
 

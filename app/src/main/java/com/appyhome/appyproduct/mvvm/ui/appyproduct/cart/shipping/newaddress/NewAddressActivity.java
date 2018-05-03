@@ -55,8 +55,8 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
             showAlert(getString(R.string.please_input_contact));
             return;
         }
-        if (!getViewModel().isPhoneNumberValid()) {
-            showAlert(getString(R.string.please_input_valid_phone));
+        if (!getViewModel().isPostCodeValid()) {
+            showAlert(getString(R.string.please_input_valid_post_code));
             return;
         }
         if (!getViewModel().checkIfLocationInputted()) {

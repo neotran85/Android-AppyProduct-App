@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -16,6 +17,11 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
     public ProductCartListViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+    }
+
+    public void fetchShippingAddresses() {
+        FetchUserInfoViewModel viewModel = new FetchUserInfoViewModel(getDataManager(), getSchedulerProvider());
+        viewModel.fetchShippingAddresses();
     }
 
     public void emptyProductCarts() {

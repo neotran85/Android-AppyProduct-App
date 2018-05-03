@@ -316,6 +316,15 @@ public class AppApiHelper implements ApiHelper {
                 .getObjectSingle(ApiResponse.class);
     }
 
+    @Override
+    public Single<ApiResponse> removeUserShippingAddress(int idAddress) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_SHIPPING_ADDRESS_REMOVE)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter("address_id", idAddress + "")
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
     /********** PRODUCT WISH LIST API INTEGRATION **********/
 
     @Override

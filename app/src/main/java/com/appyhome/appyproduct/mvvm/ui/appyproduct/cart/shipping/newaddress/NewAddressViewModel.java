@@ -19,8 +19,6 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.List;
 import java.util.Locale;
 
-import io.realm.RealmList;
-
 public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> name = new ObservableField<>("");
     public ObservableField<String> phoneNumber = new ObservableField<>("");
@@ -58,14 +56,15 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         address.is_default = checked.get() ? 1 : 0;
         address.place_id = placeId;
         address.longitude = longitude;
+        address.company_name = companyName.get();
         address.latitude = latitude;
         // ADD TO SERVER DB
         getCompositeDisposable().add(getDataManager().addUserShippingAddress(new AddShippingAddressRequest(address))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
-                    // SUCCESSFULLY ADDED TO SERVER
-                    fetchAllShippingAddresses(address);
+                    // SUCCESSFULLY ADDED TO SERVER, THEN FETCH ALL ADDRESSES
+                    fetchAllShippingAddresses();
                 }, Crashlytics::logException));
     }
 
@@ -79,6 +78,10 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
 
     public boolean isPhoneNumberValid() {
         return ValidationUtils.isPhoneNumberValid(getPhoneNumber());
+    }
+
+    public boolean isPostCodeValid() {
+        return postCode.get().length() > 0;
     }
 
     public boolean checkIfContactInputted() {
@@ -144,23 +147,18 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         return "";
     }
 
-    private void fetchAllShippingAddresses(AppyAddress address) {
+    private void fetchAllShippingAddresses() {
         getCompositeDisposable().add(getDataManager().fetchUserShippingAddress()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
                     if (data != null && data.isValid()) {
-                        RealmList<AppyAddress> addresses = data.message;
-                        if (addresses.size() > 0 && address != null) {
-                            address.updateFrom(addresses.get(addresses.size() - 1));
-                            getCompositeDisposable().add(getDataManager().addShippingAddress(address)
-                                    .take(1)
-                                    .observeOn(getSchedulerProvider().ui())
-                                    .subscribe(success -> {
-                                        //UPDATE ADDRESS SUCCESSFULLY
-                                        getNavigator().onAddressSaved();
-                                    }, Crashlytics::logException));
-                        }
+                        getCompositeDisposable().add(getDataManager().syncAllShippingAddresses(getUserId(), data.message)
+                                .take(1)
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(success -> {
+                                    getNavigator().onAddressSaved();
+                                }, Crashlytics::logException));
                     }
                 }, Crashlytics::logException));
     }
