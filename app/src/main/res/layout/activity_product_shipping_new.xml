@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="New Shipping Address"
+                android:text="@{viewModel.titleScreen}"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -414,7 +414,6 @@
                     android:background="@color/gray" />
 
                 <Button
-                    android:id="@+id/btSave"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -425,7 +424,8 @@
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.saveAddress()}"
-                    android:text="SAVE"
+                    android:text="@{viewModel.titleButton}"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>

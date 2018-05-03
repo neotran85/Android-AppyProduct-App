@@ -62,9 +62,9 @@ public interface DbHelper {
 
     Flowable<RealmResults<AppyAddress>> getAllShippingAddress(String userId);
 
-    Flowable<Boolean> addShippingAddress(AppyAddress address);
-
     Flowable<Boolean> setDefaultShippingAddress(String userId, long id);
+
+    Flowable<AppyAddress> getShippingAddress(String userId, long id);
 
     Flowable<Boolean> removeShippingAddress(String userId, long id);
 

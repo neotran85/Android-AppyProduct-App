@@ -308,6 +308,15 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Single<AddShippingAddressResponse> editUserShippingAddress(AddShippingAddressRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_SHIPPING_ADDRESS_EDIT)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(AddShippingAddressResponse.class);
+    }
+
+    @Override
     public Single<ApiResponse> setUserDefaultShippingAddress(int idAddress) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_SHIPPING_ADDRESS_SET_DEFAULT)
                 .addHeaders(mApiHeader.getProtectedApiHeader())

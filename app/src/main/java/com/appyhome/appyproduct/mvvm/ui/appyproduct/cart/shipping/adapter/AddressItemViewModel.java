@@ -22,6 +22,10 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
         super(dataManager, schedulerProvider);
     }
 
+    public int getAddressId() {
+        return idAddress;
+    }
+
     public void updateDefaultToDatabase() {
         getCompositeDisposable().add(getDataManager().setDefaultShippingAddress(getUserId(), idAddress)
                 .take(1)

@@ -501,13 +501,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(AppyAddress address) {
-        return mDbHelper.addShippingAddress(address);
+    public Flowable<Boolean> setDefaultShippingAddress(String userId, long id) {
+        return mDbHelper.setDefaultShippingAddress(userId, id);
     }
 
     @Override
-    public Flowable<Boolean> setDefaultShippingAddress(String userId, long id) {
-        return mDbHelper.setDefaultShippingAddress(userId, id);
+    public Flowable<AppyAddress> getShippingAddress(String userId, long id) {
+        return mDbHelper.getShippingAddress(userId, id);
     }
 
     @Override
@@ -813,6 +813,12 @@ public class AppDataManager implements DataManager {
     public Single<ApiResponse> removeUserShippingAddress(int idAddress) {
         return mApiHelper.removeUserShippingAddress(idAddress);
     }
+
+    @Override
+    public Single<AddShippingAddressResponse> editUserShippingAddress(AddShippingAddressRequest request) {
+        return mApiHelper.editUserShippingAddress(request);
+    }
+
     @Override
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return mApiHelper.fetchShippingFee(request);

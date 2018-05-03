@@ -110,4 +110,6 @@ public interface ApiHelper {
     Single<ApiResponse> setUserDefaultShippingAddress(int idAddress);
 
     Single<ApiResponse> removeUserShippingAddress(int idAddress);
+
+    Single<AddShippingAddressResponse> editUserShippingAddress(AddShippingAddressRequest request);
 }

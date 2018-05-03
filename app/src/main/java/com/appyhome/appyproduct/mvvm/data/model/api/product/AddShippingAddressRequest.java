@@ -7,6 +7,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddShippingAddressRequest {
     @Expose
+    @SerializedName("address_id")
+    public int address_id;
+
+    @Expose
     @SerializedName("address_name")
     public String address_name;
 
@@ -46,7 +50,16 @@ public class AddShippingAddressRequest {
     @SerializedName("is_default")
     public int is_default;
 
+    public AddShippingAddressRequest(AppyAddress address, int idAddress) {
+        update(address);
+        address_id = idAddress;
+    }
+
     public AddShippingAddressRequest(AppyAddress address) {
+        update(address);
+    }
+
+    private void update(AppyAddress address) {
         address_name = address.address_name;
         outdoor_address = address.outdoor_address;
         indoor_address = address.indoor_address;

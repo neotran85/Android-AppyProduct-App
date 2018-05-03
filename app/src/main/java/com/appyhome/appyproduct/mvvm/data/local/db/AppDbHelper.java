@@ -569,31 +569,6 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(AppyAddress address) {
-        try {
-            beginTransaction();
-            if (address.is_default == 1) {
-                RealmResults<AppyAddress> addressList = getRealm().where(AppyAddress.class)
-                        .equalTo("user_id", address.user_id)
-                        .equalTo("is_default", 1)
-                        .findAll();
-                if (addressList != null && addressList.isValid() && addressList.size() > 0) {
-                    for (AppyAddress item : addressList) {
-                        item.is_default = 0;
-                    }
-                    getRealm().copyToRealmOrUpdate(addressList);
-                }
-            }
-            address = getRealm().copyToRealmOrUpdate(address);
-            getRealm().commitTransaction();
-            return Flowable.just(address != null && address.isValid());
-        } catch (Exception e) {
-            getRealm().cancelTransaction();
-            return Flowable.just(false);
-        }
-    }
-
-    @Override
     public Flowable<Boolean> removeShippingAddress(String userId, long id) {
         beginTransaction();
         AppyAddress address = getRealm().where(AppyAddress.class)
@@ -603,6 +578,19 @@ public class AppDbHelper implements DbHelper {
         if (address != null && address.isValid()) address.deleteFromRealm();
         getRealm().commitTransaction();
         return Flowable.just(address != null && address.isValid());
+    }
+
+    @Override
+    public Flowable<AppyAddress> getShippingAddress(String userId, long id) {
+        return Flowable.fromCallable(() -> {
+            beginTransaction();
+            AppyAddress address = getRealm().where(AppyAddress.class)
+                    .equalTo("id", id)
+                    .equalTo("user_id", userId)
+                    .findFirst();
+            getRealm().commitTransaction();
+            return address;
+        });
     }
 
     @Override

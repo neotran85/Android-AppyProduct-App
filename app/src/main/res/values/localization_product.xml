@@ -57,5 +57,7 @@
     <string name="visa_fill_all_pls">Please fill all the information.</string>
     <string name="visa_3_digits_on_the_back_of_your_card">3 digits on the back of your card</string>
     <string name="visa_cvv_code">CVV Code</string>
+    <string name="title_edit_shipping_address">Edit Shipping Address</string>
+    <string name="title_add_new_shipping_address">Add New Shipping Address</string>
 
 </resources>

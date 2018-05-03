@@ -18,7 +18,9 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
 
     @Inject
     public NewAddressViewModel mViewModel;
+
     ActivityProductShippingNewBinding mBinder;
+
     @Inject
     int mLayoutId;
 
@@ -63,7 +65,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
             showAlert(getString(R.string.please_input_shipping_address));
             return;
         }
-        getViewModel().saveShippingAddress();
+        getViewModel().saveShippingAddress(getAddressId());
     }
 
     @Override
@@ -73,6 +75,18 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
         mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
         mViewModel.setNavigator(this);
+        if(getAddressId() >= 0) {
+            getViewModel().titleScreen.set(getString(R.string.title_edit_shipping_address));
+            getViewModel().titleButton.set(getString(R.string.save));
+            getViewModel().getAddressById(getAddressId());
+        } else {
+            getViewModel().titleButton.set(getString(R.string.create));
+            getViewModel().titleScreen.set(getString(R.string.title_add_new_shipping_address));
+        }
+    }
+
+    private int getAddressId() {
+        return getIntent().getIntExtra("address_id", -1);
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -29,6 +30,8 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> postCode = new ObservableField<>("");
     public ObservableField<String> companyName = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(true);
+    public ObservableField<String> titleScreen = new ObservableField<String>("");
+    public ObservableField<String> titleButton = new ObservableField<String>("");
 
     private double longitude = 0;
 
@@ -41,7 +44,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public void saveShippingAddress() {
+    public void saveShippingAddress(int idAddress) {
         AppyAddress address = new AppyAddress();
         address.address_name = name.get();
         address.recipient_name = name.get();
@@ -59,13 +62,22 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         address.company_name = companyName.get();
         address.latitude = latitude;
         // ADD TO SERVER DB
-        getCompositeDisposable().add(getDataManager().addUserShippingAddress(new AddShippingAddressRequest(address))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    // SUCCESSFULLY ADDED TO SERVER, THEN FETCH ALL ADDRESSES
-                    fetchAllShippingAddresses();
-                }, Crashlytics::logException));
+        if (idAddress >= 0)
+            getCompositeDisposable().add(getDataManager().editUserShippingAddress(new AddShippingAddressRequest(address, idAddress))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(data -> {
+                        // SUCCESSFULLY EDITED, THEN FETCH ALL ADDRESSES
+                        fetchAllShippingAddresses();
+                    }, Crashlytics::logException));
+        else
+            getCompositeDisposable().add(getDataManager().addUserShippingAddress(new AddShippingAddressRequest(address))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(data -> {
+                        // SUCCESSFULLY ADDED TO SERVER, THEN FETCH ALL ADDRESSES
+                        fetchAllShippingAddresses();
+                    }, Crashlytics::logException));
     }
 
     private void setValueNotNull(ObservableField<String> target, String value) {
@@ -145,6 +157,26 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
             }
         }
         return "";
+    }
+
+    public void getAddressById(int addressId) {
+        getCompositeDisposable().add(getDataManager().getShippingAddress(getUserId(), addressId)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(address -> {
+                    if (address != null) {
+                        name.set(address.recipient_name);
+                        companyName.set(DataUtils.getStringNotNull(address.company_name));
+                        city.set(DataUtils.getStringNotNull(address.city));
+                        unit.set(DataUtils.getStringNotNull(address.indoor_address));
+                        state.set(DataUtils.getStringNotNull(address.state));
+                        postCode.set(DataUtils.getStringNotNull(address.post_code));
+                        street.set(DataUtils.getStringNotNull(address.outdoor_address));
+                        checked.set(address.is_default == 1);
+                        phoneNumber.set(DataUtils.getStringNotNull(address.recipient_phone_number));
+                    }
+
+                }, Crashlytics::logException));
     }
 
     private void fetchAllShippingAddresses() {

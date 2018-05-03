@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,6 +9,7 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductShippingAddressBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress.NewAddressActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -63,8 +65,10 @@ public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNaviga
 
     @Override
     public void editAddress(AddressItemViewModel item) {
-        if (mContext != null) {
-
+        if (mContext != null && item != null) {
+            Intent intent = NewAddressActivity.getStartIntent(mContext);
+            intent.putExtra("address_id", item.getAddressId());
+            mContext.startActivity(intent);
         }
     }
 
