@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel;
 
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -17,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
+
 public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator> {
 
     private boolean mIsFetchCartsStarted = false;
@@ -24,6 +27,8 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
     private boolean mIsFetchProfileStarted = false;
 
     private boolean mIsFetchWishListStarted = false;
+
+    private boolean mIsFetchShippingAddresses = false;
 
     public FetchUserInfoViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
@@ -58,6 +63,29 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                     }
 
                 }, this::onFetchFailed));
+    }
+    private void fetchShippingAddresses() {
+        mIsFetchShippingAddresses = true;
+        getCompositeDisposable().add(getDataManager().fetchUserShippingAddress()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        updateAllShippingAddresses(data.message);
+                    } else {
+                        onFetchFailed(null);
+                    }
+                }, this::onFetchFailed));
+    }
+
+    private void updateAllShippingAddresses(RealmList<Address> addresses) {
+        getCompositeDisposable().add(getDataManager().syncAllShippingAddresses(getUserId(), addresses)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    // DONE FETCHING FOR USER DATA
+                    getNavigator().onFetchUserInfo_Done();
+                }, Crashlytics::logException));
     }
 
     private void updateAllProductCarts(ArrayList<ProductCartResponse> arrayList) {
@@ -107,8 +135,8 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
-                    // UPDATE WISH LIST SUCCESSFUL
-                    getNavigator().onFetchUserInfo_Done();
+                    // UPDATE WISH LIST SUCCESSFULLY, THEN FETCH SHIPPING ADDRESS
+                    fetchShippingAddresses();
                 }, Crashlytics::logException));
     }
 
@@ -124,6 +152,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
         if (!mIsFetchProfileStarted) fetchUserProfile();
         else if (!mIsFetchCartsStarted) fetchCartsServer();
         else if (!mIsFetchWishListStarted) fetchUserWishList();
+        else if (!mIsFetchShippingAddresses) fetchShippingAddresses();
         else getNavigator().onFetchUserInfo_Failed();
     }
 

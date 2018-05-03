@@ -102,6 +102,21 @@ public class ApiUrlConfig {
     public static final String API_WISH_LIST_GET = BuildConfig.BASE_URL
             + "api/appyproduct/wishlist/get";
 
+    public static final String API_SHIPPING_ADDRESS_GET = BuildConfig.BASE_URL
+            + "api/appyproduct/address/get";
+
+    public static final String API_SHIPPING_ADDRESS_ADD = BuildConfig.BASE_URL
+            + "api/appyproduct/address/add";
+
+    public static final String API_SHIPPING_ADDRESS_EDIT = BuildConfig.BASE_URL
+            + "api/appyproduct/address/edit";
+
+    public static final String API_SHIPPING_ADDRESS_REMOVE = BuildConfig.BASE_URL
+            + "api/appyproduct/address/remove";
+
+    public static final String API_SHIPPING_ADDRESS_SET_DEFAULT = BuildConfig.BASE_URL
+            + "api/appyproduct/address/setdefault";
+
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";
     public static final String URL_AIR_CON_TYPE_INFO = "file:///android_asset/html/air_con_type_info.html";

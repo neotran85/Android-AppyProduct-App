@@ -15,12 +15,14 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 
 import java.util.ArrayList;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
@@ -118,6 +120,8 @@ public interface DbHelper {
     Flowable<RealmResults<ProductSub>> getProductCategoryIdsByTopic(int idTopic);
 
     Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
+
+    Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<Address> addresses);
 
     Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
 

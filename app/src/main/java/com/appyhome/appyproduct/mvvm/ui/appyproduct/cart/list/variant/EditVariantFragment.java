@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -18,6 +19,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.Produ
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
+
+import io.realm.RealmResults;
 
 
 public class EditVariantFragment extends BaseFragment<FragmentProductVariantEditBinding, EditVariantViewModel> implements ProductDetailVariantNavigator {
@@ -39,6 +42,8 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     private EditVariantNavigator mNavigator;
 
     private int mOldVariantId = -1;
+
+    private SparseIntArray mArrayAmountAdded;
 
     public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel, EditVariantNavigator navigator) {
         Bundle args = new Bundle();
@@ -117,6 +122,14 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void showedVariants(RealmResults<ProductVariant> variants) {
+        mArrayAmountAdded = new SparseIntArray();
+        for (ProductVariant variant : variants) {
+            mArrayAmountAdded.put(variant.id, 0);
+        }
     }
 
     @Override

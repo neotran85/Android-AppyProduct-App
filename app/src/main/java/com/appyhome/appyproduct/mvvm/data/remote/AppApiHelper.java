@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListReques
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -284,6 +285,15 @@ public class AppApiHelper implements ApiHelper {
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(ApiResponse.class);
+    }
+
+    /********** SHIPPING ADDRESS API ************/
+    @Override
+    public Single<GetShippingAddressResponse> fetchUserShippingAddress() {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_SHIPPING_ADDRESS_GET)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .build()
+                .getObjectSingle(GetShippingAddressResponse.class);
     }
 
     /********** PRODUCT WISH LIST API INTEGRATION **********/

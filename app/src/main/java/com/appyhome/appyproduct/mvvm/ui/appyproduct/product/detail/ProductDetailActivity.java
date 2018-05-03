@@ -51,6 +51,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.realm.RealmResults;
 
 public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBinding, ProductItemViewModel>
         implements HasSupportFragmentInjector, ProductDetailNavigator,
@@ -218,6 +219,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         loadImages(variant);
         mBinder.tableDescription.loadData(variant);
         setUpPositionTabsForScroll();
+    }
+
+    @Override
+    public void showedVariants(RealmResults<ProductVariant> variants) {
+        // DO NOTHING HERE
     }
 
 

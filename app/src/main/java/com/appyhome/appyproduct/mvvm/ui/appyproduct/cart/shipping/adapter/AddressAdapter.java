@@ -54,10 +54,10 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
         itemViewModel.name.set(address.recipient_name);
         itemViewModel.phoneNumber.set(address.recipient_phone_number);
         itemViewModel.address.set(address.getAddressText());
-        itemViewModel.checked.set(address.is_default);
+        itemViewModel.checked.set(address.is_default == 1);
         itemViewModel.setIdAddress(address.id);
         itemViewModel.setNavigator(itemNavigator);
-        if (address.is_default)
+        if (address.is_default == 1)
             mSelected = itemViewModel;
         return itemViewModel;
     }

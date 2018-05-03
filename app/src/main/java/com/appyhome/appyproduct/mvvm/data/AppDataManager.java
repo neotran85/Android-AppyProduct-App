@@ -32,6 +32,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListReques
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
@@ -672,6 +673,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<Address> addresses) {
+        return mDbHelper.syncAllShippingAddresses(userId, addresses);
+    }
+
+    @Override
     public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
         return mDbHelper.syncAllProductFavorite(userId, array);
     }
@@ -779,6 +785,11 @@ public class AppDataManager implements DataManager {
     @Override
     public String getDefaultShippingLocation() {
         return mPreferencesHelper.getDefaultShippingLocation();
+    }
+
+    @Override
+    public Single<GetShippingAddressResponse> fetchUserShippingAddress() {
+        return mApiHelper.fetchUserShippingAddress();
     }
 
     @Override

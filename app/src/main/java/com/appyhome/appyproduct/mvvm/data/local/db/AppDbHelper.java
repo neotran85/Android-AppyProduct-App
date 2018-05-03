@@ -363,7 +363,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Address> getDefaultShippingAddress(String userId) {
         beginTransaction();
         Flowable<Address> address = getRealm().where(Address.class)
-                .equalTo("customer_id", userId)
+                .equalTo("user_id", userId)
                 .equalTo("is_default", true)
                 .findFirst().asFlowable();
         getRealm().commitTransaction();
@@ -376,7 +376,7 @@ public class AppDbHelper implements DbHelper {
         String[] fieldNames = {"is_default", "id"};
         Sort sortOrder[] = {Sort.DESCENDING, Sort.DESCENDING};
         Flowable<RealmResults<Address>> addresses = getRealm().where(Address.class)
-                .equalTo("customer_id", userId)
+                .equalTo("user_id", userId)
                 .sort(fieldNames, sortOrder)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
@@ -413,6 +413,19 @@ public class AppDbHelper implements DbHelper {
             }
         }
         return null;
+    }
+
+    @Override
+    public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<Address> addresses) {
+        return Flowable.fromCallable(() -> {
+            beginTransaction();
+            for(Address address: addresses) {
+                address.user_id = userId;
+            }
+            getRealm().copyToRealmOrUpdate(addresses);
+            getRealm().commitTransaction();
+            return true;
+        });
     }
 
     @Override
@@ -559,14 +572,14 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addShippingAddress(Address address) {
         try {
             beginTransaction();
-            if (address.is_default) {
+            if (address.is_default == 1) {
                 RealmResults<Address> addressList = getRealm().where(Address.class)
                         .equalTo("user_id", address.user_id)
-                        .equalTo("is_default", true)
+                        .equalTo("is_default", 1)
                         .findAll();
                 if (addressList != null && addressList.isValid() && addressList.size() > 0) {
                     for (Address item : addressList) {
-                        item.is_default = false;
+                        item.is_default = 0;
                     }
                     getRealm().copyToRealmOrUpdate(addressList);
                 }
@@ -593,12 +606,12 @@ public class AppDbHelper implements DbHelper {
                     .findAll();
             if (addressList != null && addressList.isValid()) {
                 for (Address address1 : addressList) {
-                    address1.is_default = false;
+                    address1.is_default = 0;
                 }
                 getRealm().copyToRealmOrUpdate(addressList);
             }
             if (address != null && address.isValid()) {
-                address.is_default = true;
+                address.is_default = 1;
                 address = getRealm().copyToRealmOrUpdate(address);
             }
             getRealm().commitTransaction();

@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.SparseIntArray;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
@@ -91,7 +92,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
                 selectVariant(result.first().model_id);
             }
         }
-
+        mDetailNavigator.showedVariants(result);
     }
 
     @Override

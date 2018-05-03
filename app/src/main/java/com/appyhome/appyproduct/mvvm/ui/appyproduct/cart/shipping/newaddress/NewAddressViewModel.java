@@ -8,7 +8,6 @@ import android.location.Geocoder;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -52,7 +51,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         address.outdoor_address = street.get();
         address.country = "Malaysia";
         address.user_id = getUserId();
-        address.is_default = checked.get();
+        address.is_default = checked.get() ? 1 : 0;
         address.place_id = placeId;
         address.longitude = longitude;
         address.latitude = latitude;

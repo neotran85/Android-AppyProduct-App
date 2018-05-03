@@ -27,9 +27,9 @@ public class Address extends RealmObject {
     public String user_id;
 
     @Expose
-    @SerializedName("is_west_my")
-    @ColumnInfo(name = "is_west_my")
-    public String is_west_my;
+    @SerializedName("west_my")
+    @ColumnInfo(name = "west_my")
+    public int west_my;
 
     @Expose
     @SerializedName("indoor_address")
@@ -82,9 +82,19 @@ public class Address extends RealmObject {
     public String post_code;
 
     @Expose
+    @SerializedName("created_at")
+    @ColumnInfo(name = "created_at")
+    public String created_at;
+
+    @Expose
+    @SerializedName("updated_at")
+    @ColumnInfo(name = "updated_at")
+    public String updated_at;
+
+    @Expose
     @SerializedName("is_default")
     @ColumnInfo(name = "is_default")
-    public boolean is_default;
+    public int is_default;
 
     @Expose
     @SerializedName("longitude")
@@ -102,7 +112,7 @@ public class Address extends RealmObject {
     public String more_info;
 
     public String getAddressText() {
-        String postCode = (post_code.length() > 0) ? ", (Post Code: " + post_code + ")" : "";
+        String postCode = (post_code.length() > 0) ? "Post Code: " + post_code : "";
         String add = DataUtils.joinStrings(", ",
                 indoor_address, outdoor_address, city, state, postCode);
         add = add.replace(" ,", " ");

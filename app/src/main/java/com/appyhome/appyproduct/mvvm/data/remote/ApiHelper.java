@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListReques
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartVariantRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
@@ -99,4 +100,6 @@ public interface ApiHelper {
     Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request);
 
     Single<GetSellerResponse> fetchSellerInformation(int sellerId);
+
+    Single<GetShippingAddressResponse> fetchUserShippingAddress();
 }
