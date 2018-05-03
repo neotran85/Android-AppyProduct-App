@@ -85,13 +85,11 @@
                     <LinearLayout
                         android:id="@+id/llTotalCost"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:gravity="bottom"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingBottom="12dp"
-                        android:paddingLeft="14dp"
-                        android:paddingRight="14dp">
+                        android:padding="14dp">
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-SemiBold.ttf"
@@ -100,7 +98,7 @@
                             android:layout_marginStart="4dp"
                             android:text="Total Cost:"
                             android:textColor="#4E4E4E"
-                            android:textSize="15sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
@@ -109,16 +107,16 @@
                             android:layout_marginStart="4dp"
                             android:text="RM"
                             android:textColor="@color/red_price"
-                            android:textSize="20sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{viewModel.totalCost}"
+                            price="@{viewModel.totalCost}"
                             android:textColor="@color/red_price"
-                            android:textSize="20sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 

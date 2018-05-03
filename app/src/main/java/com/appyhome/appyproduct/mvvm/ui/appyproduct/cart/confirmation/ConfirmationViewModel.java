@@ -14,7 +14,7 @@ import com.crashlytics.android.Crashlytics;
 import io.realm.RealmResults;
 
 public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> {
-    public ObservableField<String> totalCost = new ObservableField<>("");
+    public ObservableField<Float> totalCost = new ObservableField<>(0.0f);
     public ObservableField<String> name = new ObservableField<>("");
     public ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> address = new ObservableField<>("");
@@ -85,7 +85,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                             mTotalCost = mTotalCost + (item.price * item.amount);
                         }
                         mTotalCost = DataUtils.roundNumber(mTotalCost, 2);
-                        totalCost.set(mTotalCost + "");
+                        totalCost.set(mTotalCost);
                     }
                 }, Crashlytics::logException));
     }

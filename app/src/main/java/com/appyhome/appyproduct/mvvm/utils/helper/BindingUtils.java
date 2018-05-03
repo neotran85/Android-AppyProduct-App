@@ -147,6 +147,12 @@ public final class BindingUtils {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
         view.setText(formatter.format(amount));
     }
+    @BindingAdapter("price")
+
+    public static void setPrice(TextView view, Float amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        view.setText(formatter.format(amount));
+    }
 
     @BindingAdapter("maxLines")
     public static void setMaxLines(TextView textView, int maxLines) {
