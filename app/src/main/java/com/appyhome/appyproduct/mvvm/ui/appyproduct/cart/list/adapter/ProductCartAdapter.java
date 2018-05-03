@@ -79,7 +79,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
                     totalCost = totalCost + (price * amount);
                 }
             }
-            mProductCartListViewModel.totalCost.set(DataUtils.roundNumber(totalCost, 2) + "");
+            mProductCartListViewModel.totalCost.set(DataUtils.roundNumber(totalCost, 2));
         }
     }
 

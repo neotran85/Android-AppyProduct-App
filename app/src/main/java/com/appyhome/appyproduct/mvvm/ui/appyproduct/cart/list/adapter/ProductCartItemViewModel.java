@@ -19,7 +19,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
     public ObservableField<String> amount = new ObservableField<>("");
-    public ObservableField<String> price = new ObservableField<>("");
+    public ObservableField<Float> price = new ObservableField<>(0.0f);
     public ObservableField<String> variationName = new ObservableField<>("");
     public ObservableField<String> variantStock = new ObservableField<>("");
     public ObservableField<String> sellerName = new ObservableField<>("");
@@ -141,7 +141,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setProductCartId(productCart.id);
         setProductId(productCart.product_id);
         sellerName.set(productCart.seller_name);
-        price.set(productCart.price + "");
+        price.set(productCart.price);
         setNavigator(navigator);
         checked.set(productCart.checked);
         variationName.set(productCart.variant_name);
@@ -189,7 +189,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     }
 
     public void update(ProductVariant variant) {
-        price.set(variant.price + "");
+        price.set(variant.price);
         variationName.set(variant.variant_name);
         setVariantModelId(variant.model_id);
         imageURL.set(variant.avatar);

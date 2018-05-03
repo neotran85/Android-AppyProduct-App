@@ -210,7 +210,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mSelectedVariant = variant;
         getViewModel().setVariantId(variant.id);
         getViewModel().updateIfVariantFavorite();
-        getViewModel().price.set("RM " + variant.price);
+        getViewModel().price.set(variant.price);
         getViewModel().isVariantSelected.set(true);
         mTotalStock = variant.quantity;
         getViewModel().stockCount.set(mTotalStock + "");

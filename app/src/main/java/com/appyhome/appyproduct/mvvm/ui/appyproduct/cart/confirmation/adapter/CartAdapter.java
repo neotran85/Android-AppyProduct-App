@@ -19,7 +19,6 @@ import io.realm.RealmResults;
 public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigator> {
 
     public HashMap<String, ArrayList<CartItemViewModel>> viewModelManager;
-    private String imageTestPath = "https://redbean2013.files.wordpress.com/2013/07/38361-paul_smith_iphone_5_case_strip_car.jpg";
 
     public CartAdapter() {
         this.mItems = null;
@@ -43,7 +42,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         itemViewModel.setProductId(productCart.product_id);
         itemViewModel.sellerName.set(productCart.seller_name);
         itemViewModel.amount.set(productCart.amount + "");
-        itemViewModel.price.set(productCart.price + "");
+        itemViewModel.price.set(productCart.price);
         itemViewModel.checked.set(productCart.checked);
         itemViewModel.variationName.set(productCart.variant_name);
         return itemViewModel;
@@ -102,7 +101,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
                 totalCost = DataUtils.roundNumber(totalCost, 2);
             }
             for (CartItemViewModel item : array) {
-                item.totalCostOfStore.set(totalCost + "");
+                item.totalCostOfStore.set(totalCost);
             }
         }
     }

@@ -30,8 +30,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> variantName = new ObservableField<>("");
     public ObservableField<String> warranty = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
-    public ObservableField<String> lowestPrice = new ObservableField<>("0");
-    public ObservableField<String> price = new ObservableField<>("0");
+    public ObservableField<Float> lowestPrice = new ObservableField<>(0.0f);
+    public ObservableField<Float> price = new ObservableField<>(0.0f);
     public ObservableField<Float> rate = new ObservableField<>(0f);
     public ObservableField<String> rateCount = new ObservableField<>("");
     public ObservableField<String> favoriteCount = new ObservableField<>("");
@@ -110,7 +110,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         sellerName.set(product.seller_name);
         imageURL.set(product.avatar_name);
         productId = product.id;
-        lowestPrice.set("RM " + product.lowest_price);
+        lowestPrice.set(product.lowest_price);
         rate.set(product.rate);
         rateCount.set(product.rate_count + "");
         discount.set(product.discount + "%");
@@ -212,7 +212,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
             locationName = area;
             postCode = post_code;
         }
-        
+
         shippingLocation.set("Shipping to: " + locationName);
         getDataManager().setDefaultShippingLocation(locationName);
         getDataManager().setDefaultShippingPostCode(postCode);

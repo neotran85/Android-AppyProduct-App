@@ -86,23 +86,20 @@
                                 android:textSize="11sp" />
 
                             <TextView
-                                android:id="@+id/tvOriginalPrice"
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="8dp"
-                                android:lineSpacingExtra="4dp"
-                                android:text="RM 546.4"
-                                android:textColor="@color/gray_product_in_list"
-                                android:textSize="11sp"
-                                android:visibility="gone" />
+                                android:layout_marginEnd="4dp"
+                                android:text="@string/rm"
+                                android:textColor="@color/red_price"
+                                android:textSize="11sp" />
 
                             <TextView
                                 android:id="@+id/tvPrice"
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.lowestPrice}"
+                                price="@{viewModel.lowestPrice}"
                                 android:textColor="@color/red_price"
                                 android:textSize="11sp" />
                         </LinearLayout>

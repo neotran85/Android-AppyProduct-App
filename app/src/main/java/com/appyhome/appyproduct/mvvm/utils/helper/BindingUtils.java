@@ -145,13 +145,15 @@ public final class BindingUtils {
     @BindingAdapter("price")
     public static void setPrice(TextView view, Double amount) {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
-        view.setText(formatter.format(amount));
+        String price = formatter.format(amount).replace(".00", "");
+        view.setText(price);
     }
     @BindingAdapter("price")
 
     public static void setPrice(TextView view, Float amount) {
         DecimalFormat formatter = new DecimalFormat("#,###.00");
-        view.setText(formatter.format(amount));
+        String price = formatter.format(amount).replace(".00", "");
+        view.setText(price);
     }
 
     @BindingAdapter("maxLines")
@@ -162,14 +164,6 @@ public final class BindingUtils {
     @BindingAdapter("textVisible")
     public static void setVisibility(View view, String text) {
         view.setVisibility(text != null && text.length() > 0 ? View.VISIBLE : View.GONE);
-    }
-
-    @BindingAdapter("price")
-    public static void setPrice(TextView view, float price) {
-        if (price < 0) view.setVisibility(View.GONE);
-        else {
-            view.setText("RM " + DataUtils.roundNumber(price, 2));
-        }
     }
 
     @BindingAdapter("alpha")

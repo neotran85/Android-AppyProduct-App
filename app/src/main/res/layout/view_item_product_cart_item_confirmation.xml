@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:text="@{viewModel.totalCostOfStore}"
+                    price="@{viewModel.totalCostOfStore}"
                     android:textColor="@color/red_price"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:text="@{viewModel.price}"
+                        price="@{viewModel.price}"
                         android:textColor="@color/red_price"
                         android:textSize="14sp" />
                 </LinearLayout>

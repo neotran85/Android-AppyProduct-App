@@ -155,7 +155,6 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
             super(binding.getRoot());
             mBinding = binding;
             mBinding.setNavigator(mNavigator);
-            mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
         public ViewItemProductBinding getBinding() {
