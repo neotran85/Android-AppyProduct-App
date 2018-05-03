@@ -21,6 +21,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,13 +52,13 @@
                     android:src="@mipmap/icon_back" />
 
                 <ImageView
-                    android:onClick="@{(view) -> navigator.clearCarts()}"
                     android:id="@+id/ivTrash"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="18dp"
+                    android:onClick="@{(view) -> navigator.clearCarts()}"
                     android:src="@mipmap/icon_trash"
                     android:visibility="@{!viewModel.isCartEmpty, default=gone}" />
             </RelativeLayout>
@@ -86,9 +87,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="102dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:background="@color/white"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:visibility="@{!viewModel.isCartEmpty, default=gone}">
 
@@ -106,11 +108,11 @@
                         android:paddingStart="8dp">
 
                         <CheckBox
-                            android:onClick="@{(view) -> navigator.selectAllCarts()}"
                             android:id="@+id/cbCheckAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="@={viewModel.isCheckedAll}"
+                            android:onClick="@{(view) -> navigator.selectAllCarts()}"
                             android:scaleX="0.8"
                             android:scaleY="0.8"
                             android:textColor="@color/dark_gray"
@@ -151,27 +153,26 @@
                         android:layout_height="1dp"
                         android:background="@color/light_gray" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView1"
                             fontPath="fonts/TitilliumWeb-Bold.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="14dp"
                             android:text="@string/cart_total"
                             android:textColor="@color/dark_gray"
                             android:textSize="13sp" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="6dp"
-                            android:layout_toEndOf="@+id/textView1"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -184,36 +185,37 @@
 
                             <TextView
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                price="@{viewModel.totalCost}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                price="@{viewModel.totalCost}"
                                 android:textColor="@color/red_price"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
                         <Button
                             android:id="@+id/btNextStep"
-                            android:layout_width="92dp"
-                            android:layout_height="36dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
                             android:layout_marginEnd="14dp"
                             android:background="@mipmap/bg_checkout"
                             android:foreground="?attr/selectableItemBackground"
                             android:onClick="@{(view) -> navigator.gotoNextStep()}"
+                            android:paddingEnd="18dp"
+                            android:paddingStart="18dp"
                             android:text="@string/cart_check_out"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
-                    </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llEditVariantContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical" />
     </RelativeLayout>
 </layout>
