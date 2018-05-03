@@ -48,6 +48,6 @@ public class ProductOrder extends RealmObject {
 
     public RealmList<ProductCart> cart;
 
-    public Address shipping_address;
+    public AppyAddress shipping_address;
 
 }

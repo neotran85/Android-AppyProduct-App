@@ -2,7 +2,7 @@ package com.appyhome.appyproduct.mvvm.data.local.db;
 
 import android.text.TextUtils;
 
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -360,22 +360,22 @@ public class AppDbHelper implements DbHelper {
     /******* PRODUCT CART METHODS *******/
 
     @Override
-    public Flowable<Address> getDefaultShippingAddress(String userId) {
+    public Flowable<AppyAddress> getDefaultShippingAddress(String userId) {
         beginTransaction();
-        Flowable<Address> address = getRealm().where(Address.class)
+        Flowable<AppyAddress> address = getRealm().where(AppyAddress.class)
                 .equalTo("user_id", userId)
-                .equalTo("is_default", true)
+                .equalTo("is_default", 1)
                 .findFirst().asFlowable();
         getRealm().commitTransaction();
         return address;
     }
 
     @Override
-    public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
+    public Flowable<RealmResults<AppyAddress>> getAllShippingAddress(String userId) {
         beginTransaction();
         String[] fieldNames = {"is_default", "id"};
         Sort sortOrder[] = {Sort.DESCENDING, Sort.DESCENDING};
-        Flowable<RealmResults<Address>> addresses = getRealm().where(Address.class)
+        Flowable<RealmResults<AppyAddress>> addresses = getRealm().where(AppyAddress.class)
                 .equalTo("user_id", userId)
                 .sort(fieldNames, sortOrder)
                 .findAll().asFlowable();
@@ -416,10 +416,10 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<Address> addresses) {
+    public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<AppyAddress> addresses) {
         return Flowable.fromCallable(() -> {
             beginTransaction();
-            for(Address address: addresses) {
+            for (AppyAddress address : addresses) {
                 address.user_id = userId;
             }
             getRealm().copyToRealmOrUpdate(addresses);
@@ -569,16 +569,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(Address address) {
+    public Flowable<Boolean> addShippingAddress(AppyAddress address) {
         try {
             beginTransaction();
             if (address.is_default == 1) {
-                RealmResults<Address> addressList = getRealm().where(Address.class)
+                RealmResults<AppyAddress> addressList = getRealm().where(AppyAddress.class)
                         .equalTo("user_id", address.user_id)
                         .equalTo("is_default", 1)
                         .findAll();
                 if (addressList != null && addressList.isValid() && addressList.size() > 0) {
-                    for (Address item : addressList) {
+                    for (AppyAddress item : addressList) {
                         item.is_default = 0;
                     }
                     getRealm().copyToRealmOrUpdate(addressList);
@@ -597,15 +597,15 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> setDefaultShippingAddress(String userId, long id) {
         try {
             beginTransaction();
-            Address address = getRealm().where(Address.class)
+            AppyAddress address = getRealm().where(AppyAddress.class)
                     .equalTo("id", id)
                     .findFirst();
 
-            RealmResults<Address> addressList = getRealm().where(Address.class)
+            RealmResults<AppyAddress> addressList = getRealm().where(AppyAddress.class)
                     .equalTo("customer_id", userId)
                     .findAll();
             if (addressList != null && addressList.isValid()) {
-                for (Address address1 : addressList) {
+                for (AppyAddress address1 : addressList) {
                     address1.is_default = 0;
                 }
                 getRealm().copyToRealmOrUpdate(addressList);
@@ -797,7 +797,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                           String paymentMethod, Address shippingAddress,
+                                           String paymentMethod, AppyAddress shippingAddress,
                                            String customerId, String customerName,
                                            float totalCost, float discount, long orderId) {
         try {

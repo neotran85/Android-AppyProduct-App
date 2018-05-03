@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductShippingBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.adapter.AddressAdapter;
@@ -87,7 +87,7 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     }
 
     @Override
-    public void showAddressList(RealmResults<Address> addresses) {
+    public void showAddressList(RealmResults<AppyAddress> addresses) {
         if (addresses != null) {
             mAdapter.addItems(addresses, this);
             mAdapter.notifyDataSetChanged();

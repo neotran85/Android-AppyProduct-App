@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
@@ -294,6 +296,24 @@ public class AppApiHelper implements ApiHelper {
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(GetShippingAddressResponse.class);
+    }
+
+    @Override
+    public Single<AddShippingAddressResponse> addUserShippingAddress(AddShippingAddressRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_SHIPPING_ADDRESS_ADD)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(AddShippingAddressResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> setUserDefaultShippingAddress(int idAddress) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_SHIPPING_ADDRESS_SET_DEFAULT)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter("address_id", idAddress + "")
+                .build()
+                .getObjectSingle(ApiResponse.class);
     }
 
     /********** PRODUCT WISH LIST API INTEGRATION **********/

@@ -9,12 +9,12 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Address extends RealmObject {
+public class AppyAddress extends RealmObject {
     @Expose
     @SerializedName("id")
     @ColumnInfo(name = "id")
     @PrimaryKey
-    public long id;
+    public int id;
 
     @Expose
     @SerializedName("place_id")
@@ -110,6 +110,25 @@ public class Address extends RealmObject {
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;
+
+    public void updateFrom(AppyAddress newAddress) {
+        if (newAddress != null) {
+            state = newAddress.state;
+            post_code = newAddress.post_code;
+            city = newAddress.city;
+            country = newAddress.country;
+            address_name = newAddress.address_name;
+            outdoor_address = newAddress.outdoor_address;
+            indoor_address = newAddress.indoor_address;
+            created_at = newAddress.created_at;
+            updated_at = newAddress.updated_at;
+            is_default = newAddress.is_default;
+            west_my = newAddress.west_my;
+            company_name = newAddress.company_name;
+            recipient_name = newAddress.recipient_name;
+            recipient_phone_number = newAddress.recipient_phone_number;
+        }
+    }
 
     public String getAddressText() {
         String postCode = (post_code.length() > 0) ? "Post Code: " + post_code : "";

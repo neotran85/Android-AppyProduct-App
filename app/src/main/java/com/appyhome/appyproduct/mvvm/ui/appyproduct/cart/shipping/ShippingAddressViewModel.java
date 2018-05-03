@@ -3,7 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
@@ -23,7 +23,7 @@ public class ShippingAddressViewModel extends BaseViewModel<ShippingAddressNavig
         getCompositeDisposable().add(getDataManager().getAllShippingAddress(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe((RealmResults<Address> addresses) -> {
+                .subscribe((RealmResults<AppyAddress> addresses) -> {
                     isNoAddress.set(addresses == null || !addresses.isValid() || addresses.size() <= 0);
                     getNavigator().showAddressList(addresses);
                 }, Crashlytics::logException));

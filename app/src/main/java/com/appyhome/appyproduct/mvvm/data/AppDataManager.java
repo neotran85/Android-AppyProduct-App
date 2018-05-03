@@ -3,7 +3,7 @@ package com.appyhome.appyproduct.mvvm.data;
 import android.content.Context;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -24,6 +24,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.SignUpResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
@@ -494,12 +496,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<Address>> getAllShippingAddress(String userId) {
+    public Flowable<RealmResults<AppyAddress>> getAllShippingAddress(String userId) {
         return mDbHelper.getAllShippingAddress(userId);
     }
 
     @Override
-    public Flowable<Boolean> addShippingAddress(Address address) {
+    public Flowable<Boolean> addShippingAddress(AppyAddress address) {
         return mDbHelper.addShippingAddress(address);
     }
 
@@ -509,7 +511,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Address> getDefaultShippingAddress(String userId) {
+    public Flowable<AppyAddress> getDefaultShippingAddress(String userId) {
         return mDbHelper.getDefaultShippingAddress(userId);
     }
 
@@ -530,7 +532,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                           String paymentMethod, Address shippingAddress,
+                                           String paymentMethod, AppyAddress shippingAddress,
                                            String customerId, String customerName,
                                            float totalCost, float discount, long orderId) {
         return mDbHelper.addOrder(items, paymentMethod, shippingAddress, customerId,
@@ -673,7 +675,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<Address> addresses) {
+    public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<AppyAddress> addresses) {
         return mDbHelper.syncAllShippingAddresses(userId, addresses);
     }
 
@@ -790,6 +792,16 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<GetShippingAddressResponse> fetchUserShippingAddress() {
         return mApiHelper.fetchUserShippingAddress();
+    }
+
+    @Override
+    public Single<AddShippingAddressResponse> addUserShippingAddress(AddShippingAddressRequest request) {
+        return mApiHelper.addUserShippingAddress(request);
+    }
+
+    @Override
+    public Single<ApiResponse> setUserDefaultShippingAddress(int idAddress) {
+        return mApiHelper.setUserDefaultShippingAddress(idAddress);
     }
 
     @Override

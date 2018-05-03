@@ -33,12 +33,12 @@ public class Supplier extends RealmObject {
     @Expose
     @SerializedName("address1")
     @ColumnInfo(name = "address1")
-    public Address address1;
+    public AppyAddress address1;
 
     @Expose
     @SerializedName("address2")
     @ColumnInfo(name = "address2")
-    public Address address2;
+    public AppyAddress address2;
 
     @Expose
     @SerializedName("more_info")

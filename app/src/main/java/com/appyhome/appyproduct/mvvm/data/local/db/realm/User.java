@@ -25,10 +25,10 @@ public class User extends RealmObject {
     public String emailAddress;
 
     @ColumnInfo(name = "address")
-    public Address address;
+    public AppyAddress address;
 
     @ColumnInfo(name = "shipping_address")
-    public Address shippingAddress;
+    public AppyAddress shippingAddress;
 
     @ColumnInfo(name = "birthday")
     public String birthday;

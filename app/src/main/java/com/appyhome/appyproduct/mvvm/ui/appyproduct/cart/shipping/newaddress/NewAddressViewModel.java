@@ -7,6 +7,8 @@ import android.location.Address;
 import android.location.Geocoder;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressRequest;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.ValidationUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -16,6 +18,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.List;
 import java.util.Locale;
+
+import io.realm.RealmList;
 
 public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     public ObservableField<String> name = new ObservableField<>("");
@@ -40,8 +44,8 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     }
 
     public void saveShippingAddress() {
-        com.appyhome.appyproduct.mvvm.data.local.db.realm.Address address = new com.appyhome.appyproduct.mvvm.data.local.db.realm.Address();
-        address.id = System.currentTimeMillis();
+        AppyAddress address = new AppyAddress();
+        address.address_name = name.get();
         address.recipient_name = name.get();
         address.recipient_phone_number = getPhoneNumber();
         address.post_code = postCode.get();
@@ -55,13 +59,13 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         address.place_id = placeId;
         address.longitude = longitude;
         address.latitude = latitude;
-
-        getCompositeDisposable().add(getDataManager().addShippingAddress(address)
-                .take(1)
+        // ADD TO SERVER DB
+        getCompositeDisposable().add(getDataManager().addUserShippingAddress(new AddShippingAddressRequest(address))
+                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(success -> {
-                    // ADD ADDRESS SUCCEEDED
-                    getNavigator().onAddressSaved();
+                .subscribe(data -> {
+                    // SUCCESSFULLY ADDED TO SERVER
+                    fetchAllShippingAddresses(address);
                 }, Crashlytics::logException));
     }
 
@@ -140,4 +144,24 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         return "";
     }
 
+    private void fetchAllShippingAddresses(AppyAddress address) {
+        getCompositeDisposable().add(getDataManager().fetchUserShippingAddress()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        RealmList<AppyAddress> addresses = data.message;
+                        if (addresses.size() > 0 && address != null) {
+                            address.updateFrom(addresses.get(addresses.size() - 1));
+                            getCompositeDisposable().add(getDataManager().addShippingAddress(address)
+                                    .take(1)
+                                    .observeOn(getSchedulerProvider().ui())
+                                    .subscribe(success -> {
+                                        //UPDATE ADDRESS SUCCESSFULLY
+                                        getNavigator().onAddressSaved();
+                                    }, Crashlytics::logException));
+                        }
+                    }
+                }, Crashlytics::logException));
+    }
 }

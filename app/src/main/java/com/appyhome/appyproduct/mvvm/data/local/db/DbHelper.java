@@ -1,7 +1,7 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
 
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
@@ -15,14 +15,12 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 
 import java.util.ArrayList;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
@@ -62,18 +60,18 @@ public interface DbHelper {
 
     Flowable<Boolean> emptyProductCarts(String userId);
 
-    Flowable<RealmResults<Address>> getAllShippingAddress(String userId);
+    Flowable<RealmResults<AppyAddress>> getAllShippingAddress(String userId);
 
-    Flowable<Boolean> addShippingAddress(Address address);
+    Flowable<Boolean> addShippingAddress(AppyAddress address);
 
     Flowable<Boolean> setDefaultShippingAddress(String userId, long id);
 
-    Flowable<Address> getDefaultShippingAddress(String userId);
+    Flowable<AppyAddress> getDefaultShippingAddress(String userId);
 
     Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);
 
     Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                    String paymentMethod, Address shippingAddress,
+                                    String paymentMethod, AppyAddress shippingAddress,
                                     String customerId, String customerName,
                                     float totalCost, float discount, long orderId);
 
@@ -121,7 +119,7 @@ public interface DbHelper {
 
     Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array);
 
-    Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<Address> addresses);
+    Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<AppyAddress> addresses);
 
     Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
 

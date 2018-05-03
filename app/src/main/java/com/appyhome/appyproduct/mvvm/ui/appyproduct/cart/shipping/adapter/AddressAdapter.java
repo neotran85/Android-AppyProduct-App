@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductShippingAddressBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator> {
+public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNavigator> {
 
     private AddressItemViewModel mSelected;
     private DataManager mDataManager;
@@ -49,7 +49,7 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
         return R.layout.view_item_sample_empty;
     }
 
-    private AddressItemViewModel createViewModel(Address address, AddressItemNavigator itemNavigator) {
+    private AddressItemViewModel createViewModel(AppyAddress address, AddressItemNavigator itemNavigator) {
         AddressItemViewModel itemViewModel = new AddressItemViewModel(mDataManager, mSchedulerProvider);
         itemViewModel.name.set(address.recipient_name);
         itemViewModel.phoneNumber.set(address.recipient_phone_number);
@@ -63,11 +63,11 @@ public class AddressAdapter extends SampleAdapter<Address, AddressItemNavigator>
     }
 
     @Override
-    public void addItems(RealmResults<Address> results, AddressItemNavigator navigator) {
+    public void addItems(RealmResults<AppyAddress> results, AddressItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         if (results != null) {
-            for (Address item : results) {
+            for (AppyAddress item : results) {
                 mItems.add(createViewModel(item, navigator));
             }
         }

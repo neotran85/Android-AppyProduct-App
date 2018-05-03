@@ -14,7 +14,7 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
     public ObservableField<String> address = new ObservableField<>("");
     public ObservableField<Boolean> checked = new ObservableField<>(false);
 
-    private long idAddress = 0;
+    private int idAddress = 0;
 
     public AddressItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -28,9 +28,19 @@ public class AddressItemViewModel extends BaseViewModel<AddressItemNavigator> {
                 .subscribe(success -> {
                     getNavigator().updateDatabaseCompleted();
                 }, Crashlytics::logException));
+        setUserDefaultShippingAddresses(idAddress);
     }
 
-    public void setIdAddress(long idAddress) {
+    public void setIdAddress(int idAddress) {
         this.idAddress = idAddress;
+    }
+
+    private void setUserDefaultShippingAddresses(int idAddress) {
+        getCompositeDisposable().add(getDataManager().setUserDefaultShippingAddress(idAddress)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    // SUCCESSFULLY UPDATED
+                }, Crashlytics::logException));
     }
 }

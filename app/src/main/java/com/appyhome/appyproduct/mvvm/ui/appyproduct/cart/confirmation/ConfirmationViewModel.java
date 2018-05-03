@@ -3,7 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation;
 import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -24,7 +24,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     private float mTotalCost = 0;
     private RealmResults<ProductCart> mCarts;
     private String mPaymentMethod = "";
-    private Address mShippingAddress;
+    private AppyAddress mShippingAddress;
     private String customerName = "";
 
     public ConfirmationViewModel(DataManager dataManager,

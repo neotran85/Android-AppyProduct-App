@@ -10,7 +10,7 @@ import android.view.Window;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductShippingChooseBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressViewModel;
@@ -97,7 +97,7 @@ public class ChooseShippingAddressActivity extends BaseActivity<ActivityProductS
     }
 
     @Override
-    public void showAddressList(RealmResults<Address> addresses) {
+    public void showAddressList(RealmResults<AppyAddress> addresses) {
         if (addresses != null) {
             mAdapter.addItems(addresses, this);
             mAdapter.notifyDataSetChanged();

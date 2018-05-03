@@ -2,7 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel;
 
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Address;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -78,7 +78,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 }, this::onFetchFailed));
     }
 
-    private void updateAllShippingAddresses(RealmList<Address> addresses) {
+    private void updateAllShippingAddresses(RealmList<AppyAddress> addresses) {
         getCompositeDisposable().add(getDataManager().syncAllShippingAddresses(getUserId(), addresses)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
