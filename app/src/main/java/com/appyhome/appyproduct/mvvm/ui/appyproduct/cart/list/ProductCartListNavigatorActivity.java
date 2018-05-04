@@ -47,6 +47,10 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void gotoNextStep() {
+        if(getAdapter().isNotItemsChecked()) {
+            showAlert(getString(R.string.please_choose_at_least_one));
+            return;
+        }
         if (isEditMode()) {
             finish();
         } else {

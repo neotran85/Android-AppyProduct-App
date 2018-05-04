@@ -71,7 +71,13 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 }));
     }
 
-    public void getAllCheckedProductCarts() {
+    public void update() {
+        getAllCheckedProductCarts();
+        fetchPaymentMethods();
+        getDefaultShippingAddress();
+    }
+
+    private void getAllCheckedProductCarts() {
         getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())

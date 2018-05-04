@@ -119,7 +119,10 @@ public class ProductCartItemViewHolder extends BaseViewHolder {
                     }
                     break;
                 case R.id.cbWillBuy:
-                    if (mAdapter != null) mAdapter.updateCheckAllBySellerName(getSellerName());
+                    if (mAdapter != null) {
+                        mAdapter.updateCheckAllBySellerName(getSellerName());
+                    }
+                    viewModel.updateProductCartItemChecked();
                     break;
                 case R.id.btnIncrease:
                     amount = Integer.valueOf(viewModel.amount.get()) + 1;

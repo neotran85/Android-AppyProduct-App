@@ -69,7 +69,7 @@
 
             <LinearLayout
                 android:onClick="@{(view) -> navigator.viewOrders()}"
-                android:layout_width="wrap_content"
+                android:layout_width="192dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@mipmap/bg_view_orders"
@@ -87,7 +87,7 @@
 
             <LinearLayout
                 android:onClick="@{(view) -> navigator.returnHomeScreen()}"
-                android:layout_width="wrap_content"
+                android:layout_width="192dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@mipmap/bg_return_home_screen"

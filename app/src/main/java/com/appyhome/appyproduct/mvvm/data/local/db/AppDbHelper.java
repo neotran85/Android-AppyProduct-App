@@ -647,7 +647,8 @@ public class AppDbHelper implements DbHelper {
                     .equalTo("id", idProductCart)
                     .findFirst();
             productCart.checked = checked;
-            productCart.amount = amount;
+            if (amount >= 0)
+                productCart.amount = amount;
             if (variantModelId.length() > 0) {
                 ProductVariant variant = getRealm().where(ProductVariant.class)
                         .equalTo("model_id", variantModelId).findFirst();

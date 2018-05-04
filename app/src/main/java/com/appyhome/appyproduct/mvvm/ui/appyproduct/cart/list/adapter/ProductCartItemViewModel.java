@@ -157,6 +157,21 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
             amount.set(productCart.amount + "");
     }
 
+    public void updateProductCartItemChecked() {
+        getCompositeDisposable().add(getDataManager().updateProductCartItem(getProductCartId(), checked.get(),
+                -1, getVariantModelId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCart -> {
+                    // DO NOTHING
+                }, Crashlytics::logException));
+    }
+
+    public void updateProductCartItemChecked(boolean isCheck) {
+        checked.set(isCheck);
+        updateProductCartItemChecked();
+    }
+
     private void updateProductCartItemAmount(int amountForced) {
         getCompositeDisposable().add(getDataManager().updateProductCartItem(getProductCartId(), checked.get(),
                 amountForced, getVariantModelId())

@@ -21,13 +21,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#DEDEDE"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_height"
-            android:background="@color/white">
+            android:layout_height="@dimen/title_bar_height">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +47,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/transparent" />
+                android:layout_alignParentBottom="true"
+                android:background="@color/very_light_gray" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -68,7 +68,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:background="@color/white"
                         android:gravity="center">
 
                         <ImageView
@@ -79,14 +78,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:background="@color/transparent" />
+                        android:layout_height="8dp"
+                        android:background="@color/very_light_gray" />
 
                     <LinearLayout
                         android:id="@+id/llTotalCost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="14dp">
@@ -122,15 +120,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/transparent" />
+                        android:layout_height="8dp"
+                        android:background="@color/very_light_gray" />
 
                     <LinearLayout
                         android:id="@+id/llShippingAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:background="@color/white"
                         android:orientation="vertical"
                         android:paddingTop="14dp"
                         android:paddingBottom="20dp"
@@ -217,21 +214,19 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/transparent" />
+                        android:layout_height="8dp"
+                        android:background="@color/very_light_gray" />
 
                     <LinearLayout
                         android:id="@+id/llPaymentMethod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="14dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
                             android:orientation="horizontal">
 
                             <TextView
@@ -258,7 +253,6 @@
                             android:id="@+id/llVisa"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:background="@color/white"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingTop="20dp"
@@ -294,7 +288,6 @@
                             android:id="@+id/llMolpay"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:background="@color/white"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:visibility="@{viewModel.isMolpay, default=gone}">
@@ -328,14 +321,13 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:background="@color/transparent" />
+                        android:layout_height="8dp"
+                        android:background="@color/very_light_gray" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="60dp"
-                        android:background="@color/white"
                         android:orientation="vertical"
                         android:paddingTop="14dp">
 
@@ -383,16 +375,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
                 android:background="@color/white"
+                android:layout_alignParentBottom="true"
                 android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/gray"></View>
+                    android:background="@color/very_light_gray"></View>
 
                 <Button
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -404,7 +397,6 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.gotoNextStep()}"
                     android:text="FINAL CONFIRM"
-                    android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>
         </RelativeLayout>

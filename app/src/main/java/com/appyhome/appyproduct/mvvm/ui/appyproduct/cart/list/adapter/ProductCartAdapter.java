@@ -169,8 +169,8 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         if (mItems != null && mItems.size() > 0) {
             for (BaseViewModel item : mItems) {
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                cartItem.checked.set(isChecked);
                 cartItem.checkedAll.set(isChecked);
+                cartItem.updateProductCartItemChecked(isChecked);
             }
             updateTotalCost();
         }
@@ -251,11 +251,23 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         updateIfCheckedAll();
     }
 
+
+    public boolean isNotItemsChecked() {
+        for (BaseViewModel item : mItems) {
+            if (item instanceof ProductCartItemViewModel) {
+                ProductCartItemViewModel viewModel = (ProductCartItemViewModel) item;
+                if (viewModel.checked.get())
+                    return false;
+            }
+        }
+        return true;
+    }
+
     public void pressCheckAllBySellerName(boolean isChecked, String sellerName) {
         ArrayList<ProductCartItemViewModel> array = viewModelManager.get(sellerName);
         if (array != null && array.size() > 0) {
             for (ProductCartItemViewModel item : array) {
-                item.checked.set(isChecked);
+                item.updateProductCartItemChecked(isChecked);
             }
             array.get(0).checkedAll.set(isChecked);
         }

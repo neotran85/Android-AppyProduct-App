@@ -16,4 +16,5 @@
     <string name="visa_for_example_04_2018">For example: 04/2018</string>
     <string name="save">Save</string>
     <string name="create">Create</string>
+    <string name="please_choose_at_least_one">Please choose at least one item.</string>
 </resources>

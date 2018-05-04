@@ -31,7 +31,7 @@ import io.realm.RealmResults;
 
 public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
 
-    final int HEIGHT_CART_ITEM = 124;
+    final int HEIGHT_CART_ITEM = 144;
     final int HEIGHT_TITLE_CART_ITEM = 40;
     public static final int REQUEST_VISA_PAYMENT = 10;
     @Inject
@@ -105,9 +105,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Override
     public void onResume() {
         super.onResume();
-        getViewModel().getAllCheckedProductCarts();
-        getViewModel().fetchPaymentMethods();
-        getViewModel().getDefaultShippingAddress();
+        getViewModel().update();
     }
 
     @Override
