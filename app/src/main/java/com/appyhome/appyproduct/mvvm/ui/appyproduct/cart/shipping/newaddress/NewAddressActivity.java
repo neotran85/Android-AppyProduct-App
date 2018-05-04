@@ -75,7 +75,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
         mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
         mViewModel.setNavigator(this);
-        if(getAddressId() >= 0) {
+        if (getAddressId() >= 0) {
             getViewModel().titleScreen.set(getString(R.string.title_edit_shipping_address));
             getViewModel().titleButton.set(getString(R.string.save));
             getViewModel().getAddressById(getAddressId());

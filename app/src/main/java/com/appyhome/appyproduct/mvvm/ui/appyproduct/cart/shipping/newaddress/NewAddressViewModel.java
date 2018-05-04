@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
+
     public ObservableField<String> name = new ObservableField<>("");
     public ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> street = new ObservableField<>("");
@@ -61,16 +62,17 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
         address.longitude = longitude;
         address.company_name = companyName.get();
         address.latitude = latitude;
-        // ADD TO SERVER DB
-        if (idAddress >= 0)
+        if (idAddress >= 0) { // EDIT TO SERVER DB
             getCompositeDisposable().add(getDataManager().editUserShippingAddress(new AddShippingAddressRequest(address, idAddress))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(data -> {
                         // SUCCESSFULLY EDITED, THEN FETCH ALL ADDRESSES
-                        fetchAllShippingAddresses();
+                        if (!updateDefaultToServer(idAddress))
+                            fetchAllShippingAddresses();
                     }, Crashlytics::logException));
-        else
+
+        } else {        // ADD TO SERVER DB
             getCompositeDisposable().add(getDataManager().addUserShippingAddress(new AddShippingAddressRequest(address))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
@@ -78,6 +80,7 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                         // SUCCESSFULLY ADDED TO SERVER, THEN FETCH ALL ADDRESSES
                         fetchAllShippingAddresses();
                     }, Crashlytics::logException));
+        }
     }
 
     private void setValueNotNull(ObservableField<String> target, String value) {
@@ -97,8 +100,8 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
     }
 
     public boolean checkIfContactInputted() {
-        return name.get().length() > 0 &&
-                phoneNumber.get().length() > 0;
+        return name.get().length() > 0
+                && ValidationUtils.isPhoneNumberValid(getPhoneNumber());
     }
 
     public boolean checkIfLocationInputted() {
@@ -173,7 +176,14 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                         postCode.set(DataUtils.getStringNotNull(address.post_code));
                         street.set(DataUtils.getStringNotNull(address.outdoor_address));
                         checked.set(address.is_default == 1);
-                        phoneNumber.set(DataUtils.getStringNotNull(address.recipient_phone_number));
+                        if (address.recipient_phone_number.length() > 0) {
+                            String head = address.recipient_phone_number.substring(0, 2);
+                            if (head.equals("60")) { // MALAYSIA PHONE NUMBER
+                                String rest = address.recipient_phone_number.substring(2, address.recipient_phone_number.length());
+                                phoneNumber.set(DataUtils.getStringNotNull(rest));
+                            } else
+                                phoneNumber.set(DataUtils.getStringNotNull(address.recipient_phone_number));
+                        }
                     }
 
                 }, Crashlytics::logException));
@@ -193,5 +203,19 @@ public class NewAddressViewModel extends BaseViewModel<NewAddressNavigator> {
                                 }, Crashlytics::logException));
                     }
                 }, Crashlytics::logException));
+    }
+
+    private boolean updateDefaultToServer(int idAddress) {
+        if (checked.get()) {
+            getCompositeDisposable().add(getDataManager().setUserDefaultShippingAddress(idAddress)
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(data -> {
+                        // SUCCESSFULLY UPDATED
+                        fetchAllShippingAddresses();
+                    }, Crashlytics::logException));
+            return true;
+        }
+        return false;
     }
 }

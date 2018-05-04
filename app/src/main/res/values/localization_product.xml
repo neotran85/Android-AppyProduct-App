@@ -2,7 +2,7 @@
 <resources>
     <string name="your_cart_is_empty">Your cart is empty.\n Please add items to buy.</string>
     <string name="warning_empty_cart">Are you sure to empty your cart?</string>
-    <string name="please_input_contact">Please input contact name and phone number.</string>
+    <string name="please_input_contact">Please input contact name and valid phone number.</string>
     <string name="please_input_shipping_address">Please input a shipping address</string>
     <string name="please_input_valid_phone">Please input a valid phone number</string>
     <string name="please_input_valid_post_code">Please input a valid post code</string>

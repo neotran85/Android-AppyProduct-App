@@ -7,6 +7,7 @@ public final class ValidationUtils {
     }
 
     public static boolean isPhoneNumberValid(String number) {
+        // MALAYSIA PHONE NUMBER
         return number.matches("^(\\+?6?01)[0|1|2|3|4|6|7|8|9]\\-*[0-9]{7,8}$");
     }
 
