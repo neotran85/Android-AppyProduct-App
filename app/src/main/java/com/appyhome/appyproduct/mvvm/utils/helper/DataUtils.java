@@ -68,6 +68,11 @@ public final class DataUtils {
         return number;
     }
 
+    public static String roundPrice(Double amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        return formatter.format(amount).replace(".00", "");
+    }
+
     public static String getStringSafely(JSONObject object, String key) {
         if (object.has(key)) {
             try {

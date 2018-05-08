@@ -111,13 +111,13 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
 
     private Double getShippingCost(Object object) {
         if (object instanceof Double) {
-                return (Double)object;
-        } else if(object instanceof ArrayList) {
-            ArrayList arrayList = (ArrayList)object;
-            if(arrayList.size() > 0) {
+            return (Double) object;
+        } else if (object instanceof ArrayList) {
+            ArrayList arrayList = (ArrayList) object;
+            if (arrayList.size() > 0) {
                 try {
                     Double total = 0.0;
-                    for(int i = 0; i < arrayList.size(); i++) {
+                    for (int i = 0; i < arrayList.size(); i++) {
                         total = total + Double.valueOf(arrayList.get(i).toString());
                     }
                     return total;
@@ -143,9 +143,29 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                             shippingCostAll = shippingCostAll + getShippingCost(shippingTreeMap.get(key));
                         }
                         totalShippingCost.set(shippingCostAll);
-                        totalAllCost.set(productCost.get() + shippingCostAll);
+                        updatePricesAfterDiscount(productCost.get(), linkedTreeMap);
                     }
                 }, Crashlytics::logException));
+    }
+
+    private void updatePricesAfterDiscount(Float totalBeforeDiscount, LinkedTreeMap<String, Object> linkedTreeMap) {
+        double totalAfterDiscount = totalBeforeDiscount;
+        discount.set("RM " + DataUtils.roundPrice(totalAfterDiscount) + "+ Shipping: RM " + totalShippingCost.get());
+        if (linkedTreeMap.get("promo") instanceof ArrayList) {
+            ArrayList<LinkedTreeMap<String, Double>> arrayList = (ArrayList<LinkedTreeMap<String, Double>>) linkedTreeMap.get("promo");
+            if (arrayList != null && arrayList.size() > 0) {
+                for (LinkedTreeMap<String, Double> object : arrayList) {
+                    if (object != null) {
+                        if (object.containsKey("10PERCENT")) {
+                            totalAfterDiscount = totalBeforeDiscount * 0.9;
+                            discount.set("RM " + DataUtils.roundPrice(totalAfterDiscount)
+                                    + " (10% discounted)" + " + Shipping: RM " + totalShippingCost.get());
+                        }
+                    }
+                }
+            }
+        }
+        totalAllCost.set(totalAfterDiscount + totalShippingCost.get());
     }
 
     public String getNameOfUser() {
