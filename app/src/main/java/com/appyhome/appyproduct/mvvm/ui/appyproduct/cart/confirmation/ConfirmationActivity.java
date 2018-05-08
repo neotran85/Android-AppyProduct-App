@@ -109,8 +109,8 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     @Override
-    public void showCheckedItems(RealmResults<ProductCart> result) {
-        mAdapter.addItems(result, this);
+    public void showCheckedItems(RealmResults<ProductCart> result, int addressId) {
+        mAdapter.addItems(result, addressId, this);
         mAdapter.notifyDataSetChanged();
         updateCartContainerHeight(result.size());
     }
@@ -134,7 +134,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         if (mMainViewModel.isMolpay.get()) {
             generatedOrderId = System.currentTimeMillis();
             PaymentManager.getInstance().startMolpayActivity(this,
-                    getViewModel().totalCost.get().toString(), generatedOrderId + "",
+                    getViewModel().totalAllCost.get().toString(), generatedOrderId + "",
                     getViewModel().getPhoneNumberOfUser(),
                     getViewModel().getEmailOfUser(),
                     getViewModel().getNameOfUser(), getString(R.string.appy_home_product_payment));
@@ -158,14 +158,12 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MOLPayActivity.MOLPayXDK:
-                    AlertManager.getInstance(this).showLongToast(getString(R.string.successfully_charged));
                     getViewModel().addOrder(generatedOrderId);
                     break;
                 case REQUEST_VISA_PAYMENT:
-                    AlertManager.getInstance(this).showLongToast(getString(R.string.successfully_charged));
                     getViewModel().addOrder(0);
                     break;
             }

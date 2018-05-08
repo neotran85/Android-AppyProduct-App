@@ -524,6 +524,7 @@ public class AppDbHelper implements DbHelper {
 
     private ProductCart inputProductCart(String userId, ProductCart cartItem, ProductCartResponse item) {
         cartItem.price = item.variant_price;
+        cartItem.card_id = item.cart_id;
         cartItem.product_id = item.product_id;
         cartItem.seller_id = item.seller_id;
         cartItem.seller_name = item.seller_name;

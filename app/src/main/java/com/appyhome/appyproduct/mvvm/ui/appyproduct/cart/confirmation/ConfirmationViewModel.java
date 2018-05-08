@@ -1,23 +1,32 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation;
 
 import android.databinding.ObservableField;
+import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
+import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.internal.LinkedTreeMap;
+
+import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
 public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> {
-    public ObservableField<Float> totalCost = new ObservableField<>(0.0f);
+    public ObservableField<Double> totalAllCost = new ObservableField<>(0.0);
+    public ObservableField<Double> totalShippingCost = new ObservableField<>(0.0);
     public ObservableField<String> name = new ObservableField<>("");
+    public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> address = new ObservableField<>("");
+    public ObservableField<Float> productCost = new ObservableField<>(0.0f);
     public ObservableField<Boolean> isVisa = new ObservableField<>(false);
     public ObservableField<Boolean> isMolpay = new ObservableField<>(false);
 
@@ -26,6 +35,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     private String mPaymentMethod = "";
     private AppyAddress mShippingAddress;
     private String customerName = "";
+    private int addressId = 0;
 
     public ConfirmationViewModel(DataManager dataManager,
                                  SchedulerProvider schedulerProvider) {
@@ -38,11 +48,13 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
+                    addressId = addressResult.id;
                     mShippingAddress = addressResult;
                     name.set(addressResult.recipient_name);
                     phoneNumber.set(addressResult.recipient_phone_number);
                     address.set(addressResult.getAddressText());
                     customerName = addressResult.recipient_name;
+                    getAllCheckedProductCarts();
                 }, Crashlytics::logException));
     }
 
@@ -72,7 +84,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     }
 
     public void update() {
-        getAllCheckedProductCarts();
         fetchPaymentMethods();
         getDefaultShippingAddress();
     }
@@ -84,14 +95,55 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(items -> {
                     // GET SUCCEEDED
                     mCarts = items;
-                    getNavigator().showCheckedItems(items);
+                    getNavigator().showCheckedItems(items, addressId);
                     if (items != null && items.size() > 0) {
-                        mTotalCost = 0;
+                        float totalCost = 0;
+                        ArrayList<String> strIds = new ArrayList<>();
                         for (ProductCart item : items) {
-                            mTotalCost = mTotalCost + (item.price * item.amount);
+                            totalCost = totalCost + (item.price * item.amount);
+                            strIds.add(item.card_id + "");
                         }
-                        mTotalCost = DataUtils.roundNumber(mTotalCost, 2);
-                        totalCost.set(mTotalCost);
+                        productCost.set(DataUtils.roundNumber(totalCost, 2));
+                        updateTotalShippingCost(addressId, TextUtils.join(",", strIds));
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private Double getShippingCost(Object object) {
+        if (object instanceof Double) {
+                return (Double)object;
+        } else if(object instanceof ArrayList) {
+            ArrayList arrayList = (ArrayList)object;
+            if(arrayList.size() > 0) {
+                try {
+                    Double total = 0.0;
+                    for(int i = 0; i < arrayList.size(); i++) {
+                        total = total + Double.valueOf(arrayList.get(i).toString());
+                    }
+                    return total;
+                } catch (Exception e) {
+                    return 0.0;
+                }
+            }
+        }
+        return 0.0;
+    }
+
+    private void updateTotalShippingCost(int idAddress, String cartItemIds) {
+        getCompositeDisposable().add(getDataManager()
+                .verifyProductOrder(new VerifyOrderRequest(cartItemIds, idAddress))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    if (result != null && result.code.equals(ApiCode.BAD_REQUEST_400)) {
+                        LinkedTreeMap<String, Object> linkedTreeMap = (LinkedTreeMap<String, Object>) result.message;
+                        LinkedTreeMap<String, Object> shippingTreeMap = (LinkedTreeMap<String, Object>) linkedTreeMap.get("shipping");
+                        Double shippingCostAll = 0.0;
+                        for (String key : shippingTreeMap.keySet()) {
+                            shippingCostAll = shippingCostAll + getShippingCost(shippingTreeMap.get(key));
+                        }
+                        totalShippingCost.set(shippingCostAll);
+                        totalAllCost.set(productCost.get() + shippingCostAll);
                     }
                 }, Crashlytics::logException));
     }

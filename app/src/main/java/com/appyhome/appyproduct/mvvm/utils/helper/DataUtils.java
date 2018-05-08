@@ -32,6 +32,9 @@ public final class DataUtils {
         return isTheSameDate(date, today);
     }
 
+    public static String getStringNotNull(Object text) {
+        return text != null ? text.toString() : "";
+    }
     public static String getStringNotNull(String text) {
         return text != null ? text : "";
     }
@@ -52,6 +55,13 @@ public final class DataUtils {
 
     public static float roundNumber(float number, int decimal) {
         float scale = (float) Math.pow(10, decimal);
+        number = number * scale;
+        long temp = Math.round(number);
+        number = temp / scale;
+        return number;
+    }
+    public static double roundNumber(double number, int decimal) {
+        double scale = Math.pow(10, decimal);
         number = number * scale;
         long temp = Math.round(number);
         number = temp / scale;

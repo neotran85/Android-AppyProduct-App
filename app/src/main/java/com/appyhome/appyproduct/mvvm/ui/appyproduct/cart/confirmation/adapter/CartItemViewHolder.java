@@ -15,7 +15,6 @@ public class CartItemViewHolder extends BaseViewHolder {
         super(binding.getRoot());
         mBinding = binding;
         mAdapter = adapter;
-        mBinding.tvOriginalPrice.setPaintFlags(mBinding.tvOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
     public ViewItemProductCartItemConfirmationBinding getBinding() {
@@ -26,5 +25,6 @@ public class CartItemViewHolder extends BaseViewHolder {
     public void onBind(int position) {
         CartItemViewModel viewModel = (CartItemViewModel) mAdapter.getItems().get(position);
         mBinding.setViewModel(viewModel);
+        viewModel.updateShippingCost();
     }
 }

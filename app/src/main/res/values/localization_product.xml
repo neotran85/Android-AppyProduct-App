@@ -8,7 +8,7 @@
     <string name="please_input_valid_post_code">Please input a valid post code</string>
     <string name="visa_credit_debit">Visa Credit / Debit</string>
     <string name="via_molpay">Molpay</string>
-    <string name="thank_you_your_order_is_completed">Thank you.\n Your order is completed.</string>
+    <string name="thank_you_your_order_is_completed">Thank you.\n Your order is created completely.</string>
     <string name="toast_your_cart_is_empty">Your cart is empty.</string>
     <string name="button_back_to_home_screen">BACK TO HOME SCREEN</string>
     <string name="please_add_address">Please add a shipping address.</string>

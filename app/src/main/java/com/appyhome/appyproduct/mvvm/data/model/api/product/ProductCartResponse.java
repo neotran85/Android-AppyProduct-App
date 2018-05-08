@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class ProductCartResponse {
     @Expose
+    @SerializedName("cart_id")
+    public int cart_id;
+
+    @Expose
     @SerializedName("seller_id")
     public int seller_id;
 

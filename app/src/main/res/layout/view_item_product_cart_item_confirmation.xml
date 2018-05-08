@@ -21,16 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#DEDEDE"
-            android:visibility="@{viewModel.isFirstProductOfStore}"/>
+            android:visibility="@{viewModel.isFirstProductOfStore}" />
 
         <LinearLayout
             android:id="@+id/llStoreTitle"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="48dp"
             android:background="#F2F2F2"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="6dp"
+            android:paddingStart="6dp"
             android:visibility="@{viewModel.isFirstProductOfStore}">
 
             <ImageView
@@ -40,39 +40,79 @@
                 android:src="@mipmap/icon_store" />
 
             <TextView
-                android:layout_weight="1"
-                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                android:layout_width="match_parent"
+                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{viewModel.sellerName}"
                 android:textColor="@color/dark_gray"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:layout_marginEnd="14dp"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="4dp"
-                    android:text="RM"
-                    android:textColor="@color/red_price"
-                    android:textSize="14sp" />
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical|end"
+                android:orientation="vertical">
 
-                <TextView
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    price="@{viewModel.totalCostOfStore}"
-                    android:textColor="@color/red_price"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shipping Fee:"
+                        android:textColor="@color/medium_dark_gray"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:layout_marginStart="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RM"
+                        android:textColor="@color/red_price"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        price="@{viewModel.shippingCost}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:textColor="@color/red_price"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total:"
+                        android:textColor="@color/medium_dark_gray"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:layout_marginStart="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RM"
+                        android:textColor="@color/red_price"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        price="@{viewModel.totalCostOfStore}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:textColor="@color/red_price"
+                        android:textSize="11sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -81,9 +121,9 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingTop="4dp"
             android:paddingBottom="12dp"
-            android:paddingStart="14dp">
+            android:paddingStart="14dp"
+            android:paddingTop="4dp">
 
             <ImageView
                 android:id="@+id/ivThumbnail"
@@ -137,8 +177,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@={viewModel.variationName}"
@@ -153,22 +193,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvOriginalPrice"
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:lineSpacingExtra="4dp"
-                        android:text="RM 546.4"
-                        android:textColor="@color/gray_product_in_list"
-                        android:textSize="12sp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="4dp"
                         android:text="RM"
                         android:textColor="@color/red_price"
                         android:textSize="14sp" />
@@ -176,10 +203,10 @@
                     <TextView
                         android:id="@+id/tvPrice"
                         fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        price="@{viewModel.price}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        price="@{viewModel.price}"
                         android:textColor="@color/red_price"
                         android:textSize="14sp" />
                 </LinearLayout>

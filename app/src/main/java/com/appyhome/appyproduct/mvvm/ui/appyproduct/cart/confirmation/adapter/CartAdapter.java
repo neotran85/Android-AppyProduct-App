@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.adapter;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -34,8 +35,9 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         mItems = null;
     }
 
-    private CartItemViewModel createViewModel(ProductCart productCart) {
-        CartItemViewModel itemViewModel = new CartItemViewModel();
+    private CartItemViewModel createViewModel(ProductCart productCart, ConfirmationNavigator navigator) {
+        CartItemViewModel itemViewModel = new CartItemViewModel(navigator.getViewModel());
+        itemViewModel.setSellerId(productCart.seller_id);
         itemViewModel.title.set(productCart.product_name);
         itemViewModel.imageURL.set(productCart.product_image);
         itemViewModel.setProductCartId(productCart.id);
@@ -53,15 +55,22 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         return R.layout.view_item_product_cart_empty;
     }
 
-    public void addItems(RealmResults<ProductCart> results, ConfirmationNavigator navigator) {
+    public void addItems(RealmResults<ProductCart> results, int addressId, ConfirmationNavigator navigator) {
         mItems = new ArrayList<>();
         if (viewModelManager != null) {
             viewModelManager.clear();
         }
         viewModelManager = new HashMap();
-        if (results != null) {
+        if (results != null && results.size() > 0) {
+            ArrayList<String> cartIds = new ArrayList<>();
             for (ProductCart item : results) {
-                CartItemViewModel cartItem = createViewModel(item);
+                cartIds.add(item.card_id + "");
+            }
+            String cartIdsStr = TextUtils.join(",", cartIds);
+            for (ProductCart item : results) {
+                CartItemViewModel cartItem = createViewModel(item, navigator);
+                cartItem.setCartIds(cartIdsStr);
+                cartItem.setAddressId(addressId);
                 addProductCartToStoreBySellerName(cartItem);
                 mItems.add(cartItem);
             }
@@ -94,10 +103,10 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
 
     private void updateTotalCostOfStore(String sellerName) {
         ArrayList<CartItemViewModel> array = viewModelManager.get(sellerName);
-        float totalCost = 0;
+        double totalCost = 0;
         if (array != null && array.size() > 0) {
             for (CartItemViewModel item : array) {
-                totalCost = totalCost + Float.valueOf(item.price.get()) * Integer.valueOf(item.amount.get());
+                totalCost = totalCost + Double.valueOf(item.price.get()) * Integer.valueOf(item.amount.get());
                 totalCost = DataUtils.roundNumber(totalCost, 2);
             }
             for (CartItemViewModel item : array) {
@@ -111,5 +120,10 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         ViewItemProductCartItemConfirmationBinding itemViewBinding = ViewItemProductCartItemConfirmationBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CartItemViewHolder(itemViewBinding, this);
+    }
+
+    @Override
+    protected void addItems(RealmResults<ProductCart> items, ConfirmationNavigator navigator) {
+        // DO NOTHING
     }
 }

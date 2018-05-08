@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 
 import io.realm.RealmResults;
 
@@ -10,7 +11,7 @@ public interface ConfirmationNavigator {
 
     void gotoNextStep();
 
-    void showCheckedItems(RealmResults<ProductCart> result);
+    void showCheckedItems(RealmResults<ProductCart> result, int addressId);
 
     void editShippingAddress();
 
@@ -26,4 +27,5 @@ public interface ConfirmationNavigator {
 
     void openVisaPayment();
 
+    ConfirmationViewModel getViewModel();
 }

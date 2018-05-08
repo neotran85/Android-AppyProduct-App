@@ -29,6 +29,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressRe
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.CheckoutOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
@@ -41,6 +42,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -817,6 +820,16 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<AddShippingAddressResponse> editUserShippingAddress(AddShippingAddressRequest request) {
         return mApiHelper.editUserShippingAddress(request);
+    }
+
+    @Override
+    public Single<ApiResponse> checkoutProductOrder(CheckoutOrderRequest request) {
+        return mApiHelper.checkoutProductOrder(request);
+    }
+
+    @Override
+    public Single<VerifyOrderResponse> verifyProductOrder(VerifyOrderRequest request) {
+        return mApiHelper.verifyProductOrder(request);
     }
 
     @Override

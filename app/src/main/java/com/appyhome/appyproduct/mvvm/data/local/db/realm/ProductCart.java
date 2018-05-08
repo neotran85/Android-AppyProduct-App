@@ -46,6 +46,11 @@ public class ProductCart extends RealmObject {
     public String product_image;
 
     @Expose
+    @SerializedName("card_id")
+    @ColumnInfo(name = "card_id")
+    public int card_id;
+
+    @Expose
     @SerializedName("price")
     @ColumnInfo(name = "price")
     public float price;

@@ -82,57 +82,15 @@
                         android:background="@color/very_light_gray" />
 
                     <LinearLayout
-                        android:id="@+id/llTotalCost"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="14dp">
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-SemiBold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="Total Cost:"
-                            android:textColor="#4E4E4E"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="RM"
-                            android:textColor="@color/red_price"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            fontPath="fonts/TitilliumWeb-Bold.ttf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            price="@{viewModel.totalCost}"
-                            android:textColor="@color/red_price"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="@color/very_light_gray" />
-
-                    <LinearLayout
                         android:id="@+id/llShippingAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:orientation="vertical"
-                        android:paddingTop="14dp"
                         android:paddingBottom="20dp"
                         android:paddingEnd="14dp"
-                        android:paddingStart="14dp">
+                        android:paddingStart="14dp"
+                        android:paddingTop="14dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -144,17 +102,33 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:layout_weight="1"
                                 android:text="Shipping Address"
                                 android:textColor="#4E4E4E"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="Fee: RM"
+                                android:textColor="@color/red_price"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                price="@{viewModel.totalShippingCost}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/red_price"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:onClick="@{(view) -> navigator.editShippingAddress()}"
-                                android:text="Edit"
                                 android:paddingStart="60dp"
+                                android:text="Edit"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -198,6 +172,7 @@
                                     android:textColor="#4E4E4E"
                                     android:textSize="14sp" />
                             </LinearLayout>
+
                             <TextView
                                 fontPath="fonts/TitilliumWeb-Light.ttf"
                                 android:layout_width="wrap_content"
@@ -237,7 +212,7 @@
                                 android:layout_weight="1"
                                 android:text="Payment Method"
                                 android:textColor="#4E4E4E"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -341,17 +316,35 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="18dp"
-                                android:layout_weight="1"
                                 android:text="Your Cart"
                                 android:textColor="#4E4E4E"
-                                android:textSize="15sp" />
+                                android:textSize="14sp" />
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="RM"
+                                android:textColor="@color/red_price"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                                price="@{viewModel.productCost}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_weight="1"
+                                android:textColor="@color/red_price"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="@{(view) -> navigator.editCart()}"
-                                android:paddingStart="60dp"
                                 android:paddingEnd="14dp"
+                                android:paddingStart="60dp"
                                 android:text="Edit"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="14sp" />
@@ -374,29 +367,78 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:gravity="center_vertical|end"
                 android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/very_light_gray"></View>
+                    android:background="@color/very_light_gray" />
+
+                <TextView
+                    textVisible="@{viewModel.discount}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="12dp"
+                    android:paddingEnd="14dp"
+                    android:text="@{viewModel.discount}"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/llTotalCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical|end"
+                    android:orientation="horizontal"
+                    android:paddingEnd="14dp">
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-SemiBold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Cost:"
+                        android:textColor="#4E4E4E"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="RM"
+                        android:textColor="@color/red_price"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        price="@{viewModel.totalAllCost}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/red_price"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
                 <Button
-                    android:textColor="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="14dp"
                     android:layout_marginStart="14dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.gotoNextStep()}"
                     android:text="FINAL CONFIRM"
+                    android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>
         </RelativeLayout>

@@ -1,8 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.remote;
 
 import com.appyhome.appyproduct.mvvm.data.model.api.BannersResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.OpenSourceResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LogoutResponse;
@@ -13,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.AddShippingAddressRe
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.CheckoutOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
@@ -23,6 +22,8 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentCreateResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRequest;
@@ -314,6 +315,24 @@ public class AppApiHelper implements ApiHelper {
                 .addUrlEncodeFormBodyParameter(request)
                 .build()
                 .getObjectSingle(AddShippingAddressResponse.class);
+    }
+
+    @Override
+    public Single<ApiResponse> checkoutProductOrder(CheckoutOrderRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_ORDER_CHECKOUT)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addUrlEncodeFormBodyParameter(request)
+                .build()
+                .getObjectSingle(ApiResponse.class);
+    }
+
+    @Override
+    public Single<VerifyOrderResponse> verifyProductOrder(VerifyOrderRequest request) {
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_ORDER_VERIFY)
+                .addHeaders(mApiHeader.getProtectedApiHeader())
+                .addBodyParameter(request)
+                .build()
+                .getObjectSingle(VerifyOrderResponse.class);
     }
 
     @Override

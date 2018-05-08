@@ -117,6 +117,12 @@ public class ApiUrlConfig {
     public static final String API_SHIPPING_ADDRESS_SET_DEFAULT = BuildConfig.BASE_URL
             + "api/appyproduct/address/setdefault";
 
+    public static final String API_PRODUCT_ORDER_CHECKOUT = BuildConfig.BASE_URL
+            + "api/appyproduct/checkout/order";
+
+    public static final String API_PRODUCT_ORDER_VERIFY = BuildConfig.BASE_URL
+            + "api/appyproduct/checkout/verify";
+
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";
     public static final String URL_AIR_CON_TYPE_INFO = "file:///android_asset/html/air_con_type_info.html";
