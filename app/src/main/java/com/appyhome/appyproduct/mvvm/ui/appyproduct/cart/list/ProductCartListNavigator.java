@@ -24,4 +24,8 @@ public interface ProductCartListNavigator {
     void showLoading();
 
     void closeLoading();
+
+    void verifyOrder_DONE(String message);
+
+    void gotoNextStep_DONE();
 }

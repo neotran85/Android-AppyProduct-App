@@ -23,7 +23,7 @@ import io.realm.RealmResults;
 
 public abstract class ProductCartListNavigatorActivity extends BaseActivity<ActivityProductCartListBinding, ProductCartListViewModel>
         implements ProductCartListNavigator, EditVariantNavigator,
-        ProductCartItemNavigator, DialogInterface.OnClickListener {
+        ProductCartItemNavigator {
 
     protected static final int REQUEST_DETAIL = 11;
 
@@ -46,17 +46,22 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     }
 
     @Override
-    public void gotoNextStep() {
-        if(getAdapter().isNotItemsChecked()) {
-            showAlert(getString(R.string.please_choose_at_least_one));
-            return;
-        }
+    public void gotoNextStep_DONE() {
         if (isEditMode()) {
             finish();
         } else {
             Intent intent = ShippingAddressActivity.getStartIntent(this);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void gotoNextStep() {
+        if(getAdapter().isNotItemsChecked()) {
+            showAlert(getString(R.string.please_choose_at_least_one));
+            return;
+        }
+        getViewModel().verifyOrder();
     }
 
     @Override
@@ -70,7 +75,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void clearCarts() {
-        AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), this);
+        AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), (dialog, which) -> emptyProductCarts());
     }
 
     @Override
@@ -115,11 +120,6 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     }
 
     @Override
-    public void onClick(DialogInterface dialog, int which) {
-        emptyProductCarts();
-    }
-
-    @Override
     public void saveProductCartItem_Done(ProductCart productCart) {
         getAdapter().updateProductCartItem(productCart);
         closeFragment(EditVariantFragment.TAG);
@@ -130,10 +130,14 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
         closeFragment(EditVariantFragment.TAG);
     }
 
-
     @Override
     public void onEditVariantSelected(ProductVariant variant) {
         // DO NOTHING HERE
+    }
+
+    @Override
+    public void verifyOrder_DONE(String message) {
+
     }
 
     @Override

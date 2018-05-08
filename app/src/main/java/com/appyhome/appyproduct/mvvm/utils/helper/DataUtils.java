@@ -13,12 +13,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 public final class DataUtils {
     public static boolean isTheSameDate(Calendar cal1, Calendar cal2) {
@@ -35,6 +32,7 @@ public final class DataUtils {
     public static String getStringNotNull(Object text) {
         return text != null ? text.toString() : "";
     }
+
     public static String getStringNotNull(String text) {
         return text != null ? text : "";
     }
@@ -60,6 +58,7 @@ public final class DataUtils {
         number = temp / scale;
         return number;
     }
+
     public static double roundNumber(double number, int decimal) {
         double scale = Math.pow(10, decimal);
         number = number * scale;
@@ -85,6 +84,15 @@ public final class DataUtils {
             }
         }
         return "";
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     public static String loadJSONFromAsset(Context context, String jsonFileName)
