@@ -66,6 +66,15 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
 
     private int addressId;
 
+    private boolean checkItems(LinkedTreeMap<String, Object> data) {
+        if (data.containsKey("qty_available")) {
+            if (data.get("qty_available") instanceof Boolean) {
+                return (Boolean) data.get("qty_available");
+            }
+        }
+        return false;
+    }
+
     private void getAllCheckedProductCarts() {
         getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
                 .take(1)
@@ -84,10 +93,15 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
                                 .subscribe(result -> {
                                     if (result != null && result.code.equals(ApiCode.BAD_REQUEST_400)) {
                                         LinkedTreeMap<String, Object> linkedTreeMap = (LinkedTreeMap<String, Object>) result.message;
-                                        for(String key: linkedTreeMap.keySet()) {
-                                            if(DataUtils.isNumeric(key)) {
-                                                if(linkedTreeMap.get(key) instanceof  LinkedTreeMap) {
+                                        for (String key : linkedTreeMap.keySet()) {
+                                            if (DataUtils.isNumeric(key)) {
+                                                if (linkedTreeMap.get(key) instanceof LinkedTreeMap) {
                                                     LinkedTreeMap<String, Object> singleItems = (LinkedTreeMap<String, Object>) linkedTreeMap.get(key);
+                                                    for (String keyStr : singleItems.keySet()) {
+                                                        if (singleItems.get(keyStr) instanceof LinkedTreeMap) {
+                                                            checkItems((LinkedTreeMap<String, Object>) singleItems.get(keyStr));
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
