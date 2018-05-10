@@ -59,5 +59,8 @@
     <string name="visa_cvv_code">CVV Code</string>
     <string name="title_edit_shipping_address">Edit Shipping Address</string>
     <string name="title_add_new_shipping_address">Add New Shipping Address</string>
-
+    <string name="title_shipping_address">Shipping Address</string>
+    <string name="cart_check_out">Check out</string>
+    <string name="verifying_order">Verifying...</string>
+    <string name="unable_to_add_than">Sorry, unable to add more than</string>
 </resources>

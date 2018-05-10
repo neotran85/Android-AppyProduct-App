@@ -48,16 +48,17 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
-        mViewModel.fetchPaymentMethods();
-        isEditMode = getIntent().getBooleanExtra("edit_mode", false);
-        mViewModel.isEditMode.set(isEditMode);
+        mViewModel.updatePaymentMethods();
     }
 
     @Override
     public void gotoNextStep() {
-        if (isEditMode)
-            finish();
-        else startActivity(ConfirmationActivity.getStartIntent(this));
+        if (!getViewModel().isDefaultPaymentMethodsExist()) {
+            showAlert(getString(R.string.pls_choose_payment_method));
+            return;
+        }
+        mBinder.btnNext.setText(getString(R.string.verifying_order));
+        getViewModel().doVerifyOrder();
     }
 
     @Override
@@ -75,6 +76,12 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     @Override
     protected void onResume() {
         super.onResume();
+        updateNextButtonText();
+    }
+
+    private void updateNextButtonText() {
+        isEditMode = getIntent().getBooleanExtra("edit_mode", false);
+        mBinder.btnNext.setText(isEditMode ? "SAVE" : "NEXT");
     }
 
     @Override
@@ -90,5 +97,18 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    @Override
+    public void verifyOrder_PASSED() {
+        updateNextButtonText();
+        if (isEditMode)
+            finish();
+        else startActivity(ConfirmationActivity.getStartIntent(this));
+    }
+
+    @Override
+    public void verifyOrder_FAILED(String message) {
+        updateNextButtonText();
     }
 }

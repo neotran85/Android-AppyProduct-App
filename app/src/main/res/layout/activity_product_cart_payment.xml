@@ -169,6 +169,7 @@
                     android:background="@color/gray"></View>
 
                 <Button
+                    android:id="@+id/btnNext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -179,7 +180,6 @@
                     android:layout_marginTop="8dp"
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
-                    saveModeText="@{viewModel.isEditMode}"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>

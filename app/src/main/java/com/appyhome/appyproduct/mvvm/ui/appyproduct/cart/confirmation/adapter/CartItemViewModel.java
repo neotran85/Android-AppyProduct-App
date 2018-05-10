@@ -48,7 +48,7 @@ public class CartItemViewModel extends ProductCartItemViewModel {
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
-                    if (result != null && result.code.equals(ApiCode.BAD_REQUEST_400)) {
+                    if (result != null && result.code.equals(ApiCode.OK_200)) {
                         LinkedTreeMap<String, Object> linkedTreeMap = (LinkedTreeMap<String, Object>) result.message;
                         shippingTreeMap = (LinkedTreeMap<String, Object>) linkedTreeMap.get("shipping");
                         updatePrices();

@@ -6,10 +6,8 @@
     <string name="app_google_play_store_link">"https://play.google.com/store/apps/details?id="</string>
     <string name="app_market_link">"market://details?id="</string>
     <string name="next">NEXT</string>
-    <string name="title_shipping_address">Shipping Address</string>
+
     <string name="request_safety_code">Safety Code:</string>
-    <string name="cart_check_out">Check out</string>
-    <string name="unable_to_add_than">Sorry, unable to add more than</string>
     <string name="read_more">Read more</string>
     <string name="read_less">Show less</string>
     <string name="register_last_name">Last name</string>
@@ -17,4 +15,5 @@
     <string name="save">Save</string>
     <string name="create">Create</string>
     <string name="please_choose_at_least_one">Please choose at least one item.</string>
+    <string name="pls_choose_payment_method">Please choose a payment method.</string>
 </resources>

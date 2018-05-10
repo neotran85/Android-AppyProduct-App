@@ -1,10 +1,11 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.common.VerifyOrderNavigator;
 
 import io.realm.RealmResults;
 
-public interface ProductCartListNavigator {
+public interface ProductCartListNavigator extends VerifyOrderNavigator {
     void handleErrorService(Throwable throwable);
 
     void showAlert(String message);
@@ -25,7 +26,4 @@ public interface ProductCartListNavigator {
 
     void closeLoading();
 
-    void verifyOrder_DONE(String message);
-
-    void gotoNextStep_DONE();
 }

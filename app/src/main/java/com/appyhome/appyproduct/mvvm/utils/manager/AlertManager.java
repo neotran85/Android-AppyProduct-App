@@ -46,10 +46,14 @@ public class AlertManager {
     }
 
     public void showLoading() {
+        showLoading(true);
+    }
+
+    public void showLoading(boolean canceledOnTouchOutside) {
         if (mLoadingDialog == null || !mLoadingDialog.isShowing()) {
             mLoadingDialog = ProgressDialog.show(mContext, "",
                     mContext.getString(R.string.message_loading), true);
-            mLoadingDialog.setCanceledOnTouchOutside(true);
+            mLoadingDialog.setCanceledOnTouchOutside(canceledOnTouchOutside);
         }
     }
 

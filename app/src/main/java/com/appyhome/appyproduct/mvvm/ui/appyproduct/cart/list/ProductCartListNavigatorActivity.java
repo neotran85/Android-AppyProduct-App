@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -46,7 +45,8 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     }
 
     @Override
-    public void gotoNextStep_DONE() {
+    public void verifyOrder_PASSED() {
+        closeLoading();
         if (isEditMode()) {
             finish();
         } else {
@@ -57,11 +57,12 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void gotoNextStep() {
-        if(getAdapter().isNotItemsChecked()) {
+        if (getAdapter().isNotItemsChecked()) {
             showAlert(getString(R.string.please_choose_at_least_one));
             return;
         }
-        getViewModel().verifyOrder();
+        showLoading(false);
+        getViewModel().doVerifyOrder();
     }
 
     @Override
@@ -136,8 +137,8 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     }
 
     @Override
-    public void verifyOrder_DONE(String message) {
-
+    public void verifyOrder_FAILED(String message) {
+        closeLoading();
     }
 
     @Override
