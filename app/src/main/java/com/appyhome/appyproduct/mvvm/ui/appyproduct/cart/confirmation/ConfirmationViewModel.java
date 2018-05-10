@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.CheckoutOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentViewModel;
@@ -26,7 +27,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<String> phoneNumber = new ObservableField<>("");
     public ObservableField<String> address = new ObservableField<>("");
-    public ObservableField<Float> productCost = new ObservableField<>(0.0f);
+    public ObservableField<Double> productCost = new ObservableField<>(0.0);
     public ObservableField<Boolean> isVisa = new ObservableField<>(false);
     public ObservableField<Boolean> isMolpay = new ObservableField<>(false);
 
@@ -36,6 +37,10 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     private AppyAddress mShippingAddress;
     private String customerName = "";
     private int addressId = 0;
+    private ArrayList<String> strCartIds;
+    private double shippingCostAll = 0.0;
+    private double totalCost = 0.0;
+    private double totalCostAfterDiscount = 0.0;
 
     public ConfirmationViewModel(DataManager dataManager,
                                  SchedulerProvider schedulerProvider) {
@@ -97,14 +102,14 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     mCarts = items;
                     getNavigator().showCheckedItems(items, addressId);
                     if (items != null && items.size() > 0) {
-                        float totalCost = 0;
-                        ArrayList<String> strIds = new ArrayList<>();
+                        totalCost = 0.0;
+                        strCartIds = new ArrayList<>();
                         for (ProductCart item : items) {
                             totalCost = totalCost + (item.price * item.amount);
-                            strIds.add(item.card_id + "");
+                            strCartIds.add(item.card_id + "");
                         }
                         productCost.set(DataUtils.roundNumber(totalCost, 2));
-                        updateTotalShippingCost(addressId, TextUtils.join(",", strIds));
+                        updateTotalShippingCost(addressId, TextUtils.join(",", strCartIds));
                     }
                 }, Crashlytics::logException));
     }
@@ -138,7 +143,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     if (result != null && result.code.equals(ApiCode.OK_200)) {
                         LinkedTreeMap<String, Object> linkedTreeMap = (LinkedTreeMap<String, Object>) result.message;
                         LinkedTreeMap<String, Object> shippingTreeMap = (LinkedTreeMap<String, Object>) linkedTreeMap.get("shipping");
-                        Double shippingCostAll = 0.0;
+                        shippingCostAll = 0.0;
                         for (String key : shippingTreeMap.keySet()) {
                             shippingCostAll = shippingCostAll + getShippingCost(shippingTreeMap.get(key));
                         }
@@ -148,7 +153,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 }, Crashlytics::logException));
     }
 
-    private void updatePricesAfterDiscount(Float totalBeforeDiscount, LinkedTreeMap<String, Object> linkedTreeMap) {
+    private void updatePricesAfterDiscount(Double totalBeforeDiscount, LinkedTreeMap<String, Object> linkedTreeMap) {
         double totalAfterDiscount = totalBeforeDiscount;
         discount.set("RM " + DataUtils.roundPrice(totalAfterDiscount) + "+ Shipping: RM " + totalShippingCost.get());
         if (linkedTreeMap.get("promo") instanceof ArrayList) {
@@ -182,5 +187,33 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
 
     public String getPhoneNumberOfUser() {
         return getDataManager().getCurrentPhoneNumber();
+    }
+
+    public void createOrder(String statusPayment, String promocodeUsed) {
+        CheckoutOrderRequest request = new CheckoutOrderRequest();
+        request.address_id = addressId;
+        request.card_id = TextUtils.join(",", strCartIds);
+        request.shipping = shippingCostAll;
+        request.price = totalCost;
+        request.promocode_used = promocodeUsed;
+        request.status = statusPayment;
+
+        getCompositeDisposable().add(getDataManager()
+                .checkoutProductOrder(request)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    if(result != null && result.isValid()) {
+                        if(result.message instanceof String) {
+                            String message = (String) result.message;
+                            String[] resultStr = message.split(":");
+                            if(resultStr !=null && resultStr.length == 2) {
+                                if(DataUtils.isNumeric(resultStr[1])) {
+                                    long orderId = Long.valueOf(resultStr[1]);
+                                }
+                            }
+                        }
+                    }
+                }, Crashlytics::logException));
     }
 }

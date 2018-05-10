@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class CheckoutOrderRequest {
     @Expose
     @SerializedName("card_id")
-    public int card_id;
+    public String card_id;
 
     @Expose
     @SerializedName("address_id")
@@ -15,11 +15,11 @@ public class CheckoutOrderRequest {
 
     @Expose
     @SerializedName("shipping")
-    public float shipping;
+    public double shipping;
 
     @Expose
     @SerializedName("price")
-    public float price;
+    public double price;
 
     @Expose
     @SerializedName("promocode_used")
