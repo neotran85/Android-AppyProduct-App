@@ -431,6 +431,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btnFinalConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:layout_gravity="center_vertical"
@@ -441,7 +442,7 @@
                     android:background="@mipmap/bg_long_button"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{(view) -> navigator.gotoNextStep()}"
-                    android:text="FINAL CONFIRM"
+                    android:text="@string/cart_final_confirm"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>

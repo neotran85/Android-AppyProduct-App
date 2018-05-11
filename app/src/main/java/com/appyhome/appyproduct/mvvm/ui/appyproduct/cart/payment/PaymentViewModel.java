@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.common.VerifyOrderViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
@@ -14,16 +15,22 @@ public class PaymentViewModel extends BaseViewModel<PaymentNavigator> {
     public ObservableField<Boolean> isPaymentMolpay = new ObservableField<Boolean>(false);
 
     private VerifyOrderViewModel mVerifyOrderViewModel;
+    private FetchUserInfoViewModel mFetchUserInfoViewModel;
 
     public PaymentViewModel(DataManager dataManager,
                             SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         mVerifyOrderViewModel = new VerifyOrderViewModel(dataManager, schedulerProvider);
-    }
+        mFetchUserInfoViewModel = new FetchUserInfoViewModel(dataManager, schedulerProvider);
 
+    }
     public void setNavigator(PaymentNavigator navigator) {
         super.setNavigator(navigator);
         mVerifyOrderViewModel.setNavigator(navigator);
+    }
+
+    public void updateCartsFromServer() {
+        mFetchUserInfoViewModel.fetchUserData();
     }
 
     public boolean isDefaultPaymentMethodsExist() {

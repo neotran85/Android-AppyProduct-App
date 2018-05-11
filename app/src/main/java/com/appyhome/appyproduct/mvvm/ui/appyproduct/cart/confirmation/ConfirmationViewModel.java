@@ -9,7 +9,9 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.CheckoutOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.common.VerifyOrderViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.payment.PaymentViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
@@ -43,9 +45,20 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     private double totalCost = 0.0;
     private double totalCostAfterDiscount = 0.0;
 
+    private FetchUserInfoViewModel mFetchUserInfoViewModel;
+    private VerifyOrderViewModel mVerifyOrderViewModel;
+
     public ConfirmationViewModel(DataManager dataManager,
                                  SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        mFetchUserInfoViewModel = new FetchUserInfoViewModel(dataManager, schedulerProvider);
+        mVerifyOrderViewModel = new VerifyOrderViewModel(dataManager, schedulerProvider);
+    }
+
+    public void setNavigator(ConfirmationNavigator navigator) {
+        super.setNavigator(navigator);
+        mFetchUserInfoViewModel.setNavigator(navigator);
+        mVerifyOrderViewModel.setNavigator(navigator);
     }
 
     public void getDefaultShippingAddress() {
@@ -175,13 +188,13 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         return getDataManager().getCurrentPhoneNumber();
     }
 
-    public void createOrderToServer(String statusPayment, String promocodeUsed) {
+    public void createOrderToServer(String statusPayment, String promoCodeUsed) {
         CheckoutOrderRequest request = new CheckoutOrderRequest();
         request.address_id = addressId;
         request.card_id = TextUtils.join(",", strCartIds);
         request.shipping = shippingCostAll;
         request.price = totalCost;
-        request.promocode_used = promocodeUsed;
+        request.promocode_used = promoCodeUsed;
         request.status = statusPayment;
 
         getCompositeDisposable().add(getDataManager()
@@ -189,12 +202,12 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
-                    if(result != null && result.isValid()) {
-                        if(result.message instanceof String) {
+                    if (result != null && result.isValid()) {
+                        if (result.message instanceof String) {
                             String message = (String) result.message;
                             String[] resultStr = message.split(":");
-                            if(resultStr !=null && resultStr.length == 2) {
-                                if(DataUtils.isNumeric(resultStr[1])) {
+                            if (resultStr != null && resultStr.length == 2) {
+                                if (DataUtils.isNumeric(resultStr[1])) {
                                     long orderId = Long.valueOf(resultStr[1]);
                                     addOrderToDatabase(orderId);
                                 }
@@ -203,6 +216,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     }
                 }, Crashlytics::logException));
     }
+
     private void addOrderToDatabase(long orderId) {
         getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
                 mShippingAddress, getUserId(), customerName, mTotalCost, 0, orderId)
@@ -219,5 +233,13 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     getNavigator().handleErrors(throwable);
                     Crashlytics.logException(throwable);
                 }));
+    }
+
+    public void updateUserCartAgain() {
+        mFetchUserInfoViewModel.fetchUserData();
+    }
+
+    public void doVerifyOrderBeforePayment() {
+        mVerifyOrderViewModel.doVerifyOrder();
     }
 }

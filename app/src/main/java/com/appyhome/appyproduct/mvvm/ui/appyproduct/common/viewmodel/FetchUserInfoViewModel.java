@@ -64,6 +64,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
 
                 }, this::onFetchFailed));
     }
+
     public void fetchShippingAddresses() {
         mIsFetchShippingAddresses = true;
         getCompositeDisposable().add(getDataManager().fetchUserShippingAddress()
@@ -84,7 +85,8 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
                     // DONE FETCHING FOR USER DATA
-                    getNavigator().onFetchUserInfo_Done();
+                    if (getNavigator() != null)
+                        getNavigator().onFetchUserInfo_Done();
                 }, Crashlytics::logException));
     }
 
@@ -153,7 +155,8 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
         else if (!mIsFetchCartsStarted) fetchCartsServer();
         else if (!mIsFetchWishListStarted) fetchUserWishList();
         else if (!mIsFetchShippingAddresses) fetchShippingAddresses();
-        else getNavigator().onFetchUserInfo_Failed();
+        else if (getNavigator() != null)
+            getNavigator().onFetchUserInfo_Failed();
     }
 
     private void fetchUserProfile() {

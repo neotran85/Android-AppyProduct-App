@@ -61,6 +61,7 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     @Override
     public void handleErrors(Throwable throwable) {
+        closeLoading();
         showAlert(getString(R.string.error_unknown));
     }
 
@@ -131,19 +132,12 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     @Override
     public void gotoNextStep() {
-        if (mMainViewModel.isMolpay.get()) {
-            generatedOrderId = System.currentTimeMillis();
-            PaymentManager.getInstance().startMolpayActivity(this,
-                    getViewModel().totalAllCost.get().toString(), generatedOrderId + "",
-                    getViewModel().getPhoneNumberOfUser(),
-                    getViewModel().getEmailOfUser(),
-                    getViewModel().getNameOfUser(), getString(R.string.appy_home_product_payment));
-        } else {
-            openVisaPayment();
-        }
+        mBinder.btnFinalConfirm.setText(getString(R.string.verifying_order));
+        getViewModel().doVerifyOrderBeforePayment();
     }
 
     public void addOrderOk(ProductOrder order) {
+        closeLoading();
         gotoOrderCompleted(order.id);
     }
 
@@ -161,10 +155,12 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MOLPayActivity.MOLPayXDK:
-                    //getViewModel().addOrder(generatedOrderId);
+                    showLoading();
+                    getViewModel().addOrder("paid", "", generatedOrderId);
                     break;
                 case REQUEST_VISA_PAYMENT:
-                    //getViewModel().addOrder(0);
+                    showLoading();
+                    getViewModel().addOrder("paid", "", generatedOrderId);
                     break;
             }
         }
@@ -182,6 +178,39 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
+    }
+
+    @Override
+    public void onFetchUserInfo_Done() {
+        closeLoading();
+        showAlert(getString(R.string.pls_cart_need_updated));
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+        closeLoading();
+        showAlert(getString(R.string.pls_cart_need_updated));
+    }
+
+    @Override
+    public void verifyOrder_PASSED() {
+        mBinder.btnFinalConfirm.setText(getString(R.string.cart_final_confirm));
+        if (mMainViewModel.isMolpay.get()) {
+            generatedOrderId = System.currentTimeMillis();
+            PaymentManager.getInstance().startMolpayActivity(this,
+                    getViewModel().totalAllCost.get().toString(), generatedOrderId + "",
+                    getViewModel().getPhoneNumberOfUser(),
+                    getViewModel().getEmailOfUser(),
+                    getViewModel().getNameOfUser(), getString(R.string.appy_home_product_payment));
+        } else {
+            openVisaPayment();
+        }
+    }
+
+    @Override
+    public void verifyOrder_FAILED(String message) {
+        mBinder.btnFinalConfirm.setText(getString(R.string.cart_final_confirm));
+        getViewModel().updateUserCartAgain();
     }
 }

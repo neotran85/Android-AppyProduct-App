@@ -96,7 +96,7 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
     }
 
     @Override
@@ -110,5 +110,16 @@ public class PaymentActivity extends BaseActivity<ActivityProductCartPaymentBind
     @Override
     public void verifyOrder_FAILED(String message) {
         updateNextButtonText();
+        getViewModel().updateCartsFromServer();
+    }
+
+    @Override
+    public void onFetchUserInfo_Done() {
+
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+
     }
 }
