@@ -26,6 +26,10 @@ public class CheckoutOrderRequest {
     public String promocode_used;
 
     @Expose
+    @SerializedName("transaction_id")
+    public String transaction_id;
+
+    @Expose
     @SerializedName("status")
     public String status;
 }

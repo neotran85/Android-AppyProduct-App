@@ -184,7 +184,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         return getDataManager().getCurrentPhoneNumber();
     }
 
-    public void addOrder(String statusPayment, String promoCodeUsed) {
+    public void addOrder(String statusPayment, String promoCodeUsed, String transactionId) {
 
         CheckoutOrderRequest request = new CheckoutOrderRequest();
         request.address_id = addressId;
@@ -193,6 +193,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         request.price = totalCost;
         request.promocode_used = promoCodeUsed;
         request.status = statusPayment;
+        request.transaction_id = transactionId;
 
         getCompositeDisposable().add(getDataManager()
                 .checkoutProductOrder(request)

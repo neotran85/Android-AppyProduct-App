@@ -23,13 +23,16 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.appyhome.appyproduct.mvvm.utils.manager.PaymentManager;
+import com.crashlytics.android.Crashlytics;
 import com.molpay.molpayxdk.MOLPayActivity;
+
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-        public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
+public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
 
     final int HEIGHT_CART_ITEM = 144;
     final int HEIGHT_TITLE_CART_ITEM = 48;
@@ -154,6 +157,21 @@ import io.realm.RealmResults;
         startActivity(i);
     }
 
+    public String getMolpayTransactionId(Intent data) {
+        try {
+            JSONObject result = new JSONObject(data.getStringExtra(MOLPayActivity.MOLPayTransactionResult));
+            if (result.getString("status_code").equals("00")) {
+                // PAYMENT SUCCESS
+                String txn_ID = result.getString("txn_ID");
+                return txn_ID;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Crashlytics.logException(e);
+        }
+        return "";
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -161,11 +179,12 @@ import io.realm.RealmResults;
             switch (requestCode) {
                 case MOLPayActivity.MOLPayXDK:
                     showLoading();
-                    getViewModel().addOrder("paid", "");
+                    getViewModel().addOrder("paid", "",
+                            getMolpayTransactionId(data));
                     break;
                 case REQUEST_VISA_PAYMENT:
                     showLoading();
-                    getViewModel().addOrder("paid", "");
+                    getViewModel().addOrder("paid", "", "");
                     break;
             }
         }
