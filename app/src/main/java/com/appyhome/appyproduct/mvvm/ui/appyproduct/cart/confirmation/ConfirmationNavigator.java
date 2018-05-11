@@ -25,6 +25,8 @@ public interface ConfirmationNavigator extends FetchUserInfoNavigator, VerifyOrd
 
     void addOrderOk(ProductOrder order);
 
+    void addOrderFailed(String message);
+
     void close();
 
     void openVisaPayment();

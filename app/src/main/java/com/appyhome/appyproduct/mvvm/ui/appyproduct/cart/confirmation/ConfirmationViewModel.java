@@ -83,10 +83,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         isMolpay.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_MOLPAY));
     }
 
-    public void addOrder(String statusPayment, String promoCode, long orderId) {
-        createOrderToServer(statusPayment, promoCode);
-    }
-
     public void update() {
         fetchPaymentMethods();
         getDefaultShippingAddress();
@@ -188,10 +184,11 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         return getDataManager().getCurrentPhoneNumber();
     }
 
-    public void createOrderToServer(String statusPayment, String promoCodeUsed) {
+    public void addOrder(String statusPayment, String promoCodeUsed) {
+
         CheckoutOrderRequest request = new CheckoutOrderRequest();
         request.address_id = addressId;
-        request.card_id = TextUtils.join(",", strCartIds);
+        request.cart_id = TextUtils.join(",", strCartIds);
         request.shipping = shippingCostAll;
         request.price = totalCost;
         request.promocode_used = promoCodeUsed;
@@ -213,8 +210,15 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                                 }
                             }
                         }
+                    } else {
+                        getNavigator().addOrderFailed(result != null ? result.message.toString() : "");
                     }
-                }, Crashlytics::logException));
+                }, this::addOrderFailed));
+    }
+
+    private void addOrderFailed(Throwable throwable) {
+        Crashlytics.logException(throwable);
+        getNavigator().addOrderFailed("");
     }
 
     private void addOrderToDatabase(long orderId) {
@@ -227,12 +231,9 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     if (order != null && order.isValid()) {
                         getNavigator().addOrderOk(order);
                     } else {
-                        getNavigator().handleErrors(null);
+                        addOrderFailed(null);
                     }
-                }, throwable -> {
-                    getNavigator().handleErrors(throwable);
-                    Crashlytics.logException(throwable);
-                }));
+                }, this::addOrderFailed));
     }
 
     public void updateUserCartAgain() {

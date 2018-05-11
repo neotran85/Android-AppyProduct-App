@@ -29,7 +29,7 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
+        public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
 
     final int HEIGHT_CART_ITEM = 144;
     final int HEIGHT_TITLE_CART_ITEM = 48;
@@ -141,6 +141,11 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         gotoOrderCompleted(order.id);
     }
 
+    @Override
+    public void addOrderFailed(String message) {
+        getViewModel().updateUserCartAgain();
+    }
+
     public void gotoOrderCompleted(long idOrder) {
         Intent i = OrderCompleteActivity.getStartIntent(this);
         i.putExtra("order_id", idOrder);
@@ -156,11 +161,11 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
             switch (requestCode) {
                 case MOLPayActivity.MOLPayXDK:
                     showLoading();
-                    getViewModel().addOrder("paid", "", generatedOrderId);
+                    getViewModel().addOrder("paid", "");
                     break;
                 case REQUEST_VISA_PAYMENT:
                     showLoading();
-                    getViewModel().addOrder("paid", "", generatedOrderId);
+                    getViewModel().addOrder("paid", "");
                     break;
             }
         }
@@ -185,12 +190,14 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     public void onFetchUserInfo_Done() {
         closeLoading();
         showAlert(getString(R.string.pls_cart_need_updated));
+        editCart();
     }
 
     @Override
     public void onFetchUserInfo_Failed() {
         closeLoading();
         showAlert(getString(R.string.pls_cart_need_updated));
+        editCart();
     }
 
     @Override

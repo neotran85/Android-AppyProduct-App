@@ -31,7 +31,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
     }
 
     public void fetchShippingAddresses() {
-        mFetchUserInfoViewModel.fetchShippingAddresses();
+        new FetchUserInfoViewModel(getDataManager(), getSchedulerProvider()).fetchShippingAddresses();
     }
 
     public void emptyProductCarts() {

@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class CheckoutOrderRequest {
     @Expose
-    @SerializedName("card_id")
-    public String card_id;
+    @SerializedName("cart_id")
+    public String cart_id;
 
     @Expose
     @SerializedName("address_id")
