@@ -63,4 +63,5 @@
     <string name="cart_check_out">Check out</string>
     <string name="verifying_order">Verifying...</string>
     <string name="unable_to_add_than">Sorry, unable to add more than</string>
+    <string name="pls_cart_need_updated">Cart just updated. Please try again now.</string>
 </resources>

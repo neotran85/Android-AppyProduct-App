@@ -197,6 +197,5 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                     }
                     onFetchFailed(null);
                 }, Crashlytics::logException));
-
     }
 }

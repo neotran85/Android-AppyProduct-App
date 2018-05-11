@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import io.realm.RealmResults;
 
 public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> {
+
     public ObservableField<Double> totalAllCost = new ObservableField<>(0.0);
     public ObservableField<Double> totalShippingCost = new ObservableField<>(0.0);
     public ObservableField<String> name = new ObservableField<>("");
@@ -69,23 +70,8 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         isMolpay.set(mPaymentMethod.equals(PaymentViewModel.PAYMENT_MOLPAY));
     }
 
-    public void addOrder(long orderId) {
-        getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
-                mShippingAddress, getUserId(), customerName, mTotalCost, 0, orderId)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(order -> {
-                    // GET SUCCEEDED
-                    if (order != null && order.isValid()) {
-                        //getNavigator().showAlert("Order added");
-                        getNavigator().addOrderOk(order);
-                    } else {
-                        getNavigator().handleErrors(null);
-                    }
-                }, throwable -> {
-                    getNavigator().handleErrors(throwable);
-                    Crashlytics.logException(throwable);
-                }));
+    public void addOrder(String statusPayment, String promoCode, long orderId) {
+        createOrderToServer(statusPayment, promoCode);
     }
 
     public void update() {
@@ -189,7 +175,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         return getDataManager().getCurrentPhoneNumber();
     }
 
-    public void createOrder(String statusPayment, String promocodeUsed) {
+    public void createOrderToServer(String statusPayment, String promocodeUsed) {
         CheckoutOrderRequest request = new CheckoutOrderRequest();
         request.address_id = addressId;
         request.card_id = TextUtils.join(",", strCartIds);
@@ -210,10 +196,28 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                             if(resultStr !=null && resultStr.length == 2) {
                                 if(DataUtils.isNumeric(resultStr[1])) {
                                     long orderId = Long.valueOf(resultStr[1]);
+                                    addOrderToDatabase(orderId);
                                 }
                             }
                         }
                     }
                 }, Crashlytics::logException));
+    }
+    private void addOrderToDatabase(long orderId) {
+        getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
+                mShippingAddress, getUserId(), customerName, mTotalCost, 0, orderId)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(order -> {
+                    // GET SUCCEEDED
+                    if (order != null && order.isValid()) {
+                        getNavigator().addOrderOk(order);
+                    } else {
+                        getNavigator().handleErrors(null);
+                    }
+                }, throwable -> {
+                    getNavigator().handleErrors(throwable);
+                    Crashlytics.logException(throwable);
+                }));
     }
 }

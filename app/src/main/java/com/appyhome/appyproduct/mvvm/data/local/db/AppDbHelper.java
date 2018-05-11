@@ -395,14 +395,13 @@ public class AppDbHelper implements DbHelper {
         return carts;
     }
 
-    private ProductCart isContaining(RealmResults<ProductCart> results, ProductCartResponse response) {
-        for (ProductCart item : results) {
-            if (response.product_id == item.product_id
-                    && response.variant_id == item.variant_id) {
-                return item;
+    private boolean isContaining(ArrayList<ProductCart> carts, ProductCart itemCart) {
+        for (ProductCart item : carts) {
+            if (item.card_id == itemCart.card_id) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     private ProductFavorite isContaining(RealmResults<ProductFavorite> results, ProductFavoriteResponse response) {
@@ -432,40 +431,34 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
         return Flowable.fromCallable(() -> {
             beginTransaction();
+
+            ArrayList<ProductCart> arrayList = new ArrayList<>();
+
+            for (ProductCartResponse response : array) {
+                ProductCart cartItem = new ProductCart();
+                cartItem.id = response.cart_id;
+                cartItem.checked = true;
+                cartItem.product_image = response.product_image;
+                cartItem = inputProductCart(userId, cartItem, response);
+                arrayList.add(cartItem);
+            }
+
+            getRealm().copyToRealmOrUpdate(arrayList);
+
             RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
                     .equalTo("user_id", userId)
                     .equalTo("order_id", 0)
-                    .sort("time_added", Sort.DESCENDING)
                     .findAll();
-            long newId = System.currentTimeMillis();
+
             if (carts != null && carts.isValid() && carts.size() > 0) {
-                ArrayList<ProductCart> totalArray = new ArrayList<>();
-                for (ProductCartResponse response : array) {
-                    newId++;
-                    ProductCart cartItem = isContaining(carts, response);
-                    if (cartItem == null) {
-                        cartItem = new ProductCart();
-                        cartItem.id = newId;
-                        cartItem.product_image = response.product_image;
-                        cartItem.checked = true;
+                // REMOVED CART ITEMS NOT EXIST IN THE SERVER
+                for (ProductCart item : carts) {
+                    if (!isContaining(arrayList, item)) {
+                        item.deleteFromRealm();
                     }
-                    cartItem = inputProductCart(userId, cartItem, response);
-                    totalArray.add(cartItem);
                 }
-                getRealm().copyToRealmOrUpdate(totalArray);
-            } else {
-                ArrayList<ProductCart> arrayList = new ArrayList<>();
-                for (ProductCartResponse response : array) {
-                    newId++;
-                    ProductCart cartItem = new ProductCart();
-                    cartItem.id = newId;
-                    cartItem.checked = true;
-                    cartItem.product_image = response.product_image;
-                    cartItem = inputProductCart(userId, cartItem, response);
-                    arrayList.add(cartItem);
-                }
-                getRealm().copyToRealmOrUpdate(arrayList);
             }
+
             getRealm().commitTransaction();
             return true;
         });
@@ -808,15 +801,8 @@ public class AppDbHelper implements DbHelper {
             order.id = orderId == 0 ? System.currentTimeMillis() : orderId;
             order.customer_name = customerName;
             order.discount = discount;
-            order.customer_id = customerId;
             order.payment_method = paymentMethod;
-            order.shipping_address = shippingAddress;
-            order.cart = new RealmList<>();
-            order.total_cost = totalCost;
-            for (ProductCart item : items) {
-                item.order_id = order.id;
-                order.cart.add(item);
-            }
+
             getRealm().copyToRealmOrUpdate(items);
             order = getRealm().copyToRealmOrUpdate(order);
             getRealm().commitTransaction();

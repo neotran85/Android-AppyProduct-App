@@ -15,16 +15,19 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
     public ObservableField<Boolean> isCheckedAll = new ObservableField<>(false);
     public ObservableField<Float> totalCost = new ObservableField<>(0.0f);
     private VerifyOrderViewModel mVerifyOrderViewModel;
+    private FetchUserInfoViewModel mFetchUserInfoViewModel;
 
     public ProductCartListViewModel(DataManager dataManager,
                                     SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         mVerifyOrderViewModel = new VerifyOrderViewModel(dataManager, schedulerProvider);
+        mFetchUserInfoViewModel = new FetchUserInfoViewModel(dataManager, schedulerProvider);
     }
 
     public void setNavigator(ProductCartListNavigator navigator) {
         super.setNavigator(navigator);
         mVerifyOrderViewModel.setNavigator(navigator);
+        mFetchUserInfoViewModel.setNavigator(navigator);
     }
 
     public void fetchShippingAddresses() {
@@ -66,5 +69,9 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
 
     public void doVerifyOrder() {
         mVerifyOrderViewModel.doVerifyOrder();
+    }
+
+    public void updateUserInformationAfterFailed() {
+        mFetchUserInfoViewModel.fetchUserData();
     }
 }

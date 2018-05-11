@@ -40,19 +40,8 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
         startActivity(i);
     }
 
-    private boolean isEditMode() {
+    protected boolean isEditMode() {
         return getIntent().getBooleanExtra("edit_mode", false);
-    }
-
-    @Override
-    public void verifyOrder_PASSED() {
-        closeLoading();
-        if (isEditMode()) {
-            finish();
-        } else {
-            Intent intent = ShippingAddressActivity.getStartIntent(this);
-            startActivity(intent);
-        }
     }
 
     @Override
@@ -134,11 +123,6 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     @Override
     public void onEditVariantSelected(ProductVariant variant) {
         // DO NOTHING HERE
-    }
-
-    @Override
-    public void verifyOrder_FAILED(String message) {
-        closeLoading();
     }
 
     @Override

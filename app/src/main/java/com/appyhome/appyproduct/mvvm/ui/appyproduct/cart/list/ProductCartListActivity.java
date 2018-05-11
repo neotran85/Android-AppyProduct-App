@@ -14,6 +14,7 @@ import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 
 import javax.inject.Inject;
 
@@ -124,5 +125,35 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
+    public void onFetchUserInfo_Done() {
+        closeLoading();
+        getViewModel().getAllProductCarts();
+        showAlert(getString(R.string.pls_cart_need_updated));
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+        closeLoading();
+    }
+
+    @Override
+    public void verifyOrder_FAILED(String message) {
+        showLoading();
+        getViewModel().updateUserInformationAfterFailed();
+    }
+
+
+    @Override
+    public void verifyOrder_PASSED() {
+        closeLoading();
+        if (isEditMode()) {
+            finish();
+        } else {
+            Intent intent = ShippingAddressActivity.getStartIntent(this);
+            startActivity(intent);
+        }
     }
 }

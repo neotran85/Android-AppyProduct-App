@@ -161,10 +161,10 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case MOLPayActivity.MOLPayXDK:
-                    getViewModel().addOrder(generatedOrderId);
+                    //getViewModel().addOrder(generatedOrderId);
                     break;
                 case REQUEST_VISA_PAYMENT:
-                    getViewModel().addOrder(0);
+                    //getViewModel().addOrder(0);
                     break;
             }
         }
