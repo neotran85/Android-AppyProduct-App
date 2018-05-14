@@ -31,6 +31,9 @@ public class AlertManager {
         return mInstance;
     }
 
+    public boolean isLoadingShowed() {
+        return mLoadingDialog != null && mLoadingDialog.isShowing();
+    }
     public void closeDialog() {
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();

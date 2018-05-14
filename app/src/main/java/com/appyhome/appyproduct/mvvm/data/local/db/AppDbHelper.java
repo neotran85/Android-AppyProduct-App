@@ -396,11 +396,12 @@ public class AppDbHelper implements DbHelper {
     }
 
     private boolean isContaining(ArrayList<ProductCart> carts, ProductCart itemCart) {
-        for (ProductCart item : carts) {
-            if (item.card_id == itemCart.card_id) {
-                return true;
+        if (carts != null && carts.size() > 0)
+            for (ProductCart item : carts) {
+                if (item.card_id == itemCart.card_id) {
+                    return true;
+                }
             }
-        }
         return false;
     }
 
@@ -430,6 +431,7 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
         return Flowable.fromCallable(() -> {
+
             beginTransaction();
 
             ArrayList<ProductCart> arrayList = new ArrayList<>();
@@ -701,12 +703,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCart> getProductCart(String userId, int productId) {
+    public Flowable<ProductCart> getProductCart(String userId, long productId, long variantId) {
         try {
             beginTransaction();
             ProductCart productCart = getRealm().where(ProductCart.class)
                     .equalTo("product_id", productId)
                     .equalTo("user_id", userId)
+                    .equalTo("variant_id", variantId)
                     .equalTo("order_id", 0)
                     .findFirst();
             getRealm().commitTransaction();

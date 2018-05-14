@@ -41,9 +41,9 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     private EditVariantNavigator mNavigator;
 
-    private int mOldVariantId = -1;
-
     private SparseIntArray mArrayAmountAdded;
+
+    private long mOldVariantId = 0;
 
     public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel, EditVariantNavigator navigator) {
         Bundle args = new Bundle();
@@ -62,7 +62,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         mProductCartItemViewModel = viewModel.duplicate();
         mProductCartItemViewModel.isFirstProductOfStore.set(true);
         mProductCartItemViewModel.checked.set(true);
-        mOldVariantId = mProductCartItemViewModel.getVariantId();
+        mOldVariantId =  viewModel.getVariantId();
     }
 
     @Override
@@ -81,7 +81,8 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(mNavigator);
-        mViewModel.setProductCartItemViewModel(mProductCartItemViewModel);
+        getViewModel().setProductCartItemViewModel(mProductCartItemViewModel);
+        getViewModel().setOldVariantId(mOldVariantId);
         showProductVariantFragment();
         showProductCartItem();
     }
@@ -140,9 +141,4 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
             mNavigator.onEditVariantSelected(variant);
         }
     }
-
-    public void saveProductCartItem() {
-        getViewModel().saveProductCartItem(mOldVariantId);
-    }
-
 }

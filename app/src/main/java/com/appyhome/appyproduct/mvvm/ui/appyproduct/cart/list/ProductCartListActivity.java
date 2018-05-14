@@ -59,7 +59,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
         getViewModel().fetchShippingAddresses();
-        getViewModel().getAllProductCarts();
+        getViewModel().fetchAndSyncCartsServer();
     }
 
     @Override
@@ -86,12 +86,6 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
         rv.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
-    }
-
-    @Override
-    public void onConfirmationChanged(EditVariantViewModel viewModel) {
-        if (mEditVariantFragment != null)
-            mEditVariantFragment.saveProductCartItem();
     }
 
     @Override
@@ -129,9 +123,11 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
 
     @Override
     public void onFetchUserInfo_Done() {
-        closeLoading();
         getViewModel().getAllProductCarts();
-        showAlert(getString(R.string.pls_cart_need_updated));
+        if (isLoadingShowed()) {
+            closeLoading();
+            showAlert(getString(R.string.pls_cart_need_updated));
+        }
     }
 
     @Override
@@ -142,7 +138,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     @Override
     public void verifyOrder_FAILED(String message) {
         showLoading();
-        getViewModel().updateUserInformationAfterFailed();
+        getViewModel().fetchAndSyncCartsServer();
     }
 
 

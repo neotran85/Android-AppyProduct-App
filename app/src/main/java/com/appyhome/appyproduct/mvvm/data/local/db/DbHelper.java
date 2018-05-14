@@ -99,7 +99,7 @@ public interface DbHelper {
 
     Flowable<ProductCached> getProductCachedById(int idProduct);
 
-    Flowable<ProductCart> getProductCart(String userId, int productId);
+    Flowable<ProductCart> getProductCart(String userId, long productId, long variantId);
 
     Flowable<RealmResults<SearchItem>> getSearchSuggestions();
 

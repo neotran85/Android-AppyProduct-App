@@ -40,7 +40,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
 
     private int mMaxScroll = 0;
 
-    public static ProductVariantFragment newInstance(int productId, String selectedVariantModelId) {
+    public static ProductVariantFragment newInstance(long productId, String selectedVariantModelId) {
         Bundle args = new Bundle();
         ProductVariantFragment fragment = new ProductVariantFragment();
         fragment.setArguments(args);

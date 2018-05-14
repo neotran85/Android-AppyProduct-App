@@ -613,8 +613,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<ProductCart> getProductCart(String userId, int productId) {
-        return mDbHelper.getProductCart(userId, productId);
+    public Flowable<ProductCart> getProductCart(String userId, long productId, long variantId) {
+        return mDbHelper.getProductCart(userId, productId, variantId);
     }
 
     @Override

@@ -7,17 +7,17 @@ import com.google.gson.annotations.SerializedName;
 public class EditCartVariantRequest {
     @Expose
     @SerializedName("product_id")
-    public int product_id;
+    public long product_id;
 
     @Expose
     @SerializedName("variant_id")
-    public int variant_id;
+    public long variant_id;
 
     @Expose
     @SerializedName("new_variant_id")
-    public int new_variant_id;
+    public long new_variant_id;
 
-    public EditCartVariantRequest(int idP, int idV, int newVariantId) {
+    public EditCartVariantRequest(long idP, long idV, long newVariantId) {
         new_variant_id = newVariantId;
         product_id = idP;
         variant_id = idV;

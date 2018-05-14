@@ -26,7 +26,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListAct
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.gallery.ProductGalleryActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantFragment;
@@ -260,20 +259,15 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
 
-    private void animateProductToCart(String modelId, int amountAdded) {
+    private void animateProductToCart() {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
         AppAnimator.animateMoving(2000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (getViewModel() != null) {
-                    ProductVariant variant = mProductVariantFragment.getSelectedVariant();
-                    if (variant != null) {
-                        getViewModel().addProductToCart(modelId, amountAdded, isBuyNow);
-                        mBinder.ivProductBox.setVisibility(View.GONE);
-                    }
-                }
+                mBinder.ivProductBox.setVisibility(View.GONE);
+                mSearchToolbarViewHolder.onBind(0);
             }
         });
     }
@@ -416,27 +410,6 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
-    public void onConfirmationChanged(EditVariantViewModel viewModel) {
-        if (mProductCartItemViewModel != null && mEditVariantFragment != null && viewModel != null) {
-            ProductVariant variant = viewModel.getSelectedVariant();
-            if (variant != null) {
-                int amount = viewModel.getAmount();
-                int stock = variant.quantity;
-                if (amount > stock) {
-                    showAlert(getString(R.string.unable_to_add_more_than) + " " + stock);
-                } else {
-                    if (isBuyNow) {
-                        getViewModel().addProductToCart(variant.model_id, amount, isBuyNow);
-                    } else {
-                        animateProductToCart(variant.model_id, amount);
-                    }
-                    closeEditVariantFragment();
-                }
-            }
-        }
-    }
-
-    @Override
     public void onEditVariantSelected(ProductVariant variant) {
         if (mProductVariantFragment != null) {
             mProductVariantFragment.selectVariant(variant.model_id);
@@ -522,5 +495,10 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Override
     public void saveProductCartItem_Done(ProductCart productCart) {
         closeEditVariantFragment();
+        if (isBuyNow) {
+            mSearchToolbarViewHolder.onBind(0);
+            startActivity(ProductCartListActivity.getStartIntent(this));
+        } else animateProductToCart();
+        isBuyNow = false;
     }
 }

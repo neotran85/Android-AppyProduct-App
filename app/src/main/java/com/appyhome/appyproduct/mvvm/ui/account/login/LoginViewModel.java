@@ -1,11 +1,14 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
+import android.util.Log;
+
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.account.LoginResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppLogger;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
@@ -63,6 +66,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
             String message = response.getMessage();
             if (statusCode.equals(ApiCode.OK_200)) {
                 if (message != null && message.length() > 0) {
+                    Log.i("TOKEN", message);
                     setAccessToken(message);
                     setPhoneNumber(mPhoneNumber);
                     getDataManager().updateApiHeader(message);

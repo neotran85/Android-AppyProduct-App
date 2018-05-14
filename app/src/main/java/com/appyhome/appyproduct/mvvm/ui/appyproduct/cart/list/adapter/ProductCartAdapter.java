@@ -92,7 +92,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
                 if (cartItem.getVariantModelId().equals(productCart.variant_model_id)) {
                     arrayList.add(cartItem);
                 }
-                if (cartItem.getProductCartId() == productCart.id) {
+                if (cartItem.getProductCartId() == productCart.card_id) {
                     target = cartItem;
                 }
             }

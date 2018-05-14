@@ -70,7 +70,8 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
         mVerifyOrderViewModel.doVerifyOrder();
     }
 
-    public void updateUserInformationAfterFailed() {
-        mFetchUserInfoViewModel.fetchUserData();
+    public void fetchAndSyncCartsServer() {
+        mFetchUserInfoViewModel.fetchAndSyncCartsServer();
     }
+
 }

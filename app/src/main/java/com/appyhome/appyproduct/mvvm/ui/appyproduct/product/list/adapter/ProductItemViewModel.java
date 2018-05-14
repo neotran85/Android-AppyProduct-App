@@ -90,6 +90,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
 
     public void addProductToCart(String variantModelId, int amount, boolean isBuyNow) {
         getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), productId, variantModelId, amount)
+                .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCart -> {
                     if (productCart != null && getUserId().equals(productCart.user_id)) {

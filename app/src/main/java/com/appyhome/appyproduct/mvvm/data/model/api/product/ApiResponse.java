@@ -18,6 +18,13 @@ public class ApiResponse {
         return code != null && code.equals(ApiCode.OK_200);
     }
 
+    public boolean isEmpty() {
+        if(message instanceof  String) {
+            String str = (String) message;
+            return str != null && str.contains("cart_empty");
+        }
+        return false;
+    }
     public String getMessage() {
         return message.toString();
     }

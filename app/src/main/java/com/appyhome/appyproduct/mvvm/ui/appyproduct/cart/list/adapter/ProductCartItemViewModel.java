@@ -31,13 +31,13 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
     private int variantStockNumber = 0;
 
-    private int productId;
+    private long productId;
 
     private String variantModelId;
 
     private long productCartId = -1;
 
-    private int variantId;
+    private long variantId;
 
     public ProductCartItemViewModel() {
         super();
@@ -119,11 +119,11 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
                 }, Crashlytics::logException));
     }
 
-    public int getProductId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 
@@ -138,7 +138,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public void update(ProductCart productCart, ProductCartItemNavigator navigator) {
         title.set(productCart.product_name);
         imageURL.set(productCart.product_image);
-        setProductCartId(productCart.id);
+        setProductCartId(productCart.card_id);
         setProductId(productCart.product_id);
         sellerName.set(productCart.seller_name);
         price.set(productCart.price);
@@ -213,11 +213,11 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         setVariantId(variant.id);
     }
 
-    public int getVariantId() {
+    public long getVariantId() {
         return variantId;
     }
 
-    public void setVariantId(int variantId) {
+    public void setVariantId(long variantId) {
         this.variantId = variantId;
     }
 
