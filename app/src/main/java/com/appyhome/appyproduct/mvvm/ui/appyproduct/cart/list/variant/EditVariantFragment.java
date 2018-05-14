@@ -45,12 +45,12 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
 
     private long mOldVariantId = 0;
 
-    public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel, EditVariantNavigator navigator) {
+    public static EditVariantFragment newInstance(ProductCartItemViewModel viewModel, EditVariantNavigator navigator, long currentVariantId) {
         Bundle args = new Bundle();
         EditVariantFragment fragment = new EditVariantFragment();
         fragment.setNavigator(navigator);
         fragment.setArguments(args);
-        fragment.setProductCartItemViewModel(viewModel);
+        fragment.setProductCartItemViewModel(viewModel, currentVariantId);
         return fragment;
     }
 
@@ -58,11 +58,11 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
         mNavigator = navigator;
     }
 
-    public void setProductCartItemViewModel(ProductCartItemViewModel viewModel) {
+    public void setProductCartItemViewModel(ProductCartItemViewModel viewModel, long currentVariantId) {
         mProductCartItemViewModel = viewModel.duplicate();
         mProductCartItemViewModel.isFirstProductOfStore.set(true);
         mProductCartItemViewModel.checked.set(true);
-        mOldVariantId =  viewModel.getVariantId();
+        mOldVariantId = currentVariantId;
     }
 
     @Override

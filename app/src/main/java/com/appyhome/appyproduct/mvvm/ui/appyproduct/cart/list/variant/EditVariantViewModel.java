@@ -52,19 +52,23 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
     }
 
     public void saveProductCartItem(long oldVariantId) {
-        getCompositeDisposable().add(getDataManager().editProductCartVariant(new EditCartVariantRequest(getProductId(), oldVariantId, getVariantId()))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null && data.isValid()) {
-                        editCart();
-                    } else {
-                        addNewCart();
-                    }
-                }, Crashlytics::logException));
+        if (oldVariantId < 0) {
+            addNewCart();
+        } else {
+            getCompositeDisposable().add(getDataManager().editProductCartVariant(new EditCartVariantRequest(getProductId(), oldVariantId, getVariantId()))
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(data -> {
+                        if (data != null && data.isValid()) {
+                            editProductCartQuantity();
+                        } else {
+                            addNewCart();
+                        }
+                    }, Crashlytics::logException));
+        }
     }
 
-    private void editCart() {
+    private void editProductCartQuantity() {
         getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(getProductId(), getVariantId(), getAmount()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
@@ -76,6 +80,7 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
                         mFetchUserInfoViewModel.fetchAndSyncCartsServer();
                 }, Crashlytics::logException));
     }
+
     private void addNewCart() {
         getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(getProductId(), getVariantId(), getAmount()))
                 .subscribeOn(getSchedulerProvider().io())

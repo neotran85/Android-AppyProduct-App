@@ -390,7 +390,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
                 if (mEditVariantFragment == null) {
                     mProductCartItemViewModel = new ProductCartItemViewModel(getViewModel());
                     mProductCartItemViewModel.update(getViewModel(), mSelectedVariant);
-                    mEditVariantFragment = EditVariantFragment.newInstance(mProductCartItemViewModel, this);
+                    mEditVariantFragment = EditVariantFragment.newInstance(mProductCartItemViewModel, this, -1);
                     showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditProductVariant);
                     getViewModel().isEditVariantShowed.set(true);
                 }

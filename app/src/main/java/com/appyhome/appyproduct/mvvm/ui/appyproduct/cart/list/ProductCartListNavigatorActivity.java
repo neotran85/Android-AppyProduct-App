@@ -89,7 +89,7 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
             closeEditVariantFragment();
             setEditVariantFragment(null);
         }
-        setEditVariantFragment(EditVariantFragment.newInstance(viewModel, this));
+        setEditVariantFragment(EditVariantFragment.newInstance(viewModel, this, viewModel.getVariantId()));
         showFragment(getEditVariantFragment(), EditVariantFragment.TAG, R.id.llEditVariantContainer, true);
     }
 
