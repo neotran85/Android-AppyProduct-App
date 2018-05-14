@@ -722,58 +722,6 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCart> addProductToCart(String userId, int productId, String variantModelId, int amountAdded) {
-        return Flowable.fromCallable(() -> {
-            try {
-                beginTransaction();
-                ProductCart productCart = getRealm().where(ProductCart.class)
-                        .equalTo("product_id", productId)
-                        .equalTo("variant_model_id", variantModelId)
-                        .equalTo("user_id", userId)
-                        .equalTo("order_id", 0)
-                        .findFirst();
-                if (productCart == null || !productCart.isValid()) {
-                    ProductCached product = getRealm().where(ProductCached.class)
-                            .equalTo("id", productId)
-                            .findFirst();
-                    ProductVariant variant = getRealm().where(ProductVariant.class)
-                            .equalTo("model_id", variantModelId)
-                            .findFirst();
-                    if (variant != null) {
-                        productCart = createNewProductCart(product.convertToProduct(), userId, variant);
-                    }
-                }
-                if (productCart != null) {
-                    long timeAdded = System.currentTimeMillis();
-                    productCart.time_added = timeAdded;
-                    timeAdded--;
-                    productCart.amount = productCart.amount + amountAdded;
-                    productCart = getRealm().copyToRealmOrUpdate(productCart);
-
-                    // Update time for all seller items
-                    RealmResults<ProductCart> productCarts = getRealm().where(ProductCart.class)
-                            .equalTo("seller_name", productCart.seller_name)
-                            .equalTo("user_id", userId)
-                            .equalTo("order_id", 0)
-                            .sort("time_added", Sort.DESCENDING)
-                            .findAll();
-                    for (ProductCart cart : productCarts) {
-                        cart.time_added = timeAdded;
-                        timeAdded--;
-                    }
-                    getRealm().copyToRealmOrUpdate(productCarts);
-                }
-                getRealm().commitTransaction();
-                return productCart;
-            } catch (Exception e) {
-                getRealm().cancelTransaction();
-                e.printStackTrace();
-            }
-            return new ProductCart();
-        });
-    }
-
-    @Override
     public Flowable<Boolean> emptyProductCarts(String userId) {
         return Flowable.fromCallable(() -> {
             try {

@@ -6,13 +6,10 @@ import android.util.Log;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.EditCartRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
@@ -88,19 +85,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public void addProductToCart(String variantModelId, int amount, boolean isBuyNow) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(getUserId(), productId, variantModelId, amount)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(productCart -> {
-                    if (productCart != null && getUserId().equals(productCart.user_id)) {
-                        getNavigator().updateCartCount();
-                        getNavigator().addedToCartCompleted(amount, isBuyNow);
-                        addProductCartServer(productCart);
-                    }
-                }, Crashlytics::logException));
-    }
-
     public void inputValue(Product product, boolean isAllFavorited) {
         inputValue(product);
         isProductFavorite.set(isAllFavorited);
@@ -145,30 +129,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct());
                         checkIfFavorite(getUserId(), getProductId(), getVariantId());
-                    }
-                }, Crashlytics::logException));
-    }
-
-    private void editProductCartServer(ProductCart cart) {
-        getCompositeDisposable().add(getDataManager().editProductToCart(new EditCartRequest(cart.product_id, cart.variant_id, cart.amount))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null && data.isValid()) {
-                        Log.v("editProductCartServer", "UPDATED SUCCESSFUL");
-                    }
-                }, Crashlytics::logException));
-    }
-
-    private void addProductCartServer(ProductCart cart) {
-        getCompositeDisposable().add(getDataManager().addProductToCart(new AddToCartRequest(cart.product_id, cart.variant_id, cart.amount))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null && data.isValid()) {
-                        Log.v("addProductCartServer", "UPDATED SUCCESSFUL");
-                    } else {
-                        editProductCartServer(cart);
                     }
                 }, Crashlytics::logException));
     }
