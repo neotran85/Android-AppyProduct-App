@@ -27,6 +27,10 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
     }
 
     @Override
+    public void onBackPressed() {
+        returnHomeScreen();
+    }
+    @Override
     public int getLayoutId() {
         return mLayoutId;
     }
@@ -37,7 +41,8 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mMainViewModel);
         mBinder.setNavigator(this);
-        mMainViewModel.setNavigator(this);
+        getViewModel().setNavigator(this);
+        getViewModel().updateUserCartAgain();
     }
 
     @Override
@@ -75,5 +80,15 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    @Override
+    public void onFetchUserInfo_Done() {
+
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+
     }
 }

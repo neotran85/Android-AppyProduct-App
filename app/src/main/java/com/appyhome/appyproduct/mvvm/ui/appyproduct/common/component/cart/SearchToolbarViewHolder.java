@@ -53,6 +53,10 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
         }
     }
 
+    public SearchToolbarViewModel getViewModel() {
+        return mViewModel;
+    }
+
     public void back() {
         if (mActivity != null) {
             mActivity.finish();
@@ -78,7 +82,7 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
     }
 
     public void openCartAfterLoggedIn() {
-        if (mLoginDelayed) {
+        if (mLoginDelayed && getViewModel().isUserLoggedIn()) {
             openProductCart();
         }
     }

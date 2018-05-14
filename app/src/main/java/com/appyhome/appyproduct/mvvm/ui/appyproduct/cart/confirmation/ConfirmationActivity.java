@@ -141,20 +141,14 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
 
     public void addOrderOk(ProductOrder order) {
         closeLoading();
-        gotoOrderCompleted(order.id);
+        Intent i = OrderCompleteActivity.getStartIntent(this);
+        i.putExtra("order_id", order.id);
+        startActivity(i);
     }
 
     @Override
     public void addOrderFailed(String message) {
         getViewModel().updateUserCartAgain();
-    }
-
-    public void gotoOrderCompleted(long idOrder) {
-        Intent i = OrderCompleteActivity.getStartIntent(this);
-        i.putExtra("order_id", idOrder);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
     }
 
     public String getMolpayTransactionId(Intent data) {

@@ -221,7 +221,6 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         this.variantId = variantId;
     }
 
-
     public void update(ProductItemViewModel viewModel, ProductVariant variant) {
         update(variant);
         title.set(viewModel.title.get());

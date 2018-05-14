@@ -83,13 +83,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void onBackPressed() {
-        //CANCELLED LOGIN ACTIVITY
-        setResult(Activity.RESULT_CANCELED);
-        super.onBackPressed();
-    }
-
-    @Override
     public void openForgetPassword() {
         if (isNetworkConnected()) {
             AlertManager.getInstance(this).openInformationBrowser("Forget Password",
