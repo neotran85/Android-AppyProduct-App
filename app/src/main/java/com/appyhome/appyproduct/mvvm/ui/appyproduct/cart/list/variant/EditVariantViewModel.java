@@ -60,7 +60,10 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(data -> {
                         if (data != null && data.isValid()) {
-                            editProductCartQuantity();
+                            if (data.isVariantQuantityUpdated()) {
+                                if (mFetchUserInfoViewModel != null)
+                                    mFetchUserInfoViewModel.fetchAndSyncCartsServer();
+                            } else editProductCartQuantity();
                         } else {
                             addNewCart();
                         }
@@ -108,14 +111,7 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
 
     @Override
     public void onFetchUserInfo_Done() {
-        getCompositeDisposable().add(getDataManager().getProductCart(getUserId(), getProductId(), getVariantId())
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(data -> {
-                    if (data != null) {
-                        getNavigator().saveProductCartItem_Done(data);
-                    }
-                }, Crashlytics::logException));
+        getNavigator().saveProductCartItem_Done();
     }
 
     @Override

@@ -83,29 +83,35 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
         }
     }
 
-    public void updateProductCartItem(ProductCart productCart) {
-        if (mItems != null && mItems.size() > 0) {
-            ArrayList<ProductCartItemViewModel> arrayList = new ArrayList<>();
-            ProductCartItemViewModel target = null;
-            for (BaseViewModel item : mItems) {
-                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
-                if (cartItem.getVariantModelId().equals(productCart.variant_model_id)) {
-                    arrayList.add(cartItem);
-                }
-                if (cartItem.getProductCartId() == productCart.card_id) {
-                    target = cartItem;
-                }
+    private ProductCartItemViewModel getItem(ProductCart cart) {
+        for (BaseViewModel item : mItems) {
+            ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+            if (cartItem.getProductCartId() == cart.cart_id) {
+                return cartItem;
             }
+        }
+        return null;
+    }
+
+    public void updateProductCartItem(ProductCart productCart) {
+        if (mItems != null && mItems.size() > 0 & productCart != null) {
+            ProductCartItemViewModel target = getItem(productCart);
             if (target != null) {
                 int index = indexOf(target);
                 target.update(productCart, mNavigator);
                 notifyItemChanged(index);
             }
-            if (arrayList.size() > 0) {
+            ArrayList<ProductCartItemViewModel> arrayList = new ArrayList<>();
+            for (BaseViewModel item : mItems) {
+                ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
+                if (cartItem.getVariantModelId() == productCart.variant_model_id) {
+                    arrayList.add(cartItem);
+                }
+            }
+            if (arrayList.size() == 2) {
                 for (ProductCartItemViewModel cartItem : arrayList) {
-                    if (cartItem != target) {
+                    if (target != cartItem)
                         removeCartItem(cartItem, false);
-                    }
                 }
             }
             updateTotalCost();

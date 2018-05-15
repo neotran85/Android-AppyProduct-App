@@ -19,12 +19,17 @@ public class ApiResponse {
     }
 
     public boolean isEmpty() {
-        if(message instanceof  String) {
+        if (message instanceof String) {
             String str = (String) message;
             return str != null && str.contains("cart_empty");
         }
         return false;
     }
+
+    public boolean isVariantQuantityUpdated() {
+        return (message != null && message.toString().equals("variant_quantity_updated"));
+    }
+
     public String getMessage() {
         return message.toString();
     }

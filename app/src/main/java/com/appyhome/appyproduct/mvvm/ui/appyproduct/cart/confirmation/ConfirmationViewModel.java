@@ -101,7 +101,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                         strCartIds = new ArrayList<>();
                         for (ProductCart item : items) {
                             totalCost = totalCost + (item.price * item.amount);
-                            strCartIds.add(item.card_id + "");
+                            strCartIds.add(item.cart_id + "");
                         }
                         productCost.set(DataUtils.roundNumber(totalCost, 2));
                         updateTotalShippingCost(addressId, TextUtils.join(",", strCartIds));

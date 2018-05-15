@@ -493,7 +493,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     }
 
     @Override
-    public void saveProductCartItem_Done(ProductCart productCart) {
+    public void saveProductCartItem_Done() {
         closeEditVariantFragment();
         if (isBuyNow) {
             mSearchToolbarViewHolder.onBind(0);

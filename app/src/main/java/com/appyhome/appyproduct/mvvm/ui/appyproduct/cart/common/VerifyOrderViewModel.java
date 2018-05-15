@@ -82,7 +82,7 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                         Double totalPrice = 0.0;
                         for (ProductCart item : items) {
                             totalPrice = totalPrice + item.price * item.amount;
-                            ids.add(item.card_id + "");
+                            ids.add(item.cart_id + "");
                         }
                         verifyOrderStepByStep(ids, totalPrice);
                     }

@@ -8,7 +8,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserIn
 public interface EditVariantNavigator {
     void closeEditVariantFragment();
 
-    void saveProductCartItem_Done(ProductCart productCart);
+    void saveProductCartItem_Done();
 
     void onEditVariantSelected(ProductVariant variant);
 }

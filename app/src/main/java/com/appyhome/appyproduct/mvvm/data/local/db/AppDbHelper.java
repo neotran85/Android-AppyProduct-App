@@ -395,14 +395,14 @@ public class AppDbHelper implements DbHelper {
         return carts;
     }
 
-    private boolean isContaining(ArrayList<ProductCart> carts, ProductCart itemCart) {
+    private ProductCart isContaining(ArrayList<ProductCart> carts, ProductCart itemCart) {
         if (carts != null && carts.size() > 0)
             for (ProductCart item : carts) {
-                if (item.card_id == itemCart.card_id) {
-                    return true;
+                if (item.cart_id == itemCart.cart_id) {
+                    return item;
                 }
             }
-        return false;
+        return null;
     }
 
     private ProductFavorite isContaining(RealmResults<ProductFavorite> results, ProductFavoriteResponse response) {
@@ -431,36 +431,32 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<Boolean> syncAllProductCarts(String userId, ArrayList<ProductCartResponse> array) {
         return Flowable.fromCallable(() -> {
-
             beginTransaction();
-
             ArrayList<ProductCart> arrayList = new ArrayList<>();
-
+            long timeAdded = System.currentTimeMillis();
             for (ProductCartResponse response : array) {
                 ProductCart cartItem = new ProductCart();
-                cartItem.id = response.cart_id;
-                cartItem.checked = true;
-                cartItem.product_image = response.product_image;
                 cartItem = inputProductCart(userId, cartItem, response);
+                cartItem.time_added = timeAdded;
+                timeAdded++;
                 arrayList.add(cartItem);
             }
-
-            getRealm().copyToRealmOrUpdate(arrayList);
-
             RealmResults<ProductCart> carts = getRealm().where(ProductCart.class)
                     .equalTo("user_id", userId)
                     .equalTo("order_id", 0)
                     .findAll();
-
             if (carts != null && carts.isValid() && carts.size() > 0) {
                 // REMOVED CART ITEMS NOT EXIST IN THE SERVER
                 for (ProductCart item : carts) {
-                    if (!isContaining(arrayList, item)) {
+                    ProductCart common = isContaining(arrayList, item);
+                    if (common != null) {
+                        common.checked = item.checked;
+                    } else {
                         item.deleteFromRealm();
                     }
                 }
             }
-
+            getRealm().copyToRealmOrUpdate(arrayList);
             getRealm().commitTransaction();
             return true;
         });
@@ -518,8 +514,9 @@ public class AppDbHelper implements DbHelper {
     }
 
     private ProductCart inputProductCart(String userId, ProductCart cartItem, ProductCartResponse item) {
+        cartItem.product_image = item.product_image;
         cartItem.price = item.variant_price;
-        cartItem.card_id = item.cart_id;
+        cartItem.cart_id = item.cart_id;
         cartItem.product_id = item.product_id;
         cartItem.seller_id = item.seller_id;
         cartItem.seller_name = item.seller_name;
@@ -640,66 +637,40 @@ public class AppDbHelper implements DbHelper {
         try {
             beginTransaction();
             ProductCart productCart = getRealm().where(ProductCart.class)
-                    .equalTo("id", idProductCart)
+                    .equalTo("cart_id", idProductCart)
                     .findFirst();
-            productCart.checked = checked;
-            if (amount >= 0)
+            if (productCart != null) {
+                productCart.checked = checked;
                 productCart.amount = amount;
-            if (variantModelId.length() > 0) {
-                ProductVariant variant = getRealm().where(ProductVariant.class)
-                        .equalTo("model_id", variantModelId).findFirst();
-                if (variant != null && variant.isValid()) {
-                    productCart.variant_name = variant.variant_name;
-                    productCart.variant_id = variant.id;
-                    productCart.variant_model_id = variant.model_id;
-                    productCart.variant_stock = variant.quantity;
-                    productCart.price = variant.price;
-                    productCart.product_image = variant.avatar;
+                if (variantModelId.length() > 0) {
+                    ProductVariant variant = getRealm().where(ProductVariant.class)
+                            .equalTo("model_id", variantModelId).findFirst();
+                    if (variant != null && variant.isValid()) {
+                        productCart.variant_name = variant.variant_name;
+                        productCart.variant_id = variant.id;
+                        productCart.variant_model_id = variantModelId;
+                        productCart.variant_stock = variant.quantity;
+                        productCart.price = variant.price;
+                        productCart.product_image = variant.avatar;
+                    }
                 }
-            }
-            RealmResults<ProductCart> productCarts = getRealm().where(ProductCart.class)
-                    .equalTo("user_id", productCart.user_id)
-                    .notEqualTo("id", productCart.id)
-                    .equalTo("product_id", productCart.product_id)
-                    .equalTo("variant_model_id", productCart.variant_model_id)
-                    .findAll();
-            if (productCarts != null && productCarts.size() > 0) {
-                // SUM
-                int totalAmount = 0;
-                for (ProductCart item : productCarts) {
-                    totalAmount = totalAmount + item.amount;
+                ProductCart existedProductCart = getRealm().where(ProductCart.class)
+                        .equalTo("user_id", productCart.user_id)
+                        .notEqualTo("cart_id", idProductCart)
+                        .equalTo("variant_model_id", variantModelId)
+                        .findFirst();
+                if (existedProductCart != null && existedProductCart.isValid()) {
+                    productCart.amount = existedProductCart.amount + amount;
+                    existedProductCart.deleteFromRealm();
                 }
-                productCart.amount = productCart.amount + totalAmount;
-                productCarts.deleteAllFromRealm();
+                productCart = getRealm().copyToRealmOrUpdate(productCart);
             }
-
-            productCart = getRealm().copyToRealmOrUpdate(productCart);
             getRealm().commitTransaction();
-            return productCart.asFlowable();
+            return productCart != null ? productCart.asFlowable() : Flowable.empty();
         } catch (Exception e) {
             getRealm().cancelTransaction();
-            return new ProductCart().asFlowable();
+            return Flowable.empty();
         }
-    }
-
-    private ProductCart createNewProductCart(Product product, String userId, ProductVariant variant) {
-        ProductCart cartItem = new ProductCart();
-        cartItem.id = System.currentTimeMillis();
-        cartItem.price = variant.price;
-        cartItem.product_id = product.id;
-        cartItem.seller_id = product.seller_id;
-        cartItem.seller_name = product.seller_name;
-        cartItem.product_name = product.product_name;
-        cartItem.amount = 0;
-        cartItem.checked = true;
-        cartItem.product_image = variant.avatar;
-        cartItem.user_id = userId;
-        cartItem.order_id = 0;
-        cartItem.variant_id = variant.id;
-        cartItem.variant_stock = variant.quantity;
-        cartItem.variant_model_id = variant.model_id;
-        cartItem.variant_name = variant.variant_name;
-        return cartItem;
     }
 
     @Override

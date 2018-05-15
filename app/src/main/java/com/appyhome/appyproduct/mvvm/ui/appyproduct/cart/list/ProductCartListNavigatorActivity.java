@@ -95,9 +95,9 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void showProductDetail(ProductCartItemViewModel viewModel) {
-        Intent intent = ProductDetailActivity.getStartIntent(this, null, null);
-        intent.putExtra("product_id", viewModel.getProductId());
-        startActivityForResult(intent, REQUEST_DETAIL);
+        //Intent intent = ProductDetailActivity.getStartIntent(this, null, null);
+        //intent.putExtra("product_id", viewModel.getProductId());
+        //startActivityForResult(intent, REQUEST_DETAIL);
     }
 
     @Override
@@ -110,9 +110,9 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     }
 
     @Override
-    public void saveProductCartItem_Done(ProductCart productCart) {
-        getAdapter().updateProductCartItem(productCart);
+    public void saveProductCartItem_Done() {
         closeFragment(EditVariantFragment.TAG);
+        getViewModel().getAllProductCarts();
     }
 
     @Override

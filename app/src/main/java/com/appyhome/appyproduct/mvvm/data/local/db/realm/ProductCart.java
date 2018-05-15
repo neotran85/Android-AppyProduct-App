@@ -9,11 +9,12 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class ProductCart extends RealmObject {
+
     @Expose
-    @SerializedName("id")
-    @ColumnInfo(name = "id")
+    @SerializedName("cart_id")
+    @ColumnInfo(name = "cart_id")
     @PrimaryKey
-    public long id;
+    public long cart_id;
 
     @Expose
     @SerializedName("seller_id")
@@ -44,11 +45,6 @@ public class ProductCart extends RealmObject {
     @SerializedName("product_image")
     @ColumnInfo(name = "product_image")
     public String product_image;
-
-    @Expose
-    @SerializedName("card_id")
-    @ColumnInfo(name = "card_id")
-    public int card_id;
 
     @Expose
     @SerializedName("price")

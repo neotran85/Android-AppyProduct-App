@@ -40,7 +40,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         itemViewModel.setSellerId(productCart.seller_id);
         itemViewModel.title.set(productCart.product_name);
         itemViewModel.imageURL.set(productCart.product_image);
-        itemViewModel.setProductCartId(productCart.id);
+        itemViewModel.setProductCartId(productCart.cart_id);
         itemViewModel.setProductId(productCart.product_id);
         itemViewModel.sellerName.set(productCart.seller_name);
         itemViewModel.amount.set(productCart.amount + "");
@@ -64,7 +64,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         if (results != null && results.size() > 0) {
             ArrayList<String> cartIds = new ArrayList<>();
             for (ProductCart item : results) {
-                cartIds.add(item.card_id + "");
+                cartIds.add(item.cart_id + "");
             }
             String cartIdsStr = TextUtils.join(",", cartIds);
             for (ProductCart item : results) {
