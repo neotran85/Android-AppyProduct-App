@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant;
 
+import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
@@ -18,11 +19,14 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
 
     private ProductCartItemViewModel mProductCartItemViewModel;
 
+    public ObservableField<String> confirmButtonText = new ObservableField<>("CONFIRM");
+
     private ProductVariant mSelectedVariant;
 
     private FetchUserInfoViewModel mFetchUserInfoViewModel;
 
     private long mOldVariantId = 0;
+
 
     public EditVariantViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -52,6 +56,7 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
     }
 
     public void saveProductCartItem(long oldVariantId) {
+        confirmButtonText.set("Verifying...");
         if (oldVariantId < 0) {
             addNewCart();
         } else {
@@ -111,6 +116,7 @@ public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> im
 
     @Override
     public void onFetchUserInfo_Done() {
+        confirmButtonText.set("CONFIRM");
         getNavigator().saveProductCartItem_Done();
     }
 
