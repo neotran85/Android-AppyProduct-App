@@ -2,79 +2,32 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.confirmation.adapter;
 
 import android.databinding.ObservableField;
 
-import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.common.ShippingType;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.crashlytics.android.Crashlytics;
-import com.google.gson.internal.LinkedTreeMap;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class CartItemViewModel extends ProductCartItemViewModel {
-
-    public ObservableField<Double> totalCostOfStore = new ObservableField<>(0.0);
-    public ObservableField<Double> shippingCost = new ObservableField<>(0.0);
+    public ObservableField<String> shippingTypeOpt = new ObservableField<>("");
 
     private int sellerId;
     private int addressId;
     private String cartIds;
 
-
-    private LinkedTreeMap<String, Object> shippingTreeMap;
+    private String shippingType = ShippingType.LAND;
+    private double shippingCost = 0.0;
+    public HashMap<String, Double> shippingFees;
 
     public CartItemViewModel(BaseViewModel baseViewModel) {
         super(baseViewModel.getDataManager(), baseViewModel.getSchedulerProvider());
     }
 
-
-    public void updateShippingCost() {
-        if (shippingTreeMap != null) {
-            updatePrices();
-        } else {
-            verifyOrder(sellerId, addressId, cartIds);
-        }
-    }
-
-    private void updatePrices() {
-        Double value = getShippingCost(shippingTreeMap.get(sellerId + ""));
-        shippingCost.set(value);
-        totalCostOfStore.set(totalCostOfStore.get() + value);
-    }
-
-    private void verifyOrder(int sellerId, int idAddress, String cartItemIds) {
-        getCompositeDisposable().add(getDataManager()
-                .verifyProductOrder(new VerifyOrderRequest(cartItemIds, idAddress))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(result -> {
-                    if (result != null && result.code.equals(ApiCode.OK_200)) {
-                        LinkedTreeMap<String, Object> linkedTreeMap = (LinkedTreeMap<String, Object>) result.message;
-                        shippingTreeMap = (LinkedTreeMap<String, Object>) linkedTreeMap.get("shipping");
-                        updatePrices();
-                    }
-                }, Crashlytics::logException));
-    }
-
-    private Double getShippingCost(Object object) {
-        if (object instanceof Double) {
-            return (Double) object;
-        } else if (object instanceof ArrayList) {
-            ArrayList arrayList = (ArrayList) object;
-            if (arrayList.size() > 0) {
-                try {
-                    Double total = 0.0;
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        if (arrayList.get(i) instanceof Double)
-                            total = total + (Double) arrayList.get(i);
-                    }
-                    return total;
-                } catch (Exception e) {
-                    return 0.0;
-                }
-            }
-        }
-        return 0.0;
+    public String getShippingType() {
+        return shippingType;
     }
 
     public void setSellerId(int sellerId) {
@@ -87,5 +40,53 @@ public class CartItemViewModel extends ProductCartItemViewModel {
 
     public void setCartIds(String cartIds) {
         this.cartIds = cartIds;
+    }
+
+    public String getShippingCostByMethod(String type) {
+        for (String item : shippingFees.keySet()) {
+            if (item.equals(type)) {
+                String label = type + " (RM " + shippingFees.get(type) + ")";
+                return label;
+            }
+        }
+        return "";
+    }
+
+    public void updateShippingCost(String type) {
+        shippingType = type;
+        shippingCost = shippingFees.get(type);
+        shippingTypeOpt.set(getShippingCostByMethod(type));
+    }
+
+    public void setShippingFees(ProductCart cart) {
+        if (cart.shipping_fee != null && cart.shipping_fee.length() > 0) {
+            try {
+                shippingFees = new HashMap<>();
+                JSONObject json = new JSONObject(cart.shipping_fee);
+                if (json.has(ShippingType.AIR)) {
+                    shippingFees.put(ShippingType.AIR, json.getDouble(ShippingType.AIR));
+                    shippingType = ShippingType.AIR;
+                }
+                if (json.has(ShippingType.SEA)) {
+                    shippingFees.put(ShippingType.SEA, json.getDouble(ShippingType.SEA));
+                    shippingType = ShippingType.SEA;
+                }
+                if (json.has(ShippingType.LAND)) {
+                    shippingFees.put(ShippingType.LAND, json.getDouble(ShippingType.LAND));
+                    shippingType = ShippingType.LAND;
+                }
+                updateShippingCost(shippingType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public double getShippingCost() {
+        return shippingCost;
+    }
+
+    public int getSellerId() {
+        return sellerId;
     }
 }

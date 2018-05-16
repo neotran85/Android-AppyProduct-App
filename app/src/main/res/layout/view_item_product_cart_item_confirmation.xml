@@ -51,67 +51,40 @@
                 android:textSize="12sp" />
 
             <LinearLayout
-                android:layout_weight="1"
+                android:id="@+id/btnShipping"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical|end"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shipping Fee:"
+                        android:text="@string/confirm_item_shipping"
                         android:textColor="@color/medium_dark_gray"
-                        android:textSize="11sp" />
-                    <TextView
-                        android:layout_marginStart="4dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RM"
-                        android:textColor="@color/red_price"
                         android:textSize="11sp" />
 
                     <TextView
-                        price="@{viewModel.shippingCost}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
-                        android:textColor="@color/red_price"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total:"
+                        android:text="@{viewModel.shippingTypeOpt}"
                         android:textColor="@color/medium_dark_gray"
                         android:textSize="11sp" />
-                    <TextView
-                        android:layout_marginStart="4dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RM"
-                        android:textColor="@color/red_price"
-                        android:textSize="11sp" />
 
-                    <TextView
-                        price="@{viewModel.totalCostOfStore}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:textColor="@color/red_price"
-                        android:textSize="11sp" />
+                    <ImageView
+                        android:layout_marginStart="4dp"
+                        android:layout_width="12dp"
+                        android:layout_height="6dp"
+                        android:background="@mipmap/detail_icon_dropdown" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

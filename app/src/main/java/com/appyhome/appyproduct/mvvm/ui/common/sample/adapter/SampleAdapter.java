@@ -104,6 +104,13 @@ public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerVi
         return 1;
     }
 
+    public int getItemSize() {
+        if (mItems != null) {
+            return mItems.size();
+        }
+        return 0;
+    }
+
     public void empty() {
         mItems = new ArrayList<>();
     }

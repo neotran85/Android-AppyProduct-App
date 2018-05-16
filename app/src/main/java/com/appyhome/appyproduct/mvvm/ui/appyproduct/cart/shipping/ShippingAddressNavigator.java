@@ -15,4 +15,6 @@ public interface ShippingAddressNavigator {
     void openNewShippingAddress();
 
     void close();
+
+    void updateShippingFees_DONE();
 }

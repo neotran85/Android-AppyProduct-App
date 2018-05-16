@@ -32,4 +32,6 @@ public interface ConfirmationNavigator extends FetchUserInfoNavigator, VerifyOrd
     void openVisaPayment();
 
     ConfirmationViewModel getViewModel();
+
+    void updateTotalShippingCost(double total);
 }

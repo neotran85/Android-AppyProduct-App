@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.common;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
@@ -86,7 +87,10 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                         }
                         verifyOrderStepByStep(ids, totalPrice);
                     }
-                }, this::doVerifyOrder_FAILED));
+                }, throwable -> {
+                    // PASSED ANYWAY
+                    getNavigator().verifyOrder_PASSED();
+                }));
     }
 
     private void verifyOrderStepByStep(ArrayList<String> ids, Double totalPrice) {
@@ -96,8 +100,16 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
                     if (result != null && result.code.equals(ApiCode.OK_200)) {
-                        boolean valueVerifyAllItemsAvailable = verifyAllItemsAvailable((LinkedTreeMap<String, Object>) result.message);
-                        boolean valueVerifyTotalPrice = verifyTotalPrice((LinkedTreeMap<String, Object>) result.message, totalPrice);
+
+                        boolean valueVerifyAllItemsAvailable = false;
+                        boolean valueVerifyTotalPrice = false;
+
+                        if (result.message instanceof LinkedTreeMap) {
+                            valueVerifyAllItemsAvailable = verifyAllItemsAvailable((LinkedTreeMap<String, Object>) result.message);
+                            valueVerifyTotalPrice = verifyTotalPrice((LinkedTreeMap<String, Object>) result.message, totalPrice);
+                            updateShippingFees((LinkedTreeMap<String, Object>) result.message, false);
+                        }
+
                         if (valueVerifyAllItemsAvailable && valueVerifyTotalPrice) {
                             // PASSED VERIFICATION
                             getNavigator().verifyOrder_PASSED();
@@ -119,9 +131,87 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addressResult -> {
+                    if (addressResult != null && addressResult.isValid()) {
+                        // GET SUCCEEDED
+                        addressId = addressResult.id;
+                        getAllCheckedProductCarts();
+                    } else {
+                        // NO ADDRESS TO VERIFY
+                        getNavigator().verifyOrder_PASSED();
+                    }
+                }, throwable -> {
+                    // PASSED ANYWAY
+                    getNavigator().verifyOrder_PASSED();
+                }));
+    }
+
+    // UPDATE SHIPPING FEES
+
+    public void doVerifyShippingFee() {
+        getCompositeDisposable().add(getDataManager().getDefaultShippingAddress(getUserId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(addressResult -> {
                     // GET SUCCEEDED
                     addressId = addressResult.id;
-                    getAllCheckedProductCarts();
+                    getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
+                            .take(1)
+                            .observeOn(getSchedulerProvider().ui())
+                            .subscribe(items -> {
+                                // GET SUCCEEDED
+                                if (items != null && items.size() > 0) {
+                                    ArrayList<String> ids = new ArrayList<>();
+                                    Double totalPrice = 0.0;
+                                    for (ProductCart item : items) {
+                                        totalPrice = totalPrice + item.price * item.amount;
+                                        ids.add(item.cart_id + "");
+                                    }
+                                    verifyShippingFee(ids, addressId);
+                                }
+                            }, this::doVerifyOrder_FAILED));
                 }, this::doVerifyOrder_FAILED));
+    }
+
+    private void verifyShippingFee(ArrayList<String> ids, int idAddress) {
+        getCompositeDisposable().add(getDataManager()
+                .verifyProductOrder(new VerifyOrderRequest(TextUtils.join(",", ids), idAddress))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(result -> {
+                    if (result != null && result.code.equals(ApiCode.OK_200)) {
+                        if (result.message instanceof LinkedTreeMap)
+                            updateShippingFees((LinkedTreeMap<String, Object>) result.message, true);
+                    }
+                }, this::doVerifyOrder_FAILED));
+    }
+
+    private void updateShippingFees(LinkedTreeMap<String, Object> linkedTreeMap, boolean isCalledBack) {
+        try {
+            Bundle bundleData = new Bundle();
+            for (String key : linkedTreeMap.keySet()) {
+                if (key.equals("shipping")) {
+                    if (linkedTreeMap.get(key) instanceof LinkedTreeMap) {
+                        LinkedTreeMap<String, Object> items1 = (LinkedTreeMap<String, Object>) linkedTreeMap.get(key);
+                        for (String key1 : items1.keySet()) {
+                            if (DataUtils.isNumeric(key1)) {
+                                if (items1.get(key1) != null) {
+                                    bundleData.putString(key1, items1.get(key1).toString());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            getCompositeDisposable().add(getDataManager().updateProductCartShippingFee(getUserId(), bundleData)
+                    .take(1)
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(aBoolean -> {
+                        if (isCalledBack)
+                            getNavigator().verifyOrder_PASSED();
+                    }, Crashlytics::logException));
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            doVerifyOrder_FAILED(e);
+        }
     }
 }

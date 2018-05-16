@@ -433,7 +433,7 @@
                 <Button
                     android:id="@+id/btnFinalConfirm"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="14dp"
                     android:layout_marginEnd="14dp"

@@ -190,6 +190,12 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     }
 
     @Override
+    public void updateTotalShippingCost(double total) {
+        getViewModel().totalShippingCost.set(total);
+        getViewModel().updateAllCost();
+    }
+
+    @Override
     public int getBindingVariable() {
         return BR.viewModel;
     }

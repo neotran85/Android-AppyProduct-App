@@ -5,6 +5,10 @@ import android.arch.persistence.room.ColumnInfo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -95,6 +99,11 @@ public class ProductCart extends RealmObject {
     @SerializedName("time_added")
     @ColumnInfo(name = "time_added")
     public long time_added;
+
+    @Expose
+    @SerializedName("shipping_fee")
+    @ColumnInfo(name = "shipping_fee")
+    public String shipping_fee;
 
     @Expose
     @SerializedName("more_info")

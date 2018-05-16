@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
@@ -361,13 +362,15 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Flowable<AppyAddress> getDefaultShippingAddress(String userId) {
-        beginTransaction();
-        Flowable<AppyAddress> address = getRealm().where(AppyAddress.class)
-                .equalTo("user_id", userId)
-                .equalTo("is_default", 1)
-                .findFirst().asFlowable();
-        getRealm().commitTransaction();
-        return address;
+        return Flowable.fromCallable(() -> {
+            beginTransaction();
+            AppyAddress address = getRealm().where(AppyAddress.class)
+                    .equalTo("user_id", userId)
+                    .equalTo("is_default", 1)
+                    .findFirst();
+            getRealm().commitTransaction();
+            return address;
+        });
     }
 
     @Override
@@ -633,6 +636,30 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<Boolean> updateProductCartShippingFee(String userId, Bundle dataFees) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                RealmResults<ProductCart> cart = getRealm().where(ProductCart.class)
+                        .equalTo("user_id", userId)
+                        .equalTo("checked", true)
+                        .findAll();
+                for (ProductCart item : cart) {
+                    if (dataFees.containsKey(item.seller_id + "")) {
+                        item.shipping_fee = dataFees.getString(item.seller_id + "");
+                    } else item.shipping_fee = "";
+                }
+                getRealm().copyToRealmOrUpdate(cart);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+            }
+            return false;
+        });
+    }
+
+    @Override
     public Flowable<ProductCart> updateProductCartItem(long idProductCart, boolean checked, int amount, String variantModelId) {
         try {
             beginTransaction();
@@ -641,7 +668,8 @@ public class AppDbHelper implements DbHelper {
                     .findFirst();
             if (productCart != null) {
                 productCart.checked = checked;
-                productCart.amount = amount;
+                if (amount > 0)
+                    productCart.amount = amount;
                 if (variantModelId.length() > 0) {
                     ProductVariant variant = getRealm().where(ProductVariant.class)
                             .equalTo("model_id", variantModelId).findFirst();

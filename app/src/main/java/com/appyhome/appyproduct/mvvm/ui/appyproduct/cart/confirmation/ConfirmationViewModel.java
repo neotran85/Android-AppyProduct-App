@@ -18,6 +18,8 @@ import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.internal.LinkedTreeMap;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import io.realm.RealmResults;
@@ -104,32 +106,12 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                             strCartIds.add(item.cart_id + "");
                         }
                         productCost.set(DataUtils.roundNumber(totalCost, 2));
-                        updateTotalShippingCost(addressId, TextUtils.join(",", strCartIds));
+                        doVerifyOrderFirst(addressId, TextUtils.join(",", strCartIds));
                     }
                 }, Crashlytics::logException));
     }
 
-    private Double getShippingCost(Object object) {
-        if (object instanceof Double) {
-            return (Double) object;
-        } else if (object instanceof ArrayList) {
-            ArrayList arrayList = (ArrayList) object;
-            if (arrayList.size() > 0) {
-                try {
-                    Double total = 0.0;
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        total = total + Double.valueOf(arrayList.get(i).toString());
-                    }
-                    return total;
-                } catch (Exception e) {
-                    return 0.0;
-                }
-            }
-        }
-        return 0.0;
-    }
-
-    private void updateTotalShippingCost(int idAddress, String cartItemIds) {
+    private void doVerifyOrderFirst(int idAddress, String cartItemIds) {
         getCompositeDisposable().add(getDataManager()
                 .verifyProductOrder(new VerifyOrderRequest(cartItemIds, idAddress))
                 .subscribeOn(getSchedulerProvider().io())
@@ -137,35 +119,33 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(result -> {
                     if (result != null && result.code.equals(ApiCode.OK_200)) {
                         LinkedTreeMap<String, Object> linkedTreeMap = (LinkedTreeMap<String, Object>) result.message;
-                        LinkedTreeMap<String, Object> shippingTreeMap = (LinkedTreeMap<String, Object>) linkedTreeMap.get("shipping");
-                        shippingCostAll = 0.0;
-                        for (String key : shippingTreeMap.keySet()) {
-                            shippingCostAll = shippingCostAll + getShippingCost(shippingTreeMap.get(key));
-                        }
-                        totalShippingCost.set(shippingCostAll);
                         updatePricesAfterDiscount(productCost.get(), linkedTreeMap);
                     }
                 }, Crashlytics::logException));
     }
 
     private void updatePricesAfterDiscount(Double totalBeforeDiscount, LinkedTreeMap<String, Object> linkedTreeMap) {
-        double totalAfterDiscount = totalBeforeDiscount;
-        discount.set("RM " + DataUtils.roundPrice(totalAfterDiscount) + "+ Shipping: RM " + totalShippingCost.get());
+        totalCostAfterDiscount = totalBeforeDiscount;
+        discount.set("RM " + DataUtils.roundPrice(totalCostAfterDiscount) + "+ Shipping: RM " + totalShippingCost.get());
         if (linkedTreeMap.get("promo") instanceof ArrayList) {
             ArrayList<LinkedTreeMap<String, Double>> arrayList = (ArrayList<LinkedTreeMap<String, Double>>) linkedTreeMap.get("promo");
             if (arrayList != null && arrayList.size() > 0) {
                 for (LinkedTreeMap<String, Double> object : arrayList) {
                     if (object != null) {
                         if (object.containsKey("10PERCENT")) {
-                            totalAfterDiscount = totalBeforeDiscount * 0.9;
-                            discount.set("RM " + DataUtils.roundPrice(totalAfterDiscount)
-                                    + " (10% discounted)" + " + Shipping: RM " + totalShippingCost.get());
+                            totalCostAfterDiscount = totalBeforeDiscount * 0.9;
                         }
                     }
                 }
             }
         }
-        totalAllCost.set(totalAfterDiscount + totalShippingCost.get());
+        updateAllCost();
+    }
+
+    public void updateAllCost() {
+        totalAllCost.set(totalCostAfterDiscount + totalShippingCost.get());
+        discount.set("RM " + DataUtils.roundPrice(totalCostAfterDiscount)
+                + " (10% discounted)" + " + Shipping: RM " + totalShippingCost.get());
     }
 
     public String getNameOfUser() {

@@ -68,14 +68,11 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void gotoNextStep() {
-        if (getViewModel().isNoAddress.get()) {
+        if (mAdapter == null || mAdapter.getItemSize() == 0) {
             showAlert(getString(R.string.please_add_address));
             return;
         }
-        if (isEditMode) {
-            finish();
-        } else
-            startActivity(PaymentActivity.getStartIntent(this));
+        getViewModel().updateShippingFees();
     }
 
     @Override
@@ -105,5 +102,14 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
     @Override
     public void showAlert(String message) {
         AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
+    }
+
+    @Override
+    public void updateShippingFees_DONE() {
+        if (isEditMode) {
+            finish();
+        } else {
+            startActivity(PaymentActivity.getStartIntent(this));
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
 
+import android.os.Bundle;
+
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
@@ -126,4 +128,6 @@ public interface DbHelper {
     Flowable<ProductVariant> getProductVariantById(String variantModelId);
 
     Flowable<Boolean> addSeller(Seller seller);
+
+    Flowable<Boolean> updateProductCartShippingFee(String userId, Bundle dataFees);
 }

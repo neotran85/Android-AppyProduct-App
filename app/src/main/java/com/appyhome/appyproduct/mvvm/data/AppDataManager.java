@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.data;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
@@ -765,6 +766,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Boolean> addSeller(Seller seller) {
         return mDbHelper.addSeller(seller);
+    }
+
+    @Override
+    public Flowable<Boolean> updateProductCartShippingFee(String userId, Bundle dataFees) {
+        return mDbHelper.updateProductCartShippingFee(userId, dataFees);
     }
 
     @Override

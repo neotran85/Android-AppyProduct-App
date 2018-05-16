@@ -19,6 +19,8 @@ import io.realm.RealmResults;
 
 public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigator> {
 
+    private ConfirmationNavigator mNavigator;
+
     public HashMap<String, ArrayList<CartItemViewModel>> viewModelManager;
 
     public CartAdapter() {
@@ -37,6 +39,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
 
     private CartItemViewModel createViewModel(ProductCart productCart, ConfirmationNavigator navigator) {
         CartItemViewModel itemViewModel = new CartItemViewModel(navigator.getViewModel());
+        itemViewModel.setShippingFees(productCart);
         itemViewModel.setSellerId(productCart.seller_id);
         itemViewModel.title.set(productCart.product_name);
         itemViewModel.imageURL.set(productCart.product_image);
@@ -57,6 +60,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
 
     public void addItems(RealmResults<ProductCart> results, int addressId, ConfirmationNavigator navigator) {
         mItems = new ArrayList<>();
+        mNavigator = navigator;
         if (viewModelManager != null) {
             viewModelManager.clear();
         }
@@ -75,7 +79,22 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
                 mItems.add(cartItem);
             }
             updateTotalCostOfStore();
+            updateTotalShippingCost();
         }
+    }
+
+    public void updateTotalShippingCost() {
+        double total = 0.0;
+        int sellerId = 0;
+        for (BaseViewModel item : mItems) {
+            CartItemViewModel cartItem = (CartItemViewModel) item;
+            if(cartItem.getSellerId() != sellerId) {
+                total = total + cartItem.getShippingCost();
+            }
+            sellerId = cartItem.getSellerId();
+        }
+        if (mNavigator != null)
+            mNavigator.updateTotalShippingCost(total);
     }
 
     public int getTotalStores() {
@@ -108,9 +127,6 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
             for (CartItemViewModel item : array) {
                 totalCost = totalCost + Double.valueOf(item.price.get()) * Integer.valueOf(item.amount.get());
                 totalCost = DataUtils.roundNumber(totalCost, 2);
-            }
-            for (CartItemViewModel item : array) {
-                item.totalCostOfStore.set(totalCost);
             }
         }
     }
