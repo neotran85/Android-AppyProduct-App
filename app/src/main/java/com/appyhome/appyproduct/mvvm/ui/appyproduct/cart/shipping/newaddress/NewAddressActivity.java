@@ -1,6 +1,7 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.newaddress;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +50,24 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
                     break;
             }
         }
+    }
+
+    @Override
+    public void openStatesSelection() {
+        String currentState = getViewModel().state.get();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        int checkedItem = -1;
+        for (int i = 0; i < States.malaysiaStates.length; i++) {
+            if (currentState.equals(States.malaysiaStates[i]))
+                checkedItem = i;
+        }
+        builder.setTitle("Select a state");
+        builder.setSingleChoiceItems(States.malaysiaStates, checkedItem, (dialog, item) -> {
+            getViewModel().state.set(States.malaysiaStates[item]);
+            if (dialog != null) dialog.dismiss();
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

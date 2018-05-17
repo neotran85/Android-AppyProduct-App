@@ -10,4 +10,6 @@ public interface NewAddressNavigator {
     void onAddressSaved();
 
     void close();
+
+    void openStatesSelection();
 }
