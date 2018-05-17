@@ -13,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
 
 import javax.inject.Inject;

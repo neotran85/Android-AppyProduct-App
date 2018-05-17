@@ -36,14 +36,7 @@ import io.realm.Sort;
 
 @Singleton
 public class AppDbHelper implements DbHelper {
-
     private Realm mRealm;
-    private float[] prices = {100.50f, 25.50f, 12.60f, 50.78f, 51.2f, 12.62f};
-    private float[] rates = {3, 4.5f, 5, 2, 1, 0};
-    private int[] numberRates = {30, 415, 52, 211, 123, 985};
-    private int[] numberFavorites = {130, 15, 522, 11, 210, 205};
-    private int[] discountList = {0, 16, 0, 42, 12, 0};
-
     @Inject
     public AppDbHelper(Realm realm) {
         this.mRealm = realm;
@@ -321,14 +314,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addProducts(RealmList<Product> list) {
         try {
             beginTransaction();
-            for (Product product : list) {
-                int randomNum = new Random().nextInt(rates.length);
-                product.rate = rates[randomNum];
-                product.discount = discountList[randomNum];
-                product.rate_count = numberRates[randomNum];
-                product.favorite_count = numberFavorites[randomNum];
-                getRealm().copyToRealmOrUpdate(product);
-            }
+            getRealm().copyToRealmOrUpdate(list);
             getRealm().commitTransaction();
             return Flowable.just(true);
         } catch (Exception e) {
@@ -341,15 +327,7 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addProductsCached(RealmList<ProductCached> list) {
         try {
             beginTransaction();
-            for (ProductCached product : list) {
-                int randomNum = new Random().nextInt(rates.length);
-                product.rate = rates[randomNum];
-                product.discount = discountList[randomNum];
-                product.rate_count = numberRates[randomNum];
-                product.favorite_count = numberFavorites[randomNum];
-                product.time_db_added = System.currentTimeMillis();
-                getRealm().copyToRealmOrUpdate(product);
-            }
+            getRealm().copyToRealmOrUpdate(list);
             getRealm().commitTransaction();
             return Flowable.just(true);
         } catch (Exception e) {

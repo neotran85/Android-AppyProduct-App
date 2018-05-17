@@ -23,7 +23,6 @@ public class GlideImageLoadingService implements ImageLoadingService {
                 .load(url)
                 .placeholder(R.mipmap.no_image_large)
                 .error(R.mipmap.no_image_large)
-                .fitCenter()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
     }
@@ -34,7 +33,6 @@ public class GlideImageLoadingService implements ImageLoadingService {
                 .load(resource)
                 .placeholder(R.mipmap.no_image_large)
                 .error(R.mipmap.no_image_large)
-                .fitCenter()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
     }
@@ -45,7 +43,6 @@ public class GlideImageLoadingService implements ImageLoadingService {
                 .load(url)
                 .placeholder(placeHolder)
                 .error(errorDrawable)
-                .fitCenter()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
     }

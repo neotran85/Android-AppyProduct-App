@@ -107,6 +107,7 @@ public class EditVariantFragment extends BaseFragment<FragmentProductVariantEdit
     @Override
     public void onDestroy() {
         super.onDestroy();
+        hideKeyboard();
         mProductCartItemViewModel = null;
     }
 

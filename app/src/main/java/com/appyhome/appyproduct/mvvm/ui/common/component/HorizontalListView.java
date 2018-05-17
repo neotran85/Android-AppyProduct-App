@@ -29,6 +29,7 @@ public abstract class HorizontalListView extends LinearLayout {
     }
 
     public void notifyAdapter() {
+        this.removeAllViews();
         if (mAdapter != null && getItemCount() > 0) {
             for (int i = 0; i < mAdapter.getItemCount(); i++) {
                 View view = getItemView(i);

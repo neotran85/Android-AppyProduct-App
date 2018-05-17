@@ -63,16 +63,22 @@ public class TableLayout extends LinearListView<TabletItem> {
     public void loadData(ProductVariant variant) {
         removeAllViews();
         ArrayList<TabletItem> tableAdapter = new ArrayList<>();
-        tableAdapter.add(new TabletItem("Name", variant.product_name));
-        tableAdapter.add(new TabletItem("Variant Name", variant.variant_name));
-        String priceNote = variant.getPriceNote();
-        tableAdapter.add(new TabletItem("Price", "RM " + variant.price + (priceNote.length() > 0 ? ("\n" + priceNote) : "")));
+
+        //tableAdapter.add(new TabletItem("Name", variant.product_name));
+        //tableAdapter.add(new TabletItem("Variant Name", variant.variant_name));
+        //String priceNote = variant.getPriceNote();
+        //tableAdapter.add(new TabletItem("Price", "RM " + variant.price + (priceNote.length() > 0 ? ("\n" + priceNote) : "")));
+        //tableAdapter.add(new TabletItem("Seller Name", variant.seller_name));
+        //tableAdapter.add(new TabletItem("Created Date", variant.created_at));
+        //tableAdapter.add(new TabletItem("Updated Date", variant.updated_at));
+
         HashMap<String, String> parseDes = variant.parseDescription();
         if (parseDes != null) {
             for (String key : parseDes.keySet()) {
                 tableAdapter.add(new TabletItem(key, parseDes.get(key)));
             }
         }
+
         tableAdapter.add(new TabletItem("Dimension (cm)", variant.getSize()));
         tableAdapter.add(new TabletItem("Weight", DataUtils.roundNumber(variant.weight, 2) + " Kg"));
         tableAdapter.add(new TabletItem("Stock's quantity", variant.quantity + " (" + variant.getAvailable() + ")"));
@@ -83,12 +89,11 @@ public class TableLayout extends LinearListView<TabletItem> {
         tableAdapter.add(new TabletItem("Shipping From", variant.getShippingFrom()));
         tableAdapter.add(new TabletItem("Est. Delivery Date", variant.getDeliveryEstimation()));
         tableAdapter.add(new TabletItem("Payment Methods", "VISA, Master Card, Mol Pay"));
-        tableAdapter.add(new TabletItem("Seller Name", variant.seller_name));
+
         tableAdapter.add(new TabletItem("After Sales Service", "Please contact seller"));
         tableAdapter.add(new TabletItem("Return / Exchange", getContext().getString(R.string.return_notice)));
         tableAdapter.add(new TabletItem("Available Date", "Since " + variant.date_available));
-        tableAdapter.add(new TabletItem("Created Date", variant.created_at));
-        tableAdapter.add(new TabletItem("Updated Date", variant.updated_at));
+
         tableAdapter.add(new TabletItem("Description", variant.getDescription()));
         setAdapter(tableAdapter);
     }
