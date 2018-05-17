@@ -165,7 +165,7 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     }
 
     @Override
-    protected ProductCartItemViewHolder getContentHolder(ViewGroup parent) {
+    public ProductCartItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductCartItemBinding itemViewBinding = ViewItemProductCartItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductCartItemViewHolder(itemViewBinding, this, mNavigator);

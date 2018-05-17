@@ -59,7 +59,7 @@ public class CategoryAdapter extends SampleAdapter<ProductCategory, CategoryItem
     }
 
     @Override
-    protected ProductCategoryItemViewHolder getContentHolder(ViewGroup parent) {
+    public ProductCategoryItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductCategoryBinding itemViewBinding = ViewItemProductCategoryBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductCategoryItemViewHolder(itemViewBinding, this);

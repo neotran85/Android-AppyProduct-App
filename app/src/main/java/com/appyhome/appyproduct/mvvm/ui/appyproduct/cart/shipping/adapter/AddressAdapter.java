@@ -110,7 +110,7 @@ public class AddressAdapter extends SampleAdapter<AppyAddress, AddressItemNaviga
     }
 
     @Override
-    protected AddressItemViewHolder getContentHolder(ViewGroup parent) {
+    public AddressItemViewHolder getContentHolder(ViewGroup parent) {
         mContext = parent.getContext();
         ViewItemProductShippingAddressBinding itemViewBinding = ViewItemProductShippingAddressBinding
                 .inflate(LayoutInflater.from(mContext), parent, false);

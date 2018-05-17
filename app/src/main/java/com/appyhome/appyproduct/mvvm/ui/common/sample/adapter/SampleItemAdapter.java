@@ -32,7 +32,7 @@ public class SampleItemAdapter extends SampleAdapter<RealmObject, SampleItemNavi
     }
 
     @Override
-    protected SampleItemViewHolder getContentHolder(ViewGroup parent) {
+    public SampleItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductSampleBinding itemViewBinding = ViewItemProductSampleBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new SampleItemViewHolder(itemViewBinding, this);

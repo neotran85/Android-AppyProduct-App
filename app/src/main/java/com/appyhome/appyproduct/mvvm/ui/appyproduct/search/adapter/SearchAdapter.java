@@ -48,7 +48,7 @@ public class SearchAdapter extends SampleAdapter<SearchItem, SearchItemNavigator
     }
 
     @Override
-    protected SearchItemViewHolder getContentHolder(ViewGroup parent) {
+    public SearchItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductSearchItemBinding itemViewBinding = ViewItemProductSearchItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new SearchItemViewHolder(itemViewBinding, this, mNavigator);

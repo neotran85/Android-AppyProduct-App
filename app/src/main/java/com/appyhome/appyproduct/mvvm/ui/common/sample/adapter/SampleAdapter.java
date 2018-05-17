@@ -22,7 +22,7 @@ public abstract class SampleAdapter<T extends RealmObject, L> extends RecyclerVi
 
     protected ArrayList<BaseViewModel> mItems;
 
-    protected abstract BaseViewHolder getContentHolder(ViewGroup parent);
+    public abstract BaseViewHolder getContentHolder(ViewGroup parent);
 
     protected abstract void addItems(RealmResults<T> items, L navigator);
 

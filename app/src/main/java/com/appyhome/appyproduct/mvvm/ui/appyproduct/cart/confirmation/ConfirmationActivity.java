@@ -74,8 +74,6 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
-        mBinder.rvCartRecyclerView.setAdapter(mAdapter);
-        setUpRecyclerViewList(mBinder.rvCartRecyclerView);
         mMainViewModel.setNavigator(this);
     }
 
@@ -115,16 +113,8 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
     @Override
     public void showCheckedItems(RealmResults<ProductCart> result, int addressId) {
         mAdapter.addItems(result, addressId, this);
+        mBinder.cartListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        updateCartContainerHeight(result.size());
-    }
-
-    private void updateCartContainerHeight(int count) {
-        int height = count * HEIGHT_CART_ITEM + mAdapter.getTotalStores() * HEIGHT_TITLE_CART_ITEM;
-        height = ViewUtils.dpToPx(height);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mBinder.llCartContainer.getLayoutParams();
-        params.height = height;
-        mBinder.llCartContainer.setLayoutParams(params);
     }
 
     @Override

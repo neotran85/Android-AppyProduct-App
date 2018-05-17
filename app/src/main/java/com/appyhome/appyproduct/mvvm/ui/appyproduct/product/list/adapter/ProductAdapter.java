@@ -121,7 +121,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     }
 
     @Override
-    protected ProductItemViewHolder getContentHolder(ViewGroup parent) {
+    public ProductItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductBinding itemViewBinding = ViewItemProductBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductItemViewHolder(itemViewBinding);

@@ -82,7 +82,7 @@ public class SubCategoryAdapter extends SampleAdapter<ProductSub, CategoryItemNa
     }
 
     @Override
-    protected SubCategoryItemViewHolder getContentHolder(ViewGroup parent) {
+    public SubCategoryItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductCategorySubBinding itemViewBinding = ViewItemProductCategorySubBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new SubCategoryItemViewHolder(itemViewBinding, this, mNavigator);

@@ -44,7 +44,7 @@ public class TopicAdapter extends SampleAdapter<ProductTopic, TopicItemNavigator
     }
 
     @Override
-    protected TopicItemViewHolder getContentHolder(ViewGroup parent) {
+    public TopicItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductTopicBinding itemViewBinding = ViewItemProductTopicBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new TopicItemViewHolder(itemViewBinding);
