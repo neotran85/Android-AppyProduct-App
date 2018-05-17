@@ -400,8 +400,9 @@
                         android:layout_weight="1"
                         android:background="@mipmap/bg_edit_text_discount"
                         android:gravity="center_vertical"
-                        android:hint="@string/enter_a_promotion_code"
                         android:inputType="text"
+                        android:text="10PERCENT"
+                        android:hint="@string/enter_a_promotion_code"
                         android:paddingStart="8dp"
                         android:textColor="@color/black"
                         android:textSize="12sp" />

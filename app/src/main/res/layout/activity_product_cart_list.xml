@@ -142,6 +142,7 @@
                             android:descendantFocusability="beforeDescendants"
                             android:focusableInTouchMode="true"
                             android:gravity="center_vertical"
+                            android:text="10PERCENT"
                             android:hint="@string/enter_a_promotion_code"
                             android:inputType="text"
                             android:paddingStart="8dp"
