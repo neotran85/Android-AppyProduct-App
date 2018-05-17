@@ -81,7 +81,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="76dp"
+                        android:layout_height="110dp"
                         android:visibility="@{!viewModel.isCartEmpty, default=gone}" />
                 </LinearLayout>
 
@@ -105,9 +105,27 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingEnd="14dp"
-                        android:paddingStart="8dp"
-                        android:visibility="gone">
+                        android:paddingStart="8dp">
 
+                        <CheckBox
+                            android:id="@+id/cbCheckAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@={viewModel.isCheckedAll}"
+                            android:onClick="@{(view) -> navigator.selectAllCarts()}"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            fontPath="fonts/TitilliumWeb-Light.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cart_select_all"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="13sp" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -116,7 +134,8 @@
                             android:src="@mipmap/icon_percent_discount" />
 
                         <EditText
-                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:background="@mipmap/bg_edit_text_discount"
@@ -125,9 +144,18 @@
                             android:gravity="center_vertical"
                             android:hint="@string/enter_a_promotion_code"
                             android:inputType="text"
-                            android:paddingStart="12dp"
+                            android:paddingStart="8dp"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Light.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Use promo code?"
+                            android:textColor="@color/blue"
+                            android:textSize="11sp" />
                     </LinearLayout>
 
                     <View
@@ -137,79 +165,42 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="76dp"
+                        android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:layout_width="match_parent"
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:orientation="vertical">
+                            android:layout_marginStart="14dp"
+                            android:text="@string/cart_total"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="13sp" />
 
-                            <LinearLayout
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:text="@string/rm"
+                                android:textColor="@color/red_price"
+                                android:textSize="15sp" />
 
-                                <CheckBox
-                                    android:id="@+id/cbCheckAll"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="@={viewModel.isCheckedAll}"
-                                    android:onClick="@{(view) -> navigator.selectAllCarts()}"
-                                    android:scaleX="0.8"
-                                    android:scaleY="0.8"
-                                    android:textColor="@color/dark_gray"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/textView"
-                                    fontPath="fonts/TitilliumWeb-Light.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/cart_select_all"
-                                    android:textColor="@color/dark_gray"
-                                    android:textSize="13sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_marginTop="4dp"
-                                android:layout_marginBottom="6dp"
+                            <TextView
+                                fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                price="@{viewModel.totalCost}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="6dp"
-                                    android:text="@string/cart_total"
-                                    android:textColor="@color/dark_gray"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:layout_marginStart="4dp"
-                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/rm"
-                                    android:textColor="@color/red_price"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                    price="@{viewModel.totalCost}"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:textColor="@color/red_price"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
+                                android:layout_marginStart="4dp"
+                                android:textColor="@color/red_price"
+                                android:textSize="15sp" />
                         </LinearLayout>
 
                         <Button
