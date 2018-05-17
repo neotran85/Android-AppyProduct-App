@@ -89,7 +89,8 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                     }
                 }, throwable -> {
                     // PASSED ANYWAY
-                    getNavigator().verifyOrder_PASSED();
+                    if (getNavigator() != null)
+                        getNavigator().verifyOrder_PASSED();
                 }));
     }
 
@@ -112,7 +113,8 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
 
                         if (valueVerifyAllItemsAvailable && valueVerifyTotalPrice) {
                             // PASSED VERIFICATION
-                            getNavigator().verifyOrder_PASSED();
+                            if (getNavigator() != null)
+                                getNavigator().verifyOrder_PASSED();
                         } else {
                             // FAILED VERIFICATION
                             doVerifyOrder_FAILED(null);
@@ -123,7 +125,8 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
 
     private void doVerifyOrder_FAILED(Throwable throwable) {
         Crashlytics.logException(throwable);
-        getNavigator().verifyOrder_FAILED("");
+        if (getNavigator() != null)
+            getNavigator().verifyOrder_FAILED("");
     }
 
     public void doVerifyOrder() {
@@ -137,11 +140,13 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                         getAllCheckedProductCarts();
                     } else {
                         // NO ADDRESS TO VERIFY
-                        getNavigator().verifyOrder_PASSED();
+                        if (getNavigator() != null)
+                            getNavigator().verifyOrder_PASSED();
                     }
                 }, throwable -> {
                     // PASSED ANYWAY
-                    getNavigator().verifyOrder_PASSED();
+                    if (getNavigator() != null)
+                        getNavigator().verifyOrder_PASSED();
                 }));
     }
 
@@ -153,22 +158,24 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
-                    addressId = addressResult.id;
-                    getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
-                            .take(1)
-                            .observeOn(getSchedulerProvider().ui())
-                            .subscribe(items -> {
-                                // GET SUCCEEDED
-                                if (items != null && items.size() > 0) {
-                                    ArrayList<String> ids = new ArrayList<>();
-                                    Double totalPrice = 0.0;
-                                    for (ProductCart item : items) {
-                                        totalPrice = totalPrice + item.price * item.amount;
-                                        ids.add(item.cart_id + "");
+                    if (addressResult != null && addressResult.isValid()) {
+                        addressId = addressResult.id;
+                        getCompositeDisposable().add(getDataManager().getAllCheckedProductCarts(getUserId())
+                                .take(1)
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(items -> {
+                                    // GET SUCCEEDED
+                                    if (items != null && items.size() > 0) {
+                                        ArrayList<String> ids = new ArrayList<>();
+                                        Double totalPrice = 0.0;
+                                        for (ProductCart item : items) {
+                                            totalPrice = totalPrice + item.price * item.amount;
+                                            ids.add(item.cart_id + "");
+                                        }
+                                        verifyShippingFee(ids, addressId);
                                     }
-                                    verifyShippingFee(ids, addressId);
-                                }
-                            }, this::doVerifyOrder_FAILED));
+                                }, this::doVerifyOrder_FAILED));
+                    }
                 }, this::doVerifyOrder_FAILED));
     }
 
@@ -206,8 +213,9 @@ public class VerifyOrderViewModel extends BaseViewModel<VerifyOrderNavigator> {
                     .take(1)
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(aBoolean -> {
-                        if (isCalledBack)
+                        if (isCalledBack && getNavigator() != null) {
                             getNavigator().verifyOrder_PASSED();
+                        }
                     }, Crashlytics::logException));
         } catch (Exception e) {
             Crashlytics.logException(e);
