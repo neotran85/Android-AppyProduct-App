@@ -120,7 +120,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                                 LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
                                 Gson gson = new Gson();
                                 for (String key : linkedTreeMap.keySet()) {
-                                    if (key != null && !key.equals("padding")) {
+                                    if (key != null && key.equals("content")) {
                                         ArrayList array = linkedTreeMap.get(key);
                                         for (int i = 0; i < array.size(); i++) {
                                             JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));

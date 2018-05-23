@@ -235,6 +235,9 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
         // DO NOTHING, ONLY DO WHEN IT'S ON THE WISH LIST
+        if(getProductAdapter() != null) {
+            vm.updateProductFavorite(getProductAdapter().indexOf(vm));
+        }
     }
 
     @Override
