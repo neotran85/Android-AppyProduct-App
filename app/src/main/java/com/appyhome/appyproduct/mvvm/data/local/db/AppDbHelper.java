@@ -21,7 +21,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,6 +36,7 @@ import io.realm.Sort;
 @Singleton
 public class AppDbHelper implements DbHelper {
     private Realm mRealm;
+
     @Inject
     public AppDbHelper(Realm realm) {
         this.mRealm = realm;
@@ -277,7 +277,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCached> getProductCachedById(int idProduct) {
+    public Flowable<ProductCached> getProductCachedById(long idProduct) {
         beginTransaction();
         ProductCached product = getRealm().where(ProductCached.class)
                 .equalTo("id", idProduct)
@@ -386,16 +386,6 @@ public class AppDbHelper implements DbHelper {
         return null;
     }
 
-    private ProductFavorite isContaining(RealmResults<ProductFavorite> results, ProductFavoriteResponse response) {
-        for (ProductFavorite item : results) {
-            if (response.product_id == item.product_id
-                    && response.variant_id == item.variant_id) {
-                return item;
-            }
-        }
-        return null;
-    }
-
     @Override
     public Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<AppyAddress> addresses) {
         return Flowable.fromCallable(() -> {
@@ -444,54 +434,23 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
+    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavorite> array) {
         return Flowable.fromCallable(() -> {
             beginTransaction();
             RealmResults<ProductFavorite> favorites = getRealm().where(ProductFavorite.class)
                     .equalTo("user_id", userId)
                     .findAll();
-            long newId = System.currentTimeMillis();
-            ArrayList<ProductFavorite> totalArray;
-            if (favorites != null && favorites.isValid() && favorites.size() > 0) {
-                totalArray = new ArrayList<>();
-                for (ProductFavoriteResponse response : array) {
-                    newId++;
-                    ProductFavorite favItem = isContaining(favorites, response);
-                    if (favItem == null) {
-                        favItem = new ProductFavorite();
-                        favItem.id = newId;
-                        favItem.product_avatar = response.product_avatar;
-                    }
-                    favItem = inputProductFavorite(userId, favItem, response);
-                    totalArray.add(favItem);
-                }
-            } else {
-                totalArray = new ArrayList<>();
-                for (ProductFavoriteResponse response : array) {
-                    newId++;
-                    ProductFavorite favItem = new ProductFavorite();
-                    favItem.id = newId;
-                    favItem.product_avatar = response.product_avatar;
-                    favItem = inputProductFavorite(userId, favItem, response);
-                    totalArray.add(favItem);
-                }
+
+            for(ProductFavorite item: array) {
+                item.setUpdated_date();
             }
-            getRealm().copyToRealmOrUpdate(totalArray);
+
+            if (favorites != null)
+                favorites.deleteAllFromRealm();
+            getRealm().copyToRealmOrUpdate(array);
             getRealm().commitTransaction();
             return true;
         });
-    }
-
-    private ProductFavorite inputProductFavorite(String userId, ProductFavorite favItem, ProductFavoriteResponse item) {
-        favItem.variant_price = item.variant_price;
-        favItem.product_id = item.product_id;
-        favItem.product_name = item.product_name;
-        favItem.variant_stock_left = item.variant_stock_left;
-        favItem.user_id = userId;
-        favItem.variant_model_id = item.product_id + "_" + item.variant_id;
-        favItem.variant_id = item.variant_id;
-        favItem.variant_name = item.variant_name;
-        return favItem;
     }
 
     private ProductCart inputProductCart(String userId, ProductCart cartItem, ProductCartResponse item) {
@@ -815,7 +774,7 @@ public class AppDbHelper implements DbHelper {
 
 
     @Override
-    public Flowable<Boolean> addOrRemoveFavorite(int productId, int variantId, String userId) {
+    public Flowable<Boolean> addOrRemoveFavorite(long productId, String userId) {
         return Flowable.fromCallable(() -> {
             try {
                 Boolean value = false;
@@ -825,23 +784,17 @@ public class AppDbHelper implements DbHelper {
                         .equalTo("id", productId)
                         .findFirst();
 
-                ProductVariant variant = getRealm().where(ProductVariant.class)
-                        .equalTo("id", variantId)
-                        .equalTo("product_id", productId)
-                        .findFirst();
-
                 ProductFavorite favorite = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
-                        .equalTo("product_id", productId)
-                        .equalTo("variant_id", variantId).findFirst();
+                        .equalTo("id", productId).findFirst();
 
-                if (favorite == null || !favorite.isValid()) {
-                    favorite = new ProductFavorite(userId, product, variant);
-                    getRealm().copyToRealmOrUpdate(favorite);
-                    value = true;
-                } else {
+                if (favorite != null && favorite.isValid()) {
                     favorite.deleteFromRealm();
                     value = false;
+                } else {
+                    favorite = new ProductFavorite(userId, product);
+                    getRealm().copyToRealmOrUpdate(favorite);
+                    value = true;
                 }
                 getRealm().commitTransaction();
                 return value;
@@ -860,7 +813,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> isProductFavorite(String userId, int productId, int variantId) {
+    public Flowable<Boolean> isProductFavorite(String userId, long productId, int variantId) {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
@@ -927,7 +880,7 @@ public class AppDbHelper implements DbHelper {
         beginTransaction();
         Flowable<RealmResults<ProductFavorite>> favorites = getRealm().where(ProductFavorite.class)
                 .equalTo("user_id", userId)
-                .sort("id", Sort.DESCENDING)
+                .sort("updated_date", Sort.DESCENDING)
                 .findAll().asFlowable();
         getRealm().commitTransaction();
         return favorites;

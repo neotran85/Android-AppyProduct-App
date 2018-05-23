@@ -41,9 +41,9 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     abstract SearchToolbarViewHolder getSearchToolbarViewHolder();
 
-    abstract ArrayList<Integer> getFavoriteIds();
+    abstract ArrayList<Long> getFavoriteIds();
 
-    abstract void setFavoriteIds(ArrayList<Integer> listId);
+    abstract void setFavoriteIds(ArrayList<Long> listId);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +153,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     }
 
     @Override
-    public void getAllFavorites_Done(ArrayList<Integer> listId) {
+    public void getAllFavorites_Done(ArrayList<Long> listId) {
         setFavoriteIds(listId);
         fetchProducts();
     }

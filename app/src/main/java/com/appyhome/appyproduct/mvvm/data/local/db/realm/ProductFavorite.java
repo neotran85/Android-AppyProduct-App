@@ -2,8 +2,11 @@ package com.appyhome.appyproduct.mvvm.data.local.db.realm;
 
 import android.arch.persistence.room.ColumnInfo;
 
+import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -16,9 +19,14 @@ public class ProductFavorite extends RealmObject {
     public long id;
 
     @Expose
-    @SerializedName("product_id")
-    @ColumnInfo(name = "product_id")
-    public int product_id;
+    @SerializedName("seller_id")
+    @ColumnInfo(name = "seller_id")
+    public long seller_id;
+
+    @Expose
+    @SerializedName("category_id")
+    @ColumnInfo(name = "category_id")
+    public long category_id;
 
     @Expose
     @SerializedName("product_name")
@@ -26,34 +34,64 @@ public class ProductFavorite extends RealmObject {
     public String product_name;
 
     @Expose
+    @SerializedName("stock_location")
+    @ColumnInfo(name = "stock_location")
+    public String stock_location;
+
+    @Expose
     @SerializedName("product_avatar")
     @ColumnInfo(name = "product_avatar")
     public String product_avatar;
 
     @Expose
-    @SerializedName("variant_id")
-    @ColumnInfo(name = "variant_id")
-    public int variant_id;
+    @SerializedName("description")
+    @ColumnInfo(name = "description")
+    public String description;
 
     @Expose
-    @SerializedName("variant_price")
-    @ColumnInfo(name = "variant_price")
-    public float variant_price;
+    @SerializedName("country_manu")
+    @ColumnInfo(name = "country_manu")
+    public String country_manu;
 
     @Expose
-    @SerializedName("variant_stock_left")
-    @ColumnInfo(name = "variant_stock_left")
-    public float variant_stock_left;
+    @SerializedName("seller_name")
+    @ColumnInfo(name = "seller_name")
+    public String seller_name;
 
     @Expose
-    @SerializedName("variant_model_id")
-    @ColumnInfo(name = "variant_model_id")
-    public String variant_model_id;
+    @SerializedName("shipping_type_id")
+    @ColumnInfo(name = "shipping_type_id")
+    public long shipping_type_id;
 
     @Expose
-    @SerializedName("variant_name")
-    @ColumnInfo(name = "variant_name")
-    public String variant_name;
+    @SerializedName("pricing_scheme_id")
+    @ColumnInfo(name = "pricing_scheme_id")
+    public long pricing_scheme_id;
+
+    @Expose
+    @SerializedName("tax_class_id")
+    @ColumnInfo(name = "tax_class_id")
+    public long tax_class_id;
+
+    @Expose
+    @SerializedName("enabled")
+    @ColumnInfo(name = "enabled")
+    public int enabled;
+
+    @Expose
+    @SerializedName("sort_order")
+    @ColumnInfo(name = "sort_order")
+    public int sort_order;
+
+    @Expose
+    @SerializedName("lowest_price")
+    @ColumnInfo(name = "lowest_price")
+    public double lowest_price;
+
+    @Expose
+    @SerializedName("avatar_name")
+    @ColumnInfo(name = "avatar_name")
+    public String avatar_name;
 
     @Expose
     @SerializedName("user_id")
@@ -76,6 +114,36 @@ public class ProductFavorite extends RealmObject {
     public int rating_count;
 
     @Expose
+    @SerializedName("created_at")
+    @ColumnInfo(name = "created_at")
+    public String created_at;
+
+    @Expose
+    @SerializedName("updated_at")
+    @ColumnInfo(name = "updated_at")
+    public String updated_at;
+
+    @Expose
+    @SerializedName("updated_date")
+    @ColumnInfo(name = "updated_date")
+    public long updated_date;
+
+    @Expose
+    @SerializedName("warranty")
+    @ColumnInfo(name = "warranty")
+    public String warranty;
+
+    @Expose
+    @SerializedName("flag")
+    @ColumnInfo(name = "flag")
+    public String flag;
+
+    @Expose
+    @SerializedName("like")
+    @ColumnInfo(name = "like")
+    public long like;
+
+    @Expose
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;
@@ -83,37 +151,56 @@ public class ProductFavorite extends RealmObject {
     public ProductFavorite() {
     }
 
-    public ProductFavorite(String userId, ProductCached product, ProductVariant variant) {
+    public ProductFavorite(String userId, ProductCached product) {
         id = System.currentTimeMillis();
         user_id = userId;
         if (product != null) {
-            product_id = product.id;
+            id = product.id;
             product_name = product.product_name;
             more_info = product.more_info;
             favorite_count = product.favorite_count;
             rating = product.rate;
             rating_count = product.rate_count;
+            avatar_name = product.avatar_name;
+            seller_id = product.seller_id;
+            like = product.like;
+            flag = product.flag;
+            created_at = product.created_at;
+            shipping_type_id = product.shipping_type_id;
+            tax_class_id = product.tax_class_id;
+            sort_order = product.sort_order;
+            lowest_price = product.lowest_price;
+            description = product.description;
+            pricing_scheme_id = product.pricing_scheme_id;
+            category_id = product.category_id;
+            Date date = DataUtils.toDate(updated_at);
+            if (date != null) updated_date = date.getTime();
         }
-        if (variant != null) {
-            variant_id = variant.id;
-            product_avatar = variant.avatar;
-            variant_price = variant.price;
-            variant_name = variant.variant_name;
-            variant_model_id = variant.model_id;
-            variant_stock_left = variant.quantity;
-        }
+    }
+
+    public void setUpdated_date() {
+        Date date = DataUtils.toDate(updated_at);
+        if (date != null) updated_date = date.getTime();
     }
 
     public Product toProduct() {
         Product product = new Product();
-        product.id = product_id;
-        product.lowest_price = variant_price;
-        product.avatar_name = product_avatar;
+        product.id = id;
         product.product_name = product_name;
         product.more_info = more_info;
         product.favorite_count = favorite_count;
-        product.rate = rating;
-        product.rate_count = rating_count;
+        product.avatar_name = avatar_name;
+        product.seller_id = seller_id;
+        product.like = like;
+        product.flag = flag;
+        product.created_at = created_at;
+        product.shipping_type_id = shipping_type_id;
+        product.tax_class_id = tax_class_id;
+        product.sort_order = sort_order;
+        product.lowest_price = lowest_price;
+        product.description = description;
+        product.pricing_scheme_id = pricing_scheme_id;
+        product.category_id = category_id;
         return product;
     }
 }

@@ -13,7 +13,7 @@ public class ProductCartListViewModel extends BaseViewModel<ProductCartListNavig
 
     public ObservableField<Boolean> isCartEmpty = new ObservableField<>(true);
     public ObservableField<Boolean> isCheckedAll = new ObservableField<>(false);
-    public ObservableField<Float> totalCost = new ObservableField<>(0.0f);
+    public ObservableField<Double> totalCost = new ObservableField<>(0.0);
     private VerifyOrderViewModel mVerifyOrderViewModel;
     private FetchUserInfoViewModel mFetchUserInfoViewModel;
 

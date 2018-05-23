@@ -104,7 +104,7 @@ public interface ApiHelper {
 
     Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request);
 
-    Single<GetSellerResponse> fetchSellerInformation(int sellerId);
+    Single<GetSellerResponse> fetchSellerInformation(long sellerId);
 
     Single<GetShippingAddressResponse> fetchUserShippingAddress();
 

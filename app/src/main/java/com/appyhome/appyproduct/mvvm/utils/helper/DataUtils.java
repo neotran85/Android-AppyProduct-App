@@ -13,9 +13,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public final class DataUtils {
     public static boolean isTheSameDate(Calendar cal1, Calendar cal2) {
@@ -40,6 +43,17 @@ public final class DataUtils {
     public static boolean isEqualAndNotNull(String text1, String text2) {
         if (text1 == null || text2 == null) return false;
         return text1.equals(text2);
+    }
+
+    public static Date toDate(String date) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date startDate = null;
+        try {
+            startDate = df.parse(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return startDate;
     }
 
     public static String getStringSafely(Intent object, String key) {

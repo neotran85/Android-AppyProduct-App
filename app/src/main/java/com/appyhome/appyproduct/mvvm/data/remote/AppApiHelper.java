@@ -399,7 +399,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
+    public Single<GetSellerResponse> fetchSellerInformation(long sellerId) {
         return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_SELLER_GET)
                 .addHeaders(mApiHeader.getPublicApiHeader())
                 .addBodyParameter("seller_id", sellerId + "")

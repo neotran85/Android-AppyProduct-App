@@ -17,7 +17,7 @@ public interface ProductListNavigator {
 
     void showProducts(OrderedRealmCollection<Product> result);
 
-    void getAllFavorites_Done(ArrayList<Integer> listId);
+    void getAllFavorites_Done(ArrayList<Long> listId);
 
     void showEmptyProducts();
 

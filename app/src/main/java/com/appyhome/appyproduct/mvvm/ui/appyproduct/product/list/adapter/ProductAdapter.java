@@ -26,7 +26,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         this.mItems = null;
     }
 
-    public void addItems(OrderedRealmCollection<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
+    public void addItems(OrderedRealmCollection<Product> results, ProductItemNavigator navigator, ArrayList<Long> favoritesId) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         mViewModelEmpty = createEmptyViewModel(navigator);
@@ -49,9 +49,9 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         return mItems != null ? mItems.size() : 0;
     }
 
-    private boolean checkIfFavorite(int id, ArrayList<Integer> listId) {
+    private boolean checkIfFavorite(long id, ArrayList<Long> listId) {
         if (listId == null || listId.size() <= 0) return false;
-        for (Integer item : listId) {
+        for (Long item : listId) {
             if (item.equals(id))
                 return true;
         }
@@ -90,7 +90,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         }
     }
 
-    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, ArrayList<Integer> favoritesId) {
+    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, ArrayList<Long> favoritesId) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         mViewModelEmpty = createEmptyViewModel(navigator);

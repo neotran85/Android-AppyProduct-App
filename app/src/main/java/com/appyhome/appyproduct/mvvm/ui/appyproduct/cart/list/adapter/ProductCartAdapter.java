@@ -69,12 +69,12 @@ public class ProductCartAdapter extends SampleAdapter<ProductCart, ProductCartIt
     }
 
     public void updateTotalCost() {
-        float totalCost = 0;
+        double totalCost = 0;
         if (mItems != null && mItems.size() > 0) {
             for (BaseViewModel item : mItems) {
                 ProductCartItemViewModel cartItem = (ProductCartItemViewModel) item;
                 if (cartItem.checked.get()) {
-                    float price = Float.valueOf(cartItem.price.get());
+                    double price = Double.valueOf(cartItem.price.get());
                     int amount = Integer.valueOf(cartItem.amount.get());
                     totalCost = totalCost + (price * amount);
                 }

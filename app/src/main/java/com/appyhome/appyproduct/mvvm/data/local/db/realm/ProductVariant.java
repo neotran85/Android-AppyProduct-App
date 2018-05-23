@@ -59,7 +59,7 @@ public class ProductVariant extends RealmObject {
     @Expose
     @SerializedName("price")
     @ColumnInfo(name = "price")
-    public float price;
+    public double price;
 
     @Expose
     @SerializedName("stroke_price")
@@ -168,7 +168,7 @@ public class ProductVariant extends RealmObject {
     @Expose
     @SerializedName("seller_id")
     @ColumnInfo(name = "seller_id")
-    public int seller_id;
+    public long seller_id;
 
     @Expose
     @SerializedName("more_info")

@@ -53,7 +53,7 @@ public class ProductCart extends RealmObject {
     @Expose
     @SerializedName("price")
     @ColumnInfo(name = "price")
-    public float price;
+    public double price;
 
     @Expose
     @SerializedName("amount")

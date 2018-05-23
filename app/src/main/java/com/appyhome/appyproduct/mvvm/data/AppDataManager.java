@@ -549,8 +549,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addOrRemoveFavorite(int productId, int variantId, String userId) {
-        return mDbHelper.addOrRemoveFavorite(productId, variantId, userId);
+    public Flowable<Boolean> addOrRemoveFavorite(long productId, String userId) {
+        return mDbHelper.addOrRemoveFavorite(productId, userId);
     }
 
     @Override
@@ -559,7 +559,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> isProductFavorite(String userId, int productId, int variantId) {
+    public Flowable<Boolean> isProductFavorite(String userId, long productId, int variantId) {
         return mDbHelper.isProductFavorite(userId, productId, variantId);
     }
 
@@ -604,7 +604,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<ProductCached> getProductCachedById(int idProduct) {
+    public Flowable<ProductCached> getProductCachedById(long idProduct) {
         return mDbHelper.getProductCachedById(idProduct);
     }
 
@@ -684,7 +684,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array) {
+    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavorite> array) {
         return mDbHelper.syncAllProductFavorite(userId, array);
     }
 
@@ -759,7 +759,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<GetSellerResponse> fetchSellerInformation(int sellerId) {
+    public Single<GetSellerResponse> fetchSellerInformation(long sellerId) {
         return mApiHelper.fetchSellerInformation(sellerId);
     }
 

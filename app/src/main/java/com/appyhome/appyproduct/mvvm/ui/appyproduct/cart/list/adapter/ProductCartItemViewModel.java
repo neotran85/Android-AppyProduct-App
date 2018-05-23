@@ -19,7 +19,7 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
     public ObservableField<String> amount = new ObservableField<>("");
-    public ObservableField<Float> price = new ObservableField<>(0.0f);
+    public ObservableField<Double> price = new ObservableField<>(0.0);
     public ObservableField<String> variationName = new ObservableField<>("");
     public ObservableField<String> variantStock = new ObservableField<>("");
     public ObservableField<String> sellerName = new ObservableField<>("");

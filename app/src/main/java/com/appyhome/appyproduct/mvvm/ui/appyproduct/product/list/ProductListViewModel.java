@@ -245,10 +245,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(favorites -> {
                     // DONE GET
-                    ArrayList<Integer> arrayId = new ArrayList<>();
+                    ArrayList<Long> arrayId = new ArrayList<>();
                     if (favorites != null && favorites.size() > 0) {
                         for (ProductFavorite item : favorites) {
-                            arrayId.add(item.product_id);
+                            arrayId.add(item.id);
                         }
                     }
                     getNavigator().getAllFavorites_Done(arrayId);
@@ -311,11 +311,11 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private void sortResults(RealmList<Product> result) {
         SortOption sort = getCurrentSortOption();
         if (sort.equals(SortOption.PRICE_HIGHEST)) {
-            Collections.sort(result, (o1, o2) -> Math.round((o2.lowest_price - o1.lowest_price) * 100));
+            Collections.sort(result, (o1, o2) -> Double.compare(o2.lowest_price, o1.lowest_price));
             return;
         }
         if (sort.equals(SortOption.PRICE_LOWEST)) {
-            Collections.sort(result, (o1, o2) -> Math.round((o1.lowest_price - o2.lowest_price) * 100));
+            Collections.sort(result, (o1, o2) -> Double.compare(o1.lowest_price, o2.lowest_price));
             return;
         }
         if (sort.equals(SortOption.RATING)) {
@@ -337,7 +337,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
             return;
         }
         if (sort.equals(SortOption.POPULAR)) {
-            Collections.sort(result, (o1, o2) -> o1.like - o2.like);
+            Collections.sort(result, (o1, o2) -> Long.compare(o1.like, o2.like));
             return;
         }
     }

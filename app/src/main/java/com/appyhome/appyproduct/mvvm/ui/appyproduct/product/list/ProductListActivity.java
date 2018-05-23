@@ -45,7 +45,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Inject
     ProductAdapter mProductAdapter;
 
-    private ArrayList<Integer> mFavoritesId;
+    private ArrayList<Long> mFavoritesId;
 
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
@@ -171,12 +171,12 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     }
 
     @Override
-    ArrayList<Integer> getFavoriteIds() {
+    ArrayList<Long> getFavoriteIds() {
         return mFavoritesId;
     }
 
     @Override
-    void setFavoriteIds(ArrayList<Integer> listId) {
+    void setFavoriteIds(ArrayList<Long> listId) {
         mFavoritesId = listId;
     }
 

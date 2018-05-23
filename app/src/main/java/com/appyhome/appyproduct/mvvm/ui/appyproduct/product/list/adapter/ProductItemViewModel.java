@@ -27,8 +27,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> variantName = new ObservableField<>("");
     public ObservableField<String> warranty = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
-    public ObservableField<Float> lowestPrice = new ObservableField<>(0.0f);
-    public ObservableField<Float> price = new ObservableField<>(0.0f);
+    public ObservableField<Double> lowestPrice = new ObservableField<>(0.0);
+    public ObservableField<Double> price = new ObservableField<>(0.0);
     public ObservableField<Float> rate = new ObservableField<>(0f);
     public ObservableField<String> rateCount = new ObservableField<>("");
     public ObservableField<String> favoriteCount = new ObservableField<>("");
@@ -52,7 +52,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isRelatedProductsShowed = new ObservableField<>(true);
 
 
-    private int productId;
+    private long productId;
 
     private int variantId = -1;
 
@@ -63,16 +63,16 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         super(dataManager, schedulerProvider);
     }
 
-    public int getProductId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(int id) {
+    public void setProductId(long id) {
         productId = id;
     }
 
     public void updateProductFavorite(int position) {
-        getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(getProductId(), getVariantId(), getUserId())
+        getCompositeDisposable().add(getDataManager().addOrRemoveFavorite(getProductId(), getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
@@ -111,7 +111,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         checkIfFavorite(getUserId(), getProductId(), getVariantId());
     }
 
-    private void checkIfFavorite(String userId, int productId, int variantId) {
+    private void checkIfFavorite(String userId, long productId, int variantId) {
         getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId, variantId)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -133,7 +133,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    private void updateUserWishList(int pProductId, int pVariantId, boolean isFavorite) {
+    private void updateUserWishList(long pProductId, int pVariantId, boolean isFavorite) {
         getCompositeDisposable().add((isFavorite ? getDataManager().addUserWishList(new AddWishListRequest(pProductId, pVariantId))
                 : getDataManager().deleteUserWishList(new DeleteWishListRequest(pProductId, pVariantId)))
                 .subscribeOn(getSchedulerProvider().io())
@@ -191,7 +191,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     }, Crashlytics::logException));
     }
 
-    public void fetchSellerInformation(int sellerId) {
+    public void fetchSellerInformation(long sellerId) {
         getCompositeDisposable().add(getDataManager().fetchSellerInformation(sellerId)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())

@@ -79,13 +79,13 @@ public interface DbHelper {
 
     Flowable<Integer> getTotalCountProductCarts(String userId);
 
-    Flowable<Boolean> addOrRemoveFavorite(int productId, int variantId, String userId);
+    Flowable<Boolean> addOrRemoveFavorite(long productId, String userId);
 
     Flowable<Boolean> emptyFavorites(String userId);
 
     Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId);
 
-    Flowable<Boolean> isProductFavorite(String userId, int productId, int variantId);
+    Flowable<Boolean> isProductFavorite(String userId, long productId, int variantId);
 
     Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
 
@@ -97,7 +97,7 @@ public interface DbHelper {
 
     Flowable<Boolean> addProductsCached(RealmList<ProductCached> list);
 
-    Flowable<ProductCached> getProductCachedById(int idProduct);
+    Flowable<ProductCached> getProductCachedById(long idProduct);
 
     Flowable<ProductCart> getProductCart(String userId, long productId, long variantId);
 
@@ -123,7 +123,7 @@ public interface DbHelper {
 
     Flowable<Boolean> syncAllShippingAddresses(String userId, RealmList<AppyAddress> addresses);
 
-    Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavoriteResponse> array);
+    Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavorite> array);
 
     Flowable<ProductVariant> getProductVariantById(String variantModelId);
 

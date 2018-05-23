@@ -123,7 +123,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mPreviousNavigator = mViewModel.getNavigator();
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, false, false, getKeywordString());
         getCartPosition();
-        int productId = getProductIdByIntent();
+        long productId = getProductIdByIntent();
         if (productId > 0) {
             getViewModel().setProductId(productId);
             getViewModel().getProductCachedById();
@@ -184,8 +184,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         return "";
     }
 
-    private int getProductIdByIntent() {
-        return getIntent().getIntExtra("product_id", 0);
+    private long getProductIdByIntent() {
+        return getIntent().getLongExtra("product_id", 0);
     }
 
     private void getCartPosition() {
