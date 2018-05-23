@@ -442,6 +442,7 @@ public class AppDbHelper implements DbHelper {
                     .findAll();
 
             for(ProductFavorite item: array) {
+                item.user_id = userId;
                 item.setUpdated_date();
             }
 
@@ -813,16 +814,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> isProductFavorite(String userId, long productId, int variantId) {
+    public Flowable<Boolean> isProductFavorite(String userId, long productId) {
         return Flowable.fromCallable(() -> {
             try {
                 beginTransaction();
                 RealmQuery<ProductFavorite> query = getRealm().where(ProductFavorite.class)
                         .equalTo("user_id", userId)
-                        .equalTo("product_id", productId);
-                if (variantId > -1) {
-                    query = query.equalTo("variant_id", variantId);
-                }
+                        .equalTo("id", productId);
                 ProductFavorite favorite = query.findFirst();
                 boolean isFavorite = (favorite != null && favorite.isValid());
                 getRealm().commitTransaction();

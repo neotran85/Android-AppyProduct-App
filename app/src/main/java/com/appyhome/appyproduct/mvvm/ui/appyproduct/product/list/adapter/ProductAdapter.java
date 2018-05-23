@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductListEmptyBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;

@@ -85,7 +85,7 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId);
 
-    Flowable<Boolean> isProductFavorite(String userId, long productId, int variantId);
+    Flowable<Boolean> isProductFavorite(String userId, long productId);
 
     Flowable<ProductFilter> saveProductFilter(String userId, String shippingFrom, String discount, float rating, String priceMin, String priceMax);
 

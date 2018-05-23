@@ -559,8 +559,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> isProductFavorite(String userId, long productId, int variantId) {
-        return mDbHelper.isProductFavorite(userId, productId, variantId);
+    public Flowable<Boolean> isProductFavorite(String userId, long productId) {
+        return mDbHelper.isProductFavorite(userId, productId);
     }
 
     @Override

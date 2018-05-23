@@ -34,7 +34,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> favoriteCount = new ObservableField<>("");
     public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<Boolean> isProductFavorite = new ObservableField<>(false);
-    public ObservableField<Boolean> isVariantFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isEditVariantShowed = new ObservableField<>(false);
     public ObservableField<Boolean> isSmall = new ObservableField<>(false);
     public ObservableField<Float> smallestSize = new ObservableField<>(0.0f);
@@ -77,9 +76,10 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(value -> {
                     updateUserWishList(getProductId(), getVariantId(), value);
-                    isVariantFavorite.set(value);
+                    isProductFavorite.set(value);
                     int count = Integer.valueOf(favoriteCount.get());
                     count = value ? count + 1 : count - 1;
+                    count = count > 0 ? count : 0;
                     favoriteCount.set(count + "");
                     getNavigator().notifyFavoriteChanged(position, value);
                 }, Crashlytics::logException));
@@ -104,20 +104,19 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     }
 
     public void updateIfProductFavorite() {
-        checkIfFavorite(getUserId(), getProductId(), -1);
+        checkIfFavorite(getUserId(), getProductId());
     }
 
     public void updateIfVariantFavorite() {
-        checkIfFavorite(getUserId(), getProductId(), getVariantId());
+        checkIfFavorite(getUserId(), getProductId());
     }
 
-    private void checkIfFavorite(String userId, long productId, int variantId) {
-        getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId, variantId)
+    private void checkIfFavorite(String userId, long productId) {
+        getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(isLiked -> {
-                    if (variantId == -1) isProductFavorite.set(isLiked);
-                    else isVariantFavorite.set(isLiked);
+                    isProductFavorite.set(isLiked);
                 }, Crashlytics::logException));
     }
 
@@ -128,7 +127,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .subscribe(productCached -> {
                     if (productCached != null && productCached.isValid()) {
                         inputValue(productCached.convertToProduct());
-                        checkIfFavorite(getUserId(), getProductId(), getVariantId());
+                        checkIfFavorite(getUserId(), getProductId());
                     }
                 }, Crashlytics::logException));
     }
