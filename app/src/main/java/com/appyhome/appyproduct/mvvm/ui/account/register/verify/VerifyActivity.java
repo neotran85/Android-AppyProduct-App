@@ -59,14 +59,16 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
     public void sendVerifyingCode() {
         String verifyCode = mBinder.etVerifyingCode.getText().toString();
         if (verifyCode == null || verifyCode.length() <= 0) {
-            AlertManager.getInstance(this).showQuickToast(getString(R.string.pls_enter_the_code));
+            if (!isFinishing())
+                AlertManager.getInstance(this).showQuickToast(getString(R.string.pls_enter_the_code));
             return;
         }
         if (isNetworkConnected()) {
             hideKeyboard();
             getViewModel().verifyTrue(verifyCode);
         } else {
-            AlertManager.getInstance(this).showQuickToast(getString(R.string.error_network_not_connected));
+            if (!isFinishing())
+                AlertManager.getInstance(this).showQuickToast(getString(R.string.error_network_not_connected));
         }
     }
 
@@ -94,16 +96,18 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
 
     @Override
     public void doAfterRegisterSucceeded() {
-        AlertManager.getInstance(this).showOKDialog("", getString(R.string.phone_activated), (dialogInterface, i) -> {
-            AlertManager.getInstance(this).closeDialog();
-            setResult(RESULT_OK);
-            finish();
-        });
+        if (!isFinishing())
+            AlertManager.getInstance(this).showOKDialog("", getString(R.string.phone_activated), (dialogInterface, i) -> {
+                AlertManager.getInstance(this).closeDialog();
+                setResult(RESULT_OK);
+                finish();
+            });
     }
 
     @Override
     public void showAlert(String str) {
-        AlertManager.getInstance(this).showLongToast(str);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(str);
     }
 
     private void showTextInputError(TextInputEditText edt) {
@@ -116,7 +120,8 @@ public class VerifyActivity extends BaseActivity<ActivityVerifyBinding, VerifyVi
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
     }
 
     private void showError(String text) {

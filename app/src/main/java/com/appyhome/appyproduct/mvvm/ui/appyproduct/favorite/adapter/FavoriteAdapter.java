@@ -3,18 +3,24 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteEmptyBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemEmptyViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class FavoriteAdapter extends ProductAdapter {
+public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemNavigator> {
+
+    private ProductItemNavigator mNavigator;
+    private FavoriteItemEmptyViewModel mViewModelEmpty;
 
     public void removedFavorite(int position, boolean isFavorite) {
         if (!isFavorite) {
@@ -29,17 +35,18 @@ public class FavoriteAdapter extends ProductAdapter {
         return mItems.size();
     }
 
-    public void addItems(ProductItemNavigator navigator, RealmResults<ProductFavorite> results) {
-        mItems = new ArrayList<>();
-        mNavigator = navigator;
-        mViewModelEmpty = createEmptyViewModel(navigator);
-        if (results != null) {
-            for (ProductFavorite item : results) {
-                ProductItemViewModel itemViewModel = createViewModel(item.toProduct(), navigator, true);
-                itemViewModel.variantName.set(item.product_name);
-                mItems.add(itemViewModel);
-            }
-        }
+    protected FavoriteItemEmptyViewModel createEmptyViewModel(ProductItemNavigator navigator) {
+        BaseViewModel viewModel = navigator.getMainViewModel();
+        FavoriteItemEmptyViewModel viewModelEmpty = new FavoriteItemEmptyViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
+        return viewModelEmpty;
+    }
+
+    protected FavoriteItemViewModel createViewModel(ProductFavorite favorite, ProductItemNavigator navigator) {
+        BaseViewModel viewModel = navigator.getMainViewModel();
+        FavoriteItemViewModel itemViewModel = new FavoriteItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
+        itemViewModel.setNavigator(navigator);
+        itemViewModel.inputValue(favorite);
+        return itemViewModel;
     }
 
     @Override
@@ -58,6 +65,43 @@ public class FavoriteAdapter extends ProductAdapter {
         public void onBind(int position) {
 
         }
+    }
+
+    public int getItemsSize() {
+        return mItems != null ? mItems.size() : 0;
+    }
+
+    @Override
+    public FavoriteItemViewHolder getContentHolder(ViewGroup parent) {
+        ViewItemProductFavoriteBinding itemViewBinding = ViewItemProductFavoriteBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new FavoriteItemViewHolder(itemViewBinding, mNavigator, mItems);
+    }
+
+    @Override
+    public void addItems(RealmResults<ProductFavorite> results, ProductItemNavigator navigator) {
+        mItems = new ArrayList<>();
+        mNavigator = navigator;
+        mViewModelEmpty = createEmptyViewModel(navigator);
+        if (results != null) {
+            for (ProductFavorite item : results) {
+                FavoriteItemViewModel itemViewModel = createViewModel(item, navigator);
+                itemViewModel.variantName.set(item.product_name);
+                mItems.add(itemViewModel);
+            }
+        }
+    }
+
+    @Override
+    protected void recycle() {
+        mItems.clear();
+        mItems = null;
+        mViewModelEmpty = null;
+    }
+
+    @Override
+    protected int getEmptyItemLayout() {
+        return R.layout.view_item_sample_empty;
     }
 
 }

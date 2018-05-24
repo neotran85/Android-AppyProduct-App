@@ -69,7 +69,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
     }
 
     @Override
@@ -210,14 +211,16 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, Regi
 
     @Override
     public void openPrivacyPolicy() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.register_privacy_policy),
-                ApiUrlConfig.URL_PRIVACY_POLICY);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.register_privacy_policy),
+                    ApiUrlConfig.URL_PRIVACY_POLICY);
     }
 
     @Override
     public void openTermsOfUsage() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.register_terms),
-                ApiUrlConfig.URL_TERMS_CONDITIONS);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.register_terms),
+                    ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
 
     @Override

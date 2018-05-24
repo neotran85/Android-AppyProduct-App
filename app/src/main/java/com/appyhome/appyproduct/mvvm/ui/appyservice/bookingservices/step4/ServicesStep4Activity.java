@@ -82,11 +82,13 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                AlertManager.getInstance(this).showLongToast(getString(R.string.payment_advice));
+                if (!isFinishing())
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.payment_advice));
                 mBinder.svMainView.fullScroll(View.FOCUS_DOWN);
                 break;
             case R.id.rlVisaPayment:
-                AlertManager.getInstance(this).showComingSoonDialog();
+                if (!isFinishing())
+                    AlertManager.getInstance(this).showComingSoonDialog();
                 break;
             case R.id.rlBankPayment:
                 openBankPaymentActivity();
@@ -132,10 +134,12 @@ public class ServicesStep4Activity extends BaseActivity<ActivityServicesBookingS
         if (requestCode == MOLPayActivity.MOLPayXDK && resultCode == RESULT_OK) {
             boolean success = getViewModel().setTxn_IDPayment(data);
             if (success) {
-                AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
+                if (!isFinishing())
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.payment_success));
                 goToStep5();
             } else {
-                AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
+                if (!isFinishing())
+                    AlertManager.getInstance(this).showLongToast(getString(R.string.payment_error_something));
             }
         }
 

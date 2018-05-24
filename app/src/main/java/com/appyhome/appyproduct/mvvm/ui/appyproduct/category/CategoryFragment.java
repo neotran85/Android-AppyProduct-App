@@ -87,7 +87,8 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(getActivity()).showLongToast(message);
+        if (!getActivity().isFinishing())
+            AlertManager.getInstance(getActivity()).showLongToast(message);
     }
 
     @Override
@@ -113,7 +114,8 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(getActivity()).showErrorToast(getString(R.string.error_unknown));
+        if (!getActivity().isFinishing())
+            AlertManager.getInstance(getActivity()).showErrorToast(getString(R.string.error_unknown));
     }
 
     @Override

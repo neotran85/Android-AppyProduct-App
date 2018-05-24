@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,7 +13,6 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
@@ -78,8 +76,9 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         mBinder = getViewDataBinding();
         mBinder.setNavigator(this);
         mBinder.setViewModel(mViewModel);
+        ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
-        getViewModel().getAllFavorites();
+        //getViewModel().getAllFavorites();
     }
 
     @Override
@@ -116,19 +115,21 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         } else {
             ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         }
-        mFavoriteAdapter.addItems(this, result);
+        mFavoriteAdapter.addItems(result, this);
         mFavoriteAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
-        Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel, mFavoriteAdapter);
-        startActivity(intent);
+        //Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel, mFavoriteAdapter);
+        //startActivity(intent);
     }
 
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
-        vm.updateProductFavorite(mFavoriteAdapter.indexOf(vm));
+        int pos = mFavoriteAdapter.indexOf(vm);
+        if (pos >= 0)
+            vm.updateProductFavorite(pos);
     }
 
     @Override
@@ -148,14 +149,16 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void emptyFavorites() {
-        AlertManager.getInstance(getActivity()).showConfirmationDialog("", getString(R.string.sure_to_empty_wishlist), (dialog, which) -> {
-            getViewModel().emptyUserWishList();
-        });
+        if (!getActivity().isFinishing())
+            AlertManager.getInstance(getActivity()).showConfirmationDialog("", getString(R.string.sure_to_empty_wishlist), (dialog, which) -> {
+                getViewModel().emptyUserWishList();
+            });
     }
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(getActivity()).showLongToast(message, R.style.AppyToast_Favorite);
+        if (!getActivity().isFinishing())
+            AlertManager.getInstance(getActivity()).showLongToast(message, R.style.AppyToast_Favorite);
     }
 
     @Override

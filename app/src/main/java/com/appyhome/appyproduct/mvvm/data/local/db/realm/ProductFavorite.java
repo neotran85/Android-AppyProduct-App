@@ -173,8 +173,10 @@ public class ProductFavorite extends RealmObject {
             description = product.description;
             pricing_scheme_id = product.pricing_scheme_id;
             category_id = product.category_id;
-            Date date = DataUtils.toDate(updated_at);
-            if (date != null) updated_date = date.getTime();
+            if (product.updated_at != null && product.updated_at.length() > 0) {
+                Date date = DataUtils.toDate(updated_at);
+                if (date != null) updated_date = date.getTime();
+            }
         }
     }
 

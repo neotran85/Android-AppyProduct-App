@@ -19,7 +19,6 @@ import android.view.ViewTreeObserver;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
@@ -308,13 +307,15 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showQuickToast(message, R.style.AppyToast_Cart);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showQuickToast(message, R.style.AppyToast_Cart);
     }
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
-        AlertManager.getInstance(this).showQuickToast(isFavorite ?
-                getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showQuickToast(isFavorite ?
+                    getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
     }
 
     @Override

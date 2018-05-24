@@ -67,6 +67,7 @@ public class ProductTrackingActivity extends BaseActivity<ActivityProductTrackin
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 }

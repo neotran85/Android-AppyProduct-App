@@ -103,7 +103,8 @@ public class ServicesStep5Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(getString(R.string.error_network_general));
         this.finish();
     }
 

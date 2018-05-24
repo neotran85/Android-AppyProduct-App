@@ -61,7 +61,8 @@ public class ServicesStep3Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 
     @Override

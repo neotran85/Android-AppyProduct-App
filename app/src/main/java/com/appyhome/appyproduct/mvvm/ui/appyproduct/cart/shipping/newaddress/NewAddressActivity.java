@@ -136,6 +136,7 @@ public class NewAddressActivity extends BaseActivity<ActivityProductShippingNewB
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 }

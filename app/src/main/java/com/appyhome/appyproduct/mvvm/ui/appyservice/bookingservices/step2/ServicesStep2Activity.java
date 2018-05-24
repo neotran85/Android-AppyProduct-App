@@ -147,7 +147,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
                     mExtraServicesView.getSelectedStringValue());
             goToStep3();
         } else {
-            AlertManager.getInstance(this).showLongToast(getString(R.string.step2_warning_date_time));
+            if (!isFinishing())
+                AlertManager.getInstance(this).showLongToast(getString(R.string.step2_warning_date_time));
         }
     }
 
@@ -165,7 +166,8 @@ public class ServicesStep2Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void onCancel(DialogInterface dialogInterface) {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.please_select_the_exact_time));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(getString(R.string.please_select_the_exact_time));
     }
 
     private void openTimePicker(Calendar selected) {

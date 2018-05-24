@@ -101,7 +101,8 @@ public class ShippingAddressActivity extends BaseActivity<ActivityProductShippin
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
     }
 
     @Override

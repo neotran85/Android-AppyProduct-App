@@ -125,7 +125,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
         if (selected) {
             goToStep2();
             updateServiceOrderInfo();
-        } else
+        } else if (!isFinishing())
             AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
     }
 
@@ -138,7 +138,7 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
             case R.id.btSeeDetailService:
                 if (getOrderUserInput().getSelectedService() != null)
                     viewDetailService();
-                else
+                else if (!isFinishing())
                     AlertManager.getInstance(this).showLongToast(getString(R.string.please_choose_service));
                 break;
             case R.id.btOurFAQ:
@@ -231,29 +231,34 @@ public class ServicesStep1Activity extends BaseActivity<ActivityServicesBookingS
 
     @Override
     public void viewOurFAQ() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.booking_ordering_faq),
-                ApiUrlConfig.URL_OUR_FAQ);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.booking_ordering_faq),
+                    ApiUrlConfig.URL_OUR_FAQ);
     }
 
     @Override
     public void viewOurTANDC() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.our_booking_tc),
-                ApiUrlConfig.URL_TERMS_CONDITIONS);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.our_booking_tc),
+                    ApiUrlConfig.URL_TERMS_CONDITIONS);
     }
 
     @Override
     public void viewSuppliesMoreInformation() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.cleaning_supplies),
-                ApiUrlConfig.URL_CLEANING_SUPPLIES);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.cleaning_supplies),
+                    ApiUrlConfig.URL_CLEANING_SUPPLIES);
     }
 
     public void viewAirConTypeMoreInformation() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.aircon_type_service),
-                ApiUrlConfig.URL_AIR_CON_TYPE_INFO);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.aircon_type_service),
+                    ApiUrlConfig.URL_AIR_CON_TYPE_INFO);
     }
 
     public void viewAirConSizeMoreInformation() {
-        AlertManager.getInstance(this).openInformationBrowser(getString(R.string.aircon_size),
-                ApiUrlConfig.URL_AIR_CON_SIZE_INFO);
+        if (!isFinishing())
+            AlertManager.getInstance(this).openInformationBrowser(getString(R.string.aircon_size),
+                    ApiUrlConfig.URL_AIR_CON_SIZE_INFO);
     }
 }

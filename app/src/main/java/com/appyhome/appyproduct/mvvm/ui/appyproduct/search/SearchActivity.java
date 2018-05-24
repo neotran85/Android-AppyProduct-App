@@ -276,7 +276,8 @@ public class SearchActivity extends BaseActivity<ActivityProductSearchBinding, S
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 
     private View createProductTopics(ProductTopic item) {

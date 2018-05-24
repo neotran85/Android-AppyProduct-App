@@ -51,7 +51,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<Boolean> isRelatedProductsShowed = new ObservableField<>(true);
 
 
-    private long productId;
+    protected long productId;
 
     private int variantId = -1;
 
@@ -90,7 +90,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
         isProductFavorite.set(isAllFavorited);
     }
 
-    private void inputValue(Product product) {
+    protected void inputValue(Product product) {
         title.set(product.product_name);
         sellerName.set(product.seller_name);
         imageURL.set(product.avatar_name);

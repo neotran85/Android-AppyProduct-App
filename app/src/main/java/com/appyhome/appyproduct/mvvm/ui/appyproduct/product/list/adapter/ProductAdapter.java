@@ -1,14 +1,13 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter;
 
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductListEmptyBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
@@ -73,7 +72,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
 
     protected ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isAllFavorited) {
         BaseViewModel viewModel = navigator.getMainViewModel();
-        ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
+        FavoriteItemViewModel itemViewModel = new FavoriteItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.setNavigator(navigator);
         itemViewModel.inputValue(product, isAllFavorited);
         return itemViewModel;
@@ -125,7 +124,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     public ProductItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductBinding itemViewBinding = ViewItemProductBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ProductItemViewHolder(itemViewBinding);
+        return new ProductItemViewHolder(itemViewBinding, mNavigator, mItems);
     }
 
     public class EmptyProductItemViewHolder extends BaseViewHolder {
@@ -148,24 +147,5 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         }
     }
 
-    public class ProductItemViewHolder extends BaseViewHolder {
 
-        private ViewItemProductBinding mBinding;
-
-        private ProductItemViewHolder(ViewItemProductBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
-            mBinding.setNavigator(mNavigator);
-        }
-
-        public ViewItemProductBinding getBinding() {
-            return mBinding;
-        }
-
-        @Override
-        public void onBind(int position) {
-            ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
-            mBinding.setViewModel(viewModel);
-        }
-    }
 }

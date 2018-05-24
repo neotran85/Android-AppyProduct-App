@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.account.login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +51,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 
     @Override
@@ -85,8 +85,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openForgetPassword() {
         if (isNetworkConnected()) {
-            AlertManager.getInstance(this).openInformationBrowser("Forget Password",
-                    ApiUrlConfig.URL_FORGET_PASSWORD);
+            if (!isFinishing())
+                AlertManager.getInstance(this).openInformationBrowser("Forget Password",
+                        ApiUrlConfig.URL_FORGET_PASSWORD);
         }
     }
 
@@ -113,7 +114,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showErrorToast(getString(R.string.error_network_general));
     }
 
     @Override
@@ -188,16 +190,18 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     private void showSignUpDialog() {
-        AlertManager.getInstance(this).showConfirmationDialog(getString(R.string.title_login_error),
-                getString(R.string.suggestion_sign_up),
-                (dialog, which) -> openSignUpActivity());
+        if (!isFinishing())
+            AlertManager.getInstance(this).showConfirmationDialog(getString(R.string.title_login_error),
+                    getString(R.string.suggestion_sign_up),
+                    (dialog, which) -> openSignUpActivity());
     }
 
     private void finishActivityResult() {
         closeLoading();
         Intent intent = getIntent();
         setResult(RESULT_OK, intent);
-        AlertManager.getInstance(this).showLongToast(getString(R.string.login_success), R.style.AppyToast_Account);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(getString(R.string.login_success), R.style.AppyToast_Account);
         finish();
     }
 

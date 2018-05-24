@@ -65,6 +65,7 @@ public class VisaPaymentActivity extends BaseActivity<ActivityVisaPaymentBinding
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_VisaCard);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_VisaCard);
     }
 }

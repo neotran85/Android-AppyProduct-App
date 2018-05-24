@@ -11,8 +11,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCar
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping.ShippingAddressActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -65,7 +63,8 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void clearCarts() {
-        AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), (dialog, which) -> emptyProductCarts());
+        if (!isFinishing())
+            AlertManager.getInstance(this).showConfirmationDialog("", getString(R.string.warning_empty_cart), (dialog, which) -> emptyProductCarts());
     }
 
     @Override
@@ -75,12 +74,14 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_unknown));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showErrorToast(getString(R.string.error_unknown));
     }
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message, R.style.AppyToast_Cart);
     }
 
     @Override

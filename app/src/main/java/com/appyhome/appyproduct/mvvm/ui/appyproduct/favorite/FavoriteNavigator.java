@@ -7,6 +7,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserIn
 import io.realm.RealmResults;
 
 public interface FavoriteNavigator extends FetchUserInfoNavigator {
+
     void showProducts(RealmResults<ProductFavorite> result);
 
     void emptyFavorites();

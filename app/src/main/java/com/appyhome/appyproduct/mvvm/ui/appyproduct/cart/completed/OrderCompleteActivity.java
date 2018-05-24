@@ -30,6 +30,7 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
     public void onBackPressed() {
         returnHomeScreen();
     }
+
     @Override
     public int getLayoutId() {
         return mLayoutId;
@@ -79,7 +80,8 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 
     @Override

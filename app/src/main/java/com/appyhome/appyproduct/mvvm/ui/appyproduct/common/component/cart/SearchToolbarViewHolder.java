@@ -70,8 +70,9 @@ public class SearchToolbarViewHolder extends BaseViewHolder {
                 Intent intent = ProductCartListActivity.getStartIntent(mActivity);
                 mActivity.startActivity(intent);
             } else {
-                AlertManager.getInstance(mActivity).showLongToast(mActivity.getString(R.string.toast_your_cart_is_empty),
-                        R.style.AppyToast_Cart);
+                if (!mActivity.isFinishing())
+                    AlertManager.getInstance(mActivity).showLongToast(mActivity.getString(R.string.toast_your_cart_is_empty),
+                            R.style.AppyToast_Cart);
             }
         }
     }

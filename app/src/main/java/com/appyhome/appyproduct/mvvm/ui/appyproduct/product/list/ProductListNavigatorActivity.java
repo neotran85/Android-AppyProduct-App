@@ -93,8 +93,9 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
-        AlertManager.getInstance(this).showQuickToast(isFavorite ?
-                getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showQuickToast(isFavorite ?
+                    getString(R.string.added_wishlist) : getString(R.string.removed_wishlist), R.style.AppyToast_Favorite);
         getProductAdapter().notifyItemChanged(position);
     }
 
@@ -197,12 +198,14 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        AlertManager.getInstance(this).showErrorToast(getString(R.string.error_unknown));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showErrorToast(getString(R.string.error_unknown));
     }
 
     @Override
     public void showAlert(String message) {
-        AlertManager.getInstance(this).showLongToast(message);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(message);
     }
 
     @Override
@@ -235,7 +238,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
         // DO NOTHING, ONLY DO WHEN IT'S ON THE WISH LIST
-        if(getProductAdapter() != null) {
+        if (getProductAdapter() != null) {
             vm.updateProductFavorite(getProductAdapter().indexOf(vm));
         }
     }

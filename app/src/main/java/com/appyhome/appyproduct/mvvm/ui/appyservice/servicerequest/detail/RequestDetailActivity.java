@@ -152,17 +152,20 @@ public class RequestDetailActivity extends BaseActivity<ActivityRequestDetailBin
                         allowUserEditDetail();
                         return;
                     } else {
-                        AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_error_not_matched));
+                        if (!isFinishing())
+                            AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_error_not_matched));
                         return;
                     }
                 }
             }
         }
-        AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_error_general));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_error_general));
     }
 
     private void allowUserEditDetail() {
-        AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_success));
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLongToast(getString(R.string.barcode_success));
         openEditDetailActivity();
     }
 }

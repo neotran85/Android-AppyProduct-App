@@ -65,7 +65,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 openBookingSteps(ServiceOrderUserInput.SERVICE_HOME_CLEANING);
                 break;
             default: // Coming soon...
-                AlertManager.getInstance(getActivity()).showComingSoonDialog();
+                if (!getActivity().isFinishing())
+                    AlertManager.getInstance(getActivity()).showComingSoonDialog();
         }
     }
 
