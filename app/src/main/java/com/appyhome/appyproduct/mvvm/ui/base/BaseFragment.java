@@ -153,6 +153,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         }
     }
 
+    public boolean isActivityRunning() {
+        return getActivity() != null && !getActivity().isFinishing();
+    }
+
     public void showFragment(BaseFragment fragment, String tag, int idContainer) {
         this.getChildFragmentManager()
                 .beginTransaction()

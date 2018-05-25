@@ -89,7 +89,7 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
             float min = Float.valueOf(mBinder.etPriceMin.getText().toString());
             float max = Float.valueOf(mBinder.etPriceMax.getText().toString());
             if (min > max) {
-                if (!getActivity().isFinishing())
+                if (isActivityRunning())
                     AlertManager.getInstance(getActivity()).showOKDialog("",
                             "Please input the price min < max", null);
                 return;

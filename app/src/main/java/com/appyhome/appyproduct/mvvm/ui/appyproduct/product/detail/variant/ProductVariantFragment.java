@@ -56,7 +56,7 @@ public class ProductVariantFragment extends BaseFragment<FragmentProductVariantB
     private String getSentVariantModelId() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            return bundle.getString("sent_variant_id", "0");
+            return bundle.getString("sent_variant_id", "");
         }
         return "";
     }

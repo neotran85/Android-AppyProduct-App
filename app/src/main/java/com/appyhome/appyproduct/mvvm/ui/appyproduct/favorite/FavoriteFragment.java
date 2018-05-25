@@ -1,13 +1,18 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
+import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -17,11 +22,14 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
@@ -35,7 +43,9 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     public static final String TAG = "FavoriteFragment";
     private ProductCartItemViewModel mProductCartItemViewModel;
     private EditVariantFragment mEditVariantFragment;
-
+    private SearchToolbarViewHolder mSearchToolbarViewHolder;
+    private Point mCartPosition = new Point();
+    private Point mAddToCartPosition = new Point();
     private SnackBarCallBack mSnackBarCallBack;
 
     @Inject
@@ -64,6 +74,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void onResume() {
         super.onResume();
+        mSearchToolbarViewHolder.onBind(0);
         getViewModel().fetchUserData();
     }
 
@@ -81,6 +92,10 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
         mProductCartItemViewModel = new ProductCartItemViewModel(getViewModel().getDataManager(), getViewModel().getSchedulerProvider());
+        if (getActivity() instanceof BaseActivity) {
+            mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) getActivity(), mBinder.llCartContainer, false, false, "");
+        }
+        getCartPosition();
     }
 
     @Override
@@ -141,7 +156,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         showSnackBar(getString(R.string.removed_wishlist), "UNDO", v -> {
             if (mFavoriteAdapter != null) {
                 mFavoriteAdapter.add(vm, pos);
-                if(mSnackBarCallBack != null)
+                if (mSnackBarCallBack != null)
                     mSnackBarCallBack.setData(null, -1);
             }
         }, mSnackBarCallBack);
@@ -164,7 +179,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void emptyFavorites() {
-        if (!getActivity().isFinishing())
+        if (isActivityRunning())
             AlertManager.getInstance(getActivity()).showConfirmationDialog("", getString(R.string.sure_to_empty_wishlist), (dialog, which) -> {
                 getViewModel().emptyUserWishList();
             });
@@ -173,12 +188,19 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void addToCart(ProductItemViewModel viewModel) {
         getViewModel().isEditVariantShowed.set(true);
-        showEditProductVariantFragment(viewModel.getProductId());
+        mProductCartItemViewModel.title.set(viewModel.title.get());
+        mProductCartItemViewModel.sellerName.set(viewModel.sellerName.get());
+        mProductCartItemViewModel.setProductId(viewModel.getProductId());
+        mProductCartItemViewModel.imageURL.set(viewModel.imageURL.get());
+        mProductCartItemViewModel.amount.set("1");
+        mProductCartItemViewModel.price.set(viewModel.price.get());
+        mEditVariantFragment = EditVariantFragment.newInstance(mProductCartItemViewModel, this, -1);
+        showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditProductVariant);
     }
 
     @Override
     public void showAlert(String message) {
-        if (!getActivity().isFinishing())
+        if (isActivityRunning())
             AlertManager.getInstance(getActivity()).showLongToast(message, R.style.AppyToast_Favorite);
     }
 
@@ -208,7 +230,37 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void saveProductCartItem_Done() {
+        animateProductToCart();
+        closeEditVariantFragment();
+    }
 
+    private void getCartPosition() {
+        mBinder.llCartContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
+                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
+                mBinder.llCartContainer.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                View cartIcon = mBinder.llCartContainer.findViewById(R.id.ivCart);
+                int[] cartLocations = new int[2];
+                cartIcon.getLocationOnScreen(cartLocations);
+                mCartPosition.x = cartLocations[0];
+                mCartPosition.y = cartLocations[1];
+                mAddToCartPosition.y = AppConstants.SCREEN_HEIGHT;
+                mAddToCartPosition.x = AppConstants.SCREEN_WIDTH / 2 - sizeInPixels;
+            }
+        });
+    }
+
+    private void animateProductToCart() {
+        mBinder.ivProductBox.setVisibility(View.VISIBLE);
+        int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
+        AppAnimator.animateMoving(2000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mBinder.ivProductBox.setVisibility(View.GONE);
+                mSearchToolbarViewHolder.onBind(0);
+            }
+        });
     }
 
     @Override
@@ -219,10 +271,6 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     protected class SnackBarCallBack extends Snackbar.Callback {
         BaseViewModel viewModel;
         int position;
-
-        public SnackBarCallBack() {
-            super();
-        }
 
         public SnackBarCallBack(BaseViewModel vm, int pos) {
             super();
@@ -241,18 +289,12 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
         @Override
         public void onDismissed(Snackbar transientBottomBar, @DismissEvent int event) {
-            switch (event) {
-                case Snackbar.Callback.DISMISS_EVENT_SWIPE:
-                case Snackbar.Callback.DISMISS_EVENT_MANUAL:
-                case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
-                case Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE:
-                    if (viewModel instanceof ProductItemViewModel) {
-                        ProductItemViewModel vm = (ProductItemViewModel) viewModel;
-                        vm.updateProductFavorite(position);
-                    }
-                    break;
+            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                if (viewModel instanceof ProductItemViewModel) {
+                    ProductItemViewModel vm = (ProductItemViewModel) viewModel;
+                    vm.updateProductFavorite(position);
+                }
             }
-
         }
     }
 }

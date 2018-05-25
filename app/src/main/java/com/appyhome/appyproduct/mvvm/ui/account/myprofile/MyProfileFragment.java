@@ -98,7 +98,7 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
 
     @Override
     public void handleErrorService(Throwable throwable) {
-        if (!getActivity().isFinishing())
+        if (isActivityRunning())
             AlertManager.getInstance(getBaseActivity()).showLongToast(getString(R.string.error_network_general));
     }
 
@@ -180,11 +180,11 @@ public class MyProfileFragment extends BaseFragment<FragmentMyProfileBinding, My
     }
 
     public void showLoading() {
-        if (!getActivity().isFinishing()) AlertManager.getInstance(getActivity()).showLoading();
+        if (isActivityRunning()) AlertManager.getInstance(getActivity()).showLoading();
     }
 
     public void closeLoading() {
-        if (!getActivity().isFinishing())
+        if (isActivityRunning())
             AlertManager.getInstance(getActivity()).closeLoading();
     }
 }

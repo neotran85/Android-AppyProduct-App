@@ -87,7 +87,7 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
 
     @Override
     public void showAlert(String message) {
-        if (!getActivity().isFinishing())
+        if (isActivityRunning())
             AlertManager.getInstance(getActivity()).showLongToast(message);
     }
 
