@@ -416,6 +416,7 @@ public class AppDbHelper implements DbHelper {
                     .equalTo("user_id", userId)
                     .equalTo("order_id", 0)
                     .findAll();
+
             if (carts != null && carts.isValid() && carts.size() > 0) {
                 // REMOVED CART ITEMS NOT EXIST IN THE SERVER
                 for (ProductCart item : carts) {

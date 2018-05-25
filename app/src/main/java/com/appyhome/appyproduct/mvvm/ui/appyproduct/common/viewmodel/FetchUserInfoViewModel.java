@@ -3,10 +3,8 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -52,11 +50,13 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                                 LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
                                 Gson gson = new Gson();
                                 for (String key : linkedTreeMap.keySet()) {
-                                    ArrayList array = linkedTreeMap.get(key);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
-                                        ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
-                                        arrayList.add(item);
+                                    if (!key.equals("padding")) {
+                                        ArrayList array = linkedTreeMap.get(key);
+                                        for (int i = 0; i < array.size(); i++) {
+                                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                                            ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
+                                            arrayList.add(item);
+                                        }
                                     }
                                 }
                                 updateAllProductCarts(arrayList);
@@ -225,11 +225,13 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                                 LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
                                 Gson gson = new Gson();
                                 for (String key : linkedTreeMap.keySet()) {
-                                    ArrayList array = linkedTreeMap.get(key);
-                                    for (int i = 0; i < array.size(); i++) {
-                                        JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
-                                        ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
-                                        arrayList.add(item);
+                                    if (!key.equals("padding")) {
+                                        ArrayList array = linkedTreeMap.get(key);
+                                        for (int i = 0; i < array.size(); i++) {
+                                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                                            ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
+                                            arrayList.add(item);
+                                        }
                                     }
                                 }
                                 updateAllProductCartsNow(arrayList);

@@ -57,7 +57,7 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
         mProductCartAdapter.setMainViewModel(mViewModel);
         mBinder.cartRecyclerView.setAdapter(mProductCartAdapter);
         setUpEmptyRecyclerViewList(mBinder.cartRecyclerView);
-        getViewModel().getAllProductCarts();
+        //getViewModel().getAllProductCarts();
         getViewModel().fetchShippingAddresses();
         getViewModel().fetchAndSyncCartsServer();
     }
@@ -75,11 +75,6 @@ public class ProductCartListActivity extends ProductCartListNavigatorActivity
     @Override
     public void setEditVariantFragment(EditVariantFragment fragment) {
         mEditVariantFragment = fragment;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void setUpEmptyRecyclerViewList(RecyclerView rv) {
