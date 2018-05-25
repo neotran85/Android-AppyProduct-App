@@ -19,11 +19,13 @@ import io.realm.RealmResults;
 public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemNavigator> {
 
     private ProductItemNavigator mNavigator;
-    private FavoriteItemEmptyViewModel mViewModelEmpty;
 
     public void add(BaseViewModel viewModel, int position) {
         if (mItems != null && mItems.size() >= 0) {
-            mItems.add(position, viewModel);
+            if (position <= 0) {
+                mItems.add(0, viewModel);
+            } else
+                mItems.add(position, viewModel);
             notifyItemInserted(position);
         }
     }
@@ -31,8 +33,10 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
     public void remove(BaseViewModel viewModel) {
         if (mItems != null && mItems.size() > 0) {
             int position = indexOf(viewModel);
-            mItems.remove(position);
-            notifyItemRemoved(position);
+            if (position >= 0 && position < mItems.size()) {
+                mItems.remove(position);
+                notifyItemRemoved(position);
+            }
         }
     }
 
@@ -87,7 +91,6 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
     public void addItems(RealmResults<ProductFavorite> results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
-        mViewModelEmpty = createEmptyViewModel(navigator);
         if (results != null) {
             for (ProductFavorite item : results) {
                 FavoriteItemViewModel itemViewModel = createViewModel(item, navigator);
@@ -101,7 +104,6 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
     protected void recycle() {
         mItems.clear();
         mItems = null;
-        mViewModelEmpty = null;
     }
 
     @Override
