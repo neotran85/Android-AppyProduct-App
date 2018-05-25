@@ -7,7 +7,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteEmptyBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemEmptyViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
@@ -22,12 +21,18 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
     private ProductItemNavigator mNavigator;
     private FavoriteItemEmptyViewModel mViewModelEmpty;
 
-    public void removedFavorite(int position, boolean isFavorite) {
-        if (!isFavorite) {
-            if (mItems != null && mItems.size() > 0) {
-                mItems.remove(position);
-                notifyItemRemoved(position);
-            }
+    public void add(BaseViewModel viewModel, int position) {
+        if (mItems != null && mItems.size() >= 0) {
+            mItems.add(position, viewModel);
+            notifyItemInserted(position);
+        }
+    }
+
+    public void remove(BaseViewModel viewModel) {
+        if (mItems != null && mItems.size() > 0) {
+            int position = indexOf(viewModel);
+            mItems.remove(position);
+            notifyItemRemoved(position);
         }
     }
 

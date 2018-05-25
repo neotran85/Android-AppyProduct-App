@@ -16,5 +16,7 @@ public interface ProductItemNavigator {
 
     void onFavoriteClick(ProductItemViewModel viewModel);
 
+    void addToCart(ProductItemViewModel viewModel);
+
     void addedToCartCompleted(int amount, boolean isBuyNow);
 }

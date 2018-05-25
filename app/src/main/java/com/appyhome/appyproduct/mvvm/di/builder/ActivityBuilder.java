@@ -155,6 +155,7 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
-            NotificationFragmentProvider.class, RequestFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class})
+            NotificationFragmentProvider.class, RequestFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class,
+            EditVariantFragmentProvider.class, ProductVariantFragmentProvider.class})
     abstract MainActivity bindMainActivity();
 }

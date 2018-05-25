@@ -16,7 +16,7 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -56,15 +56,15 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:onClick="@{(view) -> navigator.emptyFavorites()}"
-                    android:visibility="@{!viewModel.isFavoriteEmpty, default=visible}"
                     android:id="@+id/ivTrash"
                     android:layout_width="48dp"
-                    android:padding="18dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/icon_trash" />
+                    android:onClick="@{(view) -> navigator.emptyFavorites()}"
+                    android:padding="18dp"
+                    android:src="@mipmap/icon_trash"
+                    android:visibility="@{!viewModel.isFavoriteEmpty, default=visible}" />
 
             </RelativeLayout>
 
@@ -72,18 +72,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
-                android:background="@color/light_gray"></View>
+                android:background="@color/light_gray" />
 
         </RelativeLayout>
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/productsRecyclerView"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/title_bar_height"
             android:clipToPadding="false"
             android:paddingTop="4dp" />
-    </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_opacity_50"
+            android:visibility="@{viewModel.isEditVariantShowed, default=gone}">
+            <LinearLayout
+                android:id="@+id/llEditProductVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical" />
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>

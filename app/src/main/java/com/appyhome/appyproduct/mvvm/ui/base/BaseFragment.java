@@ -6,7 +6,9 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,10 +142,33 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
                 .remove(this).commit();
     }
 
+    public void closeFragment(String tag) {
+        FragmentManager manager = getChildFragmentManager();
+        if (manager != null) {
+            Fragment fragment = manager.findFragmentByTag(tag);
+            if (fragment != null) {
+                manager.beginTransaction()
+                        .remove(fragment).commit();
+            }
+        }
+    }
+
+    public void showFragment(BaseFragment fragment, String tag, int idContainer) {
+        this.getChildFragmentManager()
+                .beginTransaction()
+                .addToBackStack(tag)
+                .replace(idContainer, fragment, tag)
+                .commit();
+    }
+
     public interface Callback {
 
         void onFragmentAttached();
 
         void onFragmentDetached(String tag);
+    }
+
+    public void showSnackBar(String text, String actionText, View.OnClickListener actionListener, Snackbar.Callback callback) {
+        Snackbar.make(getView(), text, Snackbar.LENGTH_LONG).addCallback(callback).setAction(actionText, actionListener).show();
     }
 }

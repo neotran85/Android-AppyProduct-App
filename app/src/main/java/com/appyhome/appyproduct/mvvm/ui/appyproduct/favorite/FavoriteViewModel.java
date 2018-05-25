@@ -13,6 +13,7 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> totalCount = new ObservableField<>("");
     public ObservableField<Boolean> isFavoriteEmpty = new ObservableField<>(true);
+    public ObservableField<Boolean> isEditVariantShowed = new ObservableField<>(false);
 
     private FetchUserInfoViewModel mFetchUserInfoViewModel;
 

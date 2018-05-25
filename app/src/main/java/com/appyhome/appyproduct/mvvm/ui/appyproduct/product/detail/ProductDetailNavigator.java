@@ -9,7 +9,7 @@ public interface ProductDetailNavigator extends ProductItemNavigator {
 
     void gotoCart();
 
-    void addToCart();
+    void addToCart(ProductItemViewModel data);
 
     void updateCartCount();
 

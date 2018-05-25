@@ -17,6 +17,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -185,6 +186,11 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Override
     public BaseViewModel getMainViewModel() {
         return mViewModel;
+    }
+
+    @Override
+    public void addToCart(ProductItemViewModel viewModel) {
+        // DO NOTHING
     }
 
     private String getSearchTopics() {

@@ -2,6 +2,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +11,14 @@ import android.view.View;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
@@ -25,9 +31,11 @@ import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
-public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, FavoriteViewModel> implements FavoriteNavigator, ProductItemNavigator {
+public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, FavoriteViewModel> implements FavoriteNavigator, ProductItemNavigator, EditVariantNavigator {
 
     public static final String TAG = "FavoriteFragment";
+    private ProductCartItemViewModel mProductCartItemViewModel;
+    private EditVariantFragment mEditVariantFragment;
 
     @Inject
     FavoriteViewModel mViewModel;
@@ -49,14 +57,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void notifyFavoriteChanged(int position, boolean isFavorite) {
-        showAlert(isFavorite ? getString(R.string.added_wishlist) : getString(R.string.removed_wishlist));
-        mFavoriteAdapter.removedFavorite(position, isFavorite);
-        int count = mFavoriteAdapter.getFavoriteCount();
-        getViewModel().updateFavoriteCount(count);
-        getViewModel().isFavoriteEmpty.set(count == 0);
-        if (count == 0) {
-            ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
-        }
+
     }
 
     @Override
@@ -78,7 +79,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         mBinder.setViewModel(mViewModel);
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mFavoriteAdapter);
-        //getViewModel().getAllFavorites();
+        mProductCartItemViewModel = new ProductCartItemViewModel(getViewModel().getDataManager(), getViewModel().getSchedulerProvider());
     }
 
     @Override
@@ -128,8 +129,19 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
         int pos = mFavoriteAdapter.indexOf(vm);
-        if (pos >= 0)
-            vm.updateProductFavorite(pos);
+        mFavoriteAdapter.remove(vm);
+        int count = mFavoriteAdapter.getFavoriteCount();
+        getViewModel().updateFavoriteCount(count);
+        getViewModel().isFavoriteEmpty.set(count == 0);
+        if (count == 0) {
+            ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
+        }
+
+        showSnackBar(getString(R.string.removed_wishlist), "UNDO", v -> {
+            if (mFavoriteAdapter != null) {
+                mFavoriteAdapter.add(vm, pos);
+            }
+        }, new SnackBarCallBack(vm, pos));
     }
 
     @Override
@@ -156,6 +168,12 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
+    public void addToCart(ProductItemViewModel viewModel) {
+        getViewModel().isEditVariantShowed.set(true);
+        showEditProductVariantFragment(viewModel.getProductId());
+    }
+
+    @Override
     public void showAlert(String message) {
         if (!getActivity().isFinishing())
             AlertManager.getInstance(getActivity()).showLongToast(message, R.style.AppyToast_Favorite);
@@ -170,5 +188,51 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void onFetchUserInfo_Failed() {
         Crashlytics.log("onFetchUserInfo_Failed");
+    }
+
+    private void showEditProductVariantFragment(long productId) {
+        mProductCartItemViewModel.setProductId(productId);
+        mEditVariantFragment = EditVariantFragment.newInstance(mProductCartItemViewModel, this, -1);
+        showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditProductVariant);
+    }
+
+    @Override
+    public void closeEditVariantFragment() {
+        getViewModel().isEditVariantShowed.set(false);
+        closeFragment(EditVariantFragment.TAG);
+        mEditVariantFragment = null;
+    }
+
+    @Override
+    public void saveProductCartItem_Done() {
+
+    }
+
+    @Override
+    public void onEditVariantSelected(ProductVariant variant) {
+
+    }
+
+    protected class SnackBarCallBack extends Snackbar.Callback {
+        BaseViewModel viewModel;
+        int position;
+
+        public SnackBarCallBack(BaseViewModel vm, int pos) {
+            position = pos;
+            viewModel = vm;
+        }
+
+        @Override
+        public void onShown(Snackbar sb) {
+            // Stub implementation to make API check happy.
+        }
+
+        @Override
+        public void onDismissed(Snackbar transientBottomBar, @DismissEvent int event) {
+            if (viewModel instanceof ProductItemViewModel) {
+                ProductItemViewModel vm = (ProductItemViewModel) viewModel;
+                vm.updateProductFavorite(position);
+            }
+        }
     }
 }

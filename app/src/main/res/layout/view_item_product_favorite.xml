@@ -20,8 +20,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_product_in_list"
         android:layout_marginEnd="@dimen/padding_product_in_list"
+        android:layout_marginStart="@dimen/padding_product_in_list"
         android:onClick="@{(view) -> navigator.onItemClick(viewModel)}">
 
         <LinearLayout
@@ -30,21 +30,20 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.CardView
-                app:cardUseCompatPadding="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:layout_marginStart="@dimen/padding_product_in_list"
                 android:layout_marginEnd="@dimen/padding_product_in_list"
+                android:layout_marginStart="@dimen/padding_product_in_list"
+                android:layout_marginTop="2dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="3dp">
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="6dp">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/ivThumbnail"
@@ -61,11 +60,11 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
                             android:id="@+id/tvTitleProduct"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="4dp"
                             android:lines="2"
                             android:text="@{viewModel.title}"
@@ -73,10 +72,10 @@
                             android:textSize="11sp" />
 
                         <LinearLayout
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="3dp"
                             android:orientation="horizontal">
 
@@ -101,28 +100,28 @@
                             <TextView
                                 android:id="@+id/tvPrice"
                                 fontPath="fonts/TitilliumWeb-Bold.ttf"
+                                price="@{viewModel.lowestPrice}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                price="@{viewModel.lowestPrice}"
                                 android:textColor="@color/red_price"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
                         <RelativeLayout
-                            android:onClick="@{(view)->navigator.onFavoriteClick(viewModel)}"
                             android:layout_width="match_parent"
                             android:layout_height="32dp"
                             android:clickable="true"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:onClick="@{(view)->navigator.onFavoriteClick(viewModel)}">
 
                             <LinearLayout
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
                                 android:id="@+id/ibAddFavorite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="32dp"
-                                android:gravity="center"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="10dp"
                                 android:clickable="false"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <ImageButton
@@ -178,6 +177,58 @@
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:onClick="@{(view)->navigator.addToCart(viewModel)}"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#fbb040"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:background="@mipmap/favorite_add_to_cart" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Add To Cart"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#a7a9ac"
+                            android:gravity="center"
+                            android:onClick="@{(view)->navigator.onFavoriteClick(viewModel)}"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="16dp"
+                                android:background="@mipmap/favorite_remove" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Remove"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
@@ -186,8 +237,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/llItemView"
-            android:adjustViewBounds="true"
             android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
             android:background="@mipmap/icon_limit_offer"
             android:visibility="@{viewModel.isDiscount, default=gone}" />
     </RelativeLayout>

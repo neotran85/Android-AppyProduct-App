@@ -252,7 +252,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
 
 
     @Override
-    public void addToCart() {
+    public void addToCart(ProductItemViewModel viewModel) {
         isBuyNow = false;
         showEditProductVariantFragment();
     }

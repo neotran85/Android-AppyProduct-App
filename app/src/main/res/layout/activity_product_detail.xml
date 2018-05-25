@@ -466,7 +466,7 @@
                         android:layout_marginEnd="100dp"
                         android:background="@mipmap/add_to_cart"
                         android:gravity="center"
-                        android:onClick="@{(view) -> navigator.addToCart()}"
+                        android:onClick="@{(view) -> navigator.addToCart(viewModel)}"
                         android:paddingEnd="26dp"
                         android:text="@string/button_add_to_cart"
                         android:textColor="@color/white"
@@ -637,7 +637,8 @@
                 android:background="@color/black_opacity_50"
                 android:visibility="@{viewModel.isEditVariantShowed, default=gone}">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:id="@+id/llEditProductVariant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
