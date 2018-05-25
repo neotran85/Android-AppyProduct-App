@@ -146,7 +146,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     public void onFavoriteClick(ProductItemViewModel vm) {
         int pos = mFavoriteAdapter.indexOf(vm);
         mFavoriteAdapter.remove(vm);
-        int count = mFavoriteAdapter.getFavoriteCount();
+        int count = mFavoriteAdapter.getItemSize();
         getViewModel().updateFavoriteCount(count);
         getViewModel().isFavoriteEmpty.set(count == 0);
         if (count == 0) {
@@ -155,6 +155,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         mSnackBarCallBack = new SnackBarCallBack(vm, pos);
         showSnackBar(getString(R.string.removed_wishlist), "UNDO", v -> {
             if (mFavoriteAdapter != null) {
+                if(mFavoriteAdapter.getItemSize() == 0)
+                    setUpRecyclerViewGrid(mBinder.productsRecyclerView);
                 mFavoriteAdapter.add(vm, pos);
                 if (mSnackBarCallBack != null)
                     mSnackBarCallBack.setData(null, -1);
@@ -213,12 +215,6 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Override
     public void onFetchUserInfo_Failed() {
         Crashlytics.log("onFetchUserInfo_Failed");
-    }
-
-    private void showEditProductVariantFragment(long productId) {
-        mProductCartItemViewModel.setProductId(productId);
-        mEditVariantFragment = EditVariantFragment.newInstance(mProductCartItemViewModel, this, -1);
-        showFragment(mEditVariantFragment, EditVariantFragment.TAG, R.id.llEditProductVariant);
     }
 
     @Override

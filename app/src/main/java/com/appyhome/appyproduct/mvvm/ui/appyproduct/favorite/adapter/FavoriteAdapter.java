@@ -36,8 +36,8 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
         }
     }
 
-    public int getFavoriteCount() {
-        return mItems.size();
+    public int getItemSize() {
+        return mItems != null ? mItems.size() : 0;
     }
 
     protected FavoriteItemEmptyViewModel createEmptyViewModel(ProductItemNavigator navigator) {
