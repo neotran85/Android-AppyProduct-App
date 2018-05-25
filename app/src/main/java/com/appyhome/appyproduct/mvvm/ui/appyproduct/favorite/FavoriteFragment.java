@@ -18,7 +18,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCar
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
@@ -36,6 +35,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     public static final String TAG = "FavoriteFragment";
     private ProductCartItemViewModel mProductCartItemViewModel;
     private EditVariantFragment mEditVariantFragment;
+
+    private SnackBarCallBack mSnackBarCallBack;
 
     @Inject
     FavoriteViewModel mViewModel;
@@ -136,12 +137,14 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         if (count == 0) {
             ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         }
-
+        mSnackBarCallBack = new SnackBarCallBack(vm, pos);
         showSnackBar(getString(R.string.removed_wishlist), "UNDO", v -> {
             if (mFavoriteAdapter != null) {
                 mFavoriteAdapter.add(vm, pos);
+                if(mSnackBarCallBack != null)
+                    mSnackBarCallBack.setData(null, -1);
             }
-        }, new SnackBarCallBack(vm, pos));
+        }, mSnackBarCallBack);
     }
 
     @Override
@@ -217,7 +220,16 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         BaseViewModel viewModel;
         int position;
 
+        public SnackBarCallBack() {
+            super();
+        }
+
         public SnackBarCallBack(BaseViewModel vm, int pos) {
+            super();
+            setData(vm, pos);
+        }
+
+        public void setData(BaseViewModel vm, int pos) {
             position = pos;
             viewModel = vm;
         }
@@ -229,10 +241,18 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
         @Override
         public void onDismissed(Snackbar transientBottomBar, @DismissEvent int event) {
-            if (viewModel instanceof ProductItemViewModel) {
-                ProductItemViewModel vm = (ProductItemViewModel) viewModel;
-                vm.updateProductFavorite(position);
+            switch (event) {
+                case Snackbar.Callback.DISMISS_EVENT_SWIPE:
+                case Snackbar.Callback.DISMISS_EVENT_MANUAL:
+                case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
+                case Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE:
+                    if (viewModel instanceof ProductItemViewModel) {
+                        ProductItemViewModel vm = (ProductItemViewModel) viewModel;
+                        vm.updateProductFavorite(position);
+                    }
+                    break;
             }
+
         }
     }
 }
