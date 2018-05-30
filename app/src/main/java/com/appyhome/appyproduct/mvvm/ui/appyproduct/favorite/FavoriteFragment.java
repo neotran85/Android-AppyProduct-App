@@ -3,6 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVarian
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteAdapter;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
@@ -75,7 +77,6 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     public void onResume() {
         super.onResume();
         mSearchToolbarViewHolder.onBind(0);
-        getViewModel().fetchUserData();
     }
 
     @Override
@@ -96,6 +97,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
             mSearchToolbarViewHolder = new SearchToolbarViewHolder((BaseActivity) getActivity(), mBinder.llCartContainer, false, false, "");
         }
         getCartPosition();
+        getViewModel().fetchUserData();
     }
 
     @Override
@@ -138,8 +140,9 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
-        //Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel, mFavoriteAdapter);
-        //startActivity(intent);
+        Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel, mFavoriteAdapter);
+        intent.putExtra("product_id", viewModel.getProductId());
+        startActivity(intent);
     }
 
     @Override

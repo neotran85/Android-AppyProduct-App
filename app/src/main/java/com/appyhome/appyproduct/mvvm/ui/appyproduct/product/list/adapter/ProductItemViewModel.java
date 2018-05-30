@@ -16,6 +16,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
@@ -46,8 +47,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> shippingFee = new ObservableField<>("");
     public ObservableField<String> shippingLocation = new ObservableField<>("");
     public ObservableField<String> sellerAvatar = new ObservableField<>("");
-    public ObservableField<ProductAdapter> relatedAdapter = new ObservableField<>(new ProductAdapter());
-    public ObservableField<ProductAdapter> productsAdapter = new ObservableField<>(new ProductAdapter());
+    public ObservableField<SampleAdapter> relatedAdapter = new ObservableField<>(new ProductAdapter());
+    public ObservableField<SampleAdapter> productsAdapter = new ObservableField<>(new ProductAdapter());
     public ObservableField<Boolean> isRelatedProductsShowed = new ObservableField<>(true);
 
 

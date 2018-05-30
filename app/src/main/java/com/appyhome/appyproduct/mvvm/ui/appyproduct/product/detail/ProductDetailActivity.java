@@ -33,6 +33,7 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -56,12 +57,16 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener, EditVariantNavigator {
 
     private final int REQUEST_SELECT_LOCATION = 10;
+
     @Inject
     public ProductItemViewModel mViewModel;
+
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
     @Inject
-    ProductAdapter mRelatedProductAdapter;
+    SampleAdapter mRelatedProductAdapter;
+
     ActivityProductDetailBinding mBinder;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
     private EditVariantFragment mEditVariantFragment;
@@ -80,7 +85,7 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private Handler mHandler = null;
     private int mHeightTopBar = 0;
 
-    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, ProductAdapter adapter) {
+    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, SampleAdapter adapter) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
         ProductDetailActivityModule.relatedProductAdapter = adapter;
         Intent intent = new Intent(context, ProductDetailActivity.class);

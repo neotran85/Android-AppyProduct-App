@@ -7,6 +7,7 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.variant.ProductVariantViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
+import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
@@ -16,7 +17,7 @@ import dagger.Provides;
 public class ProductDetailActivityModule {
 
     public static ProductItemViewModel clickedViewModel;
-    public static ProductAdapter relatedProductAdapter;
+    public static SampleAdapter relatedProductAdapter;
 
     @Provides
     ProductItemViewModel provideProductItemViewModel(DataManager dataManager,
@@ -33,7 +34,7 @@ public class ProductDetailActivityModule {
     }
 
     @Provides
-    ProductAdapter provideRelatedProductAdapter() {
+    SampleAdapter provideRelatedProductAdapter() {
         return relatedProductAdapter;
     }
 }
