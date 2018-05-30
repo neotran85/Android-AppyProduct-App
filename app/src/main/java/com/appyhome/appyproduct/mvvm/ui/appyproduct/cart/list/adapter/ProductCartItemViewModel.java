@@ -149,10 +149,9 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         variantStock.set("(Stock: " + productCart.variant_stock + ")");
         setVariantStockNumber(productCart.variant_stock);
         setVariantId(productCart.variant_id);
+        amount.set(productCart.amount + "");
         if (productCart.amount > productCart.variant_stock) {
             alertText.set("Sorry, unable to add more than" + " " + productCart.variant_stock);
-            amount.set(productCart.variant_stock + "");
-            updateProductCartItemAmount(productCart.variant_stock);
         } else
             amount.set(productCart.amount + "");
     }
@@ -170,16 +169,6 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
     public void updateProductCartItemChecked(boolean isCheck) {
         checked.set(isCheck);
         updateProductCartItemChecked();
-    }
-
-    private void updateProductCartItemAmount(int amountForced) {
-        getCompositeDisposable().add(getDataManager().updateProductCartItem(getProductCartId(), checked.get(),
-                amountForced, getVariantModelId())
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(productCart -> {
-                    // DO NOTHING
-                }, Crashlytics::logException));
     }
 
     public ProductCartItemViewModel duplicate() {

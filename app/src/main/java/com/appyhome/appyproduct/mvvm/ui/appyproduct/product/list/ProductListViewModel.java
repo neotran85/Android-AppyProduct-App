@@ -137,8 +137,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    private void processResultOfFetchProductsByObject(JSONObject jsonResult, String categoryIds, String keyword) {
-        getDataManager().setCachedResponse("fetchProductsByObject", categoryIds + ":" + keyword, jsonResult.toString());
+    private void processResultOfFetchProductsByObject(JSONObject jsonResult, String categoryIds, String keyword, String sortType) {
+        String key = categoryIds + ":" + keyword + ":" + sortType;
+        getDataManager().setCachedResponse("fetchProductsByObject", key, jsonResult.toString());
         try {
             if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
                 Gson gson = new Gson();
@@ -146,8 +147,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
                 if (response.message != null && response.message.size() > 0) {
                     // ONLY SORT IF NO KEYWORDS
-                    if (keyword == null || keyword.length() == 0)
-                        sortResults(response.message);
+                    //if (keyword == null || keyword.length() == 0)
+                    //sortResults(response.message);
                     addProductsToDatabase(response.message);
                     return;
                 }
@@ -159,23 +160,23 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword) {
-        String cachedResult = getDataManager().getCachedResponse("fetchProductsByObject", categoryIds + ":" + keyword);
+    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword, String sortType) {
+        String cachedResult = getDataManager().getCachedResponse("fetchProductsByObject", categoryIds + ":" + keyword + ":" + sortType);
         if (cachedResult != null && cachedResult.length() > 0) {
             try {
                 JSONObject jsonResult = new JSONObject(cachedResult);
-                processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword);
+                processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
         } else return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), getCurrentSortType()))
+            getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), sortType))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
                     .subscribe(jsonResult -> {
                         // 200 OK
-                        processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword);
+                        processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
                     }, throwable -> {
                         showEmptyProducts();
                         throwable.printStackTrace();
@@ -184,7 +185,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         };
     }
 
-    private String getCurrentSortType() {
+    public String getCurrentSortType() {
         try {
             String json = getDataManager().getProductsSortCurrent(getUserId());
             return new JSONObject(json).getString("value");
@@ -194,10 +195,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         return "";
     }
 
-    public void fetchProductsByCommand(String categoryIds, String keywords) {
+    public void fetchProductsByCommand(String categoryIds, String keywords, String sortType) {
         if (isOnline()) {
-            ObservableOnSubscribe<ProductListResponse> resultProcessing = null;
-            resultProcessing = fetchProductsByObject(categoryIds, keywords);
+            ObservableOnSubscribe<ProductListResponse> resultProcessing = fetchProductsByObject(categoryIds, keywords, sortType);
             if (resultProcessing != null) {
                 Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
                         .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();

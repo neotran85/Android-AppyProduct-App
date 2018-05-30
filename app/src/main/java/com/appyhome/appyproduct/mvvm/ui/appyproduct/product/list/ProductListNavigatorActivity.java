@@ -30,6 +30,8 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import java.util.ArrayList;
 
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 
@@ -151,12 +153,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void updateCartCount() {
         getSearchToolbarViewHolder().onBind(0);
-    }
-
-    @Override
-    public void getAllFavorites_Done(ArrayList<Long> listId) {
-        setFavoriteIds(listId);
-        fetchProducts();
     }
 
     @Override

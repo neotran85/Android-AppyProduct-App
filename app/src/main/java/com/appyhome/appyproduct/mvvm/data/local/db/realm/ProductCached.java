@@ -5,20 +5,22 @@ import android.arch.persistence.room.ColumnInfo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class ProductCached extends RealmObject {
+public class ProductCached extends RealmObject implements Serializable {
     @Expose
     @SerializedName("id")
     @ColumnInfo(name = "id")
     @PrimaryKey
-    public int id;
+    public long id;
 
     @Expose
     @SerializedName("seller_id")
     @ColumnInfo(name = "seller_id")
-    public int seller_id;
+    public long seller_id;
 
     @Expose
     @SerializedName("seller_name")
@@ -48,7 +50,7 @@ public class ProductCached extends RealmObject {
     @Expose
     @SerializedName("category_id")
     @ColumnInfo(name = "category_id")
-    public int category_id;
+    public long category_id;
 
     @Expose
     @SerializedName("product_name")
@@ -73,17 +75,17 @@ public class ProductCached extends RealmObject {
     @Expose
     @SerializedName("shipping_type_id")
     @ColumnInfo(name = "shipping_type_id")
-    public int shipping_type_id;
+    public long shipping_type_id;
 
     @Expose
     @SerializedName("pricing_scheme_id")
     @ColumnInfo(name = "pricing_scheme_id")
-    public int pricing_scheme_id;
+    public long pricing_scheme_id;
 
     @Expose
     @SerializedName("tax_class_id")
     @ColumnInfo(name = "tax_class_id")
-    public int tax_class_id;
+    public long tax_class_id;
 
     @Expose
     @SerializedName("enabled")
@@ -118,12 +120,12 @@ public class ProductCached extends RealmObject {
     @Expose
     @SerializedName("lowest_price")
     @ColumnInfo(name = "lowest_price")
-    public float lowest_price;
+    public double lowest_price;
 
     @Expose
     @SerializedName("like")
     @ColumnInfo(name = "like")
-    public int like;
+    public long like;
 
     @Expose
     @SerializedName("time_db_added")

@@ -124,7 +124,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     public ProductItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductBinding itemViewBinding = ViewItemProductBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ProductItemViewHolder(itemViewBinding, mNavigator, mItems);
+        return new ProductItemViewHolder(itemViewBinding, mNavigator);
     }
 
     public class EmptyProductItemViewHolder extends BaseViewHolder {
@@ -147,5 +147,22 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         }
     }
 
+    public class ProductItemViewHolder extends BaseViewHolder {
+        private ViewItemProductBinding mBinding;
+        public ProductItemViewHolder(ViewItemProductBinding binding, ProductItemNavigator navigator) {
+            super(binding.getRoot());
+            mBinding = binding;
+            mBinding.setNavigator(navigator);
+        }
 
+        public ViewItemProductBinding getBinding() {
+            return mBinding;
+        }
+
+        @Override
+        public void onBind(int position) {
+            ProductItemViewModel viewModel = (ProductItemViewModel) mItems.get(position);
+            mBinding.setViewModel(viewModel);
+        }
+    }
 }

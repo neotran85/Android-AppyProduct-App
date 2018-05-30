@@ -449,6 +449,14 @@ public class AppDbHelper implements DbHelper {
 
             if (favorites != null)
                 favorites.deleteAllFromRealm();
+
+            ArrayList<ProductCached> productsCached = new ArrayList<>();
+            for(ProductFavorite item: array) {
+                ProductCached cachedItem = item.toProductCached();
+                productsCached.add(cachedItem);
+            }
+
+            getRealm().copyToRealmOrUpdate(productsCached);
             getRealm().copyToRealmOrUpdate(array);
             getRealm().commitTransaction();
             return true;
@@ -863,8 +871,8 @@ public class AppDbHelper implements DbHelper {
                 else
                     query = query.notEqualTo("stock_location", "MY");
             }
-            float min = filter.price_min > 0 ? filter.price_min : 0;
-            float max = filter.price_max > 0 ? filter.price_max : 1000000000;
+            double min = filter.price_min > 0 ? filter.price_min : 0;
+            double max = filter.price_max > 0 ? filter.price_max : 1000000000;
             query = query.between("lowest_price", min, max);
             if (filter.rating >= 0)
                 query = query.greaterThanOrEqualTo("rate", filter.rating);

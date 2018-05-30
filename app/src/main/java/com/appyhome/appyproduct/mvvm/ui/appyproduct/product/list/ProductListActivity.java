@@ -106,8 +106,10 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        mSearchToolbarViewHolder.onBind(0);
-        mProductAdapter.notifyDataSetChanged();
+        if (mSearchToolbarViewHolder != null)
+            mSearchToolbarViewHolder.onBind(0);
+        if (mProductAdapter != null)
+            mProductAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -138,6 +140,12 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     }
 
     @Override
+    public void getAllFavorites_Done(ArrayList<Long> listId) {
+        setFavoriteIds(listId);
+        fetchProducts();
+    }
+
+    @Override
     public void fetchMore() {
         getViewModel().setIsAbleToLoadMore(false);
         getViewModel().increasePageNumber();
@@ -146,7 +154,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void fetchProducts() {
-        getViewModel().fetchProductsByCommand(getCategoryIds(), getKeywordString());
+        getViewModel().fetchProductsByCommand(getCategoryIds(), getKeywordString(), getViewModel().getCurrentSortType());
     }
 
     /************************* ABSTRACT METHODS ************************/

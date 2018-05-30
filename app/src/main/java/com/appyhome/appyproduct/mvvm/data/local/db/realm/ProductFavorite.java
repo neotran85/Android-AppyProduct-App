@@ -6,12 +6,13 @@ import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class ProductFavorite extends RealmObject {
+public class ProductFavorite extends RealmObject implements Serializable{
     @Expose
     @SerializedName("id")
     @ColumnInfo(name = "id")
@@ -185,8 +186,8 @@ public class ProductFavorite extends RealmObject {
         if (date != null) updated_date = date.getTime();
     }
 
-    public Product toProduct() {
-        Product product = new Product();
+    public ProductCached toProductCached() {
+        ProductCached product = new ProductCached();
         product.id = id;
         product.product_name = product_name;
         product.more_info = more_info;
