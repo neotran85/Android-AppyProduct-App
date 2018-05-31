@@ -7,7 +7,6 @@ import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductListEmptyBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.adapter.FavoriteItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
@@ -26,19 +25,18 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         this.mItems = null;
     }
 
-    public void addItems(OrderedRealmCollection<Product> results, ProductItemNavigator navigator, ArrayList<Long> favoritesId) {
+    public void addItems(OrderedRealmCollection<Product> results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
-        mViewModelEmpty = createEmptyViewModel(navigator);
+        mViewModelEmpty = (ProductItemEmptyViewModel) createEmptyViewModel(navigator);
         if (results != null) {
             for (Product item : results) {
-                boolean isFavorite = checkIfFavorite(item.id, favoritesId);
-                mItems.add(createViewModel(item, navigator, isFavorite));
+                mItems.add(createViewModel(item, navigator));
             }
         }
     }
 
-    protected ProductItemEmptyViewModel createEmptyViewModel(ProductItemNavigator navigator) {
+    protected BaseViewModel createEmptyViewModel(ProductItemNavigator navigator) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         ProductItemEmptyViewModel viewModelEmpty = new ProductItemEmptyViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         viewModelEmpty.setNavigator(navigator);
@@ -70,11 +68,11 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
         return R.layout.view_item_sample_empty;
     }
 
-    protected ProductItemViewModel createViewModel(Product product, ProductItemNavigator navigator, boolean isAllFavorited) {
+    protected BaseViewModel createViewModel(Product product, ProductItemNavigator navigator) {
         BaseViewModel viewModel = navigator.getMainViewModel();
-        FavoriteItemViewModel itemViewModel = new FavoriteItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
+        ProductItemViewModel itemViewModel = new ProductItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.setNavigator(navigator);
-        itemViewModel.inputValue(product, isAllFavorited);
+        itemViewModel.inputValue(product);
         return itemViewModel;
     }
 
@@ -82,33 +80,21 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     public void addItems(RealmResults<Product> results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
-        mViewModelEmpty = createEmptyViewModel(navigator);
+        mViewModelEmpty = (ProductItemEmptyViewModel) createEmptyViewModel(navigator);
         if (results != null) {
             for (Product item : results) {
-                mItems.add(createViewModel(item, navigator, false));
+                mItems.add(createViewModel(item, navigator));
             }
         }
     }
 
-    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator, ArrayList<Long> favoritesId) {
+    public void addItems(Product[] results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
-        mViewModelEmpty = createEmptyViewModel(navigator);
+        mViewModelEmpty = (ProductItemEmptyViewModel) createEmptyViewModel(navigator);
         if (results != null) {
             for (Product item : results) {
-                boolean isFavorite = checkIfFavorite(item.id, favoritesId);
-                mItems.add(createViewModel(item, navigator, isFavorite));
-            }
-        }
-    }
-
-    public void addItems(Product[] results, ProductItemNavigator navigator, boolean isAllFavorited) {
-        mItems = new ArrayList<>();
-        mNavigator = navigator;
-        mViewModelEmpty = createEmptyViewModel(navigator);
-        if (results != null) {
-            for (Product item : results) {
-                mItems.add(createViewModel(item, navigator, isAllFavorited));
+                mItems.add(createViewModel(item, navigator));
             }
         }
     }
@@ -121,7 +107,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     }
 
     @Override
-    public ProductItemViewHolder getContentHolder(ViewGroup parent) {
+    public BaseViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductBinding itemViewBinding = ViewItemProductBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductItemViewHolder(itemViewBinding, mNavigator);
@@ -149,6 +135,7 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
 
     public class ProductItemViewHolder extends BaseViewHolder {
         private ViewItemProductBinding mBinding;
+
         public ProductItemViewHolder(ViewItemProductBinding binding, ProductItemNavigator navigator) {
             super(binding.getRoot());
             mBinding = binding;

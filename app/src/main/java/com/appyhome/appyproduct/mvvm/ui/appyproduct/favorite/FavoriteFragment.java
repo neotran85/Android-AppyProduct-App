@@ -16,7 +16,7 @@ import android.view.ViewTreeObserver;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
@@ -128,7 +128,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     }
 
     @Override
-    public void showProducts(RealmResults<ProductFavorite> result) {
+    public void showProducts(RealmResults<Product> result) {
         if (result != null && result.size() > 0) {
             setUpRecyclerViewGrid(mBinder.productsRecyclerView);
         } else {

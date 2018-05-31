@@ -27,8 +27,6 @@ import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
-import java.util.ArrayList;
-
 import io.realm.OrderedRealmCollection;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
@@ -40,10 +38,6 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     abstract void setSortFragment(SortFragment fragment);
 
     abstract SearchToolbarViewHolder getSearchToolbarViewHolder();
-
-    abstract ArrayList<Long> getFavoriteIds();
-
-    abstract void setFavoriteIds(ArrayList<Long> listId);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,13 +159,13 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
             if (isFirstShowed) {
                 setUpRecyclerViewGrid(getViewDataBinding().productsRecyclerView);
                 getViewModel().setIsFirstLoaded(false);
-                getProductAdapter().addItems(result, this, getFavoriteIds());
+                getProductAdapter().addItems(result, this);
                 getProductAdapter().notifyDataSetChanged();
                 closeLoading();
             } else { // LOAD MORE
                 int rangeStart = getProductAdapter().getItemCount();
                 int itemCount = result.size() - rangeStart;
-                getProductAdapter().addItems(result, this, getFavoriteIds());
+                getProductAdapter().addItems(result, this);
                 getProductAdapter().notifyItemRangeInserted(rangeStart, itemCount);
                 closeLoading();
             }
@@ -185,7 +179,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void showEmptyProducts() {
         ViewUtils.setUpRecyclerViewListVertical(getViewDataBinding().productsRecyclerView, false);
-        getProductAdapter().addItems(null, this, getFavoriteIds());
+        getProductAdapter().addItems(new Product[0], this);
         getProductAdapter().notifyDataSetChanged();
         closeLoading();
     }

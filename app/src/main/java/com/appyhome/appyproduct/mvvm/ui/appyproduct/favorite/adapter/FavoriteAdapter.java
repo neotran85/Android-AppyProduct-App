@@ -4,19 +4,19 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductFavoriteEmptyBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemNavigator;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
 import java.util.ArrayList;
 
 import io.realm.RealmResults;
 
-public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemNavigator> {
+public class FavoriteAdapter extends ProductAdapter {
 
     private ProductItemNavigator mNavigator;
 
@@ -44,13 +44,13 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
         return mItems != null ? mItems.size() : 0;
     }
 
-    protected FavoriteItemEmptyViewModel createEmptyViewModel(ProductItemNavigator navigator) {
+    protected BaseViewModel createEmptyViewModel(ProductItemNavigator navigator) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         FavoriteItemEmptyViewModel viewModelEmpty = new FavoriteItemEmptyViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         return viewModelEmpty;
     }
 
-    protected FavoriteItemViewModel createViewModel(ProductFavorite favorite, ProductItemNavigator navigator) {
+    protected BaseViewModel createViewModel(Product favorite, ProductItemNavigator navigator) {
         BaseViewModel viewModel = navigator.getMainViewModel();
         FavoriteItemViewModel itemViewModel = new FavoriteItemViewModel(viewModel.getDataManager(), viewModel.getSchedulerProvider());
         itemViewModel.setNavigator(navigator);
@@ -81,29 +81,23 @@ public class FavoriteAdapter extends SampleAdapter<ProductFavorite, ProductItemN
     }
 
     @Override
-    public FavoriteItemViewHolder getContentHolder(ViewGroup parent) {
+    public BaseViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductFavoriteBinding itemViewBinding = ViewItemProductFavoriteBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new FavoriteItemViewHolder(itemViewBinding, mNavigator, mItems);
     }
 
     @Override
-    public void addItems(RealmResults<ProductFavorite> results, ProductItemNavigator navigator) {
+    public void addItems(RealmResults<Product> results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         if (results != null) {
-            for (ProductFavorite item : results) {
-                FavoriteItemViewModel itemViewModel = createViewModel(item, navigator);
+            for (Product item : results) {
+                FavoriteItemViewModel itemViewModel = (FavoriteItemViewModel) createViewModel(item, navigator);
                 itemViewModel.variantName.set(item.product_name);
                 mItems.add(itemViewModel);
             }
         }
-    }
-
-    @Override
-    protected void recycle() {
-        mItems.clear();
-        mItems = null;
     }
 
     @Override

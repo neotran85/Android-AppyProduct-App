@@ -3,7 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
@@ -114,7 +114,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
                     if (data != null && data.isValid()) {
-                        ArrayList<ProductFavorite> arrayList = new ArrayList<>();
+                        ArrayList<Product> arrayList = new ArrayList<>();
                         if (!data.message.equals(ApiMessage.WISHLIST_EMPTY)) {
                             try {
                                 LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
@@ -124,7 +124,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                                         ArrayList array = linkedTreeMap.get(key);
                                         for (int i = 0; i < array.size(); i++) {
                                             JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
-                                            ProductFavorite item = gson.fromJson(object.toString(), ProductFavorite.class);
+                                            Product item = gson.fromJson(object.toString(), Product.class);
                                             arrayList.add(item);
                                         }
                                     }
@@ -140,7 +140,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 }, this::onFetchFailed));
     }
 
-    private void updateWishList(ArrayList<ProductFavorite> arrayList) {
+    private void updateWishList(ArrayList<Product> arrayList) {
         getCompositeDisposable().add(getDataManager().syncAllProductFavorite(getUserId(), arrayList)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())

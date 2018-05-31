@@ -46,8 +46,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Inject
     ProductAdapter mProductAdapter;
 
-    private ArrayList<Long> mFavoritesId;
-
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
 
     private SortFragment mSortFragment;
@@ -136,12 +134,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void clearProductsLoaded_Done() {
-        getViewModel().getAllFavorites();
-    }
-
-    @Override
-    public void getAllFavorites_Done(ArrayList<Long> listId) {
-        setFavoriteIds(listId);
         fetchProducts();
     }
 
@@ -177,16 +169,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     @Override
     SearchToolbarViewHolder getSearchToolbarViewHolder() {
         return mSearchToolbarViewHolder;
-    }
-
-    @Override
-    ArrayList<Long> getFavoriteIds() {
-        return mFavoritesId;
-    }
-
-    @Override
-    void setFavoriteIds(ArrayList<Long> listId) {
-        mFavoritesId = listId;
     }
 
     /************************* GET METHODS ************************/

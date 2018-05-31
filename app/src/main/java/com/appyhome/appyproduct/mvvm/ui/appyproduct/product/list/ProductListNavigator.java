@@ -18,8 +18,6 @@ public interface ProductListNavigator {
 
     void showProducts(OrderedRealmCollection<Product> result);
 
-    void getAllFavorites_Done(ArrayList<Long> listId);
-
     void showEmptyProducts();
 
     void toggleSortOptions();

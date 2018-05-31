@@ -86,12 +86,8 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public void inputValue(Product product, boolean isAllFavorited) {
-        inputValue(product);
-        isProductFavorite.set(isAllFavorited);
-    }
-
     protected void inputValue(Product product) {
+        isProductFavorite.set(product.wishlist != null && product.wishlist.equals(getUserId()));
         title.set(product.product_name);
         sellerName.set(product.seller_name);
         imageURL.set(product.avatar_name);
@@ -227,7 +223,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                                 ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
                                 if (response.message != null && response.message.size() > 0) {
                                     ProductAdapter adapter = new ProductAdapter();
-                                    adapter.addItems(response.message, getNavigator(), null);
+                                    adapter.addItems(response.message, getNavigator());
                                     relatedAdapter.set(adapter);
                                     return;
                                 }

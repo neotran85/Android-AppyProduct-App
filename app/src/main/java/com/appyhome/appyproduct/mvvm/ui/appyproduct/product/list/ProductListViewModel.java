@@ -4,7 +4,6 @@ import android.databinding.ObservableField;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
@@ -19,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -144,11 +142,12 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
             try {
                 JSONObject jsonResult = new JSONObject(cachedResult);
                 processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
+                return null;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return null;
-        } else return (ObservableEmitter<ProductListResponse> subscriber) -> {
+        }
+        return (ObservableEmitter<ProductListResponse> subscriber) -> {
             getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), sortType))
                     .subscribeOn(getSchedulerProvider().io())
                     .observeOn(getSchedulerProvider().ui())
@@ -187,7 +186,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void addProductsToDatabase(RealmList<Product> list) {
-        getCompositeDisposable().add(getDataManager().addProducts(list)
+        getCompositeDisposable().add(getDataManager().addProducts(getUserId(), list)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {
@@ -213,24 +212,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private void showCachedList(RealmList<Product> list) {
         getNavigator().showProducts(list);
         updateCurrentFilter();
-    }
-
-    /******************************  FAVORITE METHODS *************** ***************/
-
-    public void getAllFavorites() {
-        getCompositeDisposable().add(getDataManager().getAllProductFavorites(getUserId())
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(favorites -> {
-                    // DONE GET
-                    ArrayList<Long> arrayId = new ArrayList<>();
-                    if (favorites != null && favorites.size() > 0) {
-                        for (ProductFavorite item : favorites) {
-                            arrayId.add(item.id);
-                        }
-                    }
-                    getNavigator().getAllFavorites_Done(arrayId);
-                }, Crashlytics::logException));
     }
 
     /******************************  FILTER METHODS ******************************/
@@ -284,39 +265,5 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     public void setIsAbleToLoadMore(boolean isAbleToLoadMore) {
         this.mIsAbleToLoadMore = isAbleToLoadMore;
-    }
-
-    private void sortResults(RealmList<Product> result) {
-        SortOption sort = getCurrentSortOption();
-        if (sort.equals(SortOption.PRICE_HIGHEST)) {
-            Collections.sort(result, (o1, o2) -> Double.compare(o2.lowest_price, o1.lowest_price));
-            return;
-        }
-        if (sort.equals(SortOption.PRICE_LOWEST)) {
-            Collections.sort(result, (o1, o2) -> Double.compare(o1.lowest_price, o2.lowest_price));
-            return;
-        }
-        if (sort.equals(SortOption.RATING)) {
-            Collections.sort(result, (o1, o2) -> Math.round((o1.rate - o2.rate) * 10));
-            return;
-        }
-        if (sort.equals(SortOption.LATEST)) {
-            Collections.sort(result, (o1, o2) -> {
-                try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date o1Date = sdf.parse(o1.updated_at);
-                    Date o2Date = sdf.parse(o2.updated_at);
-                    return o2Date.compareTo(o1Date);
-                } catch (Exception e) {
-                    Crashlytics.logException(e);
-                }
-                return 0;
-            });
-            return;
-        }
-        if (sort.equals(SortOption.POPULAR)) {
-            Collections.sort(result, (o1, o2) -> Long.compare(o1.like, o2.like));
-            return;
-        }
     }
 }

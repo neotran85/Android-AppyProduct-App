@@ -8,7 +8,6 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductSub;
@@ -39,7 +38,6 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressRe
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
@@ -459,8 +457,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addProducts(RealmList<Product> list) {
-        return mDbHelper.addProducts(list);
+    public Flowable<Boolean> addProducts(String userId, RealmList<Product> list) {
+        return mDbHelper.addProducts(userId, list);
     }
 
     @Override
@@ -553,7 +551,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<ProductFavorite>> getAllProductFavorites(String userId) {
+    public Flowable<RealmResults<Product>> getAllProductFavorites(String userId) {
         return mDbHelper.getAllProductFavorites(userId);
     }
 
@@ -678,7 +676,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<ProductFavorite> array) {
+    public Flowable<Boolean> syncAllProductFavorite(String userId, ArrayList<Product> array) {
         return mDbHelper.syncAllProductFavorite(userId, array);
     }
 
