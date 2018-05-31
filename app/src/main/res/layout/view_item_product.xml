@@ -20,174 +20,163 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_product_in_list"
-        android:layout_marginEnd="@dimen/padding_product_in_list"
         android:onClick="@{(view) -> navigator.onItemClick(viewModel)}">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:id="@+id/llItemView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
 
-            <android.support.v7.widget.CardView
-                app:cardUseCompatPadding="true"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="@dimen/padding_product_in_list"
-                android:layout_marginEnd="@dimen/padding_product_in_list"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="3dp">
+                android:orientation="vertical"
+                android:paddingBottom="4dp">
+
+                <ImageView
+                    android:id="@+id/ivThumbnail"
+                    imageUrl="@{viewModel.imageURL}"
+                    layout_width="@{config.PRODUCT_SIZE}"
+                    android:layout_width="@dimen/width_thumbnail_product_in_list"
+                    android:layout_height="@dimen/height_thumbnail_product_in_list"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="6dp">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/ivThumbnail"
-                        imageUrl="@{viewModel.imageURL}"
-                        layout_width="@{config.PRODUCT_SIZE}"
-                        android:layout_width="@dimen/width_thumbnail_product_in_list"
-                        android:layout_height="@dimen/height_thumbnail_product_in_list"
-                        android:adjustViewBounds="true"
-                        android:background="@color/white" />
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvTitleProduct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:lines="2"
+                        android:text="@{viewModel.title}"
+                        android:textColor="@color/gray_product_in_list"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:id="@+id/tvTitleProduct"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:lines="2"
-                            android:text="@{viewModel.title}"
+                            android:layout_marginRight="4dp"
+                            android:lineSpacingExtra="4dp"
+                            android:text="From"
                             android:textColor="@color/gray_product_in_list"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
+
+                        <TextView
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/rm"
+                            android:textColor="@color/red_price"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            fontPath="fonts/TitilliumWeb-Bold.ttf"
+                            price="@{viewModel.lowestPrice}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/red_price"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{(view)->navigator.onFavoriteClick(viewModel)}">
 
                         <LinearLayout
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
+                            android:id="@+id/ibAddFavorite"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
+                            android:layout_height="32dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:clickable="false"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
+                            <ImageButton
+                                isFavorite="@{viewModel.isProductFavorite}"
+                                android:layout_width="18dp"
+                                android:layout_height="14dp"
+                                android:layout_marginTop="1dp"
+                                android:background="@mipmap/icon_unfavorite" />
+
                             <TextView
-                                android:layout_width="match_parent"
+                                android:id="@+id/favoriteCount"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="4dp"
-                                android:lineSpacingExtra="4dp"
-                                android:text="From"
+                                android:layout_marginStart="2dp"
+                                android:paddingTop="2dp"
+                                android:text="@{viewModel.favoriteCount}"
                                 android:textColor="@color/gray_product_in_list"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:text="@string/rm"
-                                android:textColor="@color/red_price"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvPrice"
-                                fontPath="fonts/TitilliumWeb-Bold.ttf"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                price="@{viewModel.lowestPrice}"
-                                android:textColor="@color/red_price"
-                                android:textSize="11sp" />
+                                android:textSize="9sp" />
                         </LinearLayout>
 
+
                         <RelativeLayout
-                            android:onClick="@{(view)->navigator.onFavoriteClick(viewModel)}"
-                            android:layout_width="match_parent"
-                            android:layout_height="32dp"
-                            android:clickable="true"
-                            android:gravity="center_vertical">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true">
 
-                            <LinearLayout
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:id="@+id/ibAddFavorite"
-                                android:layout_width="wrap_content"
-                                android:layout_height="32dp"
-                                android:gravity="center"
-                                android:clickable="false"
-                                android:orientation="horizontal">
-
-                                <ImageButton
-                                    isFavorite="@{viewModel.isProductFavorite}"
-                                    android:layout_width="18dp"
-                                    android:layout_height="14dp"
-                                    android:layout_marginTop="1dp"
-                                    android:background="@mipmap/icon_unfavorite" />
-
-                                <TextView
-                                    android:id="@+id/favoriteCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="2dp"
-                                    android:paddingTop="2dp"
-                                    android:text="@{viewModel.favoriteCount}"
-                                    android:textColor="@color/gray_product_in_list"
-                                    android:textSize="9sp" />
-                            </LinearLayout>
-
-
-                            <RelativeLayout
+                            <RatingBar
+                                android:id="@+id/ratingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true">
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:clickable="false"
+                                android:numStars="5"
+                                android:rating="@{viewModel.rate}"
+                                android:scaleX=".7"
+                                android:scaleY=".7"
+                                android:stepSize="0.5" />
 
-                                <RatingBar
-                                    android:id="@+id/ratingBar"
-                                    style="?android:attr/ratingBarStyleSmall"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:clickable="false"
-                                    android:numStars="5"
-                                    android:rating="@{viewModel.rate}"
-                                    android:scaleX=".7"
-                                    android:scaleY=".7"
-                                    android:stepSize="0.5" />
-
-                                <TextView
-                                    android:id="@+id/ratingCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="-10dp"
-                                    android:layout_toEndOf="@id/ratingBar"
-                                    android:gravity="end"
-                                    android:paddingTop="2dp"
-                                    android:text="@{viewModel.rateCount}"
-                                    android:textColor="@color/gray_product_in_list"
-                                    android:textSize="9sp" />
-                            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/ratingCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="-10dp"
+                                android:layout_toEndOf="@id/ratingBar"
+                                android:gravity="end"
+                                android:paddingTop="2dp"
+                                android:text="@{viewModel.rateCount}"
+                                android:textColor="@color/gray_product_in_list"
+                                android:textSize="9sp" />
                         </RelativeLayout>
-                    </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/llItemView"
-            android:adjustViewBounds="true"
             android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
             android:background="@mipmap/icon_limit_offer"
             android:visibility="@{viewModel.isDiscount, default=gone}" />
     </RelativeLayout>

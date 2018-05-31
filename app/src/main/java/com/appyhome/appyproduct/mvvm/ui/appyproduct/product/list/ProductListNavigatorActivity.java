@@ -30,8 +30,6 @@ import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import java.util.ArrayList;
 
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
-import io.realm.RealmResults;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 

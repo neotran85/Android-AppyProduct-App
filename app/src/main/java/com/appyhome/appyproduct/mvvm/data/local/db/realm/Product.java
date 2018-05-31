@@ -128,6 +128,16 @@ public class Product extends RealmObject implements Serializable {
     public long like;
 
     @Expose
+    @SerializedName("cached")
+    @ColumnInfo(name = "cached")
+    public int cached = 0;
+
+    @Expose
+    @SerializedName("wishlist")
+    @ColumnInfo(name = "wishlist")
+    public String wishlist;
+
+    @Expose
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;

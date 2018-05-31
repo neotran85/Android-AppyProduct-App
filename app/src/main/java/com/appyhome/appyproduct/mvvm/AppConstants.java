@@ -36,7 +36,7 @@ public final class AppConstants {
             SCREEN_WIDTH = d.getWidth();
             SCREEN_HEIGHT = d.getHeight();
         }
-        AppyProductConstants.initiate(firstActivity);
+        AppyProductConstants.initiate();
     }
 
     public static Activity getFirstActivity() {

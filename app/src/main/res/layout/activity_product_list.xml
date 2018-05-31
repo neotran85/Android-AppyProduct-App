@@ -154,6 +154,8 @@
                         android:layout_height="match_parent"
                         android:layout_centerHorizontal="true"
                         android:clipToPadding="false"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:paddingTop="4dp" />
 
                     <ImageButton
