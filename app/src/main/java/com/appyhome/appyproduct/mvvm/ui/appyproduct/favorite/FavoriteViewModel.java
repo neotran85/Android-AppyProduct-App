@@ -30,7 +30,7 @@ public class FavoriteViewModel extends BaseViewModel<FavoriteNavigator> {
 
     public void fetchUserData() {
         if (isOnline() && isUserLoggedIn())
-            mFetchUserInfoViewModel.fetchUserData();
+            mFetchUserInfoViewModel.fetchAndSyncWishListServer();
         else {
             getNavigator().onFetchUserInfo_Done();
         }

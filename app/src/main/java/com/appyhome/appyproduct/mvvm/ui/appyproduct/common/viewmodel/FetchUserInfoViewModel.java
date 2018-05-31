@@ -4,6 +4,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiMessage;
@@ -47,18 +48,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                             updateAllProductCarts(arrayList);
                         } else {
                             try {
-                                LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
-                                Gson gson = new Gson();
-                                for (String key : linkedTreeMap.keySet()) {
-                                    if (!key.equals("padding")) {
-                                        ArrayList array = linkedTreeMap.get(key);
-                                        for (int i = 0; i < array.size(); i++) {
-                                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
-                                            ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
-                                            arrayList.add(item);
-                                        }
-                                    }
-                                }
+                                arrayList = processCartData(data);
                                 updateAllProductCarts(arrayList);
                             } catch (Exception e) {
                                 onFetchFailed(e);
@@ -69,6 +59,46 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                     }
 
                 }, this::onFetchFailed));
+    }
+
+    private ArrayList<Product> processWishListData(ApiResponse data) {
+        ArrayList<Product> arrayList = new ArrayList<>();
+        if (!data.message.equals(ApiMessage.WISHLIST_EMPTY)) {
+            try {
+                LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
+                Gson gson = new Gson();
+                for (String key : linkedTreeMap.keySet()) {
+                    if (key != null && key.equals("content")) {
+                        ArrayList array = linkedTreeMap.get(key);
+                        for (int i = 0; i < array.size(); i++) {
+                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                            Product item = gson.fromJson(object.toString(), Product.class);
+                            arrayList.add(item);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<ProductCartResponse> processCartData(ApiResponse data) {
+        ArrayList<ProductCartResponse> arrayList = new ArrayList<>();
+        LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
+        Gson gson = new Gson();
+        for (String key : linkedTreeMap.keySet()) {
+            if (!key.equals("padding")) {
+                ArrayList array = linkedTreeMap.get(key);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                    ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
+                    arrayList.add(item);
+                }
+            }
+        }
+        return arrayList;
     }
 
     public void fetchShippingAddresses() {
@@ -114,25 +144,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(data -> {
                     if (data != null && data.isValid()) {
-                        ArrayList<Product> arrayList = new ArrayList<>();
-                        if (!data.message.equals(ApiMessage.WISHLIST_EMPTY)) {
-                            try {
-                                LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
-                                Gson gson = new Gson();
-                                for (String key : linkedTreeMap.keySet()) {
-                                    if (key != null && key.equals("content")) {
-                                        ArrayList array = linkedTreeMap.get(key);
-                                        for (int i = 0; i < array.size(); i++) {
-                                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
-                                            Product item = gson.fromJson(object.toString(), Product.class);
-                                            arrayList.add(item);
-                                        }
-                                    }
-                                }
-                            } catch (Exception e) {
-                                Crashlytics.logException(e);
-                            }
-                        }
+                        ArrayList<Product> arrayList = processWishListData(data);
                         updateWishList(arrayList);
                     } else {
                         onFetchFailed(null);
@@ -211,6 +223,19 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                 }, this::onFetchFailed));
     }
 
+    public void fetchAndSyncWishListServer() {
+        mIsFetchWishListStarted = true;
+        getCompositeDisposable().add(getDataManager().fetchUserWishList()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        ArrayList<Product> arrayList = processWishListData(data);
+                        updateWishListNow(arrayList);
+                    }
+                }, Crashlytics::logException));
+    }
+
     public void fetchAndSyncCartsServer() {
         getCompositeDisposable().add(getDataManager().fetchCartsServer()
                 .subscribeOn(getSchedulerProvider().io())
@@ -222,18 +247,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                             updateAllProductCartsNow(arrayList);
                         } else {
                             try {
-                                LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
-                                Gson gson = new Gson();
-                                for (String key : linkedTreeMap.keySet()) {
-                                    if (!key.equals("padding")) {
-                                        ArrayList array = linkedTreeMap.get(key);
-                                        for (int i = 0; i < array.size(); i++) {
-                                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
-                                            ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
-                                            arrayList.add(item);
-                                        }
-                                    }
-                                }
+                                arrayList = processCartData(data);
                                 updateAllProductCartsNow(arrayList);
                             } catch (Exception e) {
                                 Crashlytics.logException(e);
@@ -241,6 +255,19 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                         }
                     }
                 }, Crashlytics::logException));
+    }
+
+    private void updateWishListNow(ArrayList<Product> arrayList) {
+        getCompositeDisposable().add(getDataManager().syncAllProductFavorite(getUserId(), arrayList)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {
+                    if (success)
+                        getNavigator().onFetchUserInfo_Done();
+                }, throwable -> {
+                    getNavigator().onFetchUserInfo_Failed();
+                    Crashlytics.logException(throwable);
+                }));
     }
 
     private void updateAllProductCartsNow(ArrayList<ProductCartResponse> arrayList) {
@@ -255,4 +282,6 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                     Crashlytics.logException(throwable);
                 }));
     }
+
+
 }
