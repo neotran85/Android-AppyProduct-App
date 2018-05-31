@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -95,9 +94,7 @@ public interface DbHelper {
 
     Flowable<Boolean> clearProductsLoaded();
 
-    Flowable<Boolean> addProductsCached(RealmList<ProductCached> list);
-
-    Flowable<ProductCached> getProductCachedById(long idProduct);
+    Flowable<Product> getProductCachedById(long idProduct);
 
     Flowable<ProductCart> getProductCart(String userId, long productId, long variantId);
 

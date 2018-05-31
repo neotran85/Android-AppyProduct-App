@@ -127,7 +127,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(productCached -> {
                     if (productCached != null && productCached.isValid()) {
-                        inputValue(productCached.convertToProduct());
+                        inputValue(productCached);
                         checkIfFavorite(getUserId(), getProductId());
                     }
                 }, Crashlytics::logException));

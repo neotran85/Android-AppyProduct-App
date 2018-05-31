@@ -6,7 +6,6 @@ import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFilter;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListCachedResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -43,7 +42,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     public ObservableField<Boolean> isFilter = new ObservableField<>(false);
     public ObservableField<Boolean> isCategoriesSelectionShowed = new ObservableField<>(false);
     public ObservableField<Boolean> isAbleToSelectCategories = new ObservableField<>(false);
-    private ProductListCachedResponse cachedResponse;
 
     private int mPageNumber = 1;
 
@@ -102,23 +100,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(products -> {
-                    addProductsCachedToDatabase();
-                    showProductList(products);
-                }, Crashlytics::logException));
-    }
-
-    private void addProductsCachedToDatabase() {
-        if (cachedResponse != null && cachedResponse.message != null && cachedResponse.message.size() > 0) {
-            setIsAbleToLoadMore(cachedResponse.message.size() == PRODUCTS_PER_PAGE);
-            getCompositeDisposable().add(getDataManager().addProductsCached(cachedResponse.message)
-                    .take(1)
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(success -> {
-                        cachedResponse.message.clear();
-                        cachedResponse = null;
-                    }, Crashlytics::logException));
-        }
+                .subscribe(this::showProductList, Crashlytics::logException));
     }
 
     public void clearProductsLoaded() {
@@ -141,14 +123,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         String key = categoryIds + ":" + keyword + ":" + sortType;
         getDataManager().setCachedResponse("fetchProductsByObject", key, jsonResult.toString());
         try {
-            if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
+            if (jsonResult.get("code").equals(ApiCode.OK_200)) {
                 Gson gson = new Gson();
                 ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
-                cachedResponse = gson.fromJson(jsonResult.toString(), ProductListCachedResponse.class);
                 if (response.message != null && response.message.size() > 0) {
-                    // ONLY SORT IF NO KEYWORDS
-                    //if (keyword == null || keyword.length() == 0)
-                    //sortResults(response.message);
                     addProductsToDatabase(response.message);
                     return;
                 }
@@ -156,7 +134,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
             // NOT OK
             showEmptyProducts();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

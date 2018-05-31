@@ -152,7 +152,7 @@ public class ProductFavorite extends RealmObject implements Serializable{
     public ProductFavorite() {
     }
 
-    public ProductFavorite(String userId, ProductCached product) {
+    public ProductFavorite(String userId, Product product) {
         id = System.currentTimeMillis();
         user_id = userId;
         if (product != null) {
@@ -186,8 +186,8 @@ public class ProductFavorite extends RealmObject implements Serializable{
         if (date != null) updated_date = date.getTime();
     }
 
-    public ProductCached toProductCached() {
-        ProductCached product = new ProductCached();
+    public Product toProductCached() {
+        Product product = new Product();
         product.id = id;
         product.product_name = product_name;
         product.more_info = more_info;

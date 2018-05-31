@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -599,12 +598,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> addProductsCached(RealmList<ProductCached> list) {
-        return mDbHelper.addProductsCached(list);
-    }
-
-    @Override
-    public Flowable<ProductCached> getProductCachedById(long idProduct) {
+    public Flowable<Product> getProductCachedById(long idProduct) {
         return mDbHelper.getProductCachedById(idProduct);
     }
 

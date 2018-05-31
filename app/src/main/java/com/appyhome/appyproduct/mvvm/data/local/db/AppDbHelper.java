@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductFavorite;
@@ -18,7 +17,6 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.SearchItem;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductFavoriteResponse;
 
 import java.util.ArrayList;
 
@@ -277,15 +275,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductCached> getProductCachedById(long idProduct) {
+    public Flowable<Product> getProductCachedById(long idProduct) {
         beginTransaction();
-        ProductCached product = getRealm().where(ProductCached.class)
+        Product product = getRealm().where(Product.class)
                 .equalTo("id", idProduct)
                 .findFirst();
-        if (product == null)
-            product = new ProductCached();
         getRealm().commitTransaction();
-        return product.asFlowable();
+        return product != null ? product.asFlowable() : null;
     }
 
     @Override
@@ -314,19 +310,11 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addProducts(RealmList<Product> list) {
         try {
             beginTransaction();
-            getRealm().copyToRealmOrUpdate(list);
-            getRealm().commitTransaction();
-            return Flowable.just(true);
-        } catch (Exception e) {
-            getRealm().cancelTransaction();
-            return Flowable.just(false);
-        }
-    }
-
-    @Override
-    public Flowable<Boolean> addProductsCached(RealmList<ProductCached> list) {
-        try {
-            beginTransaction();
+            for (int i = 0; i < list.size(); i++) {
+                Product product = list.get(i);
+                if (product != null)
+                    product.cached = i + 1;
+            }
             getRealm().copyToRealmOrUpdate(list);
             getRealm().commitTransaction();
             return Flowable.just(true);
@@ -442,7 +430,7 @@ public class AppDbHelper implements DbHelper {
                     .equalTo("user_id", userId)
                     .findAll();
 
-            for(ProductFavorite item: array) {
+            for (ProductFavorite item : array) {
                 item.user_id = userId;
                 item.setUpdated_date();
             }
@@ -450,9 +438,9 @@ public class AppDbHelper implements DbHelper {
             if (favorites != null)
                 favorites.deleteAllFromRealm();
 
-            ArrayList<ProductCached> productsCached = new ArrayList<>();
-            for(ProductFavorite item: array) {
-                ProductCached cachedItem = item.toProductCached();
+            ArrayList<Product> productsCached = new ArrayList<>();
+            for (ProductFavorite item : array) {
+                Product cachedItem = item.toProductCached();
                 productsCached.add(cachedItem);
             }
 
@@ -790,7 +778,7 @@ public class AppDbHelper implements DbHelper {
                 Boolean value = false;
                 beginTransaction();
 
-                ProductCached product = getRealm().where(ProductCached.class)
+                Product product = getRealm().where(Product.class)
                         .equalTo("id", productId)
                         .findFirst();
 
@@ -847,6 +835,7 @@ public class AppDbHelper implements DbHelper {
             try {
                 beginTransaction();
                 boolean success = getRealm().where(Product.class)
+                        .greaterThan("cached", 0)
                         .findAll().deleteAllFromRealm();
                 getRealm().commitTransaction();
                 return success;
@@ -864,6 +853,7 @@ public class AppDbHelper implements DbHelper {
                 .equalTo("user_id", userId)
                 .findFirst();
         RealmQuery query = getRealm().where(Product.class);
+        query = query.greaterThan("cached", 0);
         if (filter != null) {
             if (filter.shipping_from != null && filter.shipping_from.length() > 0) {
                 if (filter.shipping_from.equals("Local"))
@@ -877,9 +867,10 @@ public class AppDbHelper implements DbHelper {
             if (filter.rating >= 0)
                 query = query.greaterThanOrEqualTo("rate", filter.rating);
         }
-        Flowable<RealmResults<Product>> result = query.findAll().asFlowable();
+        RealmResults<Product> result = (query != null) ? query.findAll() : null;
+        result = (result != null) ? result.sort("cached", Sort.ASCENDING) : null;
         getRealm().commitTransaction();
-        return result;
+        return (result != null) ? result.asFlowable() : null;
     }
 
     @Override
