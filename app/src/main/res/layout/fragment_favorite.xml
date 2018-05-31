@@ -97,6 +97,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/title_bar_height"
                 android:clipToPadding="false"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:paddingTop="4dp" />
 
             <RelativeLayout
