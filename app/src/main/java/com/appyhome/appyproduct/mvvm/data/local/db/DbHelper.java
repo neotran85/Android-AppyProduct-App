@@ -125,4 +125,8 @@ public interface DbHelper {
     Flowable<Boolean> addSeller(Seller seller);
 
     Flowable<Boolean> updateProductCartShippingFee(String userId, Bundle dataFees);
+
+    Flowable<RealmResults<Product>> getWishListPadding(String userId);
+
+    Flowable<RealmResults<Product>> getCartPadding(String userId);
 }

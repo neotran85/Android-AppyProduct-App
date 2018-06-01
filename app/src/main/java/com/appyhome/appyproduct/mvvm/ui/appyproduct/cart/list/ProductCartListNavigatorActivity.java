@@ -11,6 +11,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCar
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.adapter.ProductCartItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.variant.EditVariantNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
@@ -95,10 +97,18 @@ public abstract class ProductCartListNavigatorActivity extends BaseActivity<Acti
     }
 
     @Override
+    public void showProductDetail(ProductItemViewModel itemViewModel) {
+        Intent intent = ProductDetailActivity.getStartIntent(this, itemViewModel);
+        intent.putExtra("type", ProductDetailActivity.DETAIL_CART);
+        intent.putExtra("product_id", itemViewModel.getProductId());
+        startActivityForResult(intent, REQUEST_DETAIL);
+
+    }
+
+    @Override
     public void showProductDetail(ProductCartItemViewModel viewModel) {
-        //Intent intent = ProductDetailActivity.getStartIntent(this, null, null);
-        //intent.putExtra("product_id", viewModel.getProductId());
-        //startActivityForResult(intent, REQUEST_DETAIL);
+        if (viewModel != null)
+            viewModel.getProductCachedById();
     }
 
     @Override

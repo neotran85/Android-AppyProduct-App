@@ -17,7 +17,6 @@ import dagger.Provides;
 public class ProductDetailActivityModule {
 
     public static ProductItemViewModel clickedViewModel;
-    public static SampleAdapter relatedProductAdapter;
 
     @Provides
     ProductItemViewModel provideProductItemViewModel(DataManager dataManager,
@@ -31,11 +30,6 @@ public class ProductDetailActivityModule {
     @Provides
     ViewModelProvider.Factory productVariantViewModelProvider(ProductVariantViewModel viewModel) {
         return new ViewModelProviderFactory<>(viewModel);
-    }
-
-    @Provides
-    SampleAdapter provideRelatedProductAdapter() {
-        return relatedProductAdapter;
     }
 }
 

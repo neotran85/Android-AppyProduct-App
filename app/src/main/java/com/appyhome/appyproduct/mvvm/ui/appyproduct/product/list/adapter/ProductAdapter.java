@@ -11,6 +11,7 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.realm.OrderedRealmCollection;
@@ -89,6 +90,17 @@ public class ProductAdapter extends SampleAdapter<Product, ProductItemNavigator>
     }
 
     public void addItems(Product[] results, ProductItemNavigator navigator) {
+        mItems = new ArrayList<>();
+        mNavigator = navigator;
+        mViewModelEmpty = (ProductItemEmptyViewModel) createEmptyViewModel(navigator);
+        if (results != null) {
+            for (Product item : results) {
+                mItems.add(createViewModel(item, navigator));
+            }
+        }
+    }
+
+    public void addItems(ArrayList<Product> results, ProductItemNavigator navigator) {
         mItems = new ArrayList<>();
         mNavigator = navigator;
         mViewModelEmpty = (ProductItemEmptyViewModel) createEmptyViewModel(navigator);

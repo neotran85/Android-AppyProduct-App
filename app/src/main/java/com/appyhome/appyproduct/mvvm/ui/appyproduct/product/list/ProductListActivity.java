@@ -12,6 +12,7 @@ import android.view.ViewParent;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductListBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.category.CategoryFragment;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.component.cart.SearchToolbarViewHolder;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.realm.RealmResults;
 
 public class ProductListActivity extends ProductListNavigatorActivity implements HasSupportFragmentInjector {
 

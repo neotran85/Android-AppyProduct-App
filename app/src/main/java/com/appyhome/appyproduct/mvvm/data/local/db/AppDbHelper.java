@@ -957,6 +957,26 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<RealmResults<Product>> getWishListPadding(String userId) {
+        beginTransaction();
+        RealmResults<Product> products = getRealm().where(Product.class)
+                .equalTo("related", userId + "_wishlist")
+                .findAll();
+        getRealm().commitTransaction();
+        return products != null ? products.asFlowable() : null;
+    }
+
+    @Override
+    public Flowable<RealmResults<Product>> getCartPadding(String userId) {
+        beginTransaction();
+        RealmResults<Product> products = getRealm().where(Product.class)
+                .equalTo("related", userId + "_cart")
+                .findAll();
+        getRealm().commitTransaction();
+        return products != null ? products.asFlowable() : null;
+    }
+
+    @Override
     public Flowable<Boolean> addSearchItem(SearchItem item) {
         return Flowable.fromCallable(() -> {
             try {

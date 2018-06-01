@@ -76,6 +76,17 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                             arrayList.add(item);
                         }
                     }
+                    if (key != null && key.equals("padding")) {
+                        RealmList<Product> relatedArrayList = new RealmList<>();
+                        ArrayList array = linkedTreeMap.get(key);
+                        for (int i = 0; i < array.size(); i++) {
+                            JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                            Product item = gson.fromJson(object.toString(), Product.class);
+                            item.related = getUserId() + "_wishlist";
+                            relatedArrayList.add(item);
+                        }
+                        addProductsPadding(relatedArrayList);
+                    }
                 }
             } catch (Exception e) {
                 Crashlytics.logException(e);
@@ -83,19 +94,36 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
         }
         return arrayList;
     }
+    private void addProductsPadding(RealmList<Product> products) {
+        getCompositeDisposable().add(getDataManager().addProducts(getUserId(), products)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(success -> {}, Crashlytics::logException));
+    }
 
     private ArrayList<ProductCartResponse> processCartData(ApiResponse data) {
         ArrayList<ProductCartResponse> arrayList = new ArrayList<>();
         LinkedTreeMap<String, ArrayList> linkedTreeMap = (LinkedTreeMap<String, ArrayList>) data.message;
         Gson gson = new Gson();
         for (String key : linkedTreeMap.keySet()) {
-            if (!key.equals("padding")) {
+            if (key != null && !key.equals("padding")) {
                 ArrayList array = linkedTreeMap.get(key);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
                     ProductCartResponse item = gson.fromJson(object.toString(), ProductCartResponse.class);
                     arrayList.add(item);
                 }
+            }
+            if (key != null && key.equals("padding")) {
+                RealmList<Product> relatedArrayList = new RealmList<>();
+                ArrayList array = linkedTreeMap.get(key);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject object = DataUtils.convertToJsonObject((LinkedTreeMap<String, String>) array.get(i));
+                    Product item = gson.fromJson(object.toString(), Product.class);
+                    item.related = getUserId() + "_cart";
+                    relatedArrayList.add(item);
+                }
+                addProductsPadding(relatedArrayList);
             }
         }
         return arrayList;

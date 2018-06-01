@@ -829,4 +829,14 @@ public class AppDataManager implements DataManager {
     public Single<GetShippingResponse> fetchShippingFee(GetShippingRequest request) {
         return mApiHelper.fetchShippingFee(request);
     }
+
+    @Override
+    public Flowable<RealmResults<Product>> getWishListPadding(String userId) {
+        return mDbHelper.getWishListPadding(userId);
+    }
+
+    @Override
+    public Flowable<RealmResults<Product>> getCartPadding(String userId) {
+        return mDbHelper.getCartPadding(userId);
+    }
 }

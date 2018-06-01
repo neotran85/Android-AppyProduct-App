@@ -28,6 +28,7 @@ import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmResults;
 
 public abstract class ProductListNavigatorActivity extends BaseActivity<ActivityProductListBinding, ProductListViewModel> implements ProductListNavigator, ProductItemFilterNavigator, SortNavigator {
 
@@ -233,8 +234,15 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
-        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel, getProductAdapter());
+        Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
+        intent.putExtra("type", ProductDetailActivity.DETAIL_PRODUCT);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
+    }
+
+
+    @Override
+    public void showRelatedProducts(RealmResults<Product> products) {
+        // DO NOTHING
     }
 }

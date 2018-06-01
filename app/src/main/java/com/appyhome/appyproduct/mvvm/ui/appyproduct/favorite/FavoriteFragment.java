@@ -140,7 +140,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
-        Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel, mFavoriteAdapter);
+        Intent intent = ProductDetailActivity.getStartIntent(this.getActivity(), viewModel);
+        intent.putExtra("type", ProductDetailActivity.DETAIL_FAVORITE);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
     }
@@ -169,6 +170,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void addedToCartCompleted(int amount, boolean isBuyNow) {
+        // DO NOTHING
+    }
+
+    @Override
+    public void showRelatedProducts(RealmResults<Product> products) {
         // DO NOTHING
     }
 

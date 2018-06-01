@@ -138,6 +138,11 @@ public class Product extends RealmObject implements Serializable {
     public String wishlist;
 
     @Expose
+    @SerializedName("related")
+    @ColumnInfo(name = "related")
+    public String related;
+
+    @Expose
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")
     public String more_info;

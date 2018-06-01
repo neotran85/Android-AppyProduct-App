@@ -192,6 +192,31 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
         return itemViewModel;
     }
 
+
+    public void getProductCachedById() {
+        getCompositeDisposable().add(getDataManager().getProductCachedById(getProductId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(productCached -> {
+                    if (productCached != null && productCached.isValid()) {
+                        ProductItemViewModel viewModel = new ProductItemViewModel(getDataManager(), getSchedulerProvider());
+                        viewModel.inputValue(productCached);
+                        checkIfFavorite(getUserId(), getProductId(), viewModel);
+                        getNavigator().showProductDetail(viewModel);
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void checkIfFavorite(String userId, long productId, ProductItemViewModel viewModel) {
+        getCompositeDisposable().add(getDataManager().isProductFavorite(userId, productId)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(isLiked -> {
+                    if (viewModel != null)
+                        viewModel.isProductFavorite.set(isLiked);
+                }, Crashlytics::logException));
+    }
+
     public void update(ProductVariant variant) {
         price.set(variant.price);
         variationName.set(variant.variant_name);

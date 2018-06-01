@@ -15,18 +15,18 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoNavigator;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.detail.ProductDetailActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
-import io.realm.RealmResults;
-
-public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
+public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> implements FetchUserInfoNavigator {
     public ObservableField<String> title = new ObservableField<>("");
     public ObservableField<String> variantName = new ObservableField<>("");
-    public ObservableField<String> warranty = new ObservableField<>("");
     public ObservableField<String> imageURL = new ObservableField<>("");
     public ObservableField<Double> lowestPrice = new ObservableField<>(0.0);
     public ObservableField<Double> price = new ObservableField<>(0.0);
@@ -36,8 +36,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<String> discount = new ObservableField<>("");
     public ObservableField<Boolean> isProductFavorite = new ObservableField<>(false);
     public ObservableField<Boolean> isEditVariantShowed = new ObservableField<>(false);
-    public ObservableField<Boolean> isSmall = new ObservableField<>(false);
-    public ObservableField<Float> smallestSize = new ObservableField<>(0.0f);
     public ObservableField<Boolean> isDiscount = new ObservableField<>(false);
     public ObservableField<Boolean> isVariantSelected = new ObservableField<>(false);
     public ObservableField<String> stockCount = new ObservableField<>("0");
@@ -51,12 +49,11 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
     public ObservableField<SampleAdapter> productsAdapter = new ObservableField<>(new ProductAdapter());
     public ObservableField<Boolean> isRelatedProductsShowed = new ObservableField<>(true);
 
-
     protected long productId;
 
     private int variantId = -1;
 
-    private RealmResults<ProductVariant> mVariants;
+    private int mDetailType = 0;
 
     public ProductItemViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
@@ -86,7 +83,7 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    protected void inputValue(Product product) {
+    public void inputValue(Product product) {
         isProductFavorite.set(product.wishlist != null && product.wishlist.equals(getUserId()));
         title.set(product.product_name);
         sellerName.set(product.seller_name);
@@ -195,7 +192,6 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                     if (data != null && data.isValid()) {
                         sellerAvatar.set(data.seller.avatar);
                         addSeller(data.seller);
-                        fetchRelatedProducts(data.seller.categories);
                     }
                 }, Crashlytics::logException));
     }
@@ -209,26 +205,64 @@ public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> {
                 }, Crashlytics::logException));
     }
 
-    private void fetchRelatedProducts(String keywords) {
-        if (keywords != null && keywords.length() > 0) {
-            String[] keyword = keywords.split(",");
-            if (keyword != null && keyword.length > 0)
-                getCompositeDisposable().add(getDataManager().fetchProducts(new ProductListRequest("", keyword[0], 0, ""))
-                        .subscribeOn(getSchedulerProvider().io())
-                        .observeOn(getSchedulerProvider().ui())
-                        .subscribe(jsonResult -> {
-                            // 200 OK
-                            if (jsonResult != null && jsonResult.get("code").equals(ApiCode.OK_200)) {
-                                Gson gson = new Gson();
-                                ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
-                                if (response.message != null && response.message.size() > 0) {
-                                    ProductAdapter adapter = new ProductAdapter();
-                                    adapter.addItems(response.message, getNavigator());
-                                    relatedAdapter.set(adapter);
-                                    return;
-                                }
-                            }
-                        }, Crashlytics::logException));
+    // RELATED PRODUCTS
+    public void getRelatedProducts(int type) {
+        mDetailType = type;
+        FetchUserInfoViewModel fetchUserInfoViewModel;
+        switch (mDetailType) {
+            case ProductDetailActivity.DETAIL_PRODUCT:
+                break;
+            case ProductDetailActivity.DETAIL_FAVORITE:
+                fetchUserInfoViewModel = new FetchUserInfoViewModel(getDataManager(), getSchedulerProvider());
+                fetchUserInfoViewModel.setNavigator(this);
+                fetchUserInfoViewModel.fetchAndSyncWishListServer();
+                break;
+            case ProductDetailActivity.DETAIL_CART:
+                fetchUserInfoViewModel = new FetchUserInfoViewModel(getDataManager(), getSchedulerProvider());
+                fetchUserInfoViewModel.setNavigator(this);
+                fetchUserInfoViewModel.fetchAndSyncCartsServer();
+                break;
         }
+    }
+
+    private void getRelatedProductsFromCart() {
+        getCompositeDisposable().add(getDataManager().getCartPadding(getUserId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        getNavigator().showRelatedProducts(data);
+                    }
+                }, Crashlytics::logException));
+    }
+
+    private void getRelatedProductsFromWishList() {
+        getCompositeDisposable().add(getDataManager().getWishListPadding(getUserId())
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(data -> {
+                    if (data != null && data.isValid()) {
+                        getNavigator().showRelatedProducts(data);
+                    }
+                }, Crashlytics::logException));
+    }
+
+    @Override
+    public void onFetchUserInfo_Done() {
+        switch (mDetailType) {
+            case ProductDetailActivity.DETAIL_PRODUCT:
+                break;
+            case ProductDetailActivity.DETAIL_FAVORITE:
+                getRelatedProductsFromWishList();
+                break;
+            case ProductDetailActivity.DETAIL_CART:
+                getRelatedProductsFromCart();
+                break;
+        }
+    }
+
+    @Override
+    public void onFetchUserInfo_Failed() {
+        onFetchUserInfo_Done();
     }
 }

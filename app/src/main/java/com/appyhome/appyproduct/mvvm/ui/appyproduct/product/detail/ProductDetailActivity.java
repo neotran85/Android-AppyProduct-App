@@ -19,6 +19,7 @@ import android.view.ViewTreeObserver;
 import com.appyhome.appyproduct.mvvm.AppConstants;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductDetailBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.list.ProductCartListActivity;
@@ -33,7 +34,6 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
-import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.helper.AppAnimator;
 import com.appyhome.appyproduct.mvvm.utils.helper.ViewUtils;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -42,6 +42,8 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,7 +58,9 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         implements HasSupportFragmentInjector, ProductDetailNavigator,
         ProductDetailVariantNavigator, ViewTreeObserver.OnScrollChangedListener, EditVariantNavigator {
 
-    private final int REQUEST_SELECT_LOCATION = 10;
+    public final static int DETAIL_CART = 0;
+    public final static int DETAIL_FAVORITE = 1;
+    public final static int DETAIL_PRODUCT = 2;
 
     @Inject
     public ProductItemViewModel mViewModel;
@@ -64,10 +68,10 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
-    @Inject
-    SampleAdapter mRelatedProductAdapter;
+    private ProductAdapter mRelatedProductAdapter;
+    private ProductAdapter mProductSetAdapter;
 
-    ActivityProductDetailBinding mBinder;
+    private ActivityProductDetailBinding mBinder;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
     private EditVariantFragment mEditVariantFragment;
     private Point mCartPosition = new Point();
@@ -85,9 +89,8 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
     private Handler mHandler = null;
     private int mHeightTopBar = 0;
 
-    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel, SampleAdapter adapter) {
+    public static Intent getStartIntent(Context context, ProductItemViewModel viewModel) {
         ProductDetailActivityModule.clickedViewModel = viewModel;
-        ProductDetailActivityModule.relatedProductAdapter = adapter;
         Intent intent = new Intent(context, ProductDetailActivity.class);
         return intent;
     }
@@ -145,8 +148,11 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         mHeightTopBar = getResources().getDimensionPixelSize(R.dimen.title_bar_height)
                 + getResources().getDimensionPixelSize(R.dimen.detail_tab_height);
         ViewUtils.loadImageAssetAsResource(this, mBinder.promotionBanners, getViewModel().promotionBannerURL.get());
+        mRelatedProductAdapter = new ProductAdapter();
+        mProductSetAdapter = new ProductAdapter();
         getViewModel().relatedAdapter.set(mRelatedProductAdapter);
-        getViewModel().productsAdapter.set(mRelatedProductAdapter);
+        getViewModel().productsAdapter.set(mProductSetAdapter);
+        getViewModel().getRelatedProducts(getType());
     }
 
     private void selectTab(View tab) {
@@ -186,6 +192,10 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
         if (getIntent().hasExtra("keyword"))
             return getIntent().getStringExtra("keyword");
         return "";
+    }
+
+    private int getType() {
+        return getIntent().getIntExtra("type", 0);
     }
 
     private long getProductIdByIntent() {
@@ -243,6 +253,27 @@ public class ProductDetailActivity extends BaseActivity<ActivityProductDetailBin
             startActivity(ProductCartListActivity.getStartIntent(this));
         }
         isBuyNow = false;
+    }
+
+    @Override
+    public void showRelatedProducts(RealmResults<Product> products) {
+        if (mRelatedProductAdapter != null) {
+            mRelatedProductAdapter.addItems(shuffleResult(products), this);
+            mRelatedProductAdapter.notifyDataSetChanged();
+        }
+        if (mProductSetAdapter != null) {
+            mProductSetAdapter.addItems(shuffleResult(products), this);
+            mProductSetAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private ArrayList<Product> shuffleResult(RealmResults<Product> products) {
+        ArrayList<Product> arrayList = new ArrayList<>();
+        for (Product product : products) {
+            arrayList.add(product);
+        }
+        Collections.shuffle(arrayList);
+        return arrayList;
     }
 
     @Override
