@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
-import com.appyhome.appyproduct.mvvm.data.model.api.BlogResponse;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductAdapter;
 import com.appyhome.appyproduct.mvvm.ui.common.component.LinearListView;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.config.GlideApp;
@@ -139,7 +137,8 @@ public final class BindingUtils {
 
     @BindingAdapter("android:visibility")
     public static void setVisibility(View view, Boolean value) {
-        view.setVisibility(value ? View.VISIBLE : View.GONE);
+        if (view != null)
+            view.setVisibility(value ? View.VISIBLE : View.GONE);
     }
 
     @BindingAdapter("price")
@@ -148,6 +147,7 @@ public final class BindingUtils {
         String price = formatter.format(amount).replace(".00", "");
         view.setText(price);
     }
+
     @BindingAdapter("price")
 
     public static void setPrice(TextView view, Float amount) {
