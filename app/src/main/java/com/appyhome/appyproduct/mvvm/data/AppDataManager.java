@@ -839,4 +839,9 @@ public class AppDataManager implements DataManager {
     public Flowable<RealmResults<Product>> getCartPadding(String userId) {
         return mDbHelper.getCartPadding(userId);
     }
+
+    @Override
+    public Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag) {
+        return mDbHelper.addProducts(userId, list, tag);
+    }
 }

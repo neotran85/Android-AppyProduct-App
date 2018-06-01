@@ -129,4 +129,6 @@ public interface DbHelper {
     Flowable<RealmResults<Product>> getWishListPadding(String userId);
 
     Flowable<RealmResults<Product>> getCartPadding(String userId);
+
+    Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag);
 }

@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductVariant;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddToCartRequest;
@@ -13,6 +14,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.Product
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
+
+import io.reactivex.Flowable;
 
 public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavigator> {
 
@@ -194,17 +197,19 @@ public class ProductCartItemViewModel extends BaseViewModel<ProductCartItemNavig
 
 
     public void getProductCachedById() {
-        getCompositeDisposable().add(getDataManager().getProductCachedById(getProductId())
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(productCached -> {
-                    if (productCached != null && productCached.isValid()) {
-                        ProductItemViewModel viewModel = new ProductItemViewModel(getDataManager(), getSchedulerProvider());
-                        viewModel.inputValue(productCached);
-                        checkIfFavorite(getUserId(), getProductId(), viewModel);
-                        getNavigator().showProductDetail(viewModel);
-                    }
-                }, Crashlytics::logException));
+        Flowable<Product> asFlowable = getDataManager().getProductCachedById(getProductId());
+        if (asFlowable != null)
+            getCompositeDisposable().add(asFlowable
+                    .take(1)
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(productCached -> {
+                        if (productCached != null && productCached.isValid()) {
+                            ProductItemViewModel viewModel = new ProductItemViewModel(getDataManager(), getSchedulerProvider());
+                            viewModel.inputValue(productCached);
+                            checkIfFavorite(getUserId(), getProductId(), viewModel);
+                            getNavigator().showProductDetail(viewModel);
+                        }
+                    }, Crashlytics::logException));
     }
 
     private void checkIfFavorite(String userId, long productId, ProductItemViewModel viewModel) {

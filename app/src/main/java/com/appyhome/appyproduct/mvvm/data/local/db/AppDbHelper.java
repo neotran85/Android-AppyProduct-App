@@ -336,6 +336,34 @@ public class AppDbHelper implements DbHelper {
         }
     }
 
+    @Override
+    public Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag) {
+        try {
+            beginTransaction();
+            RealmResults<Product> oldProducts = getRealm().where(Product.class).equalTo("related", userId + "_" + tag).findAll();
+            for(Product product: oldProducts) {
+                product.related = "";
+            }
+            getRealm().copyToRealmOrUpdate(oldProducts);
+
+            RealmResults<Product> products = getRealm().where(Product.class).equalTo("wishlist", userId).findAll();
+            for (int i = 0; i < list.size(); i++) {
+                Product product = list.get(i);
+                if (product != null)
+                    product.cached = i + 1;
+                if (isFavContaining(products, product)) {
+                    product.wishlist = userId;
+                }
+            }
+            getRealm().copyToRealmOrUpdate(list);
+            getRealm().commitTransaction();
+            return Flowable.just(true);
+        } catch (Exception e) {
+            getRealm().cancelTransaction();
+            return Flowable.just(false);
+        }
+    }
+
     /******* PRODUCT CART METHODS *******/
 
     @Override

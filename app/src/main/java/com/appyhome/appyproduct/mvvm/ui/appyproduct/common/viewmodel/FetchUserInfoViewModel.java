@@ -85,7 +85,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                             item.related = getUserId() + "_wishlist";
                             relatedArrayList.add(item);
                         }
-                        addProductsPadding(relatedArrayList);
+                        addProductsPadding(relatedArrayList, "wishlist");
                     }
                 }
             } catch (Exception e) {
@@ -94,8 +94,8 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
         }
         return arrayList;
     }
-    private void addProductsPadding(RealmList<Product> products) {
-        getCompositeDisposable().add(getDataManager().addProducts(getUserId(), products)
+    private void addProductsPadding(RealmList<Product> products, String tag) {
+        getCompositeDisposable().add(getDataManager().addProducts(getUserId(), products, tag)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(success -> {}, Crashlytics::logException));
@@ -123,7 +123,7 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
                     item.related = getUserId() + "_cart";
                     relatedArrayList.add(item);
                 }
-                addProductsPadding(relatedArrayList);
+                addProductsPadding(relatedArrayList, "cart");
             }
         }
         return arrayList;
