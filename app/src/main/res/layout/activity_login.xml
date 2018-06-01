@@ -82,7 +82,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp"
                             android:text="@string/plus_60"
                             android:textColor="@color/medium_dark_gray"
                             android:textSize="14sp" />
@@ -97,8 +97,8 @@
                             android:hint="@string/mobile_no"
                             android:inputType="phone"
                             android:maxLength="50"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="16dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="16dp"
                             android:textColor="@color/medium_dark_gray"
                             android:textColorHint="@color/dark_gray"
                             android:textSize="14sp" />

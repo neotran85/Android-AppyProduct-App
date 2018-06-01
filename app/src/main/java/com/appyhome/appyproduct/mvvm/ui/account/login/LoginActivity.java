@@ -78,7 +78,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     private void clearTextInputError(TextInputEditText editText) {
         editText.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.medium_dark_gray));
-        editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.hint_text));
+        editText.setHintTextColor(ContextCompat.getColor(LoginActivity.this, R.color.dark_gray));
         showError("");
     }
 
