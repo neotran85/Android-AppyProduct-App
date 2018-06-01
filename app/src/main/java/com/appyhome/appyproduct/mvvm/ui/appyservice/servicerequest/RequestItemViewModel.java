@@ -105,7 +105,9 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             isSafetyCodeVisible.set(isSafetyCodeVisible());
             isStatusViewVisible.set(isStatusVisible());
 
-            rating.set(Float.parseFloat(DataUtils.getStringSafely(item, "rating")));
+            String rate = DataUtils.getStringSafely(item, "rating");
+            if (rate.length() > 0)
+                rating.set(Float.parseFloat(rate));
 
             String serviceString = DataUtils.getStringSafely(item, "services");
             if (serviceString.contains("{")) {
