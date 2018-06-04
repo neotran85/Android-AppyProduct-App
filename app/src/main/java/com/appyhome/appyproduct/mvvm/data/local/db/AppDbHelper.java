@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Cached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -341,7 +342,7 @@ public class AppDbHelper implements DbHelper {
         try {
             beginTransaction();
             RealmResults<Product> oldProducts = getRealm().where(Product.class).equalTo("related", userId + "_" + tag).findAll();
-            for(Product product: oldProducts) {
+            for (Product product : oldProducts) {
                 product.related = "";
             }
             getRealm().copyToRealmOrUpdate(oldProducts);
@@ -982,6 +983,32 @@ public class AppDbHelper implements DbHelper {
                 return false;
             }
         });
+    }
+
+    @Override
+    public Flowable<Boolean> setCached(String key, String data) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                Cached cached = new Cached();
+                cached.key = key;
+                cached.data = data;
+                getRealm().copyToRealmOrUpdate(cached);
+                getRealm().commitTransaction();
+                return true;
+            } catch (Exception e) {
+                getRealm().cancelTransaction();
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public Flowable<Cached> getCached(String key) {
+        beginTransaction();
+        Cached cached = getRealm().where(Cached.class).equalTo("key", key).findFirst();
+        getRealm().commitTransaction();
+        return cached != null ? cached.asFlowable() : null;
     }
 
     @Override

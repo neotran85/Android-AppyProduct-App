@@ -61,6 +61,7 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
             close();
         }
         isFilterApplied = false;
+        closeLoading();
     }
 
 
@@ -83,6 +84,7 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
 
     @Override
     public void applyFilter() {
+        showLoading();
         String etPriceMin = mBinder.etPriceMin.getText().toString();
         String etPriceMax = mBinder.etPriceMax.getText().toString();
         if (etPriceMax.length() > 0 && etPriceMin.length() > 0) {

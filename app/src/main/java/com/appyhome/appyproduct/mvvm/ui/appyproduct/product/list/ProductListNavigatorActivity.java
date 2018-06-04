@@ -162,14 +162,13 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
                 getViewModel().setIsFirstLoaded(false);
                 getProductAdapter().addItems(result, this);
                 getProductAdapter().notifyDataSetChanged();
-                closeLoading();
             } else { // LOAD MORE
                 int rangeStart = getProductAdapter().getItemCount();
                 int itemCount = result.size() - rangeStart;
                 getProductAdapter().addItems(result, this);
                 getProductAdapter().notifyItemRangeInserted(rangeStart, itemCount);
-                closeLoading();
             }
+            closeLoading();
         } else {
             if (getViewModel().isIsAbleToLoadMore()) {
                 fetchMore();

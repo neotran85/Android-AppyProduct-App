@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.appyhome.appyproduct.mvvm.R;
+import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 
 import dagger.android.support.AndroidSupportInjection;
 
@@ -74,19 +75,9 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mViewDataBinding;
     }
 
-    public boolean isNetworkConnected() {
-        return mActivity != null && mActivity.isNetworkConnected();
-    }
-
     public void hideKeyboard() {
         if (mActivity != null) {
             mActivity.hideKeyboard();
-        }
-    }
-
-    public void openActivityOnTokenExpire() {
-        if (mActivity != null) {
-            mActivity.openActivityOnTokenExpire();
         }
     }
 
@@ -127,12 +118,9 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public void activeBackButton() {
         if (mRootView != null) {
             ImageButton button = (ImageButton) mRootView.findViewById(R.id.btBack);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getActivity() != null)
-                        getActivity().onBackPressed();
-                }
+            button.setOnClickListener(v -> {
+                if (getActivity() != null)
+                    getActivity().onBackPressed();
             });
         }
     }
@@ -151,6 +139,16 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
                         .remove(fragment).commit();
             }
         }
+    }
+
+    public void closeLoading() {
+        if (getActivity() != null)
+            AlertManager.getInstance(getActivity()).closeLoading();
+    }
+
+    public void showLoading() {
+        if (getActivity() != null)
+            AlertManager.getInstance(getActivity()).showLoading();
     }
 
     public boolean isActivityRunning() {

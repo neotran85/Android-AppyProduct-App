@@ -17,9 +17,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -30,8 +27,6 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
-
-    public static final int PRODUCTS_PER_PAGE = 100;
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
@@ -120,6 +115,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private void processResultOfFetchProductsByObject(JSONObject jsonResult, String categoryIds, String keyword, String sortType) {
         String key = categoryIds + ":" + keyword + ":" + sortType;
         getDataManager().setCachedResponse("fetchProductsByObject", key, jsonResult.toString());
+        getCompositeDisposable().add(getDataManager().setCached(key, jsonResult.toString()).take(1).observeOn(getSchedulerProvider().ui()).subscribe());
         try {
             if (jsonResult.get("code").equals(ApiCode.OK_200)) {
                 Gson gson = new Gson();
@@ -137,29 +133,48 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword, String sortType) {
-        String cachedResult = getDataManager().getCachedResponse("fetchProductsByObject", categoryIds + ":" + keyword + ":" + sortType);
+        String key = categoryIds + ":" + keyword + ":" + sortType;
+        String cachedResult = getDataManager().getCachedResponse("fetchProductsByObject", key);
         if (cachedResult != null && cachedResult.length() > 0) {
-            try {
-                JSONObject jsonResult = new JSONObject(cachedResult);
-                processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
-                return null;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), sortType))
-                    .subscribeOn(getSchedulerProvider().io())
-                    .observeOn(getSchedulerProvider().ui())
-                    .subscribe(jsonResult -> {
-                        // 200 OK
-                        processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
-                    }, throwable -> {
-                        showEmptyProducts();
-                        throwable.printStackTrace();
-                        Crashlytics.logException(throwable);
-                    });
+            return (ObservableEmitter<ProductListResponse> subscriber) -> {
+                getDataManager().getCached(key)
+                        .take(1)
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(cached -> {
+                            // 200 OK
+                            String dataCached = (cached != null && cached.data != null
+                                    && cached.data.length() > 0) ? cached.data : cachedResult;
+                            try {
+                                JSONObject jsonResult = new JSONObject(dataCached);
+                                processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
+                            } catch (JSONException e) {
+                                Crashlytics.logException(e);
+                                newFetch(categoryIds, keyword, sortType);
+                            }
+                        }, throwable -> {
+                            showEmptyProducts();
+                            throwable.printStackTrace();
+                            Crashlytics.logException(throwable);
+                            newFetch(categoryIds, keyword, sortType);
+                        });
+            };
+        } else return (ObservableEmitter<ProductListResponse> subscriber) -> {
+             newFetch(categoryIds, keyword, sortType);
         };
+    }
+
+    private void newFetch(String categoryIds, String keyword, String sortType) {
+        getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), sortType))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(jsonResult -> {
+                    // 200 OK
+                    processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
+                }, throwable -> {
+                    showEmptyProducts();
+                    throwable.printStackTrace();
+                    Crashlytics.logException(throwable);
+                });
     }
 
     public String getCurrentSortType() {

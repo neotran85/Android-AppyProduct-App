@@ -4,6 +4,7 @@ package com.appyhome.appyproduct.mvvm.data.local.db;
 import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.Cached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -131,4 +132,8 @@ public interface DbHelper {
     Flowable<RealmResults<Product>> getCartPadding(String userId);
 
     Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag);
+
+    Flowable<Boolean> setCached(String key, String data);
+
+    Flowable<Cached> getCached(String key);
 }

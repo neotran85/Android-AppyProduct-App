@@ -127,13 +127,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void showLoading() {
-        if (!isFinishing())
-            AlertManager.getInstance(this).showLoading();
+        AlertManager.getInstance(this).showLoading();
     }
 
     public void showLoading(boolean cancelable) {
-        if (!isFinishing())
-            AlertManager.getInstance(this).showLoading(cancelable);
+        AlertManager.getInstance(this).showLoading(cancelable);
     }
 
     public boolean isLoadingShowed() {
@@ -141,8 +139,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void closeLoading() {
-        if (!isFinishing())
-            AlertManager.getInstance(this).closeLoading();
+        AlertManager.getInstance(this).closeLoading();
     }
 
     public T getViewDataBinding() {

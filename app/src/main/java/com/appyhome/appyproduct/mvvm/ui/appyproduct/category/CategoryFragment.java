@@ -161,7 +161,8 @@ public class CategoryFragment extends BaseFragment<ActivityProductCategoryBindin
 
     @Override
     public void search() {
-        mNavigator.applyCategoriesSelected(mSubCategoryAdapter.getSelectedSubIds());
+        if (mNavigator != null && mSubCategoryAdapter != null)
+            mNavigator.applyCategoriesSelected(mSubCategoryAdapter.getSelectedSubIds());
     }
 
     @Override
