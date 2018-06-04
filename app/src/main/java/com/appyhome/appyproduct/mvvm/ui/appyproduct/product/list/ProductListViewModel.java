@@ -160,6 +160,10 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         return "";
     }
 
+    public void clearCachedResponse() {
+        getDataManager().clearCachedResponse();
+    }
+
     public void fetchProductsByCommand(String categoryIds, String keywords, String sortType) {
         String key = categoryIds + ":" + keywords + ":" + sortType;
         getCompositeDisposable().add(getDataManager().getCachedResponse("fetchProductsByObject", key)

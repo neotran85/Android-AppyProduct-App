@@ -64,6 +64,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
         mViewModel.setNavigator(this);
+        mViewModel.clearCachedResponse();
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
         mBinder.productsRecyclerView.setAdapter(mProductAdapter);
         mSearchToolbarViewHolder = new SearchToolbarViewHolder(this, mBinder.toolbar, true, true, getTitleSearch());
@@ -87,11 +88,6 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     public void onDestroy() {
         super.onDestroy();
         ProductDetailActivityModule.clickedViewModel = null;
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override

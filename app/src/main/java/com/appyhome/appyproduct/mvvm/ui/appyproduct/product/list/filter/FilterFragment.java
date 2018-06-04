@@ -56,7 +56,7 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
         mBinder.etPriceMin.setText((filter.price_min > 0) ? filter.price_min + "" : "");
 
         mBinder.ratingBar.setRating(filter.rating);
-        if (isFilterApplied) {
+        if (isFilterApplied && mNavigator != null) {
             mNavigator.applyFilter();
             close();
         }
