@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartCompletedBinding;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -56,10 +55,11 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
 
     @Override
     public void viewOrders() {
-        long orderId = getIntent().getLongExtra("order_id", 0);
+        showComingSoon();
+        /*long orderId = getIntent().getLongExtra("order_id", 0);
         Intent intent = ProductTrackingActivity.getStartIntent(this);
         intent.putExtra("order_id", orderId);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
 

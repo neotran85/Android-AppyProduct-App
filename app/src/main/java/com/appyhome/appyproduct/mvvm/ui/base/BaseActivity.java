@@ -270,6 +270,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         return false;
     }
 
+    public void showComingSoon() {
+        AlertManager.getInstance(this).showLongToast(getString(R.string.coming_soon));
+    }
+
     public boolean isOnline() {
         return NetworkUtils.isNetworkConnected(this);
     }

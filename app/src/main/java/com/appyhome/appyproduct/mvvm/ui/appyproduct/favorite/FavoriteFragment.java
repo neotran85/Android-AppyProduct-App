@@ -258,7 +258,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     private void animateProductToCart() {
         mBinder.ivProductBox.setVisibility(View.VISIBLE);
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.size_box_animation);
-        AppAnimator.animateMoving(2000, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
+        AppAnimator.animateMoving(750, mBinder.ivProductBox, sizeInPixels, mAddToCartPosition, mCartPosition, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);

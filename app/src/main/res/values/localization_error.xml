@@ -3,5 +3,5 @@
     <string name="error_unknown">Some error happened. Sorry for this inconvenience. Please try again.</string>
     <string name="error_network_not_connected">Please check your internet again.</string>
     <string name="error_network_general">Internal Server Error. Please try again later.</string>
-    <string name="coming_soon">Coming soon!!!</string>
+    <string name="coming_soon">Coming soon…</string>
 </resources>

@@ -67,4 +67,5 @@
     <string name="cart_final_confirm">FINAL CONFIRM</string>
     <string name="confirm_item_shipping">Shipping:</string>
     <string name="manufacturer_defect_warranty">Manufacturer Defect Warranty</string>
+    <string name="payment_methods">Payment Methods</string>
 </resources>
