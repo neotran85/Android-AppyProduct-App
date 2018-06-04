@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -147,8 +148,9 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public void showLoading() {
-        if (getActivity() != null)
-            AlertManager.getInstance(getActivity()).showLoading();
+        Activity activity = getActivity();
+        if (activity!= null && !activity.isFinishing())
+            AlertManager.getInstance(activity).showLoading();
     }
 
     public boolean isActivityRunning() {

@@ -36,7 +36,7 @@ public interface ProductListNavigator {
 
     void onFragmentClosed();
 
-    void restartFetching();
+    void reApplyFilter();
 
     void showLoading();
 

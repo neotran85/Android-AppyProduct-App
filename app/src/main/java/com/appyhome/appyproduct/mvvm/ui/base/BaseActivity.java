@@ -127,11 +127,13 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void showLoading() {
-        AlertManager.getInstance(this).showLoading();
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLoading();
     }
 
     public void showLoading(boolean cancelable) {
-        AlertManager.getInstance(this).showLoading(cancelable);
+        if (!isFinishing())
+            AlertManager.getInstance(this).showLoading(cancelable);
     }
 
     public boolean isLoadingShowed() {
@@ -139,7 +141,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void closeLoading() {
-        AlertManager.getInstance(this).closeLoading();
+        if (!isFinishing())
+            AlertManager.getInstance(this).closeLoading();
     }
 
     public T getViewDataBinding() {
@@ -258,7 +261,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public boolean askForLogin(String message, int requestCode) {
-        if (!getViewModel().isUserLoggedIn()) {
+        BaseViewModel viewModel = getViewModel();
+        if (viewModel != null && !viewModel.isUserLoggedIn()) {
             Intent intent = LoginActivity.getStartIntent(this);
             intent.putExtra("message", message);
             startActivityForResult(intent, requestCode);

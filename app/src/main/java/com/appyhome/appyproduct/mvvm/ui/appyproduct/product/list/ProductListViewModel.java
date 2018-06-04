@@ -89,7 +89,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     /******************************  PRODUCTS METHODS *************** ***************/
 
-    private void getAllProductsWithFilter() {
+    public void getAllProductsWithFilter() {
         getCompositeDisposable().add(getDataManager().getAllProductsFilter(getUserId())
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -171,6 +171,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(cached -> {
                     // 200 OK
+                    // IF CACHED EXISTED
                     if (cached != null && cached.length() > 0) {
                         try {
                             JSONObject jsonResult = new JSONObject(cached);
@@ -235,7 +236,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(filter -> {
-                    getNavigator().restartFetching();
+                    ProductListNavigator navigator = getNavigator();
+                    if (navigator != null)
+                        navigator.reApplyFilter();
                 }, Crashlytics::logException));
     }
 

@@ -112,10 +112,11 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     /************************* PRODUCTS METHODS SETUP  ************************/
 
     @Override
-    public void restartFetching() {
+    public void reApplyFilter() {
         getViewModel().resetPageNumber();
         getViewModel().setIsAbleToLoadMore(false);
-        fetchProducts();
+        //fetchProducts();
+        getViewModel().getAllProductsWithFilter();
     }
 
     @Override

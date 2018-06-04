@@ -48,7 +48,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void applyFilter() {
         showLoading();
-        restartFetching();
+        reApplyFilter();
     }
 
     @Override

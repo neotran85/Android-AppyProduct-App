@@ -61,7 +61,6 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
             close();
         }
         isFilterApplied = false;
-        closeLoading();
     }
 
 
@@ -84,7 +83,6 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
 
     @Override
     public void applyFilter() {
-        showLoading();
         String etPriceMin = mBinder.etPriceMin.getText().toString();
         String etPriceMax = mBinder.etPriceMax.getText().toString();
         if (etPriceMax.length() > 0 && etPriceMin.length() > 0) {
@@ -97,9 +95,9 @@ public class FilterFragment extends BaseFragment<FragmentProductFilterBinding, F
                 return;
             }
         }
+        isFilterApplied = true;
         getViewModel().updateFilter(mShippingForm.getCurrentValue(), mDiscount.getCurrentValue(),
                 etPriceMin, etPriceMax, mBinder.ratingBar.getRating());
-        isFilterApplied = true;
     }
 
     @Override
