@@ -115,7 +115,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private void processResultOfFetchProductsByObject(JSONObject jsonResult, String categoryIds, String keyword, String sortType) {
         String key = categoryIds + ":" + keyword + ":" + sortType;
         getDataManager().setCachedResponse("fetchProductsByObject", key, jsonResult.toString());
-        getCompositeDisposable().add(getDataManager().setCached(key, jsonResult.toString()).take(1).observeOn(getSchedulerProvider().ui()).subscribe());
         try {
             if (jsonResult.get("code").equals(ApiCode.OK_200)) {
                 Gson gson = new Gson();
@@ -133,33 +132,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword, String sortType) {
-        String key = categoryIds + ":" + keyword + ":" + sortType;
-        String cachedResult = getDataManager().getCachedResponse("fetchProductsByObject", key);
-        if (cachedResult != null && cachedResult.length() > 0) {
-            return (ObservableEmitter<ProductListResponse> subscriber) -> {
-                getDataManager().getCached(key)
-                        .take(1)
-                        .observeOn(getSchedulerProvider().ui())
-                        .subscribe(cached -> {
-                            // 200 OK
-                            String dataCached = (cached != null && cached.data != null
-                                    && cached.data.length() > 0) ? cached.data : cachedResult;
-                            try {
-                                JSONObject jsonResult = new JSONObject(dataCached);
-                                processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
-                            } catch (JSONException e) {
-                                Crashlytics.logException(e);
-                                newFetch(categoryIds, keyword, sortType);
-                            }
-                        }, throwable -> {
-                            showEmptyProducts();
-                            throwable.printStackTrace();
-                            Crashlytics.logException(throwable);
-                            newFetch(categoryIds, keyword, sortType);
-                        });
-            };
-        } else return (ObservableEmitter<ProductListResponse> subscriber) -> {
-             newFetch(categoryIds, keyword, sortType);
+        return (ObservableEmitter<ProductListResponse> subscriber) -> {
+            newFetch(categoryIds, keyword, sortType);
         };
     }
 
@@ -172,7 +146,6 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
                 }, throwable -> {
                     showEmptyProducts();
-                    throwable.printStackTrace();
                     Crashlytics.logException(throwable);
                 });
     }
@@ -182,22 +155,43 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
             String json = getDataManager().getProductsSortCurrent(getUserId());
             return new JSONObject(json).getString("value");
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return "";
     }
 
     public void fetchProductsByCommand(String categoryIds, String keywords, String sortType) {
-        if (isOnline()) {
-            ObservableOnSubscribe<ProductListResponse> resultProcessing = fetchProductsByObject(categoryIds, keywords, sortType);
-            if (resultProcessing != null) {
-                Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
-                        .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
-                getCompositeDisposable().add(disposable);
-            }
-        } else {
-            getAllProductsWithFilter();
-        }
+        String key = categoryIds + ":" + keywords + ":" + sortType;
+        getCompositeDisposable().add(getDataManager().getCachedResponse("fetchProductsByObject", key)
+                .take(1)
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(cached -> {
+                    // 200 OK
+                    if (cached != null && cached.length() > 0) {
+                        try {
+                            JSONObject jsonResult = new JSONObject(cached);
+                            processResultOfFetchProductsByObject(jsonResult, categoryIds, keywords, sortType);
+                            return;
+                        } catch (JSONException e) {
+                            Crashlytics.logException(e);
+                        }
+                    }
+                    // NO CACHED
+                    if (isOnline()) {
+                        ObservableOnSubscribe<ProductListResponse> resultProcessing = fetchProductsByObject(categoryIds, keywords, sortType);
+                        if (resultProcessing != null) {
+                            Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
+                                    .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
+                            getCompositeDisposable().add(disposable);
+                        }
+                    } else {
+                        getAllProductsWithFilter();
+                    }
+                }, throwable -> {
+                    showEmptyProducts();
+                    Crashlytics.logException(throwable);
+                    newFetch(categoryIds, keywords, sortType);
+                }));
     }
 
     private void addProductsToDatabase(RealmList<Product> list) {

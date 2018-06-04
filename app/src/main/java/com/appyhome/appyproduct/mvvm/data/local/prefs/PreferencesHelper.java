@@ -2,6 +2,8 @@ package com.appyhome.appyproduct.mvvm.data.local.prefs;
 
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
 
+import io.reactivex.Flowable;
+
 
 public interface PreferencesHelper {
 
@@ -59,7 +61,7 @@ public interface PreferencesHelper {
 
     void setCachedResponse(String command, String key, String response);
 
-    String getCachedResponse(String command, String key);
+    Flowable<String> getCachedResponse(String command, String key);
 
     void clearCachedResponse();
 

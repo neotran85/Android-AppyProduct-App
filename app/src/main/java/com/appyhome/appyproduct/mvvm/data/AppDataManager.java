@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.data.local.db.DbHelper;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.Cached;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCategory;
@@ -742,7 +741,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public String getCachedResponse(String command, String key) {
+    public Flowable<String> getCachedResponse(String command, String key) {
         return mPreferencesHelper.getCachedResponse(command, key);
     }
 
@@ -844,15 +843,5 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag) {
         return mDbHelper.addProducts(userId, list, tag);
-    }
-
-    @Override
-    public Flowable<Boolean> setCached(String key, String data) {
-        return mDbHelper.setCached(key, data);
-    }
-
-    @Override
-    public Flowable<Cached> getCached(String key) {
-        return mDbHelper.getCached(key);
     }
 }

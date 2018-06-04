@@ -8,6 +8,8 @@ import com.appyhome.appyproduct.mvvm.di.PreferenceInfo;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
+
 
 public class AppPreferencesHelper implements PreferencesHelper {
     private static final String PREF_KEY_LOCAL_DATABASE_UPDATED = "LOCAL_DATABASE_UPDATED_1";
@@ -179,8 +181,10 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public String getCachedResponse(String command, String key) {
-        return mCachedResponse.getString(PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key, "");
+    public Flowable<String> getCachedResponse(String command, String key) {
+        return Flowable.fromCallable(() -> {
+            return mCachedResponse.getString(PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key, "");
+        });
     }
 
     @Override
