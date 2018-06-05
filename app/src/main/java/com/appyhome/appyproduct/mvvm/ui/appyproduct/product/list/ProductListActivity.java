@@ -63,6 +63,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         mBinder = getViewDataBinding();
         mBinder.setViewModel(mViewModel);
         mBinder.setNavigator(this);
+        mViewModel.setIntent(getIntent());
         mViewModel.setNavigator(this);
         mViewModel.clearCachedResponse();
         ViewUtils.setUpRecyclerViewListVertical(mBinder.productsRecyclerView, false);
@@ -74,7 +75,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     }
 
     private void checkIfSelectCategoriesEnabled() {
-        if (getKeywordString().length() > 0) {
+        if (getViewModel().getKeywordString().length() > 0) {
             // NO IMAGE BUTTON TO SELECT CATEGORIES
             ViewParent parent = mBinder.btnSelectCategories.getParent();
             if (parent instanceof ViewGroup) {
@@ -112,18 +113,9 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     /************************* PRODUCTS METHODS SETUP  ************************/
 
     @Override
-    public void reApplyFilter() {
-        getViewModel().resetPageNumber();
-        getViewModel().setIsAbleToLoadMore(false);
-        //fetchProducts();
-        getViewModel().getAllProductsWithFilter();
-    }
-
-    @Override
     public void fetchProductsNew() {
         // CLEARED PRODUCTS LOADED BEFORE
         getViewModel().resetPageNumber();
-        getViewModel().setIsAbleToLoadMore(false);
         getViewModel().clearProductsLoaded();
     }
 
@@ -134,14 +126,13 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
 
     @Override
     public void fetchMore() {
-        getViewModel().setIsAbleToLoadMore(false);
         getViewModel().increasePageNumber();
         fetchProducts();
     }
 
     @Override
     public void fetchProducts() {
-        getViewModel().fetchProductsByCommand(getCategoryIds(), getKeywordString(), getViewModel().getCurrentSortType());
+        getViewModel().fetchProductsByCommand();
     }
 
     /************************* ABSTRACT METHODS ************************/
@@ -184,26 +175,10 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
         return "";
     }
 
-    private String getKeywordString() {
-        if (getIntent().hasExtra("keyword"))
-            return getIntent().getStringExtra("keyword");
-        return "";
-    }
-
     @Override
     public ProductListViewModel getViewModel() {
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProductListViewModel.class);
         return mViewModel;
-    }
-
-    private String getCategoryIds() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle.containsKey("categoryIds")) {
-            return bundle.getString("categoryIds");
-        } else {
-            return bundle.getString("id_subs");
-        }
     }
 
     @Override
@@ -217,7 +192,7 @@ public class ProductListActivity extends ProductListNavigatorActivity implements
     }
 
     private String getTitleSearch() {
-        String result = getKeywordString();
+        String result = getViewModel().getKeywordString();
         if (getSearchTopics().length() > 0) {
             result = '"' + result + '"' + " in " + getSearchTopics();
         }

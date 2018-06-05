@@ -59,7 +59,7 @@ public interface PreferencesHelper {
 
     void setLocalDatabaseUpdated(boolean isDone);
 
-    void setCachedResponse(String command, String key, String response);
+    boolean setCachedResponse(String command, String key, String response);
 
     Flowable<String> getCachedResponse(String command, String key);
 

@@ -130,7 +130,7 @@ public class Product extends RealmObject implements Serializable {
     @Expose
     @SerializedName("cached")
     @ColumnInfo(name = "cached")
-    public int cached = 0;
+    public long cached = 0;
 
     @Expose
     @SerializedName("wishlist")

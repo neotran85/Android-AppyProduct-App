@@ -48,7 +48,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void applyFilter() {
         showLoading();
-        reApplyFilter();
+        fetchProductsNew();
     }
 
     @Override
@@ -156,8 +156,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
     @Override
     public void showProducts(OrderedRealmCollection<Product> result) {
         if (result != null && result.size() > 0) {
-            boolean isFirstShowed = getViewModel().isFirstLoaded();
-            if (isFirstShowed) {
+            if (getViewModel().isFirstLoaded()) {
                 setUpRecyclerViewGrid(getViewDataBinding().productsRecyclerView);
                 getViewModel().setIsFirstLoaded(false);
                 getProductAdapter().addItems(result, this);
@@ -165,15 +164,13 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
             } else { // LOAD MORE
                 int rangeStart = getProductAdapter().getItemCount();
                 int itemCount = result.size() - rangeStart;
-                getProductAdapter().addItems(result, this);
+                getProductAdapter().addMore(result, rangeStart);
                 getProductAdapter().notifyItemRangeInserted(rangeStart, itemCount);
             }
             closeLoading();
-        } else {
-            if (getViewModel().isIsAbleToLoadMore()) {
-                fetchMore();
-            } else showEmptyProducts();
-        }
+        } else if (getViewModel().isAbleToLoadMore()) {
+            fetchMore();
+        } else showEmptyProducts();
     }
 
     @Override
@@ -212,7 +209,7 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (getViewModel().isIsAbleToLoadMore()) {
+                if (getViewModel().isAbleToLoadMore()) {
                     int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
                     int childCount = getProductAdapter().getItemCount();
                     if (lastVisiblePosition == childCount - 1) {
@@ -225,16 +222,18 @@ public abstract class ProductListNavigatorActivity extends BaseActivity<Activity
 
     @Override
     public void onFavoriteClick(ProductItemViewModel vm) {
-        // DO NOTHING, ONLY DO WHEN IT'S ON THE WISH LIST
-        if (getProductAdapter() != null) {
-            vm.updateProductFavorite(getProductAdapter().indexOf(vm));
+        if (!askForLogin(getString(R.string.ask_login_to_add_wishlist))) {
+            if (getProductAdapter() != null && vm != null) {
+                vm.updateProductFavorite(getProductAdapter().indexOf(vm));
+            }
         }
     }
 
     @Override
     public void onItemClick(ProductItemViewModel viewModel) {
         Intent intent = ProductDetailActivity.getStartIntent(this, viewModel);
-        intent.putExtra("type", ProductDetailActivity.DETAIL_PRODUCT);
+        intent.putExtra("type" +
+                "", ProductDetailActivity.DETAIL_PRODUCT);
         intent.putExtra("product_id", viewModel.getProductId());
         startActivity(intent);
     }

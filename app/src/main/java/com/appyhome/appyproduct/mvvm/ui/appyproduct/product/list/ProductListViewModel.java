@@ -1,6 +1,8 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list;
 
+import android.content.Intent;
 import android.databinding.ObservableField;
+import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
@@ -29,6 +31,8 @@ import io.realm.RealmResults;
 public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     private final int RETRY_MAX_COUNT = 5;
     private final int RETRY_TIME = 5;
+    private final int SEARCH_PAGE_LIMIT = 100;
+    private final int LISTING_PAGE_LIMIT = 1000;
     public ObservableField<Boolean> isSortShowed = new ObservableField<>(false);
     public ObservableField<String> currentSortLabel = new ObservableField<>("Sort");
     public ObservableField<String> filterNumber = new ObservableField<>("");
@@ -42,10 +46,39 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
 
     private boolean mIsFirstLoaded = true;
 
+    private Intent mIntent;
+
+    private int requestCounter = 0;
+
     public ProductListViewModel(DataManager dataManager,
                                 SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         updateSortCurrentLabel();
+    }
+
+    public void setIntent(Intent intent) {
+        mIntent = intent;
+    }
+
+    private Intent getIntent() {
+        return mIntent;
+    }
+
+    public String getKeywordString() {
+        if (getIntent().hasExtra("keyword"))
+            return getIntent().getStringExtra("keyword");
+        return "";
+    }
+
+
+    private String getCategoryIds() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle.containsKey("categoryIds")) {
+            return bundle.getString("categoryIds");
+        } else {
+            return bundle.getString("id_subs");
+        }
     }
 
     public void resetPageNumber() {
@@ -106,24 +139,47 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
     }
 
     private void showEmptyProducts() {
-        if (isFirstLoaded() && !isIsAbleToLoadMore()) {
+        if (isFirstLoaded() && !isAbleToLoadMore()) {
             updateCurrentFilter();
             getNavigator().showEmptyProducts();
         }
     }
 
-    private void processResultOfFetchProductsByObject(JSONObject jsonResult, String categoryIds, String keyword, String sortType) {
-        String key = categoryIds + ":" + keyword + ":" + sortType;
-        getDataManager().setCachedResponse("fetchProductsByObject", key, jsonResult.toString());
+    private String getKeyCached() {
+        String key = getCategoryIds() + ":" + getKeywordString() + ":" + getCurrentSortType() + ":" + getPageNumber();
+        return key;
+    }
+
+
+    private int getItemsLimitation() {
+        return getKeywordString().length() > 0 ? SEARCH_PAGE_LIMIT : LISTING_PAGE_LIMIT;
+    }
+
+    private void updateIsAbleToLoadMore(ProductListResponse response, boolean isFirstRequest) {
+        if (getKeywordString().length() > 0) {
+            mIsAbleToLoadMore = (response.message.size() == SEARCH_PAGE_LIMIT);
+        } else {
+            if (isFirstRequest) {
+                mIsAbleToLoadMore = false;
+            } else mIsAbleToLoadMore = (response.message.size() == LISTING_PAGE_LIMIT);
+        }
+    }
+
+    private void processResultOfFetchProductsByObject(JSONObject jsonResult) {
+        boolean isFirstRequest = requestCounter == 0;
+        requestCounter++;
+        getDataManager().setCachedResponse("fetchProductsByObject", getKeyCached(), jsonResult.toString());
         try {
             if (jsonResult.get("code").equals(ApiCode.OK_200)) {
                 Gson gson = new Gson();
                 ProductListResponse response = gson.fromJson(jsonResult.toString(), ProductListResponse.class);
                 if (response.message != null && response.message.size() > 0) {
                     addProductsToDatabase(response.message);
+                    updateIsAbleToLoadMore(response, isFirstRequest);
                     return;
                 }
             }
+            mIsAbleToLoadMore = false;
             // NOT OK
             showEmptyProducts();
         } catch (Exception e) {
@@ -131,19 +187,19 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         }
     }
 
-    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject(String categoryIds, String keyword, String sortType) {
+    private ObservableOnSubscribe<ProductListResponse> fetchProductsByObject() {
         return (ObservableEmitter<ProductListResponse> subscriber) -> {
-            newFetch(categoryIds, keyword, sortType);
+            newFetch();
         };
     }
 
-    private void newFetch(String categoryIds, String keyword, String sortType) {
-        getDataManager().fetchProducts(new ProductListRequest(categoryIds, keyword, getPageNumber(), sortType))
+    private void newFetch() {
+        getDataManager().fetchProducts(new ProductListRequest(getCategoryIds(), getKeywordString(), getPageNumber(), getCurrentSortType()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(jsonResult -> {
                     // 200 OK
-                    processResultOfFetchProductsByObject(jsonResult, categoryIds, keyword, sortType);
+                    processResultOfFetchProductsByObject(jsonResult);
                 }, throwable -> {
                     showEmptyProducts();
                     Crashlytics.logException(throwable);
@@ -164,8 +220,9 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         getDataManager().clearCachedResponse();
     }
 
-    public void fetchProductsByCommand(String categoryIds, String keywords, String sortType) {
-        String key = categoryIds + ":" + keywords + ":" + sortType;
+    public void fetchProductsByCommand() {
+        mIsAbleToLoadMore = false;
+        String key = getCategoryIds() + ":" + getKeywordString() + ":" + getCurrentSortType() + ":" + getPageNumber();
         getCompositeDisposable().add(getDataManager().getCachedResponse("fetchProductsByObject", key)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
@@ -175,7 +232,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     if (cached != null && cached.length() > 0) {
                         try {
                             JSONObject jsonResult = new JSONObject(cached);
-                            processResultOfFetchProductsByObject(jsonResult, categoryIds, keywords, sortType);
+                            processResultOfFetchProductsByObject(jsonResult);
                             return;
                         } catch (JSONException e) {
                             Crashlytics.logException(e);
@@ -183,7 +240,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                     }
                     // NO CACHED
                     if (isOnline()) {
-                        ObservableOnSubscribe<ProductListResponse> resultProcessing = fetchProductsByObject(categoryIds, keywords, sortType);
+                        ObservableOnSubscribe<ProductListResponse> resultProcessing = fetchProductsByObject();
                         if (resultProcessing != null) {
                             Disposable disposable = Observable.create(resultProcessing).retryWhen(throwableObservable -> throwableObservable.zipWith(Observable.range(1, RETRY_MAX_COUNT), (n, i) -> i)
                                     .flatMap(retryCount -> Observable.timer(RETRY_TIME, TimeUnit.SECONDS))).subscribe();
@@ -195,7 +252,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, throwable -> {
                     showEmptyProducts();
                     Crashlytics.logException(throwable);
-                    newFetch(categoryIds, keywords, sortType);
+                    newFetch();
                 }));
     }
 
@@ -238,7 +295,7 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 .subscribe(filter -> {
                     ProductListNavigator navigator = getNavigator();
                     if (navigator != null)
-                        navigator.reApplyFilter();
+                        navigator.fetchProductsNew();
                 }, Crashlytics::logException));
     }
 
@@ -275,11 +332,8 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public boolean isIsAbleToLoadMore() {
+    public boolean isAbleToLoadMore() {
         return mIsAbleToLoadMore;
     }
 
-    public void setIsAbleToLoadMore(boolean isAbleToLoadMore) {
-        this.mIsAbleToLoadMore = isAbleToLoadMore;
-    }
 }

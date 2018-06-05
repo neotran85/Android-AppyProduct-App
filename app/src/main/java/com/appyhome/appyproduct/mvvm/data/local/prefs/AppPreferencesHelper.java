@@ -176,8 +176,10 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public void setCachedResponse(String command, String key, String response) {
-        mCachedResponse.edit().putString(PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key, response).apply();
+    public boolean setCachedResponse(String command, String key, String response) {
+        String keyCached = PREF_KEY_CACHED_RESPONSE + ":" + command + ":" + key;
+        mCachedResponse.edit().putString(keyCached, response).apply();
+        return mCachedResponse.getAll().size() > 1;
     }
 
     @Override

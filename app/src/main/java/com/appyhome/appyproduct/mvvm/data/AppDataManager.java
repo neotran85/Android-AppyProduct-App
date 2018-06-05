@@ -736,8 +736,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void setCachedResponse(String command, String key, String response) {
-        mPreferencesHelper.setCachedResponse(command, key, response);
+    public boolean setCachedResponse(String command, String key, String response) {
+        return mPreferencesHelper.setCachedResponse(command, key, response);
     }
 
     @Override

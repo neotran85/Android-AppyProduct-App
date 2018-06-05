@@ -318,13 +318,15 @@ public class AppDbHelper implements DbHelper {
     public Flowable<Boolean> addProducts(String userId, RealmList<Product> list) {
         try {
             beginTransaction();
+            long start = System.currentTimeMillis();
             RealmResults<Product> products = getRealm().where(Product.class).equalTo("wishlist", userId).findAll();
             for (int i = 0; i < list.size(); i++) {
                 Product product = list.get(i);
-                if (product != null)
-                    product.cached = i + 1;
-                if (isFavContaining(products, product)) {
-                    product.wishlist = userId;
+                if (product != null) {
+                    product.cached = start + i + 1;
+                    if (isFavContaining(products, product)) {
+                        product.wishlist = userId;
+                    }
                 }
             }
             getRealm().copyToRealmOrUpdate(list);
@@ -345,14 +347,15 @@ public class AppDbHelper implements DbHelper {
                 product.related = "";
             }
             getRealm().copyToRealmOrUpdate(oldProducts);
-
+            long start = System.currentTimeMillis();
             RealmResults<Product> products = getRealm().where(Product.class).equalTo("wishlist", userId).findAll();
             for (int i = 0; i < list.size(); i++) {
                 Product product = list.get(i);
-                if (product != null)
-                    product.cached = i + 1;
-                if (isFavContaining(products, product)) {
-                    product.wishlist = userId;
+                if (product != null) {
+                    product.cached = start + i + 1;
+                    if (isFavContaining(products, product)) {
+                        product.wishlist = userId;
+                    }
                 }
             }
             getRealm().copyToRealmOrUpdate(list);
