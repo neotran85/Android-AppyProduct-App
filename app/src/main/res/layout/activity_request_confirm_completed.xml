@@ -41,7 +41,7 @@
                     android:paddingTop="20dp">
 
                     <TextView
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        fontPath="fonts/TitilliumWeb-Semi.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rate the service"
@@ -59,7 +59,7 @@
                         android:stepSize="0.5" />
 
                     <TextView
-                        fontPath="fonts/TitilliumWeb-Bold.ttf"
+                        fontPath="fonts/TitilliumWeb-Semi.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
