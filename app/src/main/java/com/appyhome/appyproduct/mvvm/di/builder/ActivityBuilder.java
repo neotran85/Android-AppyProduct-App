@@ -50,6 +50,8 @@ import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step4.Servic
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step5.ServicesStep5Activity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step5.ServicesStep5ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.ServiceTrackingActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.ServiceTrackingActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.confirm.RequestConfirmedActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.detail.RequestDetailActivity;
@@ -67,6 +69,7 @@ import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragmentProvider;
+import com.appyhome.appyproduct.mvvm.ui.tabs.tracking.TrackingFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragmentProvider;
 
 import dagger.Module;
@@ -153,9 +156,12 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = ProductTrackingActivityModule.class)
     abstract ProductTrackingActivity bindProductTrackingActivity();
 
+    @ContributesAndroidInjector(modules = {ServiceTrackingActivityModule.class, RequestFragmentProvider.class})
+    abstract ServiceTrackingActivity bindServiceTrackingActivity();
+
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
             MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
-            NotificationFragmentProvider.class, RequestFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class,
-            EditVariantFragmentProvider.class, ProductVariantFragmentProvider.class})
+            NotificationFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class,
+            EditVariantFragmentProvider.class, ProductVariantFragmentProvider.class, TrackingFragmentProvider.class})
     abstract MainActivity bindMainActivity();
 }

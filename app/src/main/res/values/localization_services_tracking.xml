@@ -26,5 +26,5 @@
     <string name="request_additional_detail">Additional Detail</string>
     <string name="request_add_services">+ Add services</string>
     <string name="request_confirm_completed">Confirm Completed</string>
-    <string name="please_login_to_view_service_request">Please login to view your service requests.</string>
+    <string name="please_login_to_view_service_request">Please login to view your tracking.</string>
 </resources>

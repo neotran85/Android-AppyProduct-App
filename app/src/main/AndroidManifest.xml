@@ -14,9 +14,9 @@
         android:name=".AppyProductApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -117,7 +117,7 @@
         <activity
             android:name=".ui.appyproduct.cart.shipping.newaddress.NewAddressActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity
             android:name=".ui.appyproduct.cart.payment.PaymentActivity"
@@ -159,6 +159,9 @@
                 <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.appyservice.servicerequest.ServiceTrackingActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

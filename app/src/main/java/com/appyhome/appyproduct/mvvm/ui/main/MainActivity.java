@@ -14,12 +14,12 @@ import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityMainBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.favorite.FavoriteFragment;
-import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestFragment;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 import com.appyhome.appyproduct.mvvm.ui.main.tab.AppyTabNavigator;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragment;
+import com.appyhome.appyproduct.mvvm.ui.tabs.tracking.TrackingFragment;
 import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragment;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 import com.crashlytics.android.Crashlytics;
@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             case R.id.rlRequest:
                 if (!askForLogin(getString(R.string.please_login_to_view_service_request),
                         REQUEST_LOGIN_FOR_REQUEST_TRACKING)) {
-                    showFragment(RequestFragment.newInstance(), RequestFragment.TAG);
+                    showFragment(TrackingFragment.newInstance(), TrackingFragment.TAG);
                 }
                 break;
             case R.id.rlWishList:
