@@ -36,7 +36,6 @@
 
                 <TextView
                     android:id="@+id/tvTitle"
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -79,7 +78,6 @@
 
             <TextView
                 android:id="@+id/tvStatus"
-                fontPath="fonts/TitilliumWeb-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"

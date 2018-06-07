@@ -36,7 +36,6 @@
 
                 <Button
                     android:id="@+id/btRequest"
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -47,7 +46,6 @@
 
                 <Button
                     android:id="@+id/btOrders"
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -58,7 +56,6 @@
 
                 <Button
                     android:id="@+id/btClosed"
-                    fontPath="fonts/TitilliumWeb-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.R;
@@ -58,7 +59,9 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
 
     @Override
     public void onClick(View view) {
-        changeTabSelection((Button) view, getRecycleByTab(view.getId()));
+        if (view.getId() == R.id.btBack) {
+            getActivity().finish();
+        } else changeTabSelection((Button) view, getRecycleByTab(view.getId()));
     }
 
     private void changeTabSelection(Button view, RecyclerView recyclerView) {
@@ -116,6 +119,11 @@ public class RequestFragment extends BaseFragment<FragmentRequestBinding, Reques
         mTabs = new Button[]{mBinder.btRequest, mBinder.btOrders, mBinder.btClosed};
         ViewUtils.setOnClickListener(this, mTabs);
         changeTabSelection(mBinder.btRequest, mBinder.requestRecyclerView);
+        ImageView backButton = getActivity().findViewById(R.id.btBack);
+        if (backButton != null) {
+            backButton.setVisibility(View.VISIBLE);
+            backButton.setOnClickListener(this);
+        }
     }
 
     @Override
