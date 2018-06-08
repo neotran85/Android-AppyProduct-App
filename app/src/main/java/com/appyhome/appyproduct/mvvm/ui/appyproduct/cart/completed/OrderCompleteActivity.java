@@ -67,12 +67,6 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
         startActivity(intent);*/
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     @Override
     public OrderCompleteViewModel getViewModel() {
         return mMainViewModel;

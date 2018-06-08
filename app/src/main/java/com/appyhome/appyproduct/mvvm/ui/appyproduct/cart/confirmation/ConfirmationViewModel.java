@@ -4,7 +4,6 @@ import android.databinding.ObservableField;
 import android.text.TextUtils;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
@@ -21,8 +20,6 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
-
-import io.realm.RealmResults;
 
 public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> {
 
@@ -157,7 +154,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     }
 
     public void addOrder(String statusPayment, String promoCodeUsed, String transactionId) {
-
         CheckoutOrderRequest request = new CheckoutOrderRequest();
         request.address_id = addressId;
         request.cart_id = TextUtils.join(",", strCartIds);

@@ -32,9 +32,7 @@ import javax.inject.Inject;
 import io.realm.RealmResults;
 
 public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfirmationBinding, ConfirmationViewModel> implements ConfirmationNavigator {
-
-    final int HEIGHT_CART_ITEM = 144;
-    final int HEIGHT_TITLE_CART_ITEM = 48;
+    
     public static final int REQUEST_VISA_PAYMENT = 10;
     @Inject
     public CartAdapter mAdapter;
