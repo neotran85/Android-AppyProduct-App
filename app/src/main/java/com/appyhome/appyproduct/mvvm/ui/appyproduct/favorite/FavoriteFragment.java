@@ -43,23 +43,19 @@ import io.realm.RealmResults;
 public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, FavoriteViewModel> implements FavoriteNavigator, ProductItemNavigator, EditVariantNavigator {
 
     public static final String TAG = "FavoriteFragment";
+    @Inject
+    FavoriteViewModel mViewModel;
+    @Inject
+    FavoriteAdapter mFavoriteAdapter;
+    @Inject
+    int mLayoutId;
+    FragmentFavoriteBinding mBinder;
     private ProductCartItemViewModel mProductCartItemViewModel;
     private EditVariantFragment mEditVariantFragment;
     private SearchToolbarViewHolder mSearchToolbarViewHolder;
     private Point mCartPosition = new Point();
     private Point mAddToCartPosition = new Point();
     private SnackBarCallBack mSnackBarCallBack;
-
-    @Inject
-    FavoriteViewModel mViewModel;
-
-    @Inject
-    FavoriteAdapter mFavoriteAdapter;
-
-    @Inject
-    int mLayoutId;
-
-    FragmentFavoriteBinding mBinder;
 
     public static FavoriteFragment newInstance() {
         Bundle args = new Bundle();
@@ -159,7 +155,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         mSnackBarCallBack = new SnackBarCallBack(vm, pos);
         showSnackBar(getString(R.string.removed_wishlist), "UNDO", v -> {
             if (mFavoriteAdapter != null) {
-                if(mFavoriteAdapter.getItemSize() == 0)
+                if (mFavoriteAdapter.getItemSize() == 0)
                     setUpRecyclerViewGrid(mBinder.productsRecyclerView);
                 mFavoriteAdapter.add(vm, pos);
                 if (mSnackBarCallBack != null)

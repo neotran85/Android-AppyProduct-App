@@ -5,8 +5,6 @@ import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
-
 import io.realm.RealmList;
 
 

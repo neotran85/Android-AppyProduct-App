@@ -1,13 +1,10 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct;
 
-import android.content.Context;
-
 import com.appyhome.appyproduct.mvvm.AppConstants;
-import com.appyhome.appyproduct.mvvm.R;
 
 public final class AppyProductConstants {
     public static void initiate() {
-        PRODUCT_CONFIG.PRODUCT_SIZE = AppConstants.SCREEN_WIDTH / 2 ;
+        PRODUCT_CONFIG.PRODUCT_SIZE = AppConstants.SCREEN_WIDTH / 2;
     }
 
     public static class RESOURCE_URL {

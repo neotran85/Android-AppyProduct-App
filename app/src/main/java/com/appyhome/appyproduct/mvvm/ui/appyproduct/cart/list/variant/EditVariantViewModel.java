@@ -17,10 +17,8 @@ import com.crashlytics.android.Crashlytics;
 
 public class EditVariantViewModel extends BaseViewModel<EditVariantNavigator> implements FetchUserInfoNavigator {
 
-    private ProductCartItemViewModel mProductCartItemViewModel;
-
     public ObservableField<String> confirmButtonText = new ObservableField<>("CONFIRM");
-
+    private ProductCartItemViewModel mProductCartItemViewModel;
     private ProductVariant mSelectedVariant;
 
     private FetchUserInfoViewModel mFetchUserInfoViewModel;

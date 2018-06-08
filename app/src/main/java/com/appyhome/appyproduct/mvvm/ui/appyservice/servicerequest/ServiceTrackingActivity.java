@@ -1,6 +1,5 @@
 package com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

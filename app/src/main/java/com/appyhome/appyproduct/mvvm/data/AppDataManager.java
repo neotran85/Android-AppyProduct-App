@@ -763,8 +763,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void setDefaultShippingLocation(String location) {
-        mPreferencesHelper.setDefaultShippingLocation(location);
+    public String getDefaultShippingPostCode() {
+        return mPreferencesHelper.getDefaultShippingPostCode();
     }
 
     @Override
@@ -773,13 +773,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public String getDefaultShippingPostCode() {
-        return mPreferencesHelper.getDefaultShippingPostCode();
+    public String getDefaultShippingLocation() {
+        return mPreferencesHelper.getDefaultShippingLocation();
     }
 
     @Override
-    public String getDefaultShippingLocation() {
-        return mPreferencesHelper.getDefaultShippingLocation();
+    public void setDefaultShippingLocation(String location) {
+        mPreferencesHelper.setDefaultShippingLocation(location);
     }
 
     @Override

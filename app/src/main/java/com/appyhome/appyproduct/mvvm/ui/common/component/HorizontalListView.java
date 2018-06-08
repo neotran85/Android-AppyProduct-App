@@ -7,8 +7,6 @@ import android.widget.LinearLayout;
 
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
-import java.util.ArrayList;
-
 import javax.annotation.Nullable;
 
 public abstract class HorizontalListView extends LinearLayout {

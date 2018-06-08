@@ -202,9 +202,9 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(orderGetResponse -> {
                     // GET SUCCEEDED
                     if (orderGetResponse != null && orderGetResponse.isValid()) {
-                        for(ProductOrder order: orderGetResponse.message) {
+                        for (ProductOrder order : orderGetResponse.message) {
                             order.customer_id = getUserId();
-                            if(order.id == idOrder) {
+                            if (order.id == idOrder) {
                                 getNavigator().addOrderOk(order);
                             }
                         }

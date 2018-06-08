@@ -13,14 +13,12 @@ import java.util.HashMap;
 
 public class CartItemViewModel extends ProductCartItemViewModel {
     public ObservableField<String> shippingTypeOpt = new ObservableField<>("");
-
+    public HashMap<String, Double> shippingFees;
     private int sellerId;
     private int addressId;
     private String cartIds;
-
     private String shippingType = ShippingType.LAND;
     private double shippingCost = 0.0;
-    public HashMap<String, Double> shippingFees;
 
     public CartItemViewModel(BaseViewModel baseViewModel) {
         super(baseViewModel.getDataManager(), baseViewModel.getSchedulerProvider());
@@ -28,10 +26,6 @@ public class CartItemViewModel extends ProductCartItemViewModel {
 
     public String getShippingType() {
         return shippingType;
-    }
-
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
     }
 
     public void setAddressId(int addressId) {
@@ -88,5 +82,9 @@ public class CartItemViewModel extends ProductCartItemViewModel {
 
     public int getSellerId() {
         return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
     }
 }

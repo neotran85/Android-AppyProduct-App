@@ -161,16 +161,6 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public void setDefaultShippingLocation(String location) {
-        mPrefs.edit().putString(PREF_KEY_SHIPPING_LOCATION, location).apply();
-    }
-
-    @Override
-    public void setDefaultShippingPostCode(String postCode) {
-        mPrefs.edit().putString(PREF_KEY_SHIPPING_POST_CODE, postCode).apply();
-    }
-
-    @Override
     public void setProductsSortCurrent(String userId, String sort) {
         mPrefs.edit().putString(PREF_PRODUCT_SORT_CURRENT + ":" + userId, sort).apply();
     }
@@ -195,8 +185,18 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
+    public void setDefaultShippingPostCode(String postCode) {
+        mPrefs.edit().putString(PREF_KEY_SHIPPING_POST_CODE, postCode).apply();
+    }
+
+    @Override
     public String getDefaultShippingLocation() {
         return mPrefs.getString(PREF_KEY_SHIPPING_LOCATION, "");
+    }
+
+    @Override
+    public void setDefaultShippingLocation(String location) {
+        mPrefs.edit().putString(PREF_KEY_SHIPPING_LOCATION, location).apply();
     }
 
     @Override

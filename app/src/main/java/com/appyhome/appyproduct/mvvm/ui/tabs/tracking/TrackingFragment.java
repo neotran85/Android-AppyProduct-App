@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
-import com.appyhome.appyproduct.mvvm.databinding.FragmentSampleBinding;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentTrackingBinding;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.ServiceTrackingActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;

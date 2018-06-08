@@ -32,9 +32,9 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRes
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.ServiceOrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ServiceOrderEditRequest;
 
 import org.json.JSONObject;
 

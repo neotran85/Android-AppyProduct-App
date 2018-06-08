@@ -65,17 +65,6 @@ public class FavoriteAdapter extends ProductAdapter {
         return new FavoriteItemEmptyViewHolder(itemViewBinding);
     }
 
-    public class FavoriteItemEmptyViewHolder extends BaseViewHolder {
-        public FavoriteItemEmptyViewHolder(ViewItemProductFavoriteEmptyBinding binding) {
-            super(binding.getRoot());
-        }
-
-        @Override
-        public void onBind(int position) {
-
-        }
-    }
-
     public int getItemsSize() {
         return mItems != null ? mItems.size() : 0;
     }
@@ -103,6 +92,17 @@ public class FavoriteAdapter extends ProductAdapter {
     @Override
     protected int getEmptyItemLayout() {
         return R.layout.view_item_sample_empty;
+    }
+
+    public class FavoriteItemEmptyViewHolder extends BaseViewHolder {
+        public FavoriteItemEmptyViewHolder(ViewItemProductFavoriteEmptyBinding binding) {
+            super(binding.getRoot());
+        }
+
+        @Override
+        public void onBind(int position) {
+
+        }
     }
 
 }

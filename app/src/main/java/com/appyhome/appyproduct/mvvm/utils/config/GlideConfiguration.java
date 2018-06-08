@@ -20,7 +20,7 @@ public class GlideConfiguration extends AppGlideModule {
         // "IllegalStateException: Software rendering doesn't support hardware bitmaps"
         RequestOptions options = new RequestOptions();
         boolean isAndroidO = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
-            DecodeFormat format = isAndroidO ? DecodeFormat.PREFER_ARGB_8888 : DecodeFormat.PREFER_RGB_565;
+        DecodeFormat format = isAndroidO ? DecodeFormat.PREFER_ARGB_8888 : DecodeFormat.PREFER_RGB_565;
         options.format(format);
         if (isAndroidO) options.disallowHardwareConfig();
 

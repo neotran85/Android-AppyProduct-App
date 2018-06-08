@@ -12,8 +12,6 @@ import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONObject;
 
-import io.reactivex.functions.Consumer;
-
 public class MyProfileViewModel extends BaseViewModel<MyProfileNavigator> {
 
     public ObservableField<String> lastName = new ObservableField<>("");

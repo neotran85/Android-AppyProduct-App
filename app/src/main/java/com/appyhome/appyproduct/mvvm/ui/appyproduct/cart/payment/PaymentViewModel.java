@@ -24,6 +24,7 @@ public class PaymentViewModel extends BaseViewModel<PaymentNavigator> {
         mFetchUserInfoViewModel = new FetchUserInfoViewModel(dataManager, schedulerProvider);
 
     }
+
     public void setNavigator(PaymentNavigator navigator) {
         super.setNavigator(navigator);
         mVerifyOrderViewModel.setNavigator(navigator);

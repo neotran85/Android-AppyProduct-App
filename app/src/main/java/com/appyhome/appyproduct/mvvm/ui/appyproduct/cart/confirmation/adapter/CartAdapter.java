@@ -19,9 +19,8 @@ import io.realm.RealmResults;
 
 public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigator> {
 
-    private ConfirmationNavigator mNavigator;
-
     public HashMap<String, ArrayList<CartItemViewModel>> viewModelManager;
+    private ConfirmationNavigator mNavigator;
 
     public CartAdapter() {
         this.mItems = null;
@@ -88,7 +87,7 @@ public class CartAdapter extends SampleAdapter<ProductCart, ConfirmationNavigato
         int sellerId = 0;
         for (BaseViewModel item : mItems) {
             CartItemViewModel cartItem = (CartItemViewModel) item;
-            if(cartItem.getSellerId() != sellerId) {
+            if (cartItem.getSellerId() != sellerId) {
                 total = total + cartItem.getShippingCost();
             }
             sellerId = cartItem.getSellerId();

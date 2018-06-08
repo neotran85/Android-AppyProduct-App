@@ -6,5 +6,6 @@ import io.realm.RealmResults;
 
 public interface ProductDetailVariantNavigator {
     void selectedVariant(ProductVariant variant);
+
     void showedVariants(RealmResults<ProductVariant> variants);
 }

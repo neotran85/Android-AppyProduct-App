@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.Product;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.adapter.ProductItemViewModel;
 
-import java.util.ArrayList;
-
 import io.realm.OrderedRealmCollection;
 
 public interface ProductListNavigator {

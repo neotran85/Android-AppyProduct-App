@@ -12,7 +12,7 @@ public class VisaPaymentActivityModule {
 
     @Provides
     VisaPaymentViewModel provideVisaPaymentViewModel(DataManager dataManager,
-                                                SchedulerProvider schedulerProvider) {
+                                                     SchedulerProvider schedulerProvider) {
         return new VisaPaymentViewModel(dataManager, schedulerProvider);
     }
 

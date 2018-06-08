@@ -149,7 +149,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     public void showLoading() {
         Activity activity = getActivity();
-        if (activity!= null && !activity.isFinishing())
+        if (activity != null && !activity.isFinishing())
             AlertManager.getInstance(activity).showLoading();
     }
 
@@ -165,14 +165,14 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
                 .commit();
     }
 
+    public void showSnackBar(String text, String actionText, View.OnClickListener actionListener, Snackbar.Callback callback) {
+        Snackbar.make(getView(), text, Snackbar.LENGTH_LONG).addCallback(callback).setAction(actionText, actionListener).show();
+    }
+
     public interface Callback {
 
         void onFragmentAttached();
 
         void onFragmentDetached(String tag);
-    }
-
-    public void showSnackBar(String text, String actionText, View.OnClickListener actionListener, Snackbar.Callback callback) {
-        Snackbar.make(getView(), text, Snackbar.LENGTH_LONG).addCallback(callback).setAction(actionText, actionListener).show();
     }
 }

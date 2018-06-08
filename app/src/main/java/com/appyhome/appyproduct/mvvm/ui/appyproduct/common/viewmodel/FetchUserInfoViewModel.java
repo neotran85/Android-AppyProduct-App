@@ -94,11 +94,13 @@ public class FetchUserInfoViewModel extends BaseViewModel<FetchUserInfoNavigator
         }
         return arrayList;
     }
+
     private void addProductsPadding(RealmList<Product> products, String tag) {
         getCompositeDisposable().add(getDataManager().addProducts(getUserId(), products, tag)
                 .take(1)
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(success -> {}, Crashlytics::logException));
+                .subscribe(success -> {
+                }, Crashlytics::logException));
     }
 
     private ArrayList<ProductCartResponse> processCartData(ApiResponse data) {

@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.cart.shipping;
 
 import android.databinding.ObservableField;
-import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;

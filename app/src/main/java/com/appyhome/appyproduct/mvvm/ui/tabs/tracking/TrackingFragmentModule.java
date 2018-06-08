@@ -15,7 +15,7 @@ public class TrackingFragmentModule {
 
     @Provides
     TrackingViewModel provideTrackingViewModel(DataManager dataManager,
-                                             SchedulerProvider schedulerProvider) {
+                                               SchedulerProvider schedulerProvider) {
         return new TrackingViewModel(dataManager, schedulerProvider);
     }
 

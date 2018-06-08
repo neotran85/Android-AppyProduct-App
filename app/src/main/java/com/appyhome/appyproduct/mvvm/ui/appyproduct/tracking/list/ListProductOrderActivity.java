@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductOrderListBinding;
-import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
 

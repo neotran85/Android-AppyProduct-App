@@ -11,9 +11,6 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.Seller;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.AddWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.DeleteWishListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
-import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListResponse;
-import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.AppyProductConstants;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoNavigator;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.common.viewmodel.FetchUserInfoViewModel;
@@ -22,7 +19,6 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
 
 public class ProductItemViewModel extends BaseViewModel<ProductItemNavigator> implements FetchUserInfoNavigator {
     public ObservableField<String> title = new ObservableField<>("");

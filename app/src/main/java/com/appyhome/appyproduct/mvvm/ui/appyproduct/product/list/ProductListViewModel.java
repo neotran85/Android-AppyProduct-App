@@ -56,12 +56,12 @@ public class ProductListViewModel extends BaseViewModel<ProductListNavigator> {
         updateSortCurrentLabel();
     }
 
-    public void setIntent(Intent intent) {
-        mIntent = intent;
-    }
-
     private Intent getIntent() {
         return mIntent;
+    }
+
+    public void setIntent(Intent intent) {
+        mIntent = intent;
     }
 
     public String getKeywordString() {
