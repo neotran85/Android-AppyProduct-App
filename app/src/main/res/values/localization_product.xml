@@ -4,7 +4,6 @@
     <string name="warning_empty_cart">Are you sure to empty your cart?</string>
     <string name="please_input_contact">Please input contact name and valid phone number.</string>
     <string name="please_input_shipping_address">Please input a shipping address</string>
-    <string name="please_input_valid_phone">Please input a valid phone number</string>
     <string name="please_input_valid_post_code">Please input a valid post code</string>
     <string name="visa_credit_debit">Visa Credit / Debit</string>
     <string name="via_molpay">Molpay</string>
@@ -22,8 +21,6 @@
     <string name="enter_a_promotion_code">Promotion code</string>
     <string name="cart_select_all">Select All</string>
     <string name="cart_total">Total:</string>
-    <string name="edit_variant_confirm">Confirm</string>
-    <string name="unable_to_add_more_than">Sorry, unable to add more than</string>
     <string name="sure_to_empty_wishlist">Are you sure to empty your wishlist?</string>
     <string name="ask_login_to_add_wishlist">Please login to add this product to your wishlist.</string>
     <string name="please_login_view_wishlist">Please login to view your wishlist</string>
@@ -37,7 +34,6 @@
     <string name="pls_login_add_to_cart">Please login to add product to your cart.</string>
     <string name="warranty_text"><![CDATA[Defective items must be reported and acknowledged by AppyHome Customer Service within 7days of product received and should be returned to AppyHome Warehouse for further action upon warranty approved. Defective item endorsed after seven (7) days from the date of received is no longer eligible for replacement or refund. Any extended warranty period offered by Manufacturer directly will be and should be attended by Representative by Manufacturer unless stated otherwise.]]></string>
     <string name="return_notice">Need to return the items to seller\'s address by using post office or other shipping service</string>
-    <string name="please_select_your_location_for_shipping_fee_estimation">Please select your location to estimate shipping cost.</string>
     <string name="fee_unknown">Unknown</string>
     <string name="appy_home_product_payment">AppyHome Product Payment</string>
     <string name="filter_price_max">Max</string>
@@ -53,7 +49,6 @@
     <string name="filter_reset">CLEAR FORM</string>
     <string name="filter_apply">APPLY</string>
     <string name="filter_rating">Rating</string>
-    <string name="successfully_charged">Thank you. Successfully Charged!</string>
     <string name="visa_fill_all_pls">Please fill all the information.</string>
     <string name="visa_3_digits_on_the_back_of_your_card">3 digits on the back of your card</string>
     <string name="visa_cvv_code">CVV Code</string>

@@ -74,12 +74,6 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         mMainViewModel.setNavigator(this);
     }
 
-    private void setUpRecyclerViewList(RecyclerView rv) {
-        ViewUtils.setUpRecyclerViewListVertical(rv, false);
-        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        rv.setNestedScrollingEnabled(false);
-    }
-
     @Override
     public void editShippingAddress() {
         Intent intent = ShippingAddressActivity.getStartIntent(this);
