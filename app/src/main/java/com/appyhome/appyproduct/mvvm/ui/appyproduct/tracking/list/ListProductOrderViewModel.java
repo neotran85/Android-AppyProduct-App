@@ -8,18 +8,16 @@ import com.appyhome.appyproduct.mvvm.ui.base.BaseViewModel;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 
-import java.util.ArrayList;
-
 public class ListProductOrderViewModel extends BaseViewModel<ListProductOrderNavigator> {
     private static final int STATUS_ACTIVE = 0;
     private static final int STATUS_HISTORY = 1;
     private static final int STATUS_CANCELED = 2;
 
-    public ObservableField<ListProductOrderAdapter> activeAdapter = new ObservableField<>();
+    public ObservableField<ListProductOrderAdapter> activeAdapter = new ObservableField<>(new ListProductOrderAdapter());
 
-    public ObservableField<ListProductOrderAdapter> historyAdapter = new ObservableField<>();
+    public ObservableField<ListProductOrderAdapter> historyAdapter = new ObservableField<>(new ListProductOrderAdapter());
 
-    public ObservableField<ListProductOrderAdapter> canceledAdapter = new ObservableField<>();
+    public ObservableField<ListProductOrderAdapter> canceledAdapter = new ObservableField<>(new ListProductOrderAdapter());
 
     public ListProductOrderViewModel(DataManager dataManager,
                                      SchedulerProvider schedulerProvider) {

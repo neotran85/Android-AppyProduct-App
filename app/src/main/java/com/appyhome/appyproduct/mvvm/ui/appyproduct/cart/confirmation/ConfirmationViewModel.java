@@ -35,12 +35,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
     public ObservableField<Double> productCost = new ObservableField<>(0.0);
     public ObservableField<Boolean> isVisa = new ObservableField<>(false);
     public ObservableField<Boolean> isMolpay = new ObservableField<>(false);
-
-    private float mTotalCost = 0;
-    private RealmResults<ProductCart> mCarts;
     private String mPaymentMethod = "";
-    private AppyAddress mShippingAddress;
-    private String customerName = "";
     private int addressId = 0;
     private ArrayList<String> strCartIds;
     private double shippingCostAll = 0.0;
@@ -70,11 +65,9 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(addressResult -> {
                     // GET SUCCEEDED
                     addressId = addressResult.id;
-                    mShippingAddress = addressResult;
                     name.set(addressResult.recipient_name);
                     phoneNumber.set(addressResult.recipient_phone_number);
                     address.set(addressResult.getAddressText());
-                    customerName = addressResult.recipient_name;
                     getAllCheckedProductCarts();
                 }, Crashlytics::logException));
     }
@@ -96,7 +89,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(items -> {
                     // GET SUCCEEDED
-                    mCarts = items;
                     getNavigator().showCheckedItems(items, addressId);
                     if (items != null && items.size() > 0) {
                         totalCost = 0.0;
