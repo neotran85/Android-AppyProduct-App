@@ -29,13 +29,13 @@ public class ApiUrlConfig {
     public static final String API_APPOINTMENT_DELETE = BuildConfig.BASE_URL
             + "api/delete/appointment";
 
-    public static final String API_ORDER_GET = BuildConfig.BASE_URL
+    public static final String API_SERVICE_ORDER_GET = BuildConfig.BASE_URL
             + "api/read/order";
 
-    public static final String API_ORDER_EDIT = BuildConfig.BASE_URL
+    public static final String API_SERVICE_ORDER_EDIT = BuildConfig.BASE_URL
             + "api/edit/order";
 
-    public static final String API_ORDER_COMPLETED = BuildConfig.BASE_URL
+    public static final String API_SERVICE_ORDER_COMPLETED = BuildConfig.BASE_URL
             + "api/mark/ordercomplete";
 
     public static final String API_RECEIPT_GET = BuildConfig.BASE_URL
@@ -122,6 +122,9 @@ public class ApiUrlConfig {
 
     public static final String API_PRODUCT_ORDER_VERIFY = BuildConfig.BASE_URL
             + "api/appyproduct/checkout/verify";
+
+    public static final String API_PRODUCT_ORDER_GET = BuildConfig.BASE_URL
+            + "api/appyproduct/order/get";
 
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";

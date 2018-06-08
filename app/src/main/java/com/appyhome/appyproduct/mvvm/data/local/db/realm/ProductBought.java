@@ -28,17 +28,22 @@ public class ProductBought extends RealmObject {
     @Expose
     @SerializedName("product_id")
     @ColumnInfo(name = "product_id")
-    public int product_id;
+    public long product_id;
 
     @Expose
     @SerializedName("variant_id")
     @ColumnInfo(name = "variant_id")
-    public int variant_id;
+    public long variant_id;
 
     @Expose
     @SerializedName("quantity")
     @ColumnInfo(name = "quantity")
-    public int quantity;
+    public long quantity;
+
+    @Expose
+    @SerializedName("card_id")
+    @ColumnInfo(name = "card_id")
+    public long card_id;
 
     @Expose
     @SerializedName("price")

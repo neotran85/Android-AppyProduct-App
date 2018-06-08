@@ -52,7 +52,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
     private TypeRequestData[] mArrayTypeRequest = {
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.fetchAppointment(new AppointmentGetRequest(id));
+                    return manager.fetchServiceAppointment(new AppointmentGetRequest(id));
                 }
 
                 public String getDateLabel() {
@@ -61,7 +61,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             },
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.fetchOrder(new OrderGetRequest(id));
+                    return manager.fetchServiceOrder(new OrderGetRequest(id));
                 }
 
                 public String getDateLabel() {
@@ -70,7 +70,7 @@ public class RequestItemViewModel extends BaseViewModel<RequestItemNavigator> {
             },
             new TypeRequestData() {
                 public Single<JSONObject> getRequestData(DataManager manager, String id) {
-                    return manager.fetchReceipt(new ReceiptGetRequest(id));
+                    return manager.fetchServiceReceipt(new ReceiptGetRequest(id));
                 }
 
                 public String getDateLabel() {

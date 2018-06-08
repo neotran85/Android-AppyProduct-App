@@ -69,11 +69,6 @@ public interface DbHelper {
 
     Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId);
 
-    Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                    String paymentMethod, AppyAddress shippingAddress,
-                                    String customerId, String customerName,
-                                    float totalCost, float discount, long orderId);
-
     Flowable<Integer> getTotalCountProductCarts(String userId);
 
     Flowable<Boolean> addOrRemoveFavorite(long productId, String userId);
@@ -131,4 +126,8 @@ public interface DbHelper {
     Flowable<RealmResults<Product>> getCartPadding(String userId);
 
     Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag);
+
+    Flowable<Boolean> saveProductOrders(RealmList<ProductOrder> orders);
+
+    Flowable<ProductOrder> getProductOrder(long orderId);
 }

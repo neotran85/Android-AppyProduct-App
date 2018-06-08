@@ -1,4 +1,4 @@
-package com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking;
+package com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.detail;
 
 import android.databinding.ObservableField;
 
@@ -23,7 +23,6 @@ public class ProductTrackingViewModel extends BaseViewModel<ProductTrackingNavig
                 .subscribe(order -> {
                     // GET SUCCEEDED
                     fieldOrderId.set(order.id + "");
-                    fieldPaymentMethod.set("Paid by " + order.payment_method);
                     getNavigator().showOrder(order);
                 }, Crashlytics::logException));
     }

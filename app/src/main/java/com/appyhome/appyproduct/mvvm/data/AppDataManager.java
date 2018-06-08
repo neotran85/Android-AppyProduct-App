@@ -37,6 +37,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.OrderGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
@@ -49,9 +50,9 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRes
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ServiceOrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyService;
 import com.appyhome.appyproduct.mvvm.data.model.db.AppyServiceCategory;
 import com.appyhome.appyproduct.mvvm.data.model.db.ServiceAddress;
@@ -235,43 +236,43 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<JSONObject> fetchAppointmentAll() {
-        return mApiHelper.fetchAppointmentAll();
+    public Single<JSONObject> fetchServiceAppointmentAll() {
+        return mApiHelper.fetchServiceAppointmentAll();
     }
 
     @Override
-    public Single<JSONObject> fetchAppointment(AppointmentGetRequest request) {
-        return mApiHelper.fetchAppointment(request);
+    public Single<JSONObject> fetchServiceAppointment(AppointmentGetRequest request) {
+        return mApiHelper.fetchServiceAppointment(request);
     }
 
     @Override
-    public Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request) {
-        return mApiHelper.deleteAppointment(request);
+    public Single<AppointmentDeleteResponse> deleteServiceAppointment(AppointmentDeleteRequest request) {
+        return mApiHelper.deleteServiceAppointment(request);
     }
 
     @Override
-    public Single<JSONObject> fetchOrder(OrderGetRequest request) {
-        return mApiHelper.fetchOrder(request);
+    public Single<JSONObject> fetchServiceOrder(OrderGetRequest request) {
+        return mApiHelper.fetchServiceOrder(request);
     }
 
     @Override
-    public Single<JSONObject> fetchOrderAll() {
-        return mApiHelper.fetchOrderAll();
+    public Single<JSONObject> fetchServiceOrderAll() {
+        return mApiHelper.fetchServiceOrderAll();
     }
 
     @Override
-    public Single<JSONObject> fetchReceipt(ReceiptGetRequest request) {
-        return mApiHelper.fetchReceipt(request);
+    public Single<JSONObject> fetchServiceReceipt(ReceiptGetRequest request) {
+        return mApiHelper.fetchServiceReceipt(request);
     }
 
     @Override
-    public Single<JSONObject> fetchReceiptAll() {
-        return mApiHelper.fetchReceiptAll();
+    public Single<JSONObject> fetchServiceReceiptAll() {
+        return mApiHelper.fetchServiceReceiptAll();
     }
 
     @Override
-    public Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request) {
-        return mApiHelper.markOrderCompleted(request);
+    public Single<OrderCompletedResponse> markServiceOrderCompleted(OrderCompletedRequest request) {
+        return mApiHelper.markServiceOrderCompleted(request);
     }
 
     @Override
@@ -290,8 +291,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<JSONObject> editOrder(OrderEditRequest request) {
-        return mApiHelper.editOrder(request);
+    public Single<JSONObject> editServiceOrder(ServiceOrderEditRequest request) {
+        return mApiHelper.editServiceOrder(request);
     }
 
     @Override
@@ -529,15 +530,6 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<RealmResults<ProductCart>> getAllCheckedProductCarts(String userId) {
         return mDbHelper.getAllCheckedProductCarts(userId);
-    }
-
-    @Override
-    public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                           String paymentMethod, AppyAddress shippingAddress,
-                                           String customerId, String customerName,
-                                           float totalCost, float discount, long orderId) {
-        return mDbHelper.addOrder(items, paymentMethod, shippingAddress, customerId,
-                customerName, totalCost, discount, orderId);
     }
 
     @Override
@@ -843,5 +835,20 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag) {
         return mDbHelper.addProducts(userId, list, tag);
+    }
+
+    @Override
+    public Flowable<Boolean> saveProductOrders(RealmList<ProductOrder> orders) {
+        return mDbHelper.saveProductOrders(orders);
+    }
+
+    @Override
+    public Flowable<ProductOrder> getProductOrder(long orderId) {
+        return mDbHelper.getProductOrder(orderId);
+    }
+
+    @Override
+    public Single<OrderGetResponse> fetchUserProductOrders() {
+        return mApiHelper.fetchUserProductOrders();
     }
 }

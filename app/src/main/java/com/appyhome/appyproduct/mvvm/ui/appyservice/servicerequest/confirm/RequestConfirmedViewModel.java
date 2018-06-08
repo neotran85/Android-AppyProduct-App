@@ -16,7 +16,7 @@ public class RequestConfirmedViewModel extends RequestItemViewModel {
     public void markOrderCompleted(String comments, String rating) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .markOrderCompleted(new OrderCompletedRequest(getIdNumber(), comments, rating))
+                .markServiceOrderCompleted(new OrderCompletedRequest(getIdNumber(), comments, rating))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {

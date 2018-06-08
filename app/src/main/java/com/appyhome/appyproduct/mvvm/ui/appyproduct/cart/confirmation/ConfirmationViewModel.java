@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import com.appyhome.appyproduct.mvvm.data.DataManager;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.AppyAddress;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductCart;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.ApiResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.CheckoutOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
@@ -17,8 +19,6 @@ import com.appyhome.appyproduct.mvvm.utils.helper.DataUtils;
 import com.appyhome.appyproduct.mvvm.utils.rx.SchedulerProvider;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.internal.LinkedTreeMap;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -181,16 +181,8 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(result -> {
                     if (result != null && result.isValid()) {
-                        if (result.message instanceof String) {
-                            String message = (String) result.message;
-                            String[] resultStr = message.split(":");
-                            if (resultStr != null && resultStr.length == 2) {
-                                if (DataUtils.isNumeric(resultStr[1])) {
-                                    long orderId = Long.valueOf(resultStr[1]);
-                                    addOrderToDatabase(orderId);
-                                }
-                            }
-                        }
+                        long idOrder = getOrderId(result);
+                        addOrdersToDatabase(idOrder);
                     } else {
                         getNavigator().addOrderFailed(result != null ? result.message.toString() : "");
                     }
@@ -202,19 +194,38 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
         getNavigator().addOrderFailed("");
     }
 
-    private void addOrderToDatabase(long orderId) {
-        getCompositeDisposable().add(getDataManager().addOrder(mCarts, mPaymentMethod,
-                mShippingAddress, getUserId(), customerName, mTotalCost, 0, orderId)
-                .take(1)
+    private long getOrderId(ApiResponse result) {
+        if (result.message instanceof String) {
+            String message = (String) result.message;
+            String[] resultStr = message.split(":");
+            if (resultStr != null && resultStr.length == 2) {
+                if (DataUtils.isNumeric(resultStr[1])) {
+                    return Long.valueOf(resultStr[1]);
+                }
+            }
+        }
+        return -1;
+    }
+
+    private void addOrdersToDatabase(long idOrder) {
+        getCompositeDisposable().add(getDataManager().fetchUserProductOrders()
+                .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(order -> {
+                .subscribe(orderGetResponse -> {
                     // GET SUCCEEDED
-                    if (order != null && order.isValid()) {
-                        getNavigator().addOrderOk(order);
-                    } else {
-                        addOrderFailed(null);
+                    if (orderGetResponse != null && orderGetResponse.isValid()) {
+                        for(ProductOrder order: orderGetResponse.message) {
+                            if(order.id == idOrder) {
+                                getNavigator().addOrderOk(order);
+                            }
+                        }
+                        getCompositeDisposable().add(getDataManager().saveProductOrders(orderGetResponse.message)
+                                .take(1)
+                                .observeOn(getSchedulerProvider().ui())
+                                .subscribe(success -> {
+                                }, Crashlytics::logException));
                     }
-                }, this::addOrderFailed));
+                }, Crashlytics::logException));
     }
 
     public void updateUserCartAgain() {

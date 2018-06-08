@@ -37,8 +37,10 @@ import com.appyhome.appyproduct.mvvm.ui.appyproduct.product.list.sort.SortFragme
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.search.SearchActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyproduct.topic.ProductTopicFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingActivity;
-import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.detail.ProductTrackingActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.detail.ProductTrackingActivityModule;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.list.ListProductOrderActivity;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.list.ListProductOrderActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1Activity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step1.ServicesStep1ActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.bookingservices.step2.ServicesStep2Activity;
@@ -67,7 +69,6 @@ import com.appyhome.appyproduct.mvvm.ui.main.MainActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivity;
 import com.appyhome.appyproduct.mvvm.ui.splash.SplashActivityModule;
 import com.appyhome.appyproduct.mvvm.ui.tabs.home.HomeFragmentProvider;
-import com.appyhome.appyproduct.mvvm.ui.tabs.mywishlist.MyWishListFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.notification.NotificationFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.tracking.TrackingFragmentProvider;
 import com.appyhome.appyproduct.mvvm.ui.tabs.userpage.UserPageFragmentProvider;
@@ -150,6 +151,9 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = SearchActivityModule.class)
     abstract SearchActivity bindSearchActivity();
 
+    @ContributesAndroidInjector(modules = ListProductOrderActivityModule.class)
+    abstract ListProductOrderActivity bindListProductOrderActivity();
+
     @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductVariantFragmentProvider.class, EditVariantFragmentProvider.class})
     abstract ProductDetailActivity bindProductDetailActivity();
 
@@ -160,7 +164,7 @@ public abstract class ActivityBuilder {
     abstract ServiceTrackingActivity bindServiceTrackingActivity();
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class, TextInputDialogProvider.class, HomeFragmentProvider.class,
-            MyProfileFragmentProvider.class, UserPageFragmentProvider.class, MyWishListFragmentProvider.class, FavoriteFragmentProvider.class,
+            MyProfileFragmentProvider.class, UserPageFragmentProvider.class, FavoriteFragmentProvider.class,
             NotificationFragmentProvider.class, ProductTopicFragmentProvider.class, SortFragmentProvider.class,
             EditVariantFragmentProvider.class, ProductVariantFragmentProvider.class, TrackingFragmentProvider.class})
     abstract MainActivity bindMainActivity();

@@ -3,7 +3,7 @@ package com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.edit;
 import android.content.Intent;
 
 import com.appyhome.appyproduct.mvvm.data.DataManager;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ServiceOrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.remote.ApiCode;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestItemViewModel;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.RequestType;
@@ -51,7 +51,7 @@ public class RequestEditViewModel extends RequestItemViewModel {
     }
 
     public void editOrder(String additional, String amount, String txn_ID) {
-        OrderEditRequest request = new OrderEditRequest();
+        ServiceOrderEditRequest request = new ServiceOrderEditRequest();
         request.setIdNumber(getIdNumber());
         request.setEditCode(getEditCode());
         JSONObject obj = new JSONObject();
@@ -65,10 +65,10 @@ public class RequestEditViewModel extends RequestItemViewModel {
         }
     }
 
-    private void editOrder(OrderEditRequest request) {
+    private void editOrder(ServiceOrderEditRequest request) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .editOrder(request)
+                .editServiceOrder(request)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(new Consumer<JSONObject>() {

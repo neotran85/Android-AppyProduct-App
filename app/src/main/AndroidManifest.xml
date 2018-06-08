@@ -144,7 +144,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.appyproduct.tracking.ProductTrackingActivity"
+            android:name=".ui.appyproduct.tracking.detail.ProductTrackingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.appyproduct.tracking.list.ListProductOrderActivity"
             android:screenOrientation="portrait" />
 
         <activity

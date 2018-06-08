@@ -25,9 +25,9 @@ public class RequestViewModel extends BaseViewModel<RequestNavigator> {
 
     public void fetchAllData() {
         setIsLoading(true);
-        fetchDataByType(getDataManager().fetchAppointmentAll(), RequestType.TYPE_REQUEST);
-        fetchDataByType(getDataManager().fetchOrderAll(), RequestType.TYPE_ORDER);
-        fetchDataByType(getDataManager().fetchReceiptAll(), RequestType.TYPE_CLOSED);
+        fetchDataByType(getDataManager().fetchServiceAppointmentAll(), RequestType.TYPE_REQUEST);
+        fetchDataByType(getDataManager().fetchServiceOrderAll(), RequestType.TYPE_ORDER);
+        fetchDataByType(getDataManager().fetchServiceReceiptAll(), RequestType.TYPE_CLOSED);
     }
 
     private void fetchDataByType(Single<JSONObject> object, final int type) {

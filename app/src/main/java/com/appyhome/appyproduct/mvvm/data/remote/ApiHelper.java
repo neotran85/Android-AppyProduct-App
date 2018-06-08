@@ -20,6 +20,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.product.GetSellerResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingAddressResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.GetShippingResponse;
+import com.appyhome.appyproduct.mvvm.data.model.api.product.OrderGetResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductListRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductVariantResponse;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.VerifyOrderRequest;
@@ -31,7 +32,7 @@ import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentDeleteRes
 import com.appyhome.appyproduct.mvvm.data.model.api.service.AppointmentGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderCompletedResponse;
-import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderEditRequest;
+import com.appyhome.appyproduct.mvvm.data.model.api.service.ServiceOrderEditRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.OrderGetRequest;
 import com.appyhome.appyproduct.mvvm.data.model.api.service.ReceiptGetRequest;
 
@@ -52,23 +53,23 @@ public interface ApiHelper {
 
     Single<AppointmentCreateResponse> createAppointment(AppointmentCreateRequest dataRequest);
 
-    Single<JSONObject> fetchAppointment(AppointmentGetRequest request);
+    Single<JSONObject> fetchServiceAppointment(AppointmentGetRequest request);
 
-    Single<JSONObject> fetchOrder(OrderGetRequest request);
+    Single<JSONObject> fetchServiceOrder(OrderGetRequest request);
 
-    Single<JSONObject> fetchReceipt(ReceiptGetRequest request);
+    Single<JSONObject> fetchServiceReceipt(ReceiptGetRequest request);
 
-    Single<JSONObject> fetchOrderAll();
+    Single<JSONObject> fetchServiceOrderAll();
 
-    Single<OrderCompletedResponse> markOrderCompleted(OrderCompletedRequest request);
+    Single<OrderCompletedResponse> markServiceOrderCompleted(OrderCompletedRequest request);
 
-    Single<JSONObject> fetchReceiptAll();
+    Single<JSONObject> fetchServiceReceiptAll();
 
-    Single<AppointmentDeleteResponse> deleteAppointment(AppointmentDeleteRequest request);
+    Single<AppointmentDeleteResponse> deleteServiceAppointment(AppointmentDeleteRequest request);
 
-    Single<JSONObject> fetchAppointmentAll();
+    Single<JSONObject> fetchServiceAppointmentAll();
 
-    Single<JSONObject> editOrder(OrderEditRequest request);
+    Single<JSONObject> editServiceOrder(ServiceOrderEditRequest request);
 
     Single<JSONObject> fetchUserProfile();
 
@@ -119,4 +120,6 @@ public interface ApiHelper {
     Single<ApiResponse> checkoutProductOrder(CheckoutOrderRequest request);
 
     Single<VerifyOrderResponse> verifyProductOrder(VerifyOrderRequest request);
+
+    Single<OrderGetResponse> fetchUserProductOrders();
 }

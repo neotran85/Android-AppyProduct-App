@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.appyproduct.tracking.ProductTrackingActivity">
+    tools:context=".ui.appyproduct.tracking.detail.ProductTrackingActivity">
 
     <data>
 
@@ -10,11 +10,11 @@
 
         <variable
             name="navigator"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingNavigator" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.detail.ProductTrackingNavigator" />
 
         <variable
             name="viewModel"
-            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.ProductTrackingViewModel" />
+            type="com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.detail.ProductTrackingViewModel" />
 
     </data>
 

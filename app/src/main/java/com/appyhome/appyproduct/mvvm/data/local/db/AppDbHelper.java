@@ -710,29 +710,6 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<ProductOrder> addOrder(RealmResults<ProductCart> items,
-                                           String paymentMethod, AppyAddress shippingAddress,
-                                           String customerId, String customerName,
-                                           float totalCost, float discount, long orderId) {
-        try {
-            beginTransaction();
-            ProductOrder order = new ProductOrder();
-            order.id = orderId == 0 ? System.currentTimeMillis() : orderId;
-            order.customer_name = customerName;
-            order.discount = discount;
-            order.payment_method = paymentMethod;
-
-            getRealm().copyToRealmOrUpdate(items);
-            order = getRealm().copyToRealmOrUpdate(order);
-            getRealm().commitTransaction();
-            return order.asFlowable();
-        } catch (Exception e) {
-            getRealm().cancelTransaction();
-            return new ProductOrder().asFlowable();
-        }
-    }
-
-    @Override
     public Flowable<ProductFilter> getCurrentFilter(String userId) {
         return Flowable.fromCallable(() -> {
             try {
@@ -1005,6 +982,29 @@ public class AppDbHelper implements DbHelper {
                 .findAll();
         getRealm().commitTransaction();
         return products != null ? products.asFlowable() : null;
+    }
+
+    @Override
+    public Flowable<Boolean> saveProductOrders(RealmList<ProductOrder> orders) {
+        return Flowable.fromCallable(() -> {
+            try {
+                beginTransaction();
+                getRealm().copyToRealmOrUpdate(orders);
+                getRealm().commitTransaction();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        });
+    }
+
+    @Override
+    public Flowable<ProductOrder> getProductOrder(long orderId) {
+        beginTransaction();
+        ProductOrder productOrder = getRealm().where(ProductOrder.class).equalTo("id", orderId).findFirst();
+        getRealm().commitTransaction();
+        return productOrder != null ? productOrder.asFlowable() : null;
     }
 
     @Override

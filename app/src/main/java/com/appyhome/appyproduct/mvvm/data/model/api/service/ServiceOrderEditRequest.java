@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class OrderEditRequest {
+public class ServiceOrderEditRequest {
     @Expose
     @SerializedName("id_number")
     private String idNumber;
@@ -17,7 +17,7 @@ public class OrderEditRequest {
     @SerializedName("additional")
     private String additional;
 
-    public OrderEditRequest() {
+    public ServiceOrderEditRequest() {
 
     }
 

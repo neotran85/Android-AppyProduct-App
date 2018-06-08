@@ -43,6 +43,7 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
         mBinder.setNavigator(this);
         getViewModel().setNavigator(this);
         getViewModel().updateUserCartAgain();
+        getViewModel().getProductOrder(getOrderId());
     }
 
     @Override
@@ -51,6 +52,10 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+    }
+
+    private long getOrderId() {
+        return getIntent().getLongExtra("order_id", 0);
     }
 
     @Override
