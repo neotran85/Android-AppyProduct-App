@@ -57,6 +57,11 @@ public class ProductOrder extends RealmObject {
     public long user_id;
 
     @Expose
+    @SerializedName("customer_id")
+    @ColumnInfo(name = "customer_id")
+    public String customer_id;
+
+    @Expose
     @SerializedName("price")
     @ColumnInfo(name = "price")
     public double price;
@@ -69,7 +74,7 @@ public class ProductOrder extends RealmObject {
     @Expose
     @SerializedName("status")
     @ColumnInfo(name = "status")
-    public String status;
+    public int status;
     @Expose
     @SerializedName("more_info")
     @ColumnInfo(name = "more_info")

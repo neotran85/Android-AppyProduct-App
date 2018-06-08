@@ -215,14 +215,15 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                     // GET SUCCEEDED
                     if (orderGetResponse != null && orderGetResponse.isValid()) {
                         for(ProductOrder order: orderGetResponse.message) {
+                            order.customer_id = getUserId();
                             if(order.id == idOrder) {
                                 getNavigator().addOrderOk(order);
                             }
                         }
-                        getCompositeDisposable().add(getDataManager().saveProductOrders(orderGetResponse.message)
+                        getCompositeDisposable().add(getDataManager().saveProductOrders(orderGetResponse.message, getUserId())
                                 .take(1)
                                 .observeOn(getSchedulerProvider().ui())
-                                .subscribe(success -> {
+                                .subscribe(results -> {
                                 }, Crashlytics::logException));
                     }
                 }, Crashlytics::logException));

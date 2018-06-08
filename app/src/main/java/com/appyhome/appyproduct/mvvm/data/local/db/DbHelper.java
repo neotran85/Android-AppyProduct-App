@@ -127,7 +127,7 @@ public interface DbHelper {
 
     Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag);
 
-    Flowable<Boolean> saveProductOrders(RealmList<ProductOrder> orders);
+    Flowable<RealmResults<ProductOrder>> saveProductOrders(RealmList<ProductOrder> orders, String userId);
 
     Flowable<ProductOrder> getProductOrder(long orderId);
 }

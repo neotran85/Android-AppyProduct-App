@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
+import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductOrderListBinding;
 import com.appyhome.appyproduct.mvvm.databinding.ActivitySampleBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -37,6 +40,7 @@ public class ListProductOrderActivity extends BaseActivity<ActivityProductOrderL
         mBinder.setNavigator(this);
         mBinder.setViewModel(mMainViewModel);
         mMainViewModel.setNavigator(this);
+        getViewModel().syncAllProductOrders();
     }
 
     @Override
@@ -58,5 +62,10 @@ public class ListProductOrderActivity extends BaseActivity<ActivityProductOrderL
     public void showAlert(String message) {
         if (!isFinishing())
             AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    @Override
+    public void showProductOrders(ArrayList<ProductOrder> activeList, ArrayList<ProductOrder> historyList, ArrayList<ProductOrder> canceledList) {
+
     }
 }

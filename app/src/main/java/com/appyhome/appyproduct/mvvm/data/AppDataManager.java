@@ -838,8 +838,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<Boolean> saveProductOrders(RealmList<ProductOrder> orders) {
-        return mDbHelper.saveProductOrders(orders);
+    public Flowable<RealmResults<ProductOrder>> saveProductOrders(RealmList<ProductOrder> orders, String userId) {
+        return mDbHelper.saveProductOrders(orders, userId);
     }
 
     @Override

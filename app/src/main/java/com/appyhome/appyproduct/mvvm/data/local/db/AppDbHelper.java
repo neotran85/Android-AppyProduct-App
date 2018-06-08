@@ -985,18 +985,12 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<Boolean> saveProductOrders(RealmList<ProductOrder> orders) {
-        return Flowable.fromCallable(() -> {
-            try {
-                beginTransaction();
-                getRealm().copyToRealmOrUpdate(orders);
-                getRealm().commitTransaction();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-            return true;
-        });
+    public Flowable<RealmResults<ProductOrder>> saveProductOrders(RealmList<ProductOrder> orders, String userId) {
+        beginTransaction();
+        getRealm().copyToRealmOrUpdate(orders);
+        RealmResults<ProductOrder> results = getRealm().where(ProductOrder.class).equalTo("customer_id", userId).findAll();
+        getRealm().commitTransaction();
+        return results != null ? results.asFlowable() : null;
     }
 
     @Override
