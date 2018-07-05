@@ -21,6 +21,11 @@ public class ProductBought extends RealmObject {
     public long order_id;
 
     @Expose
+    @SerializedName("title")
+    @ColumnInfo(name = "title")
+    public String title;
+
+    @Expose
     @SerializedName("user_id")
     @ColumnInfo(name = "user_id")
     public long user_id;

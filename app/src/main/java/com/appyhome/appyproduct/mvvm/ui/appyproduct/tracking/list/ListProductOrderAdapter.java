@@ -1,8 +1,12 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.list;
 
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.appyhome.appyproduct.mvvm.R;
 import com.appyhome.appyproduct.mvvm.data.local.db.realm.ProductOrder;
+import com.appyhome.appyproduct.mvvm.databinding.ViewItemProductOrderBinding;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseViewHolder;
 import com.appyhome.appyproduct.mvvm.ui.common.sample.adapter.SampleAdapter;
 
@@ -14,7 +18,9 @@ public class ListProductOrderAdapter extends SampleAdapter<ProductOrder, ListPro
 
     @Override
     public BaseViewHolder getContentHolder(ViewGroup parent) {
-        return null;
+        ViewItemProductOrderBinding itemViewBinding = ViewItemProductOrderBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new OrderItemViewHolder(itemViewBinding);
     }
 
     public void addItem(ProductOrder order, ListProductOrderNavigator navigator) {
@@ -38,7 +44,26 @@ public class ListProductOrderAdapter extends SampleAdapter<ProductOrder, ListPro
 
     @Override
     protected int getEmptyItemLayout() {
-        return 0;
+        return R.layout.view_item_product_order_empty;
     }
 
+    public class OrderItemViewHolder extends BaseViewHolder {
+
+        private ViewItemProductOrderBinding mBinding;
+
+        public OrderItemViewHolder(ViewItemProductOrderBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
+        public ViewItemProductOrderBinding getBinding() {
+            return mBinding;
+        }
+
+        @Override
+        public void onBind(int position) {
+            OrderItemViewModel viewModel = (OrderItemViewModel) getItem(position);
+            mBinding.setViewModel(viewModel);
+        }
+    }
 }
