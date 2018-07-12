@@ -57,15 +57,6 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
                 }, Crashlytics::logException));
     }
 
-    public void getSearchSuggestions() {
-        getCompositeDisposable().add(getDataManager().getSearchSuggestions()
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(suggestions -> {
-                    getNavigator().showSuggestions(suggestions);
-                }, Crashlytics::logException));
-    }
-
     public void getAllProductTopics() {
         getCompositeDisposable().add(getDataManager().getAllProductTopics()
                 .take(1)

@@ -11,6 +11,7 @@ public class OrderItemViewModel extends BaseViewModel<ListProductOrderNavigator>
     public ObservableField<String> date = new ObservableField<>("");
     public ObservableField<String> name = new ObservableField<>("");
     public ObservableField<String> quantity = new ObservableField<>("");
+    public ObservableField<String> status = new ObservableField<>("");
 
     public OrderItemViewModel(ListProductOrderNavigator navigator, ProductOrder order) {
         setNavigator(navigator);
@@ -18,7 +19,7 @@ public class OrderItemViewModel extends BaseViewModel<ListProductOrderNavigator>
             long quantityTotal = 0;
             String titleStr = "";
             if (order.items != null && order.items.size() > 0) {
-                titleStr = order.items.get(0) != null ? order.items.get(0).title : "";
+                titleStr = order.items.get(0) != null ? order.items.get(0).product_name : "";
                 for (ProductBought item : order.items) {
                     quantityTotal = quantityTotal + item.quantity;
                 }

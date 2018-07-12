@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -141,6 +142,36 @@ public class Product extends RealmObject implements Serializable {
     @SerializedName("related")
     @ColumnInfo(name = "related")
     public String related;
+
+    @Expose
+    @SerializedName("year_ext_warranty")
+    @ColumnInfo(name = "year_ext_warranty")
+    public int year_ext_warranty;
+
+    @Expose
+    @SerializedName("ext_warranty")
+    @ColumnInfo(name = "ext_warranty")
+    public int ext_warranty;
+
+    @Expose
+    @SerializedName("intro")
+    @ColumnInfo(name = "intro")
+    public String intro;
+
+    @Expose
+    @SerializedName("features")
+    @ColumnInfo(name = "features")
+    public RealmList<String> features;
+
+    @Expose
+    @SerializedName("descr_images")
+    @ColumnInfo(name = "descr_images")
+    public RealmList<String> descr_images;
+
+    @Expose
+    @SerializedName("warranty")
+    @ColumnInfo(name = "warranty")
+    public String warranty;
 
     @Expose
     @SerializedName("more_info")

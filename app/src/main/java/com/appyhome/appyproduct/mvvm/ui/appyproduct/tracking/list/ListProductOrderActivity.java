@@ -18,6 +18,7 @@ public class ListProductOrderActivity extends BaseActivity<ActivityProductOrderL
 
     @Inject
     public ListProductOrderViewModel mMainViewModel;
+
     ActivityProductOrderListBinding mBinder;
     @Inject
     int mLayoutId;
@@ -61,6 +62,11 @@ public class ListProductOrderActivity extends BaseActivity<ActivityProductOrderL
     public void showAlert(String message) {
         if (!isFinishing())
             AlertManager.getInstance(this).showLongToast(message);
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 
     @Override

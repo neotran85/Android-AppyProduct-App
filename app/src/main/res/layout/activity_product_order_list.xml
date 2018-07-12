@@ -28,8 +28,27 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/view_header"></include>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_bar_height"
+                android:background="@color/white">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Product Orders Tracking"
+                    android:textColor="@color/semi_gray"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="14dp"
+                    android:onClick="@{(view) -> navigator.close()}"
+                    android:src="@mipmap/icon_back" />
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/viewServiceTracking"
                 android:layout_width="match_parent"
@@ -51,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:text="ACTIVE"
+                        android:text="Requests"
                         android:textColor="@color/semi_gray"
                         android:textSize="12sp" />
 
@@ -61,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:text="HISTORY"
+                        android:text="Orders"
                         android:textColor="@color/semi_gray"
                         android:textSize="12sp" />
 
@@ -71,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:text="CANCELED"
+                        android:text="Closed"
                         android:textColor="@color/semi_gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -82,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible"
-                    tools:listitem="@layout/view_item_request" />
+                    tools:listitem="@layout/view_item_order_product" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/historyRecyclerView"
@@ -90,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone"
-                    tools:listitem="@layout/view_item_request" />
+                    tools:listitem="@layout/view_item_order_product" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/canceledRecyclerView"
@@ -98,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone"
-                    tools:listitem="@layout/view_item_request" />
+                    tools:listitem="@layout/view_item_order_product" />
             </LinearLayout>
 
         </LinearLayout>

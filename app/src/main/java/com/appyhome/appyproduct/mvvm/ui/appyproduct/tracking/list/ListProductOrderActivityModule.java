@@ -11,13 +11,13 @@ import dagger.Provides;
 public class ListProductOrderActivityModule {
 
     @Provides
-    ListProductOrderViewModel provideSampleViewModel(DataManager dataManager,
+    ListProductOrderViewModel provideListProductOrderViewModel(DataManager dataManager,
                                                      SchedulerProvider schedulerProvider) {
         return new ListProductOrderViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     int provideLayoutId() {
-        return R.layout.activity_sample;
+        return R.layout.activity_product_order_list;
     }
 }

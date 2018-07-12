@@ -123,8 +123,8 @@ public class ApiUrlConfig {
     public static final String API_PRODUCT_ORDER_VERIFY = BuildConfig.BASE_URL
             + "api/appyproduct/checkout/verify";
 
-    public static final String API_PRODUCT_ORDER_GET = BuildConfig.BASE_URL
-            + "api/appyproduct/order/get";
+    public static final String API_PRODUCT_ORDER_GET_ALL = BuildConfig.BASE_URL
+            + "api/appyproduct/order/getall";
 
     public static final String URL_FORGET_PASSWORD = "http://dev.lara.appycms.com/password/reset";
     public static final String URL_SCHEDULING_FAQ = "file:///android_asset/html/scheduling_faq.html";

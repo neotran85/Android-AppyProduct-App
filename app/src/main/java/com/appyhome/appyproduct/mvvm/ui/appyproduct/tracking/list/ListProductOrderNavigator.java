@@ -7,5 +7,7 @@ import java.util.ArrayList;
 public interface ListProductOrderNavigator {
     void showAlert(String message);
 
+    void close();
+
     void showProductOrders(ArrayList<ProductOrder> activeList, ArrayList<ProductOrder> historyList, ArrayList<ProductOrder> canceledList);
 }

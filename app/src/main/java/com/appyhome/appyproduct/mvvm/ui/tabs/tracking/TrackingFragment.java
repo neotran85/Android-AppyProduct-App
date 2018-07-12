@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.FragmentTrackingBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.list.ListProductOrderActivity;
 import com.appyhome.appyproduct.mvvm.ui.appyservice.servicerequest.ServiceTrackingActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseFragment;
 
@@ -66,7 +67,8 @@ public class TrackingFragment extends BaseFragment<FragmentTrackingBinding, Trac
 
     @Override
     public void openOrderTracking() {
-
+        Intent intent = ListProductOrderActivity.getStartIntent(this.getActivity());
+        startActivity(intent);
     }
 
     @Override

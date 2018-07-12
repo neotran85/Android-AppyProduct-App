@@ -410,7 +410,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<OrderGetResponse> fetchUserProductOrders() {
-        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_ORDER_GET)
+        return Rx2AndroidNetworking.post(ApiUrlConfig.API_PRODUCT_ORDER_GET_ALL)
                 .addHeaders(mApiHeader.getProtectedApiHeader())
                 .build()
                 .getObjectSingle(OrderGetResponse.class);
