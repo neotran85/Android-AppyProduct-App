@@ -1,5 +1,6 @@
 package com.appyhome.appyproduct.mvvm.data.local.db;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -18,6 +19,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -985,7 +987,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<RealmResults<ProductOrder>> saveProductOrders(RealmList<ProductOrder> orders, String userId) {
+    public Flowable<RealmResults<ProductOrder>> saveProductOrders(Collection<ProductOrder> orders, String userId) {
         beginTransaction();
         getRealm().copyToRealmOrUpdate(orders);
         RealmResults<ProductOrder> results = getRealm().where(ProductOrder.class).equalTo("customer_id", userId).findAll();

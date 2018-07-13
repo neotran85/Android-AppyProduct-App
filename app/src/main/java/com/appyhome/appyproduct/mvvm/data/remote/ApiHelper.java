@@ -121,5 +121,5 @@ public interface ApiHelper {
 
     Single<VerifyOrderResponse> verifyProductOrder(VerifyOrderRequest request);
 
-    Single<OrderGetResponse> fetchUserProductOrders();
+    Single<JSONObject> fetchUserProductOrders();
 }

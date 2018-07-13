@@ -1,7 +1,6 @@
 package com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.list;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.appyhome.appyproduct.mvvm.R;
@@ -17,10 +16,14 @@ import io.realm.RealmResults;
 public class ListProductOrderAdapter extends SampleAdapter<ProductOrder, ListProductOrderNavigator> {
 
     @Override
-    public BaseViewHolder getContentHolder(ViewGroup parent) {
+    public OrderItemViewHolder getContentHolder(ViewGroup parent) {
         ViewItemProductOrderBinding itemViewBinding = ViewItemProductOrderBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new OrderItemViewHolder(itemViewBinding);
+    }
+
+    public void newAdapter() {
+        mItems = new ArrayList<>();
     }
 
     public void addItem(ProductOrder order, ListProductOrderNavigator navigator) {
@@ -39,7 +42,8 @@ public class ListProductOrderAdapter extends SampleAdapter<ProductOrder, ListPro
 
     @Override
     protected void recycle() {
-
+        mItems.clear();
+        mItems = null;
     }
 
     @Override
@@ -63,7 +67,7 @@ public class ListProductOrderAdapter extends SampleAdapter<ProductOrder, ListPro
         @Override
         public void onBind(int position) {
             OrderItemViewModel viewModel = (OrderItemViewModel) getItem(position);
-            mBinding.setViewModel(viewModel);
+            getBinding().setViewModel(viewModel);
         }
     }
 }

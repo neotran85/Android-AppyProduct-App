@@ -28,8 +28,8 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="There is no order."
+                android:layout_marginStart="10dp"
+                android:text="No Items."
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -120,10 +120,10 @@ public class ConfirmationActivity extends BaseActivity<ActivityProductCartConfir
         getViewModel().doVerifyOrderBeforePayment();
     }
 
-    public void addOrderOk(ProductOrder order) {
+    public void addOrderOk(long orderId) {
         closeLoading();
         Intent i = OrderCompleteActivity.getStartIntent(this);
-        i.putExtra("order_id", order.id);
+        i.putExtra("order_id", orderId);
         startActivity(i);
     }
 

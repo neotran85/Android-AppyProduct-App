@@ -22,7 +22,7 @@ public interface ConfirmationNavigator extends FetchUserInfoNavigator, VerifyOrd
 
     void handleErrors(Throwable throwable);
 
-    void addOrderOk(ProductOrder order);
+    void addOrderOk(long orderId);
 
     void addOrderFailed(String message);
 

@@ -18,6 +18,7 @@ import com.appyhome.appyproduct.mvvm.data.local.db.realm.User;
 import com.appyhome.appyproduct.mvvm.data.model.api.product.ProductCartResponse;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import io.reactivex.Flowable;
 import io.realm.RealmList;
@@ -127,7 +128,7 @@ public interface DbHelper {
 
     Flowable<Boolean> addProducts(String userId, RealmList<Product> list, String tag);
 
-    Flowable<RealmResults<ProductOrder>> saveProductOrders(RealmList<ProductOrder> orders, String userId);
+    Flowable<RealmResults<ProductOrder>> saveProductOrders(Collection<ProductOrder> orders, String userId);
 
     Flowable<ProductOrder> getProductOrder(long orderId);
 }

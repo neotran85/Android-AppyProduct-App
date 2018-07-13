@@ -38,23 +38,24 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Product Orders Tracking"
-                    android:textColor="@color/semi_gray"
+                    android:textColor="@color/medium_dark_gray"
                     android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:padding="14dp"
                     android:onClick="@{(view) -> navigator.close()}"
+                    android:padding="14dp"
                     android:src="@mipmap/icon_back" />
             </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/viewServiceTracking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:background="#F1F1F1"
+                android:background="@color/very_little_gray"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -66,15 +67,17 @@
 
                     <Button
                         android:id="@+id/btRequest"
+                        android:onClick="@{(view) -> navigator.onSwitchTab(view)}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        android:text="Requests"
-                        android:textColor="@color/semi_gray"
+                        android:background="@color/colorAccent"
+                        android:text="Request"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
 
                     <Button
+                        android:onClick="@{(view) -> navigator.onSwitchTab(view)}"
                         android:id="@+id/btOrders"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,6 +88,7 @@
                         android:textSize="12sp" />
 
                     <Button
+                        android:onClick="@{(view) -> navigator.onSwitchTab(view)}"
                         android:id="@+id/btClosed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -97,27 +101,29 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/activeRecyclerView"
-                    adapter="@{viewModel.activeAdapter}"
+                    android:layout_marginTop="6dp"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible"
-                    tools:listitem="@layout/view_item_order_product" />
+                    android:layout_height="match_parent" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:layout_marginTop="6dp"
                     android:id="@+id/historyRecyclerView"
-                    adapter="@{viewModel.historyAdapter}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
-                    tools:listitem="@layout/view_item_order_product" />
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/canceledRecyclerView"
-                    adapter="@{viewModel.canceledAdapter}"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/closedRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
-                    tools:listitem="@layout/view_item_order_product" />
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

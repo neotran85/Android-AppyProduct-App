@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.appyhome.appyproduct.mvvm.BR;
 import com.appyhome.appyproduct.mvvm.databinding.ActivityProductCartCompletedBinding;
+import com.appyhome.appyproduct.mvvm.ui.appyproduct.tracking.list.ListProductOrderActivity;
 import com.appyhome.appyproduct.mvvm.ui.base.BaseActivity;
 import com.appyhome.appyproduct.mvvm.ui.main.MainActivity;
 import com.appyhome.appyproduct.mvvm.utils.manager.AlertManager;
@@ -43,7 +44,7 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
         mBinder.setNavigator(this);
         getViewModel().setNavigator(this);
         getViewModel().updateUserCartAgain();
-        getViewModel().getProductOrder(getOrderId());
+        getViewModel().orderPref.set("Order Id: " + getOrderId() + "");
     }
 
     @Override
@@ -60,11 +61,10 @@ public class OrderCompleteActivity extends BaseActivity<ActivityProductCartCompl
 
     @Override
     public void viewOrders() {
-        showComingSoon();
-        /*long orderId = getIntent().getLongExtra("order_id", 0);
-        Intent intent = ProductTrackingActivity.getStartIntent(this);
-        intent.putExtra("order_id", orderId);
-        startActivity(intent);*/
+        Intent intent = ListProductOrderActivity.getStartIntent(this);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override

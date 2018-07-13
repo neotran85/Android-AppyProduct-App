@@ -24,17 +24,6 @@ public class OrderCompleteViewModel extends BaseViewModel<OrderCompleteNavigator
         mFetchUserInfoViewModel.setNavigator(navigator);
     }
 
-    public void getProductOrder(long orderId) {
-        getCompositeDisposable().add(getDataManager().getProductOrder(orderId)
-                .take(1)
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(productOrder -> {
-                    if (productOrder != null) {
-                        orderPref.set("Order Ref: " + productOrder.order_ref);
-                    }
-                }, Crashlytics::logException));
-    }
-
     public void updateUserCartAgain() {
         mFetchUserInfoViewModel.fetchAndSyncCartsServer();
     }

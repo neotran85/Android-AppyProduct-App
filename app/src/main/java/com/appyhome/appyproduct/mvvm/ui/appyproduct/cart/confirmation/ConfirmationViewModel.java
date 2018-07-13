@@ -170,7 +170,7 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
                 .subscribe(result -> {
                     if (result != null && result.isValid()) {
                         long idOrder = getOrderId(result);
-                        addOrdersToDatabase(idOrder);
+                        getNavigator().addOrderOk(idOrder);
                     } else {
                         getNavigator().addOrderFailed(result != null ? result.message.toString() : "");
                     }
@@ -193,28 +193,6 @@ public class ConfirmationViewModel extends BaseViewModel<ConfirmationNavigator> 
             }
         }
         return -1;
-    }
-
-    private void addOrdersToDatabase(long idOrder) {
-        getCompositeDisposable().add(getDataManager().fetchUserProductOrders()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(orderGetResponse -> {
-                    // GET SUCCEEDED
-                    if (orderGetResponse != null && orderGetResponse.isValid()) {
-                        for (ProductOrder order : orderGetResponse.message) {
-                            order.customer_id = getUserId();
-                            if (order.id == idOrder) {
-                                getNavigator().addOrderOk(order);
-                            }
-                        }
-                        getCompositeDisposable().add(getDataManager().saveProductOrders(orderGetResponse.message, getUserId())
-                                .take(1)
-                                .observeOn(getSchedulerProvider().ui())
-                                .subscribe(results -> {
-                                }, Crashlytics::logException));
-                    }
-                }, Crashlytics::logException));
     }
 
     public void updateUserCartAgain() {

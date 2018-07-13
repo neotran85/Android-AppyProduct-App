@@ -20,8 +20,7 @@ public class SampleItemAdapter extends SampleAdapter<RealmObject, SampleItemNavi
         return R.layout.view_item_product_cart_empty;
     }
 
-    public void addItems(RealmResults<RealmObject> results, SampleItemNavigator navigator) {
-    }
+    public void addItems(RealmResults<RealmObject> results, SampleItemNavigator navigator) {}
 
     @Override
     protected void recycle() {

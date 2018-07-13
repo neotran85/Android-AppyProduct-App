@@ -69,6 +69,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -838,7 +839,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<RealmResults<ProductOrder>> saveProductOrders(RealmList<ProductOrder> orders, String userId) {
+    public Flowable<RealmResults<ProductOrder>> saveProductOrders(Collection<ProductOrder> orders, String userId) {
         return mDbHelper.saveProductOrders(orders, userId);
     }
 
@@ -848,7 +849,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<OrderGetResponse> fetchUserProductOrders() {
+    public Single<JSONObject> fetchUserProductOrders() {
         return mApiHelper.fetchUserProductOrders();
     }
 }
